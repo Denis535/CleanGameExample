@@ -16,15 +16,14 @@ namespace Project.UI {
         }
 
         // MainMenuWidget
-        public static Widget MainMenuWidget(this UIFactory factory, out Widget widget, out Label title, out ColumnScope mainPageSlot, out ColumnScope startGamePageSlot) {
+        public static Widget MainMenuWidget(this UIFactory factory, out Widget widget, out Label title, out ColumnScope pageView) {
             using (factory.LeftWidget( "main-menu-widget" ).AsScope( out widget )) {
                 using (factory.Card().AsScope()) {
                     using (factory.Header().AsScope()) {
                         factory.Label( "Main Menu" ).AddToScope( out title );
                     }
                     using (factory.Content().AsScope()) {
-                        factory.ColumnScope().AddToScope( out mainPageSlot );
-                        factory.ColumnScope().AddToScope( out startGamePageSlot );
+                        factory.ColumnScope().AddToScope( out pageView );
                     }
                 }
             }

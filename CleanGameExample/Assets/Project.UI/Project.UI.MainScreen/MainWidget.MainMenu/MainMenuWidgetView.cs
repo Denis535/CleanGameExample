@@ -13,8 +13,7 @@ namespace Project.UI.MainScreen {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        private SlotWrapper MainPageSlot { get; }
-        private SlotWrapper StartGamePageSlot { get; }
+        private SlotWrapper PageView { get; }
         // MainPage
         public ElementWrapper MainPage { get; }
         public ButtonWrapper MainPage_StartGame { get; }
@@ -28,19 +27,18 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget( out var widget, out var title, out var mainPageSlot, out var startGamePageSlot );
+            VisualElement = factory.MainMenuWidget( out var widget, out var title, out var pageView );
             Widget = widget.Wrap();
             Title = title.Wrap();
-            MainPageSlot = mainPageSlot.AsSlot();
-            StartGamePageSlot = startGamePageSlot.AsSlot();
+            PageView = pageView.AsSlot();
             // MainPage
-            MainPageSlot.Add( factory.MainMenuWidget_MainPage( out var mainPage, out var startGame, out var settings, out var quit ) );
+            PageView.Add( factory.MainMenuWidget_MainPage( out var mainPage, out var startGame, out var settings, out var quit ) );
             MainPage = mainPage.Wrap();
             MainPage_StartGame = startGame.Wrap();
             MainPage_Settings = settings.Wrap();
             MainPage_Quit = quit.Wrap();
             // StartGamePage
-            StartGamePageSlot.Add( factory.MainMenuWidget_StartGamePage( out var startGamePage, out var newGame, out var @continue, out var back ) );
+            PageView.Add( factory.MainMenuWidget_StartGamePage( out var startGamePage, out var newGame, out var @continue, out var back ) );
             StartGamePage = startGamePage.Wrap();
             StartGamePage_NewGame = newGame.Wrap();
             StartGamePage_Continue = @continue.Wrap();

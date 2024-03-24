@@ -39,8 +39,9 @@ namespace UnityEngine.AddressableAssets {
             public const string @Program = "Project/Program.unity";
             public const string @MainScene = "Project/MainScene.unity";
             public const string @GameScene = "Project/GameScene.unity";
-            public const string @TestWorldScene_1 = "Project/TestWorldScene_1.unity";
-            public const string @TestWorldScene_2 = "Project/TestWorldScene_2.unity";
+            public const string @Level_01 = "Project/Level_01.unity";
+            public const string @Level_02 = "Project/Level_02.unity";
+            public const string @Level_03 = "Project/Level_03.unity";
         }
     }
 }

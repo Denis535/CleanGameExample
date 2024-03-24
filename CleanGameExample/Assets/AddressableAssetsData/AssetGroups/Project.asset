@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 12b846aacc10c6440bad170613e70ed7
   m_SerializeEntries:
-  - m_GUID: 49ef10eb212885b4db0e2048d56e74df
-    m_Address: Project/Program.unity
+  - m_GUID: 25b5c566d0ca06f468e180be9038653b
+    m_Address: Project
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

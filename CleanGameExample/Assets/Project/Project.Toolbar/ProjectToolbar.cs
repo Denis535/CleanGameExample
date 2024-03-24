@@ -14,8 +14,10 @@ namespace Project.Toolbar {
         // LoadScene
         [MenuItem( "Project/Launcher", priority = 0 )]
         public static void LoadLauncher() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Launcher.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Launcher.unity" );
         }
+
+        // LoadScene
         [MenuItem( "Project/Program", priority = 1 )]
         public static void LoadProgram() {
             EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Program.unity" );
@@ -30,13 +32,17 @@ namespace Project.Toolbar {
         }
 
         // LoadScene
-        [MenuItem( "Project/Test World Scene 1", priority = 100 )]
-        public static void LoadTestWorldScene_1() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/TestWorldScene_1.unity" );
+        [MenuItem( "Project/Level 1", priority = 100 )]
+        public static void LoadLevel1() {
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Level_01.unity" );
         }
-        [MenuItem( "Project/Test World Scene 2", priority = 101 )]
-        public static void LoadTestWorldScene_2() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/TestWorldScene_2.unity" );
+        [MenuItem( "Project/Level 2", priority = 101 )]
+        public static void LoadLevel2() {
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Level_02.unity" );
+        }
+        [MenuItem( "Project/Level 3", priority = 101 )]
+        public static void LoadLevel3() {
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Level_03.unity" );
         }
 
         // Build

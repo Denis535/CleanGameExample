@@ -118,7 +118,7 @@ namespace Project.UI {
                 {
                     // LoadGameScene
                     await Task.Delay( 3_000 );
-                    await UIRouterHelper.LoadWorldSceneAsync( GetLevelAddress( Level.TestWorld1 ) );
+                    await UIRouterHelper.LoadWorldSceneAsync( GetLevelAddress( Level.Level1 ) );
                     await UIRouterHelper.LoadGameSceneAsync();
                 }
             }
@@ -173,8 +173,9 @@ namespace Project.UI {
         // Helpers
         private static string GetLevelAddress(Level level) {
             return level switch {
-                Level.TestWorld1 => R.Project.TestWorldScene_1,
-                Level.TestWorld2 => R.Project.TestWorldScene_2,
+                Level.Level1 => R.Project.Level_01,
+                Level.Level2 => R.Project.Level_02,
+                Level.Level3 => R.Project.Level_03,
                 _ => throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" ),
             };
         }
@@ -195,7 +196,8 @@ namespace Project.UI {
     }
     // Level
     public enum Level {
-        TestWorld1,
-        TestWorld2,
+        Level1,
+        Level2,
+        Level3,
     }
 }

@@ -38,14 +38,14 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView( factory );
             {
                 view.Title.Text = "Main Menu";
-                view.MainPageSlot.IsDisplayed = true;
-                view.StartGamePageSlot.IsDisplayed = false;
+                view.MainPage.IsDisplayed = true;
+                view.StartGamePage.IsDisplayed = false;
             }
             // MainPage
             view.MainPage_StartGame.OnClick( evt => {
                 view.Title.Text = "Start Game";
-                view.MainPageSlot.IsDisplayed = false;
-                view.StartGamePageSlot.IsDisplayed = true;
+                view.MainPage.IsDisplayed = false;
+                view.StartGamePage.IsDisplayed = true;
             } );
             view.MainPage_Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
@@ -65,8 +65,8 @@ namespace Project.UI.MainScreen {
             } );
             view.StartGamePage_Back.OnClick( evt => {
                 view.Title.Text = "Main Menu";
-                view.MainPageSlot.IsDisplayed = true;
-                view.StartGamePageSlot.IsDisplayed = false;
+                view.MainPage.IsDisplayed = true;
+                view.StartGamePage.IsDisplayed = false;
             } );
             return view;
         }

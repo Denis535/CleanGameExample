@@ -1,0 +1,16 @@
+{
+    "name": "UIToolkit.ThemeStyleSheet.Samples",
+    "rootNamespace": "UIToolkit.ThemeStyleSheet.Samples",
+    "references": [
+        "UIToolkit.ThemeStyleSheet"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

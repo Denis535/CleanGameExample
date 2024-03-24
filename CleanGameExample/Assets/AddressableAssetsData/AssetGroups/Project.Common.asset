@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Project.Common
+  m_EditorClassIdentifier: 
+  m_GroupName: Project.Common
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 16c22cbe1e242d944bf2eed677985dd4
+  m_SerializeEntries:
+  - m_GUID: 90e2823520b580a47b2e95e06eac4ab7
+    m_Address: UnityEngine.Audio/AudioMixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28f9353458050664da297ba7fcf686fd
+    m_Address: UnityEngine/LightingSettings.lighting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8c8417ae2abb549498500522f9dbf026, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 86744220b4780d84f8251144560ce410, type: 2}
+    - {fileID: 11400000, guid: 18d18138bd9da5d4ea4c9e42294e519e, type: 2}

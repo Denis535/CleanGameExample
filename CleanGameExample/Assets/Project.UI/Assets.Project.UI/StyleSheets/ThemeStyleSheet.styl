@@ -1,0 +1,30 @@
+@import "Packages/com.denis535.uitoolkit-theme-style-sheet/Runtime/UIToolkit.ThemeStyleSheet/Assets.UnityEngine.UIElements/StyleSheets/Internal/_Utils"
+
+// root-widget
+.root-widget
+    add-layout-position(absolute)
+    add-layout-size(100%, 100%)
+    add-layout-box(0px, 0px, 0px)
+.root-widget .widget-slot
+.root-widget .modal-widget-slot
+    add-layout-position(absolute)
+    add-layout-size(100%, 100%)
+    add-layout-box(0px, 0px, 0px)
+
+// main-widget
+#main-widget
+    add-view-background(null, img('project://database/Assets/Project.UI/Assets.Project.UI.MainScreen/Images/Background.png', null, scale-and-crop))
+    transition-property scale, -unity-background-image-tint-color
+    transition-duration 3s
+    transition-timing-function ease
+
+// create-game-widget
+#create-game-widget
+#join-game-widget
+    .card .content #title
+        add-font(null, 120%, bold)
+        add-view()
+
+// game-widget
+#game-widget
+    add-view()

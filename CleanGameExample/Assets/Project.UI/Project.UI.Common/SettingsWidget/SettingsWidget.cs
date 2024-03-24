@@ -1,0 +1,90 @@
+﻿#nullable enable
+namespace Project.UI.Common {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using UnityEngine;
+    using UnityEngine.Framework;
+    using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
+
+    public class SettingsWidget : UIWidgetBase<SettingsWidgetView> {
+
+        // Globals
+        private UIFactory Factory { get; }
+        // View
+        protected override SettingsWidgetView View { get; }
+
+        // Constructor
+        public SettingsWidget() {
+            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
+            View = CreateView( this, Factory );
+            this.AttachChild( new ProfileSettingsWidget() );
+            this.AttachChild( new VideoSettingsWidget() );
+            this.AttachChild( new AudioSettingsWidget() );
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        // OnAttach
+        public override void OnAttach(object? argument) {
+        }
+        public override void OnDetach(object? argument) {
+        }
+
+        // ShowWidget
+        protected override void ShowWidget(UIWidgetBase widget) {
+            if (widget is ProfileSettingsWidget) {
+                View.ProfileSettingsSlot.Add( widget.GetVisualElement()! );
+                return;
+            }
+            if (widget is VideoSettingsWidget) {
+                View.VideoSettingsSlot.Add( widget.GetVisualElement()! );
+                return;
+            }
+            if (widget is AudioSettingsWidget) {
+                View.AudioSettingsSlot.Add( widget.GetVisualElement()! );
+                return;
+            }
+            base.ShowWidget( widget );
+        }
+        protected override void HideWidget(UIWidgetBase widget) {
+            if (widget is ProfileSettingsWidget) {
+                View.ProfileSettingsSlot.Remove( widget.GetVisualElement()! );
+                return;
+            }
+            if (widget is VideoSettingsWidget) {
+                View.VideoSettingsSlot.Remove( widget.GetVisualElement()! );
+                return;
+            }
+            if (widget is AudioSettingsWidget) {
+                View.AudioSettingsSlot.Remove( widget.GetVisualElement()! );
+                return;
+            }
+            base.HideWidget( widget );
+        }
+
+        // Helpers
+        private static SettingsWidgetView CreateView(SettingsWidget widget, UIFactory factory) {
+            var view = new SettingsWidgetView( factory );
+            view.Widget.OnChangeAny( evt => {
+                view.Okey.IsValid =
+                    view.ProfileSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() ) &&
+                    view.VideoSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() ) &&
+                    view.AudioSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() );
+            } );
+            view.Okey.OnClick( evt => {
+                if (view.Okey.IsValid) {
+                    widget.DetachSelf( DetachReason.Submit );
+                }
+            } );
+            view.Back.OnClick( evt => {
+                widget.DetachSelf( DetachReason.Cancel );
+            } );
+            return view;
+        }
+
+    }
+}

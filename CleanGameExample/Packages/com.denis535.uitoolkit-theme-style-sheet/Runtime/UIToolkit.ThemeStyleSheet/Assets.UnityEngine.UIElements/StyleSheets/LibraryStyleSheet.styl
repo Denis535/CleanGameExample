@@ -1,0 +1,147 @@
+// Multiple selectors are always applied after simple selectors.
+// UIToolkit doesn't support !important.
+// So we should always use multiple selectors (like: .style.visual-element).
+// https://unity3d.atlassian.net/servicedesk/customer/portal/2/IN-70085
+
+// get-style-arguments
+get-style-arguments()
+    result = ()
+    for argument in arguments
+        for i in argument
+            push(result, i)
+    result
+
+// add-style
+add-style(selector, property, key, value)
+    {get-style-selector(selector, get-style-key(key))}
+        add-property(get-style-property(property), get-style-value(value, property))
+get-style-selector(selector, key)
+    replace('{key}', key, selector)
+get-style-key(key)
+    key = get-string(key)
+    key = replace('^(-)',     'n',  key) // replace starting '-' with 'n'
+    key = replace('^(flex-)', '',   key) // trim starting 'flex-'
+    key = replace('(%)$',     'pc', key) // replace ending '%' with 'pc'
+    key = replace(' ',        '-',  key) // replace spaces with '-'
+    key
+get-style-property(property)
+    // view
+    return '-unity-' + get-string(property) if property == 'overflow-clip-box'
+    // view/foreground
+    return '-unity-' + get-string(property) if property == 'font'
+    return '-unity-' + get-string(property) if property == 'font-definition'
+    return '-unity-' + get-string(property) if property == 'font-style'
+    // view/foreground
+    return '-unity-' + get-string(property) if property == 'text-align'
+    return '-unity-' + get-string(property) if property == 'text-outline'
+    return '-unity-' + get-string(property) if property == 'text-outline-width'
+    return '-unity-' + get-string(property) if property == 'text-outline-color'
+    return '-unity-' + get-string(property) if property == 'text-overflow-position'
+    return '-unity-' + get-string(property) if property == 'paragraph-spacing'
+    // view/background
+    return '-unity-' + get-string(property) if property == 'background-image-tint-color'
+    return '-unity-' + get-string(property) if property == 'background-scale-mode'
+    return '-unity-' + get-string(property) if property == 'slice-scale'
+    return '-unity-' + get-string(property) if property == 'slice-left'
+    return '-unity-' + get-string(property) if property == 'slice-right'
+    return '-unity-' + get-string(property) if property == 'slice-top'
+    return '-unity-' + get-string(property) if property == 'slice-bottom'
+    // misc
+    property
+get-style-value(value, property)
+    value = hsla(0deg, 0%, 90%, 1.00) if value == light
+    value = hsla(0deg, 0%, 10%, 1.00) if value == dark
+    value = value / 100               if property == 'opacity'
+    value = split('-', value)         if property == 'transform-origin'
+    value = value                     if property == 'translate'
+    value = value                     if property == 'rotate'
+    value = value / 100               if property == 'scale' and typeof(value) == 'unit'
+    value
+
+/* view */
+add-style( '.display-{key}.visual-element',                         'display',                     i, i) for i in get-style-arguments(flex none     )
+add-style( '.visibility-{key}.visual-element',                      'visibility',                  i, i) for i in get-style-arguments(visible hidden)
+add-style( '.opacity-{key}.visual-element',                         'opacity',                     i, i) for i in get-style-arguments(range(0, 100) )
+/* view/cursor */
+add-style( '.cursor-{key}.visual-element',                          'cursor',                      i, i) for i in get-style-arguments(arrow arrow-plus arrow-minus move-arrow rotate-arrow scale-arrow slide-arrow text link pan orbit zoom fps)
+/* view/foreground */
+add-style( '.color-{key}.visual-element',                           'color',                       i, i) for i in get-style-arguments(white black light dark gray red green blue transparent                                                        )
+add-style( '.font-size-{key}.visual-element',                       'font-size',                   i, i) for i in get-style-arguments(range(25%, 400%)                                                                                              )
+add-style( '.font-style-{key}.visual-element',                      'font-style',                  i, i) for i in get-style-arguments(normal bold italic bold-and-italic                                                                            )
+add-style( '.text-align-{key}.visual-element',                      'text-align',                  i, i) for i in get-style-arguments(upper-left upper-center upper-right middle-left middle-center middle-right lower-left lower-center lower-right)
+/* view/background */
+add-style( '.background-color-{key}.visual-element',                'background-color',            i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+add-style( '.background-image-color-{key}.visual-element',          'background-image-tint-color', i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+/* view/border */
+add-style( '.border-color-{key}.visual-element',                    'border-color',                i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+add-style( '.border-top-color-{key}.visual-element',                'border-top-color',            i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+add-style( '.border-bottom-color-{key}.visual-element',             'border-bottom-color',         i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+add-style( '.border-left-color-{key}.visual-element',               'border-left-color',           i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+add-style( '.border-right-color-{key}.visual-element',              'border-right-color',          i, i) for i in get-style-arguments(white black light dark gray red green blue transparent)
+/* view/border */
+add-style( '.border-radius-{key}.visual-element',                   'border-radius',               i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-top-left-radius-{key}.visual-element',          'border-top-left-radius',      i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-top-right-radius-{key}.visual-element',         'border-top-right-radius',     i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-bottom-left-radius-{key}.visual-element',       'border-bottom-left-radius',   i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-bottom-right-radius-{key}.visual-element',      'border-bottom-right-radius',  i, i) for i in get-style-arguments(range(0px, 16px))
+
+/* layout/position */
+add-style( '.position-{key}.visual-element',                        'position',                    i, i) for i in get-style-arguments(relative absolute)
+add-style( '.top-{key}.visual-element',                             'top',                         i, i) for i in get-style-arguments(auto range(-200px, 200px) range(-200%, 200%))
+add-style( '.bottom-{key}.visual-element',                          'bottom',                      i, i) for i in get-style-arguments(auto range(-200px, 200px) range(-200%, 200%))
+add-style( '.left-{key}.visual-element',                            'left',                        i, i) for i in get-style-arguments(auto range(-200px, 200px) range(-200%, 200%))
+add-style( '.right-{key}.visual-element',                           'right',                       i, i) for i in get-style-arguments(auto range(-200px, 200px) range(-200%, 200%))
+
+/* layout/width */
+add-style( '.width-{key}.visual-element',                           'width',                       i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.min-width-{key}.visual-element',                       'min-width',                   i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.max-width-{key}.visual-element',                       'max-width',                   i, i) for i in get-style-arguments(none range(0px, 200px) range(0%, 200%))
+/* layout/width */
+add-style( '.label-width-{key}.visual-element > .unity-label',      'width',                       i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.min-label-width-{key}.visual-element > .unity-label',  'min-width',                   i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.max-label-width-{key}.visual-element > .unity-label',  'max-width',                   i, i) for i in get-style-arguments(none range(0px, 200px) range(0%, 200%))
+/* layout/height */
+add-style( '.height-{key}.visual-element',                          'height',                      i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.min-height-{key}.visual-element',                      'min-height',                  i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.max-height-{key}.visual-element',                      'max-height',                  i, i) for i in get-style-arguments(none range(0px, 200px) range(0%, 200%))
+
+/* layout/margin */
+add-style( '.margin-{key}.visual-element',                          'margin',                      i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.margin-top-{key}.visual-element',                      'margin-top',                  i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.margin-bottom-{key}.visual-element',                   'margin-bottom',               i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.margin-left-{key}.visual-element',                     'margin-left',                 i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+add-style( '.margin-right-{key}.visual-element',                    'margin-right',                i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 200%))
+/* layout/border */
+add-style( '.border-width-{key}.visual-element',                    'border-width',                i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-top-width-{key}.visual-element',                'border-top-width',            i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-bottom-width-{key}.visual-element',             'border-bottom-width',         i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-left-width-{key}.visual-element',               'border-left-width',           i, i) for i in get-style-arguments(range(0px, 16px))
+add-style( '.border-right-width-{key}.visual-element',              'border-right-width',          i, i) for i in get-style-arguments(range(0px, 16px))
+/* layout/padding */
+add-style( '.padding-{key}.visual-element',                         'padding',                     i, i) for i in get-style-arguments(range(0px, 200px) range(0%, 200%))
+add-style( '.padding-top-{key}.visual-element',                     'padding-top',                 i, i) for i in get-style-arguments(range(0px, 200px) range(0%, 200%))
+add-style( '.padding-bottom-{key}.visual-element',                  'padding-bottom',              i, i) for i in get-style-arguments(range(0px, 200px) range(0%, 200%))
+add-style( '.padding-left-{key}.visual-element',                    'padding-left',                i, i) for i in get-style-arguments(range(0px, 200px) range(0%, 200%))
+add-style( '.padding-right-{key}.visual-element',                   'padding-right',               i, i) for i in get-style-arguments(range(0px, 200px) range(0%, 200%))
+
+/* flex/self */
+add-style( '.grow-{key}.visual-element',                            'flex-grow',                   i, i) for i in get-style-arguments(range(0, 100)                         )
+add-style( '.shrink-{key}.visual-element',                          'flex-shrink',                 i, i) for i in get-style-arguments(range(0, 100)                         )
+add-style( '.basis-{key}.visual-element',                           'flex-basis',                  i, i) for i in get-style-arguments(auto range(0px, 200px) range(0%, 100%))
+add-style( '.align-self-{key}.visual-element',                      'align-self',                  i, i) for i in get-style-arguments(flex-start flex-end center stretch    ) // align self on cross-axis
+/* flex/container */
+add-style( '.{key}.visual-element',                                 'flex-direction',              i, i) for i in get-style-arguments(column column-reverse row row-reverse                )
+add-style( '.{key}.visual-element',                                 'flex-wrap',                   i, i) for i in get-style-arguments(nowrap wrap wrap-reverse                             )
+add-style( '.justify-content-{key}.visual-element',                 'justify-content',             i, i) for i in get-style-arguments(flex-start flex-end center space-between space-around) // justify children along main-axis
+add-style( '.align-content-{key}.visual-element',                   'align-content',               i, i) for i in get-style-arguments(flex-start flex-end center stretch                   ) // align children on cross-axis
+add-style( '.align-items-{key}.visual-element',                     'align-items',                 i, i) for i in get-style-arguments(flex-start flex-end center stretch                   ) // align children on cross-axis
+
+/* transform */
+add-style( '.transform-origin-{key}.visual-element',                'transform-origin',            i, i       ) for i in get-style-arguments(center center-top center-bottom center-left center-right top-left top-right bottom-left bottom-right)
+add-style( '.translate-{key}.visual-element',                       'translate',                   i, i       ) for i in get-style-arguments(none                                                                                                )
+add-style( '.translate-x-{key}.visual-element',                     'translate',                   i, (i 0px) ) for i in get-style-arguments(range(-200px, 200px)                                                                                )
+add-style( '.translate-x-{key}.visual-element',                     'translate',                   i, (i  0%) ) for i in get-style-arguments(range(-200%,  200% )                                                                                )
+add-style( '.translate-y-{key}.visual-element',                     'translate',                   i, (0px i) ) for i in get-style-arguments(range(-200px, 200px)                                                                                )
+add-style( '.translate-y-{key}.visual-element',                     'translate',                   i, (0%  i) ) for i in get-style-arguments(range(-200%,  200% )                                                                                )
+add-style( '.rotate-{key}.visual-element',                          'rotate',                      i, i       ) for i in get-style-arguments(none range(-360deg, 360deg)                                                                         )
+add-style( '.scale-{key}.visual-element',                           'scale',                       i, i       ) for i in get-style-arguments(none range(25, 400)                                                                                 )

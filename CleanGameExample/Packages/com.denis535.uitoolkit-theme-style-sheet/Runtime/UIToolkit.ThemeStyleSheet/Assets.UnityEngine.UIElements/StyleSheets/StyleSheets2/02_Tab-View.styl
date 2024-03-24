@@ -1,0 +1,101 @@
+@import "../Internal/_Theme"
+
+// selector
+selector--tab-view                = // string: .unity-tab-view
+selector--tab-view-headers        = // string: .unity-tab-view .unity-tab-view__header-container
+selector--tab-view-contents       = // string: .unity-tab-view .unity-tab-view__content-container
+selector--tab-header              = // string: .unity-tab-view .unity-tab__header.%
+selector--tab-header-icon         = // string: .unity-tab-view .unity-tab__header.% .unity-tab__header-image
+selector--tab-header-text         = // string: .unity-tab-view .unity-tab__header.% .unity-tab__header-label
+selector--tab-header-underline    = // string: .unity-tab-view .unity-tab__header.% .unity-tab__header-underline
+selector--tab-content             = // string: .unity-tab-view            .unity-tab.%
+selector--tab-content--light10    = // string: .unity-tab-view.light10    .unity-tab.%
+selector--tab-content--light9     = // string: .unity-tab-view.light9     .unity-tab.%
+selector--tab-content--light8     = // string: .unity-tab-view.light8     .unity-tab.%
+selector--tab-content--light7     = // string: .unity-tab-view.light7     .unity-tab.%
+selector--tab-content--light6     = // string: .unity-tab-view.light6     .unity-tab.%
+selector--tab-content--light5     = // string: .unity-tab-view.light5     .unity-tab.%
+selector--tab-content--light4     = // string: .unity-tab-view.light4     .unity-tab.%
+selector--tab-content--light3     = // string: .unity-tab-view.light3     .unity-tab.%
+selector--tab-content--light2     = // string: .unity-tab-view.light2     .unity-tab.%
+selector--tab-content--light      = // string: .unity-tab-view.light      .unity-tab.%
+selector--tab-content--gray       = // string: .unity-tab-view.gray       .unity-tab.%
+selector--tab-content--dark       = // string: .unity-tab-view.dark       .unity-tab.%
+selector--tab-content--dark2      = // string: .unity-tab-view.dark2      .unity-tab.%
+selector--tab-content--dark3      = // string: .unity-tab-view.dark3      .unity-tab.%
+selector--tab-content--dark4      = // string: .unity-tab-view.dark4      .unity-tab.%
+selector--tab-content--dark5      = // string: .unity-tab-view.dark5      .unity-tab.%
+selector--tab-content--dark6      = // string: .unity-tab-view.dark6      .unity-tab.%
+selector--tab-content--dark7      = // string: .unity-tab-view.dark7      .unity-tab.%
+selector--tab-content--dark8      = // string: .unity-tab-view.dark8      .unity-tab.%
+selector--tab-content--dark9      = // string: .unity-tab-view.dark9      .unity-tab.%
+selector--tab-content--dark10     = // string: .unity-tab-view.dark10     .unity-tab.%
+selector--tab-content--small      = // string: .unity-tab-view.small      .unity-tab
+selector--tab-content--medium     = // string: .unity-tab-view.medium     .unity-tab
+selector--tab-content--large      = // string: .unity-tab-view.large      .unity-tab
+selector--tab-content--no-outline = // string: .unity-tab-view.no-outline .unity-tab
+selector--tab-content-container   = // string: .unity-tab-view            .unity-tab .unity-tab__content-container
+
+// theme
+.selector--tab-view              // styles: add-theme(null                )
+.selector--tab-view-headers      // styles: add-theme(null                )
+.selector--tab-view-contents     // styles: add-theme(null                )
+.selector--tab-header            // styles: add-theme(tab-header          ).add-font(null, null, null).add-text(middle-center, null, null)
+.selector--tab-header-underline  // styles: add-theme(tab-header-underline)
+.selector--tab-content           // styles: add-theme(view                ).add-property(display, none)
+.selector--tab-content--light10  // styles: add-theme(view--light10       )
+.selector--tab-content--light9   // styles: add-theme(view--light9        )
+.selector--tab-content--light8   // styles: add-theme(view--light8        )
+.selector--tab-content--light7   // styles: add-theme(view--light7        )
+.selector--tab-content--light6   // styles: add-theme(view--light6        )
+.selector--tab-content--light5   // styles: add-theme(view--light5        )
+.selector--tab-content--light4   // styles: add-theme(view--light4        )
+.selector--tab-content--light3   // styles: add-theme(view--light3        )
+.selector--tab-content--light2   // styles: add-theme(view--light2        )
+.selector--tab-content--light    // styles: add-theme(view--light         )
+.selector--tab-content--gray     // styles: add-theme(view--gray          )
+.selector--tab-content--dark     // styles: add-theme(view--dark          )
+.selector--tab-content--dark2    // styles: add-theme(view--dark2         )
+.selector--tab-content--dark3    // styles: add-theme(view--dark3         )
+.selector--tab-content--dark4    // styles: add-theme(view--dark4         )
+.selector--tab-content--dark5    // styles: add-theme(view--dark5         )
+.selector--tab-content--dark6    // styles: add-theme(view--dark6         )
+.selector--tab-content--dark7    // styles: add-theme(view--dark7         )
+.selector--tab-content--dark8    // styles: add-theme(view--dark8         )
+.selector--tab-content--dark9    // styles: add-theme(view--dark9         )
+.selector--tab-content--dark10   // styles: add-theme(view--dark10        )
+.selector--tab-content-container // styles: add-theme(null                )
+
+// layout
+.selector--tab-view                // styles: add-layout(null,                        auto, auto, ( 4px             ), (0px), (0px                ))
+.selector--tab-view-headers        // styles: add-layout(null,                        auto, auto, (-3px -3px 0px 0px), (0px), (0px                ))
+.selector--tab-view-contents       // styles: add-layout(null,                        auto, auto, ( 0px  0px 6px 0px), (0px), (0px                ))
+.selector--tab-header              // styles: add-layout(null,                        auto, auto, ( 3px  3px 0px 0px), (1px), (12px 12px 10px 10px))
+.selector--tab-header-icon         // styles: add-layout(null,                        auto, auto, ( 0px             ), (0px), (0px                ))
+.selector--tab-header-text         // styles: add-layout(null,                        auto, auto, ( 0px             ), (0px), (0px                ))
+.selector--tab-header-underline    // styles: add-layout(absolute null null null 0px, 100%, 4px,  ( 0px             ), (1px), (0px                ))
+.selector--tab-content             // styles: add-layout(null,                        auto, auto, ( 0px             ), (1px), (0px                ))
+.selector--tab-content--small      // styles: add-layout(null,                        auto, auto, ( 0px             ), (1px), (6px  6px  5px  5px ))
+.selector--tab-content--medium     // styles: add-layout(null,                        auto, auto, ( 0px             ), (1px), (12px 12px 10px 10px))
+.selector--tab-content--large      // styles: add-layout(null,                        auto, auto, ( 0px             ), (1px), (24px 24px 20px 20px))
+.selector--tab-content--no-outline // styles: add-layout(border: 0px                                                                               )
+.selector--tab-content-container   // styles: add-layout(null,                        auto, auto, ( 0px             ), (0px), (0px                ))
+
+// flex
+.selector--tab-view              // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--tab-view-headers      // styles: add-flex(0, 1, auto, auto).add-flex2(row,    flex-start, null, stretch)
+.selector--tab-view-contents     // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--tab-header            // styles: add-flex(1, 1, auto, auto).add-flex2(row,    center,     null, stretch)
+.selector--tab-header-icon       // styles: add-flex(0, 1, auto, auto)
+.selector--tab-header-text       // styles: add-flex(0, 1, auto, auto)
+.selector--tab-header-underline  // styles: add-flex(0, 1, auto, auto)
+.selector--tab-content           // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--tab-content-container // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+
+// misc
+.selector--tab-view            // styles: null
+.selector--tab-view-headers    // styles: null
+.selector--tab-view-contents   // styles: null
+.selector--tab-header          // styles: add-text(middle-center, null, null)
+.selector--tab-content         // styles: add-property(display, none)
+.selector--tab-content:checked // styles: add-property(display, flex)

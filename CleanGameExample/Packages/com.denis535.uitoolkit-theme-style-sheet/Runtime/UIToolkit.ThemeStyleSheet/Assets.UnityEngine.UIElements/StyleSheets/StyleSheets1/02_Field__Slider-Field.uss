@@ -1,0 +1,136 @@
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-tracker {
+  background-color: #4d4d4c;
+  border-left-color: rgba(92,77,61,0);
+  border-right-color: rgba(92,77,61,0);
+  border-top-color: rgba(92,77,61,0);
+  border-bottom-color: rgba(92,77,61,0);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider:hover .unity-base-slider__input #unity-drag-container #unity-tracker {
+  background-color: #50504e;
+  border-left-color: rgba(84,77,69,0.5);
+  border-right-color: rgba(84,77,69,0.5);
+  border-top-color: rgba(84,77,69,0.5);
+  border-bottom-color: rgba(84,77,69,0.5);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider:active .unity-base-slider__input #unity-drag-container #unity-tracker {
+  background-color: #4b4b49;
+  border-left-color: rgba(84,77,69,0.5);
+  border-right-color: rgba(84,77,69,0.5);
+  border-top-color: rgba(84,77,69,0.5);
+  border-bottom-color: rgba(84,77,69,0.5);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-dragger {
+  background-color: #cdcdcb;
+  border-left-color: rgba(92,77,61,0);
+  border-right-color: rgba(92,77,61,0);
+  border-top-color: rgba(92,77,61,0);
+  border-bottom-color: rgba(92,77,61,0);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider:hover .unity-base-slider__input #unity-drag-container #unity-dragger {
+  background-color: #cfcfce;
+  border-left-color: rgba(84,77,69,0.5);
+  border-right-color: rgba(84,77,69,0.5);
+  border-top-color: rgba(84,77,69,0.5);
+  border-bottom-color: rgba(84,77,69,0.5);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider:active .unity-base-slider__input #unity-drag-container #unity-dragger {
+  background-color: #cacac9;
+  border-left-color: rgba(84,77,69,0.5);
+  border-right-color: rgba(84,77,69,0.5);
+  border-top-color: rgba(84,77,69,0.5);
+  border-bottom-color: rgba(84,77,69,0.5);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container {
+  width: auto;
+  height: auto;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-tracker {
+  width: auto;
+  height: 8px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-dragger {
+  position: absolute;
+  width: 8px;
+  height: 24px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-tracker {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+}
+.unity-base-slider .unity-base-slider__input #unity-drag-container #unity-dragger {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+}

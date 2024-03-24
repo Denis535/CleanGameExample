@@ -1,0 +1,83 @@
+.unity-base-popup-field .unity-base-popup-field__input .unity-base-popup-field__arrow {
+  background-color: rgba(0,0,0,0);
+  background-image: url('../../Images/DropdownArrow.png');
+  -unity-background-image-tint-color: #ccc;
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-popup-field:hover .unity-base-popup-field__input .unity-base-popup-field__arrow {
+  background-color: rgba(0,0,0,0);
+  background-image: url('../../Images/DropdownArrow.png');
+  -unity-background-image-tint-color: #cfcfcf;
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-popup-field:active .unity-base-popup-field__input .unity-base-popup-field__arrow {
+  background-color: rgba(0,0,0,0);
+  background-image: url('../../Images/DropdownArrow.png');
+  -unity-background-image-tint-color: #c9c9c9;
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.unity-base-popup-field .unity-base-popup-field__input .unity-base-popup-field__text {
+  width: auto;
+  height: auto;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-popup-field .unity-base-popup-field__input .unity-base-popup-field__arrow {
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-popup-field .unity-base-popup-field__input .unity-base-popup-field__text {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+}
+.unity-base-popup-field .unity-base-popup-field__input .unity-base-popup-field__arrow {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+}

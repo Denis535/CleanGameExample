@@ -1,0 +1,38 @@
+@import "../Internal/_Theme"
+
+// selector
+selector--overlay                 = // string: .unity-base-dropdown
+selector--dropdown                = // string: .unity-base-dropdown .unity-base-dropdown__container-outer.%
+selector--list-view               = // string: .unity-base-dropdown .unity-list-view
+selector--list-item               = // string: .unity-base-dropdown .unity-list-view__item
+selector--dropdown-item           = // string: .unity-base-dropdown .unity-list-view__item .unity-base-dropdown__item.%
+selector--dropdown-item-checkmark = // string: .unity-base-dropdown .unity-list-view__item .unity-base-dropdown__item.% .unity-base-dropdown__checkmark
+selector--dropdown-item-text      = // string: .unity-base-dropdown .unity-list-view__item .unity-base-dropdown__item.% .unity-base-dropdown__label
+selector--empty-list-label        = // string: .unity-base-dropdown .unity-list-view__empty-label.%
+
+// theme
+.selector--dropdown                // styles: add-theme(dropdown     )
+.selector--dropdown-item           // styles: add-theme(dropdown-item)
+.selector--dropdown-item-checkmark // styles: add-theme(checkmark    )
+.selector--dropdown-item-text      // styles: add-theme(null         )
+.selector--empty-list-label        // styles: add-theme(dropdown-item)
+
+// layout
+.selector--overlay                 // styles: add-layout(absolute, auto, auto, (0px             ), (0px            ), (0px                ))
+.selector--dropdown                // styles: add-layout(null,     auto, auto, (0px             ), (1px            ), (0px                ))
+.selector--list-view               // styles: add-layout(null,     auto, auto, (0px             ), (0px            ), (0px   0px  0px  0px))
+.selector--list-item               // styles: add-layout(null,     auto, auto, (0px             ), (0px            ), (0px   0px  0px  0px))
+.selector--dropdown-item           // styles: add-layout(null,     auto, auto, (0px             ), (0px 0px 0px 1px), (12px 12px 10px 10px))
+.selector--dropdown-item-checkmark // styles: add-layout(null,     16px, 16px, (0px 12px 0px 0px), (1px            ), (0px                ))
+.selector--dropdown-item-text      // styles: add-layout(null,     auto, auto, (0px             ), (0px            ), (0px                ))
+.selector--empty-list-label        // styles: add-layout(null,     auto, auto, (0px             ), (0px 0px 0px 1px), (12px 12px 10px 10px))
+
+// flex
+.selector--overlay                 // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--dropdown                // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--list-view               // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--list-item               // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--dropdown-item           // styles: add-flex(0, 1, auto, auto).add-flex2(row,    flex-start, null, stretch)
+.selector--dropdown-item-checkmark // styles: add-flex(0, 1, auto, auto)
+.selector--dropdown-item-text      // styles: add-flex(1, 1, auto, auto)
+.selector--empty-list-label        // styles: add-flex(0, 1, auto, auto)

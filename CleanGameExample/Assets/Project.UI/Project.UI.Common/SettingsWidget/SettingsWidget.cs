@@ -34,8 +34,8 @@ namespace Project.UI.Common {
         public override void OnDetach(object? argument) {
         }
 
-        // ShowWidget
-        protected override void ShowWidget(UIWidgetBase widget) {
+        // ShowDescendantWidget
+        protected override void ShowDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
                 View.ProfileSettingsTab.Add( profileSettingsWidget );
                 return;
@@ -48,9 +48,9 @@ namespace Project.UI.Common {
                 View.AudioSettingsTab.Add( audioSettingsWidget );
                 return;
             }
-            base.ShowWidget( widget );
+            base.ShowDescendantWidget( widget );
         }
-        protected override void HideWidget(UIWidgetBase widget) {
+        protected override void HideDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
                 View.ProfileSettingsTab.Remove( profileSettingsWidget );
                 return;
@@ -63,7 +63,7 @@ namespace Project.UI.Common {
                 View.AudioSettingsTab.Remove( audioSettingsWidget );
                 return;
             }
-            base.HideWidget( widget );
+            base.HideDescendantWidget( widget );
         }
 
         // Helpers

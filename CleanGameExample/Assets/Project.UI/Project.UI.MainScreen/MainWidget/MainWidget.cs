@@ -73,12 +73,13 @@ namespace Project.UI.MainScreen {
         public override void OnDetach(object? argument) {
         }
 
-        protected override void ShowWidget(UIWidgetBase widget) {
-            base.ShowWidget( widget );
+        // ShowDescendantWidget
+        protected override void ShowDescendantWidget(UIWidgetBase widget) {
+            base.ShowDescendantWidget( widget );
             View.SetEffect( ((RootWidget2) Parent!).Widgets.Count - 2 );
         }
-        protected override void HideWidget(UIWidgetBase widget) {
-            base.HideWidget( widget );
+        protected override void HideDescendantWidget(UIWidgetBase widget) {
+            base.HideDescendantWidget( widget );
             View.SetEffect( ((RootWidget2) Parent!).Widgets.Count - 2 );
         }
 

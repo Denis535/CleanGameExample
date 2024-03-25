@@ -27,14 +27,6 @@ namespace Project.UI.Common {
             base.OnDetach( argument );
         }
 
-        // ShowWidget
-        protected override void ShowWidget(UIWidgetBase widget) {
-            base.ShowWidget( widget );
-        }
-        protected override void HideWidget(UIWidgetBase widget) {
-            base.HideWidget( widget );
-        }
-
         // RecalcVisibility
         protected override void RecalcVisibility() {
             base.RecalcVisibility();

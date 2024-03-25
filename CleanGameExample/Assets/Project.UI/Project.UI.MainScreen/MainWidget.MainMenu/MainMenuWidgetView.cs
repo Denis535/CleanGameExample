@@ -13,7 +13,7 @@ namespace Project.UI.MainScreen {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        public SlotWrapper PageView { get; }
+        public SlotWrapper<UIViewBase> PageView { get; }
         public MainMenuWidgetView_MainPage MainPage { get; }
         public MainMenuWidgetView_StartGamePage StartGamePage { get; }
 
@@ -22,7 +22,7 @@ namespace Project.UI.MainScreen {
             VisualElement = factory.MainMenuWidget( out var widget, out var title, out var pageView );
             Widget = widget.Wrap();
             Title = title.Wrap();
-            PageView = pageView.AsSlot();
+            PageView = pageView.AsSlot<UIViewBase>();
             PageView.Add( MainPage = new MainMenuWidgetView_MainPage( factory ) );
             PageView.Add( StartGamePage = new MainMenuWidgetView_StartGamePage( factory ) );
         }

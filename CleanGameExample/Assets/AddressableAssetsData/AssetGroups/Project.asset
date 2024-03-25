@@ -22,6 +22,41 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 925374fb0fa1f8e40b9210efb3615f67
+    m_Address: Project.UI.MainScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 506e0e43fb24a474c897a72fed0f644d
+    m_Address: Project.UI.MainScreen.Music.Theme.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8251838560314614e9a9acfabad511f5
+    m_Address: Project.UI.GameScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60983d8abbfe24a33b402c4b7f2eb967
+    m_Address: Project.UI.GameScreen.Music.Theme_1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c12abe952b7164f5b8d90a49682a3e8a
+    m_Address: Project.UI.GameScreen.Music.Theme_2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a29260584c80e3d40ad2c5076c412886
+    m_Address: Project.UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7aad2e07666b7854080cef1732678100
+    m_Address: Project.UI.Common
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8c8417ae2abb549498500522f9dbf026, type: 2}
   m_SchemaSet:

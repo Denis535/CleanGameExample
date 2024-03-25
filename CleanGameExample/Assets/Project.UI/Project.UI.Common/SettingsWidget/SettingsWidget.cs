@@ -36,31 +36,31 @@ namespace Project.UI.Common {
 
         // ShowWidget
         protected override void ShowWidget(UIWidgetBase widget) {
-            if (widget is ProfileSettingsWidget) {
-                View.ProfileSettingsTab.Add( widget );
+            if (widget is ProfileSettingsWidget profileSettingsWidget) {
+                View.ProfileSettingsTab.Add( profileSettingsWidget );
                 return;
             }
-            if (widget is VideoSettingsWidget) {
-                View.VideoSettingsTab.Add( widget );
+            if (widget is VideoSettingsWidget videoSettingsWidget) {
+                View.VideoSettingsTab.Add( videoSettingsWidget );
                 return;
             }
-            if (widget is AudioSettingsWidget) {
-                View.AudioSettingsTab.Add( widget );
+            if (widget is AudioSettingsWidget audioSettingsWidget) {
+                View.AudioSettingsTab.Add( audioSettingsWidget );
                 return;
             }
             base.ShowWidget( widget );
         }
         protected override void HideWidget(UIWidgetBase widget) {
-            if (widget is ProfileSettingsWidget) {
-                View.ProfileSettingsTab.Remove( widget );
+            if (widget is ProfileSettingsWidget profileSettingsWidget) {
+                View.ProfileSettingsTab.Remove( profileSettingsWidget );
                 return;
             }
-            if (widget is VideoSettingsWidget) {
-                View.VideoSettingsTab.Remove( widget );
+            if (widget is VideoSettingsWidget videoSettingsWidget) {
+                View.VideoSettingsTab.Remove( videoSettingsWidget );
                 return;
             }
-            if (widget is AudioSettingsWidget) {
-                View.AudioSettingsTab.Remove( widget );
+            if (widget is AudioSettingsWidget audioSettingsWidget) {
+                View.AudioSettingsTab.Remove( audioSettingsWidget );
                 return;
             }
             base.HideWidget( widget );
@@ -70,9 +70,7 @@ namespace Project.UI.Common {
         private static SettingsWidgetView CreateView(SettingsWidget widget, UIFactory factory) {
             var view = new SettingsWidgetView( factory );
             view.Widget.OnChangeAny( evt => {
-                view.Okey.SetValid( view.ProfileSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) &&
-                    view.VideoSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) &&
-                    view.AudioSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
+                view.Okey.SetValid( view.TabView.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
             } );
             view.Okey.OnClick( evt => {
                 if (view.Okey.IsValid()) {

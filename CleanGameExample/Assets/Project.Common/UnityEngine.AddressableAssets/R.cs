@@ -40,10 +40,10 @@ namespace UnityEngine.AddressableAssets {
                 public const string @Program = "Project.Scenes/Program.unity";
                 public const string @MainScene = "Project.Scenes/MainScene.unity";
                 public const string @GameScene = "Project.Scenes/GameScene.unity";
-                public static class @Levels {
-                    public const string @Level_01 = "Project.Scenes.Levels/Level_01.unity";
-                    public const string @Level_02 = "Project.Scenes.Levels/Level_02.unity";
-                    public const string @Level_03 = "Project.Scenes.Levels/Level_03.unity";
+                public static class @Worlds {
+                    public const string @World_01 = "Project.Scenes.Worlds/World_01.unity";
+                    public const string @World_02 = "Project.Scenes.Worlds/World_02.unity";
+                    public const string @World_03 = "Project.Scenes.Worlds/World_03.unity";
                 }
             }
         }

@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f98db6bbb08f88442b8766aca5e302e7
-    m_Address: Project.Scenes.Levels
+    m_Address: Project.Scenes.Worlds
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

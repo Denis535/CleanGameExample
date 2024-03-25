@@ -19,13 +19,13 @@ namespace UnityEngine.AddressableAssets {
                         public const string @Background__Background = "Project.UI.MainScreen/Images/Background.png[Background]";
                     }
                     public static class @Music {
-                        public const string @Theme = "Project.UI.MainScreen.Music.Theme.wav";
+                        public const string @Theme = "Project.UI.MainScreen/Music/Theme #Slowly Building Motif.wav";
                     }
                 }
                 public static class @GameScreen {
                     public static class @Music {
-                        public const string @Theme_1 = "Project.UI.GameScreen.Music.Theme_1.wav";
-                        public const string @Theme_2 = "Project.UI.GameScreen.Music.Theme_2.wav";
+                        public const string @Theme_1 = "Project.UI.GameScreen/Music/Theme_1 #Long Calm Ambience.wav";
+                        public const string @Theme_2 = "Project.UI.GameScreen/Music/Theme_2 #Warm Guitar Swells.wav";
                     }
                 }
                 public static class @StyleSheets {
@@ -36,12 +36,16 @@ namespace UnityEngine.AddressableAssets {
                 }
                 public const string @PanelSettings = "Project.UI/PanelSettings.asset";
             }
-            public const string @Program = "Project/Program.unity";
-            public const string @MainScene = "Project/MainScene.unity";
-            public const string @GameScene = "Project/GameScene.unity";
-            public const string @Level_01 = "Project/Level_01.unity";
-            public const string @Level_02 = "Project/Level_02.unity";
-            public const string @Level_03 = "Project/Level_03.unity";
+            public static class @Scenes {
+                public const string @Program = "Project.Scenes/Program.unity";
+                public const string @MainScene = "Project.Scenes/MainScene.unity";
+                public const string @GameScene = "Project.Scenes/GameScene.unity";
+                public static class @Levels {
+                    public const string @Level_01 = "Project.Scenes.Levels/Level_01.unity";
+                    public const string @Level_02 = "Project.Scenes.Levels/Level_02.unity";
+                    public const string @Level_03 = "Project.Scenes.Levels/Level_03.unity";
+                }
+            }
         }
     }
 }

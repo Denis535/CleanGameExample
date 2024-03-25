@@ -25,19 +25,19 @@ namespace Project.UI {
         // LoadScene
         public static async Task LoadProgramAsync() {
             Assert.Operation.Message( $"ProgramHandle {programHandle} must be null" ).Valid( programHandle == null );
-            programHandle = Addressables2.LoadSceneAsync( R.Project.Program, LoadSceneMode.Single, true );
+            programHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.Program, LoadSceneMode.Single, true );
             var program = await programHandle.Value.GetResultAsync( default );
             SceneManager.SetActiveScene( program.Scene );
         }
         public static async Task LoadMainSceneAsync() {
             Assert.Operation.Message( $"MainSceneHandle {mainSceneHandle} must be null" ).Valid( mainSceneHandle == null );
-            mainSceneHandle = Addressables2.LoadSceneAsync( R.Project.MainScene, LoadSceneMode.Additive, true );
+            mainSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.MainScene, LoadSceneMode.Additive, true );
             var mainScene = await mainSceneHandle.Value.GetResultAsync( default );
             SceneManager.SetActiveScene( mainScene.Scene );
         }
         public static async Task LoadGameSceneAsync() {
             Assert.Operation.Message( $"GameSceneHandle {gameSceneHandle} must be null" ).Valid( gameSceneHandle == null );
-            gameSceneHandle = Addressables2.LoadSceneAsync( R.Project.GameScene, LoadSceneMode.Additive, true );
+            gameSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.GameScene, LoadSceneMode.Additive, true );
             var gameScene = await gameSceneHandle.Value.GetResultAsync( default );
             SceneManager.SetActiveScene( gameScene.Scene );
         }

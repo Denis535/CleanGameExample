@@ -173,9 +173,9 @@ namespace Project.UI {
         // Helpers
         private static string GetLevelAddress(Level level) {
             return level switch {
-                Level.Level1 => R.Project.Level_01,
-                Level.Level2 => R.Project.Level_02,
-                Level.Level3 => R.Project.Level_03,
+                Level.Level1 => R.Project.Scenes.Levels.Level_01,
+                Level.Level2 => R.Project.Scenes.Levels.Level_02,
+                Level.Level3 => R.Project.Scenes.Levels.Level_03,
                 _ => throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" ),
             };
         }

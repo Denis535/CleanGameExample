@@ -43,10 +43,10 @@ namespace Project.UI.Common {
             var view = new ProfileSettingsWidgetView( factory );
             view.Group.OnAttachToPanel( evt => {
                 view.Name.Value = profileSettings.Name;
-                view.Name.IsValid = profileSettings.IsNameValid( view.Name.Value );
+                view.Name.SetValid( profileSettings.IsNameValid( view.Name.Value ) );
             } );
             view.Name.OnChange( evt => {
-                view.Name.IsValid = profileSettings.IsNameValid( evt.newValue! );
+                view.Name.SetValid( profileSettings.IsNameValid( evt.newValue! ) );
             } );
             return view;
         }

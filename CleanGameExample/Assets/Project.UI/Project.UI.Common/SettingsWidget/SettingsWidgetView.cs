@@ -13,20 +13,22 @@ namespace Project.UI.Common {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        public SlotWrapper ProfileSettingsSlot { get; }
-        public SlotWrapper VideoSettingsSlot { get; }
-        public SlotWrapper AudioSettingsSlot { get; }
+        public ElementWrapper TabView { get; }
+        public SlotWrapper ProfileSettingsTab { get; }
+        public SlotWrapper VideoSettingsTab { get; }
+        public SlotWrapper AudioSettingsTab { get; }
         public ButtonWrapper Okey { get; }
         public ButtonWrapper Back { get; }
 
         // Constructor
         public SettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.SettingsWidget( out var widget, out var title, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
+            VisualElement = factory.SettingsWidget( out var widget, out var title, out var tabView, out var profileSettingsTab, out var videoSettingsTab, out var audioSettingsTab, out var okey, out var back );
             Widget = widget.Wrap();
             Title = title.Wrap();
-            ProfileSettingsSlot = profileSettingsSlot.AsSlot();
-            VideoSettingsSlot = videoSettingsSlot.AsSlot();
-            AudioSettingsSlot = audioSettingsSlot.AsSlot();
+            TabView = tabView.Wrap();
+            ProfileSettingsTab = profileSettingsTab.AsSlot();
+            VideoSettingsTab = videoSettingsTab.AsSlot();
+            AudioSettingsTab = audioSettingsTab.AsSlot();
             Okey = okey.Wrap();
             Back = back.Wrap();
         }

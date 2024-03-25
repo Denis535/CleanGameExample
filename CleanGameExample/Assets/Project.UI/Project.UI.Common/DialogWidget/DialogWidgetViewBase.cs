@@ -13,9 +13,9 @@ namespace Project.UI.Common {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public ElementWrapper Card { get; }
-        public ElementWrapper Header { get; }
-        public ElementWrapper Content { get; }
-        public ElementWrapper Footer { get; }
+        public SlotWrapper Header { get; }
+        public SlotWrapper Content { get; }
+        public SlotWrapper Footer { get; }
         public LabelWrapper Title { get; }
         public LabelWrapper Message { get; }
 
@@ -25,36 +25,36 @@ namespace Project.UI.Common {
                 VisualElement = factory.DialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.Wrap();
+                Header = header.AsSlot();
+                Content = content.AsSlot();
+                Footer = footer.AsSlot();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
                 VisualElement = factory.InfoDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.Wrap();
+                Header = header.AsSlot();
+                Content = content.AsSlot();
+                Footer = footer.AsSlot();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
                 VisualElement = factory.WarningDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.Wrap();
+                Header = header.AsSlot();
+                Content = content.AsSlot();
+                Footer = footer.AsSlot();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
                 VisualElement = factory.ErrorDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.Wrap();
+                Header = header.AsSlot();
+                Content = content.AsSlot();
+                Footer = footer.AsSlot();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else {
@@ -73,7 +73,7 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.GetVisualElement().Add( button );
+            Footer.Add( button );
         }
         public void OnCancel(UIFactory factory, string text, Action? callback) {
             var button = factory.Cancel( text );
@@ -82,7 +82,7 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.GetVisualElement().Add( button );
+            Footer.Add( button );
         }
 
     }

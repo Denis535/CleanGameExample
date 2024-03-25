@@ -37,30 +37,30 @@ namespace Project.UI.Common {
         // ShowWidget
         protected override void ShowWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget) {
-                View.ProfileSettingsSlot.Add( widget.GetVisualElement()! );
+                View.ProfileSettingsTab.Add( widget );
                 return;
             }
             if (widget is VideoSettingsWidget) {
-                View.VideoSettingsSlot.Add( widget.GetVisualElement()! );
+                View.VideoSettingsTab.Add( widget );
                 return;
             }
             if (widget is AudioSettingsWidget) {
-                View.AudioSettingsSlot.Add( widget.GetVisualElement()! );
+                View.AudioSettingsTab.Add( widget );
                 return;
             }
             base.ShowWidget( widget );
         }
         protected override void HideWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget) {
-                View.ProfileSettingsSlot.Remove( widget.GetVisualElement()! );
+                View.ProfileSettingsTab.Remove( widget );
                 return;
             }
             if (widget is VideoSettingsWidget) {
-                View.VideoSettingsSlot.Remove( widget.GetVisualElement()! );
+                View.VideoSettingsTab.Remove( widget );
                 return;
             }
             if (widget is AudioSettingsWidget) {
-                View.AudioSettingsSlot.Remove( widget.GetVisualElement()! );
+                View.AudioSettingsTab.Remove( widget );
                 return;
             }
             base.HideWidget( widget );
@@ -70,13 +70,12 @@ namespace Project.UI.Common {
         private static SettingsWidgetView CreateView(SettingsWidget widget, UIFactory factory) {
             var view = new SettingsWidgetView( factory );
             view.Widget.OnChangeAny( evt => {
-                view.Okey.IsValid =
-                    view.ProfileSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() ) &&
-                    view.VideoSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() ) &&
-                    view.AudioSettingsSlot.GetVisualElement().GetDescendants().All( i => i.IsValid() );
+                view.Okey.SetValid( view.ProfileSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) &&
+                    view.VideoSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) &&
+                    view.AudioSettingsTab.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
             } );
             view.Okey.OnClick( evt => {
-                if (view.Okey.IsValid) {
+                if (view.Okey.IsValid()) {
                     widget.DetachSelf( DetachReason.Submit );
                 }
             } );

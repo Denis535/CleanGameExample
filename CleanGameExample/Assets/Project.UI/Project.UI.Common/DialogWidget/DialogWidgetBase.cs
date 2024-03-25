@@ -17,14 +17,14 @@ namespace Project.UI.Common {
             get => View.Title.Text;
             set {
                 View.Title.Text = value;
-                View.Header.IsDisplayed = value != null;
+                View.Header.SetDisplayed( value != null );
             }
         }
         public string? Message {
             get => View.Message.Text;
             set {
                 View.Message.Text = value;
-                View.Content.IsDisplayed = value != null;
+                View.Content.SetDisplayed( value != null );
             }
         }
 
@@ -44,7 +44,7 @@ namespace Project.UI.Common {
             }
             Title = title;
             Message = message;
-            View.Footer.IsDisplayed = false;
+            View.Footer.SetDisplayed( false );
         }
         public override void Dispose() {
             base.Dispose();
@@ -62,7 +62,7 @@ namespace Project.UI.Common {
                 callback?.Invoke();
                 this.DetachSelf();
             } );
-            View.Footer.IsDisplayed = true;
+            View.Footer.SetDisplayed( true );
             return this;
         }
         public DialogWidgetBase<TView> OnCancel(string text, Action? callback) {
@@ -70,7 +70,7 @@ namespace Project.UI.Common {
                 callback?.Invoke();
                 this.DetachSelf();
             } );
-            View.Footer.IsDisplayed = true;
+            View.Footer.SetDisplayed( true );
             return this;
         }
 

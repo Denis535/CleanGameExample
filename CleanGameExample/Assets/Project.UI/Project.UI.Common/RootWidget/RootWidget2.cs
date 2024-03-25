@@ -42,14 +42,14 @@ namespace Project.UI.Common {
         protected override void RecalcWidgetVisibility(UIWidgetBase widget, bool isLast) {
             if (!isLast) {
                 // hide covered widgets
-                widget.GetVisualElement()!.SetEnabled( true );
+                widget.SetEnabled( true );
                 if (widget is not MainWidget and not GameWidget) {
-                    widget.GetVisualElement()!.SetDisplayed( false );
+                    widget.SetDisplayed( false );
                 }
             } else {
                 // show new widget or unhide uncovered widget
-                widget.GetVisualElement()!.SetEnabled( !ModalWidgets.Any() );
-                widget.GetVisualElement()!.SetDisplayed( true );
+                widget.SetEnabled( !ModalWidgets.Any() );
+                widget.SetDisplayed( true );
             }
         }
         protected override void RecalcModalWidgetVisibility(UIWidgetBase widget, bool isLast) {

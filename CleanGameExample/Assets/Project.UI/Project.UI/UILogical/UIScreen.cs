@@ -58,7 +58,7 @@ namespace Project.UI {
         // AttachWidget
         protected override void __AttachWidget__(UIWidgetBase widget, object? argument) {
             base.__AttachWidget__( widget, argument );
-            AddVisualElement( Document, widget.GetVisualElement()! );
+            AddVisualElement( Document, widget.__GetVisualElement__()! );
         }
         protected override void __DetachWidget__(UIWidgetBase widget, object? argument) {
             if (Document) {
@@ -69,7 +69,7 @@ namespace Project.UI {
                 Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
                 return;
             }
-            RemoveVisualElement( Document, widget.GetVisualElement()! );
+            RemoveVisualElement( Document, widget.__GetVisualElement__()! );
             base.__DetachWidget__( widget, argument );
         }
 

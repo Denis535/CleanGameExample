@@ -13,17 +13,9 @@ namespace Project.UI.MainScreen {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        private SlotWrapper PageView { get; }
-        // MainPage
-        public ElementWrapper MainPage { get; }
-        public ButtonWrapper MainPage_StartGame { get; }
-        public ButtonWrapper MainPage_Settings { get; }
-        public ButtonWrapper MainPage_Quit { get; }
-        // StartGamePage
-        public ElementWrapper StartGamePage { get; }
-        public ButtonWrapper StartGamePage_NewGame { get; }
-        public ButtonWrapper StartGamePage_Continue { get; }
-        public ButtonWrapper StartGamePage_Back { get; }
+        public SlotWrapper PageView { get; }
+        public MainMenuWidgetView_MainPage MainPage { get; }
+        public MainMenuWidgetView_StartGamePage StartGamePage { get; }
 
         // Constructor
         public MainMenuWidgetView(UIFactory factory) {
@@ -31,21 +23,69 @@ namespace Project.UI.MainScreen {
             Widget = widget.Wrap();
             Title = title.Wrap();
             PageView = pageView.AsSlot();
-            // MainPage
-            PageView.Add( factory.MainMenuWidget_MainPage( out var mainPage, out var startGame, out var settings, out var quit ) );
-            MainPage = mainPage.Wrap();
-            MainPage_StartGame = startGame.Wrap();
-            MainPage_Settings = settings.Wrap();
-            MainPage_Quit = quit.Wrap();
-            // StartGamePage
-            PageView.Add( factory.MainMenuWidget_StartGamePage( out var startGamePage, out var newGame, out var @continue, out var back ) );
-            StartGamePage = startGamePage.Wrap();
-            StartGamePage_NewGame = newGame.Wrap();
-            StartGamePage_Continue = @continue.Wrap();
-            StartGamePage_Back = back.Wrap();
+            PageView.Add( MainPage = new MainMenuWidgetView_MainPage( factory ) );
+            PageView.Add( StartGamePage = new MainMenuWidgetView_StartGamePage( factory ) );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+    }
+    public class MainMenuWidgetView_MainPage : UIViewBase {
+
+        // VisualElement
+        protected override VisualElement VisualElement { get; }
+        public ElementWrapper Scope { get; }
+        public ButtonWrapper StartGame { get; }
+        public ButtonWrapper Settings { get; }
+        public ButtonWrapper Quit { get; }
+
+        // Constructor
+        public MainMenuWidgetView_MainPage(UIFactory factory) {
+            VisualElement = factory.MainMenuWidget_MainPage( out var scope, out var startGame, out var settings, out var quit );
+            Scope = scope.Wrap();
+            StartGame = startGame.Wrap();
+            Settings = settings.Wrap();
+            Quit = quit.Wrap();
+        }
+
+        // SetActive
+        public void SetActive() {
+            foreach (var child in VisualElement.parent.Children()) {
+                child.SetEnabled( false );
+                child.SetDisplayed( false );
+            }
+            VisualElement.SetEnabled( true );
+            VisualElement.SetDisplayed( true );
+        }
+
+    }
+    public class MainMenuWidgetView_StartGamePage : UIViewBase {
+
+        // VisualElement
+        protected override VisualElement VisualElement { get; }
+        public ElementWrapper Scope { get; }
+        public ButtonWrapper NewGame { get; }
+        public ButtonWrapper Continue { get; }
+        public ButtonWrapper Back { get; }
+
+        // Constructor
+        public MainMenuWidgetView_StartGamePage(UIFactory factory) {
+            VisualElement = factory.MainMenuWidget_StartGamePage( out var scope, out var newGame, out var @continue, out var back );
+            Scope = scope.Wrap();
+            NewGame = newGame.Wrap();
+            Continue = @continue.Wrap();
+            Back = back.Wrap();
+        }
+
+        // SetActive
+        public void SetActive() {
+            foreach (var child in VisualElement.parent.Children()) {
+                child.SetEnabled( false );
+                child.SetDisplayed( false );
+            }
+            VisualElement.SetEnabled( true );
+            VisualElement.SetDisplayed( true );
         }
 
     }

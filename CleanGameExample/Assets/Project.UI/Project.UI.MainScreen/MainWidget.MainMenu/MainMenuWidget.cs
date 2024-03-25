@@ -39,45 +39,35 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView( factory );
             {
                 view.Title.Text = "Main Menu";
-                view.StartGamePage.IsEnabled = false;
-                view.StartGamePage.IsDisplayed = false;
-                view.MainPage.IsEnabled = true;
-                view.MainPage.IsDisplayed = true;
+                view.MainPage.SetActive();
             }
             // MainPage
-            view.MainPage_StartGame.OnClick( evt => {
+            view.MainPage.StartGame.OnClick( evt => {
                 view.Title.Text = "Start Game";
-                view.MainPage.GetVisualElement().SaveFocus();
-                view.MainPage.IsEnabled = false;
-                view.MainPage.IsDisplayed = false;
-                view.StartGamePage.IsEnabled = true;
-                view.StartGamePage.IsDisplayed = true;
-                view.StartGamePage.GetVisualElement().LoadFocus();
+                view.MainPage.__GetVisualElement__().SaveFocus();
+                view.StartGamePage.SetActive();
+                view.StartGamePage.__GetVisualElement__().Focus2();
             } );
-            view.MainPage_Settings.OnClick( evt => {
+            view.MainPage.Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
             } );
-            view.MainPage_Quit.OnClick( evt => {
+            view.MainPage.Quit.OnClick( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
                 widget.AttachChild( dialog );
             } );
             // StartGamePage
-            view.StartGamePage_NewGame.OnClick( evt => {
+            view.StartGamePage.NewGame.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync().Throw();
             } );
-            view.StartGamePage_Continue.OnClick( evt => {
+            view.StartGamePage.Continue.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync().Throw();
             } );
-            view.StartGamePage_Back.OnClick( evt => {
+            view.StartGamePage.Back.OnClick( evt => {
                 view.Title.Text = "Main Menu";
-                view.StartGamePage.GetVisualElement().SaveFocus();
-                view.StartGamePage.IsEnabled = false;
-                view.StartGamePage.IsDisplayed = false;
-                view.MainPage.IsEnabled = true;
-                view.MainPage.IsDisplayed = true;
-                view.MainPage.GetVisualElement().LoadFocus();
+                view.MainPage.SetActive();
+                view.MainPage.__GetVisualElement__().LoadFocus();
             } );
             return view;
         }

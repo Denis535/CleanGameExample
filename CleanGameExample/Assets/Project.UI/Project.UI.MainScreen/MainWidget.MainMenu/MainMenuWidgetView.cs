@@ -13,18 +13,14 @@ namespace Project.UI.MainScreen {
         protected override VisualElement VisualElement { get; }
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        public SlotWrapper<UIViewBase> PageView { get; }
-        public MainMenuWidgetView_MainPage MainPage { get; }
-        public MainMenuWidgetView_StartGamePage StartGamePage { get; }
+        public ViewStackSlotWrapper<UIViewBase> PagesSlot { get; }
 
         // Constructor
         public MainMenuWidgetView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget( out var widget, out var title, out var pageView );
+            VisualElement = factory.MainMenuWidget( out var widget, out var title, out var pagesSlot );
             Widget = widget.Wrap();
             Title = title.Wrap();
-            PageView = pageView.AsSlot<UIViewBase>();
-            PageView.Add( MainPage = new MainMenuWidgetView_MainPage( factory ) );
-            PageView.Add( StartGamePage = new MainMenuWidgetView_StartGamePage( factory ) );
+            PagesSlot = pagesSlot.AsViewStackSlot<UIViewBase>();
         }
         public override void Dispose() {
             base.Dispose();
@@ -49,16 +45,6 @@ namespace Project.UI.MainScreen {
             Quit = quit.Wrap();
         }
 
-        // SetActive
-        public void SetActive() {
-            foreach (var child in VisualElement.parent.Children()) {
-                child.SetEnabled( false );
-                child.SetDisplayed( false );
-            }
-            VisualElement.SetEnabled( true );
-            VisualElement.SetDisplayed( true );
-        }
-
     }
     public class MainMenuWidgetView_StartGamePage : UIViewBase {
 
@@ -76,16 +62,6 @@ namespace Project.UI.MainScreen {
             NewGame = newGame.Wrap();
             Continue = @continue.Wrap();
             Back = back.Wrap();
-        }
-
-        // SetActive
-        public void SetActive() {
-            foreach (var child in VisualElement.parent.Children()) {
-                child.SetEnabled( false );
-                child.SetDisplayed( false );
-            }
-            VisualElement.SetEnabled( true );
-            VisualElement.SetDisplayed( true );
         }
 
     }

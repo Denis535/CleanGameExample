@@ -37,37 +37,52 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView( factory );
-            {
-                view.Title.Text = "Main Menu";
-                view.MainPage.SetActive();
-            }
-            // MainPage
-            view.MainPage.StartGame.OnClick( evt => {
-                view.Title.Text = "Start Game";
-                view.MainPage.__GetVisualElement__().SaveFocus();
-                view.StartGamePage.SetActive();
-                view.StartGamePage.__GetVisualElement__().Focus2();
+            view.Title.Text = "Main Menu";
+            view.PagesSlot.Push( CreateView_MainPage( widget, factory, router ) );
+            return view;
+        }
+        private static MainMenuWidgetView_MainPage CreateView_MainPage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
+            var view = new MainMenuWidgetView_MainPage( factory );
+            view.Scope.OnGeometryChanged( evt => {
+                if (view.IsEnabledInHierarchy()) {
+                    view.__GetVisualElement__().LoadFocus();
+                } else {
+                    view.__GetVisualElement__().SaveFocus();
+                }
             } );
-            view.MainPage.Settings.OnClick( evt => {
+            view.StartGame.OnClick( evt => {
+                widget.View.Title.Text = "Start Game";
+                widget.View.PagesSlot.Push( CreateView_StartGamePage( widget, factory, router ) );
+            } );
+            view.Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
             } );
-            view.MainPage.Quit.OnClick( evt => {
+            view.Quit.OnClick( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
                 widget.AttachChild( dialog );
             } );
-            // StartGamePage
-            view.StartGamePage.NewGame.OnClick( evt => {
+            return view;
+        }
+        private static MainMenuWidgetView_StartGamePage CreateView_StartGamePage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
+            var view = new MainMenuWidgetView_StartGamePage( factory );
+            view.Scope.OnGeometryChanged( evt => {
+                if (view.IsEnabledInHierarchy()) {
+                    view.__GetVisualElement__().LoadFocus();
+                } else {
+                    view.__GetVisualElement__().SaveFocus();
+                }
+            } );
+            view.NewGame.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync().Throw();
             } );
-            view.StartGamePage.Continue.OnClick( evt => {
+            view.Continue.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync().Throw();
             } );
-            view.StartGamePage.Back.OnClick( evt => {
-                view.Title.Text = "Main Menu";
-                view.MainPage.SetActive();
-                view.MainPage.__GetVisualElement__().LoadFocus();
+            view.Back.OnClick( evt => {
+                widget.View.Title.Text = "Main Menu";
+                widget.View.PagesSlot.Pop();
             } );
             return view;
         }

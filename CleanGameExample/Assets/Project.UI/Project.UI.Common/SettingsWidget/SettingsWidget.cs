@@ -15,6 +15,10 @@ namespace Project.UI.Common {
         private UIFactory Factory { get; }
         // View
         protected override SettingsWidgetView View { get; }
+        // Children
+        private ProfileSettingsWidget ProfileSettingsWidget => View.ProfileSettingsSlot.Widget!;
+        private VideoSettingsWidget VideoSettingsWidget => View.VideoSettingsSlot.Widget!;
+        private AudioSettingsWidget AudioSettingsWidget => View.AudioSettingsSlot.Widget!;
 
         // Constructor
         public SettingsWidget() {
@@ -37,30 +41,30 @@ namespace Project.UI.Common {
         // ShowDescendantWidget
         protected override void ShowDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsTab.Add( profileSettingsWidget );
+                View.ProfileSettingsSlot.Add( profileSettingsWidget );
                 return;
             }
             if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsTab.Add( videoSettingsWidget );
+                View.VideoSettingsSlot.Add( videoSettingsWidget );
                 return;
             }
             if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsTab.Add( audioSettingsWidget );
+                View.AudioSettingsSlot.Add( audioSettingsWidget );
                 return;
             }
             base.ShowDescendantWidget( widget );
         }
         protected override void HideDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsTab.Remove( profileSettingsWidget );
+                View.ProfileSettingsSlot.Remove( profileSettingsWidget );
                 return;
             }
             if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsTab.Remove( videoSettingsWidget );
+                View.VideoSettingsSlot.Remove( videoSettingsWidget );
                 return;
             }
             if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsTab.Remove( audioSettingsWidget );
+                View.AudioSettingsSlot.Remove( audioSettingsWidget );
                 return;
             }
             base.HideDescendantWidget( widget );

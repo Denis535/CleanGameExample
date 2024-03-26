@@ -14,21 +14,21 @@ namespace Project.UI.Common {
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
         public ElementWrapper TabView { get; }
-        public SlotWrapper<ProfileSettingsWidgetView> ProfileSettingsTab { get; }
-        public SlotWrapper<VideoSettingsWidgetView> VideoSettingsTab { get; }
-        public SlotWrapper<AudioSettingsWidgetView> AudioSettingsTab { get; }
+        public WidgetSlotWrapper<ProfileSettingsWidget> ProfileSettingsSlot { get; }
+        public WidgetSlotWrapper<VideoSettingsWidget> VideoSettingsSlot { get; }
+        public WidgetSlotWrapper<AudioSettingsWidget> AudioSettingsSlot { get; }
         public ButtonWrapper Okey { get; }
         public ButtonWrapper Back { get; }
 
         // Constructor
         public SettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.SettingsWidget( out var widget, out var title, out var tabView, out var profileSettingsTab, out var videoSettingsTab, out var audioSettingsTab, out var okey, out var back );
+            VisualElement = factory.SettingsWidget( out var widget, out var title, out var tabView, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
             Widget = widget.Wrap();
             Title = title.Wrap();
             TabView = tabView.Wrap();
-            ProfileSettingsTab = profileSettingsTab.AsSlot<ProfileSettingsWidgetView>();
-            VideoSettingsTab = videoSettingsTab.AsSlot<VideoSettingsWidgetView>();
-            AudioSettingsTab = audioSettingsTab.AsSlot<AudioSettingsWidgetView>();
+            ProfileSettingsSlot = profileSettingsSlot.AsWidgetSlot<ProfileSettingsWidget>();
+            VideoSettingsSlot = videoSettingsSlot.AsWidgetSlot<VideoSettingsWidget>();
+            AudioSettingsSlot = audioSettingsSlot.AsWidgetSlot<AudioSettingsWidget>();
             Okey = okey.Wrap();
             Back = back.Wrap();
         }

@@ -65,4 +65,25 @@ namespace Project.UI.MainScreen {
         }
 
     }
+    public class MainMenuWidgetView_SelectLevelPage : UIViewBase {
+
+        // VisualElement
+        protected override VisualElement VisualElement { get; }
+        public ElementWrapper Scope { get; }
+        public ButtonWrapper Level1 { get; }
+        public ButtonWrapper Level2 { get; }
+        public ButtonWrapper Level3 { get; }
+        public ButtonWrapper Back { get; }
+
+        // Constructor
+        public MainMenuWidgetView_SelectLevelPage(UIFactory factory) {
+            VisualElement = factory.MainMenuWidget_SelectLevelPage( out var scope, out var level1, out var level2, out var level3, out var back );
+            Scope = scope.Wrap();
+            Level1 = level1.Wrap();
+            Level2 = level2.Wrap();
+            Level3 = level3.Wrap();
+            Back = back.Wrap();
+        }
+
+    }
 }

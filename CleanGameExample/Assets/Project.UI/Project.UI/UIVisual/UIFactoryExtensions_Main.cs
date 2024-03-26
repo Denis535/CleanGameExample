@@ -45,6 +45,15 @@ namespace Project.UI {
             }
             return scope;
         }
+        public static ColumnScope MainMenuWidget_SelectLevelPage(this UIFactory factory, out ColumnScope scope, out Button level1, out Button level2, out Button level3, out Button back) {
+            using (factory.ColumnScope().AsScope( out scope )) {
+                factory.Select( "Level 1" ).AddToScope( out level1 );
+                factory.Select( "Level 2" ).AddToScope( out level2 );
+                factory.Select( "Level 3" ).AddToScope( out level3 );
+                factory.Select( "Back" ).AddToScope( out back );
+            }
+            return scope;
+        }
 
         // LoadingWidget
         public static Widget LoadingWidget(this UIFactory factory, out Widget widget, out Label loading) {

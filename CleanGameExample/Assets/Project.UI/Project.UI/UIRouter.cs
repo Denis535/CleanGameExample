@@ -107,7 +107,7 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoaded;
         }
-        public async Task LoadGameSceneAsync() {
+        public async Task LoadGameSceneAsync(World world) {
             Release.LogFormat( "Load: GameScene" );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
@@ -118,7 +118,7 @@ namespace Project.UI {
                 {
                     // LoadGameScene
                     await Task.Delay( 3_000 );
-                    await UIRouterHelper.LoadWorldSceneAsync( GetWorldAddress( World.World1 ) );
+                    await UIRouterHelper.LoadWorldSceneAsync( GetWorldAddress( world ) );
                     await UIRouterHelper.LoadGameSceneAsync();
                 }
             }

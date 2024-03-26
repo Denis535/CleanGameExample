@@ -43,13 +43,6 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_MainPage CreateView_MainPage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView_MainPage( factory );
-            view.Scope.OnGeometryChanged( evt => {
-                if (view.IsEnabledInHierarchy()) {
-                    view.__GetVisualElement__().LoadFocus();
-                } else {
-                    view.__GetVisualElement__().SaveFocus();
-                }
-            } );
             view.StartGame.OnClick( evt => {
                 widget.View.Title.Text = "Start Game";
                 widget.View.PagesSlot.Push( CreateView_StartGamePage( widget, factory, router ) );
@@ -65,13 +58,6 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_StartGamePage CreateView_StartGamePage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView_StartGamePage( factory );
-            view.Scope.OnGeometryChanged( evt => {
-                if (view.IsEnabledInHierarchy()) {
-                    view.__GetVisualElement__().LoadFocus();
-                } else {
-                    view.__GetVisualElement__().SaveFocus();
-                }
-            } );
             view.NewGame.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync().Throw();

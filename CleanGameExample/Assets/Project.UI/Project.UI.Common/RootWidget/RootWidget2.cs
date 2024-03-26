@@ -27,25 +27,50 @@ namespace Project.UI.Common {
             base.OnDetach( argument );
         }
 
-        // RecalcVisibility
-        protected override void RecalcVisibility() {
-            base.RecalcVisibility();
-        }
-        protected override void RecalcWidgetVisibility(UIWidgetBase widget, bool isLast) {
-            if (!isLast) {
-                // hide covered widgets
-                widget.SetEnabled( true );
-                if (widget is not MainWidget and not GameWidget) {
-                    widget.SetDisplayed( false );
+        // ShowDescendantWidget
+        protected override void ShowDescendantWidget(UIWidgetBase widget) {
+            if (widget.IsViewable) {
+                if (widget.IsModal()) {
+                    View.ModalWidgetSlot.Add( widget );
+                } else {
+                    View.WidgetSlot.Add( widget );
                 }
-            } else {
-                // show new widget or unhide uncovered widget
-                widget.SetEnabled( !ModalWidgets.Any() );
-                widget.SetDisplayed( true );
+                {
+                    var prev = (UIWidgetBase?) View.WidgetSlot.Widgets.Concat( View.ModalWidgetSlot.Widgets ).SkipLast( 1 ).LastOrDefault();
+                    if (prev != null) prev.__GetView__()!.__GetVisualElement__().SaveFocus();
+                    RecalcVisibility( View );
+                    var last = (UIWidgetBase?) View.WidgetSlot.Widgets.Concat( View.ModalWidgetSlot.Widgets ).LastOrDefault();
+                    if (last != null) last.__GetView__()!.__GetVisualElement__().Focus2();
+                }
             }
         }
-        protected override void RecalcModalWidgetVisibility(UIWidgetBase widget, bool isLast) {
-            base.RecalcModalWidgetVisibility( widget, isLast );
+        protected override void HideDescendantWidget(UIWidgetBase widget) {
+            if (widget.IsViewable) {
+                if (widget.IsModal()) {
+                    Assert.Operation.Message( $"Widget {widget} must be last" ).Valid( widget == View.ModalWidgetSlot.Widgets.LastOrDefault() );
+                    View.ModalWidgetSlot.Remove( widget );
+                } else {
+                    Assert.Operation.Message( $"Widget {widget} must be last" ).Valid( widget == View.WidgetSlot.Widgets.LastOrDefault() );
+                    View.WidgetSlot.Remove( widget );
+                }
+                {
+                    RecalcVisibility( View );
+                    var last = (UIWidgetBase?) View.WidgetSlot.Widgets.Concat( View.ModalWidgetSlot.Widgets ).LastOrDefault();
+                    if (last != null) last.__GetView__()!.__GetVisualElement__().LoadFocus();
+                }
+            }
+        }
+
+        // Helpers
+        protected static new void RecalcVisibility(RootWidgetViewBase view) {
+            foreach (var widget in view.WidgetSlot.Widgets) {
+                if (widget is not MainWidget and not GameWidget) {
+                    RecalcWidgetVisibility( widget, widget == view.WidgetSlot.Widgets.Last(), view.ModalWidgetSlot.Widgets.Any() );
+                }
+            }
+            foreach (var widget in view.ModalWidgetSlot.Widgets) {
+                RecalcModalWidgetVisibility( widget, widget == view.ModalWidgetSlot.Widgets.Last() );
+            }
         }
 
     }

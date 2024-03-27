@@ -39,16 +39,16 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView( factory );
             //view.Title.Text = "Main Menu";
             view.PagesSlot.Push( CreateView_MainPage( widget, factory, router ) );
-            view.PagesSlot.Peek().__GetVisualElement__().Focus2();
+            //view.PagesSlot.Peek().__GetVisualElement__().Focus2();
             return view;
         }
         private static MainMenuWidgetView_MainPage CreateView_MainPage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView_MainPage( factory );
             view.StartGame.OnClick( evt => {
                 //widget.View.Title.Text = "Start Game";
-                widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
                 widget.View.PagesSlot.Push( CreateView_StartGamePage( widget, factory, router ) );
-                widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
             } );
             view.Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
@@ -62,19 +62,19 @@ namespace Project.UI.MainScreen {
         private static MainMenuWidgetView_StartGamePage CreateView_StartGamePage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView_StartGamePage( factory );
             view.NewGame.OnClick( evt => {
-                widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
                 widget.View.PagesSlot.Push( CreateView_SelectLevelPage( widget, factory, router ) );
-                widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
             } );
             view.Continue.OnClick( evt => {
-                widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().SaveFocus();
                 widget.View.PagesSlot.Push( CreateView_SelectLevelPage( widget, factory, router ) );
-                widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().Focus2();
             } );
             view.Back.OnClick( evt => {
                 //widget.View.Title.Text = "Main Menu";
                 widget.View.PagesSlot.Pop();
-                widget.View.PagesSlot.Peek().__GetVisualElement__().LoadFocus();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().LoadFocus();
             } );
             return view;
         }
@@ -95,7 +95,7 @@ namespace Project.UI.MainScreen {
             view.Back.OnClick( evt => {
                 //widget.View.Title.Text = "Main Menu";
                 widget.View.PagesSlot.Pop();
-                widget.View.PagesSlot.Peek().__GetVisualElement__().LoadFocus();
+                //widget.View.PagesSlot.Peek().__GetVisualElement__().LoadFocus();
             } );
             return view;
         }

@@ -41,30 +41,30 @@ namespace Project.UI.Common {
         // ShowDescendantWidget
         protected override void ShowDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsSlot.Add( profileSettingsWidget );
+                View.ProfileSettingsSlot.Set( profileSettingsWidget );
                 return;
             }
             if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsSlot.Add( videoSettingsWidget );
+                View.VideoSettingsSlot.Set( videoSettingsWidget );
                 return;
             }
             if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsSlot.Add( audioSettingsWidget );
+                View.AudioSettingsSlot.Set( audioSettingsWidget );
                 return;
             }
             base.ShowDescendantWidget( widget );
         }
         protected override void HideDescendantWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsSlot.Remove( profileSettingsWidget );
+                View.ProfileSettingsSlot.Clear( profileSettingsWidget );
                 return;
             }
             if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsSlot.Remove( videoSettingsWidget );
+                View.VideoSettingsSlot.Clear( videoSettingsWidget );
                 return;
             }
             if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsSlot.Remove( audioSettingsWidget );
+                View.AudioSettingsSlot.Clear( audioSettingsWidget );
                 return;
             }
             base.HideDescendantWidget( widget );

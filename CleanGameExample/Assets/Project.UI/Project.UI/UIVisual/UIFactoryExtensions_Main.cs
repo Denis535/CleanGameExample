@@ -29,7 +29,7 @@ namespace Project.UI {
             }
             return widget;
         }
-        public static ColumnScope MainMenuWidget_MainPage(this UIFactory factory, out ColumnScope scope, out Button startGame, out Button settings, out Button quit) {
+        public static ColumnScope MainMenuWidget_MainMenuPage(this UIFactory factory, out ColumnScope scope, out Button startGame, out Button settings, out Button quit) {
             using (factory.ColumnScope().AsScope( out scope )) {
                 factory.Select( "Start Game" ).AddToScope( out startGame );
                 factory.Select( "Settings" ).AddToScope( out settings );
@@ -47,9 +47,23 @@ namespace Project.UI {
         }
         public static ColumnScope MainMenuWidget_SelectLevelPage(this UIFactory factory, out ColumnScope scope, out Button level1, out Button level2, out Button level3, out Button back) {
             using (factory.ColumnScope().AsScope( out scope )) {
-                factory.Select( "Level 1" ).AddToScope( out level1 );
-                factory.Select( "Level 2" ).AddToScope( out level2 );
-                factory.Select( "Level 3" ).AddToScope( out level3 );
+                using (factory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
+                    factory.Select( "Level 1" ).AddToScope( out level1 );
+                    factory.Select( "Level 2" ).AddToScope( out level2 );
+                    factory.Select( "Level 3" ).AddToScope( out level3 );
+                }
+                factory.Select( "Back" ).AddToScope( out back );
+            }
+            return scope;
+        }
+        public static ColumnScope MainMenuWidgetView_SelectYourCharacter(this UIFactory factory, out ColumnScope scope, out Button white, out Button red, out Button green, out Button blue, out Button back) {
+            using (factory.ColumnScope().AsScope( out scope )) {
+                using (factory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
+                    factory.Select( "White" ).AddToScope( out white );
+                    factory.Select( "Red" ).AddToScope( out red );
+                    factory.Select( "Green" ).AddToScope( out green );
+                    factory.Select( "Blue" ).AddToScope( out blue );
+                }
                 factory.Select( "Back" ).AddToScope( out back );
             }
             return scope;

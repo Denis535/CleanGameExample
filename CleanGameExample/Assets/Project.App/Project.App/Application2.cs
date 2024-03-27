@@ -43,7 +43,7 @@ namespace Project.App {
         }
 
         // StartGame
-        public void StartGame() {
+        public void StartGame(World world, Character character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game == null );
             Game = GameObject2.RequireAnyObjectByType<Game>( FindObjectsInactive.Exclude );
             Game.StartGame();
@@ -68,5 +68,18 @@ namespace Project.App {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+    }
+    // World
+    public enum World {
+        World1,
+        World2,
+        World3
+    }
+    // Character
+    public enum Character { 
+        White,
+        Red,
+        Green,
+        Blue
     }
 }

@@ -107,7 +107,7 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoaded;
         }
-        public async Task LoadGameSceneAsync(World world) {
+        public async Task LoadGameSceneAsync(World world, Character character) {
             Release.LogFormat( "Load: GameScene" );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
@@ -123,7 +123,7 @@ namespace Project.UI {
                 }
             }
             State = UIRouterState.GameSceneLoaded;
-            Application.StartGame();
+            Application.StartGame( world, character );
         }
 
 #if UNITY_EDITOR
@@ -193,11 +193,5 @@ namespace Project.UI {
         // Quit
         Quitting,
         Quited,
-    }
-    // World
-    public enum World {
-        World1,
-        World2,
-        World3,
     }
 }

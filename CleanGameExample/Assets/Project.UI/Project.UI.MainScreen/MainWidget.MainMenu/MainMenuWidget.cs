@@ -45,6 +45,11 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView_MainMenuPage( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Main Menu";
+                view.Scope.__GetVisualElement__().Focus2();
+                view.Scope.__GetVisualElement__().LoadFocus();
+            } );
+            view.Scope.OnDetachFromPanel( evt => {
+                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.StartGame.OnClick( evt => {
                 widget.View.PagesSlot.Push( CreateView_StartGamePage( widget, factory, router ) );
@@ -62,6 +67,11 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView_StartGamePage( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Start Game";
+                view.Scope.__GetVisualElement__().Focus2();
+                view.Scope.__GetVisualElement__().LoadFocus();
+            } );
+            view.Scope.OnDetachFromPanel( evt => {
+                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.NewGame.OnClick( evt => {
                 widget.View.PagesSlot.Push( CreateView_SelectLevelPage( widget, factory, router ) );
@@ -78,6 +88,11 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView_SelectLevelPage( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Level";
+                view.Scope.__GetVisualElement__().Focus2();
+                view.Scope.__GetVisualElement__().LoadFocus();
+            } );
+            view.Scope.OnDetachFromPanel( evt => {
+                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.Level1.OnClick( evt => {
                 widget.View.PagesSlot.Push( CreateView_SelectYourCharacter( widget, factory, router, World.World1 ) );
@@ -97,6 +112,11 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView_SelectYourCharacter( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
+                view.Scope.__GetVisualElement__().Focus2();
+                view.Scope.__GetVisualElement__().LoadFocus();
+            } );
+            view.Scope.OnDetachFromPanel( evt => {
+                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.White.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );

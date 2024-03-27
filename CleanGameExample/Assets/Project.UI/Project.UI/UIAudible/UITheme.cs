@@ -22,8 +22,13 @@ namespace Project.UI {
         } );
 
         // Globals
+        private AudioSource AudioSource { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
+        // IsPlaying
+        private bool IsPlaying { get; set; }
+        // IsPaused
+        private bool IsPaused { get; set; }
         // State
         public UIThemeState State => GetState( Router.State );
         private ValueTracker2<UIThemeState, UITheme> StateTracker { get; } = new ValueTracker2<UIThemeState, UITheme>( i => i.State );
@@ -33,6 +38,7 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
+            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
             Router = this.GetDependencyContainer().Resolve<UIRouter>( null );
             Application = this.GetDependencyContainer().Resolve<Application2>( null );
         }
@@ -56,36 +62,49 @@ namespace Project.UI {
                 }
             }
             if (IsMainTheme) {
-                if (!AudioSource.isPlaying && IsPlaying && IsUnPaused) {
+                if (!AudioSource.isPlaying && IsPlaying && !IsPaused) {
                     PlayNext( MainThemes );
                 }
                 if (Router.IsGameSceneLoading) {
-                    Volume = Mathf.MoveTowards( Volume, 0, Volume * UnityEngine.Time.deltaTime * 0.5f );
+                    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * UnityEngine.Time.deltaTime * 0.5f );
                 }
             } else if (IsGameTheme) {
-                if (!AudioSource.isPlaying && IsPlaying && IsUnPaused) {
+                if (!AudioSource.isPlaying && IsPlaying && !IsPaused) {
                     PlayNext( GameThemes );
                 }
-                SetPaused( Application.IsGamePaused );
+                if (Application.IsGamePaused) {
+                    Pause();
+                } else {
+                    UnPause();
+                }
             }
         }
 
         // Play
         private async void Play(string key) {
             Stop();
-            var clip = await Addressables2.LoadAssetAsync<AudioClip>( key ).GetResultAsync( default, i => i.Result.name = key, (i, ex) => Addressables2.Release( i ) );
-            Play( clip );
-            Volume = 1;
+            AudioSource.clip = await Addressables2.LoadAssetAsync<AudioClip>( key ).GetResultAsync( destroyCancellationToken, i => i.Result.name = key, (i, ex) => Addressables2.Release( i ) );
+            AudioSource.volume = 1;
+            AudioSource.Play();
         }
         private void PlayNext(string[] keys) {
-            Play( GetNextValue( keys, Clip?.name ) );
+            Play( GetNextValue( keys, AudioSource.clip?.name ) );
         }
-        private new void Stop() {
+        private void Stop() {
             if (AudioSource.clip != null) {
                 var clip = AudioSource.clip;
-                base.Stop();
+                AudioSource.Stop();
+                AudioSource.clip = null;
                 Addressables2.Release( clip );
             }
+        }
+
+        // Pause
+        private void Pause() {
+            AudioSource.Pause();
+        }
+        private void UnPause() {
+            AudioSource.UnPause();
         }
 
         // Helpers

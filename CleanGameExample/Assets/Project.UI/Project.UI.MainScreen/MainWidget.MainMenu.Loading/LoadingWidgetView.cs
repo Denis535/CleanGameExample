@@ -11,8 +11,7 @@ namespace Project.UI.MainScreen {
 
     public class LoadingWidgetView : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Widget { get; }
         public LabelWrapper Loading { get; }
 

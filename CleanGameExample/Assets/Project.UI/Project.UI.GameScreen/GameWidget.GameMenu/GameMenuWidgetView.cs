@@ -5,12 +5,10 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
     public class GameMenuWidgetView : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
         public ButtonWrapper Resume { get; }

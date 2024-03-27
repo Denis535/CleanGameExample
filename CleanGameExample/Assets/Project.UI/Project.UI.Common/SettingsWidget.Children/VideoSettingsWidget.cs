@@ -14,8 +14,6 @@ namespace Project.UI.Common {
         // Globals
         private UIFactory Factory { get; }
         private Globals.VideoSettings VideoSettings { get; }
-        // View
-        protected override VideoSettingsWidgetView View { get; }
 
         // Constructor
         public VideoSettingsWidget() {

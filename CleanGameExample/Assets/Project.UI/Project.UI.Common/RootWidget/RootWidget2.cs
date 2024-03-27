@@ -37,14 +37,18 @@ namespace Project.UI.Common {
         // ShowDescendantWidget
         protected override void ShowDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
             var covered = slot.Widgets.LastOrDefault();
-            if (covered != null && covered is not MainWidget and not GameWidget) slot.__GetVisualElement__().Remove( covered.__GetView__()!.__GetVisualElement__() );
+            if (covered != null && covered is not MainWidget and not GameWidget) {
+                slot.__GetVisualElement__().Remove( covered.__GetView__()!.__GetVisualElement__() );
+            }
             slot.Add( widget );
         }
         protected override void HideDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
             Assert.Operation.Message( $"Widget {widget} must be last" ).Valid( widget == slot.Widgets.LastOrDefault() );
             slot.Remove( widget );
             var uncovered = slot.Widgets.LastOrDefault();
-            if (uncovered != null && uncovered is not MainWidget and not GameWidget) slot.__GetVisualElement__().Add( uncovered.__GetView__()!.__GetVisualElement__() );
+            if (uncovered != null && uncovered is not MainWidget and not GameWidget) {
+                slot.__GetVisualElement__().Add( uncovered.__GetView__()!.__GetVisualElement__() );
+            }
         }
 
     }

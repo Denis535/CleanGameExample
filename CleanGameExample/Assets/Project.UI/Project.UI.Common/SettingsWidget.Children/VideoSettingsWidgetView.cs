@@ -5,12 +5,10 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
     public class VideoSettingsWidgetView : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Group { get; }
         public ToggleFieldWrapper<bool> IsFullScreen { get; }
         public PopupFieldWrapper<object> ScreenResolution { get; }

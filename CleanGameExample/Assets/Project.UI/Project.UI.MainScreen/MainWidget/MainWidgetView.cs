@@ -10,8 +10,7 @@ namespace Project.UI.MainScreen {
 
     public class MainWidgetView : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Widget { get; }
 
         // Constructor

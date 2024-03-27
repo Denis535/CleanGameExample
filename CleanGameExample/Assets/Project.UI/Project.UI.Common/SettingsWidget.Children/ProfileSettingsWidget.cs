@@ -13,8 +13,6 @@ namespace Project.UI.Common {
         // Globals
         private UIFactory Factory { get; }
         private Globals.ProfileSettings ProfileSettings { get; }
-        // View
-        protected override ProfileSettingsWidgetView View { get; }
 
         // Constructor
         public ProfileSettingsWidget() {

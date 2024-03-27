@@ -11,8 +11,6 @@ namespace Project.UI.Common {
 
         // Globals
         private UIFactory Factory { get; }
-        // View
-        protected override TView View { get; }
         public string? Title {
             get => View.Title.Text;
             set {

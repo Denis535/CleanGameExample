@@ -13,8 +13,6 @@ namespace Project.UI.Common {
 
         // Globals
         private UIFactory Factory { get; }
-        // View
-        protected override SettingsWidgetView View { get; }
         // Children
         private ProfileSettingsWidget ProfileSettingsWidget => View.ProfileSettingsSlot.Widget!;
         private VideoSettingsWidget VideoSettingsWidget => View.VideoSettingsSlot.Widget!;

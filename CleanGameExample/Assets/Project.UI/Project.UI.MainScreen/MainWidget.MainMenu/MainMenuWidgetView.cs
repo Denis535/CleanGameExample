@@ -5,12 +5,10 @@ namespace Project.UI.MainScreen {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
     public class MainMenuWidgetView : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
         public ViewStackSlotWrapper<UIViewBase> PagesSlot { get; }
@@ -30,8 +28,7 @@ namespace Project.UI.MainScreen {
     // MainMenuPage
     public class MainMenuWidgetView_MainMenuPage : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Scope { get; }
         public ButtonWrapper StartGame { get; }
         public ButtonWrapper Settings { get; }
@@ -50,8 +47,7 @@ namespace Project.UI.MainScreen {
     // StartGamePage
     public class MainMenuWidgetView_StartGamePage : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Scope { get; }
         public ButtonWrapper NewGame { get; }
         public ButtonWrapper Continue { get; }
@@ -70,8 +66,7 @@ namespace Project.UI.MainScreen {
     // SelectLevelPage
     public class MainMenuWidgetView_SelectLevelPage : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Scope { get; }
         public ButtonWrapper Level1 { get; }
         public ButtonWrapper Level2 { get; }
@@ -92,8 +87,7 @@ namespace Project.UI.MainScreen {
     // SelectYourCharacter
     public class MainMenuWidgetView_SelectYourCharacter : UIViewBase {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Scope { get; }
         public ButtonWrapper White { get; }
         public ButtonWrapper Red { get; }

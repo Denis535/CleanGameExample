@@ -13,8 +13,6 @@ namespace Project.UI.Common {
         // Globals
         private UIFactory Factory { get; }
         private Globals.AudioSettings AudioSettings { get; }
-        // View
-        protected override AudioSettingsWidgetView View { get; }
 
         // Constructor
         public AudioSettingsWidget() {

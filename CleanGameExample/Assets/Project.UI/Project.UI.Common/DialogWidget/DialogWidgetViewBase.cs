@@ -9,8 +9,7 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase, IModalWidgetView {
 
-        // VisualElement
-        protected override VisualElement VisualElement { get; }
+        // View
         public ElementWrapper Widget { get; }
         public ElementWrapper Card { get; }
         public ElementWrapper Header { get; }

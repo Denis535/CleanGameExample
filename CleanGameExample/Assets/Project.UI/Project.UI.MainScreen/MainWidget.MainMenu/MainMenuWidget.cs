@@ -16,8 +16,6 @@ namespace Project.UI.MainScreen {
         // Globals
         private UIFactory Factory { get; }
         private UIRouter Router { get; }
-        // View
-        protected override MainMenuWidgetView View { get; }
 
         // Constructor
         public MainMenuWidget() {

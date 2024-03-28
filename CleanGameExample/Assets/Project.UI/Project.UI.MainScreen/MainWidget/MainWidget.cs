@@ -3,6 +3,7 @@ namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Project.App;
     using Project.UI.Common;
@@ -35,9 +36,8 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override async void OnAttach(object? argument) {
-            //UIWidgetBase.OnViewAssignedEvent += OnViewAssigned;
-            //UIViewBase.OnVisualElementAssignedEvent += OnVisualElementAssigned;
-
+            UIFactory.OnViewAttach += OnViewAttach;
+            UIFactory.OnViewDetach += OnViewDetach;
             // await MainScene
             if (!Router.IsMainSceneLoaded) {
                 while (!Router.IsMainSceneLoaded) {
@@ -72,19 +72,51 @@ namespace Project.UI.MainScreen {
             this.AttachChild( new MainMenuWidget() );
         }
         public override void OnDetach(object? argument) {
-            //UIWidgetBase.OnViewAssignedEvent -= OnViewAssigned;
-            //UIViewBase.OnVisualElementAssignedEvent -= OnVisualElementAssigned;
+            UIFactory.OnViewAttach -= OnViewAttach;
+            UIFactory.OnViewDetach -= OnViewDetach;
         }
 
-        //// OnViewAssigned
-        //private void OnViewAssigned(UIWidgetBase widget, UIViewBase view) {
-        //}
+        // OnViewAttach
+        private void OnViewAttach(UIViewBase view) {
+            OnViewChanged();
+        }
+        private void OnViewDetach(UIViewBase view) {
+            OnViewChanged();
+        }
 
-        //// OnVisualElementAssigned
-        //private void OnVisualElementAssigned(UIViewBase view, VisualElement visualElement) {
-        //    visualElement.OnAttachToPanel( evt => Debug.Log( view ) );
-        //    visualElement.OnDetachFromPanel( evt => Debug.Log( view ) );
-        //}
+        // OnViewChanged
+        private void OnViewChanged() {
+            var root = (RootWidget2) Parent!;
+            var widget = root.Widgets.LastOrDefault();
+            if (widget is MainMenuWidget mainMenuWidget) {
+                var view = mainMenuWidget.__GetView__().ContentSlot.Peek();
+                if (view is MainMenuWidgetView_MainMenuView) {
+                    View.SetEffect( Color.white, default, 0, 1.0f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_StartGameView) {
+                    View.SetEffect( Color.white, default, 0, 1.1f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_SelectLevelView) {
+                    View.SetEffect( Color.white, default, 0, 1.2f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_SelectYourCharacterView) {
+                    View.SetEffect( Color.white, default, 0, 1.3f );
+                    return;
+                }
+            }
+            if (widget is LoadingWidget) {
+                View.SetEffect( Color.gray, default, 45, 2.5f );
+                return;
+            }
+            if (widget is SettingsWidget) {
+                View.SetEffect( Color.white, default, 0, 1.1f );
+                return;
+            }
+            View.SetEffect( Color.white, default, 0, 1 );
+        }
 
         // Update
         public void Update() {

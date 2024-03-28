@@ -36,7 +36,7 @@
 #main-widget {
   background-image: url('project://database/Assets/Project.UI/Assets.Project.UI.MainScreen/Images/Background.png');
   -unity-background-scale-mode: scale-and-crop;
-  transition-property: scale, -unity-background-image-tint-color;
+  transition-property: -unity-background-image-tint-color, translate, rotate, scale;
   transition-duration: 3s;
   transition-timing-function: ease;
 }

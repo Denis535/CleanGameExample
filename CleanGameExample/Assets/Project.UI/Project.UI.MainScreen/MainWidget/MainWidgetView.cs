@@ -6,7 +6,6 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
-    using UnityEngine.UIElements.Experimental;
 
     public class MainWidgetView : UIViewBase {
 
@@ -22,13 +21,13 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // SetBackground
-        //public void SetBackground(int value) {
-        //    var t = Mathf.InverseLerp( 0, 6, value );
-        //    t = Easing.OutPower( t, 2 );
-        //    VisualElement.transform.scale = Vector3.LerpUnclamped( new Vector3( 1, 1, 1 ), new Vector3( 2, 2, 1 ), t );
-        //    VisualElement.style.unityBackgroundImageTintColor = Color.LerpUnclamped( new Color( 1, 1, 1, 1 ), new Color( 0, 0, 0, 1 ), t );
-        //}
+        // SetEffect
+        public void SetEffect(Color color, Vector2 position, float rotate, float scale) {
+            VisualElement.style.unityBackgroundImageTintColor = color;
+            VisualElement.style.translate = new Translate( position.x, position.y, 0 );
+            VisualElement.style.rotate = new Rotate( Angle.Degrees( rotate ) );
+            VisualElement.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
+        }
 
     }
 }

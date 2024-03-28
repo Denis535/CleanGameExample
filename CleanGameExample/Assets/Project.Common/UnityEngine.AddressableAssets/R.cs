@@ -1,22 +1,27 @@
 namespace UnityEngine.AddressableAssets {
     public static class @R {
         public static class @UnityEngine {
+            public const string @LightingSettings = "UnityEngine/LightingSettings.lighting";
             public static class @Audio {
                 public const string @AudioMixer = "UnityEngine.Audio/AudioMixer.mixer";
-                public const string @AudioMixer__Game = "UnityEngine.Audio/AudioMixer.mixer[Game]";
-                public const string @AudioMixer__Master = "UnityEngine.Audio/AudioMixer.mixer[Master]";
-                public const string @AudioMixer__Music = "UnityEngine.Audio/AudioMixer.mixer[Music]";
-                public const string @AudioMixer__Sfx = "UnityEngine.Audio/AudioMixer.mixer[Sfx]";
-                public const string @AudioMixer__Snapshot = "UnityEngine.Audio/AudioMixer.mixer[Snapshot]";
+                public static class @AudioMixer_SubAssets {
+                    public const string @Game = "UnityEngine.Audio/AudioMixer.mixer[Game]";
+                    public const string @Master = "UnityEngine.Audio/AudioMixer.mixer[Master]";
+                    public const string @Music = "UnityEngine.Audio/AudioMixer.mixer[Music]";
+                    public const string @Sfx = "UnityEngine.Audio/AudioMixer.mixer[Sfx]";
+                    public const string @Snapshot = "UnityEngine.Audio/AudioMixer.mixer[Snapshot]";
+                }
             }
-            public const string @LightingSettings = "UnityEngine/LightingSettings.lighting";
         }
         public static class @Project {
             public static class @UI {
+                public const string @PanelSettings = "Project.UI/PanelSettings.asset";
                 public static class @MainScreen {
                     public static class @Images {
                         public const string @Background = "Project.UI.MainScreen/Images/Background.png";
-                        public const string @Background__Background = "Project.UI.MainScreen/Images/Background.png[Background]";
+                        public static class @Background_SubAssets {
+                            public const string @Background = "Project.UI.MainScreen/Images/Background.png[Background]";
+                        }
                     }
                     public static class @Music {
                         public const string @Theme = "Project.UI.MainScreen/Music/Theme #Slowly Building Motif.wav";
@@ -34,7 +39,6 @@ namespace UnityEngine.AddressableAssets {
                 public static class @ThemeStyleSheets {
                     public const string @ThemeStyleSheet = "Project.UI/ThemeStyleSheets/ThemeStyleSheet.tss";
                 }
-                public const string @PanelSettings = "Project.UI/PanelSettings.asset";
             }
             public static class @Scenes {
                 public const string @Program = "Project.Scenes/Program.unity";

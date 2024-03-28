@@ -36,21 +36,16 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
             var view = new MainMenuWidgetView( factory );
-            view.PagesSlot.Push( CreateView_MainMenuPage( widget, factory, router ) );
+            view.ViewsSlot.Push( CreateView_MainMenuView( widget, factory, router ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuPage CreateView_MainMenuPage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_MainMenuPage( factory );
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
+            var view = new MainMenuWidgetView_MainMenuView( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Main Menu";
-                view.Scope.__GetVisualElement__().Focus2();
-                view.Scope.__GetVisualElement__().LoadFocus();
-            } );
-            view.Scope.OnDetachFromPanel( evt => {
-                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.StartGame.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_StartGamePage( widget, factory, router ) );
+                widget.View.ViewsSlot.Push( CreateView_StartGameView( widget, factory, router ) );
             } );
             view.Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
@@ -61,60 +56,45 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGamePage CreateView_StartGamePage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_StartGamePage( factory );
+        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
+            var view = new MainMenuWidgetView_StartGameView( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Start Game";
-                view.Scope.__GetVisualElement__().Focus2();
-                view.Scope.__GetVisualElement__().LoadFocus();
-            } );
-            view.Scope.OnDetachFromPanel( evt => {
-                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.NewGame.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_SelectLevelPage( widget, factory, router ) );
+                widget.View.ViewsSlot.Push( CreateView_SelectLevelView( widget, factory, router ) );
             } );
             view.Continue.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_SelectLevelPage( widget, factory, router ) );
+                widget.View.ViewsSlot.Push( CreateView_SelectLevelView( widget, factory, router ) );
             } );
             view.Back.OnClick( evt => {
-                widget.View.PagesSlot.Pop();
+                widget.View.ViewsSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelPage CreateView_SelectLevelPage(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_SelectLevelPage( factory );
+        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
+            var view = new MainMenuWidgetView_SelectLevelView( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Level";
-                view.Scope.__GetVisualElement__().Focus2();
-                view.Scope.__GetVisualElement__().LoadFocus();
-            } );
-            view.Scope.OnDetachFromPanel( evt => {
-                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.Level1.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_SelectYourCharacter( widget, factory, router, World.World1 ) );
+                widget.View.ViewsSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
             } );
             view.Level2.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_SelectYourCharacter( widget, factory, router, World.World1 ) );
+                widget.View.ViewsSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
             } );
             view.Level3.OnClick( evt => {
-                widget.View.PagesSlot.Push( CreateView_SelectYourCharacter( widget, factory, router, World.World1 ) );
+                widget.View.ViewsSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
             } );
             view.Back.OnClick( evt => {
-                widget.View.PagesSlot.Pop();
+                widget.View.ViewsSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectYourCharacter CreateView_SelectYourCharacter(MainMenuWidget widget, UIFactory factory, UIRouter router, World world) {
-            var view = new MainMenuWidgetView_SelectYourCharacter( factory );
+        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIFactory factory, UIRouter router, World world) {
+            var view = new MainMenuWidgetView_SelectYourCharacterView( factory );
             view.Scope.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
-                view.Scope.__GetVisualElement__().Focus2();
-                view.Scope.__GetVisualElement__().LoadFocus();
-            } );
-            view.Scope.OnDetachFromPanel( evt => {
-                view.Scope.__GetVisualElement__().SaveFocus();
             } );
             view.White.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
@@ -133,7 +113,7 @@ namespace Project.UI.MainScreen {
                 router.LoadGameSceneAsync( world, Character.Blue ).Throw();
             } );
             view.Back.OnClick( evt => {
-                widget.View.PagesSlot.Pop();
+                widget.View.ViewsSlot.Pop();
             } );
             return view;
         }

@@ -16,20 +16,20 @@ namespace Project.UI {
         }
 
         // MainMenuWidget
-        public static Widget MainMenuWidget(this UIFactory factory, out Widget widget, out Label title, out ColumnScope pagesSlot) {
+        public static Widget MainMenuWidget(this UIFactory factory, out Widget widget, out Label title, out ColumnScope viewsSlot) {
             using (factory.LeftWidget( "main-menu-widget" ).AsScope( out widget )) {
                 using (factory.Card().AsScope()) {
                     using (factory.Header().AsScope()) {
                         factory.Label( "Main Menu" ).AddToScope( out title );
                     }
                     using (factory.Content().AsScope()) {
-                        factory.ColumnScope().AddToScope( out pagesSlot );
+                        factory.ColumnScope().AddToScope( out viewsSlot );
                     }
                 }
             }
             return widget;
         }
-        public static ColumnScope MainMenuWidget_MainMenuPage(this UIFactory factory, out ColumnScope scope, out Button startGame, out Button settings, out Button quit) {
+        public static ColumnScope MainMenuWidget_MainMenuView(this UIFactory factory, out ColumnScope scope, out Button startGame, out Button settings, out Button quit) {
             using (factory.ColumnScope().AsScope( out scope )) {
                 factory.Select( "Start Game" ).AddToScope( out startGame );
                 factory.Select( "Settings" ).AddToScope( out settings );
@@ -37,7 +37,7 @@ namespace Project.UI {
             }
             return scope;
         }
-        public static ColumnScope MainMenuWidget_StartGamePage(this UIFactory factory, out ColumnScope scope, out Button newGame, out Button @continue, out Button back) {
+        public static ColumnScope MainMenuWidget_StartGameView(this UIFactory factory, out ColumnScope scope, out Button newGame, out Button @continue, out Button back) {
             using (factory.ColumnScope().AsScope( out scope )) {
                 factory.Select( "New Game" ).AddToScope( out newGame );
                 factory.Select( "Continue" ).AddToScope( out @continue );
@@ -45,7 +45,7 @@ namespace Project.UI {
             }
             return scope;
         }
-        public static ColumnScope MainMenuWidget_SelectLevelPage(this UIFactory factory, out ColumnScope scope, out Button level1, out Button level2, out Button level3, out Button back) {
+        public static ColumnScope MainMenuWidget_SelectLevelView(this UIFactory factory, out ColumnScope scope, out Button level1, out Button level2, out Button level3, out Button back) {
             using (factory.ColumnScope().AsScope( out scope )) {
                 using (factory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     factory.Select( "Level 1" ).AddToScope( out level1 );
@@ -56,7 +56,7 @@ namespace Project.UI {
             }
             return scope;
         }
-        public static ColumnScope MainMenuWidgetView_SelectYourCharacter(this UIFactory factory, out ColumnScope scope, out Button white, out Button red, out Button green, out Button blue, out Button back) {
+        public static ColumnScope MainMenuWidgetView_SelectYourCharacterView(this UIFactory factory, out ColumnScope scope, out Button white, out Button red, out Button green, out Button blue, out Button back) {
             using (factory.ColumnScope().AsScope( out scope )) {
                 using (factory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     factory.Select( "White" ).AddToScope( out white );

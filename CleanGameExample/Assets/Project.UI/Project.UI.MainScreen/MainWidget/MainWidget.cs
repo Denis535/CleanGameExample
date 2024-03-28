@@ -35,6 +35,9 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override async void OnAttach(object? argument) {
+            //UIWidgetBase.OnViewAssignedEvent += OnViewAssigned;
+            //UIViewBase.OnVisualElementAssignedEvent += OnVisualElementAssigned;
+
             // await MainScene
             if (!Router.IsMainSceneLoaded) {
                 while (!Router.IsMainSceneLoaded) {
@@ -69,17 +72,19 @@ namespace Project.UI.MainScreen {
             this.AttachChild( new MainMenuWidget() );
         }
         public override void OnDetach(object? argument) {
+            //UIWidgetBase.OnViewAssignedEvent -= OnViewAssigned;
+            //UIViewBase.OnVisualElementAssignedEvent -= OnVisualElementAssigned;
         }
 
-        // ShowDescendantWidget
-        protected override void ShowDescendantWidget(UIWidgetBase widget) {
-            base.ShowDescendantWidget( widget );
-            View.SetEffect( ((RootWidget2) Parent!).Widgets.Count - 2 );
-        }
-        protected override void HideDescendantWidget(UIWidgetBase widget) {
-            base.HideDescendantWidget( widget );
-            View.SetEffect( ((RootWidget2) Parent!).Widgets.Count - 2 );
-        }
+        //// OnViewAssigned
+        //private void OnViewAssigned(UIWidgetBase widget, UIViewBase view) {
+        //}
+
+        //// OnVisualElementAssigned
+        //private void OnVisualElementAssigned(UIViewBase view, VisualElement visualElement) {
+        //    visualElement.OnAttachToPanel( evt => Debug.Log( view ) );
+        //    visualElement.OnDetachFromPanel( evt => Debug.Log( view ) );
+        //}
 
         // Update
         public void Update() {

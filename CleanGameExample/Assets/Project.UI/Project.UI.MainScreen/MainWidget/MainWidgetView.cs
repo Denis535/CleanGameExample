@@ -22,13 +22,13 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // SetEffect
-        public void SetEffect(int value) {
-            var t = Mathf.InverseLerp( 0, 6, value );
-            t = Easing.OutPower( t, 2 );
-            VisualElement.transform.scale = Vector3.LerpUnclamped( new Vector3( 1, 1, 1 ), new Vector3( 2, 2, 1 ), t );
-            VisualElement.style.unityBackgroundImageTintColor = Color.LerpUnclamped( new Color( 1, 1, 1, 1 ), new Color( 0, 0, 0, 1 ), t );
-        }
+        // SetBackground
+        //public void SetBackground(int value) {
+        //    var t = Mathf.InverseLerp( 0, 6, value );
+        //    t = Easing.OutPower( t, 2 );
+        //    VisualElement.transform.scale = Vector3.LerpUnclamped( new Vector3( 1, 1, 1 ), new Vector3( 2, 2, 1 ), t );
+        //    VisualElement.style.unityBackgroundImageTintColor = Color.LerpUnclamped( new Color( 1, 1, 1, 1 ), new Color( 0, 0, 0, 1 ), t );
+        //}
 
     }
 }

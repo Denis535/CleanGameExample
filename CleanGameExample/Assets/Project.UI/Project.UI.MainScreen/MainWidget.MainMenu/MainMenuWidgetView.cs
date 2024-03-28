@@ -11,14 +11,14 @@ namespace Project.UI.MainScreen {
         // View
         public ElementWrapper Widget { get; }
         public LabelWrapper Title { get; }
-        public ViewStackSlotWrapper<UIViewBase> ViewsSlot { get; }
+        public ViewStackSlotWrapper<UIViewBase> ContentSlot { get; }
 
         // Constructor
         public MainMenuWidgetView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget( out var widget, out var title, out var viewsSlot );
+            VisualElement = factory.MainMenuWidget( this, out var widget, out var title, out var contentSlot );
             Widget = widget.Wrap();
             Title = title.Wrap();
-            ViewsSlot = viewsSlot.AsViewStackSlot<UIViewBase>();
+            ContentSlot = contentSlot.AsViewStackSlot<UIViewBase>();
         }
         public override void Dispose() {
             base.Dispose();
@@ -29,15 +29,15 @@ namespace Project.UI.MainScreen {
     public class MainMenuWidgetView_MainMenuView : UIViewBase {
 
         // View
-        public ElementWrapper Scope { get; }
+        public ElementWrapper Root { get; }
         public ButtonWrapper StartGame { get; }
         public ButtonWrapper Settings { get; }
         public ButtonWrapper Quit { get; }
 
         // Constructor
         public MainMenuWidgetView_MainMenuView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_MainMenuView( out var scope, out var startGame, out var settings, out var quit );
-            Scope = scope.Wrap();
+            VisualElement = factory.MainMenuWidget_MainMenuView( this, out var root, out var startGame, out var settings, out var quit );
+            Root = root.Wrap();
             StartGame = startGame.Wrap();
             Settings = settings.Wrap();
             Quit = quit.Wrap();
@@ -48,15 +48,15 @@ namespace Project.UI.MainScreen {
     public class MainMenuWidgetView_StartGameView : UIViewBase {
 
         // View
-        public ElementWrapper Scope { get; }
+        public ElementWrapper Root { get; }
         public ButtonWrapper NewGame { get; }
         public ButtonWrapper Continue { get; }
         public ButtonWrapper Back { get; }
 
         // Constructor
         public MainMenuWidgetView_StartGameView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_StartGameView( out var scope, out var newGame, out var @continue, out var back );
-            Scope = scope.Wrap();
+            VisualElement = factory.MainMenuWidget_StartGameView( this, out var root, out var newGame, out var @continue, out var back );
+            Root = root.Wrap();
             NewGame = newGame.Wrap();
             Continue = @continue.Wrap();
             Back = back.Wrap();
@@ -67,7 +67,7 @@ namespace Project.UI.MainScreen {
     public class MainMenuWidgetView_SelectLevelView : UIViewBase {
 
         // View
-        public ElementWrapper Scope { get; }
+        public ElementWrapper Root { get; }
         public ButtonWrapper Level1 { get; }
         public ButtonWrapper Level2 { get; }
         public ButtonWrapper Level3 { get; }
@@ -75,8 +75,8 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_SelectLevelView( out var scope, out var level1, out var level2, out var level3, out var back );
-            Scope = scope.Wrap();
+            VisualElement = factory.MainMenuWidget_SelectLevelView( this, out var root, out var level1, out var level2, out var level3, out var back );
+            Root = root.Wrap();
             Level1 = level1.Wrap();
             Level2 = level2.Wrap();
             Level3 = level3.Wrap();
@@ -88,7 +88,7 @@ namespace Project.UI.MainScreen {
     public class MainMenuWidgetView_SelectYourCharacterView : UIViewBase {
 
         // View
-        public ElementWrapper Scope { get; }
+        public ElementWrapper Root { get; }
         public ButtonWrapper White { get; }
         public ButtonWrapper Red { get; }
         public ButtonWrapper Green { get; }
@@ -97,8 +97,8 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectYourCharacterView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidgetView_SelectYourCharacterView( out var scope, out var white, out var red, out var green, out var blue, out var back );
-            Scope = scope.Wrap();
+            VisualElement = factory.MainMenuWidgetView_SelectYourCharacterView( this, out var root, out var white, out var red, out var green, out var blue, out var back );
+            Root = root.Wrap();
             White = white.Wrap();
             Red = red.Wrap();
             Green = green.Wrap();

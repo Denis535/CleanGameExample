@@ -39,7 +39,7 @@ namespace Project.UI.Common {
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, UIFactory factory, Globals.ProfileSettings profileSettings) {
             var view = new ProfileSettingsWidgetView( factory );
-            view.Group.OnAttachToPanel( evt => {
+            view.Root.OnAttachToPanel( evt => {
                 view.Name.Value = profileSettings.Name;
                 view.Name.SetValid( profileSettings.IsNameValid( view.Name.Value ) );
             } );

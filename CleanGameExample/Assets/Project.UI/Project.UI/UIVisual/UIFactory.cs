@@ -6,6 +6,7 @@ namespace Project.UI {
     using System.Linq;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.UI;
     using UnityEngine.ResourceManagement.AsyncOperations;
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
@@ -27,6 +28,8 @@ namespace Project.UI {
 
         // System
         public static Func<object?, string?>? StringSelector { get; set; }
+        public static event Action<UIViewBase>? OnViewAttach;
+        public static event Action<UIViewBase>? OnViewDetach;
         // Globals
         private AudioSource AudioSource { get; set; } = default!;
 
@@ -62,71 +65,71 @@ namespace Project.UI {
             //Addressables2.Release( tik );
         }
 
-        // VisualElement
-        public VisualElement VisualElement() {
-            var result = Create<VisualElement>( null );
+        // Widget
+        public Widget Widget(UIViewBase view) {
+            var result = Create<Widget>( view, "widget", "widget" );
+            return result;
+        }
+        public Widget LeftWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "left-widget", "left-widget" );
+            return result;
+        }
+        public Widget SmallWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "small-widget", "small-widget" );
+            return result;
+        }
+        public Widget MediumWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "medium-widget", "medium-widget" );
+            return result;
+        }
+        public Widget LargeWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "large-widget", "large-widget" );
             return result;
         }
 
         // Widget
-        public Widget Widget(string name) {
-            var result = Create<Widget>( name );
-            return result;
-        }
-        public Widget LeftWidget(string name) {
-            var result = Create<Widget>( name, "left-widget" );
-            return result;
-        }
-        public Widget SmallWidget(string name) {
-            var result = Create<Widget>( name, "small-widget" );
-            return result;
-        }
-        public Widget MediumWidget(string name) {
-            var result = Create<Widget>( name, "medium-widget" );
-            return result;
-        }
-        public Widget LargeWidget(string name) {
-            var result = Create<Widget>( name, "large-widget" );
-            return result;
-        }
-
-        // Widget
-        public Widget DialogWidget() {
-            var result = Create<Widget>( "dialog-widget", "dialog-widget" );
+        public Widget DialogWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "dialog-widget", "dialog-widget" );
             result.OnAttachToPanel( PlayDialog );
             return result;
         }
-        public Widget InfoDialogWidget() {
-            var result = Create<Widget>( "info-dialog-widget", "info-dialog-widget" );
+        public Widget InfoDialogWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "info-dialog-widget", "info-dialog-widget" );
             result.OnAttachToPanel( PlayInfoDialog );
             return result;
         }
-        public Widget WarningDialogWidget() {
-            var result = Create<Widget>( "warning-dialog-widget", "warning-dialog-widget" );
+        public Widget WarningDialogWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "warning-dialog-widget", "warning-dialog-widget" );
             result.OnAttachToPanel( PlayWarningDialog );
             return result;
         }
-        public Widget ErrorDialogWidget() {
-            var result = Create<Widget>( "error-dialog-widget", "error-dialog-widget" );
+        public Widget ErrorDialogWidget(UIViewBase view) {
+            var result = Create<Widget>( view, "error-dialog-widget", "error-dialog-widget" );
             result.OnAttachToPanel( PlayErrorDialog );
+            return result;
+        }
+
+        // View
+        public VisualElement View(UIViewBase view) {
+            var result = Create<VisualElement>( view, "view", "view" );
             return result;
         }
 
         // Card
         public Card Card() {
-            var result = Create<Card>( "card" );
+            var result = Create<Card>( "card", "card" );
             return result;
         }
         public Header Header() {
-            var result = Create<Header>( "header" );
+            var result = Create<Header>( "header", "header" );
             return result;
         }
         public Content Content() {
-            var result = Create<Content>( "content" );
+            var result = Create<Content>( "content", "content" );
             return result;
         }
         public Footer Footer() {
-            var result = Create<Footer>( "footer" );
+            var result = Create<Footer>( "footer", "footer" );
             return result;
         }
 
@@ -150,11 +153,11 @@ namespace Project.UI {
 
         // TabView
         public TabView TabView() {
-            var result = Create<TabView>( "tab-view" );
+            var result = Create<TabView>( "tab-view", null );
             return result;
         }
         public Tab Tab(string label) {
-            var result = Create<Tab>( "tab" );
+            var result = Create<Tab>( "tab", null );
             result.label = label;
             result.tabHeader.OnMouseDown( PlayClick );
             return result;
@@ -162,7 +165,7 @@ namespace Project.UI {
 
         // ScrollView
         public ScrollView ScrollView() {
-            var result = Create<ScrollView>( "scroll-view" );
+            var result = Create<ScrollView>( "scroll-view", null );
             result.horizontalScroller.lowButton.OnClick( PlayClick );
             result.horizontalScroller.highButton.OnClick( PlayClick );
             result.horizontalScroller.highButton.BringToFront();
@@ -176,47 +179,47 @@ namespace Project.UI {
 
         // Scope
         public ColumnScope ColumnScope() {
-            var result = Create<ColumnScope>( "scope" );
+            var result = Create<ColumnScope>( "scope", null );
             return result;
         }
         public RowScope RowScope() {
-            var result = Create<RowScope>( "scope" );
+            var result = Create<RowScope>( "scope", null );
             return result;
         }
 
         // Group
         public ColumnGroup ColumnGroup() {
-            var result = Create<ColumnGroup>( "group" );
+            var result = Create<ColumnGroup>( "group", null );
             return result;
         }
         public RowGroup RowGroup() {
-            var result = Create<RowGroup>( "group" );
+            var result = Create<RowGroup>( "group", null );
             return result;
         }
 
         // Box
         public Box Box() {
-            var result = Create<Box>( "box" );
+            var result = Create<Box>( "box", null );
             return result;
         }
 
         // Label
         public Label Label(string? text) {
-            var result = Create<Label>( null );
+            var result = Create<Label>( null, null );
             result.text = text;
             return result;
         }
 
         // Button
         public Button Button(string? text) {
-            var result = Create<Button>( null );
+            var result = Create<Button>( null, null );
             result.text = text;
             result.OnFocus( PlayFocus );
             result.OnClick( PlayClick );
             return result;
         }
         public RepeatButton RepeatButton(string? text) {
-            var result = Create<RepeatButton>( null );
+            var result = Create<RepeatButton>( null, null );
             result.text = text;
             result.OnFocus( PlayFocus );
             result.OnClick( PlayClick );
@@ -225,21 +228,21 @@ namespace Project.UI {
 
         // Select
         public Button Select(string? text) {
-            var result = Create<Button>( null );
+            var result = Create<Button>( null, null );
             result.text = text;
             result.OnFocus( PlayFocus );
             result.OnClick( PlaySelect );
             return result;
         }
         public Button Submit(string? text) {
-            var result = Create<Button>( null );
+            var result = Create<Button>( null, null );
             result.text = text;
             result.OnFocus( PlayFocus );
             result.OnClick( PlaySubmit );
             return result;
         }
         public Button Cancel(string? text) {
-            var result = Create<Button>( null );
+            var result = Create<Button>( null, null );
             result.text = text;
             result.OnFocus( PlayFocus );
             result.OnClick( PlayCancel );
@@ -248,7 +251,7 @@ namespace Project.UI {
 
         // Field
         public TextField TextField(string? label, string? value, int maxLength, bool isMultiline = false, bool isReadOnly = false) {
-            var result = Create<TextField>( null );
+            var result = Create<TextField>( null, null );
             result.label = label;
             result.value = value;
             result.maxLength = maxLength;
@@ -259,7 +262,7 @@ namespace Project.UI {
             return result;
         }
         public PopupField<object?> PopupField(string? label, object? value, params object?[] choices) {
-            var result = Create<PopupField<object?>>( null );
+            var result = Create<PopupField<object?>>( null, null );
             result.formatSelectedValueCallback = StringSelector;
             result.formatListItemCallback = StringSelector;
             result.label = label;
@@ -270,7 +273,7 @@ namespace Project.UI {
             return result;
         }
         public DropdownField DropdownField(string? label, string? value, params string?[] choices) {
-            var result = Create<DropdownField>( null );
+            var result = Create<DropdownField>( null, null );
             result.formatSelectedValueCallback = StringSelector;
             result.formatListItemCallback = StringSelector;
             result.label = label;
@@ -281,7 +284,7 @@ namespace Project.UI {
             return result;
         }
         public Slider SliderField(string? label, float value, float min, float max) {
-            var result = Create<Slider>( null );
+            var result = Create<Slider>( null, null );
             result.label = label;
             result.value = value;
             result.lowValue = min;
@@ -291,7 +294,7 @@ namespace Project.UI {
             return result;
         }
         public SliderInt IntSliderField(string? label, int value, int min, int max) {
-            var result = Create<SliderInt>( null );
+            var result = Create<SliderInt>( null, null );
             result.label = label;
             result.value = value;
             result.lowValue = min;
@@ -301,7 +304,7 @@ namespace Project.UI {
             return result;
         }
         public Toggle ToggleField(string? label, bool value) {
-            var result = Create<Toggle>( null );
+            var result = Create<Toggle>( null, null );
             result.label = label;
             result.value = value;
             result.OnFocus( PlayFocus );
@@ -405,7 +408,20 @@ namespace Project.UI {
             animation.Start();
         }
         // Helpers
-        private static T Create<T>(string? name, string? @class = null) where T : VisualElement, new() {
+        private static T Create<T>(UIViewBase view, string? name, string? @class) where T : VisualElement, new() {
+            var result = new T();
+            result.name = name;
+            result.AddToClassList( "visual-element" );
+            result.AddToClassList( @class );
+            result.OnAttachToPanel( evt => {
+                OnViewAttach?.Invoke( view );
+            } );
+            result.OnDetachFromPanel( evt => {
+                OnViewDetach?.Invoke( view );
+            } );
+            return result;
+        }
+        private static T Create<T>(string? name, string? @class) where T : VisualElement, new() {
             var result = new T();
             result.name = name;
             result.AddToClassList( "visual-element" );

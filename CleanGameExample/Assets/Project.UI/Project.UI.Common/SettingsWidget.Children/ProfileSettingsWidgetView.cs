@@ -9,13 +9,13 @@ namespace Project.UI.Common {
     public class ProfileSettingsWidgetView : UIViewBase {
 
         // View
-        public ElementWrapper Group { get; }
+        public ElementWrapper Root { get; }
         public TextFieldWrapper<string> Name { get; }
 
         // Constructor
         public ProfileSettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.ProfileSettingsWidget( out var group, out var name );
-            Group = group.Wrap();
+            VisualElement = factory.ProfileSettingsWidget( this, out var root, out var name );
+            Root = root.Wrap();
             Name = name.Wrap();
         }
         public override void Dispose() {

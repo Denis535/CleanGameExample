@@ -42,7 +42,7 @@ namespace Project.UI.Common {
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, UIFactory factory, Globals.VideoSettings videoSettings) {
             var view = new VideoSettingsWidgetView( factory );
-            view.Group.OnAttachToPanel( evt => {
+            view.Root.OnAttachToPanel( evt => {
                 view.IsFullScreen.Value = videoSettings.IsFullScreen;
                 view.ScreenResolution.ValueChoices = (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray());
                 view.IsVSync.Value = videoSettings.IsVSync;

@@ -14,15 +14,13 @@ namespace Project.UI.Common {
 
         // Constructor
         public RootWidget2() {
-            UIViewBase.OnVisualElementAssignedEvent += (UIViewBase view, VisualElement element) => {
-                element.OnAttachToPanel( evt => {
-                    if (element.focusController.focusedElement != null) return;
-                    if (element.LoadFocus()) return;
-                    View.__GetVisualElement__().Focus2();
-                } );
-                element.OnDetachFromPanel( evt => {
-                    element.SaveFocus();
-                } );
+            UIFactory.OnViewAttach += view => {
+                if (view.__GetVisualElement__().focusController.focusedElement != null) return;
+                if (view.__GetVisualElement__().LoadFocus()) return;
+                View.__GetVisualElement__().Focus2();
+            };
+            UIFactory.OnViewDetach += view => {
+                view.__GetVisualElement__().SaveFocus();
             };
         }
         public override void Dispose() {

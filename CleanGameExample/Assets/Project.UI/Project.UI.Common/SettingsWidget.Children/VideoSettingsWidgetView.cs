@@ -9,15 +9,15 @@ namespace Project.UI.Common {
     public class VideoSettingsWidgetView : UIViewBase {
 
         // View
-        public ElementWrapper Group { get; }
+        public ElementWrapper Root { get; }
         public ToggleFieldWrapper<bool> IsFullScreen { get; }
         public PopupFieldWrapper<object> ScreenResolution { get; }
         public ToggleFieldWrapper<bool> IsVSync { get; }
 
         // Constructor
         public VideoSettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.VideoSettingsWidget( out var group, out var isFullScreen, out var screenResolution, out var isVSync );
-            Group = group.Wrap();
+            VisualElement = factory.VideoSettingsWidget( this, out var root, out var isFullScreen, out var screenResolution, out var isVSync );
+            Root = root.Wrap();
             IsFullScreen = isFullScreen.Wrap();
             ScreenResolution = screenResolution.Wrap();
             IsVSync = isVSync.Wrap();

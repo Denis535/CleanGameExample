@@ -21,7 +21,7 @@ namespace Project.UI.Common {
         // Constructor
         public DialogWidgetViewBase(UIFactory factory) {
             if (this is DialogWidgetView) {
-                VisualElement = factory.DialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = factory.DialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
@@ -30,7 +30,7 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
-                VisualElement = factory.InfoDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = factory.InfoDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
@@ -39,7 +39,7 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
-                VisualElement = factory.WarningDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = factory.WarningDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
@@ -48,7 +48,7 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
-                VisualElement = factory.ErrorDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = factory.ErrorDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();

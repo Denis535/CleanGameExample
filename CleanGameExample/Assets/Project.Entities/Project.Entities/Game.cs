@@ -3,11 +3,15 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Environment;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
 
+        // Globals
+        private World? World { get; set; }
+        private Player? Player { get; set; }
         // State
         public bool IsPlaying { get; private set; }
         public bool IsPaused { get; private set; }
@@ -26,8 +30,10 @@ namespace Project.Entities {
         }
 
         // StartGame
-        public void StartGame() {
+        public void StartGame(World world, Player player) {
             Assert.Operation.Message( $"IsPlaying {IsPlaying} must be false" ).Valid( !IsPlaying );
+            World = world;
+            Player = player;
             IsPlaying = true;
         }
         public void StopGame() {

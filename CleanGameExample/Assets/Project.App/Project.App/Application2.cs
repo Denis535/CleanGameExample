@@ -5,10 +5,10 @@ namespace Project.App {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Project.Entities;
+    using Project.Entities.Environment;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.App;
-    using UnityEngine.ResourceManagement.AsyncOperations;
 
     public class Application2 : ApplicationBase {
 
@@ -49,35 +49,29 @@ namespace Project.App {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Cursor.lockState = CursorLockMode.Locked;
             switch (level) {
-                case Level.Level1:
-                    var gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
-                    Game = gameObject.RequireComponent<Game>();
-                    Game.StartGame();
+                case Level.Level1: {
+                    Game = new GameObject().AddComponent<Game>();
+                    var world = Game.gameObject.GetComponent<World>();
+                    var player = Game.gameObject.AddComponent<Player>();
+                    Game.StartGame( world, player );
                     break;
-                case Level.Level2:
-                    gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
-                    Game = gameObject.RequireComponent<Game>();
-                    Game.StartGame();
+                }
+                case Level.Level2: {
+                    Game = new GameObject().AddComponent<Game>();
+                    var world = Game.gameObject.GetComponent<World>();
+                    var player = Game.gameObject.AddComponent<Player>();
+                    Game.StartGame( world, player );
                     break;
-                case Level.Level3:
-                    gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
-                    Game = gameObject.RequireComponent<Game>();
-                    Game.StartGame();
+                }
+                case Level.Level3: {
+                    Game = new GameObject().AddComponent<Game>();
+                    var world = Game.gameObject.GetComponent<World>();
+                    var player = Game.gameObject.AddComponent<Player>();
+                    Game.StartGame( world, player );
                     break;
+                }
                 default:
                     throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
-            }
-            switch (character) {
-                case Character.White:
-                    break;
-                case Character.Red:
-                    break;
-                case Character.Green:
-                    break;
-                case Character.Blue:
-                    break;
-                default:
-                    throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }
         public void StopGame() {

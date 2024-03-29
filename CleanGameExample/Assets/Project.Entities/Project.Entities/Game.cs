@@ -10,8 +10,8 @@ namespace Project.Entities {
     public class Game : GameBase {
 
         // Globals
-        private World? World { get; set; }
         private Player? Player { get; set; }
+        private World? World { get; set; }
         // State
         public bool IsPlaying { get; private set; }
         public bool IsPaused { get; private set; }
@@ -30,10 +30,10 @@ namespace Project.Entities {
         }
 
         // StartGame
-        public void StartGame(World world, Player player) {
+        public void StartGame(Player player, World world) {
             Assert.Operation.Message( $"IsPlaying {IsPlaying} must be false" ).Valid( !IsPlaying );
-            World = world;
             Player = player;
+            World = world;
             IsPlaying = true;
         }
         public void StopGame() {

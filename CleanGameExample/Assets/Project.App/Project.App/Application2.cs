@@ -50,24 +50,24 @@ namespace Project.App {
             Cursor.lockState = CursorLockMode.Locked;
             switch (level) {
                 case Level.Level1: {
-                    Game = new GameObject().AddComponent<Game>();
-                    var world = Game.gameObject.GetComponent<World>();
+                    Game = new GameObject( "Game" ).AddComponent<Game>();
                     var player = Game.gameObject.AddComponent<Player>();
-                    Game.StartGame( world, player );
+                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
+                    Game.StartGame( player, world );
                     break;
                 }
                 case Level.Level2: {
-                    Game = new GameObject().AddComponent<Game>();
-                    var world = Game.gameObject.GetComponent<World>();
+                    Game = new GameObject( "Game" ).AddComponent<Game>();
                     var player = Game.gameObject.AddComponent<Player>();
-                    Game.StartGame( world, player );
+                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
+                    Game.StartGame( player, world );
                     break;
                 }
                 case Level.Level3: {
-                    Game = new GameObject().AddComponent<Game>();
-                    var world = Game.gameObject.GetComponent<World>();
+                    Game = new GameObject( "Game" ).AddComponent<Game>();
                     var player = Game.gameObject.AddComponent<Player>();
-                    Game.StartGame( world, player );
+                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
+                    Game.StartGame( player, world );
                     break;
                 }
                 default:

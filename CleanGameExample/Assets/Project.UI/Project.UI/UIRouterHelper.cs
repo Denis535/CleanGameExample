@@ -15,12 +15,12 @@ namespace Project.UI {
         private static AsyncOperationHandle<SceneInstance>? programHandle;
         private static AsyncOperationHandle<SceneInstance>? mainSceneHandle;
         private static AsyncOperationHandle<SceneInstance>? gameSceneHandle;
-        private static AsyncOperationHandle<SceneInstance>? worldSceneHandle;
+        private static AsyncOperationHandle<SceneInstance>? levelSceneHandle;
 
         public static bool IsProgramLoaded => programHandle != null;
         public static bool IsMainSceneLoaded => mainSceneHandle != null;
         public static bool IsGameSceneLoaded => gameSceneHandle != null;
-        public static bool IsWorldSceneLoaded => worldSceneHandle != null;
+        public static bool IsLevelSceneLoaded => levelSceneHandle != null;
 
         // LoadScene
         public static async Task LoadProgramAsync() {
@@ -41,10 +41,10 @@ namespace Project.UI {
             var gameScene = await gameSceneHandle.Value.GetResultAsync( default );
             SceneManager.SetActiveScene( gameScene.Scene );
         }
-        public static async Task LoadWorldSceneAsync(string key) {
-            Assert.Operation.Message( $"WorldSceneHandle {worldSceneHandle} must be null" ).Valid( worldSceneHandle == null );
-            worldSceneHandle = Addressables2.LoadSceneAsync( key, LoadSceneMode.Additive, true );
-            var worldScene = await worldSceneHandle.Value.GetResultAsync( default );
+        public static async Task LoadLevelSceneAsync(string key) {
+            Assert.Operation.Message( $"LevelSceneHandle {levelSceneHandle} must be null" ).Valid( levelSceneHandle == null );
+            levelSceneHandle = Addressables2.LoadSceneAsync( key, LoadSceneMode.Additive, true );
+            var levelScene = await levelSceneHandle.Value.GetResultAsync( default );
         }
 
         // UnloadScene
@@ -60,11 +60,11 @@ namespace Project.UI {
             await Addressables2.UnloadSceneAsync( gameSceneHandle.Value ).WaitAsync( default );
             gameSceneHandle = null;
         }
-        public static async Task UnloadWorldSceneAsync() {
-            Assert.Operation.Message( $"WorldSceneHandle {worldSceneHandle} must be non-null" ).Valid( worldSceneHandle != null );
-            Assert.Operation.Message( $"WorldSceneHandle {worldSceneHandle} must be valid" ).Valid( worldSceneHandle.Value.IsValid() );
-            await Addressables2.UnloadSceneAsync( worldSceneHandle.Value ).WaitAsync( default );
-            worldSceneHandle = null;
+        public static async Task UnloadLevelSceneAsync() {
+            Assert.Operation.Message( $"LevelSceneHandle {levelSceneHandle} must be non-null" ).Valid( levelSceneHandle != null );
+            Assert.Operation.Message( $"LevelSceneHandle {levelSceneHandle} must be valid" ).Valid( levelSceneHandle.Value.IsValid() );
+            await Addressables2.UnloadSceneAsync( levelSceneHandle.Value ).WaitAsync( default );
+            levelSceneHandle = null;
         }
 
     }

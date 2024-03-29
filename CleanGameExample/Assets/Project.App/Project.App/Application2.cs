@@ -45,27 +45,27 @@ namespace Project.App {
         }
 
         // StartGame
-        public void StartGame(World world, Character character) {
+        public void StartGame(Level level, Character character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Cursor.lockState = CursorLockMode.Locked;
-            switch (world) {
-                case World.World1:
+            switch (level) {
+                case Level.Level1:
                     var gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
                     Game = gameObject.RequireComponent<Game>();
                     Game.StartGame();
                     break;
-                case World.World2:
+                case Level.Level2:
                     gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
                     Game = gameObject.RequireComponent<Game>();
                     Game.StartGame();
                     break;
-                case World.World3:
+                case Level.Level3:
                     gameObject = Addressables2.InstantiateAsync( R.Project.Entities.Game ).GetResult( null, null );
                     Game = gameObject.RequireComponent<Game>();
                     Game.StartGame();
                     break;
                 default:
-                    throw Exceptions.Internal.NotSupported( $"World {world} is not supported" );
+                    throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
             switch (character) {
                 case Character.White:
@@ -101,11 +101,11 @@ namespace Project.App {
         }
 
     }
-    // World
-    public enum World {
-        World1,
-        World2,
-        World3
+    // Level
+    public enum Level {
+        Level1,
+        Level2,
+        Level3
     }
     // Character
     public enum Character {

@@ -98,7 +98,7 @@ namespace Project.UI {
                 if (UIRouterHelper.IsGameSceneLoaded) {
                     // UnloadGameScene
                     await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadWorldSceneAsync();
+                    await UIRouterHelper.UnloadLevelSceneAsync();
                 }
                 {
                     // LoadMainScene
@@ -107,7 +107,7 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoaded;
         }
-        public async Task LoadGameSceneAsync(World world, Character character) {
+        public async Task LoadGameSceneAsync(Level level, Character character) {
             Release.LogFormat( "Load: GameScene" );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
@@ -118,12 +118,12 @@ namespace Project.UI {
                 {
                     // LoadGameScene
                     await Task.Delay( 3_000 );
-                    await UIRouterHelper.LoadWorldSceneAsync( GetWorldAddress( world ) );
+                    await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
                     await UIRouterHelper.LoadGameSceneAsync();
                 }
             }
             State = UIRouterState.GameSceneLoaded;
-            Application.StartGame( world, character );
+            Application.StartGame( level, character );
         }
 
 #if UNITY_EDITOR
@@ -159,7 +159,7 @@ namespace Project.UI {
                 if (UIRouterHelper.IsGameSceneLoaded) {
                     // UnloadGameScene
                     await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadWorldSceneAsync();
+                    await UIRouterHelper.UnloadLevelSceneAsync();
                 }
             }
             State = UIRouterState.Quited;
@@ -171,12 +171,12 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static string GetWorldAddress(World world) {
-            return world switch {
-                World.World1 => R.Project.Scenes.Worlds.World_01,
-                World.World2 => R.Project.Scenes.Worlds.World_02,
-                World.World3 => R.Project.Scenes.Worlds.World_03,
-                _ => throw Exceptions.Internal.NotSupported( $"World {world} is not supported" ),
+        private static string GetLevelAddress(Level level) {
+            return level switch {
+                Level.Level1 => R.Project.Scenes.Worlds.World_01,
+                Level.Level2 => R.Project.Scenes.Worlds.World_02,
+                Level.Level3 => R.Project.Scenes.Worlds.World_03,
+                _ => throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" ),
             };
         }
 

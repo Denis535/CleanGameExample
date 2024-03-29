@@ -77,39 +77,39 @@ namespace Project.UI.MainScreen {
                 widget.View.Title.Text = "Select Level";
             } );
             view.Level1.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
             } );
             view.Level2.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
             } );
             view.Level3.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, World.World1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIFactory factory, UIRouter router, World world) {
+        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIFactory factory, UIRouter router, Level level) {
             var view = new MainMenuWidgetView_SelectYourCharacterView( factory );
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
             } );
             view.White.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( world, Character.White ).Throw();
+                router.LoadGameSceneAsync( level, Character.White ).Throw();
             } );
             view.Red.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( world, Character.Red ).Throw();
+                router.LoadGameSceneAsync( level, Character.Red ).Throw();
             } );
             view.Green.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( world, Character.Green ).Throw();
+                router.LoadGameSceneAsync( level, Character.Green ).Throw();
             } );
             view.Blue.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( world, Character.Blue ).Throw();
+                router.LoadGameSceneAsync( level, Character.Blue ).Throw();
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();

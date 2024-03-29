@@ -4,7 +4,7 @@ namespace Project.App {
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Project.Entities.GameScene;
+    using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.App;
 

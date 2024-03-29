@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.GameScene {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;

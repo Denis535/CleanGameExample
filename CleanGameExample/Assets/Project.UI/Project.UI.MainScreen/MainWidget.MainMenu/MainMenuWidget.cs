@@ -5,7 +5,6 @@ namespace Project.UI.MainScreen {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Project.App;
-    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework;
     using UnityEngine.Framework.UI;

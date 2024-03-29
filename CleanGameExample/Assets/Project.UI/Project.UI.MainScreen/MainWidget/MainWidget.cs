@@ -6,7 +6,6 @@ namespace Project.UI.MainScreen {
     using System.Linq;
     using System.Threading.Tasks;
     using Project.App;
-    using Project.UI.Common;
     using Unity.Services.Authentication;
     using Unity.Services.Core;
     using UnityEngine;

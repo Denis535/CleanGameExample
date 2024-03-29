@@ -5,7 +5,7 @@ namespace Project {
     using System.Collections;
     using System.Collections.Generic;
     using Project.App;
-    using Project.Entities.GameScene;
+    using Project.Entities;
     using Project.UI;
     using UnityEngine;
     using UnityEngine.Framework;

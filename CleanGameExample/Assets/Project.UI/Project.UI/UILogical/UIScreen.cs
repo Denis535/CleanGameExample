@@ -4,7 +4,6 @@ namespace Project.UI {
     using System.Collections;
     using System.Collections.Generic;
     using Project.App;
-    using Project.UI.Common;
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
     using UnityEngine;

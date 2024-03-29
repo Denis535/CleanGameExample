@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7aad2e07666b7854080cef1732678100
-    m_Address: Project.UI.Common
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 925374fb0fa1f8e40b9210efb3615f67
     m_Address: Project.UI.MainScreen
     m_ReadOnly: 0

@@ -40,6 +40,9 @@ namespace UnityEngine.AddressableAssets {
                     public const string @ThemeStyleSheet = "Project.UI/ThemeStyleSheets/ThemeStyleSheet.tss";
                 }
             }
+            public static class @Entities {
+                public const string @Game = "Project.Entities/Game.prefab";
+            }
             public static class @Scenes {
                 public const string @Program = "Project.Scenes/Program.unity";
                 public const string @MainScene = "Project.Scenes/MainScene.unity";

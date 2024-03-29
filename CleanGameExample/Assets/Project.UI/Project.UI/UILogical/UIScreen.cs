@@ -16,6 +16,8 @@ namespace Project.UI {
         // Globals
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
+        // Widget
+        private new RootWidget2? Widget => (RootWidget2?) base.Widget;
         // State
         public UIScreenState State => GetState( Router.State );
         private ValueTracker2<UIScreenState, UIScreen> StateTracker { get; } = new ValueTracker2<UIScreenState, UIScreen>( i => i.State );
@@ -49,10 +51,7 @@ namespace Project.UI {
                     Widget!.AttachChild( new GameWidget() );
                 }
             }
-            foreach (var descendant in Widget!.Descendants) {
-                (descendant as MainWidget)?.Update();
-                (descendant as GameWidget)?.Update();
-            }
+            Widget!.Update();
         }
 
         // AttachWidget
@@ -61,15 +60,12 @@ namespace Project.UI {
             AddVisualElement( Document, widget.__GetView__()!.__GetVisualElement__()! );
         }
         protected override void __DetachWidget__(UIWidgetBase widget, object? argument) {
-            if (Document) {
-                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
-                return;
+            if (Document && Document.rootVisualElement != null) {
+                RemoveVisualElement( Document, widget.__GetView__()!.__GetVisualElement__()! );
+            } else {
+                if (!Document) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
+                if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
             }
-            if (Document.rootVisualElement != null) {
-                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
-                return;
-            }
-            RemoveVisualElement( Document, widget.__GetView__()!.__GetVisualElement__()! );
             base.__DetachWidget__( widget, argument );
         }
 

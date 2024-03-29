@@ -78,5 +78,13 @@ namespace Project.UI.Common {
             }
         }
 
+        // Update
+        public void Update() {
+            foreach (var child in Children) {
+                (child as MainWidget)?.Update();
+                (child as GameWidget)?.Update();
+            }
+        }
+
     }
 }

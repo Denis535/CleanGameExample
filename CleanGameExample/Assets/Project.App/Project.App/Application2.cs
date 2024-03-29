@@ -7,7 +7,6 @@ namespace Project.App {
     using Project.Entities;
     using Project.Entities.Environment;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.App;
 
     public class Application2 : ApplicationBase {
@@ -50,24 +49,30 @@ namespace Project.App {
             Cursor.lockState = CursorLockMode.Locked;
             switch (level) {
                 case Level.Level1: {
-                    Game = new GameObject( "Game" ).AddComponent<Game>();
-                    var player = Game.gameObject.AddComponent<Player>();
                     var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    Game.StartGame( player, world );
+                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
+                    var game = obj.RequireComponent<Game>();
+                    var player = obj.RequireComponent<Player>();
+                    Game = game;
+                    Game.StartGame( world, player );
                     break;
                 }
                 case Level.Level2: {
-                    Game = new GameObject( "Game" ).AddComponent<Game>();
-                    var player = Game.gameObject.AddComponent<Player>();
                     var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    Game.StartGame( player, world );
+                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
+                    var game = obj.RequireComponent<Game>();
+                    var player = obj.RequireComponent<Player>();
+                    Game = game;
+                    Game.StartGame( world, player );
                     break;
                 }
                 case Level.Level3: {
-                    Game = new GameObject( "Game" ).AddComponent<Game>();
-                    var player = Game.gameObject.AddComponent<Player>();
                     var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    Game.StartGame( player, world );
+                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
+                    var game = obj.RequireComponent<Game>();
+                    var player = obj.RequireComponent<Player>();
+                    Game = game;
+                    Game.StartGame( world, player );
                     break;
                 }
                 default:
@@ -77,7 +82,6 @@ namespace Project.App {
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             Game.StopGame();
-            Addressables2.ReleaseInstance( Game.gameObject );
             Game = null;
             Cursor.lockState = CursorLockMode.None;
         }

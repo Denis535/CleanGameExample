@@ -18,7 +18,6 @@ namespace Project.UI {
 
         // Globals
         private Application2 Application { get; set; } = default!;
-
         // State
         public UIRouterState State {
             get {

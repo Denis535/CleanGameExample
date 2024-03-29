@@ -3,7 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Environment;
+    using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 

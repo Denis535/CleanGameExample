@@ -5,7 +5,7 @@ namespace Project.App {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Project.Entities;
-    using Project.Entities.Environment;
+    using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.App;
 
@@ -13,9 +13,7 @@ namespace Project.App {
 
         // Game
         private Game? Game { get; set; }
-        [MemberNotNullWhen( true, "Game" )]
-        public bool IsGameRunning => Game is not null;
-        // Game/State
+        [MemberNotNullWhen( true, "Game" )] public bool IsGameRunning => Game is not null;
         public bool IsGamePlaying {
             get {
                 Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
@@ -47,37 +45,8 @@ namespace Project.App {
         public void StartGame(Level level, Character character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Cursor.lockState = CursorLockMode.Locked;
-            switch (level) {
-                case Level.Level1: {
-                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
-                    var game = obj.RequireComponent<Game>();
-                    var player = obj.RequireComponent<Player>();
-                    Game = game;
-                    Game.StartGame( world, player );
-                    break;
-                }
-                case Level.Level2: {
-                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
-                    var game = obj.RequireComponent<Game>();
-                    var player = obj.RequireComponent<Player>();
-                    Game = game;
-                    Game.StartGame( world, player );
-                    break;
-                }
-                case Level.Level3: {
-                    var world = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
-                    var obj = new GameObject( "Game", typeof( Game ), typeof( Player ) );
-                    var game = obj.RequireComponent<Game>();
-                    var player = obj.RequireComponent<Player>();
-                    Game = game;
-                    Game.StartGame( world, player );
-                    break;
-                }
-                default:
-                    throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
-            }
+            Game = GetGame( level );
+            Game.StartGame( GetWorld(), GetPlayer( Game, character ) );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
@@ -96,6 +65,43 @@ namespace Project.App {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             Game.UnPause();
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        // Helpers
+        private static Game GetGame(Level level) {
+            switch (level) {
+                case Level.Level1: {
+                    var gameObject = new GameObject( "Game" );
+                    return gameObject.AddComponent<Game>();
+                }
+                case Level.Level2: {
+                    var gameObject = new GameObject( "Game" );
+                    return gameObject.AddComponent<Game>();
+                }
+                case Level.Level3: {
+                    var gameObject = new GameObject( "Game" );
+                    return gameObject.AddComponent<Game>();
+                }
+                default:
+                    throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
+            }
+        }
+        private static World GetWorld() {
+            return GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
+        }
+        private static Player GetPlayer(Game game, Character character) {
+            switch (character) {
+                case Character.White:
+                    return game.gameObject.AddComponent<Player>();
+                case Character.Red:
+                    return game.gameObject.AddComponent<Player>();
+                case Character.Green:
+                    return game.gameObject.AddComponent<Player>();
+                case Character.Blue:
+                    return game.gameObject.AddComponent<Player>();
+                default:
+                    throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
+            }
         }
 
     }

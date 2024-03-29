@@ -12,6 +12,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MainWidget : UIWidgetBase<MainWidgetView> {
 
@@ -36,8 +37,6 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override async void OnAttach(object? argument) {
-            UIFactory.OnViewAttach += OnViewAttach;
-            UIFactory.OnViewDetach += OnViewDetach;
             // await MainScene
             if (!Router.IsMainSceneLoaded) {
                 while (!Router.IsMainSceneLoaded) {
@@ -72,22 +71,11 @@ namespace Project.UI.MainScreen {
             this.AttachChild( new MainMenuWidget() );
         }
         public override void OnDetach(object? argument) {
-            UIFactory.OnViewAttach -= OnViewAttach;
-            UIFactory.OnViewDetach -= OnViewDetach;
         }
 
-        // OnViewAttach
-        private void OnViewAttach(UIViewBase view) {
-            OnViewChanged();
-        }
-        private void OnViewDetach(UIViewBase view) {
-            OnViewChanged();
-        }
-
-        // OnViewChanged
-        private void OnViewChanged() {
-            var root = (RootWidget2) Parent!;
-            var widget = root.Widgets.LastOrDefault();
+        // Update
+        public void Update() {
+            var widget = Descendants.FirstOrDefault( i => i.__GetView__()?.__GetVisualElement__().IsAttached() ?? false );
             if (widget is MainMenuWidget mainMenuWidget) {
                 var view = mainMenuWidget.__GetView__().ContentSlot.Peek();
                 if (view is MainMenuWidgetView_MainMenuView) {
@@ -95,15 +83,15 @@ namespace Project.UI.MainScreen {
                     return;
                 }
                 if (view is MainMenuWidgetView_StartGameView) {
-                    View.SetEffect( Color.white, default, 0, 1.1f );
+                    View.SetEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectLevelView) {
-                    View.SetEffect( Color.white, default, 0, 1.2f );
+                    View.SetEffect( Color.white, default, 2, 1.2f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectYourCharacterView) {
-                    View.SetEffect( Color.white, default, 0, 1.3f );
+                    View.SetEffect( Color.white, default, 3, 1.3f );
                     return;
                 }
             }
@@ -112,14 +100,10 @@ namespace Project.UI.MainScreen {
                 return;
             }
             if (widget is SettingsWidget) {
-                View.SetEffect( Color.white, default, 0, 1.1f );
+                View.SetEffect( Color.white, default, 1, 1.1f );
                 return;
             }
             View.SetEffect( Color.white, default, 0, 1 );
-        }
-
-        // Update
-        public void Update() {
         }
 
         // Helpers

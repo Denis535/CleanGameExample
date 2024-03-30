@@ -16,7 +16,7 @@ namespace Project.UI {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         // Widget
-        private new RootWidget2? Widget => (RootWidget2?) base.Widget;
+        private new UIRootWidget2? Widget => (UIRootWidget2?) base.Widget;
         // State
         public UIScreenState State => GetState( Router.State );
         private ValueTracker2<UIScreenState, UIScreen> StateTracker { get; } = new ValueTracker2<UIScreenState, UIScreen>( i => i.State );
@@ -28,7 +28,7 @@ namespace Project.UI {
             base.Awake();
             Router = this.GetDependencyContainer().Resolve<UIRouter>( null );
             Application = this.GetDependencyContainer().Resolve<Application2>( null );
-            this.AttachWidget( new RootWidget2() );
+            this.AttachWidget( new UIRootWidget2() );
         }
         public new void OnDestroy() {
             Widget?.DetachSelf();

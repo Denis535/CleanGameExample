@@ -17,6 +17,7 @@ namespace Project {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
 
+#if UNITY_EDITOR
         // OnEnterPlaymode
         //[InitializeOnEnterPlayMode]
         //public static void OnEnterPlaymode() {
@@ -30,13 +31,14 @@ namespace Project {
         //    if (scene.name == "GameScene") {
         //    }
         //}
+#endif
 
 #if UNITY_EDITOR
         // OnLoad
         [InitializeOnLoadMethod]
         internal static void OnLoad() {
             if (!EditorApplication.isPlaying) {
-                UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>( "Assets/Project/Assets.Project/Launcher.unity" );
+                //UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>( "Assets/Project/Assets.Project/Launcher.unity" );
                 //EditorSceneManager.playModeStartScene = null;
             }
         }

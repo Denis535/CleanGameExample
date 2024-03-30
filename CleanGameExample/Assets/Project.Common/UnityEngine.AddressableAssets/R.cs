@@ -40,15 +40,17 @@ namespace UnityEngine.AddressableAssets {
                     public const string @ThemeStyleSheet = "Project.UI/ThemeStyleSheets/ThemeStyleSheet.tss";
                 }
             }
+            public static class @Entities {
+                public static class @Worlds {
+                    public const string @World_01 = "Project.Entities.Worlds/World_01.unity";
+                    public const string @World_02 = "Project.Entities.Worlds/World_02.unity";
+                    public const string @World_03 = "Project.Entities.Worlds/World_03.unity";
+                }
+            }
             public static class @Scenes {
                 public const string @Program = "Project.Scenes/Program.unity";
                 public const string @MainScene = "Project.Scenes/MainScene.unity";
                 public const string @GameScene = "Project.Scenes/GameScene.unity";
-                public static class @Worlds {
-                    public const string @World_01 = "Project.Scenes.Worlds/World_01.unity";
-                    public const string @World_02 = "Project.Scenes.Worlds/World_02.unity";
-                    public const string @World_03 = "Project.Scenes.Worlds/World_03.unity";
-                }
             }
         }
     }

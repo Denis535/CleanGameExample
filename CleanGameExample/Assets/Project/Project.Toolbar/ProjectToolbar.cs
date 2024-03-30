@@ -32,17 +32,17 @@ namespace Project.Toolbar {
         }
 
         // LoadScene
-        [MenuItem( "Project/World 1", priority = 100 )]
+        [MenuItem( "Project/World 01", priority = 100 )]
         public static void LoadLevel1() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes.Worlds/World_01.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_01.unity" );
         }
-        [MenuItem( "Project/World 2", priority = 101 )]
+        [MenuItem( "Project/World 02", priority = 101 )]
         public static void LoadLevel2() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes.Worlds/World_02.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_02.unity" );
         }
-        [MenuItem( "Project/World 3", priority = 101 )]
+        [MenuItem( "Project/World 03", priority = 101 )]
         public static void LoadLevel3() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes.Worlds/World_03.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_03.unity" );
         }
 
         // Build

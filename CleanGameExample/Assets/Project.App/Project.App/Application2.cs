@@ -5,16 +5,20 @@ namespace Project.App {
     using System.Collections.Generic;
     using Project.Entities;
     using UnityEngine;
+    using UnityEngine.Framework;
     using UnityEngine.Framework.App;
 
     public class Application2 : ApplicationBase {
 
+        // Camera
+        public Camera2 Camera { get; private set; } = default!;
         // Game
         public Game? Game { get; private set; }
 
         // Awake
         public new void Awake() {
             base.Awake();
+            Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
         }
         public new void OnDestroy() {
             base.OnDestroy();

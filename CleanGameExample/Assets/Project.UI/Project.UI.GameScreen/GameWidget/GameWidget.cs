@@ -14,7 +14,6 @@ namespace Project.UI.GameScreen {
         // Globals
         private UIFactory Factory { get; }
         private Application2 Application { get; }
-        //private Camera2 Camera { get; }
         // Actions
         private InputActions Actions { get; }
 
@@ -22,7 +21,6 @@ namespace Project.UI.GameScreen {
         public GameWidget() {
             Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
             Application = this.GetDependencyContainer().Resolve<Application2>( null );
-            //Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
             View = CreateView( this, Factory );
             Actions = new InputActions();
         }
@@ -70,16 +68,20 @@ namespace Project.UI.GameScreen {
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );
             }
-            //Debug.Log( Actions.Game.Look.ReadValue<Vector2>() );
-            //if (Actions.Game.Move.WasPerformedThisFrame()) {
-            //    Debug.Log( "Move: " + Actions.Game.Move.ReadValue<Vector2>() );
-            //}
-            //if (Actions.Game.Look.WasPerformedThisFrame()) {
-            //    Debug.Log( "Look: " + Actions.Game.Move.ReadValue<Vector2>() );
-            //}
-            //if (Actions.Game.Fire.WasPerformedThisFrame()) {
-            //    Debug.Log( "Fire" );
-            //}
+            if (Application.Game != null && Application.Game.IsPlaying) {
+                Application.Camera.Target = new Vector3( 0, 1, 0 );
+                Application.Camera.LookDelta += Actions.App.Look.ReadValue<Vector2>();
+                Application.Camera.ScrollDelta += Actions.App.ScrollWheel.ReadValue<Vector2>().y;
+                //if (Actions.Game.Move.WasPerformedThisFrame()) {
+                //    Debug.Log( "Move: " + Actions.Game.Move.ReadValue<Vector2>() );
+                //}
+                //if (Actions.Game.Look.WasPerformedThisFrame()) {
+                //    Debug.Log( "Look: " + Actions.Game.Move.ReadValue<Vector2>() );
+                //}
+                //if (Actions.Game.Fire.WasPerformedThisFrame()) {
+                //    Debug.Log( "Fire" );
+                //}
+            }
         }
 
         // Helpers

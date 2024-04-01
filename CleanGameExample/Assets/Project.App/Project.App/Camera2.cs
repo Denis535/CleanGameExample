@@ -9,6 +9,10 @@ namespace Project.App {
     [DefaultExecutionOrder( ScriptExecutionOrders.Application - 1 )]
     public class Camera2 : MonoBehaviour {
 
+        public Vector3? Target { get; set; }
+        public Vector2 LookDelta { get; set; }
+        public float ScrollDelta { get; set; }
+
         // Awake
         public void Awake() {
         }
@@ -19,6 +23,9 @@ namespace Project.App {
         public void Start() {
         }
         public void Update() {
+        }
+        public void LateUpdate() {
+            //Debug.Log( LookDelta + " / " + ScrollDelta );
         }
 
     }

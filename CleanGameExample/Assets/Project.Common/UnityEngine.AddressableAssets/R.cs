@@ -45,6 +45,42 @@ namespace UnityEngine.AddressableAssets {
                     public const string @World_01 = "Project.Entities.Worlds/World_01.unity";
                     public const string @World_02 = "Project.Entities.Worlds/World_02.unity";
                     public const string @World_03 = "Project.Entities.Worlds/World_03.unity";
+                    public static class @Environment {
+                        public static class @Materials {
+                            public const string @Box_Blue = "Project.Entities.Worlds.Environment/Materials/Box_Blue.mat";
+                            public const string @Box_Gray = "Project.Entities.Worlds.Environment/Materials/Box_Gray.mat";
+                            public const string @Box_Green = "Project.Entities.Worlds.Environment/Materials/Box_Green.mat";
+                            public const string @Box_Orange = "Project.Entities.Worlds.Environment/Materials/Box_Orange.mat";
+                            public const string @Box_Red = "Project.Entities.Worlds.Environment/Materials/Box_Red.mat";
+                            public const string @Box_Yellow = "Project.Entities.Worlds.Environment/Materials/Box_Yellow.mat";
+                            public const string @Grid_Blue = "Project.Entities.Worlds.Environment/Materials/Grid_Blue.mat";
+                            public const string @Grid_Gray = "Project.Entities.Worlds.Environment/Materials/Grid_Gray.mat";
+                            public const string @Grid_Green = "Project.Entities.Worlds.Environment/Materials/Grid_Green.mat";
+                            public const string @Grid_Orange = "Project.Entities.Worlds.Environment/Materials/Grid_Orange.mat";
+                            public const string @Grid_Red = "Project.Entities.Worlds.Environment/Materials/Grid_Red.mat";
+                            public const string @Grid_Yellow = "Project.Entities.Worlds.Environment/Materials/Grid_Yellow.mat";
+                        }
+                        public static class @Textures {
+                            public const string @Box_Blue = "Project.Entities.Worlds.Environment/Textures/Box_Blue.png";
+                            public const string @Box_Gray = "Project.Entities.Worlds.Environment/Textures/Box_Gray.png";
+                            public const string @Box_Green = "Project.Entities.Worlds.Environment/Textures/Box_Green.png";
+                            public const string @Box_Orange = "Project.Entities.Worlds.Environment/Textures/Box_Orange.png";
+                            public const string @Box_Red = "Project.Entities.Worlds.Environment/Textures/Box_Red.png";
+                            public const string @Box_Yellow = "Project.Entities.Worlds.Environment/Textures/Box_Yellow.png";
+                            public const string @Grid_Blue = "Project.Entities.Worlds.Environment/Textures/Grid_Blue.png";
+                            public const string @Grid_Gray = "Project.Entities.Worlds.Environment/Textures/Grid_Gray.png";
+                            public const string @Grid_Green = "Project.Entities.Worlds.Environment/Textures/Grid_Green.png";
+                            public const string @Grid_Orange = "Project.Entities.Worlds.Environment/Textures/Grid_Orange.png";
+                            public const string @Grid_Red = "Project.Entities.Worlds.Environment/Textures/Grid_Red.png";
+                            public const string @Grid_Yellow = "Project.Entities.Worlds.Environment/Textures/Grid_Yellow.png";
+                        }
+                    }
+                }
+                public static class @Characters {
+                    public const string @Character_Blue = "Project.Entities.Characters/Character_Blue.prefab";
+                    public const string @Character_Green = "Project.Entities.Characters/Character_Green.prefab";
+                    public const string @Character_Red = "Project.Entities.Characters/Character_Red.prefab";
+                    public const string @Character_White = "Project.Entities.Characters/Character_White.prefab";
                 }
             }
             public static class @Scenes {

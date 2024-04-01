@@ -14,6 +14,7 @@ namespace Project.UI.GameScreen {
         // Globals
         private UIFactory Factory { get; }
         private Application2 Application { get; }
+        //private Camera2 Camera { get; }
         // Actions
         private InputActions Actions { get; }
 
@@ -21,6 +22,7 @@ namespace Project.UI.GameScreen {
         public GameWidget() {
             Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
             Application = this.GetDependencyContainer().Resolve<Application2>( null );
+            //Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
             View = CreateView( this, Factory );
             Actions = new InputActions();
         }
@@ -32,17 +34,20 @@ namespace Project.UI.GameScreen {
         // OnAttach
         public override void OnAttach(object? argument) {
             Actions.Enable();
+            Cursor.lockState = CursorLockMode.Locked;
         }
         public override void OnDetach(object? argument) {
             Actions.Disable();
+            Cursor.lockState = CursorLockMode.None;
         }
 
         // OnDescendantWidgetAttach
         public override void OnBeforeDescendantAttach(UIWidgetBase descendant) {
             base.OnBeforeDescendantAttach( descendant );
             if (descendant is GameMenuWidget) {
-                Application.Pause();
+                Application.Game!.IsPlaying = false;
                 Actions.Disable();
+                Cursor.lockState = CursorLockMode.None;
             }
         }
         public override void OnAfterDescendantAttach(UIWidgetBase descendant) {
@@ -53,8 +58,9 @@ namespace Project.UI.GameScreen {
         }
         public override void OnAfterDescendantDetach(UIWidgetBase descendant) {
             if (IsAttached && descendant is GameMenuWidget) {
+                Application.Game!.IsPlaying = true;
                 Actions.Enable();
-                Application.UnPause();
+                Cursor.lockState = CursorLockMode.Locked;
             }
             base.OnAfterDescendantDetach( descendant );
         }
@@ -64,6 +70,7 @@ namespace Project.UI.GameScreen {
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );
             }
+            //Debug.Log( Actions.Game.Look.ReadValue<Vector2>() );
             //if (Actions.Game.Move.WasPerformedThisFrame()) {
             //    Debug.Log( "Move: " + Actions.Game.Move.ReadValue<Vector2>() );
             //}

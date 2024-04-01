@@ -17,6 +17,7 @@ namespace Project {
         [SerializeField] private UIFactory uiFactory = default!;
         [SerializeField] private UIRouter uiRouter = default!;
         [SerializeField] private Application2 application = default!;
+        [SerializeField] private new Camera2 camera = default!;
 
         // Globals
         private UITheme UITheme => uiTheme;
@@ -24,6 +25,7 @@ namespace Project {
         private UIFactory UIFactory => uiFactory;
         private UIRouter UIRouter => uiRouter;
         private Application2 Application => application;
+        private Camera2 Camera => camera;
         private Globals Globals { get; set; } = default!;
         private Globals.ProfileSettings ProfileSettings { get; set; } = default!;
         private Globals.VideoSettings VideoSettings { get; set; } = default!;
@@ -76,8 +78,8 @@ namespace Project {
                 Assert.Object.Message( $"Object {Application} must be alive" ).Alive( Application );
                 return Application;
             }
-            if (type == typeof( Camera )) {
-                return Camera.main;
+            if (type == typeof( Camera2 )) {
+                return Camera;
             }
             if (type == typeof( Globals )) {
                 return Globals;

@@ -89,7 +89,7 @@ namespace Project.UI {
         }
         public async Task LoadMainSceneAsync() {
             Release.LogFormat( "Load: MainScene" );
-            if (Application.IsGameRunning) {
+            if (Application.Game != null) {
                 Application.StopGame();
             }
             State = UIRouterState.MainSceneLoading;
@@ -122,7 +122,7 @@ namespace Project.UI {
                 }
             }
             State = UIRouterState.GameSceneLoaded;
-            Application.StartGame( level, character );
+            Application.RunGame( level, character );
         }
 
 #if UNITY_EDITOR
@@ -146,7 +146,7 @@ namespace Project.UI {
         }
 #endif
         private async void OnQuitAsync() {
-            if (Application.IsGameRunning) {
+            if (Application.Game != null) {
                 Application.StopGame();
             }
             State = UIRouterState.Quitting;

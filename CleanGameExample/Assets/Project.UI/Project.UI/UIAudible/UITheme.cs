@@ -72,10 +72,10 @@ namespace Project.UI {
                 if (!AudioSource.isPlaying && IsPlaying && !IsPaused) {
                     PlayNext( GameThemes );
                 }
-                if (Application.IsGamePaused) {
-                    Pause();
-                } else {
+                if (Application.Game!.IsPlaying) {
                     UnPause();
+                } else {
+                    Pause();
                 }
             }
         }

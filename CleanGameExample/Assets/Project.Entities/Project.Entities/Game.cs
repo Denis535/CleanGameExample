@@ -9,48 +9,61 @@ namespace Project.Entities {
 
     public class Game : GameBase {
 
+        private bool isPlaying = true;
+
+        // System
+        private bool IsInitialized { get; set; }
+        public bool IsPlaying {
+            get {
+                return isPlaying;
+            }
+            set {
+                isPlaying = value;
+            }
+        }
         // Globals
-        private World? World { get; set; }
-        private Player? Player { get; set; }
-        // State
-        public bool IsPlaying { get; private set; }
-        public bool IsPaused { get; private set; }
-        public bool IsUnPaused => !IsPaused;
+        private World World { get; set; } = default!;
+        // Player
+        public Player? Player { get; private set; } = default!;
 
         // Awake
         public void Awake() {
+            World = GameObject2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
         }
         public void OnDestroy() {
         }
 
+        // Initialize
+        public void Initialize() {
+            Assert.Object.Message( $"Game {this} must be awakened" ).Initialized( didAwake );
+            Assert.Operation.Message( $"Game {this} must not be initialized" ).Valid( !IsInitialized );
+            IsInitialized = true;
+        }
+        public void Deinitialize() {
+            Assert.Object.Message( $"Game {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
+        }
+
+        // CreatePlayer
+        public T CreatePlayer<T>() where T : Player {
+            Assert.Object.Message( $"Game {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Game {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
+            Assert.Operation.Message( $"Player must be null" ).Valid( Player == null );
+            Player = gameObject.AddComponent<T>();
+            return (T) Player;
+        }
+        public void DestroyPlayer() {
+            Assert.Operation.Message( $"Player must be non-null" ).Valid( Player != null );
+            DestroyImmediate( Player );
+        }
+
         // Start
         public void Start() {
+            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
         }
         public void Update() {
-        }
-
-        // StartGame
-        public void StartGame(World world, Player player) {
-            Assert.Operation.Message( $"IsPlaying {IsPlaying} must be false" ).Valid( !IsPlaying );
-            World = world;
-            Player = player;
-            IsPlaying = true;
-        }
-        public void StopGame() {
-            Assert.Operation.Message( $"IsPlaying {IsPlaying} must be true" ).Valid( IsPlaying );
-            IsPlaying = false;
-        }
-
-        // Pause
-        public void Pause() {
-            Assert.Operation.Message( $"IsPlaying {IsPlaying} must be true" ).Valid( IsPlaying );
-            Assert.Operation.Message( $"IsPaused {IsPaused} must be false" ).Valid( !IsPaused );
-            IsPaused = true;
-        }
-        public void UnPause() {
-            Assert.Operation.Message( $"IsPlaying {IsPlaying} must be true" ).Valid( IsPlaying );
-            Assert.Operation.Message( $"IsPaused {IsPaused} must be true" ).Valid( IsPaused );
-            IsPaused = false;
+            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
         }
 
     }

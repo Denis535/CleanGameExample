@@ -5,7 +5,6 @@ namespace Project {
     using System.Collections;
     using System.Collections.Generic;
     using Project.App;
-    using Project.Entities;
     using Project.UI;
     using UnityEngine;
     using UnityEngine.Framework;
@@ -18,7 +17,6 @@ namespace Project {
         private UIScreen Screen { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
-        private Game? Game => GameObject.FindAnyObjectByType<Game>( FindObjectsInactive.Exclude );
 
         // Awake
         public void Awake() {
@@ -33,20 +31,29 @@ namespace Project {
         // OnGUI
         public void OnGUI() {
             using (new GUILayout.VerticalScope( GUI.skin.box )) {
-                GUILayout.Label( "Fps: " + (1f / Time.smoothDeltaTime).ToString( "000." ) );
-                GUILayout.Space( 2 );
-                GUILayout.Label( "Theme State: " + Theme.State );
-                GUILayout.Label( "Screen State: " + Screen.State );
-                GUILayout.Label( "Router State: " + Router.State );
-                GUILayout.Space( 2 );
-                if (Application.IsGameRunning) {
-                    GUILayout.Label( "Is Game Running: " + Application.IsGameRunning );
-                    GUILayout.Label( "Is Game Playing: " + Application.IsGamePlaying );
-                    GUILayout.Label( "Is Game Paused: " + Application.IsGamePaused );
+                {
+                    // Fps
+                    GUILayout.Label( "Fps: " + (1f / Time.smoothDeltaTime).ToString( "000." ) );
+                    GUILayout.Space( 2 );
                 }
-                //GUILayout.Space( 2 );
-                //GUILayout.Label( "Is Focused: " + UnityEngine.Application.isFocused );
-                //GUILayout.Label( "Focused Element: " + GetFocusedElement()?.Convert( GetDisplayString ) );
+                {
+                    // State
+                    GUILayout.Label( "Theme State: " + Theme.State );
+                    GUILayout.Label( "Screen State: " + Screen.State );
+                    GUILayout.Label( "Router State: " + Router.State );
+                    GUILayout.Space( 2 );
+                }
+                if (Application.Game != null) {
+                    // Game
+                    GUILayout.Label( "Is Game Running: " + true );
+                    GUILayout.Label( "Is Game Playing: " + Application.Game.IsPlaying );
+                    GUILayout.Space( 2 );
+                }
+                {
+                    // Misc
+                    //GUILayout.Label( "Is Focused: " + UnityEngine.Application.isFocused );
+                    //GUILayout.Label( "Focused Element: " + GetFocusedElement()?.Convert( GetDisplayString ) );
+                }
             }
         }
 

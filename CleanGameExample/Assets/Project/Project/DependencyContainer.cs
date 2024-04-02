@@ -3,9 +3,11 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using Project.App;
     using Project.UI;
     using Unity.Services.Authentication;
+    using UnityEditor;
     using UnityEngine;
     using UnityEngine.Framework;
 
@@ -37,12 +39,12 @@ namespace Project {
 
         // Awake
         public void Awake() {
+            IDependencyContainer.Instance = this;
             Globals = new Globals();
             ProfileSettings = new Globals.ProfileSettings();
             VideoSettings = new Globals.VideoSettings();
             AudioSettings = new Globals.AudioSettings();
             Preferences = new Globals.Preferences();
-            IDependencyContainer.Instance = this;
         }
         public void OnDestroy() {
         }
@@ -107,20 +109,23 @@ namespace Project {
             //    return QosService;
             //}
             // Misc
-            if (type == typeof( GameObject )) {
-                var result = GameObject.Find( (string) argument! );
-                if (result is not null) {
-                    Assert.Object.Message( $"Object {result} must be alive" ).Alive( result );
-                }
-                return result;
-            }
             if (type.IsDescendentOf( typeof( MonoBehaviour ) )) {
-                var result = (MonoBehaviour) GameObject.FindAnyObjectByType( type );
+                var result = (MonoBehaviour) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
                 if (result is not null) {
                     Assert.Object.Message( $"Object {result} must be awakened" ).Initialized( result.didAwake );
                     Assert.Object.Message( $"Object {result} must be alive" ).Alive( result );
                 }
                 return result;
+            }
+            if (type.HasElementType && type.GetElementType().IsDescendentOf( typeof( MonoBehaviour ) )) {
+                var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+                foreach (var result_ in result.Cast<MonoBehaviour>()) {
+                    Assert.Object.Message( $"Object {result_} must be awakened" ).Initialized( result_.didAwake );
+                    Assert.Object.Message( $"Object {result_} must be alive" ).Alive( result_ );
+                }
+                var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
+                result.CopyTo( result2, 0 );
+                return result2;
             }
             return null;
         }

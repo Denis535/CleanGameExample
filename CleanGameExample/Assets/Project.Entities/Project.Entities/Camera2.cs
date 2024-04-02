@@ -43,7 +43,7 @@ namespace Project.Entities {
 
         // Helpers
         private static Vector3 GetRotation(Vector3 rotation, Vector2 delta) {
-            rotation.x += delta.y * 0.15f;
+            rotation.x -= delta.y * 0.15f;
             rotation.x = Math.Clamp( rotation.x, -90, 90 );
             rotation.y += delta.x * 0.15f;
             return rotation;

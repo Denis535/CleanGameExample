@@ -22,9 +22,10 @@ namespace Project.UI {
         } );
 
         // Globals
-        private AudioSource AudioSource { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
+        // AudioSource
+        private AudioSource AudioSource { get; set; } = default!;
         // IsPlaying
         private bool IsPlaying { get; set; }
         // IsPaused
@@ -38,9 +39,9 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
             Router = this.GetDependencyContainer().Resolve<UIRouter>( null );
             Application = this.GetDependencyContainer().Resolve<Application2>( null );
+            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {
             Stop();

@@ -17,7 +17,7 @@ namespace Project {
         [SerializeField] private UIFactory uiFactory = default!;
         [SerializeField] private UIRouter uiRouter = default!;
         [SerializeField] private Application2 application = default!;
-        [SerializeField] private new Camera2 camera = default!;
+        [SerializeField] private new Camera camera = default!;
 
         // Globals
         private UITheme UITheme => uiTheme;
@@ -25,7 +25,7 @@ namespace Project {
         private UIFactory UIFactory => uiFactory;
         private UIRouter UIRouter => uiRouter;
         private Application2 Application => application;
-        private Camera2 Camera => camera;
+        private Camera Camera => camera;
         private Globals Globals { get; set; } = default!;
         private Globals.ProfileSettings ProfileSettings { get; set; } = default!;
         private Globals.VideoSettings VideoSettings { get; set; } = default!;
@@ -78,7 +78,8 @@ namespace Project {
                 Assert.Object.Message( $"Object {Application} must be alive" ).Alive( Application );
                 return Application;
             }
-            if (type == typeof( Camera2 )) {
+            if (type == typeof( Camera )) {
+                Assert.Object.Message( $"Object {Camera} must be alive" ).Alive( Camera );
                 return Camera;
             }
             if (type == typeof( Globals )) {
@@ -105,6 +106,22 @@ namespace Project {
             //if (type == typeof( IQosService )) {
             //    return QosService;
             //}
+            // Misc
+            if (type == typeof( GameObject )) {
+                var result = GameObject.Find( (string) argument! );
+                if (result is not null) {
+                    Assert.Object.Message( $"Object {result} must be alive" ).Alive( result );
+                }
+                return result;
+            }
+            if (type.IsDescendentOf( typeof( MonoBehaviour ) )) {
+                var result = (MonoBehaviour) GameObject.FindAnyObjectByType( type );
+                if (result is not null) {
+                    Assert.Object.Message( $"Object {result} must be awakened" ).Initialized( result.didAwake );
+                    Assert.Object.Message( $"Object {result} must be alive" ).Alive( result );
+                }
+                return result;
+            }
             return null;
         }
 

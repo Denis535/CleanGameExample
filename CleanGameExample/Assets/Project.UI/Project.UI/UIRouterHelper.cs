@@ -31,20 +31,24 @@ namespace Project.UI {
         }
         public static async Task LoadMainSceneAsync() {
             Assert.Operation.Message( $"MainSceneHandle {mainSceneHandle} must be null" ).Valid( mainSceneHandle == null );
-            mainSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.MainScene, LoadSceneMode.Additive, true );
+            mainSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.MainScene, LoadSceneMode.Additive, false );
             var mainScene = await mainSceneHandle.Value.GetResultAsync( default );
+            await mainScene.ActivateAsync();
             SceneManager.SetActiveScene( mainScene.Scene );
         }
         public static async Task LoadGameSceneAsync() {
             Assert.Operation.Message( $"GameSceneHandle {gameSceneHandle} must be null" ).Valid( gameSceneHandle == null );
-            gameSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.GameScene, LoadSceneMode.Additive, true );
+            gameSceneHandle = Addressables2.LoadSceneAsync( R.Project.Scenes.GameScene, LoadSceneMode.Additive, false );
             var gameScene = await gameSceneHandle.Value.GetResultAsync( default );
+            await gameScene.ActivateAsync();
             SceneManager.SetActiveScene( gameScene.Scene );
         }
         public static async Task LoadLevelSceneAsync(string key) {
             Assert.Operation.Message( $"LevelSceneHandle {levelSceneHandle} must be null" ).Valid( levelSceneHandle == null );
-            levelSceneHandle = Addressables2.LoadSceneAsync( key, LoadSceneMode.Additive, true );
+            levelSceneHandle = Addressables2.LoadSceneAsync( key, LoadSceneMode.Additive, false );
             var levelScene = await levelSceneHandle.Value.GetResultAsync( default );
+            await levelScene.ActivateAsync();
+            SceneManager.SetActiveScene( levelScene.Scene );
         }
 
         // UnloadScene

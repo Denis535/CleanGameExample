@@ -1,13 +1,12 @@
 #nullable enable
-namespace Project.App {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework;
+    using UnityEngine.Framework.Entities;
 
-    [DefaultExecutionOrder( ScriptExecutionOrders.Application - 1 )]
-    public class Camera2 : MonoBehaviour {
+    public class Camera2 : EntityBase {
 
         public Vector3? Target { get; set; }
         public Vector2 LookDelta { get; set; }

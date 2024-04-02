@@ -4,15 +4,19 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
     public class Player : PlayerBase {
 
         // System
         private bool IsInitialized { get; set; }
+        // Globals
+        public Camera2 Camera { get; private set; } = default!;
 
         // Awake
         public void Awake() {
+            Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
         }
         public void OnDestroy() {
         }

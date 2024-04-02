@@ -593,13 +593,13 @@ namespace UnityEngine.InputSystem
             ]
         },
         {
-            ""name"": ""App"",
-            ""id"": ""fcd22fca-0584-4235-b473-0147b88de08e"",
+            ""name"": ""Game"",
+            ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
             ""actions"": [
                 {
                     ""name"": ""Look"",
                     ""type"": ""Value"",
-                    ""id"": ""c2bca651-88ee-49ec-8163-2188e8044a83"",
+                    ""id"": ""e5b0eea5-03e5-4ed2-89b0-916823234287"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -608,64 +608,12 @@ namespace UnityEngine.InputSystem
                 {
                     ""name"": ""ScrollWheel"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""bf272e9c-8161-440e-b43a-d4fc0f47f0be"",
+                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""44862d07-4f19-41e4-877f-7d1745cba65e"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
-                {
-                    ""name"": """",
-                    ""id"": ""8f3f18ca-fc8d-4683-9e01-4f98bd88dcc9"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2332a465-77a2-4b11-ac5c-54f4231dbc28"",
-                    ""path"": ""<Joystick>/{Hatswitch}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d1b2de3e-1906-4c88-b36e-800efc06f998"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ScrollWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Game"",
-            ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
-            ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
@@ -839,6 +787,50 @@ namespace UnityEngine.InputSystem
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39f53890-9205-47a7-92b1-ff717cfc0fde"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95111174-d355-416b-af25-e4161c2f4c99"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17eba588-b05a-4b8d-90ec-ee365f1e02d6"",
+                    ""path"": ""<Joystick>/{Hatswitch}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c0d89db-72dc-42d7-910e-eed2fe034968"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -920,12 +912,10 @@ namespace UnityEngine.InputSystem
             m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-            // App
-            m_App = asset.FindActionMap("App", throwIfNotFound: true);
-            m_App_Look = m_App.FindAction("Look", throwIfNotFound: true);
-            m_App_ScrollWheel = m_App.FindAction("ScrollWheel", throwIfNotFound: true);
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
+            m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
+            m_Game_ScrollWheel = m_Game.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
             m_Game_Fire = m_Game.FindAction("Fire", throwIfNotFound: true);
         }
@@ -1120,69 +1110,19 @@ namespace UnityEngine.InputSystem
         }
         public UIActions @UI => new UIActions(this);
 
-        // App
-        private readonly InputActionMap m_App;
-        private List<IAppActions> m_AppActionsCallbackInterfaces = new List<IAppActions>();
-        private readonly InputAction m_App_Look;
-        private readonly InputAction m_App_ScrollWheel;
-        public struct AppActions
-        {
-            private @InputActions m_Wrapper;
-            public AppActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Look => m_Wrapper.m_App_Look;
-            public InputAction @ScrollWheel => m_Wrapper.m_App_ScrollWheel;
-            public InputActionMap Get() { return m_Wrapper.m_App; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(AppActions set) { return set.Get(); }
-            public void AddCallbacks(IAppActions instance)
-            {
-                if (instance == null || m_Wrapper.m_AppActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_AppActionsCallbackInterfaces.Add(instance);
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
-                @ScrollWheel.started += instance.OnScrollWheel;
-                @ScrollWheel.performed += instance.OnScrollWheel;
-                @ScrollWheel.canceled += instance.OnScrollWheel;
-            }
-
-            private void UnregisterCallbacks(IAppActions instance)
-            {
-                @Look.started -= instance.OnLook;
-                @Look.performed -= instance.OnLook;
-                @Look.canceled -= instance.OnLook;
-                @ScrollWheel.started -= instance.OnScrollWheel;
-                @ScrollWheel.performed -= instance.OnScrollWheel;
-                @ScrollWheel.canceled -= instance.OnScrollWheel;
-            }
-
-            public void RemoveCallbacks(IAppActions instance)
-            {
-                if (m_Wrapper.m_AppActionsCallbackInterfaces.Remove(instance))
-                    UnregisterCallbacks(instance);
-            }
-
-            public void SetCallbacks(IAppActions instance)
-            {
-                foreach (var item in m_Wrapper.m_AppActionsCallbackInterfaces)
-                    UnregisterCallbacks(item);
-                m_Wrapper.m_AppActionsCallbackInterfaces.Clear();
-                AddCallbacks(instance);
-            }
-        }
-        public AppActions @App => new AppActions(this);
-
         // Game
         private readonly InputActionMap m_Game;
         private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
+        private readonly InputAction m_Game_Look;
+        private readonly InputAction m_Game_ScrollWheel;
         private readonly InputAction m_Game_Move;
         private readonly InputAction m_Game_Fire;
         public struct GameActions
         {
             private @InputActions m_Wrapper;
             public GameActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Look => m_Wrapper.m_Game_Look;
+            public InputAction @ScrollWheel => m_Wrapper.m_Game_ScrollWheel;
             public InputAction @Move => m_Wrapper.m_Game_Move;
             public InputAction @Fire => m_Wrapper.m_Game_Fire;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
@@ -1194,6 +1134,12 @@ namespace UnityEngine.InputSystem
             {
                 if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
+                @ScrollWheel.started += instance.OnScrollWheel;
+                @ScrollWheel.performed += instance.OnScrollWheel;
+                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
@@ -1204,6 +1150,12 @@ namespace UnityEngine.InputSystem
 
             private void UnregisterCallbacks(IGameActions instance)
             {
+                @Look.started -= instance.OnLook;
+                @Look.performed -= instance.OnLook;
+                @Look.canceled -= instance.OnLook;
+                @ScrollWheel.started -= instance.OnScrollWheel;
+                @ScrollWheel.performed -= instance.OnScrollWheel;
+                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
@@ -1287,13 +1239,10 @@ namespace UnityEngine.InputSystem
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         }
-        public interface IAppActions
+        public interface IGameActions
         {
             void OnLook(InputAction.CallbackContext context);
             void OnScrollWheel(InputAction.CallbackContext context);
-        }
-        public interface IGameActions
-        {
             void OnMove(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
         }

@@ -69,6 +69,9 @@ namespace Project.UI.GameScreen {
                 this.AttachChild( new GameMenuWidget() );
             }
             if (Application.Game != null && Application.Game.IsPlaying) {
+                Application.Game.Player!.Camera.Target = Vector3.up;
+                Application.Game.Player!.Camera.InputRotationDelta += Actions.Game.Look.ReadValue<Vector2>();
+                Application.Game.Player!.Camera.InputDistanceDelta += Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
             }
         }
 

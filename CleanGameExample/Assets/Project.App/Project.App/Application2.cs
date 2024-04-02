@@ -11,13 +11,11 @@ namespace Project.App {
     public class Application2 : ApplicationBase {
 
         // Globals
-        public Camera Camera { get; private set; } = default!;
         public Game? Game { get; private set; }
 
         // Awake
         public new void Awake() {
             base.Awake();
-            Camera = this.GetDependencyContainer().Resolve<Camera>( null );
             Game = null;
         }
         public new void OnDestroy() {
@@ -27,7 +25,6 @@ namespace Project.App {
         // RunGame
         public void RunGame(Level level, Character character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
-            Camera.gameObject.SetActive( false );
             Game = this.GetDependencyContainer().Resolve<Game>( null );
             Game.Initialize();
         }
@@ -36,7 +33,6 @@ namespace Project.App {
             Assert.Operation.Message( $"Player must be non-null" ).Valid( Game.Player is not null );
             Game.Deinitialize();
             Game = null;
-            Camera.gameObject.SetActive( true );
         }
 
     }

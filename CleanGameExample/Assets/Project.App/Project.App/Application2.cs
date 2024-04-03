@@ -16,7 +16,6 @@ namespace Project.App {
         // Awake
         public new void Awake() {
             base.Awake();
-            Game = null;
         }
         public new void OnDestroy() {
             base.OnDestroy();

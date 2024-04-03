@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
@@ -14,7 +15,7 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = (Arguments) this.GetArguments();
+            Args = InitializationContext.GetArguments<Player, Arguments>();
         }
         public void OnDestroy() {
         }
@@ -23,6 +24,11 @@ namespace Project.Entities {
         public void Start() {
         }
         public void Update() {
+        }
+
+        // Spawn
+        public void Spawn(PlayerStart start) {
+            
         }
 
     }

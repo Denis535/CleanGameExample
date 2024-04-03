@@ -30,7 +30,7 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = (Arguments) this.GetArguments();
+            Args = InitializationContext.GetArguments<Game, Arguments>();
             World = this.GetDependencyContainer().Resolve<World>( null );
             Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
             Player = gameObject.AddComponent<Player>( new Player.Arguments( Args.Character ) );
@@ -40,7 +40,7 @@ namespace Project.Entities {
 
         // Start
         public void Start() {
-            //var startPoint = World.PlayerStarts.FirstOrDefault();
+            Player.Spawn( World.PlayerStarts.First() );
         }
         public void Update() {
         }

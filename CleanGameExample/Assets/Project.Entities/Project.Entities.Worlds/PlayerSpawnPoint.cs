@@ -7,11 +7,11 @@ namespace Project.Entities.Worlds {
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
-    public class PlayerStart : EntityBase {
+    public class PlayerSpawnPoint : EntityBase {
 
         // OnValidate
         public void OnValidate() {
-            gameObject.name = "PlayerStart";
+            gameObject.name = "PlayerSpawnPoint";
         }
 
         // Awake

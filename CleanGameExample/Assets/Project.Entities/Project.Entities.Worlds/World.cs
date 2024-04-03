@@ -8,12 +8,12 @@ namespace Project.Entities.Worlds {
 
     public class World : WorldBase {
 
-        // PlayerStarts
-        public PlayerStart[] PlayerStarts { get; private set; } = default!;
+        // PlayerSpawnPoints
+        public PlayerSpawnPoint[] PlayerSpawnPoints { get; private set; } = default!;
 
         // Awake
         public void Awake() {
-            PlayerStarts = gameObject.RequireComponentsInChildren<PlayerStart>();
+            PlayerSpawnPoints = gameObject.RequireComponentsInChildren<PlayerSpawnPoint>();
         }
         public void OnDestroy() {
         }

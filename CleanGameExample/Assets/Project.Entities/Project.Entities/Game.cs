@@ -40,7 +40,7 @@ namespace Project.Entities {
 
         // Start
         public void Start() {
-            Player.Spawn( World.PlayerStarts.First() );
+            Player.Spawn( World.PlayerSpawnPoints.First() );
         }
         public void Update() {
         }

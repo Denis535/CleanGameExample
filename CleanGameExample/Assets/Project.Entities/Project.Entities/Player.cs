@@ -27,7 +27,7 @@ namespace Project.Entities {
         }
 
         // Spawn
-        public void Spawn(PlayerStart start) {
+        public void Spawn(PlayerSpawnPoint point) {
             
         }
 

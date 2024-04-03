@@ -14,11 +14,11 @@ namespace Project.UI {
     public class UITheme : UIAudioThemeBase {
 
         private static readonly string[] MainThemes = GetShuffled( new[] {
-            R.Project.UI.MainScreen.Music.Theme,
+            R.Project.UI.MainScreen.Music.Theme_Value,
         } );
         private static readonly string[] GameThemes = GetShuffled( new[] {
-            R.Project.UI.GameScreen.Music.Theme_1,
-            R.Project.UI.GameScreen.Music.Theme_2,
+            R.Project.UI.GameScreen.Music.Theme_1_Value,
+            R.Project.UI.GameScreen.Music.Theme_2_Value,
         } );
 
         // Globals

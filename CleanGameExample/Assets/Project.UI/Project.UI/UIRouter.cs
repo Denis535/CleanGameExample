@@ -172,9 +172,9 @@ namespace Project.UI {
         // Helpers
         private static string GetLevelAddress(Level level) {
             return level switch {
-                Level.Level1 => R.Project.Entities.Worlds.World_01,
-                Level.Level2 => R.Project.Entities.Worlds.World_02,
-                Level.Level3 => R.Project.Entities.Worlds.World_03,
+                Level.Level1 => R.Project.Entities.Worlds.World_01_Value,
+                Level.Level2 => R.Project.Entities.Worlds.World_02_Value,
+                Level.Level3 => R.Project.Entities.Worlds.World_03_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" ),
             };
         }

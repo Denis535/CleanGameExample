@@ -56,10 +56,10 @@ namespace Project.UI {
             }
             return root;
         }
-        public static VisualElement MainMenuWidgetView_SelectYourCharacterView(this UIFactory factory, UIViewBase view, out VisualElement root, out Button white, out Button red, out Button green, out Button blue, out Button back) {
+        public static VisualElement MainMenuWidgetView_SelectYourCharacterView(this UIFactory factory, UIViewBase view, out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
             using (factory.View( view ).AsScope( out root )) {
                 using (factory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
-                    factory.Select( "White" ).AddToScope( out white );
+                    factory.Select( "Gray" ).AddToScope( out gray );
                     factory.Select( "Red" ).AddToScope( out red );
                     factory.Select( "Green" ).AddToScope( out green );
                     factory.Select( "Blue" ).AddToScope( out blue );

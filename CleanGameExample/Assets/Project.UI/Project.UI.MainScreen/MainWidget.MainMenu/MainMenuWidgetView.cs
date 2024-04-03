@@ -89,7 +89,7 @@ namespace Project.UI.MainScreen {
 
         // View
         public ElementWrapper Root { get; }
-        public ButtonWrapper White { get; }
+        public ButtonWrapper Gray { get; }
         public ButtonWrapper Red { get; }
         public ButtonWrapper Green { get; }
         public ButtonWrapper Blue { get; }
@@ -97,9 +97,9 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectYourCharacterView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidgetView_SelectYourCharacterView( this, out var root, out var white, out var red, out var green, out var blue, out var back );
+            VisualElement = factory.MainMenuWidgetView_SelectYourCharacterView( this, out var root, out var gray, out var red, out var green, out var blue, out var back );
             Root = root.Wrap();
-            White = white.Wrap();
+            Gray = gray.Wrap();
             Red = red.Wrap();
             Green = green.Wrap();
             Blue = blue.Wrap();

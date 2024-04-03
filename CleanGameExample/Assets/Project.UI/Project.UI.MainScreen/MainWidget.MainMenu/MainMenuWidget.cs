@@ -95,9 +95,9 @@ namespace Project.UI.MainScreen {
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
             } );
-            view.White.OnClick( evt => {
+            view.Gray.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, Character.White ).Throw();
+                router.LoadGameSceneAsync( level, Character.Gray ).Throw();
             } );
             view.Red.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );

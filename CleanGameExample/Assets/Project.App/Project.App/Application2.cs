@@ -44,7 +44,7 @@ namespace Project.App {
     }
     // Character
     public enum Character {
-        White,
+        Gray,
         Red,
         Green,
         Blue

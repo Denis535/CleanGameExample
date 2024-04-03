@@ -13,7 +13,7 @@ namespace Project.App {
         public class AudioSettings : GlobalsBase {
 
             // Fields
-            private readonly AudioMixer mixer = Addressables2.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer ).GetResult()!;
+            private readonly AudioMixer mixer = Addressables2.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult()!;
             private float masterVolume;
             private float musicVolume;
             private float sfxVolume;

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.denis535.addressables-source-generator": {
-      "version": "1.0.33",
+      "version": "1.0.34",
       "depth": 0,
       "source": "registry",
       "dependencies": {

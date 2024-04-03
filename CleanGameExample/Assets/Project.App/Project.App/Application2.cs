@@ -26,7 +26,7 @@ namespace Project.App {
         public void RunGame(Level level, Character character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = this.GetDependencyContainer().Resolve<Game>( null );
-            Game.Initialize();
+            Game.Initialize( level, character );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
@@ -35,18 +35,5 @@ namespace Project.App {
             Game = null;
         }
 
-    }
-    // Level
-    public enum Level {
-        Level1,
-        Level2,
-        Level3
-    }
-    // Character
-    public enum Character {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
 }

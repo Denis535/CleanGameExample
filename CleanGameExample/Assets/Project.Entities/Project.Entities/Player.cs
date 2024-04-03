@@ -4,25 +4,24 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
     public class Player : PlayerBase {
+        //public struct Arguments {
+        //    public Character Character { get; init; }
+        //}
 
         // System
         private bool IsInitialized { get; set; }
-        // Globals
-        public Camera2 Camera { get; private set; } = default!;
 
         // Awake
         public void Awake() {
-            Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
         }
         public void OnDestroy() {
         }
 
         // Initialize
-        public void Initialize() {
+        public void Initialize(Character character) {
             Assert.Object.Message( $"Player {this} must be awakened" ).Initialized( didAwake );
             Assert.Operation.Message( $"Player {this} must not be initialized" ).Valid( !IsInitialized );
             IsInitialized = true;
@@ -40,5 +39,12 @@ namespace Project.Entities {
             Assert.Operation.Message( $"Player {this} must be initialized" ).Valid( IsInitialized );
         }
 
+    }
+    // Character
+    public enum Character {
+        Gray,
+        Red,
+        Green,
+        Blue
     }
 }

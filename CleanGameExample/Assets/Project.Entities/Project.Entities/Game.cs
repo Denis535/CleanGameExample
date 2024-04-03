@@ -10,56 +10,39 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        //public struct Arguments {
-        //    public Level Level { get; init; }
-        //}
-
+        public record Arguments(Level Level, Character Character);
         private bool isPlaying = true;
 
-        // System
-        private bool IsInitialized { get; set; }
+        // Args
+        private Arguments Args { get; set; } = default!;
+        // Globals
+        public World World { get; private set; } = default!;
+        public Camera2 Camera { get; private set; } = default!;
+        // Player
+        public Player Player { get; private set; } = default!;
+        // IsPlaying
         public bool IsPlaying {
             get => isPlaying;
             set {
                 isPlaying = value;
             }
         }
-        // Globals
-        public World World { get; private set; } = default!;
-        public Camera2 Camera { get; private set; } = default!;
-        // Player
-        public Player? Player { get; private set; } = default!;
 
         // Awake
         public void Awake() {
+            Args = (Arguments) this.GetArguments();
             World = this.GetDependencyContainer().Resolve<World>( null );
             Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
+            Player = gameObject.AddComponent<Player>( new Player.Arguments( Args.Character ) );
         }
         public void OnDestroy() {
         }
 
-        // Initialize
-        public void Initialize(Level level, Character character) {
-            Assert.Object.Message( $"Game {this} must be awakened" ).Initialized( didAwake );
-            Player = gameObject.AddComponent<Player>();
-            Player.Initialize( character );
-            IsInitialized = true;
-        }
-        public void Deinitialize() {
-            Assert.Object.Message( $"Game {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
-            Player!.Deinitialize();
-            DestroyImmediate( Player );
-            Player = null;
-        }
-
         // Start
         public void Start() {
-            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
-            var startPoint = World.PlayerStarts.FirstOrDefault();
+            //var startPoint = World.PlayerStarts.FirstOrDefault();
         }
         public void Update() {
-            Assert.Operation.Message( $"Game {this} must be initialized" ).Valid( IsInitialized );
         }
 
     }

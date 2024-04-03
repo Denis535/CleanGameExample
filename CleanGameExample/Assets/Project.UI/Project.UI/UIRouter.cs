@@ -117,13 +117,15 @@ namespace Project.UI {
                 }
                 {
                     // LoadGameScene
-                    await Task.Delay( 3_000 );
-                    await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
-                    await UIRouterHelper.LoadGameSceneAsync();
+                    using (InitializationContext.Begin<Game>( new Game.Arguments( level, character ) )) {
+                        await Task.Delay( 3_000 );
+                        await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
+                        await UIRouterHelper.LoadGameSceneAsync();
+                    }
                 }
             }
             State = UIRouterState.GameSceneLoaded;
-            Application.RunGame( level, character );
+            Application.RunGame();
         }
 
 #if UNITY_EDITOR

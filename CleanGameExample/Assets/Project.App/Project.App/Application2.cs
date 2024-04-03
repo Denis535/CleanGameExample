@@ -23,15 +23,12 @@ namespace Project.App {
         }
 
         // RunGame
-        public void RunGame(Level level, Character character) {
+        public void RunGame() {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = this.GetDependencyContainer().Resolve<Game>( null );
-            Game.Initialize( level, character );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
-            Assert.Operation.Message( $"Player must be non-null" ).Valid( Game.Player is not null );
-            Game.Deinitialize();
             Game = null;
         }
 

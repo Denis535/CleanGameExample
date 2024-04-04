@@ -165,31 +165,31 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            var scene = await program.LoadAsync( LoadSceneMode.Single, false );
+            var scene = await program.LoadAsync( LoadSceneMode.Single );
             SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_MainScene() {
-            var scene = await mainScene.LoadAsync( LoadSceneMode.Additive, false );
+            var scene = await mainScene.LoadAsync( LoadSceneMode.Additive );
             SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_GameScene() {
-            var scene = await gameScene.LoadAsync( LoadSceneMode.Additive, false );
+            var scene = await gameScene.LoadAsync( LoadSceneMode.Additive );
             SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
             switch (level) {
                 case Level.Level1: {
-                    var scene = await world1.LoadAsync( LoadSceneMode.Additive, false );
+                    var scene = await world1.LoadAsync( LoadSceneMode.Additive );
                     SceneManager.SetActiveScene( scene );
                     break;
                 }
                 case Level.Level2: {
-                    var scene = await world2.LoadAsync( LoadSceneMode.Additive, false );
+                    var scene = await world2.LoadAsync( LoadSceneMode.Additive );
                     SceneManager.SetActiveScene( scene );
                     break;
                 }
                 case Level.Level3: {
-                    var scene = await world3.LoadAsync( LoadSceneMode.Additive, false );
+                    var scene = await world3.LoadAsync( LoadSceneMode.Additive );
                     SceneManager.SetActiveScene( scene );
                     break;
                 }

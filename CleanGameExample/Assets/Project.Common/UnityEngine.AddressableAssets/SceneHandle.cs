@@ -9,7 +9,7 @@ namespace UnityEngine.AddressableAssets {
     using UnityEngine.ResourceManagement.ResourceProviders;
     using UnityEngine.SceneManagement;
 
-    public class SceneHandle {
+    public sealed class SceneHandle {
 
         private readonly string key;
         private AsyncOperationHandle<SceneInstance>? handle;
@@ -25,9 +25,9 @@ namespace UnityEngine.AddressableAssets {
             this.key = key;
         }
 
-        public async Task<Scene> LoadAsync(LoadSceneMode mode, bool activateOnLoad) {
+        public async Task<Scene> LoadAsync(LoadSceneMode mode) {
             Assert.Operation.Message( $"SceneHandle {this} must be non-active" ).Valid( handle == null );
-            handle = Addressables.LoadSceneAsync( key, mode, activateOnLoad );
+            handle = Addressables.LoadSceneAsync( key, mode, false );
             if (handle.Value.IsValid() && handle.Value.IsFailed()) {
                 throw handle.Value.OperationException;
             }

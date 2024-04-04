@@ -19,8 +19,8 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidget() {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
-            Application = this.GetDependencyContainer().Resolve<Application2>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
+            Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
             View = CreateView( this, Factory );
             Actions = new InputActions();
         }

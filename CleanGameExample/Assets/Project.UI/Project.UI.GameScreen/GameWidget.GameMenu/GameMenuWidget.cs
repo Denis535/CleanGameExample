@@ -16,8 +16,8 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidget() {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
-            Router = this.GetDependencyContainer().Resolve<UIRouter>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
+            Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
             View = CreateView( this, Factory, Router );
         }
         public override void Dispose() {

@@ -20,7 +20,7 @@ namespace Project.UI {
 
         // Constructor
         public SettingsWidget() {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             View = CreateView( this, Factory );
             this.AttachChild( new ProfileSettingsWidget() );
             this.AttachChild( new VideoSettingsWidget() );

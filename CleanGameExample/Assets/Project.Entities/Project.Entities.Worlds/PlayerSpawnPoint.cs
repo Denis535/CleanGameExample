@@ -4,10 +4,8 @@ namespace Project.Entities.Worlds {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework;
-    using UnityEngine.Framework.Entities;
 
-    public class PlayerSpawnPoint : EntityBase {
+    public class PlayerSpawnPoint : MonoBehaviour {
 
         // OnValidate
         public void OnValidate() {

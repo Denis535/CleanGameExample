@@ -10,14 +10,14 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Arguments(Level Level, Character Character);
+        public record Arguments(Level Level);
         private bool isPlaying = true;
 
         // Args
         private Arguments Args { get; set; } = default!;
         // Globals
-        public World World { get; private set; } = default!;
         public Camera2 Camera { get; private set; } = default!;
+        public World World { get; private set; } = default!;
         // Player
         public Player Player { get; private set; } = default!;
         // IsPlaying
@@ -31,9 +31,9 @@ namespace Project.Entities {
         // Awake
         public void Awake() {
             Args = InitializationContext.GetArguments<Game, Arguments>();
-            World = this.GetDependencyContainer().Resolve<World>( null );
-            Camera = this.GetDependencyContainer().Resolve<Camera2>( null );
-            Player = gameObject.AddComponent<Player>( new Player.Arguments( Args.Character ) );
+            Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
+            World = this.GetDependencyContainer().RequireDependency<World>( null );
+            Player = gameObject.RequireComponent<Player>();
         }
         public void OnDestroy() {
         }

@@ -24,10 +24,10 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidget() {
-            Router = this.GetDependencyContainer().Resolve<UIRouter>( null );
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
-            Application = this.GetDependencyContainer().Resolve<Application2>( null );
-            Globals = this.GetDependencyContainer().Resolve<Globals>( null );
+            Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
+            Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
+            Globals = this.GetDependencyContainer().RequireDependency<Globals>( null );
             View = CreateView( this, Factory );
         }
         public override void Dispose() {

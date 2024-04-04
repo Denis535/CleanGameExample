@@ -24,7 +24,7 @@ namespace Project.App {
         // RunGame
         public void RunGame() {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
-            Game = this.GetDependencyContainer().Resolve<Game>( null );
+            Game = this.GetDependencyContainer().RequireDependency<Game>( null );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );

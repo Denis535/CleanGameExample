@@ -28,7 +28,7 @@ namespace Project.UI {
 
         // Constructor
         public DialogWidgetBase(string? title, string? message) {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             if (this is DialogWidget) {
                 View = (TView) (object) new DialogWidgetView( Factory );
             } else if (this is InfoDialogWidget) {

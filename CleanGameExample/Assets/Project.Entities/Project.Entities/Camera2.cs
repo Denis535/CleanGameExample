@@ -20,10 +20,10 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            this.GetDependencyContainer().Resolve<Camera>( null ).gameObject.SetActive( false );
+            this.GetDependencyContainer().RequireDependency<Camera>( null ).gameObject.SetActive( false );
         }
         public void OnDestroy() {
-            this.GetDependencyContainer().Resolve<Camera>( null ).gameObject.SetActive( true );
+            this.GetDependencyContainer().RequireDependency<Camera>( null ).gameObject.SetActive( true );
         }
 
         // Start

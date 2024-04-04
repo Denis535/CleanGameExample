@@ -14,7 +14,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public LoadingWidget() {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             View = CreateView( this, Factory );
         }
         public override void Dispose() {

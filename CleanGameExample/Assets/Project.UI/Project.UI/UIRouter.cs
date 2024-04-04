@@ -72,7 +72,7 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Application = this.GetDependencyContainer().Resolve<Application2>( null );
+            Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
 #if !UNITY_EDITOR
             UnityEngine.Application.wantsToQuit += OnQuit;
 #endif
@@ -117,10 +117,12 @@ namespace Project.UI {
                 }
                 {
                     // LoadGameScene
-                    using (InitializationContext.Begin<Game>( new Game.Arguments( level, character ) )) {
-                        await Task.Delay( 3_000 );
-                        await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
-                        await UIRouterHelper.LoadGameSceneAsync();
+                    using (InitializationContext.Begin<Game>( new Game.Arguments( level ) )) {
+                        using (InitializationContext.Begin<Player>( new Player.Arguments( character ) )) {
+                            await Task.Delay( 3_000 );
+                            await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
+                            await UIRouterHelper.LoadGameSceneAsync();
+                        }
                     }
                 }
             }

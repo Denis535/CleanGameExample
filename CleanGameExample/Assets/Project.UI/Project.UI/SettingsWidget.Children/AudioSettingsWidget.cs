@@ -16,8 +16,8 @@ namespace Project.UI {
 
         // Constructor
         public AudioSettingsWidget() {
-            Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
-            AudioSettings = this.GetDependencyContainer().Resolve<Globals.AudioSettings>( null );
+            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
+            AudioSettings = this.GetDependencyContainer().RequireDependency<Globals.AudioSettings>( null );
             View = CreateView( this, Factory, AudioSettings );
         }
         public override void Dispose() {

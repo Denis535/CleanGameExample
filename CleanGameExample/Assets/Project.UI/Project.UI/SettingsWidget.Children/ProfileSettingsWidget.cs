@@ -16,8 +16,8 @@ namespace Project.UI {
 
         // Constructor
         public ProfileSettingsWidget() {
-            Factory = Factory = this.GetDependencyContainer().Resolve<UIFactory>( null );
-            ProfileSettings = this.GetDependencyContainer().Resolve<Globals.ProfileSettings>( null );
+            Factory = Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
+            ProfileSettings = this.GetDependencyContainer().RequireDependency<Globals.ProfileSettings>( null );
             View = CreateView( this, Factory, ProfileSettings );
         }
         public override void Dispose() {

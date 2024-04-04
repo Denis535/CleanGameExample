@@ -18,32 +18,37 @@ namespace UnityEngine.AddressableAssets {
         public bool IsValid => handle!.Value.IsValid();
         public bool IsSucceeded => handle!.Value.IsSucceeded();
         public bool IsFailed => handle!.Value.IsFailed();
+        public SceneInstance SceneInstance => handle!.Value.Result;
         public Scene Scene => handle!.Value.Result.Scene;
 
         public SceneHandle(string key) {
             this.key = key;
         }
 
-        public async Task LoadAsync(LoadSceneMode mode) {
+        public async Task<Scene> LoadAsync(LoadSceneMode mode, bool activateOnLoad) {
             Assert.Operation.Message( $"SceneHandle {this} must be non-active" ).Valid( handle == null );
-            try {
-                handle = Addressables2.LoadSceneAsync( key, mode, false );
-                var sceneInstance = await handle.Value.Task;
-                if (handle.Value.IsSucceeded()) {
-                    await sceneInstance.ActivateAsync();
-                    SceneManager.SetActiveScene( sceneInstance.Scene );
-                    return;
-                }
+            handle = Addressables.LoadSceneAsync( key, mode, activateOnLoad );
+            if (handle.Value.IsValid() && handle.Value.IsFailed()) {
                 throw handle.Value.OperationException;
-            } finally {
             }
+            var sceneInstance = await handle.Value.Task;
+            if (handle.Value.IsValid() && handle.Value.IsFailed()) {
+                throw handle.Value.OperationException;
+            }
+            await sceneInstance.ActivateAsync();
+            return sceneInstance.Scene;
         }
         public async Task UnloadAsync() {
             Assert.Operation.Message( $"SceneHandle {this} must be active" ).Valid( handle != null );
-            try {
-                await Addressables2.UnloadSceneAsync( handle.Value ).Task;
-            } finally {
+            var tmp_handle = handle;
+            handle = null;
+            await Addressables.UnloadSceneAsync( tmp_handle.Value ).Task;
+        }
+        public async Task SafeUnloadAsync() {
+            if (handle != null) {
+                var tmp_handle = handle;
                 handle = null;
+                await Addressables.UnloadSceneAsync( tmp_handle.Value ).Task;
             }
         }
 

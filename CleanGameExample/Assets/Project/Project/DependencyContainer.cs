@@ -3,15 +3,12 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Project.App;
     using Project.UI;
     using Unity.Services.Authentication;
-    using UnityEditor;
     using UnityEngine;
     using UnityEngine.Framework;
 
-    [DefaultExecutionOrder( 1 )]
     public class DependencyContainer : MonoBehaviour, IDependencyContainer {
 
         [SerializeField] private UITheme uiTheme = default!;
@@ -34,8 +31,6 @@ namespace Project {
         private Globals.AudioSettings AudioSettings { get; set; } = default!;
         private Globals.Preferences Preferences { get; set; } = default!;
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
-        //private ILobbyService LobbyService => Unity.Services.Lobbies.LobbyService.Instance;
-        //private IQosService QosService => Unity.Services.Qos.QosService.Instance;
 
         // Awake
         public void Awake() {
@@ -49,80 +44,65 @@ namespace Project {
         public void OnDestroy() {
         }
 
-        // GetDependency
-        public object? GetDependency(Type type, object? argument) {
-            Assert.Object.Message( $"Object {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Object {this} must be alive" ).Alive( this );
+        // GetObject
+        object? IDependencyContainer.GetObject(Type type, object? argument) {
             // UI
             if (type == typeof( UITheme )) {
-                Assert.Object.Message( $"Object {UITheme} must be awakened" ).Initialized( UITheme.didAwake );
-                Assert.Object.Message( $"Object {UITheme} must be alive" ).Alive( UITheme );
-                return UITheme;
+                var result = UITheme;
+                return result;
             }
             if (type == typeof( UIScreen )) {
-                Assert.Object.Message( $"Object {UIScreen} must be awakened" ).Initialized( UIScreen.didAwake );
-                Assert.Object.Message( $"Object {UIScreen} must be alive" ).Alive( UIScreen );
-                return UIScreen;
+                var result = UIScreen;
+                return result;
             }
             if (type == typeof( UIFactory )) {
-                Assert.Object.Message( $"Object {UIFactory} must be awakened" ).Initialized( UIFactory.didAwake );
-                Assert.Object.Message( $"Object {UIFactory} must be alive" ).Alive( UIFactory );
-                return UIFactory;
+                var result = UIFactory;
+                return result;
             }
             if (type == typeof( UIRouter )) {
-                Assert.Object.Message( $"Object {UIRouter} must be awakened" ).Initialized( UIRouter.didAwake );
-                Assert.Object.Message( $"Object {UIRouter} must be alive" ).Alive( UIRouter );
-                return UIRouter;
+                var result = UIRouter;
+                return result;
             }
             // App
             if (type == typeof( Application2 )) {
-                Assert.Object.Message( $"Object {Application} must be awakened" ).Initialized( Application.didAwake );
-                Assert.Object.Message( $"Object {Application} must be alive" ).Alive( Application );
-                return Application;
+                var result = Application;
+                return result;
             }
             if (type == typeof( Camera )) {
-                Assert.Object.Message( $"Object {Camera} must be alive" ).Alive( Camera );
-                return Camera;
+                var result = Camera;
+                return result;
             }
             if (type == typeof( Globals )) {
-                return Globals;
+                var result = Globals;
+                return result;
             }
             if (type == typeof( Globals.ProfileSettings )) {
-                return ProfileSettings;
+                var result = ProfileSettings;
+                return result;
             }
             if (type == typeof( Globals.VideoSettings )) {
-                return VideoSettings;
+                var result = VideoSettings;
+                return result;
             }
             if (type == typeof( Globals.AudioSettings )) {
-                return AudioSettings;
+                var result = AudioSettings;
+                return result;
             }
             if (type == typeof( Globals.Preferences )) {
-                return Preferences;
+                var result = Preferences;
+                return result;
             }
             if (type == typeof( IAuthenticationService )) {
-                return AuthenticationService;
+                var result = AuthenticationService;
+                return result;
             }
-            //if (type == typeof( ILobbyService )) {
-            //    return LobbyService;
-            //}
-            //if (type == typeof( IQosService )) {
-            //    return QosService;
-            //}
             // Misc
             if (type.IsDescendentOf( typeof( MonoBehaviour ) )) {
                 var result = (MonoBehaviour) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
-                if (result is not null) {
-                    Assert.Object.Message( $"Object {result} must be awakened" ).Initialized( result.didAwake );
-                    Assert.Object.Message( $"Object {result} must be alive" ).Alive( result );
-                }
                 return result;
             }
             if (type.HasElementType && type.GetElementType().IsDescendentOf( typeof( MonoBehaviour ) )) {
                 var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-                foreach (var result_ in result.Cast<MonoBehaviour>()) {
-                    Assert.Object.Message( $"Object {result_} must be awakened" ).Initialized( result_.didAwake );
-                    Assert.Object.Message( $"Object {result_} must be alive" ).Alive( result_ );
-                }
                 var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
                 result.CopyTo( result2, 0 );
                 return result2;

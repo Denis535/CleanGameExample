@@ -35,34 +35,34 @@ namespace Project.UI {
                 switch (value) {
                     // MainScene
                     case UIRouterState.MainSceneLoading:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.GameSceneLoaded );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.GameSceneLoaded );
                         state = value;
                         break;
                     case UIRouterState.MainSceneLoaded:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.MainSceneLoading );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.MainSceneLoading );
                         state = value;
                         break;
                     // GameScene
                     case UIRouterState.GameSceneLoading:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.MainSceneLoaded );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.MainSceneLoaded );
                         state = value;
                         break;
                     case UIRouterState.GameSceneLoaded:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.GameSceneLoading );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.GameSceneLoading );
                         state = value;
                         break;
                     // Quit
                     case UIRouterState.Quitting:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
                         state = value;
                         break;
                     case UIRouterState.Quited:
-                        Assert.Operation.Message( $"State {state} is invalid" ).Valid( state is UIRouterState.Quitting );
+                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.Quitting );
                         state = value;
                         break;
                     // Misc
                     default:
-                        throw Exceptions.Internal.NotSupported( $"Value {value} is not supported" );
+                        throw Exceptions.Internal.NotSupported( $"Transition from {state} to {value} is not supported" );
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace Project.UI {
         public static async Task LoadProgramAsync() {
             Release.LogFormat( "Load: Program" );
             using (@lock.Enter()) {
-                await program.LoadAsync( LoadSceneMode.Single );
+                await LoadSceneAsync_Program();
             }
         }
         public async Task LoadMainSceneAsync() {
@@ -114,8 +114,8 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 await UnloadSceneAsync_MainScene();
                 await Task.Delay( 3_000 );
-                using (InitializationContext.Begin<Game>( new Game.Arguments( level ) )) {
-                    using (InitializationContext.Begin<Player>( new Player.Arguments( character ) )) {
+                using (InitializationContext.Enter<Game, Game.Arguments>( new Game.Arguments( level ) )) {
+                    using (InitializationContext.Enter<Player, Player.Arguments>( new Player.Arguments( character ) )) {
                         await LoadSceneAsync_World( level );
                         await LoadSceneAsync_GameScene();
                     }
@@ -165,26 +165,32 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await program.LoadAsync( LoadSceneMode.Single );
+            var scene = await program.LoadAsync( LoadSceneMode.Single, false );
+            SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await mainScene.LoadAsync( LoadSceneMode.Additive );
+            var scene = await mainScene.LoadAsync( LoadSceneMode.Additive, false );
+            SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await gameScene.LoadAsync( LoadSceneMode.Additive );
+            var scene = await gameScene.LoadAsync( LoadSceneMode.Additive, false );
+            SceneManager.SetActiveScene( scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
             switch (level) {
                 case Level.Level1: {
-                    await world1.LoadAsync( LoadSceneMode.Additive );
+                    var scene = await world1.LoadAsync( LoadSceneMode.Additive, false );
+                    SceneManager.SetActiveScene( scene );
                     break;
                 }
                 case Level.Level2: {
-                    await world2.LoadAsync( LoadSceneMode.Additive );
+                    var scene = await world2.LoadAsync( LoadSceneMode.Additive, false );
+                    SceneManager.SetActiveScene( scene );
                     break;
                 }
                 case Level.Level3: {
-                    await world3.LoadAsync( LoadSceneMode.Additive );
+                    var scene = await world3.LoadAsync( LoadSceneMode.Additive, false );
+                    SceneManager.SetActiveScene( scene );
                     break;
                 }
                 default:
@@ -193,15 +199,15 @@ namespace Project.UI {
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            if (mainScene.IsActive) await mainScene.UnloadAsync();
+            await mainScene.SafeUnloadAsync();
         }
         private async Task UnloadSceneAsync_GameScene() {
-            if (gameScene.IsActive) await gameScene.UnloadAsync();
+            await gameScene.SafeUnloadAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            if (world1.IsActive) await world1.UnloadAsync();
-            if (world2.IsActive) await world2.UnloadAsync();
-            if (world3.IsActive) await world3.UnloadAsync();
+            await world1.SafeUnloadAsync();
+            await world2.SafeUnloadAsync();
+            await world3.SafeUnloadAsync();
         }
 
     }

@@ -11,10 +11,17 @@ namespace Project.UI {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
+    using UnityEngine.SceneManagement;
 
     public class UIRouter : UIRouterBase {
 
-        private readonly Lock @lock = new Lock();
+        private static readonly Lock @lock = new Lock();
+        private static readonly SceneHandle program = new SceneHandle( R.Project.Scenes.Program_Value );
+        private readonly SceneHandle mainScene = new SceneHandle( R.Project.Scenes.MainScene_Value );
+        private readonly SceneHandle gameScene = new SceneHandle( R.Project.Scenes.GameScene_Value );
+        private readonly SceneHandle world1 = new SceneHandle( R.Project.Entities.Worlds.World_01_Value );
+        private readonly SceneHandle world2 = new SceneHandle( R.Project.Entities.Worlds.World_02_Value );
+        private readonly SceneHandle world3 = new SceneHandle( R.Project.Entities.Worlds.World_03_Value );
         private UIRouterState state;
 
         // Globals
@@ -84,8 +91,8 @@ namespace Project.UI {
         // LoadScene
         public static async Task LoadProgramAsync() {
             Release.LogFormat( "Load: Program" );
-            {
-                await UIRouterHelper.LoadProgramAsync();
+            using (@lock.Enter()) {
+                await program.LoadAsync( LoadSceneMode.Single );
             }
         }
         public async Task LoadMainSceneAsync() {
@@ -95,34 +102,22 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoading;
             using (@lock.Enter()) {
-                if (UIRouterHelper.IsGameSceneLoaded) {
-                    // UnloadGameScene
-                    await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadWorldSceneAsync();
-                }
-                {
-                    // LoadMainScene
-                    await UIRouterHelper.LoadMainSceneAsync();
-                }
+                await UnloadSceneAsync_GameScene();
+                await UnloadSceneAsync_World();
+                await LoadSceneAsync_MainScene();
             }
             State = UIRouterState.MainSceneLoaded;
         }
         public async Task LoadGameSceneAsync(Level level, Character character) {
-            Release.LogFormat( "Load: GameScene" );
+            Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
-                if (UIRouterHelper.IsMainSceneLoaded) {
-                    // UnloadMainScene
-                    await UIRouterHelper.UnloadMainSceneAsync();
-                }
-                {
-                    // LoadGameScene
-                    using (InitializationContext.Begin<Game>( new Game.Arguments( level ) )) {
-                        using (InitializationContext.Begin<Player>( new Player.Arguments( character ) )) {
-                            await Task.Delay( 3_000 );
-                            await UIRouterHelper.LoadWorldSceneAsync( GetWorldAddress( level ) );
-                            await UIRouterHelper.LoadGameSceneAsync();
-                        }
+                await UnloadSceneAsync_MainScene();
+                await Task.Delay( 3_000 );
+                using (InitializationContext.Begin<Game>( new Game.Arguments( level ) )) {
+                    using (InitializationContext.Begin<Player>( new Player.Arguments( character ) )) {
+                        await LoadSceneAsync_World( level );
+                        await LoadSceneAsync_GameScene();
                     }
                 }
             }
@@ -156,15 +151,9 @@ namespace Project.UI {
             }
             State = UIRouterState.Quitting;
             using (@lock.Enter()) {
-                if (UIRouterHelper.IsMainSceneLoaded) {
-                    // UnloadMainScene
-                    await UIRouterHelper.UnloadMainSceneAsync();
-                }
-                if (UIRouterHelper.IsGameSceneLoaded) {
-                    // UnloadGameScene
-                    await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadWorldSceneAsync();
-                }
+                await UnloadSceneAsync_MainScene();
+                await UnloadSceneAsync_GameScene();
+                await UnloadSceneAsync_World();
             }
             State = UIRouterState.Quited;
 #if UNITY_EDITOR
@@ -175,13 +164,44 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static string GetWorldAddress(Level level) {
-            return level switch {
-                Level.Level1 => R.Project.Entities.Worlds.World_01_Value,
-                Level.Level2 => R.Project.Entities.Worlds.World_02_Value,
-                Level.Level3 => R.Project.Entities.Worlds.World_03_Value,
-                _ => throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" ),
-            };
+        private static async Task LoadSceneAsync_Program() {
+            await program.LoadAsync( LoadSceneMode.Single );
+        }
+        public async Task LoadSceneAsync_MainScene() {
+            await mainScene.LoadAsync( LoadSceneMode.Additive );
+        }
+        public async Task LoadSceneAsync_GameScene() {
+            await gameScene.LoadAsync( LoadSceneMode.Additive );
+        }
+        public async Task LoadSceneAsync_World(Level level) {
+            switch (level) {
+                case Level.Level1: {
+                    await world1.LoadAsync( LoadSceneMode.Additive );
+                    break;
+                }
+                case Level.Level2: {
+                    await world2.LoadAsync( LoadSceneMode.Additive );
+                    break;
+                }
+                case Level.Level3: {
+                    await world3.LoadAsync( LoadSceneMode.Additive );
+                    break;
+                }
+                default:
+                    throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
+            }
+        }
+        // Helpers
+        private async Task UnloadSceneAsync_MainScene() {
+            if (mainScene.IsActive) await mainScene.UnloadAsync();
+        }
+        private async Task UnloadSceneAsync_GameScene() {
+            if (gameScene.IsActive) await gameScene.UnloadAsync();
+        }
+        private async Task UnloadSceneAsync_World() {
+            if (world1.IsActive) await world1.UnloadAsync();
+            if (world2.IsActive) await world2.UnloadAsync();
+            if (world3.IsActive) await world3.UnloadAsync();
         }
 
     }

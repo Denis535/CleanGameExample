@@ -80,10 +80,10 @@ namespace Project.UI.MainScreen {
                 widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
             } );
             view.Level2.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level2 ) );
             } );
             view.Level3.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level3 ) );
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();

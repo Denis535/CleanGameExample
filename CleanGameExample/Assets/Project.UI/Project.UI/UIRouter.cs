@@ -98,7 +98,7 @@ namespace Project.UI {
                 if (UIRouterHelper.IsGameSceneLoaded) {
                     // UnloadGameScene
                     await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadLevelSceneAsync();
+                    await UIRouterHelper.UnloadWorldSceneAsync();
                 }
                 {
                     // LoadMainScene
@@ -120,7 +120,7 @@ namespace Project.UI {
                     using (InitializationContext.Begin<Game>( new Game.Arguments( level ) )) {
                         using (InitializationContext.Begin<Player>( new Player.Arguments( character ) )) {
                             await Task.Delay( 3_000 );
-                            await UIRouterHelper.LoadLevelSceneAsync( GetLevelAddress( level ) );
+                            await UIRouterHelper.LoadWorldSceneAsync( GetWorldAddress( level ) );
                             await UIRouterHelper.LoadGameSceneAsync();
                         }
                     }
@@ -163,7 +163,7 @@ namespace Project.UI {
                 if (UIRouterHelper.IsGameSceneLoaded) {
                     // UnloadGameScene
                     await UIRouterHelper.UnloadGameSceneAsync();
-                    await UIRouterHelper.UnloadLevelSceneAsync();
+                    await UIRouterHelper.UnloadWorldSceneAsync();
                 }
             }
             State = UIRouterState.Quited;
@@ -175,7 +175,7 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static string GetLevelAddress(Level level) {
+        private static string GetWorldAddress(Level level) {
             return level switch {
                 Level.Level1 => R.Project.Entities.Worlds.World_01_Value,
                 Level.Level2 => R.Project.Entities.Worlds.World_02_Value,

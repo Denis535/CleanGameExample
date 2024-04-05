@@ -13,12 +13,12 @@ namespace Project.UI {
 
         // Globals
         private UIFactory Factory { get; }
-        private Globals.VideoSettings VideoSettings { get; }
+        private Storage.VideoSettings VideoSettings { get; }
 
         // Constructor
         public VideoSettingsWidget() {
             Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
-            VideoSettings = this.GetDependencyContainer().RequireDependency<Globals.VideoSettings>( null );
+            VideoSettings = this.GetDependencyContainer().RequireDependency<Storage.VideoSettings>( null );
             View = CreateView( this, Factory, VideoSettings );
         }
         public override void Dispose() {
@@ -40,7 +40,7 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, UIFactory factory, Globals.VideoSettings videoSettings) {
+        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, UIFactory factory, Storage.VideoSettings videoSettings) {
             var view = new VideoSettingsWidgetView( factory );
             view.Root.OnAttachToPanel( evt => {
                 view.IsFullScreen.Value = videoSettings.IsFullScreen;

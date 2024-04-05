@@ -5,26 +5,24 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
-    using UnityEngine.ResourceManagement.AsyncOperations;
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
     public class UIFactory : MonoBehaviour {
 
-        // Assets
-        private AudioClip click = default!;
-        private AudioClip selectClick = default!;
-        private AudioClip submitClick = default!;
-        private AudioClip cancelClick = default!;
-        private AudioClip invalidClick = default!;
-        private AudioClip tik = default!;
-        private AudioClip focus = default!;
-        private AudioClip dialog = default!;
-        private AudioClip infoDialog = default!;
-        private AudioClip warningDialog = default!;
-        private AudioClip errorDialog = default!;
+        //// Assets
+        //private AudioClip click = default!;
+        //private AudioClip selectClick = default!;
+        //private AudioClip submitClick = default!;
+        //private AudioClip cancelClick = default!;
+        //private AudioClip invalidClick = default!;
+        //private AudioClip tik = default!;
+        //private AudioClip focus = default!;
+        //private AudioClip dialog = default!;
+        //private AudioClip infoDialog = default!;
+        //private AudioClip warningDialog = default!;
+        //private AudioClip errorDialog = default!;
 
         // System
         public static Func<object?, string?>? StringSelector { get; set; }
@@ -314,85 +312,85 @@ namespace Project.UI {
 
         // Helpers
         private void PlayClick(MouseDownEvent evt) {
-            var target = (VisualElement) evt.target;
-            PlaySound( target.IsValid() ? click : invalidClick, true );
+            //var target = (VisualElement) evt.target;
+            //PlaySound( target.IsValid() ? click : invalidClick, true );
         }
         private void PlayClick(ClickEvent evt) {
-            var target = (VisualElement) evt.target;
-            PlaySound( target.IsValid() ? click : invalidClick, true );
+            //var target = (VisualElement) evt.target;
+            //PlaySound( target.IsValid() ? click : invalidClick, true );
         }
         private void PlaySelect(ClickEvent evt) {
-            var target = (VisualElement) evt.target;
-            PlaySound( target.IsValid() ? selectClick : invalidClick, true );
+            //var target = (VisualElement) evt.target;
+            //PlaySound( target.IsValid() ? selectClick : invalidClick, true );
         }
         private void PlaySubmit(ClickEvent evt) {
-            var target = (VisualElement) evt.target;
-            PlaySound( target.IsValid() ? submitClick : invalidClick, true );
+            //var target = (VisualElement) evt.target;
+            //PlaySound( target.IsValid() ? submitClick : invalidClick, true );
         }
         private void PlayCancel(ClickEvent evt) {
-            var target = (VisualElement) evt.target;
-            PlaySound( target.IsValid() ? cancelClick : invalidClick, true );
+            //var target = (VisualElement) evt.target;
+            //PlaySound( target.IsValid() ? cancelClick : invalidClick, true );
         }
         private void PlayChange(ChangeEvent<object?> evt) {
-            if (evt.newValue != evt.previousValue) {
-                PlaySound( tik );
-            }
+            //if (evt.newValue != evt.previousValue) {
+            //    PlaySound( tik );
+            //}
         }
         private void PlayChange(ChangeEvent<string?> evt) {
-            if (evt.newValue != evt.previousValue) {
-                PlaySound( tik );
-            }
+            //if (evt.newValue != evt.previousValue) {
+            //    PlaySound( tik );
+            //}
         }
         private void PlayChange(ChangeEvent<float> evt) {
-            if (Mathf.FloorToInt( evt.newValue * 100 ) != Mathf.FloorToInt( evt.previousValue * 100 )) {
-                PlaySound( tik );
-            }
+            //if (Mathf.FloorToInt( evt.newValue * 100 ) != Mathf.FloorToInt( evt.previousValue * 100 )) {
+            //    PlaySound( tik );
+            //}
         }
         private void PlayChange(ChangeEvent<int> evt) {
-            if (evt.newValue != evt.previousValue) {
-                PlaySound( tik );
-            }
+            //if (evt.newValue != evt.previousValue) {
+            //    PlaySound( tik );
+            //}
         }
         private void PlayChange(ChangeEvent<bool> evt) {
-            if (evt.newValue != evt.previousValue) {
-                PlaySound( tik );
-            }
+            //if (evt.newValue != evt.previousValue) {
+            //    PlaySound( tik );
+            //}
         }
         // Helpers
         private void PlayFocus(FocusEvent evt) {
-            if (evt.direction != FocusChangeDirection.none && evt.direction != FocusChangeDirection.unspecified) {
-                PlaySound( focus );
-            }
+            //if (evt.direction != FocusChangeDirection.none && evt.direction != FocusChangeDirection.unspecified) {
+            //    PlaySound( focus );
+            //}
         }
         // Helpers
         private void PlayDialog(AttachToPanelEvent evt) {
-            PlaySound( dialog, true );
+            //PlaySound( dialog, true );
             PlayAppearance( (VisualElement) evt.target );
         }
         private void PlayInfoDialog(AttachToPanelEvent evt) {
-            PlaySound( infoDialog, true );
+            //PlaySound( infoDialog, true );
             PlayAppearance( (VisualElement) evt.target );
         }
         private void PlayWarningDialog(AttachToPanelEvent evt) {
-            PlaySound( warningDialog, true );
+            //PlaySound( warningDialog, true );
             PlayAppearance( (VisualElement) evt.target );
         }
         private void PlayErrorDialog(AttachToPanelEvent evt) {
-            PlaySound( errorDialog, true );
+            //PlaySound( errorDialog, true );
             PlayAppearance( (VisualElement) evt.target );
         }
         // Helpers
-        private void PlaySound(AudioClip clip, bool isPriority = false) {
-            if (isPriority) {
-                AudioSource.clip = clip;
-                AudioSource.Play();
-            } else {
-                if (!AudioSource.isPlaying || AudioSource.clip == clip) {
-                    AudioSource.clip = clip;
-                    AudioSource.Play();
-                }
-            }
-        }
+        //private void PlaySound(AudioClip clip, bool isPriority = false) {
+        //    if (isPriority) {
+        //        AudioSource.clip = clip;
+        //        AudioSource.Play();
+        //    } else {
+        //        if (!AudioSource.isPlaying || AudioSource.clip == clip) {
+        //            AudioSource.clip = clip;
+        //            AudioSource.Play();
+        //        }
+        //    }
+        //}
         private static void PlayAppearance(VisualElement element) {
             var animation = ValueAnimation<float>.Create( element, Mathf.LerpUnclamped );
             animation.valueUpdated = (view, t) => {

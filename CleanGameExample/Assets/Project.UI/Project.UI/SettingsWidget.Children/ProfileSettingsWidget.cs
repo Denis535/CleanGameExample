@@ -12,12 +12,12 @@ namespace Project.UI {
 
         // Globals
         private UIFactory Factory { get; }
-        private Globals.ProfileSettings ProfileSettings { get; }
+        private Storage.ProfileSettings ProfileSettings { get; }
 
         // Constructor
         public ProfileSettingsWidget() {
             Factory = Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
-            ProfileSettings = this.GetDependencyContainer().RequireDependency<Globals.ProfileSettings>( null );
+            ProfileSettings = this.GetDependencyContainer().RequireDependency<Storage.ProfileSettings>( null );
             View = CreateView( this, Factory, ProfileSettings );
         }
         public override void Dispose() {
@@ -37,7 +37,7 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, UIFactory factory, Globals.ProfileSettings profileSettings) {
+        private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, UIFactory factory, Storage.ProfileSettings profileSettings) {
             var view = new ProfileSettingsWidgetView( factory );
             view.Root.OnAttachToPanel( evt => {
                 view.Name.Value = profileSettings.Name;

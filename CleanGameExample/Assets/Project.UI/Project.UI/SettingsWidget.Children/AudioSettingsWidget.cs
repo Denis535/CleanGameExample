@@ -12,12 +12,12 @@ namespace Project.UI {
 
         // Globals
         private UIFactory Factory { get; }
-        private Globals.AudioSettings AudioSettings { get; }
+        private Storage.AudioSettings AudioSettings { get; }
 
         // Constructor
         public AudioSettingsWidget() {
             Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
-            AudioSettings = this.GetDependencyContainer().RequireDependency<Globals.AudioSettings>( null );
+            AudioSettings = this.GetDependencyContainer().RequireDependency<Storage.AudioSettings>( null );
             View = CreateView( this, Factory, AudioSettings );
         }
         public override void Dispose() {
@@ -40,7 +40,7 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, UIFactory factory, Globals.AudioSettings audioSettings) {
+        private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, UIFactory factory, Storage.AudioSettings audioSettings) {
             var view = new AudioSettingsWidgetView( factory );
             view.Root.OnAttachToPanel( evt => {
                 view.MasterVolume.ValueMinMax = (audioSettings.MasterVolume, 0, 1);

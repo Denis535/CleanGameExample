@@ -19,7 +19,7 @@ namespace Project.UI.MainScreen {
         private UIRouter Router { get; }
         private UIFactory Factory { get; }
         private Application2 Application { get; }
-        private Globals Globals { get; set; } = default!;
+        private Storage Globals { get; set; } = default!;
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
 
         // Constructor
@@ -27,7 +27,7 @@ namespace Project.UI.MainScreen {
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
             Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
-            Globals = this.GetDependencyContainer().RequireDependency<Globals>( null );
+            Globals = this.GetDependencyContainer().RequireDependency<Storage>( null );
             View = CreateView( this, Factory );
         }
         public override void Dispose() {

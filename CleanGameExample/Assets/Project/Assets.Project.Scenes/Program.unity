@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54368618a3aee74d8d87f57c8521ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 90e2823520b580a47b2e95e06eac4ab7, type: 2}
   uiTheme: {fileID: 243093304}
   uiScreen: {fileID: 938585823}
   uiFactory: {fileID: 938585824}

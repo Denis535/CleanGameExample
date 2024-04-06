@@ -10,7 +10,7 @@ namespace UnityEngine.Framework.UI {
     public static class VisualElementFactory {
 
         // System
-        public static event Action<VisualElement, UIViewBase?>? OnVisualElementCreated;
+        public static event Action<VisualElement>? OnVisualElementCreated;
         public static Func<object?, string?>? StringSelector { get; set; }
         // Sfx
         public static event EventCallback<EventBase>? PlayClick;
@@ -27,52 +27,52 @@ namespace UnityEngine.Framework.UI {
         public static event EventCallback<AttachToPanelEvent>? PlayErrorDialog;
 
         // Widget
-        public static Widget Widget(UIViewBase view) {
-            var result = Create<Widget>( view, "widget", "widget" );
+        public static Widget Widget() {
+            var result = Create<Widget>( "widget", "widget" );
             return result;
         }
-        public static Widget LeftWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "left-widget", "left-widget" );
+        public static Widget LeftWidget() {
+            var result = Create<Widget>( "left-widget", "left-widget" );
             return result;
         }
-        public static Widget SmallWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "small-widget", "small-widget" );
+        public static Widget SmallWidget() {
+            var result = Create<Widget>( "small-widget", "small-widget" );
             return result;
         }
-        public static Widget MediumWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "medium-widget", "medium-widget" );
+        public static Widget MediumWidget() {
+            var result = Create<Widget>( "medium-widget", "medium-widget" );
             return result;
         }
-        public static Widget LargeWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "large-widget", "large-widget" );
+        public static Widget LargeWidget() {
+            var result = Create<Widget>( "large-widget", "large-widget" );
             return result;
         }
 
         // Widget
-        public static Widget DialogWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "dialog-widget", "dialog-widget" );
+        public static Widget DialogWidget() {
+            var result = Create<Widget>( "dialog-widget", "dialog-widget" );
             result.OnAttachToPanel( evt => PlayDialog?.Invoke( evt ) );
             return result;
         }
-        public static Widget InfoDialogWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "info-dialog-widget", "info-dialog-widget" );
+        public static Widget InfoDialogWidget() {
+            var result = Create<Widget>( "info-dialog-widget", "info-dialog-widget" );
             result.OnAttachToPanel( evt => PlayInfoDialog?.Invoke( evt ) );
             return result;
         }
-        public static Widget WarningDialogWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "warning-dialog-widget", "warning-dialog-widget" );
+        public static Widget WarningDialogWidget() {
+            var result = Create<Widget>( "warning-dialog-widget", "warning-dialog-widget" );
             result.OnAttachToPanel( evt => PlayWarningDialog?.Invoke( evt ) );
             return result;
         }
-        public static Widget ErrorDialogWidget(UIViewBase view) {
-            var result = Create<Widget>( view, "error-dialog-widget", "error-dialog-widget" );
+        public static Widget ErrorDialogWidget() {
+            var result = Create<Widget>( "error-dialog-widget", "error-dialog-widget" );
             result.OnAttachToPanel( evt => PlayErrorDialog?.Invoke( evt ) );
             return result;
         }
 
         // View
-        public static VisualElement View(UIViewBase view) {
-            var result = Create<VisualElement>( view, "view", "view" );
+        public static VisualElement View() {
+            var result = Create<VisualElement>( "view", "view" );
             return result;
         }
 
@@ -120,7 +120,7 @@ namespace UnityEngine.Framework.UI {
         public static Tab Tab(string label) {
             var result = Create<Tab>( "tab", null );
             result.label = label;
-            result.tabHeader.OnMouseDown( PlayClick );
+            result.tabHeader.OnMouseDown( evt => PlayClick?.Invoke( evt ) );
             return result;
         }
 
@@ -274,20 +274,12 @@ namespace UnityEngine.Framework.UI {
         }
 
         // Helpers
-        private static T Create<T>(UIViewBase view, string? name, string? @class) where T : VisualElement, new() {
-            var result = new T();
-            result.name = name;
-            result.AddToClassList( "visual-element" );
-            result.AddToClassList( @class );
-            OnVisualElementCreated?.Invoke( result, view );
-            return result;
-        }
         private static T Create<T>(string? name, string? @class) where T : VisualElement, new() {
             var result = new T();
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
-            OnVisualElementCreated?.Invoke( result, null );
+            OnVisualElementCreated?.Invoke( result );
             return result;
         }
 

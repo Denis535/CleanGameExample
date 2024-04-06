@@ -22,7 +22,7 @@ namespace UnityEngine.Framework.UI {
         // Constructor
         public DialogWidgetViewBase() {
             if (this is DialogWidgetView) {
-                VisualElement = DialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = DialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
@@ -32,7 +32,7 @@ namespace UnityEngine.Framework.UI {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
-                VisualElement = InfoDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = InfoDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
@@ -42,7 +42,7 @@ namespace UnityEngine.Framework.UI {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
-                VisualElement = WarningDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = WarningDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
@@ -52,7 +52,7 @@ namespace UnityEngine.Framework.UI {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
-                VisualElement = ErrorDialogWidget( this, out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = ErrorDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Widget = widget.Wrap();
                 Card = card.Wrap();
@@ -90,8 +90,8 @@ namespace UnityEngine.Framework.UI {
         }
 
         // Helpers
-        private static Widget DialogWidget(UIViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.DialogWidget( view ).AsScope( out widget )) {
+        private static Widget DialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.DialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.DialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -107,8 +107,8 @@ namespace UnityEngine.Framework.UI {
             }
             return widget;
         }
-        private static Widget InfoDialogWidget(UIViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.InfoDialogWidget( view ).AsScope( out widget )) {
+        private static Widget InfoDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.InfoDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.InfoDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -124,8 +124,8 @@ namespace UnityEngine.Framework.UI {
             }
             return widget;
         }
-        private static Widget WarningDialogWidget(UIViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.WarningDialogWidget( view ).AsScope( out widget )) {
+        private static Widget WarningDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.WarningDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.WarningDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -141,8 +141,8 @@ namespace UnityEngine.Framework.UI {
             }
             return widget;
         }
-        private static Widget ErrorDialogWidget(UIViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.ErrorDialogWidget( view ).AsScope( out widget )) {
+        private static Widget ErrorDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.ErrorDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.ErrorDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );

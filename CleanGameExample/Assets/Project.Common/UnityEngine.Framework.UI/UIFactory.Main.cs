@@ -1,25 +1,24 @@
 #nullable enable
-namespace Project.UI {
+namespace UnityEngine.Framework.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
     public static partial class UIFactory {
         public static class Main {
 
             // MainWidget
-            public static Widget MainWidget(UIViewBase view, out Widget widget) {
-                using (VisualElementFactory.Widget( view ).Name( "main-widget" ).AsScope( out widget )) {
+            public static Widget MainWidget(out Widget widget) {
+                using (VisualElementFactory.Widget().Name( "main-widget" ).AsScope( out widget )) {
                 }
                 return widget;
             }
 
             // MainMenuWidget
-            public static Widget MainMenuWidget(UIViewBase view, out Widget widget, out Label title, out VisualElement contentSlot) {
-                using (VisualElementFactory.LeftWidget( view ).AsScope( out widget )) {
+            public static Widget MainMenuWidget(out Widget widget, out Label title, out VisualElement contentSlot) {
+                using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
                     using (VisualElementFactory.Card().AsScope()) {
                         using (VisualElementFactory.Header().AsScope()) {
                             VisualElementFactory.Label( "Main Menu" ).AddToScope( out title );
@@ -30,24 +29,24 @@ namespace Project.UI {
                 }
                 return widget;
             }
-            public static VisualElement MainMenuWidget_MainMenuView(UIViewBase view, out VisualElement root, out Button startGame, out Button settings, out Button quit) {
-                using (VisualElementFactory.View( view ).AsScope( out root )) {
+            public static VisualElement MainMenuWidget_MainMenuView(out VisualElement root, out Button startGame, out Button settings, out Button quit) {
+                using (VisualElementFactory.View().AsScope( out root )) {
                     VisualElementFactory.Select( "Start Game" ).AddToScope( out startGame );
                     VisualElementFactory.Select( "Settings" ).AddToScope( out settings );
                     VisualElementFactory.Select( "Quit" ).AddToScope( out quit );
                 }
                 return root;
             }
-            public static VisualElement MainMenuWidget_StartGameView(UIViewBase view, out VisualElement root, out Button newGame, out Button @continue, out Button back) {
-                using (VisualElementFactory.View( view ).AsScope( out root )) {
+            public static VisualElement MainMenuWidget_StartGameView(out VisualElement root, out Button newGame, out Button @continue, out Button back) {
+                using (VisualElementFactory.View().AsScope( out root )) {
                     VisualElementFactory.Select( "New Game" ).AddToScope( out newGame );
                     VisualElementFactory.Select( "Continue" ).AddToScope( out @continue );
                     VisualElementFactory.Select( "Back" ).AddToScope( out back );
                 }
                 return root;
             }
-            public static VisualElement MainMenuWidget_SelectLevelView(UIViewBase view, out VisualElement root, out Button level1, out Button level2, out Button level3, out Button back) {
-                using (VisualElementFactory.View( view ).AsScope( out root )) {
+            public static VisualElement MainMenuWidget_SelectLevelView(out VisualElement root, out Button level1, out Button level2, out Button level3, out Button back) {
+                using (VisualElementFactory.View().AsScope( out root )) {
                     using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                         VisualElementFactory.Select( "Level 1" ).AddToScope( out level1 );
                         VisualElementFactory.Select( "Level 2" ).AddToScope( out level2 );
@@ -57,8 +56,8 @@ namespace Project.UI {
                 }
                 return root;
             }
-            public static VisualElement MainMenuWidgetView_SelectYourCharacterView(UIViewBase view, out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
-                using (VisualElementFactory.View( view ).AsScope( out root )) {
+            public static VisualElement MainMenuWidgetView_SelectYourCharacterView(out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
+                using (VisualElementFactory.View().AsScope( out root )) {
                     using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                         VisualElementFactory.Select( "Gray" ).AddToScope( out gray );
                         VisualElementFactory.Select( "Red" ).AddToScope( out red );
@@ -71,8 +70,8 @@ namespace Project.UI {
             }
 
             // LoadingWidget
-            public static Widget LoadingWidget(UIViewBase view, out Widget widget, out Label loading) {
-                using (VisualElementFactory.Widget( view ).AsScope( out widget )) {
+            public static Widget LoadingWidget(out Widget widget, out Label loading) {
+                using (VisualElementFactory.Widget().AsScope( out widget )) {
                     using (VisualElementFactory.ColumnScope().Classes( "margin-2pc", "grow-1", "justify-content-end", "align-items-center" ).AsScope()) {
                         VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold" ).AddToScope( out loading );
                     }

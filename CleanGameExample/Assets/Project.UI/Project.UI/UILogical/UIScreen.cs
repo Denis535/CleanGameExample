@@ -24,6 +24,16 @@ namespace Project.UI {
             base.Awake();
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
             Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
+            VisualElementFactory.PlayClick += evt => { };
+            VisualElementFactory.PlaySelect += evt => { };
+            VisualElementFactory.PlaySubmit += evt => { };
+            VisualElementFactory.PlayCancel += evt => { };
+            VisualElementFactory.PlayChange += evt => { };
+            VisualElementFactory.PlayFocus += evt => { };
+            VisualElementFactory.PlayDialog += evt => { };
+            VisualElementFactory.PlayInfoDialog += evt => { };
+            VisualElementFactory.PlayWarningDialog += evt => { };
+            VisualElementFactory.PlayErrorDialog += evt => { };
             this.AttachWidget( new UIRootWidget2() );
         }
         public new void OnDestroy() {

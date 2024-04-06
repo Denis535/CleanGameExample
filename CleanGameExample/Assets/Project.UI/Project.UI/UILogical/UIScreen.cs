@@ -3,6 +3,7 @@ namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using Project.App;
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
@@ -16,10 +17,10 @@ namespace Project.UI {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         // Widget
-        private new UIRootWidget2? Widget => (UIRootWidget2?) base.Widget;
+        private new UIRootWidget2 Widget => (UIRootWidget2) base.Widget!;
         // State
         public UIScreenState State => GetState( Router.State );
-        private ValueTracker2<UIScreenState, UIScreen> StateTracker { get; } = new ValueTracker2<UIScreenState, UIScreen>( i => i.State );
+        //private ValueTracker2<UIScreenState, UIScreen> StateTracker { get; } = new ValueTracker2<UIScreenState, UIScreen>( i => i.State );
         public bool IsMainScreen => State == UIScreenState.MainScreen;
         public bool IsGameScreen => State == UIScreenState.GameScreen;
 
@@ -42,13 +43,18 @@ namespace Project.UI {
 #if UNITY_EDITOR
             //AddVisualElementIfNeeded( Document, Widget!.GetVisualElement()! );
 #endif
-            if (StateTracker.IsChanged( this )) {
-                Widget!.DetachChildren();
-                if (IsMainScreen) {
-                    Widget!.AttachChild( new MainWidget() );
-                } else if (IsGameScreen) {
-                    Widget!.AttachChild( new GameWidget() );
+            if (IsMainScreen) {
+                if (Widget.Children.FirstOrDefault() is not MainWidget) {
+                    Widget.DetachChildren();
+                    Widget.AttachChild( new MainWidget() );
                 }
+            } else if (IsGameScreen) {
+                if (Widget.Children.FirstOrDefault() is not GameWidget) {
+                    Widget.DetachChildren();
+                    Widget.AttachChild( new GameWidget() );
+                }
+            } else {
+                Widget.DetachChildren();
             }
             Widget!.Update();
         }

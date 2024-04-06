@@ -47,7 +47,6 @@ namespace Project {
         // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
         internal static void OnLoad2() {
-            UnityEngine.Application.logMessageReceived += OnLog;
             UIFactory.StringSelector = GetDisplayString;
         }
 
@@ -70,21 +69,11 @@ namespace Project {
         public void Update() {
         }
 
-        // OnLog
-        private static void OnLog(string message, string stackTrace, LogType type) {
-#if RELEASE
-            if (type is LogType.Error or LogType.Assert or LogType.Exception) {
-                UnityEngine.Application.Quit( 1 );
-            }
-#endif
-        }
-
-        // Helpers/GetDisplayString
+        // Helpers
         private static string GetDisplayString<T>(T value) {
             if (value is Resolution resolution) return GetDisplayString( resolution );
             return value?.ToString() ?? "Null";
         }
-        // Helpers/GetDisplayString
         private static string GetDisplayString(Resolution value) {
             return $"{value.width} x {value.height}";
         }

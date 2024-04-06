@@ -28,7 +28,7 @@ namespace Project.UI {
         private AudioSource AudioSource { get; set; } = default!;
         // State
         public UIThemeState State => GetState( Router.State );
-        private ValueTracker2<UIThemeState, UITheme> StateTracker { get; } = new ValueTracker2<UIThemeState, UITheme>( i => i.State );
+        //private ValueTracker2<UIThemeState, UITheme> StateTracker { get; } = new ValueTracker2<UIThemeState, UITheme>( i => i.State );
         public bool IsMainTheme => State == UIThemeState.MainTheme;
         public bool IsGameTheme => State == UIThemeState.GameTheme;
 
@@ -66,7 +66,7 @@ namespace Project.UI {
             while (IsMainTheme) {
                 clip = GetNextValue( MainThemes, clip );
                 try {
-                    Play( AudioSource, await clip.LoadAsync( destroyCancellationToken ) );
+                    Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
                     while (IsMainTheme && IsPlaying( AudioSource )) {
                         if (Router.IsGameSceneLoading) {
                             AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
@@ -86,7 +86,7 @@ namespace Project.UI {
             while (IsGameTheme) {
                 clip = GetNextValue( GameThemes, clip );
                 try {
-                    Play( AudioSource, await clip.LoadAsync( destroyCancellationToken ) );
+                    Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
                     while (IsGameTheme && IsPlaying( AudioSource )) {
                         Pause( AudioSource, !Application.Game!.IsPlaying );
                         await Task.Yield();

@@ -20,10 +20,10 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = InitializationContext.GetArguments<Player, Arguments>();
+            Args = ComponentContext.GetArguments<Player, Arguments>();
         }
         public void OnDestroy() {
-            if (CharacterHandle != null) Addressables2.ReleaseInstance( CharacterHandle.Value );
+            if (CharacterHandle != null) Addressables.ReleaseInstance( CharacterHandle.Value );
         }
 
         // Start
@@ -36,19 +36,19 @@ namespace Project.Entities {
         public void Spawn(PlayerSpawnPoint point) {
             switch (Args.Character) {
                 case Project.Entities.Character.Gray: {
-                    CharacterHandle = Addressables2.InstantiateAsync( R.Project.Entities.Characters.Character_Gray_Value, point.transform.position, point.transform.rotation );
+                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Gray_Value, point.transform.position, point.transform.rotation );
                     break;
                 }
                 case Project.Entities.Character.Red: {
-                    CharacterHandle = Addressables2.InstantiateAsync( R.Project.Entities.Characters.Character_Red_Value, point.transform.position, point.transform.rotation );
+                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Red_Value, point.transform.position, point.transform.rotation );
                     break;
                 }
                 case Project.Entities.Character.Green: {
-                    CharacterHandle = Addressables2.InstantiateAsync( R.Project.Entities.Characters.Character_Green_Value, point.transform.position, point.transform.rotation );
+                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Green_Value, point.transform.position, point.transform.rotation );
                     break;
                 }
                 case Project.Entities.Character.Blue: {
-                    CharacterHandle = Addressables2.InstantiateAsync( R.Project.Entities.Characters.Character_Blue_Value, point.transform.position, point.transform.rotation );
+                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Blue_Value, point.transform.position, point.transform.rotation );
                     break;
                 }
                 default: {

@@ -4,6 +4,8 @@ namespace Project.UI {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Project.App;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
@@ -40,7 +42,6 @@ namespace Project.UI {
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {
-            Stop( AudioSource );
             base.OnDestroy();
         }
 
@@ -49,31 +50,52 @@ namespace Project.UI {
             using (@lock.Enter()) {
             }
         }
-        public void Update() {
+        public async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                if (StateTracker.IsChanged( this )) {
-                    Stop( AudioSource );
-                }
-                if (!IsPlaying( AudioSource )) {
-                    if (IsMainTheme) {
-                        Stop( AudioSource );
-                        PlayNext( AudioSource, MainThemes );
-                    } else if (IsGameTheme) {
-                        Stop( AudioSource );
-                        PlayNext( AudioSource, GameThemes );
-                    }
-                }
                 if (IsMainTheme) {
-                    if (Router.IsGameSceneLoading) {
-                        AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 0.5f );
+                    await PlayMainTheme();
+                } else
+                if (IsGameTheme) {
+                    await PlayGameTheme();
+                }
+            }
+        }
+
+        // PlayMainTheme
+        private async Task PlayMainTheme() {
+            var clip = (AssetHandle<AudioClip>?) null;
+            while (IsMainTheme) {
+                clip = GetNextValue( MainThemes, clip );
+                try {
+                    Play( AudioSource, await clip.LoadAsync( destroyCancellationToken ) );
+                    while (IsMainTheme && IsPlaying( AudioSource )) {
+                        if (Router.IsGameSceneLoading) {
+                            AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
+                            AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
+                        }
+                        await Task.Yield();
                     }
-                } else if (IsGameTheme) {
-                    if (Application.Game!.IsPlaying) {
-                        AudioSource.UnPause();
-                    } else {
-                        AudioSource.Pause();
+                } finally {
+                    Stop( AudioSource );
+                    clip.Release();
+                }
+            }
+        }
+        // PlayGameTheme
+        private async Task PlayGameTheme() {
+            var clip = (AssetHandle<AudioClip>?) null;
+            while (IsGameTheme) {
+                clip = GetNextValue( GameThemes, clip );
+                try {
+                    Play( AudioSource, await clip.LoadAsync( destroyCancellationToken ) );
+                    while (IsGameTheme && IsPlaying( AudioSource )) {
+                        Pause( AudioSource, !Application.Game!.IsPlaying );
+                        await Task.Yield();
                     }
+                } finally {
+                    Stop( AudioSource );
+                    clip.Release();
                 }
             }
         }
@@ -92,21 +114,24 @@ namespace Project.UI {
         private static bool IsPlaying(AudioSource source) {
             return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length );
         }
-        private static void Play(AudioSource source, AssetHandle<AudioClip> clip) {
-            Assert.Operation.Message( $"You are trying to play {clip} clip but first you must unload old clip" ).Valid( source.clip == null );
-            source.clip = clip.Load();
+        private static void Play(AudioSource source, AudioClip clip) {
+            Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );
+            source.clip = clip;
             source.volume = 1;
+            source.pitch = 1;
             source.Play();
         }
-        private static void PlayNext(AudioSource source, AssetHandle<AudioClip>[] clips) {
-            var clip = MainThemes.Concat( GameThemes ).FirstOrDefault( i => i.IsActive && i.IsSucceeded && i.Asset == source.clip );
-            Play( source, GetNextValue( clips, clip ) );
+        private static void Pause(AudioSource source, bool value) {
+            if (value) {
+                source.Pause();
+            } else {
+                source.UnPause();
+            }
         }
         private static void Stop(AudioSource source) {
             if (source.clip != null) {
                 source.Stop();
                 source.clip = null;
-                MainThemes.Concat( GameThemes ).Release();
             }
         }
 

@@ -30,7 +30,7 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = InitializationContext.GetArguments<Game, Arguments>();
+            Args = ComponentContext.GetArguments<Game, Arguments>();
             Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
             World = this.GetDependencyContainer().RequireDependency<World>( null );
             Player = gameObject.RequireComponent<Player>();

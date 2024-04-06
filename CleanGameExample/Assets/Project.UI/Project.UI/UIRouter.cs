@@ -114,8 +114,8 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 await UnloadSceneAsync_MainScene();
                 await Task.Delay( 3_000 );
-                using (InitializationContext.Enter<Game, Game.Arguments>( new Game.Arguments( level ) )) {
-                    using (InitializationContext.Enter<Player, Player.Arguments>( new Player.Arguments( character ) )) {
+                using (ComponentContext.Enter<Game, Game.Arguments>( new Game.Arguments( level ) )) {
+                    using (ComponentContext.Enter<Player, Player.Arguments>( new Player.Arguments( character ) )) {
                         await LoadSceneAsync_World( level );
                         await LoadSceneAsync_GameScene();
                     }

@@ -9,16 +9,15 @@ namespace UnityEngine.Framework.UI {
 
     public static class VisualElementFactory {
 
-        // System
-        public static event Action<VisualElement>? OnVisualElementCreated;
         public static Func<object?, string?>? StringSelector { get; set; }
+        public static event Action<VisualElement>? OnVisualElementCreated;
         // Sfx
         public static event EventCallback<EventBase>? PlayClick;
         public static event EventCallback<ClickEvent>? PlaySelect;
         public static event EventCallback<ClickEvent>? PlaySubmit;
         public static event EventCallback<ClickEvent>? PlayCancel;
         public static event EventCallback<IChangeEvent>? PlayChange;
-        // sfx
+        // Sfx
         public static event EventCallback<FocusEvent>? PlayFocus;
         // Sfx
         public static event EventCallback<AttachToPanelEvent>? PlayDialog;

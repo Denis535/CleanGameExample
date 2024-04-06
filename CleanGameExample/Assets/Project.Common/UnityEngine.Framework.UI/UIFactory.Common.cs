@@ -9,6 +9,75 @@ namespace UnityEngine.Framework.UI {
     public static partial class UIFactory {
         public static class Common {
 
+            public static Widget DialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+                using (VisualElementFactory.DialogWidget().AsScope( out widget )) {
+                    using (VisualElementFactory.DialogCard().AsScope( out card )) {
+                        using (VisualElementFactory.Header().AsScope( out header )) {
+                            VisualElementFactory.Label( null ).AddToScope( out title );
+                        }
+                        using (VisualElementFactory.Content().AsScope( out content )) {
+                            using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
+                                VisualElementFactory.Label( null ).AddToScope( out message );
+                            }
+                        }
+                        using (VisualElementFactory.Footer().AsScope( out footer )) {
+                        }
+                    }
+                }
+                return widget;
+            }
+            public static Widget InfoDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+                using (VisualElementFactory.InfoDialogWidget().AsScope( out widget )) {
+                    using (VisualElementFactory.InfoDialogCard().AsScope( out card )) {
+                        using (VisualElementFactory.Header().AsScope( out header )) {
+                            VisualElementFactory.Label( null ).AddToScope( out title );
+                        }
+                        using (VisualElementFactory.Content().AsScope( out content )) {
+                            using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
+                                VisualElementFactory.Label( null ).AddToScope( out message );
+                            }
+                        }
+                        using (VisualElementFactory.Footer().AsScope( out footer )) {
+                        }
+                    }
+                }
+                return widget;
+            }
+            public static Widget WarningDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+                using (VisualElementFactory.WarningDialogWidget().AsScope( out widget )) {
+                    using (VisualElementFactory.WarningDialogCard().AsScope( out card )) {
+                        using (VisualElementFactory.Header().AsScope( out header )) {
+                            VisualElementFactory.Label( null ).AddToScope( out title );
+                        }
+                        using (VisualElementFactory.Content().AsScope( out content )) {
+                            using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
+                                VisualElementFactory.Label( null ).AddToScope( out message );
+                            }
+                        }
+                        using (VisualElementFactory.Footer().AsScope( out footer )) {
+                        }
+                    }
+                }
+                return widget;
+            }
+            public static Widget ErrorDialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+                using (VisualElementFactory.ErrorDialogWidget().AsScope( out widget )) {
+                    using (VisualElementFactory.ErrorDialogCard().AsScope( out card )) {
+                        using (VisualElementFactory.Header().AsScope( out header )) {
+                            VisualElementFactory.Label( null ).AddToScope( out title );
+                        }
+                        using (VisualElementFactory.Content().AsScope( out content )) {
+                            using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
+                                VisualElementFactory.Label( null ).AddToScope( out message );
+                            }
+                        }
+                        using (VisualElementFactory.Footer().AsScope( out footer )) {
+                        }
+                    }
+                }
+                return widget;
+            }
+
             // SettingsWidget
             public static Widget SettingsWidget(UIViewBase view, out Widget widget, out Label title, out TabView tabView, out Tab profileSettingsSlot, out Tab videoSettingsSlot, out Tab audioSettingsSlot, out Button okey, out Button back) {
                 using (VisualElementFactory.MediumWidget().AsScope( out widget )) {

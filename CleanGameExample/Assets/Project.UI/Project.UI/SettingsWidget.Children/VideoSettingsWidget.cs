@@ -11,7 +11,7 @@ namespace Project.UI {
 
     public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private Storage.VideoSettings VideoSettings { get; }
 

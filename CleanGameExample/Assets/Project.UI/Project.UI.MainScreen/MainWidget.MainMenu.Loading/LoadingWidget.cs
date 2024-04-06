@@ -9,7 +9,7 @@ namespace Project.UI.MainScreen {
 
     public class LoadingWidget : UIWidgetBase<LoadingWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
 
         // Constructor

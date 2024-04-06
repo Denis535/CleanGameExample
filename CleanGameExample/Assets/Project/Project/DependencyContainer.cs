@@ -20,7 +20,7 @@ namespace Project {
         [SerializeField] private new Camera camera = default!;
         [SerializeField] private AudioMixer audioMixer = default!;
 
-        // Globals
+        // Deps
         private UITheme UITheme => uiTheme;
         private UIScreen UIScreen => uiScreen;
         private UIFactory UIFactory => uiFactory;
@@ -28,7 +28,7 @@ namespace Project {
         private Application2 Application => application;
         private Camera Camera => camera;
         private AudioMixer AudioMixer => audioMixer;
-        // Globals
+        // Deps
         private Storage Storage { get; set; } = default!;
         private Storage.ProfileSettings ProfileSettings { get; set; } = default!;
         private Storage.VideoSettings VideoSettings { get; set; } = default!;

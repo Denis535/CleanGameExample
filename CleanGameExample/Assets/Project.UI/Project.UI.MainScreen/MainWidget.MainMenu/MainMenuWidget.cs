@@ -12,7 +12,7 @@ namespace Project.UI.MainScreen {
 
     public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private UIRouter Router { get; }
 

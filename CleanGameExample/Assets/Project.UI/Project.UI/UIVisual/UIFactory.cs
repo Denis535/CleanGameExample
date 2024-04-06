@@ -27,7 +27,7 @@ namespace Project.UI {
         // System
         public static Func<object?, string?>? StringSelector { get; set; }
         public static event Action<VisualElement, UIViewBase?>? OnVisualElementCreate;
-        // Globals
+        // Deps
         private AudioSource AudioSource { get; set; } = default!;
 
         // Awake
@@ -44,7 +44,7 @@ namespace Project.UI {
             //infoDialog = Addressables2.LoadAssetAsync<AudioClip>( R.Project.UI.Sounds.InfoDialog ).GetResult();
             //warningDialog = Addressables2.LoadAssetAsync<AudioClip>( R.Project.UI.Sounds.WarningDialog ).GetResult();
             //errorDialog = Addressables2.LoadAssetAsync<AudioClip>( R.Project.UI.Sounds.ErrorDialog ).GetResult();
-            // Globals
+            // Deps
             AudioSource = GetComponentInChildren<AudioSource>();
         }
         public void OnDestroy() {

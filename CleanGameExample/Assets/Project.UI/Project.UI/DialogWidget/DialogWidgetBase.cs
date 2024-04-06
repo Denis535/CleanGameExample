@@ -9,8 +9,9 @@ namespace Project.UI {
 
     public abstract class DialogWidgetBase<TView> : UIWidgetBase<TView>, IModalWidget where TView : DialogWidgetViewBase {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
+        // Title
         public string? Title {
             get => View.Title.Text;
             set {
@@ -18,6 +19,7 @@ namespace Project.UI {
                 View.Header.SetDisplayed( value != null );
             }
         }
+        // Message
         public string? Message {
             get => View.Message.Text;
             set {

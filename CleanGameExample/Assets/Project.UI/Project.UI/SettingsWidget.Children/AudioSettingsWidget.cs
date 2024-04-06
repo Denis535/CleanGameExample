@@ -10,7 +10,7 @@ namespace Project.UI {
 
     public class AudioSettingsWidget : UIWidgetBase<AudioSettingsWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private Storage.AudioSettings AudioSettings { get; }
 

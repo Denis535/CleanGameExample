@@ -10,7 +10,7 @@ namespace Project.UI {
 
     public class ProfileSettingsWidget : UIWidgetBase<ProfileSettingsWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private Storage.ProfileSettings ProfileSettings { get; }
 

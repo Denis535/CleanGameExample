@@ -15,11 +15,11 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase<MainWidgetView> {
 
-        // Globals
+        // Deps
         private UIRouter Router { get; }
         private UIFactory Factory { get; }
         private Application2 Application { get; }
-        private Storage Globals { get; set; } = default!;
+        private Storage Storage { get; set; } = default!;
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
 
         // Constructor
@@ -27,7 +27,7 @@ namespace Project.UI.MainScreen {
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
             Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
-            Globals = this.GetDependencyContainer().RequireDependency<Storage>( null );
+            Storage = this.GetDependencyContainer().RequireDependency<Storage>( null );
             View = CreateView( this, Factory );
         }
         public override void Dispose() {
@@ -46,7 +46,7 @@ namespace Project.UI.MainScreen {
             if (UnityServices.State != ServicesInitializationState.Initialized) {
                 try {
                     var options = new InitializationOptions();
-                    if (Globals.Profile != null) options.SetProfile( Globals.Profile );
+                    if (Storage.Profile != null) options.SetProfile( Storage.Profile );
                     await UnityServices.InitializeAsync( options );
                 } catch (Exception ex) {
                     var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );

@@ -15,10 +15,9 @@ namespace Project.Entities {
 
         // Args
         private Arguments Args { get; set; } = default!;
-        // Globals
+        // Deps
         public Camera2 Camera { get; private set; } = default!;
         public World World { get; private set; } = default!;
-        // Player
         public Player Player { get; private set; } = default!;
         // IsPlaying
         public bool IsPlaying {

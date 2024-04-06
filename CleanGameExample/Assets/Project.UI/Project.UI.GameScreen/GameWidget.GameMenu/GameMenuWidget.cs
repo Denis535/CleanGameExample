@@ -10,7 +10,7 @@ namespace Project.UI.GameScreen {
 
     public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private UIRouter Router { get; }
 

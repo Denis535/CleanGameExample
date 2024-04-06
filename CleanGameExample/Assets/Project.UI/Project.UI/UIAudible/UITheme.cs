@@ -3,8 +3,6 @@ namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using Project.App;
     using UnityEngine;
@@ -24,7 +22,7 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
-        // Globals
+        // Deps
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         private AudioSource AudioSource { get; set; } = default!;

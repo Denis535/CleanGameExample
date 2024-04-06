@@ -12,7 +12,7 @@ namespace Project {
     [DefaultExecutionOrder( ScriptExecutionOrders.Program )]
     public class DebugScreen : MonoBehaviour {
 
-        // Globals
+        // Deps
         private UITheme Theme { get; set; } = default!;
         private UIScreen Screen { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;

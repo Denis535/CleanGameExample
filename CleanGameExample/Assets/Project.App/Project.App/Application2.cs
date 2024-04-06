@@ -10,7 +10,7 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase {
 
-        // Globals
+        // Game
         public Game? Game { get; private set; }
 
         // Awake

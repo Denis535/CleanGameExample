@@ -11,7 +11,7 @@ namespace Project.UI {
 
     public class SettingsWidget : UIWidgetBase<SettingsWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         // Children
         private ProfileSettingsWidget ProfileSettingsWidget => View.ProfileSettingsSlot.Widget!;

@@ -24,7 +24,7 @@ namespace Project.UI {
         private readonly SceneHandle world3 = new SceneHandle( R.Project.Entities.Worlds.World_03_Value );
         private UIRouterState state;
 
-        // Globals
+        // Deps
         private Application2 Application { get; set; } = default!;
         // State
         public UIRouterState State {

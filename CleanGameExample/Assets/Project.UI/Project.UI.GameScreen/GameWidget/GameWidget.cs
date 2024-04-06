@@ -11,7 +11,7 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
-        // Globals
+        // Deps
         private UIFactory Factory { get; }
         private Application2 Application { get; }
         // Actions

@@ -9,39 +9,26 @@ namespace UnityEngine.AddressableAssets {
     using UnityEngine.ResourceManagement.ResourceProviders;
     using UnityEngine.SceneManagement;
 
-    public class SceneHandleAsync {
+    public class SceneHandle {
 
         private AsyncOperationHandle<SceneInstance>? handle;
 
         public string Key { get; }
         public bool IsActive => handle != null;
-        public bool IsValid {
+        public bool IsValid => handle != null && handle.Value.IsValid();
+        public bool IsSucceeded => handle != null && handle.Value.IsValid() && handle.Value.IsSucceeded();
+        public bool IsFailed => handle != null && handle.Value.IsValid() && handle.Value.IsFailed();
+        public Scene Scene {
             get {
                 Assert.Operation.Message( $"Handle {this} must be active" ).Valid( handle != null );
-                return handle.Value.IsValid();
-            }
-        }
-        public bool IsSucceeded {
-            get {
-                Assert.Operation.Message( $"Handle {this} must be active" ).Valid( handle != null );
-                return handle.Value.IsSucceeded();
-            }
-        }
-        public bool IsFailed {
-            get {
-                Assert.Operation.Message( $"Handle {this} must be active" ).Valid( handle != null );
-                return handle.Value.IsFailed();
-            }
-        }
-        public Task<Scene> SceneAsync {
-            get {
-                Assert.Operation.Message( $"Handle {this} must be active" ).Valid( handle != null );
-                return handle.Value.Task.ContinueWith( i => i.Result.Scene );
+                Assert.Operation.Message( $"Handle {this} must be valid" ).Valid( handle.Value.IsValid() );
+                Assert.Operation.Message( $"Handle {this} must be succeeded" ).Valid( handle.Value.IsSucceeded() );
+                return handle.Value.Result.Scene;
             }
         }
 
         // Constructor
-        public SceneHandleAsync(string key) {
+        public SceneHandle(string key) {
             Key = key;
         }
 
@@ -73,7 +60,16 @@ namespace UnityEngine.AddressableAssets {
 
         // Utils
         public override string ToString() {
-            return $"AsyncSceneHandle: {Key}";
+            return $"SceneHandle: {Key}";
+        }
+
+    }
+    public static class SceneHandleExtensions {
+
+        public static async Task UnloadAsync(this IEnumerable<SceneHandle> collection) {
+            foreach (var item in collection) {
+                await item.UnloadAsync();
+            }
         }
 
     }

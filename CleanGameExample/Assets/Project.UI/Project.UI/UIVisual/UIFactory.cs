@@ -26,8 +26,7 @@ namespace Project.UI {
 
         // System
         public static Func<object?, string?>? StringSelector { get; set; }
-        public static event Action<UIViewBase>? OnViewAttach;
-        public static event Action<UIViewBase>? OnViewDetach;
+        public static event Action<VisualElement, UIViewBase?>? OnVisualElementCreate;
         // Globals
         private AudioSource AudioSource { get; set; } = default!;
 
@@ -411,12 +410,7 @@ namespace Project.UI {
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
-            result.OnAttachToPanel( evt => {
-                OnViewAttach?.Invoke( view );
-            } );
-            result.OnDetachFromPanel( evt => {
-                OnViewDetach?.Invoke( view );
-            } );
+            OnVisualElementCreate?.Invoke( result, view );
             return result;
         }
         private static T Create<T>(string? name, string? @class) where T : VisualElement, new() {
@@ -424,6 +418,7 @@ namespace Project.UI {
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
+            OnVisualElementCreate?.Invoke( result, null );
             return result;
         }
 

@@ -16,12 +16,12 @@ namespace Project.UI {
     public class UIRouter : UIRouterBase {
 
         private static readonly Lock @lock = new Lock();
-        private static readonly SceneHandleAsync program = new SceneHandleAsync( R.Project.Scenes.Program_Value );
-        private readonly SceneHandleAsync mainScene = new SceneHandleAsync( R.Project.Scenes.MainScene_Value );
-        private readonly SceneHandleAsync gameScene = new SceneHandleAsync( R.Project.Scenes.GameScene_Value );
-        private readonly SceneHandleAsync world1 = new SceneHandleAsync( R.Project.Entities.Worlds.World_01_Value );
-        private readonly SceneHandleAsync world2 = new SceneHandleAsync( R.Project.Entities.Worlds.World_02_Value );
-        private readonly SceneHandleAsync world3 = new SceneHandleAsync( R.Project.Entities.Worlds.World_03_Value );
+        private static readonly SceneHandle program = new SceneHandle( R.Project.Scenes.Program_Value );
+        private readonly SceneHandle mainScene = new SceneHandle( R.Project.Scenes.MainScene_Value );
+        private readonly SceneHandle gameScene = new SceneHandle( R.Project.Scenes.GameScene_Value );
+        private readonly SceneHandle world1 = new SceneHandle( R.Project.Entities.Worlds.World_01_Value );
+        private readonly SceneHandle world2 = new SceneHandle( R.Project.Entities.Worlds.World_02_Value );
+        private readonly SceneHandle world3 = new SceneHandle( R.Project.Entities.Worlds.World_03_Value );
         private UIRouterState state;
 
         // Globals
@@ -167,36 +167,36 @@ namespace Project.UI {
         private static async Task LoadSceneAsync_Program() {
             await program.LoadAsync( LoadSceneMode.Single, false );
             await program.ActivateAsync();
-            SceneManager.SetActiveScene( program.SceneAsync.Result );
+            SceneManager.SetActiveScene( program.Scene );
         }
         public async Task LoadSceneAsync_MainScene() {
             await mainScene.LoadAsync( LoadSceneMode.Additive, false );
             await mainScene.ActivateAsync();
-            SceneManager.SetActiveScene( mainScene.SceneAsync.Result );
+            SceneManager.SetActiveScene( mainScene.Scene );
         }
         public async Task LoadSceneAsync_GameScene() {
             await gameScene.LoadAsync( LoadSceneMode.Additive, false );
             await gameScene.ActivateAsync();
-            SceneManager.SetActiveScene( gameScene.SceneAsync.Result );
+            SceneManager.SetActiveScene( gameScene.Scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
             switch (level) {
                 case Level.Level1: {
                     await world1.LoadAsync( LoadSceneMode.Additive, false );
                     await world1.ActivateAsync();
-                    SceneManager.SetActiveScene( world1.SceneAsync.Result );
+                    SceneManager.SetActiveScene( world1.Scene );
                     break;
                 }
                 case Level.Level2: {
                     await world2.LoadAsync( LoadSceneMode.Additive, false );
                     await world2.ActivateAsync();
-                    SceneManager.SetActiveScene( world2.SceneAsync.Result );
+                    SceneManager.SetActiveScene( world2.Scene );
                     break;
                 }
                 case Level.Level3: {
                     await world3.LoadAsync( LoadSceneMode.Additive, false );
                     await world3.ActivateAsync();
-                    SceneManager.SetActiveScene( world3.SceneAsync.Result );
+                    SceneManager.SetActiveScene( world3.Scene );
                     break;
                 }
                 default:

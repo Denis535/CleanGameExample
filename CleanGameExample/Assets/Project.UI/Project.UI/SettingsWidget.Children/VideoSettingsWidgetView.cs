@@ -15,8 +15,8 @@ namespace Project.UI {
         public ToggleFieldWrapper<bool> IsVSync { get; }
 
         // Constructor
-        public VideoSettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.VideoSettingsWidget( this, out var root, out var isFullScreen, out var screenResolution, out var isVSync );
+        public VideoSettingsWidgetView() {
+            VisualElement = UIFactory.Common.VideoSettingsWidget( this, out var root, out var isFullScreen, out var screenResolution, out var isVSync );
             Root = root.Wrap();
             IsFullScreen = isFullScreen.Wrap();
             ScreenResolution = screenResolution.Wrap();

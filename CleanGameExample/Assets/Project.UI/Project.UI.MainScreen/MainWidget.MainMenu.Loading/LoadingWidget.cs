@@ -4,18 +4,13 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
 
     public class LoadingWidget : UIWidgetBase<LoadingWidgetView> {
 
-        // Deps
-        private UIFactory Factory { get; }
-
         // Constructor
         public LoadingWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
-            View = CreateView( this, Factory );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -28,8 +23,8 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static LoadingWidgetView CreateView(LoadingWidget widget, UIFactory factory) {
-            var view = new LoadingWidgetView( factory );
+        private static LoadingWidgetView CreateView(LoadingWidget widget) {
+            var view = new LoadingWidgetView();
             return view;
         }
 

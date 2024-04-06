@@ -16,8 +16,8 @@ namespace Project.UI {
         public SliderFieldWrapper<float> GameVolume { get; }
 
         // Constructor
-        public AudioSettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.AudioSettingsWidget( this, out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
+        public AudioSettingsWidgetView() {
+            VisualElement = UIFactory.Common.AudioSettingsWidget( this, out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
             Root = root.Wrap();
             MasterVolume = masterVolume.Wrap();
             MusicVolume = musicVolume.Wrap();

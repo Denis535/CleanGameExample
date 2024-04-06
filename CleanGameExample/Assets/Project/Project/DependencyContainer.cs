@@ -14,7 +14,6 @@ namespace Project {
 
         [SerializeField] private UITheme uiTheme = default!;
         [SerializeField] private UIScreen uiScreen = default!;
-        [SerializeField] private UIFactory uiFactory = default!;
         [SerializeField] private UIRouter uiRouter = default!;
         [SerializeField] private Application2 application = default!;
         [SerializeField] private new Camera camera = default!;
@@ -23,7 +22,6 @@ namespace Project {
         // Deps
         private UITheme UITheme => uiTheme;
         private UIScreen UIScreen => uiScreen;
-        private UIFactory UIFactory => uiFactory;
         private UIRouter UIRouter => uiRouter;
         private Application2 Application => application;
         private Camera Camera => camera;
@@ -57,10 +55,6 @@ namespace Project {
             }
             if (type == typeof( UIScreen )) {
                 var result = UIScreen;
-                return result;
-            }
-            if (type == typeof( UIFactory )) {
-                var result = UIFactory;
                 return result;
             }
             if (type == typeof( UIRouter )) {

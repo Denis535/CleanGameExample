@@ -13,14 +13,12 @@ namespace Project.UI.MainScreen {
     public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
 
         // Deps
-        private UIFactory Factory { get; }
         private UIRouter Router { get; }
 
         // Constructor
         public MainMenuWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
-            View = CreateView( this, Factory, Router );
+            View = CreateView( this, Router );
         }
         public override void Dispose() {
             base.Dispose();
@@ -33,18 +31,18 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView( factory );
-            view.ContentSlot.Push( CreateView_MainMenuView( widget, factory, router ) );
+        private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView();
+            view.ContentSlot.Push( CreateView_MainMenuView( widget, router ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_MainMenuView( factory );
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView_MainMenuView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Main Menu";
             } );
             view.StartGame.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_StartGameView( widget, factory, router ) );
+                widget.View.ContentSlot.Push( CreateView_StartGameView( widget, router ) );
             } );
             view.Settings.OnClick( evt => {
                 widget.AttachChild( new SettingsWidget() );
@@ -55,43 +53,43 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_StartGameView( factory );
+        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView_StartGameView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Start Game";
             } );
             view.NewGame.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, factory, router ) );
+                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, router ) );
             } );
             view.Continue.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, factory, router ) );
+                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, router ) );
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new MainMenuWidgetView_SelectLevelView( factory );
+        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView_SelectLevelView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Level";
             } );
             view.Level1.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, Level.Level1 ) );
             } );
             view.Level2.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level2 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, Level.Level2 ) );
             } );
             view.Level3.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, factory, router, Level.Level3 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, Level.Level3 ) );
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIFactory factory, UIRouter router, Level level) {
-            var view = new MainMenuWidgetView_SelectYourCharacterView( factory );
+        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIRouter router, Level level) {
+            var view = new MainMenuWidgetView_SelectYourCharacterView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
             } );

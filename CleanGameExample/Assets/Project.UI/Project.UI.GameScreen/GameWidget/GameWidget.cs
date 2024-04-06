@@ -12,16 +12,14 @@ namespace Project.UI.GameScreen {
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
         // Deps
-        private UIFactory Factory { get; }
         private Application2 Application { get; }
         // Actions
         private InputActions Actions { get; }
 
         // Constructor
         public GameWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
-            View = CreateView( this, Factory );
+            View = CreateView( this );
             Actions = new InputActions();
         }
         public override void Dispose() {
@@ -76,8 +74,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameWidgetView CreateView(GameWidget widget, UIFactory factory) {
-            var view = new GameWidgetView( factory );
+        private static GameWidgetView CreateView(GameWidget widgety) {
+            var view = new GameWidgetView();
             return view;
         }
 

@@ -16,8 +16,8 @@ namespace Project.UI.MainScreen {
         public LabelWrapper Loading { get; }
 
         // Constructor
-        public LoadingWidgetView(UIFactory factory) {
-            VisualElement = factory.LoadingWidget( this, out var widget, out var loading );
+        public LoadingWidgetView() {
+            VisualElement = UIFactory.Main.LoadingWidget( this, out var widget, out var loading );
             VisualElement.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
             Widget = widget.Wrap();
             Loading = loading.Wrap();

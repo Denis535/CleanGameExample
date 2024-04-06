@@ -13,8 +13,8 @@ namespace Project.UI {
         public TextFieldWrapper<string> Name { get; }
 
         // Constructor
-        public ProfileSettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.ProfileSettingsWidget( this, out var root, out var name );
+        public ProfileSettingsWidgetView() {
+            VisualElement = UIFactory.Common.ProfileSettingsWidget( this, out var root, out var name );
             Root = root.Wrap();
             Name = name.Wrap();
         }

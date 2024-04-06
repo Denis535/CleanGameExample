@@ -8,6 +8,7 @@ namespace Project {
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Framework;
+    using UnityEngine.Framework.UI;
 
     public class Program : ProgramBase {
 
@@ -47,7 +48,7 @@ namespace Project {
         // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
         internal static void OnLoad2() {
-            UIFactory.StringSelector = GetDisplayString;
+            VisualElementFactory.StringSelector = GetDisplayString;
         }
 
         // Awake

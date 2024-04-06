@@ -19,8 +19,8 @@ namespace Project.UI {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public SettingsWidgetView(UIFactory factory) {
-            VisualElement = factory.SettingsWidget( this, out var widget, out var title, out var tabView, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
+        public SettingsWidgetView() {
+            VisualElement = UIFactory.Common.SettingsWidget( this, out var widget, out var title, out var tabView, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
             Widget = widget.Wrap();
             Title = title.Wrap();
             TabView = tabView.Wrap();

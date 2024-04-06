@@ -11,14 +11,12 @@ namespace Project.UI.GameScreen {
     public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
 
         // Deps
-        private UIFactory Factory { get; }
         private UIRouter Router { get; }
 
         // Constructor
         public GameMenuWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
-            View = CreateView( this, Factory, Router );
+            View = CreateView( this, Router );
         }
         public override void Dispose() {
             base.Dispose();
@@ -31,8 +29,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameMenuWidgetView CreateView(GameMenuWidget widget, UIFactory factory, UIRouter router) {
-            var view = new GameMenuWidgetView( factory );
+        private static GameMenuWidgetView CreateView(GameMenuWidget widget, UIRouter router) {
+            var view = new GameMenuWidgetView();
             view.Resume.OnClick( evt => {
                 widget.DetachSelf();
             } );

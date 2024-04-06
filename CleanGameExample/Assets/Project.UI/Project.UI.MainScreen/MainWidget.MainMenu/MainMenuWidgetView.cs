@@ -14,8 +14,8 @@ namespace Project.UI.MainScreen {
         public ViewStackSlotWrapper<UIViewBase> ContentSlot { get; }
 
         // Constructor
-        public MainMenuWidgetView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget( this, out var widget, out var title, out var contentSlot );
+        public MainMenuWidgetView() {
+            VisualElement = UIFactory.Main.MainMenuWidget( this, out var widget, out var title, out var contentSlot );
             Widget = widget.Wrap();
             Title = title.Wrap();
             ContentSlot = contentSlot.AsViewStackSlot<UIViewBase>();
@@ -35,8 +35,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Quit { get; }
 
         // Constructor
-        public MainMenuWidgetView_MainMenuView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_MainMenuView( this, out var root, out var startGame, out var settings, out var quit );
+        public MainMenuWidgetView_MainMenuView() {
+            VisualElement = UIFactory.Main.MainMenuWidget_MainMenuView( this, out var root, out var startGame, out var settings, out var quit );
             Root = root.Wrap();
             StartGame = startGame.Wrap();
             Settings = settings.Wrap();
@@ -54,8 +54,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public MainMenuWidgetView_StartGameView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_StartGameView( this, out var root, out var newGame, out var @continue, out var back );
+        public MainMenuWidgetView_StartGameView() {
+            VisualElement = UIFactory.Main.MainMenuWidget_StartGameView( this, out var root, out var newGame, out var @continue, out var back );
             Root = root.Wrap();
             NewGame = newGame.Wrap();
             Continue = @continue.Wrap();
@@ -74,8 +74,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public MainMenuWidgetView_SelectLevelView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidget_SelectLevelView( this, out var root, out var level1, out var level2, out var level3, out var back );
+        public MainMenuWidgetView_SelectLevelView() {
+            VisualElement = UIFactory.Main.MainMenuWidget_SelectLevelView( this, out var root, out var level1, out var level2, out var level3, out var back );
             Root = root.Wrap();
             Level1 = level1.Wrap();
             Level2 = level2.Wrap();
@@ -96,8 +96,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public MainMenuWidgetView_SelectYourCharacterView(UIFactory factory) {
-            VisualElement = factory.MainMenuWidgetView_SelectYourCharacterView( this, out var root, out var gray, out var red, out var green, out var blue, out var back );
+        public MainMenuWidgetView_SelectYourCharacterView() {
+            VisualElement = UIFactory.Main.MainMenuWidgetView_SelectYourCharacterView( this, out var root, out var gray, out var red, out var green, out var blue, out var back );
             Root = root.Wrap();
             Gray = gray.Wrap();
             Red = red.Wrap();

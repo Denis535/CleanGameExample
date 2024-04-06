@@ -16,8 +16,8 @@ namespace Project.UI.GameScreen {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public GameMenuWidgetView(UIFactory factory) {
-            VisualElement = factory.GameMenuWidget( this, out var widget, out var title, out var resume, out var settings, out var back );
+        public GameMenuWidgetView() {
+            VisualElement = UIFactory.Game.GameMenuWidget( this, out var widget, out var title, out var resume, out var settings, out var back );
             Widget = widget.Wrap();
             Title = title.Wrap();
             Resume = resume.Wrap();

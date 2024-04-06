@@ -11,8 +11,6 @@ namespace Project.UI {
 
     public class SettingsWidget : UIWidgetBase<SettingsWidgetView> {
 
-        // Deps
-        private UIFactory Factory { get; }
         // Children
         private ProfileSettingsWidget ProfileSettingsWidget => View.ProfileSettingsSlot.Widget!;
         private VideoSettingsWidget VideoSettingsWidget => View.VideoSettingsSlot.Widget!;
@@ -20,8 +18,7 @@ namespace Project.UI {
 
         // Constructor
         public SettingsWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
-            View = CreateView( this, Factory );
+            View = CreateView( this );
             this.AttachChild( new ProfileSettingsWidget() );
             this.AttachChild( new VideoSettingsWidget() );
             this.AttachChild( new AudioSettingsWidget() );
@@ -69,8 +66,8 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static SettingsWidgetView CreateView(SettingsWidget widget, UIFactory factory) {
-            var view = new SettingsWidgetView( factory );
+        private static SettingsWidgetView CreateView(SettingsWidget widget) {
+            var view = new SettingsWidgetView();
             view.Widget.OnChangeAny( evt => {
                 view.Okey.SetValid( view.TabView.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
             } );

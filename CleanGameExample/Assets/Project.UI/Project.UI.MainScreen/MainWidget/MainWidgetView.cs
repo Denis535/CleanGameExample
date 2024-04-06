@@ -13,8 +13,8 @@ namespace Project.UI.MainScreen {
         public ElementWrapper Widget { get; }
 
         // Constructor
-        public MainWidgetView(UIFactory factory) {
-            VisualElement = factory.MainWidget( this, out var widget );
+        public MainWidgetView() {
+            VisualElement = UIFactory.Main.MainWidget( this, out var widget );
             Widget = widget.Wrap();
         }
         public override void Dispose() {

@@ -14,7 +14,7 @@ namespace Project.UI {
 
         // Constructor
         public UIRootWidget2() {
-            UIFactory.OnVisualElementCreate += (visualElement, view) => {
+            VisualElementFactory.OnVisualElementCreated += (visualElement, view) => {
                 if (view != null) {
                     visualElement.OnAttachToPanel( evt => {
                         if (visualElement.focusController.focusedElement != null) return;

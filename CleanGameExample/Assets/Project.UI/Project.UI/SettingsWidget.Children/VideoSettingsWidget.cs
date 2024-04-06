@@ -12,14 +12,12 @@ namespace Project.UI {
     public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
 
         // Deps
-        private UIFactory Factory { get; }
         private Storage.VideoSettings VideoSettings { get; }
 
         // Constructor
         public VideoSettingsWidget() {
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             VideoSettings = this.GetDependencyContainer().RequireDependency<Storage.VideoSettings>( null );
-            View = CreateView( this, Factory, VideoSettings );
+            View = CreateView( this, VideoSettings );
         }
         public override void Dispose() {
             base.Dispose();
@@ -40,8 +38,8 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, UIFactory factory, Storage.VideoSettings videoSettings) {
-            var view = new VideoSettingsWidgetView( factory );
+        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
+            var view = new VideoSettingsWidgetView();
             view.Root.OnAttachToPanel( evt => {
                 view.IsFullScreen.Value = videoSettings.IsFullScreen;
                 view.ScreenResolution.ValueChoices = (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray());

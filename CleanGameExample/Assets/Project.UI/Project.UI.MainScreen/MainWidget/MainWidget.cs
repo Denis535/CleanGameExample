@@ -17,7 +17,6 @@ namespace Project.UI.MainScreen {
 
         // Deps
         private UIRouter Router { get; }
-        private UIFactory Factory { get; }
         private Application2 Application { get; }
         private Storage Storage { get; set; } = default!;
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
@@ -25,10 +24,9 @@ namespace Project.UI.MainScreen {
         // Constructor
         public MainWidget() {
             Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
-            Factory = this.GetDependencyContainer().RequireDependency<UIFactory>( null );
             Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
             Storage = this.GetDependencyContainer().RequireDependency<Storage>( null );
-            View = CreateView( this, Factory );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -106,8 +104,8 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MainWidgetView CreateView(MainWidget widget, UIFactory factory) {
-            var view = new MainWidgetView( factory );
+        private static MainWidgetView CreateView(MainWidget widget) {
+            var view = new MainWidgetView();
             return view;
         }
 

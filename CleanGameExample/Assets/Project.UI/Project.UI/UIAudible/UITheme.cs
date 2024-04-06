@@ -5,6 +5,7 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Project.App;
+    using Project.Entities;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework;
@@ -26,11 +27,7 @@ namespace Project.UI {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         private AudioSource AudioSource { get; set; } = default!;
-        // State
-        public UIThemeState State => GetState( Router.State );
-        //private ValueTracker2<UIThemeState, UITheme> StateTracker { get; } = new ValueTracker2<UIThemeState, UITheme>( i => i.State );
-        public bool IsMainTheme => State == UIThemeState.MainTheme;
-        public bool IsGameTheme => State == UIThemeState.GameTheme;
+        private Game? Game => Application.Game;
 
         // Awake
         public new void Awake() {
@@ -51,10 +48,10 @@ namespace Project.UI {
         public async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                if (IsMainTheme) {
+                if (IsMainTheme( Router.State )) {
                     await PlayMainTheme();
                 } else
-                if (IsGameTheme) {
+                if (IsGameTheme( Router.State )) {
                     await PlayGameTheme();
                 }
             }
@@ -63,11 +60,11 @@ namespace Project.UI {
         // PlayMainTheme
         private async Task PlayMainTheme() {
             var clip = (AssetHandle<AudioClip>?) null;
-            while (IsMainTheme) {
+            while (IsMainTheme( Router.State )) {
                 clip = GetNextValue( MainThemes, clip );
                 try {
                     Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
-                    while (IsMainTheme && IsPlaying( AudioSource )) {
+                    while (IsMainTheme( Router.State ) && IsPlaying( AudioSource )) {
                         if (Router.IsGameSceneLoading) {
                             AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
                             AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
@@ -83,12 +80,12 @@ namespace Project.UI {
         // PlayGameTheme
         private async Task PlayGameTheme() {
             var clip = (AssetHandle<AudioClip>?) null;
-            while (IsGameTheme) {
+            while (IsGameTheme( Router.State )) {
                 clip = GetNextValue( GameThemes, clip );
                 try {
                     Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
-                    while (IsGameTheme && IsPlaying( AudioSource )) {
-                        Pause( AudioSource, !Application.Game!.IsPlaying );
+                    while (IsGameTheme( Router.State ) && IsPlaying( AudioSource )) {
+                        Pause( AudioSource, !Game!.IsPlaying );
                         await Task.Yield();
                     }
                 } finally {
@@ -99,14 +96,17 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static UIThemeState GetState(UIRouterState state) {
+        private static bool IsMainTheme(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return UIThemeState.MainTheme;
+                return true;
             }
+            return false;
+        }
+        private static bool IsGameTheme(UIRouterState state) {
             if (state is UIRouterState.GameSceneLoaded) {
-                return UIThemeState.GameTheme;
+                return true;
             }
-            return UIThemeState.None;
+            return false;
         }
         // Helpers
         private static bool IsPlaying(AudioSource source) {
@@ -133,11 +133,5 @@ namespace Project.UI {
             }
         }
 
-    }
-    // UIThemeState
-    public enum UIThemeState {
-        None,
-        MainTheme,
-        GameTheme,
     }
 }

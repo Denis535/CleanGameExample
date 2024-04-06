@@ -38,9 +38,7 @@ namespace Project {
                 }
                 {
                     // State
-                    GUILayout.Label( "Theme State: " + Theme.State );
-                    GUILayout.Label( "Screen State: " + Screen.State );
-                    GUILayout.Label( "Router State: " + Router.State );
+                    GUILayout.Label( "State: " + Router.State );
                     GUILayout.Space( 2 );
                 }
                 if (Application.Game != null) {

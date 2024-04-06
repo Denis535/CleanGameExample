@@ -17,12 +17,7 @@ namespace Project.UI {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         // Widget
-        private new UIRootWidget2 Widget => (UIRootWidget2) base.Widget!;
-        // State
-        public UIScreenState State => GetState( Router.State );
-        //private ValueTracker2<UIScreenState, UIScreen> StateTracker { get; } = new ValueTracker2<UIScreenState, UIScreen>( i => i.State );
-        public bool IsMainScreen => State == UIScreenState.MainScreen;
-        public bool IsGameScreen => State == UIScreenState.GameScreen;
+        private new UIRootWidget2? Widget => (UIRootWidget2?) base.Widget;
 
         // Awake
         public new void Awake() {
@@ -32,7 +27,7 @@ namespace Project.UI {
             this.AttachWidget( new UIRootWidget2() );
         }
         public new void OnDestroy() {
-            Widget?.DetachSelf();
+            Widget!.DetachSelf();
             base.OnDestroy();
         }
 
@@ -40,21 +35,18 @@ namespace Project.UI {
         public void Start() {
         }
         public void Update() {
-#if UNITY_EDITOR
-            //AddVisualElementIfNeeded( Document, Widget!.GetVisualElement()! );
-#endif
-            if (IsMainScreen) {
-                if (Widget.Children.FirstOrDefault() is not MainWidget) {
+            if (IsMainScreen( Router.State )) {
+                if (Widget!.Children.FirstOrDefault() is not MainWidget) {
                     Widget.DetachChildren();
                     Widget.AttachChild( new MainWidget() );
                 }
-            } else if (IsGameScreen) {
-                if (Widget.Children.FirstOrDefault() is not GameWidget) {
+            } else if (IsGameScreen( Router.State )) {
+                if (Widget!.Children.FirstOrDefault() is not GameWidget) {
                     Widget.DetachChildren();
                     Widget.AttachChild( new GameWidget() );
                 }
             } else {
-                Widget.DetachChildren();
+                Widget!.DetachChildren();
             }
             Widget!.Update();
         }
@@ -75,21 +67,18 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static UIScreenState GetState(UIRouterState state) {
+        private static bool IsMainScreen(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return UIScreenState.MainScreen;
+                return true;
             }
+            return false;
+        }
+        private static bool IsGameScreen(UIRouterState state) {
             if (state is UIRouterState.GameSceneLoaded) {
-                return UIScreenState.GameScreen;
+                return true;
             }
-            return UIScreenState.None;
+            return false;
         }
 
-    }
-    // UIScreenState
-    public enum UIScreenState {
-        None,
-        MainScreen,
-        GameScreen,
     }
 }

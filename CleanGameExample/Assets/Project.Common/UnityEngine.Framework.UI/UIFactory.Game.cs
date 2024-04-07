@@ -12,6 +12,7 @@ namespace UnityEngine.Framework.UI {
             // GameWidget
             public static Widget GameWidget(out Widget widget) {
                 using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
+                    VisualElementFactory.Label( "+" ).Classes( "font-size-400pc", "color-light", "position-absolute", "left-50pc", "top-50pc", "translate-x-n50pc", "translate-y-n50pc" ).AddToScope();
                 }
                 return widget;
             }

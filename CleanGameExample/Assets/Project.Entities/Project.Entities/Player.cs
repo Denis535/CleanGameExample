@@ -7,23 +7,22 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
-    using UnityEngine.ResourceManagement.AsyncOperations;
 
     public class Player : PlayerBase {
         public record Arguments(Character Character);
+        private readonly PrefabHandle grayCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Gray_Value );
+        private readonly PrefabHandle redCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Red_Value );
+        private readonly PrefabHandle greenCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Green_Value );
+        private readonly PrefabHandle blueCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Blue_Value );
 
         // Args
         private Arguments Args { get; set; } = default!;
-        // Character
-        private AsyncOperationHandle<GameObject>? CharacterHandle { get; set; }
-        public GameObject? Character => CharacterHandle?.Result;
 
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
         }
         public void OnDestroy() {
-            if (CharacterHandle != null) Addressables.ReleaseInstance( CharacterHandle.Value );
         }
 
         // Start
@@ -36,19 +35,19 @@ namespace Project.Entities {
         public void Spawn(PlayerSpawnPoint point) {
             switch (Args.Character) {
                 case Project.Entities.Character.Gray: {
-                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Gray_Value, point.transform.position, point.transform.rotation );
+                    grayCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
                     break;
                 }
                 case Project.Entities.Character.Red: {
-                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Red_Value, point.transform.position, point.transform.rotation );
+                    redCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
                     break;
                 }
                 case Project.Entities.Character.Green: {
-                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Green_Value, point.transform.position, point.transform.rotation );
+                    greenCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
                     break;
                 }
                 case Project.Entities.Character.Blue: {
-                    CharacterHandle = Addressables.InstantiateAsync( R.Project.Entities.Characters.Character_Blue_Value, point.transform.position, point.transform.rotation );
+                    blueCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
                     break;
                 }
                 default: {

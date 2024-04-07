@@ -114,8 +114,8 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 await UnloadSceneAsync_MainScene();
                 await Task.Delay( 3_000 );
-                using (Context.Enter<Game, Game.Arguments>( new Game.Arguments( level ) )) {
-                    using (Context.Enter<Player, Player.Arguments>( new Player.Arguments( character ) )) {
+                using (Context.Begin<Game, Game.Arguments>( new Game.Arguments( level ) )) {
+                    using (Context.Begin<Player, Player.Arguments>( new Player.Arguments( character ) )) {
                         await LoadSceneAsync_World( level );
                         await LoadSceneAsync_GameScene();
                     }
@@ -165,36 +165,36 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await program.LoadSceneAsync( LoadSceneMode.Single, false, default );
+            await program.LoadSceneAsync( LoadSceneMode.Single, false );
             await program.ActivateAsync();
             SceneManager.SetActiveScene( program.Scene );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await mainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+            await mainScene.LoadSceneAsync( LoadSceneMode.Additive, false );
             await mainScene.ActivateAsync();
             SceneManager.SetActiveScene( mainScene.Scene );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await gameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+            await gameScene.LoadSceneAsync( LoadSceneMode.Additive, false );
             await gameScene.ActivateAsync();
             SceneManager.SetActiveScene( gameScene.Scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
             switch (level) {
                 case Level.Level1: {
-                    await world1.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+                    await world1.LoadSceneAsync( LoadSceneMode.Additive, false );
                     await world1.ActivateAsync();
                     SceneManager.SetActiveScene( world1.Scene );
                     break;
                 }
                 case Level.Level2: {
-                    await world2.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+                    await world2.LoadSceneAsync( LoadSceneMode.Additive, false );
                     await world2.ActivateAsync();
                     SceneManager.SetActiveScene( world2.Scene );
                     break;
                 }
                 case Level.Level3: {
-                    await world3.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+                    await world3.LoadSceneAsync( LoadSceneMode.Additive, false );
                     await world3.ActivateAsync();
                     SceneManager.SetActiveScene( world3.Scene );
                     break;
@@ -205,10 +205,10 @@ namespace Project.UI {
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            if (mainScene.IsActive) await mainScene.UnloadAsync();
+            if (mainScene.IsValid) await mainScene.UnloadAsync();
         }
         private async Task UnloadSceneAsync_GameScene() {
-            if (gameScene.IsActive) await gameScene.UnloadAsync();
+            if (gameScene.IsValid) await gameScene.UnloadAsync();
         }
         private async Task UnloadSceneAsync_World() {
             await new[] { world1, world2, world3 }.UnloadAllAsync();

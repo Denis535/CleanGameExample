@@ -62,19 +62,17 @@ namespace Project.UI {
             var clip = (AssetHandle<AudioClip>?) null;
             while (IsMainTheme( Router.State )) {
                 clip = GetNextValue( MainThemes, clip );
-                try {
-                    Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
-                    while (IsMainTheme( Router.State ) && IsPlaying( AudioSource )) {
-                        if (Router.IsGameSceneLoading) {
-                            AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
-                            AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
-                        }
-                        await Task.Yield();
+                var clip_ = await clip.LoadAssetAsync( destroyCancellationToken );
+                Play( AudioSource, clip_ );
+                while (IsMainTheme( Router.State ) && IsPlaying( AudioSource )) {
+                    if (Router.IsGameSceneLoading) {
+                        AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
+                        AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
                     }
-                } finally {
-                    Stop( AudioSource );
-                    clip.Release();
+                    await Task.Yield();
                 }
+                Stop( AudioSource );
+                clip.Release();
             }
         }
         // PlayGameTheme
@@ -82,16 +80,14 @@ namespace Project.UI {
             var clip = (AssetHandle<AudioClip>?) null;
             while (IsGameTheme( Router.State )) {
                 clip = GetNextValue( GameThemes, clip );
-                try {
-                    Play( AudioSource, await clip.LoadAssetAsync( destroyCancellationToken ) );
-                    while (IsGameTheme( Router.State ) && IsPlaying( AudioSource )) {
-                        Pause( AudioSource, !Game!.IsPlaying );
-                        await Task.Yield();
-                    }
-                } finally {
-                    Stop( AudioSource );
-                    clip.Release();
+                var clip_ = await clip.LoadAssetAsync( destroyCancellationToken );
+                Play( AudioSource, clip_ );
+                while (IsGameTheme( Router.State ) && IsPlaying( AudioSource )) {
+                    Pause( AudioSource, !Game!.IsPlaying );
+                    await Task.Yield();
                 }
+                Stop( AudioSource );
+                clip.Release();
             }
         }
 
@@ -111,6 +107,9 @@ namespace Project.UI {
         // Helpers
         private static bool IsPlaying(AudioSource source) {
             return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length );
+        }
+        private static bool IsPaused(AudioSource source) {
+            return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length ) && !source.isPlaying;
         }
         private static void Play(AudioSource source, AudioClip clip) {
             Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );

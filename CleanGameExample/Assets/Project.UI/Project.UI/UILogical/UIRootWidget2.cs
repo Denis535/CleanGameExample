@@ -14,17 +14,21 @@ namespace Project.UI {
 
         // Constructor
         public UIRootWidget2() {
-            VisualElementFactory.OnVisualElementCreated += visualElement => {
-                if (visualElement is Widget || visualElement.name == "view") {
-                    visualElement.OnAttachToPanel( evt => {
-                        if (visualElement.focusController.focusedElement != null) return;
-                        if (visualElement.LoadFocus()) return;
-                        visualElement.Focus2();
-                    } );
-                    visualElement.OnDetachFromPanel( evt => {
-                        visualElement.SaveFocus();
-                    } );
-                }
+            VisualElementFactory.OnWidgetAttach += visualElement => {
+                if (visualElement.focusController.focusedElement != null) return;
+                if (visualElement.LoadFocus()) return;
+                visualElement.Focus2();
+            };
+            VisualElementFactory.OnViewAttach += visualElement => {
+                if (visualElement.focusController.focusedElement != null) return;
+                if (visualElement.LoadFocus()) return;
+                visualElement.Focus2();
+            };
+            VisualElementFactory.OnWidgetDetach += visualElement => {
+                visualElement.SaveFocus();
+            };
+            VisualElementFactory.OnViewDetach += visualElement => {
+                visualElement.SaveFocus();
             };
         }
         public override void Dispose() {

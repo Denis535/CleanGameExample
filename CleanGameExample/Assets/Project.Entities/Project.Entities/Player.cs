@@ -20,7 +20,7 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = ValueScope.Get<Player, Arguments>();
+            Args = Context.Get<Player, Arguments>();
         }
         public void OnDestroy() {
             if (CharacterHandle != null) Addressables.ReleaseInstance( CharacterHandle.Value );

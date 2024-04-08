@@ -3,7 +3,7 @@ namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
+    using System.Linq;
     using Project.App;
     using Project.Entities;
     using UnityEngine;
@@ -28,6 +28,8 @@ namespace Project.UI {
         private Application2 Application { get; set; } = default!;
         private AudioSource AudioSource { get; set; } = default!;
         private Game? Game => Application.Game;
+        // Theme
+        private AssetHandle<AudioClip>? ThemeHandle { get; set; }
 
         // Awake
         public new void Awake() {
@@ -37,6 +39,8 @@ namespace Project.UI {
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {
+            Stop( AudioSource );
+            ThemeHandle?.Release();
             base.OnDestroy();
         }
 
@@ -49,45 +53,30 @@ namespace Project.UI {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
                 if (IsMainTheme( Router.State )) {
-                    await PlayMainTheme();
-                } else
-                if (IsGameTheme( Router.State )) {
-                    await PlayGameTheme();
-                }
-            }
-        }
-
-        // PlayMainTheme
-        private async Task PlayMainTheme() {
-            var clip = (AssetHandle<AudioClip>?) null;
-            while (IsMainTheme( Router.State )) {
-                clip = GetNextValue( MainThemes, clip );
-                var clip_ = await clip.LoadAssetAsync( destroyCancellationToken );
-                Play( AudioSource, clip_ );
-                while (IsMainTheme( Router.State ) && IsPlaying( AudioSource )) {
+                    if (!MainThemes.Contains( ThemeHandle ) || !IsPlaying( AudioSource )) {
+                        var next = GetNextValue( MainThemes, ThemeHandle );
+                        Stop( AudioSource );
+                        ThemeHandle?.Release();
+                        ThemeHandle = null;
+                        ThemeHandle = next;
+                        Play( AudioSource, await ThemeHandle.LoadAssetAsync( destroyCancellationToken ) );
+                    }
                     if (Router.IsGameSceneLoading) {
                         AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
                         AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
                     }
-                    await Task.Yield();
-                }
-                Stop( AudioSource );
-                clip.Release();
-            }
-        }
-        // PlayGameTheme
-        private async Task PlayGameTheme() {
-            var clip = (AssetHandle<AudioClip>?) null;
-            while (IsGameTheme( Router.State )) {
-                clip = GetNextValue( GameThemes, clip );
-                var clip_ = await clip.LoadAssetAsync( destroyCancellationToken );
-                Play( AudioSource, clip_ );
-                while (IsGameTheme( Router.State ) && IsPlaying( AudioSource )) {
+                } else
+                if (IsGameTheme( Router.State )) {
+                    if (!GameThemes.Contains( ThemeHandle ) || !IsPlaying( AudioSource )) {
+                        var next = GetNextValue( GameThemes, ThemeHandle );
+                        Stop( AudioSource );
+                        ThemeHandle?.Release();
+                        ThemeHandle = null;
+                        ThemeHandle = next;
+                        Play( AudioSource, await ThemeHandle.LoadAssetAsync( destroyCancellationToken ) );
+                    }
                     Pause( AudioSource, !Game!.IsPlaying );
-                    await Task.Yield();
                 }
-                Stop( AudioSource );
-                clip.Release();
             }
         }
 
@@ -115,7 +104,7 @@ namespace Project.UI {
             Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );
             source.clip = clip;
             source.volume = 1;
-            source.pitch = 1;
+            source.pitch = 10;
             source.Play();
         }
         private static void Pause(AudioSource source, bool value) {

@@ -1,25 +1,25 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--field                 = // string: .unity-base-slider.%
-selector--field-label           = // string: .unity-base-slider.% .unity-base-slider__label
-selector--field-input           = // string: .unity-base-slider.% .unity-base-slider__input
-// selector
-selector--field-input-container = // string: .unity-base-slider.% .unity-base-slider__input #unity-drag-container
-selector--field-input-tracker   = // string: .unity-base-slider.% .unity-base-slider__input #unity-drag-container #unity-tracker
-selector--field-input-dragger   = // string: .unity-base-slider.% .unity-base-slider__input #unity-drag-container #unity-dragger
+// alias
+alias--field                 = // string: .unity-base-slider.{state}
+alias--field-label           = // string: .unity-base-slider.{state} .unity-base-slider__label
+alias--field-input           = // string: .unity-base-slider.{state} .unity-base-slider__input
+// alias
+alias--field-input-container = // string: .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container
+alias--field-input-tracker   = // string: .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container #unity-tracker
+alias--field-input-dragger   = // string: .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container #unity-dragger
 
-// theme
+// style
 .selector--field-input-container // styles: add-theme(null          )
 .selector--field-input-tracker   // styles: add-theme(slider-tracker)
 .selector--field-input-dragger   // styles: add-theme(slider-dragger)
 
-// layout
+// style
 .selector--field-input-container // styles: add-layout(null,     auto, auto, (0px), (0px), (0px))
 .selector--field-input-tracker   // styles: add-layout(null,     auto,  8px, (0px), (1px), (0px))
 .selector--field-input-dragger   // styles: add-layout(absolute, 8px,  24px, (0px), (1px), (0px))
 
-// flex
+// style
 .selector--field-input-container // styles: add-flex(1, 1, auto, auto).add-flex2(row, flex-start, null, center)
 .selector--field-input-tracker   // styles: add-flex(1, 1, auto, auto)
 .selector--field-input-dragger   // styles: add-flex(0, 1, auto, auto)

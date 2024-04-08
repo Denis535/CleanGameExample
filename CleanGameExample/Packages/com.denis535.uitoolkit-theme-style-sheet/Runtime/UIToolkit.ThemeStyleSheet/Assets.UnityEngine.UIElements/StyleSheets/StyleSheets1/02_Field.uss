@@ -1,3 +1,9 @@
+.unity-base-field .unity-base-field__label {
+  -unity-text-align: middle-left;
+}
+.unity-base-field .unity-base-field__input {
+  -unity-text-align: middle-left;
+}
 .unity-base-field {
   background-color: rgba(0,0,0,0);
   border-left-color: rgba(0,0,0,0);
@@ -489,10 +495,4 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: stretch;
-}
-.unity-base-field .unity-base-field__label {
-  -unity-text-align: middle-left;
-}
-.unity-base-field .unity-base-field__input {
-  -unity-text-align: middle-left;
 }

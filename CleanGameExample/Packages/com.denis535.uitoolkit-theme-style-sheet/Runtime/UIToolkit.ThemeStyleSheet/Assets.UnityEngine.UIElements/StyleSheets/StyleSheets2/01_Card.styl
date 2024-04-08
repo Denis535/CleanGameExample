@@ -1,136 +1,136 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--card                   = // string: .card.%
-selector--header                 = // string: .card.%                .header
-selector--content                = // string: .card.%                .content
-selector--footer                 = // string: .card.%                .footer
-// selector
-selector--dialog-card            = // string: .dialog-card.%
-selector--dialog-header          = // string: .dialog-card.%         .header
-selector--dialog-content         = // string: .dialog-card.%         .content
-selector--dialog-footer          = // string: .dialog-card.%         .footer
-// selector
-selector--info-dialog-card       = // string: .info-dialog-card.%
-selector--info-dialog-header     = // string: .info-dialog-card.%    .header
-selector--info-dialog-content    = // string: .info-dialog-card.%    .content
-selector--info-dialog-footer     = // string: .info-dialog-card.%    .footer
-// selector
-selector--warning-dialog-card    = // string: .warning-dialog-card.%
-selector--warning-dialog-header  = // string: .warning-dialog-card.% .header
-selector--warning-dialog-content = // string: .warning-dialog-card.% .content
-selector--warning-dialog-footer  = // string: .warning-dialog-card.% .footer
-// selector
-selector--error-dialog-card      = // string: .error-dialog-card.%
-selector--error-dialog-header    = // string: .error-dialog-card.%   .header
-selector--error-dialog-content   = // string: .error-dialog-card.%   .content
-selector--error-dialog-footer    = // string: .error-dialog-card.%   .footer
+// alias
+alias--card                   = // string: .card.{state}
+alias--header                 = // string: .card.{state}                .header
+alias--content                = // string: .card.{state}                .content
+alias--footer                 = // string: .card.{state}                .footer
+// alias
+alias--dialog-card            = // string: .dialog-card.{state}
+alias--dialog-header          = // string: .dialog-card.{state}         .header
+alias--dialog-content         = // string: .dialog-card.{state}         .content
+alias--dialog-footer          = // string: .dialog-card.{state}         .footer
+// alias
+alias--info-dialog-card       = // string: .info-dialog-card.{state}
+alias--info-dialog-header     = // string: .info-dialog-card.{state}    .header
+alias--info-dialog-content    = // string: .info-dialog-card.{state}    .content
+alias--info-dialog-footer     = // string: .info-dialog-card.{state}    .footer
+// alias
+alias--warning-dialog-card    = // string: .warning-dialog-card.{state}
+alias--warning-dialog-header  = // string: .warning-dialog-card.{state} .header
+alias--warning-dialog-content = // string: .warning-dialog-card.{state} .content
+alias--warning-dialog-footer  = // string: .warning-dialog-card.{state} .footer
+// alias
+alias--error-dialog-card      = // string: .error-dialog-card.{state}
+alias--error-dialog-header    = // string: .error-dialog-card.{state}   .header
+alias--error-dialog-content   = // string: .error-dialog-card.{state}   .content
+alias--error-dialog-footer    = // string: .error-dialog-card.{state}   .footer
 
-// theme
+// style
+.selector--card                   // styles: add-font(null, null, null)
+.selector--header                 // styles: add-font(null, 130%, bold)
+.selector--content                // styles: add-font(null, null, null)
+.selector--footer                 // styles: add-font(null, 120%, bold)
+// style
+.selector--dialog-card            // styles: add-font(null, null, null)
+.selector--dialog-header          // styles: add-font(null, 130%, bold)
+.selector--dialog-content         // styles: add-font(null, 120%, null)
+.selector--dialog-footer          // styles: add-font(null, 120%, bold)
+// style
+.selector--info-dialog-card       // styles: add-font(null, null, null)
+.selector--info-dialog-header     // styles: add-font(null, 130%, bold)
+.selector--info-dialog-content    // styles: add-font(null, 120%, null)
+.selector--info-dialog-footer     // styles: add-font(null, 120%, bold)
+// style
+.selector--warning-dialog-card    // styles: add-font(null, null, null)
+.selector--warning-dialog-header  // styles: add-font(null, 130%, bold)
+.selector--warning-dialog-content // styles: add-font(null, 120%, null)
+.selector--warning-dialog-footer  // styles: add-font(null, 120%, bold)
+// style
+.selector--error-dialog-card      // styles: add-font(null, null, null)
+.selector--error-dialog-header    // styles: add-font(null, 130%, bold)
+.selector--error-dialog-content   // styles: add-font(null, 120%, null)
+.selector--error-dialog-footer    // styles: add-font(null, 120%, bold)
+
+// style
 .selector--card                   // styles: add-theme(card                  )
 .selector--header                 // styles: add-theme(header                )
 .selector--content                // styles: add-theme(content               )
 .selector--footer                 // styles: add-theme(footer                )
-// theme
+// style
 .selector--dialog-card            // styles: add-theme(dialog-card           )
 .selector--dialog-header          // styles: add-theme(dialog-header         )
 .selector--dialog-content         // styles: add-theme(dialog-content        )
 .selector--dialog-footer          // styles: add-theme(dialog-footer         )
-// theme
+// style
 .selector--info-dialog-card       // styles: add-theme(info-dialog-card      )
 .selector--info-dialog-header     // styles: add-theme(info-dialog-header    )
 .selector--info-dialog-content    // styles: add-theme(info-dialog-content   )
 .selector--info-dialog-footer     // styles: add-theme(info-dialog-footer    )
-// theme
+// style
 .selector--warning-dialog-card    // styles: add-theme(warning-dialog-card   )
 .selector--warning-dialog-header  // styles: add-theme(warning-dialog-header )
 .selector--warning-dialog-content // styles: add-theme(warning-dialog-content)
 .selector--warning-dialog-footer  // styles: add-theme(warning-dialog-footer )
-// theme
+// style
 .selector--error-dialog-card      // styles: add-theme(error-dialog-card     )
 .selector--error-dialog-header    // styles: add-theme(error-dialog-header   )
 .selector--error-dialog-content   // styles: add-theme(error-dialog-content  )
 .selector--error-dialog-footer    // styles: add-theme(error-dialog-footer   )
 
-// layout
+// style
 .selector--card                    // styles: add-layout(null, auto, auto, (0px), (1px 1px 1px 1px), (0px  0px  0px  0px ))
 .selector--header                  // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 1px), (24px 24px 16px 16px))
 .selector--content                 // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 0px), (24px 24px 20px 20px))
 .selector--footer                  // styles: add-layout(null, auto, auto, (0px), (0px 0px 1px 0px), (24px 24px 20px 20px))
 .selector--footer *                // styles: add-layout(width: 25%)
-// layout
+// style
 .selector--dialog-card             // styles: add-layout(null, auto, auto, (0px), (1px 1px 1px 1px), (0px  0px  0px  0px ))
 .selector--dialog-header           // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 1px), (24px 24px 16px 16px))
 .selector--dialog-content          // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 0px), (24px 24px 20px 20px))
 .selector--dialog-footer           // styles: add-layout(null, auto, auto, (0px), (0px 0px 1px 0px), (24px 24px 20px 20px))
 .selector--dialog-footer *         // styles: add-layout(width: 25%)
-// layout
+// style
 .selector--info-dialog-card        // styles: add-layout(null, auto, auto, (0px), (1px 1px 1px 1px), (0px  0px  0px  0px ))
 .selector--info-dialog-header      // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 1px), (24px 24px 16px 16px))
 .selector--info-dialog-content     // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 0px), (24px 24px 20px 20px))
 .selector--info-dialog-footer      // styles: add-layout(null, auto, auto, (0px), (0px 0px 1px 0px), (24px 24px 20px 20px))
 .selector--info-dialog-footer *    // styles: add-layout(width: 25%)
-// layout
+// style
 .selector--warning-dialog-card     // styles: add-layout(null, auto, auto, (0px), (1px 1px 1px 1px), (0px  0px  0px  0px ))
 .selector--warning-dialog-header   // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 1px), (24px 24px 16px 16px))
 .selector--warning-dialog-content  // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 0px), (24px 24px 20px 20px))
 .selector--warning-dialog-footer   // styles: add-layout(null, auto, auto, (0px), (0px 0px 1px 0px), (24px 24px 20px 20px))
 .selector--warning-dialog-footer * // styles: add-layout(width: 25%)
-// layout
+// style
 .selector--error-dialog-card       // styles: add-layout(null, auto, auto, (0px), (1px 1px 1px 1px), (0px  0px  0px  0px ))
 .selector--error-dialog-header     // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 1px), (24px 24px 16px 16px))
 .selector--error-dialog-content    // styles: add-layout(null, auto, auto, (0px), (0px 0px 0px 0px), (24px 24px 20px 20px))
 .selector--error-dialog-footer     // styles: add-layout(null, auto, auto, (0px), (0px 0px 1px 0px), (24px 24px 20px 20px))
 .selector--error-dialog-footer *   // styles: add-layout(width: 25%)
 
-// flex
+// style
 .selector--card                   // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--header                 // styles: add-flex(0, 0, auto, auto).add-flex2(row,    center,       null, center )
 .selector--content                // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--footer                 // styles: add-flex(0, 0, auto, auto).add-flex2(row,    space-around, null, center )
-// flex
+// style
 .selector--dialog-card            // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--dialog-header          // styles: add-flex(0, 0, auto, auto).add-flex2(row,    center,       null, center )
 .selector--dialog-content         // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--dialog-footer          // styles: add-flex(0, 0, auto, auto).add-flex2(row,    space-around, null, center )
-// flex
+// style
 .selector--info-dialog-card       // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--info-dialog-header     // styles: add-flex(0, 0, auto, auto).add-flex2(row,    center,       null, center )
 .selector--info-dialog-content    // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--info-dialog-footer     // styles: add-flex(0, 0, auto, auto).add-flex2(row,    space-around, null, center )
-// flex
+// style
 .selector--warning-dialog-card    // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--warning-dialog-header  // styles: add-flex(0, 0, auto, auto).add-flex2(row,    center,       null, center )
 .selector--warning-dialog-content // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--warning-dialog-footer  // styles: add-flex(0, 0, auto, auto).add-flex2(row,    space-around, null, center )
-// flex
+// style
 .selector--error-dialog-card      // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--error-dialog-header    // styles: add-flex(0, 0, auto, auto).add-flex2(row,    center,       null, center )
 .selector--error-dialog-content   // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start,   null, stretch)
 .selector--error-dialog-footer    // styles: add-flex(0, 0, auto, auto).add-flex2(row,    space-around, null, center )
-
-// misc
-.selector--card                   // styles: add-font(null, null, null)
-.selector--header                 // styles: add-font(null, 130%, bold)
-.selector--content                // styles: add-font(null, null, null)
-.selector--footer                 // styles: add-font(null, 120%, bold)
-// misc
-.selector--dialog-card            // styles: add-font(null, null, null)
-.selector--dialog-header          // styles: add-font(null, 130%, bold)
-.selector--dialog-content         // styles: add-font(null, 120%, null)
-.selector--dialog-footer          // styles: add-font(null, 120%, bold)
-// misc
-.selector--info-dialog-card       // styles: add-font(null, null, null)
-.selector--info-dialog-header     // styles: add-font(null, 130%, bold)
-.selector--info-dialog-content    // styles: add-font(null, 120%, null)
-.selector--info-dialog-footer     // styles: add-font(null, 120%, bold)
-// misc
-.selector--warning-dialog-card    // styles: add-font(null, null, null)
-.selector--warning-dialog-header  // styles: add-font(null, 130%, bold)
-.selector--warning-dialog-content // styles: add-font(null, 120%, null)
-.selector--warning-dialog-footer  // styles: add-font(null, 120%, bold)
-// misc
-.selector--error-dialog-card      // styles: add-font(null, null, null)
-.selector--error-dialog-header    // styles: add-font(null, 130%, bold)
-.selector--error-dialog-content   // styles: add-font(null, 120%, null)
-.selector--error-dialog-footer    // styles: add-font(null, 120%, bold)

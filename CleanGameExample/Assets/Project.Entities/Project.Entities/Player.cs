@@ -10,10 +10,10 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
         public record Arguments(Character Character);
-        private readonly PrefabHandle grayCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Gray_Value );
-        private readonly PrefabHandle redCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Red_Value );
-        private readonly PrefabHandle greenCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Green_Value );
-        private readonly PrefabHandle blueCharacter = new PrefabHandle( R.Project.Entities.Characters.Character_Blue_Value );
+        private readonly PrefabHandle<Transform> grayCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Gray_Value );
+        private readonly PrefabHandle<Transform> redCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Red_Value );
+        private readonly PrefabHandle<Transform> greenCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Green_Value );
+        private readonly PrefabHandle<Transform> blueCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Blue_Value );
 
         // Args
         private Arguments Args { get; set; } = default!;

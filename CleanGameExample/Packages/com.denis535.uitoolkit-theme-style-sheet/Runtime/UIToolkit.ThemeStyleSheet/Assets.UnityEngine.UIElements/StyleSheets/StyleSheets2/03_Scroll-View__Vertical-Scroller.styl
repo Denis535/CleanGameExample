@@ -1,16 +1,16 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--scroller              = // string: .unity-scroller--vertical
-selector--field                 = // string: .unity-scroller--vertical .unity-base-slider
-selector--field-input           = // string: .unity-scroller--vertical .unity-base-slider   .unity-base-slider__input
-selector--field-input-container = // string: .unity-scroller--vertical .unity-base-slider   .unity-base-slider__input #unity-drag-container
-selector--field-input-tracker   = // string: .unity-scroller--vertical .unity-base-slider.% .unity-base-slider__input #unity-drag-container #unity-tracker
-selector--field-input-dragger   = // string: .unity-scroller--vertical .unity-base-slider.% .unity-base-slider__input #unity-drag-container #unity-dragger
-selector--low-button            = // string: .unity-scroller--vertical #unity-low-button.%
-selector--high-button           = // string: .unity-scroller--vertical #unity-high-button.%
+// alias
+alias--scroller              = // string: .unity-scroller--vertical
+alias--field                 = // string: .unity-scroller--vertical .unity-base-slider
+alias--field-input           = // string: .unity-scroller--vertical .unity-base-slider.{state} .unity-base-slider__input
+alias--field-input-container = // string: .unity-scroller--vertical .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container
+alias--field-input-tracker   = // string: .unity-scroller--vertical .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container #unity-tracker
+alias--field-input-dragger   = // string: .unity-scroller--vertical .unity-base-slider.{state} .unity-base-slider__input #unity-drag-container #unity-dragger
+alias--low-button            = // string: .unity-scroller--vertical #unity-low-button.{state}
+alias--high-button           = // string: .unity-scroller--vertical #unity-high-button.{state}
 
-// theme
+// style
 .selector--scroller              // styles: add-theme(null             )
 .selector--field                 // styles: add-theme(null             )
 .selector--field-input           // styles: add-theme(null             )
@@ -20,7 +20,7 @@ selector--high-button           = // string: .unity-scroller--vertical #unity-hi
 .selector--low-button            // styles: add-theme(up-arrow-button  )
 .selector--high-button           // styles: add-theme(down-arrow-button)
 
-// layout
+// style
 .selector--scroller              // styles: add-layout(null,     auto, auto, (0px 2px 2px 2px), (0px), (0px))
 .selector--field                 // styles: add-layout(null,     auto, auto, (0px 0px 2px 2px), (0px), (0px))
 .selector--field-input           // styles: add-layout(null,     auto, auto, (0px            ), (0px), (0px))
@@ -30,7 +30,7 @@ selector--high-button           = // string: .unity-scroller--vertical #unity-hi
 .selector--low-button            // styles: add-layout(null,     24px, 24px, (0px            ), (1px), (0px))
 .selector--high-button           // styles: add-layout(null,     24px, 24px, (0px            ), (1px), (0px))
 
-// flex
+// style
 .selector--scroller              // styles: add-flex(0, 0, auto, auto).add-flex2(column, flex-start, null, center)
 .selector--field                 // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start, null, center)
 .selector--field-input           // styles: add-flex(1, 1, auto, auto).add-flex2(column, flex-start, null, center)

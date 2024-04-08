@@ -1,0 +1,35 @@
+@import "_Utils_add_style"
+
+// get-selector
+get-selector(argument)
+    key   = get-selector-key(argument)
+    args  = get-selector-args(argument)
+    arg   = shift(args)
+    value = get-selector-internal(key, arg, args)
+    value
+// get-selector-internal
+get-selector-internal(key, skin, state)
+    error-if-no-value('Alias is invalid: %s', key)
+    value = get-value(key)
+    value = replace('(\s+)',      ' ',             value)
+    value = replace('(\.{skin})',  skin,            value) if skin
+    value = replace('(\.{state})', join('', state), value) if state
+    value
+
+// get-selector-key
+get-selector-key(argument)
+    key = match('(^[\w-]*)', argument, g)
+    key = replace('(--+)', '--', key)
+    key = get-key('alias', key)
+    key
+// get-selector-args
+get-selector-args(argument)
+    args = match('([.#:][\w-]*)', argument, g)
+    result = ()
+    for arg in args
+        push(result, get-selector-arg(arg))
+    result
+// get-selector-arg
+get-selector-arg(arg)
+    return arg if arg != '.null'
+    null

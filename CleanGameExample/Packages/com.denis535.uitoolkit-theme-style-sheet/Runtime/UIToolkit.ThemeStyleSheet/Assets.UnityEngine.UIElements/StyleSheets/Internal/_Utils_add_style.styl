@@ -1,0 +1,247 @@
+// create-theme
+bg(arguments)
+    return {
+        background-color: arguments[0],
+        background-image: arguments[1]
+    }
+bd(arguments)
+    return {
+        border-color:  arguments[0],
+        border-radius: arguments[1]
+    }
+img(url, color, scale-mode = null, slice-left = null, slice-right = null, slice-top = null, slice-bottom = null, slice-scale = null)
+    return {
+        url:          url,
+        color:        color,
+        scale-mode:   scale-mode,
+        slice-left:   slice-left,
+        slice-right:  slice-right,
+        slice-top:    slice-top,
+        slice-bottom: slice-bottom,
+        slice-scale:  slice-scale,
+    }
+
+// add-style
+add-font(url, size, style)
+    add-property2 'font-url'            url
+    add-property2 'font-definition-url' url
+    add-property2 'font-size'           size
+    add-property2 'font-style'          style
+add-text(align, outline, shadow)
+    add-property2 'text-align'          align
+    add-property2 'text-outline'        outline
+    add-property2 'text-shadow'         shadow
+
+// add-view
+add-view-theme(theme)
+    if theme != null
+        color               = theme[0]
+        background-color    = theme[1].background-color
+        background-image    = theme[1].background-image
+        border-color        = theme[2].border-color
+        border-radius       = theme[2].border-radius
+        add-view-foreground color
+        add-view-background background-color background-image
+        add-view-border     border-color     border-radius
+
+// add-view
+add-view(color = null, background-color = null, background-image = null, border-color = null, border-radius = null)
+    add-view-foreground                           color
+    add-view-background                           background-color background-image
+    add-view-border                               border-color     border-radius
+add-view-foreground(color)
+    add-property2 'color'                         color
+add-view-background(background-color, background-image)
+    add-property2 'background-color'              background-color
+    add-property2 'background-image-url'          background-image.url          if background-image != null
+    add-property2 'background-image-color'        background-image.color        if background-image != null
+    add-property2 'background-image-scale-mode'   background-image.scale-mode   if background-image != null
+    add-property2 'background-image-slice-left'   background-image.slice-left   if background-image != null
+    add-property2 'background-image-slice-right'  background-image.slice-right  if background-image != null
+    add-property2 'background-image-slice-top'    background-image.slice-top    if background-image != null
+    add-property2 'background-image-slice-bottom' background-image.slice-bottom if background-image != null
+    add-property2 'background-image-slice-scale'  background-image.slice-scale  if background-image != null
+add-view-border(border-color, border-radius)
+    add-property2 'border-left-color'             border-color[0]
+    add-property2 'border-right-color'            border-color[1] or border-color[0]
+    add-property2 'border-top-color'              border-color[2] or border-color[0]
+    add-property2 'border-bottom-color'           border-color[3] or border-color[0]
+    add-property2 'border-top-left-radius'        border-radius[0]
+    add-property2 'border-top-right-radius'       border-radius[1] or border-radius[0]
+    add-property2 'border-bottom-left-radius'     border-radius[2] or border-radius[0]
+    add-property2 'border-bottom-right-radius'    border-radius[3] or border-radius[0]
+
+// add-layout
+add-layout(position = null, width = null, height = null, margin = null, border = null, padding = null)
+    add-layout-position                 position, null, null, null, null
+    add-layout-size                     width, height
+    add-layout-box                      margin, border, padding
+add-layout-position(position, left = null, right = null, top = null, bottom = null)
+    add-property2 'position'            position[0]
+    add-property2 'left'                left   or position[1]
+    add-property2 'right'               right  or position[2]
+    add-property2 'top'                 top    or position[3]
+    add-property2 'bottom'              bottom or position[4]
+add-layout-size(width, height)
+    add-property2 'width'               width[0]
+    add-property2 'min-width'           width[1]
+    add-property2 'max-width'           width[2]
+    add-property2 'height'              height[0]
+    add-property2 'min-height'          height[1]
+    add-property2 'max-height'          height[2]
+add-layout-box(margin, border, padding)
+    add-property2 'margin-left'         margin[0]
+    add-property2 'margin-right'        margin[1] or margin[0]
+    add-property2 'margin-top'          margin[2] or margin[0]
+    add-property2 'margin-bottom'       margin[3] or margin[0]
+    add-property2 'border-left-width'   border[0]
+    add-property2 'border-right-width'  border[1] or border[0]
+    add-property2 'border-top-width'    border[2] or border[0]
+    add-property2 'border-bottom-width' border[3] or border[0]
+    add-property2 'padding-left'        padding[0]
+    add-property2 'padding-right'       padding[1] or padding[0]
+    add-property2 'padding-top'         padding[2] or padding[0]
+    add-property2 'padding-bottom'      padding[3] or padding[0]
+
+// add-flex
+add-flex(flex-grow, flex-shrink, flex-basis, align-self)
+    add-property2 'flex-grow'       flex-grow
+    add-property2 'flex-shrink'     flex-shrink
+    add-property2 'flex-basis'      flex-basis
+    add-property2 'align-self'      align-self
+add-flex2(flex-direction, justify-content, align-content, align-items)
+    add-property2 'flex-direction'  flex-direction
+    add-property2 'justify-content' justify-content
+    add-property2 'align-content'   align-content
+    add-property2 'align-items'     align-items
+
+// add-property
+add-property2(property, value)
+    property = get-string(property)
+    property = get-native-property(property)
+    property = get-unity-property(property)
+    if value != null
+        // todo: does this support addressables?
+        value = s("url('%s')", unquote(value)) if property == '-unity-font'
+        value = s("url('%s')", unquote(value)) if property == '-unity-font-definition'
+        value = s("url('%s')", unquote(value)) if property == 'background-image'
+        add-property(property, value)
+get-native-property(property)
+    // view
+    return 'color'                       if property == 'color'
+    // view
+    return 'font'                        if property == 'font-url'
+    return 'font-definition'             if property == 'font-definition-url'
+    return 'font-size'                   if property == 'font-size'
+    return 'font-style'                  if property == 'font-style'
+    // view
+    return 'text-align'                  if property == 'text-align'
+    return 'text-outline'                if property == 'text-outline'
+    return 'text-shadow'                 if property == 'text-shadow'
+    // view
+    return 'background-color'            if property == 'background-color'
+    // view
+    return 'background-image'            if property == 'background-image-url'
+    return 'background-image-tint-color' if property == 'background-image-color'
+    return 'background-scale-mode'       if property == 'background-image-scale-mode'
+    return 'slice-left'                  if property == 'background-image-slice-left'
+    return 'slice-right'                 if property == 'background-image-slice-right'
+    return 'slice-top'                   if property == 'background-image-slice-top'
+    return 'slice-bottom'                if property == 'background-image-slice-bottom'
+    return 'slice-scale'                 if property == 'background-image-slice-scale'
+    // view
+    return 'border-left-color'           if property == 'border-left-color'
+    return 'border-right-color'          if property == 'border-right-color'
+    return 'border-top-color'            if property == 'border-top-color'
+    return 'border-bottom-color'         if property == 'border-bottom-color'
+    // view
+    return 'border-top-left-radius'      if property == 'border-top-left-radius'
+    return 'border-top-right-radius'     if property == 'border-top-right-radius'
+    return 'border-bottom-left-radius'   if property == 'border-bottom-left-radius'
+    return 'border-bottom-right-radius'  if property == 'border-bottom-right-radius'
+    // layout
+    return 'position'                    if property == 'position'
+    return 'left'                        if property == 'left'
+    return 'right'                       if property == 'right'
+    return 'top'                         if property == 'top'
+    return 'bottom'                      if property == 'bottom'
+    // layout
+    return 'width'                       if property == 'width'
+    return 'min-width'                   if property == 'min-width'
+    return 'max-width'                   if property == 'max-width'
+    // layout
+    return 'height'                      if property == 'height'
+    return 'min-height'                  if property == 'min-height'
+    return 'max-height'                  if property == 'max-height'
+    // layout
+    return 'margin'                      if property == 'margin'
+    return 'margin-left'                 if property == 'margin-left'
+    return 'margin-right'                if property == 'margin-right'
+    return 'margin-top'                  if property == 'margin-top'
+    return 'margin-bottom'               if property == 'margin-bottom'
+    // layout
+    return 'border'                      if property == 'border'
+    return 'border-left-width'           if property == 'border-left-width'
+    return 'border-right-width'          if property == 'border-right-width'
+    return 'border-top-width'            if property == 'border-top-width'
+    return 'border-bottom-width'         if property == 'border-bottom-width'
+    // layout
+    return 'padding'                     if property == 'padding'
+    return 'padding-left'                if property == 'padding-left'
+    return 'padding-right'               if property == 'padding-right'
+    return 'padding-top'                 if property == 'padding-top'
+    return 'padding-bottom'              if property == 'padding-bottom'
+    // flex
+    return 'flex-grow'                   if property == 'flex-grow'
+    return 'flex-shrink'                 if property == 'flex-shrink'
+    return 'flex-basis'                  if property == 'flex-basis'
+    return 'align-self'                  if property == 'align-self'      // stretch center start end
+    // flex
+    return 'flex-direction'              if property == 'flex-direction'  // column column-reverse row row-reverse
+    return 'flex-wrap'                   if property == 'flex-wrap'       // nowrap wrap wrap-reverse
+    return 'justify-content'             if property == 'justify-content' // start center space-between space-around (Justification of children on the main axis of this container)
+    return 'align-content'               if property == 'align-content'   // start center space-between space-around (Alignment of children (the whole area) on the cross axis (if they span over multiple lines in this container))
+    return 'align-items'                 if property == 'align-items'     // stretch center start end                (Alignment of children on the cross axis of this container)
+    // misc
+    property
+get-unity-property(property)
+    // view
+    return '-unity-' + property if property == 'overflow-clip-box'
+    // view
+    return '-unity-' + property if property == 'font'
+    return '-unity-' + property if property == 'font-definition'
+    return '-unity-' + property if property == 'font-style'
+    // view
+    return '-unity-' + property if property == 'text-align'
+    return '-unity-' + property if property == 'text-outline'
+    return '-unity-' + property if property == 'text-outline-width'
+    return '-unity-' + property if property == 'text-outline-color'
+    return '-unity-' + property if property == 'text-overflow-position'
+    return '-unity-' + property if property == 'paragraph-spacing'
+    // view
+    return '-unity-' + property if property == 'background-image-tint-color'
+    return '-unity-' + property if property == 'background-scale-mode'
+    return '-unity-' + property if property == 'slice-left'
+    return '-unity-' + property if property == 'slice-right'
+    return '-unity-' + property if property == 'slice-top'
+    return '-unity-' + property if property == 'slice-bottom'
+    return '-unity-' + property if property == 'slice-scale'
+    // misc
+    property
+
+// misc
+get-key(key...)
+    result =         get-string(key[0])
+    result += '--' + get-string(key[1]) if key[1] != null
+    result += '--' + get-string(key[2]) if key[2] != null
+    result
+// misc
+has-value(key)
+    is-defined(get-string(key), true)
+// misc
+get-value(key)
+    get-definition(get-string(key), true)
+// misc
+error-if-no-value(text, key)
+    if !is-defined(get-string(key), true)
+        error(get-string(s(text, get-string(key))))

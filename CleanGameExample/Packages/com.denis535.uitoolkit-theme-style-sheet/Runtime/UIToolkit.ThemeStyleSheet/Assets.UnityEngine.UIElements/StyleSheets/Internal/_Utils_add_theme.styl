@@ -1,0 +1,50 @@
+@import "_Utils_add_style"
+
+// add-theme
+add-theme(name)
+    if name != null
+        error-if-no-value('Theme is invalid: %s', get-key('theme', name, 'normal'))
+        for key, value in get-themes(name)
+            args = get-theme-args(key)
+            if args[0] != null and match('(light|gray|dark)', args[0])
+                arg = shift(args)
+                add-theme-internal(value, selector(), arg, args)
+            else
+                add-theme-internal(value, selector(), null, args)
+// add-theme-internal
+add-theme-internal(theme, selector, skin, state)
+    selector = replace('(\.{skin})',  skin,            selector) if skin
+    selector = replace('(\.{state})', join('', state), selector) if state
+    /{selector}
+        add-view-theme(theme)
+
+// get-themes
+get-themes(name)
+    result = {}
+    for key, value in get-definitions(true)
+        if match('(^theme--' +  name + '--)', key, g)
+            result[key] = value
+    result
+
+// get-theme-args
+get-theme-args(key)
+    args = split('--', key)
+    shift(args)
+    shift(args)
+    result = ()
+    for arg in args
+        push(result, get-theme-arg(arg))
+    result
+// get-theme-arg
+get-theme-arg(arg)
+    return null        if arg == 'normal'
+    return ':hover'    if arg == 'hover'
+    return ':active'   if arg == 'active'
+    return ':focus'    if arg == 'focus'
+    return ':checked'  if arg == 'checked'
+    return '.invalid'  if arg == 'invalid'
+    return ('.' + arg) if match('light', arg)
+    return ('.' + arg) if match('gray',  arg)
+    return ('.' + arg) if match('dark',  arg)
+    return null        if arg == 'null'
+    error('State is invalid: ' + arg)

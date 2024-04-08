@@ -1,26 +1,26 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--field       = // string: .unity-base-field.%
-selector--field-label = // string: .unity-base-field.% .unity-base-field__label
-selector--field-input = // string: .unity-base-field.% .unity-base-field__input
+// alias
+alias--field       = // string: .unity-base-field.{state}
+alias--field-label = // string: .unity-base-field.{state} .unity-base-field__label
+alias--field-input = // string: .unity-base-field.{state} .unity-base-field__input
 
-// theme
+// style
+.selector--field       // styles: null
+.selector--field-label // styles: add-text(middle-left, null, null)
+.selector--field-input // styles: add-text(middle-left, null, null)
+
+// style
 .selector--field       // styles: add-theme(field)
 .selector--field-label // styles: add-theme(field-label)
 .selector--field-input // styles: add-theme(field-input)
 
-// layout
+// style
 .selector--field       // styles: add-layout(null, auto, auto, (4px            ), (0px), (0px                ))
 .selector--field-label // styles: add-layout(null, auto, auto, (0px 4px 0px 0px), (1px), (12px 12px 10px 10px))
 .selector--field-input // styles: add-layout(null, auto, auto, (0px            ), (1px), (12px 12px 10px 10px))
 
-// flex
+// style
 .selector--field       // styles: add-flex(0, 1, auto, auto).add-flex2(row, flex-start, null, stretch)
 .selector--field-label // styles: add-flex(0, 1, auto, auto)
 .selector--field-input // styles: add-flex(1, 1, auto, auto).add-flex2(row, flex-end,   null, stretch)
-
-// misc
-.selector--field       // styles: null
-.selector--field-label // styles: add-text(middle-left, null, null)
-.selector--field-input // styles: add-text(middle-left, null, null)

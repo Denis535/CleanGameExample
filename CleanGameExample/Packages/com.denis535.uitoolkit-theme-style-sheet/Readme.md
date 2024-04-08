@@ -28,9 +28,15 @@ This package contains styles for the following elements:
     - InfoDialogWidget
     - WarningDialogWidget
     - ErrorDialogWidget
+- Cards
+    - Card
+    - DialogCard
+    - InfoDialogCard
+    - WarningDialogCard
+    - ErrorDialogCard
 - Views
-    - TabView    - classes: light10/light/gray/dark/dark10, small/medium/large
-    - ScrollView - classes: light10/light/gray/dark/dark10, small/medium/large, reverse
+    - TabView    - classes: light10/light/gray/dark/dark10, small/medium/large, no-outline
+    - ScrollView - classes: light10/light/gray/dark/dark10, small/medium/large, reverse, no-outline
 - Scopes
     - Scope - classes: light10/light/gray/dark/dark10  small/medium/large, column/row
     - Group - classes: light10/light/gray/dark/dark10, small/medium/large, column/row

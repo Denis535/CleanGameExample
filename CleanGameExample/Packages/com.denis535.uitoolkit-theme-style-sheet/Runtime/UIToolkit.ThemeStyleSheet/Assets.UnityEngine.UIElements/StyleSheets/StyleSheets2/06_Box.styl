@@ -1,61 +1,16 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--box          = // string: .unity-box.%
-selector--box--light10 = // string: .unity-box.light10.%
-selector--box--light9  = // string: .unity-box.light9.%
-selector--box--light8  = // string: .unity-box.light8.%
-selector--box--light7  = // string: .unity-box.light7.%
-selector--box--light6  = // string: .unity-box.light6.%
-selector--box--light5  = // string: .unity-box.light5.%
-selector--box--light4  = // string: .unity-box.light4.%
-selector--box--light3  = // string: .unity-box.light3.%
-selector--box--light2  = // string: .unity-box.light2.%
-selector--box--light   = // string: .unity-box.light.%
-selector--box--gray    = // string: .unity-box.gray.%
-selector--box--dark    = // string: .unity-box.dark.%
-selector--box--dark2   = // string: .unity-box.dark2.%
-selector--box--dark3   = // string: .unity-box.dark3.%
-selector--box--dark4   = // string: .unity-box.dark4.%
-selector--box--dark5   = // string: .unity-box.dark5.%
-selector--box--dark6   = // string: .unity-box.dark6.%
-selector--box--dark7   = // string: .unity-box.dark7.%
-selector--box--dark8   = // string: .unity-box.dark8.%
-selector--box--dark9   = // string: .unity-box.dark9.%
-selector--box--dark10  = // string: .unity-box.dark10.%
-selector--box--small   = // string: .unity-box.small
-selector--box--medium  = // string: .unity-box.medium
-selector--box--large   = // string: .unity-box.large
+// alias
+alias--box = // string: .unity-box.{skin}.{state}
 
-// theme
-.selector--box          // styles: add-theme(box         )
-.selector--box--light10 // styles: add-theme(box--light10)
-.selector--box--light9  // styles: add-theme(box--light9 )
-.selector--box--light8  // styles: add-theme(box--light8 )
-.selector--box--light7  // styles: add-theme(box--light7 )
-.selector--box--light6  // styles: add-theme(box--light6 )
-.selector--box--light5  // styles: add-theme(box--light5 )
-.selector--box--light4  // styles: add-theme(box--light4 )
-.selector--box--light3  // styles: add-theme(box--light3 )
-.selector--box--light2  // styles: add-theme(box--light2 )
-.selector--box--light   // styles: add-theme(box--light  )
-.selector--box--gray    // styles: add-theme(box--gray   )
-.selector--box--dark    // styles: add-theme(box--dark   )
-.selector--box--dark2   // styles: add-theme(box--dark2  )
-.selector--box--dark3   // styles: add-theme(box--dark3  )
-.selector--box--dark4   // styles: add-theme(box--dark4  )
-.selector--box--dark5   // styles: add-theme(box--dark5  )
-.selector--box--dark6   // styles: add-theme(box--dark6  )
-.selector--box--dark7   // styles: add-theme(box--dark7  )
-.selector--box--dark8   // styles: add-theme(box--dark8  )
-.selector--box--dark9   // styles: add-theme(box--dark9  )
-.selector--box--dark10  // styles: add-theme(box--dark10 )
+// style
+.selector--box // styles: add-theme(box)
 
-// layout
-.selector--box         // styles: add-layout(null, auto, auto, (4px), (1px), (0px                ))
-.selector--box--small  // styles: add-layout(null, auto, auto, (4px), (1px), (6px  6px  5px  5px ))
-.selector--box--medium // styles: add-layout(null, auto, auto, (4px), (1px), (12px 12px 10px 10px))
-.selector--box--large  // styles: add-layout(null, auto, auto, (4px), (1px), (24px 24px 20px 20px))
+// style
+.selector--box        // styles: add-layout(null, auto, auto, (4px), (1px), (0px                ))
+.selector--box.small  // styles: add-layout(null, auto, auto, (4px), (1px), (6px  6px  5px  5px ))
+.selector--box.medium // styles: add-layout(null, auto, auto, (4px), (1px), (12px 12px 10px 10px))
+.selector--box.large  // styles: add-layout(null, auto, auto, (4px), (1px), (24px 24px 20px 20px))
 
-// flex
+// style
 .selector--box // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)

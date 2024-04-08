@@ -1,64 +1,17 @@
 @import "../Internal/_Theme"
 
-// selector
-selector--scope          = // string: .scope.%
-selector--scope--light10 = // string: .scope.light10.%
-selector--scope--light9  = // string: .scope.light9.%
-selector--scope--light8  = // string: .scope.light8.%
-selector--scope--light7  = // string: .scope.light7.%
-selector--scope--light6  = // string: .scope.light6.%
-selector--scope--light5  = // string: .scope.light5.%
-selector--scope--light4  = // string: .scope.light4.%
-selector--scope--light3  = // string: .scope.light3.%
-selector--scope--light2  = // string: .scope.light2.%
-selector--scope--light   = // string: .scope.light.%
-selector--scope--gray    = // string: .scope.gray.%
-selector--scope--dark    = // string: .scope.dark.%
-selector--scope--dark2   = // string: .scope.dark2.%
-selector--scope--dark3   = // string: .scope.dark3.%
-selector--scope--dark4   = // string: .scope.dark4.%
-selector--scope--dark5   = // string: .scope.dark5.%
-selector--scope--dark6   = // string: .scope.dark6.%
-selector--scope--dark7   = // string: .scope.dark7.%
-selector--scope--dark8   = // string: .scope.dark8.%
-selector--scope--dark9   = // string: .scope.dark9.%
-selector--scope--dark10  = // string: .scope.dark10.%
-selector--scope--small   = // string: .scope.small
-selector--scope--medium  = // string: .scope.medium
-selector--scope--large   = // string: .scope.large
-selector--scope--column  = // string: .scope.column
-selector--scope--row     = // string: .scope.row
+// alias
+alias--scope = // string: .scope.{skin}.{state}
 
-// theme
-.selector--scope          // styles: add-theme(scope         )
-.selector--scope--light10 // styles: add-theme(scope--light10)
-.selector--scope--light9  // styles: add-theme(scope--light9 )
-.selector--scope--light8  // styles: add-theme(scope--light8 )
-.selector--scope--light7  // styles: add-theme(scope--light7 )
-.selector--scope--light6  // styles: add-theme(scope--light6 )
-.selector--scope--light5  // styles: add-theme(scope--light5 )
-.selector--scope--light4  // styles: add-theme(scope--light4 )
-.selector--scope--light3  // styles: add-theme(scope--light3 )
-.selector--scope--light2  // styles: add-theme(scope--light2 )
-.selector--scope--light   // styles: add-theme(scope--light  )
-.selector--scope--gray    // styles: add-theme(scope--gray   )
-.selector--scope--dark    // styles: add-theme(scope--dark   )
-.selector--scope--dark2   // styles: add-theme(scope--dark2  )
-.selector--scope--dark3   // styles: add-theme(scope--dark3  )
-.selector--scope--dark4   // styles: add-theme(scope--dark4  )
-.selector--scope--dark5   // styles: add-theme(scope--dark5  )
-.selector--scope--dark6   // styles: add-theme(scope--dark6  )
-.selector--scope--dark7   // styles: add-theme(scope--dark7  )
-.selector--scope--dark8   // styles: add-theme(scope--dark8  )
-.selector--scope--dark9   // styles: add-theme(scope--dark9  )
-.selector--scope--dark10  // styles: add-theme(scope--dark10 )
+// style
+.selector--scope // styles: add-theme(scope)
 
-// layout
-.selector--scope         // styles: add-layout(null, auto, auto, (0px), (0px), (0px                ))
-.selector--scope--small  // styles: add-layout(null, auto, auto, (0px), (1px), (6px  6px  5px  5px ))
-.selector--scope--medium // styles: add-layout(null, auto, auto, (0px), (1px), (12px 12px 10px 10px))
-.selector--scope--large  // styles: add-layout(null, auto, auto, (0px), (1px), (24px 24px 20px 20px))
+// style
+.selector--scope        // styles: add-layout(null, auto, auto, (0px), (0px), (0px                ))
+.selector--scope.small  // styles: add-layout(null, auto, auto, (0px), (1px), (6px  6px  5px  5px ))
+.selector--scope.medium // styles: add-layout(null, auto, auto, (0px), (1px), (12px 12px 10px 10px))
+.selector--scope.large  // styles: add-layout(null, auto, auto, (0px), (1px), (24px 24px 20px 20px))
 
-// flex
-.selector--scope--column // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
-.selector--scope--row    // styles: add-flex(0, 1, auto, auto).add-flex2(row,    flex-start, null, stretch)
+// style
+.selector--scope.column // styles: add-flex(0, 1, auto, auto).add-flex2(column, flex-start, null, stretch)
+.selector--scope.row    // styles: add-flex(0, 1, auto, auto).add-flex2(row,    flex-start, null, stretch)

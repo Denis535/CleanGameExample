@@ -1,4 +1,7 @@
 .unity-label {
+  -unity-text-align: upper-left;
+}
+.unity-label {
   width: auto;
   height: auto;
   margin-left: 4px;
@@ -67,7 +70,4 @@
   flex-shrink: 1;
   flex-basis: auto;
   align-self: auto;
-}
-.unity-label {
-  -unity-text-align: upper-left;
 }

@@ -16,10 +16,6 @@ namespace Project.UI {
     public class UIRouter : UIRouterBase {
 
         private static readonly Lock @lock = new Lock();
-        private static readonly SceneHandle program = new SceneHandle( R.Project.Scenes.Program_Value );
-        private readonly SceneHandle mainScene = new SceneHandle( R.Project.Scenes.MainScene_Value );
-        private readonly SceneHandle gameScene = new SceneHandle( R.Project.Scenes.GameScene_Value );
-        private readonly DynamicSceneHandle world = new DynamicSceneHandle();
         private UIRouterState state;
 
         // Deps
@@ -73,6 +69,11 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
+        // Program
+        private static SceneHandle Program { get; } = new SceneHandle( R.Project.Scenes.Program_Value );
+        private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
+        private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
+        private DynamicSceneHandle World { get; } = new DynamicSceneHandle();
 
         // Awake
         public new void Awake() {
@@ -163,53 +164,42 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await program.LoadSceneAsync( LoadSceneMode.Single, false, default );
-            await program.ActivateAsync();
-            SceneManager.SetActiveScene( program.Scene );
+            await Program.LoadSceneAsync( LoadSceneMode.Single, false, default );
+            await Program.ActivateAsync();
+            SceneManager.SetActiveScene( Program.Scene );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await mainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
-            await mainScene.ActivateAsync();
-            SceneManager.SetActiveScene( mainScene.Scene );
+            await MainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+            await MainScene.ActivateAsync();
+            SceneManager.SetActiveScene( MainScene.Scene );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await gameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
-            await gameScene.ActivateAsync();
-            SceneManager.SetActiveScene( gameScene.Scene );
+            await GameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
+            await GameScene.ActivateAsync();
+            SceneManager.SetActiveScene( GameScene.Scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
+            await World.LoadSceneAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
+            await World.ActivateAsync();
+            SceneManager.SetActiveScene( World.Scene );
+        }
+        private static string GetWorldAddress(Level level) {
             switch (level) {
-                case Level.Level1: {
-                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_01_Value, LoadSceneMode.Additive, false, default );
-                    await world.ActivateAsync();
-                    SceneManager.SetActiveScene( world.Scene );
-                    break;
-                }
-                case Level.Level2: {
-                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_02_Value, LoadSceneMode.Additive, false, default );
-                    await world.ActivateAsync();
-                    SceneManager.SetActiveScene( world.Scene );
-                    break;
-                }
-                case Level.Level3: {
-                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_03_Value, LoadSceneMode.Additive, false, default );
-                    await world.ActivateAsync();
-                    SceneManager.SetActiveScene( world.Scene );
-                    break;
-                }
-                default:
-                    throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
+                case Level.Level1: return R.Project.Entities.Worlds.World_01_Value;
+                case Level.Level2: return R.Project.Entities.Worlds.World_02_Value;
+                case Level.Level3: return R.Project.Entities.Worlds.World_03_Value;
+                default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            await mainScene.UnloadSafeAsync();
+            await MainScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_GameScene() {
-            await gameScene.UnloadSafeAsync();
+            await GameScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            await world.UnloadSafeAsync();
+            await World.UnloadSafeAsync();
         }
 
     }

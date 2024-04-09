@@ -11,6 +11,7 @@ namespace Project.Entities {
 
     public class Game : GameBase {
         public record Arguments(Level Level);
+        private readonly Lock @lock = new Lock();
         private bool isPlaying = true;
 
         // Args
@@ -38,10 +39,16 @@ namespace Project.Entities {
         }
 
         // Start
-        public void Start() {
-            Player.Spawn( World.PlayerSpawnPoints.First() );
+        public async void Start() {
+            if (@lock.IsLocked) return;
+            using (@lock.Enter()) {
+                await Player.Spawn( World.PlayerSpawnPoints.First() );
+            }
         }
         public void Update() {
+            if (@lock.IsLocked) return;
+            using (@lock.Enter()) {
+            }
         }
 
     }

@@ -24,13 +24,14 @@ namespace Project.UI {
         } );
 
         private readonly Lock @lock = new Lock();
-        private readonly DynamicAssetHandle<AudioClip> theme = new DynamicAssetHandle<AudioClip>();
 
         // Deps
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         private AudioSource AudioSource { get; set; } = default!;
         private Game? Game => Application.Game;
+        // Theme
+        private DynamicAssetHandle<AudioClip> Theme { get; } = new DynamicAssetHandle<AudioClip>();
 
         // Awake
         public new void Awake() {
@@ -40,7 +41,7 @@ namespace Project.UI {
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {
-            Stop( AudioSource, theme );
+            Stop( AudioSource, Theme );
             base.OnDestroy();
         }
 
@@ -61,17 +62,17 @@ namespace Project.UI {
             }
         }
         private async Task Update_MainTheme() {
-            if (!theme.IsValid) {
-                await Play( AudioSource, theme, MainThemes.First(), destroyCancellationToken );
+            if (!Theme.IsValid) {
+                await Play( AudioSource, Theme, MainThemes.First(), destroyCancellationToken );
             } else
-            if (!MainThemes.Contains( theme.Key )) {
-                Stop( AudioSource, theme );
-                await Play( AudioSource, theme, MainThemes.First(), destroyCancellationToken );
+            if (!MainThemes.Contains( Theme.Key )) {
+                Stop( AudioSource, Theme );
+                await Play( AudioSource, Theme, MainThemes.First(), destroyCancellationToken );
             } else
             if (!IsPlaying( AudioSource )) {
-                var next = GetNextValue( MainThemes, theme.Key );
-                Stop( AudioSource, theme );
-                await Play( AudioSource, theme, next, destroyCancellationToken );
+                var next = GetNextValue( MainThemes, Theme.Key );
+                Stop( AudioSource, Theme );
+                await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
             if (Router.IsGameSceneLoading) {
                 AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
@@ -79,17 +80,17 @@ namespace Project.UI {
             }
         }
         private async Task Update_GameTheme() {
-            if (!theme.IsValid) {
-                await Play( AudioSource, theme, GameThemes.First(), destroyCancellationToken );
+            if (!Theme.IsValid) {
+                await Play( AudioSource, Theme, GameThemes.First(), destroyCancellationToken );
             } else
-            if (!GameThemes.Contains( theme.Key )) {
-                Stop( AudioSource, theme );
-                await Play( AudioSource, theme, GameThemes.First(), destroyCancellationToken );
+            if (!GameThemes.Contains( Theme.Key )) {
+                Stop( AudioSource, Theme );
+                await Play( AudioSource, Theme, GameThemes.First(), destroyCancellationToken );
             } else
             if (!IsPlaying( AudioSource )) {
-                var next = GetNextValue( GameThemes, theme.Key );
-                Stop( AudioSource, theme );
-                await Play( AudioSource, theme, next, destroyCancellationToken );
+                var next = GetNextValue( GameThemes, Theme.Key );
+                Stop( AudioSource, Theme );
+                await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
             Pause( AudioSource, !Game!.IsPlaying );
         }
@@ -121,6 +122,7 @@ namespace Project.UI {
             Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );
             source.clip = clip;
             source.volume = 1;
+            source.pitch = 1;
             source.Play();
         }
         private static void Pause(AudioSource source, bool value) {

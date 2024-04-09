@@ -3,6 +3,8 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
@@ -10,50 +12,52 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
         public record Arguments(Character Character);
-        //private readonly PrefabHandle<Transform> grayCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Gray_Value );
-        //private readonly PrefabHandle<Transform> redCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Red_Value );
-        //private readonly PrefabHandle<Transform> greenCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Green_Value );
-        //private readonly PrefabHandle<Transform> blueCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Blue_Value );
+        private readonly Lock @lock = new Lock();
 
         // Args
         private Arguments Args { get; set; } = default!;
+        // Character
+        private DynamicPrefabHandle<Transform> CharacterHandle = new DynamicPrefabHandle<Transform>();
+        public Transform? Character => CharacterHandle.Instances.FirstOrDefault();
 
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
+            CharacterHandle.LoadPrefabAsync( GetCharacterAddress( Args.Character ), destroyCancellationToken );
         }
         public void OnDestroy() {
+            CharacterHandle.DestroyAllImmediate();
+            CharacterHandle.Release();
         }
 
         // Start
         public void Start() {
+            if (@lock.IsLocked) return;
+            using (@lock.Enter()) {
+            }
         }
         public void Update() {
+            if (@lock.IsLocked) return;
+            using (@lock.Enter()) {
+            }
         }
 
         // Spawn
-        public void Spawn(PlayerSpawnPoint point) {
-            //switch (Args.Character) {
-            //    case Project.Entities.Character.Gray: {
-            //        grayCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-            //        break;
-            //    }
-            //    case Project.Entities.Character.Red: {
-            //        redCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-            //        break;
-            //    }
-            //    case Project.Entities.Character.Green: {
-            //        greenCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-            //        break;
-            //    }
-            //    case Project.Entities.Character.Blue: {
-            //        blueCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-            //        break;
-            //    }
-            //    default: {
-            //        throw Exceptions.Internal.NotSupported( $"Character {Args.Character} is not supported" );
-            //    }
-            //}
+        public async Task Spawn(PlayerSpawnPoint point) {
+            using (@lock.Enter()) {
+                await CharacterHandle.InstantiateAsync( point.transform.position, point.transform.rotation, destroyCancellationToken );
+            }
+        }
+
+        // Heleprs
+        private static string GetCharacterAddress(Character character) {
+            switch (character) {
+                case Project.Entities.Character.Gray: return R.Project.Entities.Characters.Character_Gray_Value;
+                case Project.Entities.Character.Red: return R.Project.Entities.Characters.Character_Red_Value;
+                case Project.Entities.Character.Green: return R.Project.Entities.Characters.Character_Green_Value;
+                case Project.Entities.Character.Blue: return R.Project.Entities.Characters.Character_Blue_Value;
+                default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
+            }
         }
 
     }

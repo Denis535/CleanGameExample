@@ -19,9 +19,7 @@ namespace Project.UI {
         private static readonly SceneHandle program = new SceneHandle( R.Project.Scenes.Program_Value );
         private readonly SceneHandle mainScene = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private readonly SceneHandle gameScene = new SceneHandle( R.Project.Scenes.GameScene_Value );
-        private readonly SceneHandle world1 = new SceneHandle( R.Project.Entities.Worlds.World_01_Value );
-        private readonly SceneHandle world2 = new SceneHandle( R.Project.Entities.Worlds.World_02_Value );
-        private readonly SceneHandle world3 = new SceneHandle( R.Project.Entities.Worlds.World_03_Value );
+        private readonly DynamicSceneHandle world = new DynamicSceneHandle();
         private UIRouterState state;
 
         // Deps
@@ -165,38 +163,38 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await program.LoadSceneAsync( LoadSceneMode.Single, false );
+            await program.LoadSceneAsync( LoadSceneMode.Single, false, default );
             await program.ActivateAsync();
             SceneManager.SetActiveScene( program.Scene );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await mainScene.LoadSceneAsync( LoadSceneMode.Additive, false );
+            await mainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
             await mainScene.ActivateAsync();
             SceneManager.SetActiveScene( mainScene.Scene );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await gameScene.LoadSceneAsync( LoadSceneMode.Additive, false );
+            await gameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
             await gameScene.ActivateAsync();
             SceneManager.SetActiveScene( gameScene.Scene );
         }
         public async Task LoadSceneAsync_World(Level level) {
             switch (level) {
                 case Level.Level1: {
-                    await world1.LoadSceneAsync( LoadSceneMode.Additive, false );
-                    await world1.ActivateAsync();
-                    SceneManager.SetActiveScene( world1.Scene );
+                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_01_Value, LoadSceneMode.Additive, false, default );
+                    await world.ActivateAsync();
+                    SceneManager.SetActiveScene( world.Scene );
                     break;
                 }
                 case Level.Level2: {
-                    await world2.LoadSceneAsync( LoadSceneMode.Additive, false );
-                    await world2.ActivateAsync();
-                    SceneManager.SetActiveScene( world2.Scene );
+                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_02_Value, LoadSceneMode.Additive, false, default );
+                    await world.ActivateAsync();
+                    SceneManager.SetActiveScene( world.Scene );
                     break;
                 }
                 case Level.Level3: {
-                    await world3.LoadSceneAsync( LoadSceneMode.Additive, false );
-                    await world3.ActivateAsync();
-                    SceneManager.SetActiveScene( world3.Scene );
+                    await world.LoadSceneAsync( R.Project.Entities.Worlds.World_03_Value, LoadSceneMode.Additive, false, default );
+                    await world.ActivateAsync();
+                    SceneManager.SetActiveScene( world.Scene );
                     break;
                 }
                 default:
@@ -205,13 +203,13 @@ namespace Project.UI {
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            if (mainScene.IsValid) await mainScene.UnloadAsync();
+            await mainScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_GameScene() {
-            if (gameScene.IsValid) await gameScene.UnloadAsync();
+            await gameScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            await new[] { world1, world2, world3 }.UnloadAllAsync();
+            await world.UnloadSafeAsync();
         }
 
     }

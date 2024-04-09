@@ -10,10 +10,10 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
         public record Arguments(Character Character);
-        private readonly PrefabHandle<Transform> grayCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Gray_Value );
-        private readonly PrefabHandle<Transform> redCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Red_Value );
-        private readonly PrefabHandle<Transform> greenCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Green_Value );
-        private readonly PrefabHandle<Transform> blueCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Blue_Value );
+        //private readonly PrefabHandle<Transform> grayCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Gray_Value );
+        //private readonly PrefabHandle<Transform> redCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Red_Value );
+        //private readonly PrefabHandle<Transform> greenCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Green_Value );
+        //private readonly PrefabHandle<Transform> blueCharacter = new PrefabHandle<Transform>( R.Project.Entities.Characters.Character_Blue_Value );
 
         // Args
         private Arguments Args { get; set; } = default!;
@@ -33,27 +33,27 @@ namespace Project.Entities {
 
         // Spawn
         public void Spawn(PlayerSpawnPoint point) {
-            switch (Args.Character) {
-                case Project.Entities.Character.Gray: {
-                    grayCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-                    break;
-                }
-                case Project.Entities.Character.Red: {
-                    redCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-                    break;
-                }
-                case Project.Entities.Character.Green: {
-                    greenCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-                    break;
-                }
-                case Project.Entities.Character.Blue: {
-                    blueCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
-                    break;
-                }
-                default: {
-                    throw Exceptions.Internal.NotSupported( $"Character {Args.Character} is not supported" );
-                }
-            }
+            //switch (Args.Character) {
+            //    case Project.Entities.Character.Gray: {
+            //        grayCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
+            //        break;
+            //    }
+            //    case Project.Entities.Character.Red: {
+            //        redCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
+            //        break;
+            //    }
+            //    case Project.Entities.Character.Green: {
+            //        greenCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
+            //        break;
+            //    }
+            //    case Project.Entities.Character.Blue: {
+            //        blueCharacter.InstantiateAsync( point.transform.position, point.transform.rotation, null, destroyCancellationToken );
+            //        break;
+            //    }
+            //    default: {
+            //        throw Exceptions.Internal.NotSupported( $"Character {Args.Character} is not supported" );
+            //    }
+            //}
         }
 
     }

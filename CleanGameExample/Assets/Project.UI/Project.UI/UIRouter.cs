@@ -164,23 +164,23 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await Program.LoadSceneAsync( LoadSceneMode.Single, false, default );
-            await Program.ActivateAsync();
+            await Program.LoadAsync( LoadSceneMode.Single, false, default );
+            await Program.ActivateAsync( default );
             SceneManager.SetActiveScene( Program.Result );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await MainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
-            await MainScene.ActivateAsync();
+            await MainScene.LoadAsync( LoadSceneMode.Additive, false, default );
+            await MainScene.ActivateAsync( default );
             SceneManager.SetActiveScene( MainScene.Result );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await GameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
-            await GameScene.ActivateAsync();
+            await GameScene.LoadAsync( LoadSceneMode.Additive, false, default );
+            await GameScene.ActivateAsync( default );
             SceneManager.SetActiveScene( GameScene.Result );
         }
         public async Task LoadSceneAsync_World(Level level) {
-            await World.LoadSceneAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
-            await World.ActivateAsync();
+            await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
+            await World.ActivateAsync( default );
             SceneManager.SetActiveScene( World.Result );
         }
         private static string GetWorldAddress(Level level) {

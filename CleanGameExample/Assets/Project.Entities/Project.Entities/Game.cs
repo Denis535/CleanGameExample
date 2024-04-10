@@ -42,7 +42,7 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                await Player.Spawn( World.PlayerSpawnPoints.First() );
+                await Player.SpawnAsync( World.PlayerSpawnPoints.First() );
             }
         }
         public void Update() {

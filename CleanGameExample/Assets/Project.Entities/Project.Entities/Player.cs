@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Project.Entities.Worlds;
     using UnityEngine;
@@ -17,17 +16,15 @@ namespace Project.Entities {
         // Args
         private Arguments Args { get; set; } = default!;
         // Character
-        private DynamicPrefabHandle<Transform> CharacterPrefab = new DynamicPrefabHandle<Transform>();
-        public Transform? Character { get; private set; }
+        private DynamicInstanceHandle<Transform> CharacterInstance = new DynamicInstanceHandle<Transform>();
+        public Transform? Character => CharacterInstance.IsSucceeded ? CharacterInstance.Result : null;
 
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
-            CharacterPrefab.LoadAsync( GetCharacterAddress( Args.Character ), destroyCancellationToken );
         }
         public void OnDestroy() {
-            if (Character) DestroyImmediate( Character?.gameObject );
-            CharacterPrefab.Release();
+            CharacterInstance.ReleaseInstanceSafe();
         }
 
         // Start
@@ -43,10 +40,9 @@ namespace Project.Entities {
         }
 
         // Spawn
-        public async Task Spawn(PlayerSpawnPoint point) {
+        public async Task SpawnAsync(PlayerSpawnPoint point) {
             using (@lock.Enter()) {
-                var prefab = await CharacterPrefab.GetResultAsync( destroyCancellationToken );
-                Character = GameObject.Instantiate( prefab, point.transform.position, point.transform.rotation );
+                await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
             }
         }
 

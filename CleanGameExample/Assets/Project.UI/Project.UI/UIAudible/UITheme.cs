@@ -116,7 +116,7 @@ namespace Project.UI {
             return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length ) && !source.isPlaying;
         }
         private static async Task Play(AudioSource source, DynamicAssetHandle<AudioClip> clip, string key, CancellationToken cancellationToken) {
-            Play( source, await clip.LoadAssetAsync( key, cancellationToken ) );
+            Play( source, await clip.LoadAsync( key, cancellationToken ) );
         }
         private static void Play(AudioSource source, AudioClip clip) {
             Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );

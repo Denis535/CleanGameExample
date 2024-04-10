@@ -166,22 +166,22 @@ namespace Project.UI {
         private static async Task LoadSceneAsync_Program() {
             await Program.LoadSceneAsync( LoadSceneMode.Single, false, default );
             await Program.ActivateAsync();
-            SceneManager.SetActiveScene( Program.Scene );
+            SceneManager.SetActiveScene( Program.Result );
         }
         public async Task LoadSceneAsync_MainScene() {
             await MainScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
             await MainScene.ActivateAsync();
-            SceneManager.SetActiveScene( MainScene.Scene );
+            SceneManager.SetActiveScene( MainScene.Result );
         }
         public async Task LoadSceneAsync_GameScene() {
             await GameScene.LoadSceneAsync( LoadSceneMode.Additive, false, default );
             await GameScene.ActivateAsync();
-            SceneManager.SetActiveScene( GameScene.Scene );
+            SceneManager.SetActiveScene( GameScene.Result );
         }
         public async Task LoadSceneAsync_World(Level level) {
             await World.LoadSceneAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
             await World.ActivateAsync();
-            SceneManager.SetActiveScene( World.Scene );
+            SceneManager.SetActiveScene( World.Result );
         }
         private static string GetWorldAddress(Level level) {
             switch (level) {

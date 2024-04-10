@@ -17,17 +17,17 @@ namespace Project.Entities {
         // Args
         private Arguments Args { get; set; } = default!;
         // Character
-        private DynamicPrefabHandle<Transform> CharacterHandle = new DynamicPrefabHandle<Transform>();
-        public Transform? Character => CharacterHandle.Instances.FirstOrDefault();
+        private DynamicPrefabHandle<Transform> CharacterPrefab = new DynamicPrefabHandle<Transform>();
+        public Transform? Character { get; private set; }
 
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
-            CharacterHandle.LoadPrefabAsync( GetCharacterAddress( Args.Character ), destroyCancellationToken );
+            CharacterPrefab.LoadAsync( GetCharacterAddress( Args.Character ), destroyCancellationToken );
         }
         public void OnDestroy() {
-            CharacterHandle.DestroyAllImmediate();
-            CharacterHandle.Release();
+            if (Character) DestroyImmediate( Character?.gameObject );
+            CharacterPrefab.Release();
         }
 
         // Start
@@ -45,7 +45,8 @@ namespace Project.Entities {
         // Spawn
         public async Task Spawn(PlayerSpawnPoint point) {
             using (@lock.Enter()) {
-                await CharacterHandle.InstantiateAsync( point.transform.position, point.transform.rotation, destroyCancellationToken );
+                var prefab = await CharacterPrefab.GetResultAsync( destroyCancellationToken );
+                Character = GameObject.Instantiate( prefab, point.transform.position, point.transform.rotation );
             }
         }
 

@@ -166,22 +166,22 @@ namespace Project.UI {
         private static async Task LoadSceneAsync_Program() {
             await Program.LoadAsync( LoadSceneMode.Single, false, default );
             await Program.ActivateAsync( default );
-            SceneManager.SetActiveScene( Program.Result );
+            SceneManager.SetActiveScene( Program.Value );
         }
         public async Task LoadSceneAsync_MainScene() {
             await MainScene.LoadAsync( LoadSceneMode.Additive, false, default );
             await MainScene.ActivateAsync( default );
-            SceneManager.SetActiveScene( MainScene.Result );
+            SceneManager.SetActiveScene( MainScene.Value );
         }
         public async Task LoadSceneAsync_GameScene() {
             await GameScene.LoadAsync( LoadSceneMode.Additive, false, default );
             await GameScene.ActivateAsync( default );
-            SceneManager.SetActiveScene( GameScene.Result );
+            SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(Level level) {
             await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
             await World.ActivateAsync( default );
-            SceneManager.SetActiveScene( World.Result );
+            SceneManager.SetActiveScene( World.Value );
         }
         private static string GetWorldAddress(Level level) {
             switch (level) {
@@ -193,13 +193,13 @@ namespace Project.UI {
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            await MainScene.UnloadSafeAsync();
+            await MainScene.UnloadSafeAsync( default );
         }
         private async Task UnloadSceneAsync_GameScene() {
-            await GameScene.UnloadSafeAsync();
+            await GameScene.UnloadSafeAsync( default );
         }
         private async Task UnloadSceneAsync_World() {
-            await World.UnloadSafeAsync();
+            await World.UnloadSafeAsync( default );
         }
 
     }

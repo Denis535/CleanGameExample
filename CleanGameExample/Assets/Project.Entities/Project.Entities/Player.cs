@@ -17,7 +17,7 @@ namespace Project.Entities {
         private Arguments Args { get; set; } = default!;
         // Character
         private DynamicInstanceHandle<Transform> CharacterInstance = new DynamicInstanceHandle<Transform>();
-        public Transform? Character => CharacterInstance.IsSucceeded ? CharacterInstance.Result : null;
+        public Transform? Character => CharacterInstance.ValueSafe;
 
         // Awake
         public void Awake() {

@@ -9,7 +9,7 @@ namespace Project.Entities.Worlds {
 
         // OnValidate
         public void OnValidate() {
-            gameObject.name = "PlayerSpawnPoint";
+            gameObject.name = GetType().Name;
         }
 
         // Awake

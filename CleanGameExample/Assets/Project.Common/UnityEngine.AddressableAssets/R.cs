@@ -46,38 +46,9 @@ namespace UnityEngine.AddressableAssets {
                     public const string @World_02_Value = "Project.Entities.Worlds/World_02.unity";
                     public const string @World_03_Value = "Project.Entities.Worlds/World_03.unity";
                     public static class @Environment {
-                        public static class @Materials {
-                            public const string @Box_Blue_Value = "Project.Entities.Worlds.Environment/Materials/Box_Blue.mat";
-                            public const string @Box_Gray_Value = "Project.Entities.Worlds.Environment/Materials/Box_Gray.mat";
-                            public const string @Box_Green_Value = "Project.Entities.Worlds.Environment/Materials/Box_Green.mat";
-                            public const string @Box_Orange_Value = "Project.Entities.Worlds.Environment/Materials/Box_Orange.mat";
-                            public const string @Box_Red_Value = "Project.Entities.Worlds.Environment/Materials/Box_Red.mat";
-                            public const string @Box_Yellow_Value = "Project.Entities.Worlds.Environment/Materials/Box_Yellow.mat";
-                            public const string @Grid_Blue_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Blue.mat";
-                            public const string @Grid_Gray_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Gray.mat";
-                            public const string @Grid_Green_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Green.mat";
-                            public const string @Grid_Orange_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Orange.mat";
-                            public const string @Grid_Red_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Red.mat";
-                            public const string @Grid_Yellow_Value = "Project.Entities.Worlds.Environment/Materials/Grid_Yellow.mat";
-                        }
-                        public static class @Textures {
-                            public const string @Box_Blue_Value = "Project.Entities.Worlds.Environment/Textures/Box_Blue.png";
-                            public const string @Box_Gray_Value = "Project.Entities.Worlds.Environment/Textures/Box_Gray.png";
-                            public const string @Box_Green_Value = "Project.Entities.Worlds.Environment/Textures/Box_Green.png";
-                            public const string @Box_Orange_Value = "Project.Entities.Worlds.Environment/Textures/Box_Orange.png";
-                            public const string @Box_Red_Value = "Project.Entities.Worlds.Environment/Textures/Box_Red.png";
-                            public const string @Box_Yellow_Value = "Project.Entities.Worlds.Environment/Textures/Box_Yellow.png";
-                            public const string @Grid_Blue_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Blue.png";
-                            public const string @Grid_Gray_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Gray.png";
-                            public const string @Grid_Green_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Green.png";
-                            public const string @Grid_Orange_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Orange.png";
-                            public const string @Grid_Red_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Red.png";
-                            public const string @Grid_Yellow_Value = "Project.Entities.Worlds.Environment/Textures/Grid_Yellow.png";
-                        }
-                    }
-                    public static class @World_01 {
-                        public const string @LightingData_Value = "Project.Entities.Worlds/World_01/LightingData.asset";
-                        public const string @ReflectionProbe_0_Value = "Project.Entities.Worlds/World_01/ReflectionProbe-0.exr";
+                        public const string @Cube_Blue_Value = "Project.Entities.Worlds.Environment/Cube_Blue.prefab";
+                        public const string @Cube_Green_Value = "Project.Entities.Worlds.Environment/Cube_Green.prefab";
+                        public const string @Cube_Red_Value = "Project.Entities.Worlds.Environment/Cube_Red.prefab";
                     }
                 }
                 public static class @Characters {

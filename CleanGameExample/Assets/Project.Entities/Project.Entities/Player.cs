@@ -4,24 +4,24 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Project.Entities.Characters;
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
     public class Player : PlayerBase {
-        public record Arguments(Character Character);
+        public record Arguments(CharacterEnum Character);
         private readonly Lock @lock = new Lock();
 
         // Args
-        private Arguments Args { get; set; } = default!;
+        private Arguments Args { get; } = Context.Get<Player, Arguments>();
         // Character
-        private DynamicInstanceHandle<Transform> CharacterInstance = new DynamicInstanceHandle<Transform>();
-        public Transform? Character => CharacterInstance.ValueSafe;
+        private DynamicInstanceHandle<Character> CharacterInstance { get; } = new DynamicInstanceHandle<Character>();
+        public Character? Character => CharacterInstance.ValueSafe;
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Player, Arguments>();
         }
         public void OnDestroy() {
             CharacterInstance.ReleaseInstanceSafe();
@@ -47,19 +47,19 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static string GetCharacterAddress(Character character) {
+        private static string GetCharacterAddress(CharacterEnum character) {
             switch (character) {
-                case Project.Entities.Character.Gray: return R.Project.Entities.Characters.Character_Gray_Value;
-                case Project.Entities.Character.Red: return R.Project.Entities.Characters.Character_Red_Value;
-                case Project.Entities.Character.Green: return R.Project.Entities.Characters.Character_Green_Value;
-                case Project.Entities.Character.Blue: return R.Project.Entities.Characters.Character_Blue_Value;
+                case Project.Entities.CharacterEnum.Gray: return R.Project.Entities.Characters.Character_Gray_Value;
+                case Project.Entities.CharacterEnum.Red: return R.Project.Entities.Characters.Character_Red_Value;
+                case Project.Entities.CharacterEnum.Green: return R.Project.Entities.Characters.Character_Green_Value;
+                case Project.Entities.CharacterEnum.Blue: return R.Project.Entities.Characters.Character_Blue_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }
 
     }
     // Character
-    public enum Character {
+    public enum CharacterEnum {
         Gray,
         Red,
         Green,

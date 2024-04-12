@@ -107,7 +107,7 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoaded;
         }
-        public async Task LoadGameSceneAsync(Level level, Character character) {
+        public async Task LoadGameSceneAsync(LevelEnum level, CharacterEnum character) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
@@ -178,16 +178,16 @@ namespace Project.UI {
             await GameScene.ActivateAsync( default );
             SceneManager.SetActiveScene( GameScene.Value );
         }
-        public async Task LoadSceneAsync_World(Level level) {
+        public async Task LoadSceneAsync_World(LevelEnum level) {
             await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
             await World.ActivateAsync( default );
             SceneManager.SetActiveScene( World.Value );
         }
-        private static string GetWorldAddress(Level level) {
+        private static string GetWorldAddress(LevelEnum level) {
             switch (level) {
-                case Level.Level1: return R.Project.Entities.Worlds.World_01_Value;
-                case Level.Level2: return R.Project.Entities.Worlds.World_02_Value;
-                case Level.Level3: return R.Project.Entities.Worlds.World_03_Value;
+                case LevelEnum.Level1: return R.Project.Entities.Worlds.World_01_Value;
+                case LevelEnum.Level2: return R.Project.Entities.Worlds.World_02_Value;
+                case LevelEnum.Level3: return R.Project.Entities.Worlds.World_03_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

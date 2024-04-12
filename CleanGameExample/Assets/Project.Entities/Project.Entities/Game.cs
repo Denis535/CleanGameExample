@@ -10,15 +10,16 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Arguments(Level Level);
+        public record Arguments(LevelEnum Level);
         private readonly Lock @lock = new Lock();
         private bool isPlaying = true;
 
         // Args
-        private Arguments Args { get; set; } = default!;
+        private Arguments Args { get; } = Context.Get<Game, Arguments>();
         // Deps
         public Camera2 Camera { get; private set; } = default!;
         public World World { get; private set; } = default!;
+        // Player
         public Player Player { get; private set; } = default!;
         // IsPlaying
         public bool IsPlaying {
@@ -30,7 +31,6 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Game, Arguments>();
             Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
             World = this.GetDependencyContainer().RequireDependency<World>( null );
             Player = gameObject.RequireComponent<Player>();
@@ -53,7 +53,7 @@ namespace Project.Entities {
 
     }
     // Level
-    public enum Level {
+    public enum LevelEnum {
         Level1,
         Level2,
         Level3

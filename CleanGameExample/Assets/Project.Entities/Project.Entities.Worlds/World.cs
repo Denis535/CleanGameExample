@@ -10,10 +10,13 @@ namespace Project.Entities.Worlds {
 
         // PlayerSpawnPoints
         public PlayerSpawnPoint[] PlayerSpawnPoints { get; private set; } = default!;
+        // LootSpawnPoints
+        public LootSpawnPoint[] LootSpawnPoints { get; private set; } = default!;
 
         // Awake
         public void Awake() {
             PlayerSpawnPoints = gameObject.RequireComponentsInChildren<PlayerSpawnPoint>();
+            LootSpawnPoints = gameObject.GetComponentsInChildren<LootSpawnPoint>();
         }
         public void OnDestroy() {
         }

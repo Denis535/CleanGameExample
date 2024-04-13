@@ -13,6 +13,10 @@ namespace Project.Entities.Characters {
         // View
         private CharacterView View { get; set; } = default!;
         private CharacterBody Body { get; set; } = default!;
+        // Input
+        public Vector3 MoveDeltaInput { get => Body.MoveDeltaInput; set => Body.MoveDeltaInput = value; }
+        public Vector3 LookVectorInput { get => Body.LookVectorInput; set => Body.LookVectorInput = value; }
+        public bool FireInput { get; set; }
 
         // Awake
         public void Awake() {

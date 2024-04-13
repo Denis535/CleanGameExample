@@ -66,11 +66,15 @@ namespace Project.UI.GameScreen {
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );
             }
-            if (Application.Game != null && Application.Game.IsPlaying) {
-                Application.Game.Camera.Target = Vector3.up * 2;
-                Application.Game.Camera.InputRotationDelta += Actions.Game.Look.ReadValue<Vector2>();
-                Application.Game.Camera.InputDistanceDelta += Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
+            if (Application.Game != null && Application.Game.Player.Character != null) {
+                Application.Game.Camera.Target = Application.Game.Player.Character.transform;
+                if (Application.Game.IsPlaying) {
+                    Application.Game.Camera.RotationDeltaInput += Actions.Game.Look.ReadValue<Vector2>();
+                    Application.Game.Camera.DistanceDeltaInput += Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
+                }
             }
+        }
+        public void LateUpdate() {
         }
 
         // Helpers

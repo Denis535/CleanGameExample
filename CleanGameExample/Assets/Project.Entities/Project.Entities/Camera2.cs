@@ -10,13 +10,13 @@ namespace Project.Entities {
     public class Camera2 : EntityBase {
 
         // Target
-        public Vector3? Target { get; set; }
-        // Rotation
+        public Transform? Target { get; set; }
+        // Transform
         public Vector3 Rotation { get; private set; } = new Vector3( 30, 0, 0 );
-        public Vector2 InputRotationDelta { get; set; }
-        // Distance
         public float Distance { get; private set; } = 2.5f;
-        public float InputDistanceDelta { get; set; }
+        // Input
+        public Vector2 RotationDeltaInput { get; set; }
+        public float DistanceDeltaInput { get; set; }
 
         // Awake
         public void Awake() {
@@ -32,12 +32,15 @@ namespace Project.Entities {
         public void Update() {
         }
         public void LateUpdate() {
-            Rotation = GetRotation( Rotation, InputRotationDelta );
-            Distance = GetDistance( Distance, InputDistanceDelta );
-            InputRotationDelta = Vector3.zero;
-            InputDistanceDelta = 0;
+            Rotation = GetRotation( Rotation, RotationDeltaInput );
+            Distance = GetDistance( Distance, DistanceDeltaInput );
+            RotationDeltaInput = Vector2.zero;
+            DistanceDeltaInput = 0;
             if (Target != null) {
-                Apply( transform, Target.Value, Rotation, Distance );
+                Apply( transform, Target.position, Rotation, Distance );
+            } else {
+                Apply( transform, Vector3.up * 100, Rotation, Distance );
+                Target = null;
             }
         }
 
@@ -54,7 +57,9 @@ namespace Project.Entities {
         }
         private static void Apply(Transform transform, Vector3 target, Vector3 rotation, float distance) {
             transform.localEulerAngles = rotation;
-            transform.position = target;
+            transform.position = target +
+                (Vector3.up * 1.7f) + (Vector3.up * 0.5f * Mathf.InverseLerp( 2, 4, distance )) +
+                (Vector3.right * 0.3f) + (Vector3.right * 0.5f * Mathf.InverseLerp( 2, 4, distance ));
             transform.Translate( 0, 0, -distance, Space.Self );
         }
 

@@ -102,6 +102,8 @@ namespace Project.UI.MainScreen {
             }
             View.SetEffect( Color.white, default, 0, 1 );
         }
+        public void LateUpdate() {
+        }
 
         // Helpers
         private static MainWidgetView CreateView(MainWidget widget) {

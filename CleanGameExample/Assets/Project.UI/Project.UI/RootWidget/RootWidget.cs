@@ -93,6 +93,12 @@ namespace Project.UI {
                 (child as GameWidget)?.Update();
             }
         }
+        public void LateUpdate() {
+            foreach (var child in Children) {
+                (child as MainWidget)?.LateUpdate();
+                (child as GameWidget)?.LateUpdate();
+            }
+        }
 
     }
 }

@@ -8,6 +8,10 @@ namespace Project.Entities.Characters {
 
     public class CharacterBody : EntityBodyBase {
 
+        // Input
+        public Vector3 MoveDeltaInput { get; set; }
+        public Vector3 LookVectorInput { get; set; }
+
         // Awake
         public void Awake() {
         }

@@ -60,6 +60,9 @@ namespace Project.UI {
             }
             Widget!.Update();
         }
+        public void LateUpdate() {
+            Widget!.LateUpdate();
+        }
 
         // AttachWidget
         protected override void __AttachWidget__(UIWidgetBase widget, object? argument) {

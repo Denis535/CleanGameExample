@@ -67,10 +67,33 @@ namespace Project.UI.GameScreen {
                 this.AttachChild( new GameMenuWidget() );
             }
             if (Application.Game != null && Application.Game.Player.Character != null) {
-                Application.Game.Camera.Target = Application.Game.Player.Character.transform;
                 if (Application.Game.IsPlaying) {
-                    Application.Game.Camera.RotationDeltaInput = Actions.Game.Look.ReadValue<Vector2>();
+                    Application.Game.Player.Character.MoveInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => new Vector3( i.x, 0, i.y ) );
+                    Application.Game.Player.Character.LookInput = Application.Game.Camera.transform.forward;
+                    Application.Game.Player.Character.FireInput = Actions.Game.Fire.IsPressed();
+                    Application.Game.Player.Character.AimInput = Actions.Game.Aim.IsPressed();
+                    Application.Game.Player.Character.JumpInput = Actions.Game.Jump.IsPressed();
+                    Application.Game.Player.Character.CrouchInput = Actions.Game.Crouch.IsPressed();
+                    Application.Game.Player.Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
+                } else {
+                    Application.Game.Player.Character.MoveInput = default;
+                    Application.Game.Player.Character.LookInput = Application.Game.Camera.transform.forward;
+                    Application.Game.Player.Character.FireInput = false;
+                    Application.Game.Player.Character.AimInput = false;
+                    Application.Game.Player.Character.JumpInput = false;
+                    Application.Game.Player.Character.CrouchInput = false;
+                    Application.Game.Player.Character.InteractInput = false;
+                }
+            }
+            if (Application.Game != null) {
+                if (Application.Game.IsPlaying) {
+                    Application.Game.Camera.Target = Application.Game.Player.Character?.transform;
+                    Application.Game.Camera.RotationDeltaInput = Actions.Game.Rotate.ReadValue<Vector2>();
                     Application.Game.Camera.DistanceDeltaInput = Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
+                } else {
+                    Application.Game.Camera.Target = Application.Game.Player.Character?.transform;
+                    Application.Game.Camera.RotationDeltaInput = default;
+                    Application.Game.Camera.DistanceDeltaInput = default;
                 }
             }
         }

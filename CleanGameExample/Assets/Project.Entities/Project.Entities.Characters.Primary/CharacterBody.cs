@@ -9,8 +9,10 @@ namespace Project.Entities.Characters.Primary {
     public class CharacterBody : EntityBodyBase {
 
         // Input
-        public Vector3 MoveDeltaInput { get; set; }
-        public Vector3 LookVectorInput { get; set; }
+        public Vector3 MoveInput { get; set; }
+        public Vector3 LookInput { get; set; }
+        public bool JumpInput { get; set; }
+        public bool CrouchInput { get; set; }
 
         // Awake
         public void Awake() {

@@ -67,14 +67,14 @@ namespace Project.UI.GameScreen {
                 this.AttachChild( new GameMenuWidget() );
             }
             if (Application.Game != null && Application.Game.IsPlaying) {
-                Application.Game.Camera.Target = Vector3.up;
+                Application.Game.Camera.Target = Vector3.up * 2;
                 Application.Game.Camera.InputRotationDelta += Actions.Game.Look.ReadValue<Vector2>();
                 Application.Game.Camera.InputDistanceDelta += Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
             }
         }
 
         // Helpers
-        private static GameWidgetView CreateView(GameWidget widgety) {
+        private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
             return view;
         }

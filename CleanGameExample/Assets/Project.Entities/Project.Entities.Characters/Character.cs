@@ -23,9 +23,9 @@ namespace Project.Entities.Characters {
         }
 
         // Start
-        void Start() {
+        public void Start() {
         }
-        void Update() {
+        public void Update() {
         }
 
     }

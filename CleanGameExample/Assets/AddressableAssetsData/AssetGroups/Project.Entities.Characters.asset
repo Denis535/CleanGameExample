@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 1a980615ffa9d2d4fbfbd612e05aa25b
   m_SerializeEntries:
   - m_GUID: 9e9d12ae88141e643a8cf42f2cd68c52
-    m_Address: Project.Entities.Characters
+    m_Address: Project.Entities.Characters.Primary
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

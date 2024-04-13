@@ -69,12 +69,14 @@ namespace Project.UI.GameScreen {
             if (Application.Game != null && Application.Game.Player.Character != null) {
                 Application.Game.Camera.Target = Application.Game.Player.Character.transform;
                 if (Application.Game.IsPlaying) {
-                    Application.Game.Camera.RotationDeltaInput += Actions.Game.Look.ReadValue<Vector2>();
-                    Application.Game.Camera.DistanceDeltaInput += Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
+                    Application.Game.Camera.RotationDeltaInput = Actions.Game.Look.ReadValue<Vector2>();
+                    Application.Game.Camera.DistanceDeltaInput = Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
                 }
             }
         }
         public void LateUpdate() {
+        }
+        public void FixedUpdate() {
         }
 
         // Helpers

@@ -5,6 +5,7 @@ namespace Project.Entities.Worlds {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
+    using Object = UnityEngine.Object;
 
     public class World : WorldBase {
 
@@ -17,9 +18,9 @@ namespace Project.Entities.Worlds {
 
         // Awake
         public void Awake() {
-            PlayerSpawnPoints = gameObject.RequireComponentsInChildren<PlayerSpawnPoint>();
-            EnemySpawnPoints = gameObject.GetComponentsInChildren<EnemySpawnPoint>();
-            LootSpawnPoints = gameObject.GetComponentsInChildren<LootSpawnPoint>();
+            PlayerSpawnPoints = Object2.RequireObjectsByType<PlayerSpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+            EnemySpawnPoints = Object.FindObjectsByType<EnemySpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+            LootSpawnPoints = Object.FindObjectsByType<LootSpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
         }
         public void OnDestroy() {
         }

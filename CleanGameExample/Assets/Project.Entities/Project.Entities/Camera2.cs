@@ -34,8 +34,6 @@ namespace Project.Entities {
         public void LateUpdate() {
             Rotation = GetRotation( Rotation, RotationDeltaInput );
             Distance = GetDistance( Distance, DistanceDeltaInput );
-            RotationDeltaInput = Vector2.zero;
-            DistanceDeltaInput = 0;
             if (Target != null) {
                 Apply( transform, Target.position, Rotation, Distance );
             } else {

@@ -104,6 +104,8 @@ namespace Project.UI.MainScreen {
         }
         public void LateUpdate() {
         }
+        public void FixedUpdate() {
+        }
 
         // Helpers
         private static MainWidgetView CreateView(MainWidget widget) {

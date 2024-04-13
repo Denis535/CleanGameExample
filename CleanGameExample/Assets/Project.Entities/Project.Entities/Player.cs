@@ -5,6 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Project.Entities.Characters;
+    using Project.Entities.Characters.Primary;
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
@@ -49,10 +50,10 @@ namespace Project.Entities {
         // Heleprs
         private static string GetCharacterAddress(CharacterEnum character) {
             switch (character) {
-                case Project.Entities.CharacterEnum.Gray: return R.Project.Entities.Characters.Character_Gray_Value;
-                case Project.Entities.CharacterEnum.Red: return R.Project.Entities.Characters.Character_Red_Value;
-                case Project.Entities.CharacterEnum.Green: return R.Project.Entities.Characters.Character_Green_Value;
-                case Project.Entities.CharacterEnum.Blue: return R.Project.Entities.Characters.Character_Blue_Value;
+                case CharacterEnum.Gray: return R.Project.Entities.Characters.Primary.Character_Gray_Value;
+                case CharacterEnum.Red: return R.Project.Entities.Characters.Primary.Character_Red_Value;
+                case CharacterEnum.Green: return R.Project.Entities.Characters.Primary.Character_Green_Value;
+                case CharacterEnum.Blue: return R.Project.Entities.Characters.Primary.Character_Blue_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }

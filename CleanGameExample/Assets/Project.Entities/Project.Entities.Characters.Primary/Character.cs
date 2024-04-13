@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities.Characters.Primary {
     using System;
     using System.Collections;
     using System.Collections.Generic;

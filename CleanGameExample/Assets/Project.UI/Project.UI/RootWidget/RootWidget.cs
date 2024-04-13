@@ -99,6 +99,12 @@ namespace Project.UI {
                 (child as GameWidget)?.LateUpdate();
             }
         }
+        public void FixedUpdate() {
+            foreach (var child in Children) {
+                (child as MainWidget)?.FixedUpdate();
+                (child as GameWidget)?.FixedUpdate();
+            }
+        }
 
     }
 }

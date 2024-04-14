@@ -4,6 +4,8 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using Project.App;
+    using Project.Entities;
+    using Project.Entities.Characters.Primary;
     using UnityEngine;
     using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
@@ -13,6 +15,9 @@ namespace Project.UI.GameScreen {
 
         // Deps
         private Application2 Application { get; }
+        private Game Game => Application.Game!;
+        private Camera2 Camera => Application.Game!.Camera;
+        private Character? Character => Application.Game?.Player.Character;
         // Actions
         private InputActions Actions { get; }
 
@@ -62,50 +67,65 @@ namespace Project.UI.GameScreen {
         }
 
         // Update
+        public void FixedUpdate() {
+        }
         public void Update() {
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );
             }
-            if (Application.Game != null && Application.Game.Player.Character != null) {
-                if (Application.Game.IsPlaying) {
-                    Application.Game.Player.Character.MoveInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => new Vector3( i.x, 0, i.y ) );
-                    Application.Game.Player.Character.LookInput = Application.Game.Camera.transform.forward;
-                    Application.Game.Player.Character.FireInput = Actions.Game.Fire.IsPressed();
-                    Application.Game.Player.Character.AimInput = Actions.Game.Aim.IsPressed();
-                    Application.Game.Player.Character.JumpInput = Actions.Game.Jump.IsPressed();
-                    Application.Game.Player.Character.CrouchInput = Actions.Game.Crouch.IsPressed();
-                    Application.Game.Player.Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
-                } else {
-                    Application.Game.Player.Character.MoveInput = default;
-                    Application.Game.Player.Character.LookInput = Application.Game.Camera.transform.forward;
-                    Application.Game.Player.Character.FireInput = false;
-                    Application.Game.Player.Character.AimInput = false;
-                    Application.Game.Player.Character.JumpInput = false;
-                    Application.Game.Player.Character.CrouchInput = false;
-                    Application.Game.Player.Character.InteractInput = false;
+            if (Game.IsPlaying) {
+                {
+                    Camera.Target = Character?.transform;
+                    Camera.RotationDeltaInput = Actions.Game.Look.ReadValue<Vector2>();
+                    Camera.DistanceDeltaInput = Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
                 }
-            }
-            if (Application.Game != null) {
-                if (Application.Game.IsPlaying) {
-                    Application.Game.Camera.Target = Application.Game.Player.Character?.transform;
-                    Application.Game.Camera.RotationDeltaInput = Actions.Game.Rotate.ReadValue<Vector2>();
-                    Application.Game.Camera.DistanceDeltaInput = Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
-                } else {
-                    Application.Game.Camera.Target = Application.Game.Player.Character?.transform;
-                    Application.Game.Camera.RotationDeltaInput = default;
-                    Application.Game.Camera.DistanceDeltaInput = default;
+                if (Character != null) {
+                    Character.FireInput = Actions.Game.Fire.IsPressed();
+                    Character.AimInput = Actions.Game.Aim.IsPressed();
+                    Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
+                    if (Actions.Game.Move.IsPressed()) {
+                        Character.LookDirectionInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
+                    }
+                    if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
+                        Character.LookDirectionInput = Camera.transform.forward;
+                    }
+                    Character.MoveDirectionInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
+                    Character.JumpInput = Actions.Game.Jump.IsPressed();
+                    Character.CrouchInput = Actions.Game.Crouch.IsPressed();
+                    Character.AccelerationInput = Actions.Game.Acceleration.IsPressed();
+                }
+            } else {
+                {
+                    Camera.Target = Character?.transform;
+                    Camera.RotationDeltaInput = default;
+                    Camera.DistanceDeltaInput = default;
+                }
+                if (Character != null) {
+                    Character.FireInput = false;
+                    Character.AimInput = false;
+                    Character.InteractInput = false;
+                    Character.LookDirectionInput = default;
+                    Character.MoveDirectionInput = default;
+                    Character.JumpInput = false;
+                    Character.CrouchInput = false;
+                    Character.AccelerationInput = false;
                 }
             }
         }
         public void LateUpdate() {
-        }
-        public void FixedUpdate() {
         }
 
         // Helpers
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
             return view;
+        }
+        // Helpers
+        private static Vector3 GetMoveDirection(Vector2 direction, Transform camera) {
+            var result = new Vector3( direction.x, 0, direction.y );
+            result = camera.TransformDirection( result );
+            result = new Vector3( result.x, 0, result.z );
+            return result.normalized * direction.magnitude;
         }
 
     }

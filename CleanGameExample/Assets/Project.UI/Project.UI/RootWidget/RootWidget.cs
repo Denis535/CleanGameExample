@@ -87,6 +87,12 @@ namespace Project.UI {
         }
 
         // Update
+        public void FixedUpdate() {
+            foreach (var child in Children) {
+                (child as MainWidget)?.FixedUpdate();
+                (child as GameWidget)?.FixedUpdate();
+            }
+        }
         public void Update() {
             foreach (var child in Children) {
                 (child as MainWidget)?.Update();
@@ -97,12 +103,6 @@ namespace Project.UI {
             foreach (var child in Children) {
                 (child as MainWidget)?.LateUpdate();
                 (child as GameWidget)?.LateUpdate();
-            }
-        }
-        public void FixedUpdate() {
-            foreach (var child in Children) {
-                (child as MainWidget)?.FixedUpdate();
-                (child as GameWidget)?.FixedUpdate();
             }
         }
 

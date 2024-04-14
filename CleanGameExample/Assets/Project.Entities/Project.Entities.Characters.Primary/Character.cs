@@ -6,26 +6,51 @@ namespace Project.Entities.Characters.Primary {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    [RequireComponent( typeof( CharacterView ) )]
     [RequireComponent( typeof( CharacterBody ) )]
+    [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
 
         // View
-        private CharacterView View { get; set; } = default!;
         private CharacterBody Body { get; set; } = default!;
+        private CharacterView View { get; set; } = default!;
         // Input
-        public Vector3 MoveInput { get => Body.MoveInput; set => Body.MoveInput = value; }
-        public Vector3 LookInput { get => Body.LookInput; set => Body.LookInput = value; }
-        public bool FireInput { get; set; }
-        public bool AimInput { get; set; }
-        public bool JumpInput { get => Body.JumpInput; set => Body.JumpInput = value; }
-        public bool CrouchInput { get => Body.CrouchInput; set => Body.CrouchInput = value; }
-        public bool InteractInput { get; set; }
+        public bool FireInput {
+            get => View.FireInput;
+            set => View.FireInput = value;
+        }
+        public bool AimInput {
+            get => View.AimInput;
+            set => View.AimInput = value;
+        }
+        public bool InteractInput {
+            get => View.InteractInput;
+            set => View.InteractInput = value;
+        }
+        public Vector3 LookDirectionInput {
+            get => View.LookDirectionInput;
+            set => View.LookDirectionInput = value;
+        }
+        public Vector3 MoveDirectionInput {
+            get => View.MoveDirectionInput;
+            set { Body.MoveDirectionInput = value; View.MoveDirectionInput = value; }
+        }
+        public bool JumpInput {
+            get => View.JumpInput;
+            set { Body.JumpInput = value; View.JumpInput = value; }
+        }
+        public bool CrouchInput {
+            get => View.CrouchInput;
+            set { Body.CrouchInput = value; View.CrouchInput = value; }
+        }
+        public bool AccelerationInput {
+            get => View.AccelerationInput;
+            set { Body.AccelerationInput = value; View.AccelerationInput = value; }
+        }
 
         // Awake
         public void Awake() {
-            View = gameObject.RequireComponent<CharacterView>();
             Body = gameObject.RequireComponent<CharacterBody>();
+            View = gameObject.RequireComponent<CharacterView>();
         }
         public void OnDestroy() {
         }

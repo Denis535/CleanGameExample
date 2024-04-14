@@ -71,6 +71,8 @@ namespace Project.UI.MainScreen {
         }
 
         // Update
+        public void FixedUpdate() {
+        }
         public void Update() {
             var widget = Descendants.FirstOrDefault( i => i.__GetView__()?.__GetVisualElement__().IsAttached() ?? false );
             if (widget is MainMenuWidget mainMenuWidget) {
@@ -103,8 +105,6 @@ namespace Project.UI.MainScreen {
             View.SetEffect( Color.white, default, 0, 1 );
         }
         public void LateUpdate() {
-        }
-        public void FixedUpdate() {
         }
 
         // Helpers

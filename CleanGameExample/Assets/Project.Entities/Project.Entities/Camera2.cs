@@ -7,6 +7,7 @@ namespace Project.Entities {
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
+    [DefaultExecutionOrder( ScriptExecutionOrders.Entity_View + 1 )]
     public class Camera2 : EntityBase {
 
         // Target
@@ -35,9 +36,9 @@ namespace Project.Entities {
             Rotation = GetRotation( Rotation, RotationDeltaInput );
             Distance = GetDistance( Distance, DistanceDeltaInput );
             if (Target != null) {
-                Apply( transform, Target.position, Rotation, Distance );
+                Apply( transform, Target, Rotation, Distance );
             } else {
-                Apply( transform, Vector3.up * 100, Rotation, Distance );
+                Apply( transform, null, Rotation, Distance );
                 Target = null;
             }
         }
@@ -45,7 +46,7 @@ namespace Project.Entities {
         // Helpers
         private static Vector3 GetRotation(Vector3 rotation, Vector2 delta) {
             rotation.x -= delta.y * 0.15f;
-            rotation.x = Math.Clamp( rotation.x, -90, 90 );
+            rotation.x = Math.Clamp( rotation.x, -85, 85 );
             rotation.y += delta.x * 0.15f;
             return rotation;
         }
@@ -53,13 +54,26 @@ namespace Project.Entities {
             distance = Math.Clamp( distance + delta * 0.2f, 2, 4 );
             return distance;
         }
+        private static void Apply(Transform transform, Transform? target, Vector3 rotation, float distance) {
+            if (target != null) {
+                var target2 = target.position + Vector3.up * 1.7f;
+                Apply( transform, target2, rotation, distance );
+            } else {
+                Apply( transform, new Vector3( 0, 1024, 0 ), rotation, distance );
+            }
+        }
         private static void Apply(Transform transform, Vector3 target, Vector3 rotation, float distance) {
+            transform.position = target;
             transform.localEulerAngles = rotation;
-            transform.position = target +
-                (Vector3.up * 1.7f) + (Vector3.up * 0.5f * Mathf.InverseLerp( 2, 4, distance )) +
-                (Vector3.right * 0.3f) + (Vector3.right * 0.5f * Mathf.InverseLerp( 2, 4, distance ));
             transform.Translate( 0, 0, -distance, Space.Self );
         }
+        //private static Vector3 GetTargetOffset(float distance) {
+        //    return
+        //        (Vector3.up * 1.7f) +
+        //        (Vector3.up * 0.5f * Mathf.InverseLerp( 2, 4, distance )) +
+        //        (Vector3.right * 0.3f) +
+        //        (Vector3.right * 0.5f * Mathf.InverseLerp( 2, 4, distance ));
+        //}
 
     }
 }

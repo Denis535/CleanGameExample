@@ -44,6 +44,9 @@ namespace Project.UI {
         // Start
         public void Start() {
         }
+        public void FixedUpdate() {
+            Widget!.FixedUpdate();
+        }
         public void Update() {
             if (IsMainScreen( Router.State )) {
                 if (Widget!.Children.FirstOrDefault() is not MainWidget) {
@@ -62,9 +65,6 @@ namespace Project.UI {
         }
         public void LateUpdate() {
             Widget!.LateUpdate();
-        }
-        public void FixedUpdate() {
-            Widget!.FixedUpdate();
         }
 
         // AttachWidget

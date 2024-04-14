@@ -56,7 +56,7 @@ namespace Project.Entities {
         }
         private static void Apply(Transform transform, Transform? target, Vector3 rotation, float distance) {
             if (target != null) {
-                var target2 = target.position + Vector3.up * 1.7f;
+                var target2 = target.position + Vector3.up * 2f;
                 Apply( transform, target2, rotation, distance );
             } else {
                 Apply( transform, new Vector3( 0, 1024, 0 ), rotation, distance );
@@ -65,15 +65,9 @@ namespace Project.Entities {
         private static void Apply(Transform transform, Vector3 target, Vector3 rotation, float distance) {
             transform.position = target;
             transform.localEulerAngles = rotation;
-            transform.Translate( 0, 0, -distance, Space.Self );
+            transform.Translate( 0.2f + 0.3f * Mathf.InverseLerp( 2, 4, distance ), 0, -distance, Space.Self );
+            transform.Translate( 0, 0.2f * Mathf.InverseLerp( 2, 4, distance ), 0, Space.World );
         }
-        //private static Vector3 GetTargetOffset(float distance) {
-        //    return
-        //        (Vector3.up * 1.7f) +
-        //        (Vector3.up * 0.5f * Mathf.InverseLerp( 2, 4, distance )) +
-        //        (Vector3.right * 0.3f) +
-        //        (Vector3.right * 0.5f * Mathf.InverseLerp( 2, 4, distance ));
-        //}
 
     }
 }

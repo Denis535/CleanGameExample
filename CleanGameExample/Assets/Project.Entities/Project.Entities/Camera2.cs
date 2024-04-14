@@ -7,7 +7,7 @@ namespace Project.Entities {
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
-    [DefaultExecutionOrder( ScriptExecutionOrders.Entity_View + 1 )]
+    [DefaultExecutionOrder( ScriptExecutionOrders.Entity + 1000 )]
     public class Camera2 : EntityBase {
 
         // Target
@@ -18,6 +18,9 @@ namespace Project.Entities {
         // Input
         public Vector2 RotationDeltaInput { get; set; }
         public float DistanceDeltaInput { get; set; }
+        // Hit
+        public Vector3? HitPoint { get; private set; }
+        public GameObject? HitObject { get; private set; }
 
         // Awake
         public void Awake() {
@@ -37,9 +40,10 @@ namespace Project.Entities {
             Distance = GetDistance( Distance, DistanceDeltaInput );
             if (Target != null) {
                 Apply( transform, Target, Rotation, Distance );
+                (HitPoint, HitObject) = Raycast( transform );
             } else {
                 Apply( transform, null, Rotation, Distance );
-                Target = null;
+                (HitPoint, HitObject) = (null, null);
             }
         }
 
@@ -67,6 +71,16 @@ namespace Project.Entities {
             transform.localEulerAngles = rotation;
             transform.Translate( 0.2f + 0.3f * Mathf.InverseLerp( 2, 4, distance ), 0, -distance, Space.Self );
             transform.Translate( 0, 0.2f * Mathf.InverseLerp( 2, 4, distance ), 0, Space.World );
+        }
+        // Helpers
+        private static (Vector3?, GameObject?) Raycast(Transform transform) {
+            var hit = default( RaycastHit );
+            var mask = ~0;
+            if (Physics.Raycast( transform.position, transform.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
+                return (hit.point, hit.transform.gameObject);
+            } else {
+                return (null, null);
+            }
         }
 
     }

@@ -8,11 +8,12 @@ namespace Project.Entities.Characters.Primary {
 
     public class CharacterView : EntityViewBase {
 
+        // Target
+        public Vector3? Target { get; set; }
         // Input
         public bool FireInput { get; set; }
         public bool AimInput { get; set; }
         public bool InteractInput { get; set; }
-        public Vector3 LookDirectionInput { get; set; }
         public Vector3 MoveDirectionInput { get; set; }
         public bool JumpInput { get; set; }
         public bool CrouchInput { get; set; }
@@ -28,8 +29,8 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            if (LookDirectionInput != default) {
-                transform.forward = new Vector3( LookDirectionInput.x, 0, LookDirectionInput.z ).normalized;
+            if (Target.HasValue) {
+                transform.LookAt( new Vector3( Target.Value.x, transform.position.y, Target.Value.z ), Vector3.up );
             }
         }
 

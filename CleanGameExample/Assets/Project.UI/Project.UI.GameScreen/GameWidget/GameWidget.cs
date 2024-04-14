@@ -80,15 +80,15 @@ namespace Project.UI.GameScreen {
                     Camera.DistanceDeltaInput = Actions.Game.ScrollWheel.ReadValue<Vector2>().y;
                 }
                 if (Character != null) {
+                    if (Actions.Game.Move.IsPressed()) {
+                        Character.Target = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) ) * 1024 + Vector3.up * 1.8f;
+                    }
+                    if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
+                        Character.Target = Camera.HitPoint ?? Character.transform.TransformPoint( Vector3.forward * 1024 + Vector3.up * 1.8f );
+                    }
                     Character.FireInput = Actions.Game.Fire.IsPressed();
                     Character.AimInput = Actions.Game.Aim.IsPressed();
                     Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
-                    if (Actions.Game.Move.IsPressed()) {
-                        Character.LookDirectionInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
-                    }
-                    if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                        Character.LookDirectionInput = Camera.transform.forward;
-                    }
                     Character.MoveDirectionInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
                     Character.JumpInput = Actions.Game.Jump.IsPressed();
                     Character.CrouchInput = Actions.Game.Crouch.IsPressed();
@@ -101,10 +101,10 @@ namespace Project.UI.GameScreen {
                     Camera.DistanceDeltaInput = default;
                 }
                 if (Character != null) {
+                    Character.Target = default;
                     Character.FireInput = false;
                     Character.AimInput = false;
                     Character.InteractInput = false;
-                    Character.LookDirectionInput = default;
                     Character.MoveDirectionInput = default;
                     Character.JumpInput = false;
                     Character.CrouchInput = false;

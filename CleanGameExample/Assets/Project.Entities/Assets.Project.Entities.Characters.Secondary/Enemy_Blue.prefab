@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1851250560492189391}
   - component: {fileID: 7839155877423681900}
   - component: {fileID: 4241105559141867987}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6952417827834183038}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

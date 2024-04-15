@@ -84,12 +84,7 @@ namespace Project.UI.GameScreen {
             }
             if (Character != null) {
                 if (Game.IsPlaying) {
-                    //if (Actions.Game.Move.IsPressed()) {
-                    //    Character.Target = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) ) * 1024 + Vector3.up * 1.8f;
-                    //}
-                    //if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                    //    Character.Target = Camera.HitPoint ?? Character.transform.TransformPoint( Vector3.forward * 1024 + Vector3.up * 1.8f );
-                    //}
+                    Character.Camera = Camera.transform;
                     Character.FireInput = Actions.Game.Fire.IsPressed();
                     Character.AimInput = Actions.Game.Aim.IsPressed();
                     Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
@@ -98,7 +93,7 @@ namespace Project.UI.GameScreen {
                     Character.CrouchInput = Actions.Game.Crouch.IsPressed();
                     Character.AccelerationInput = Actions.Game.Acceleration.IsPressed();
                 } else {
-                    //Character.Target = default;
+                    Character.Camera = Camera.transform;
                     Character.FireInput = false;
                     Character.AimInput = false;
                     Character.InteractInput = false;

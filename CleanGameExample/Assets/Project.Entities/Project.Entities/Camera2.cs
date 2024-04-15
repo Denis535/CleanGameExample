@@ -18,9 +18,6 @@ namespace Project.Entities {
         // Input
         public Vector2 AnglesDeltaInput { get; set; }
         public float DistanceDeltaInput { get; set; }
-        // Hit
-        //public Vector3? HitPoint { get; private set; }
-        //public GameObject? HitObject { get; private set; }
 
         // Awake
         public void Awake() {
@@ -40,10 +37,8 @@ namespace Project.Entities {
             Distance = GetDistance( Distance, DistanceDeltaInput );
             if (Target != null) {
                 Apply( transform, Target, Angles, Distance );
-                //(HitPoint, HitObject) = Raycast( transform );
             } else {
                 Apply( transform, null, Angles, Distance );
-                //(HitPoint, HitObject) = (null, null);
             }
         }
 
@@ -63,7 +58,8 @@ namespace Project.Entities {
                 var target2 = target.position + Vector3.up * 2f;
                 Apply( transform, target2, angles, distance );
             } else {
-                Apply( transform, new Vector3( 0, 1024, 0 ), angles, distance );
+                var target2 = new Vector3( 0, 1024, 0 );
+                Apply( transform, target2, angles, distance );
             }
         }
         private static void Apply(Transform transform, Vector3 target, Vector2 angles, float distance) {
@@ -72,16 +68,6 @@ namespace Project.Entities {
             transform.Translate( 0.2f + 0.3f * Mathf.InverseLerp( 2, 4, distance ), 0, -distance, Space.Self );
             transform.Translate( 0, 0.2f * Mathf.InverseLerp( 2, 4, distance ), 0, Space.World );
         }
-        // Helpers
-        //private static (Vector3?, GameObject?) Raycast(Transform transform) {
-        //    var hit = default( RaycastHit );
-        //    var mask = ~0;
-        //    if (Physics.Raycast( transform.position, transform.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
-        //        return (hit.point, hit.transform.gameObject);
-        //    } else {
-        //        return (null, null);
-        //    }
-        //}
 
     }
 }

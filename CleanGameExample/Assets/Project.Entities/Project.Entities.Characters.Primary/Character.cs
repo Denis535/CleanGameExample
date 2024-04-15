@@ -13,52 +13,16 @@ namespace Project.Entities.Characters.Primary {
         // View
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
-        // Target
-        //public Vector3? Target {
-        //    get => View.Target;
-        //    set => View.Target = value;
-        //}
+        // Camera
+        public Transform? Camera { get; set; }
         // Input
-        public bool FireInput {
-            get => View.FireInput;
-            set => View.FireInput = value;
-        }
-        public bool AimInput {
-            get => View.AimInput;
-            set => View.AimInput = value;
-        }
-        public bool InteractInput {
-            get => View.InteractInput;
-            set => View.InteractInput = value;
-        }
-        public Vector3 MoveDirectionInput {
-            get => View.MoveDirectionInput;
-            set {
-                Body.MoveDirectionInput = value;
-                View.MoveDirectionInput = value;
-            }
-        }
-        public bool JumpInput {
-            get => View.JumpInput;
-            set {
-                Body.JumpInput = value;
-                View.JumpInput = value;
-            }
-        }
-        public bool CrouchInput {
-            get => View.CrouchInput;
-            set {
-                Body.CrouchInput = value;
-                View.CrouchInput = value;
-            }
-        }
-        public bool AccelerationInput {
-            get => View.AccelerationInput;
-            set {
-                Body.AccelerationInput = value;
-                View.AccelerationInput = value;
-            }
-        }
+        public bool FireInput { get; set; }
+        public bool AimInput { get; set; }
+        public bool InteractInput { get; set; }
+        public Vector3 MoveDirectionInput { get; set; }
+        public bool JumpInput { get; set; }
+        public bool CrouchInput { get; set; }
+        public bool AccelerationInput { get; set; }
 
         // Awake
         public void Awake() {
@@ -72,6 +36,16 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
+            if (MoveDirectionInput != default) {
+                View.Target = transform.position + MoveDirectionInput * 1024;
+            }
+            View.FireInput = FireInput;
+            View.AimInput = AimInput;
+            View.InteractInput = InteractInput;
+            View.MoveDirectionInput = Body.MoveDirectionInput = MoveDirectionInput;
+            View.JumpInput = Body.JumpInput = JumpInput;
+            View.CrouchInput = Body.CrouchInput = CrouchInput;
+            View.AccelerationInput = Body.AccelerationInput = AccelerationInput;
         }
 
         // OnDrawGizmos

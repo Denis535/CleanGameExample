@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 6952417827834183038}
   m_Layer: 10
   m_Name: Enemy_Red
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

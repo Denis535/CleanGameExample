@@ -14,10 +14,10 @@ namespace Project.Entities.Characters.Primary {
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
         // Target
-        public Vector3? Target {
-            get => View.Target;
-            set => View.Target = value;
-        }
+        //public Vector3? Target {
+        //    get => View.Target;
+        //    set => View.Target = value;
+        //}
         // Input
         public bool FireInput {
             get => View.FireInput;
@@ -76,10 +76,10 @@ namespace Project.Entities.Characters.Primary {
 
         // OnDrawGizmos
         public void OnDrawGizmos() {
-            if (Target != null) {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere( Target.Value, 0.1f );
-            }
+            //if (Target != null) {
+            //    Gizmos.color = Color.red;
+            //    Gizmos.DrawSphere( Target.Value, 0.1f );
+            //}
         }
 
     }

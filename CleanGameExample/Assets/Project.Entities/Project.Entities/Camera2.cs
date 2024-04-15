@@ -13,14 +13,14 @@ namespace Project.Entities {
         // Target
         public Transform? Target { get; set; }
         // Transform
-        public Vector3 Rotation { get; private set; } = new Vector3( 30, 0, 0 );
+        public Vector2 Angles { get; private set; } = new Vector2( 0, 30 );
         public float Distance { get; private set; } = 2.5f;
         // Input
-        public Vector2 RotationDeltaInput { get; set; }
+        public Vector2 AnglesDeltaInput { get; set; }
         public float DistanceDeltaInput { get; set; }
         // Hit
-        public Vector3? HitPoint { get; private set; }
-        public GameObject? HitObject { get; private set; }
+        //public Vector3? HitPoint { get; private set; }
+        //public GameObject? HitObject { get; private set; }
 
         // Awake
         public void Awake() {
@@ -36,52 +36,52 @@ namespace Project.Entities {
         public void Update() {
         }
         public void LateUpdate() {
-            Rotation = GetRotation( Rotation, RotationDeltaInput );
+            Angles = GetAngles( Angles, AnglesDeltaInput );
             Distance = GetDistance( Distance, DistanceDeltaInput );
             if (Target != null) {
-                Apply( transform, Target, Rotation, Distance );
-                (HitPoint, HitObject) = Raycast( transform );
+                Apply( transform, Target, Angles, Distance );
+                //(HitPoint, HitObject) = Raycast( transform );
             } else {
-                Apply( transform, null, Rotation, Distance );
-                (HitPoint, HitObject) = (null, null);
+                Apply( transform, null, Angles, Distance );
+                //(HitPoint, HitObject) = (null, null);
             }
         }
 
         // Helpers
-        private static Vector3 GetRotation(Vector3 rotation, Vector2 delta) {
-            rotation.x -= delta.y * 0.15f;
-            rotation.x = Math.Clamp( rotation.x, -85, 85 );
-            rotation.y += delta.x * 0.15f;
-            return rotation;
+        private static Vector2 GetAngles(Vector2 angles, Vector2 delta) {
+            angles.x += delta.x * 0.15f;
+            angles.y -= delta.y * 0.15f;
+            angles.y = Math.Clamp( angles.y, -89, 89 );
+            return angles;
         }
         private static float GetDistance(float distance, float delta) {
             distance = Math.Clamp( distance + delta * 0.2f, 2, 4 );
             return distance;
         }
-        private static void Apply(Transform transform, Transform? target, Vector3 rotation, float distance) {
+        private static void Apply(Transform transform, Transform? target, Vector2 angles, float distance) {
             if (target != null) {
                 var target2 = target.position + Vector3.up * 2f;
-                Apply( transform, target2, rotation, distance );
+                Apply( transform, target2, angles, distance );
             } else {
-                Apply( transform, new Vector3( 0, 1024, 0 ), rotation, distance );
+                Apply( transform, new Vector3( 0, 1024, 0 ), angles, distance );
             }
         }
-        private static void Apply(Transform transform, Vector3 target, Vector3 rotation, float distance) {
+        private static void Apply(Transform transform, Vector3 target, Vector2 angles, float distance) {
             transform.position = target;
-            transform.localEulerAngles = rotation;
+            transform.localEulerAngles = new Vector3( angles.y, angles.x, 0 );
             transform.Translate( 0.2f + 0.3f * Mathf.InverseLerp( 2, 4, distance ), 0, -distance, Space.Self );
             transform.Translate( 0, 0.2f * Mathf.InverseLerp( 2, 4, distance ), 0, Space.World );
         }
         // Helpers
-        private static (Vector3?, GameObject?) Raycast(Transform transform) {
-            var hit = default( RaycastHit );
-            var mask = ~0;
-            if (Physics.Raycast( transform.position, transform.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
-                return (hit.point, hit.transform.gameObject);
-            } else {
-                return (null, null);
-            }
-        }
+        //private static (Vector3?, GameObject?) Raycast(Transform transform) {
+        //    var hit = default( RaycastHit );
+        //    var mask = ~0;
+        //    if (Physics.Raycast( transform.position, transform.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
+        //        return (hit.point, hit.transform.gameObject);
+        //    } else {
+        //        return (null, null);
+        //    }
+        //}
 
     }
 }

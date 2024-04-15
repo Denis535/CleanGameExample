@@ -46,7 +46,7 @@ namespace Project.UI.GameScreen {
         public override void OnBeforeDescendantAttach(UIWidgetBase descendant) {
             base.OnBeforeDescendantAttach( descendant );
             if (descendant is GameMenuWidget) {
-                Application.Game!.IsPlaying = false;
+                Game.IsPlaying = false;
                 Actions.Disable();
                 Cursor.lockState = CursorLockMode.None;
             }
@@ -59,7 +59,7 @@ namespace Project.UI.GameScreen {
         }
         public override void OnAfterDescendantDetach(UIWidgetBase descendant) {
             if (IsAttached && descendant is GameMenuWidget) {
-                Application.Game!.IsPlaying = true;
+                Game.IsPlaying = true;
                 Actions.Enable();
                 Cursor.lockState = CursorLockMode.Locked;
             }
@@ -88,7 +88,7 @@ namespace Project.UI.GameScreen {
                     Character.FireInput = Actions.Game.Fire.IsPressed();
                     Character.AimInput = Actions.Game.Aim.IsPressed();
                     Character.InteractInput = Actions.Game.Interact.WasPressedThisFrame();
-                    Character.MoveDirectionInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
+                    Character.MoveInput = Actions.Game.Move.ReadValue<Vector2>().Convert( i => GetMoveDirection( i, Camera.transform ) );
                     Character.JumpInput = Actions.Game.Jump.IsPressed();
                     Character.CrouchInput = Actions.Game.Crouch.IsPressed();
                     Character.AccelerationInput = Actions.Game.Acceleration.IsPressed();
@@ -97,7 +97,7 @@ namespace Project.UI.GameScreen {
                     Character.FireInput = false;
                     Character.AimInput = false;
                     Character.InteractInput = false;
-                    Character.MoveDirectionInput = default;
+                    Character.MoveInput = default;
                     Character.JumpInput = false;
                     Character.CrouchInput = false;
                     Character.AccelerationInput = false;

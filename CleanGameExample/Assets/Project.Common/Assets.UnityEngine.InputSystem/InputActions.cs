@@ -606,6 +606,15 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""ScrollWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
@@ -628,15 +637,6 @@ namespace UnityEngine.InputSystem
                     ""type"": ""Button"",
                     ""id"": ""dd2063aa-ef4d-4b21-b6ac-eb1fcde0dc29"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ScrollWheel"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
-                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -813,17 +813,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1c0d89db-72dc-42d7-910e-eed2fe034968"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ScrollWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""39f53890-9205-47a7-92b1-ff717cfc0fde"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
@@ -907,6 +896,17 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c0d89db-72dc-42d7-910e-eed2fe034968"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -993,10 +993,10 @@ namespace UnityEngine.InputSystem
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
+            m_Game_ScrollWheel = m_Game.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Game_Fire = m_Game.FindAction("Fire", throwIfNotFound: true);
             m_Game_Aim = m_Game.FindAction("Aim", throwIfNotFound: true);
             m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
-            m_Game_ScrollWheel = m_Game.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
             m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
             m_Game_Crouch = m_Game.FindAction("Crouch", throwIfNotFound: true);
@@ -1197,10 +1197,10 @@ namespace UnityEngine.InputSystem
         private readonly InputActionMap m_Game;
         private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
         private readonly InputAction m_Game_Look;
+        private readonly InputAction m_Game_ScrollWheel;
         private readonly InputAction m_Game_Fire;
         private readonly InputAction m_Game_Aim;
         private readonly InputAction m_Game_Interact;
-        private readonly InputAction m_Game_ScrollWheel;
         private readonly InputAction m_Game_Move;
         private readonly InputAction m_Game_Jump;
         private readonly InputAction m_Game_Crouch;
@@ -1210,10 +1210,10 @@ namespace UnityEngine.InputSystem
             private @InputActions m_Wrapper;
             public GameActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Look => m_Wrapper.m_Game_Look;
+            public InputAction @ScrollWheel => m_Wrapper.m_Game_ScrollWheel;
             public InputAction @Fire => m_Wrapper.m_Game_Fire;
             public InputAction @Aim => m_Wrapper.m_Game_Aim;
             public InputAction @Interact => m_Wrapper.m_Game_Interact;
-            public InputAction @ScrollWheel => m_Wrapper.m_Game_ScrollWheel;
             public InputAction @Move => m_Wrapper.m_Game_Move;
             public InputAction @Jump => m_Wrapper.m_Game_Jump;
             public InputAction @Crouch => m_Wrapper.m_Game_Crouch;
@@ -1230,6 +1230,9 @@ namespace UnityEngine.InputSystem
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @ScrollWheel.started += instance.OnScrollWheel;
+                @ScrollWheel.performed += instance.OnScrollWheel;
+                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -1239,9 +1242,6 @@ namespace UnityEngine.InputSystem
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @ScrollWheel.started += instance.OnScrollWheel;
-                @ScrollWheel.performed += instance.OnScrollWheel;
-                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
@@ -1261,6 +1261,9 @@ namespace UnityEngine.InputSystem
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
+                @ScrollWheel.started -= instance.OnScrollWheel;
+                @ScrollWheel.performed -= instance.OnScrollWheel;
+                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Fire.started -= instance.OnFire;
                 @Fire.performed -= instance.OnFire;
                 @Fire.canceled -= instance.OnFire;
@@ -1270,9 +1273,6 @@ namespace UnityEngine.InputSystem
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
-                @ScrollWheel.started -= instance.OnScrollWheel;
-                @ScrollWheel.performed -= instance.OnScrollWheel;
-                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
@@ -1365,10 +1365,10 @@ namespace UnityEngine.InputSystem
         public interface IGameActions
         {
             void OnLook(InputAction.CallbackContext context);
+            void OnScrollWheel(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnAim(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
-            void OnScrollWheel(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);

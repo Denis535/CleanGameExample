@@ -19,7 +19,8 @@ namespace Project.Entities.Characters.Primary {
         public bool FireInput { get; set; }
         public bool AimInput { get; set; }
         public bool InteractInput { get; set; }
-        public Vector3 MoveDirectionInput { get; set; }
+        // Input
+        public Vector3 MoveInput { get; set; }
         public bool JumpInput { get; set; }
         public bool CrouchInput { get; set; }
         public bool AccelerationInput { get; set; }
@@ -36,20 +37,19 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            View.Target = null;
-            if (MoveDirectionInput != default) {
-                View.Target = transform.position + MoveDirectionInput * 1024 + Vector3.up * 1.75f;
+            Body.TargetInput = null;
+            if (MoveInput != default) {
+                View.TargetInput = Body.TargetInput = transform.position + MoveInput * 1024 + Vector3.up * 1.75f;
             }
             if (FireInput || AimInput || InteractInput) {
                 if (Camera != null) {
-                    var hit = Raycast( Camera );
-                    View.Target = hit.Point;
+                    View.TargetInput = Body.TargetInput = GetTarget( Camera, out _ );
                 }
             }
             View.FireInput = FireInput;
             View.AimInput = AimInput;
             View.InteractInput = InteractInput;
-            View.MoveDirectionInput = Body.MoveDirectionInput = MoveDirectionInput;
+            View.MoveInput = Body.MoveInput = MoveInput;
             View.JumpInput = Body.JumpInput = JumpInput;
             View.CrouchInput = Body.CrouchInput = CrouchInput;
             View.AccelerationInput = Body.AccelerationInput = AccelerationInput;
@@ -64,13 +64,14 @@ namespace Project.Entities.Characters.Primary {
         }
 
         // Helpers
-        private static (Vector3? Point, GameObject? Object) Raycast(Transform camera) {
-            var hit = default( RaycastHit );
+        private static Vector3? GetTarget(Transform camera, out GameObject? @object) {
             var mask = ~0;
-            if (Physics.Raycast( camera.position, camera.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
-                return (hit.point, hit.transform.gameObject);
+            if (Physics.Raycast( camera.position, camera.forward, out var hit, 256, mask, QueryTriggerInteraction.Ignore )) {
+                @object = hit.transform.gameObject;
+                return hit.point;
             } else {
-                return (null, null);
+                @object = null;
+                return camera.TransformPoint( Vector3.forward * 1024 );
             }
         }
 

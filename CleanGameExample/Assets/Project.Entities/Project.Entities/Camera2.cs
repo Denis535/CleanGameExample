@@ -31,8 +31,6 @@ namespace Project.Entities {
         public void Start() {
         }
         public void Update() {
-        }
-        public void LateUpdate() {
             Angles = GetAngles( Angles, AnglesDeltaInput );
             Distance = GetDistance( Distance, DistanceDeltaInput );
             if (Target != null) {

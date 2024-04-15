@@ -36,8 +36,15 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
+            View.Target = null;
             if (MoveDirectionInput != default) {
-                View.Target = transform.position + MoveDirectionInput * 1024;
+                View.Target = transform.position + MoveDirectionInput * 1024 + Vector3.up * 1.75f;
+            }
+            if (FireInput || AimInput || InteractInput) {
+                if (Camera != null) {
+                    var hit = Raycast( Camera );
+                    View.Target = hit.Point;
+                }
             }
             View.FireInput = FireInput;
             View.AimInput = AimInput;
@@ -54,6 +61,17 @@ namespace Project.Entities.Characters.Primary {
             //    Gizmos.color = Color.red;
             //    Gizmos.DrawSphere( Target.Value, 0.1f );
             //}
+        }
+
+        // Helpers
+        private static (Vector3? Point, GameObject? Object) Raycast(Transform camera) {
+            var hit = default( RaycastHit );
+            var mask = ~0;
+            if (Physics.Raycast( camera.position, camera.forward, out hit, 256, mask, QueryTriggerInteraction.Ignore )) {
+                return (hit.point, hit.transform.gameObject);
+            } else {
+                return (null, null);
+            }
         }
 
     }

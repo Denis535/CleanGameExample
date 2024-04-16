@@ -15,13 +15,14 @@ namespace Project.Entities {
         private readonly Lock @lock = new Lock();
 
         // Args
-        private Arguments Args { get; } = Context.Get<Player, Arguments>();
+        private Arguments Args { get; set; } = default!;
         // Character
         private DynamicInstanceHandle<Character> CharacterInstance { get; } = new DynamicInstanceHandle<Character>();
         public Character? Character => CharacterInstance.ValueSafe;
 
         // Awake
         public void Awake() {
+            Args = Context.Get<Player, Arguments>();
         }
         public void OnDestroy() {
             CharacterInstance.ReleaseInstanceSafe();
@@ -40,9 +41,11 @@ namespace Project.Entities {
         }
 
         // Spawn
-        public async Task SpawnAsync(PlayerSpawnPoint point) {
+        public async Task SpawnAsync(PlayerSpawnPoint point, Camera2 camera) {
             using (@lock.Enter()) {
-                await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
+                using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( camera ) )) {
+                    await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
+                }
             }
         }
 

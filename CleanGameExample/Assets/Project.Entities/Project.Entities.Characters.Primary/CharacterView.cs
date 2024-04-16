@@ -8,17 +8,6 @@ namespace Project.Entities.Characters.Primary {
 
     public class CharacterView : EntityViewBase {
 
-        // Input
-        public bool FireInput { get; set; }
-        public bool AimInput { get; set; }
-        public bool InteractInput { get; set; }
-        // Input
-        public Vector3 MoveInput { get; set; }
-        public Vector3? TargetInput { get; set; }
-        public bool JumpInput { get; set; }
-        public bool CrouchInput { get; set; }
-        public bool AccelerationInput { get; set; }
-
         // Awake
         public void Awake() {
         }

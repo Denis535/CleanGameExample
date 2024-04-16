@@ -9,24 +9,27 @@ namespace Project.Entities.Characters.Primary {
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
+        public record Arguments(Camera2 Camera);
 
+        // Args
+        private Arguments Args { get; set; } = default!;
         // View
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
-        // Camera
-        public Transform? Camera { get; set; }
         // Input
-        public bool FireInput { get; set; }
-        public bool AimInput { get; set; }
-        public bool InteractInput { get; set; }
+        public bool IsFirePressed { get; private set; }
+        public bool IsAimPressed { get; private set; }
+        public bool IsInteractPressed { get; private set; }
         // Input
-        public Vector3 MoveInput { get; set; }
-        public bool JumpInput { get; set; }
-        public bool CrouchInput { get; set; }
-        public bool AccelerationInput { get; set; }
+        public Vector3? MoveVector => Body.MoveVector;
+        public Vector3? LookTarget => Body.LookTarget;
+        public bool IsJumpPressed => Body.IsJumpPressed;
+        public bool IsCrouchPressed => Body.IsCrouchPressed;
+        public bool IsAcceleratePressed => Body.IsAcceleratePressed;
 
         // Awake
         public void Awake() {
+            Args = Context.Get<Character, Arguments>();
             Body = gameObject.RequireComponent<CharacterBody>();
             View = gameObject.RequireComponent<CharacterView>();
         }
@@ -37,42 +40,44 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            Body.TargetInput = null;
-            if (MoveInput != default) {
-                View.TargetInput = Body.TargetInput = transform.position + MoveInput * 1024 + Vector3.up * 1.75f;
-            }
-            if (FireInput || AimInput || InteractInput) {
-                if (Camera != null) {
-                    View.TargetInput = Body.TargetInput = GetTarget( Camera, out _ );
-                }
-            }
-            View.FireInput = FireInput;
-            View.AimInput = AimInput;
-            View.InteractInput = InteractInput;
-            View.MoveInput = Body.MoveInput = MoveInput;
-            View.JumpInput = Body.JumpInput = JumpInput;
-            View.CrouchInput = Body.CrouchInput = CrouchInput;
-            View.AccelerationInput = Body.AccelerationInput = AccelerationInput;
+            Args.Camera.SetTarget( transform );
         }
 
-        // OnDrawGizmos
-        public void OnDrawGizmos() {
-            //if (Target != null) {
-            //    Gizmos.color = Color.red;
-            //    Gizmos.DrawSphere( Target.Value, 0.1f );
-            //}
+        // Input
+        public void Fire(bool isPressed, bool thisFrame) {
+            IsFirePressed = isPressed;
+        }
+        public void Aim(bool isPressed, bool thisFrame) {
+            IsAimPressed = isPressed;
+        }
+        public void Interact(bool isPressed, bool thisFrame) {
+            IsInteractPressed = thisFrame;
+        }
+        // Input
+        public void Move(Vector3? vector, bool isPressed, bool thisFrame) {
+            if (vector.HasValue) {
+                Body.Move( GetMoveVector( vector.Value, Args.Camera.transform ) );
+            } else {
+                Body.Move( null );
+            }
+        }
+        public void LookAt(Vector3? target, bool thisFrame) {
+            Body.LookAt( target );
+        }
+        public void Jump(bool isPressed, bool thisFrame) {
+            Body.Jump( isPressed );
+        }
+        public void Crouch(bool isPressed, bool thisFrame) {
+            Body.Crouch( isPressed );
+        }
+        public void Accelerate(bool isPressed, bool thisFrame) {
+            Body.Accelerate( isPressed );
         }
 
         // Helpers
-        private static Vector3? GetTarget(Transform camera, out GameObject? @object) {
-            var mask = ~0;
-            if (Physics.Raycast( camera.position, camera.forward, out var hit, 256, mask, QueryTriggerInteraction.Ignore )) {
-                @object = hit.transform.gameObject;
-                return hit.point;
-            } else {
-                @object = null;
-                return camera.TransformPoint( Vector3.forward * 1024 );
-            }
+        private static Vector3 GetMoveVector(Vector2 vector, Transform camera) {
+            var result = camera.TransformDirection( vector.x, 0, vector.y );
+            return new Vector3( result.x, 0, result.z ).normalized * vector.magnitude;
         }
 
     }

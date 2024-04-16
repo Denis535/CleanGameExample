@@ -15,7 +15,7 @@ namespace Project.Entities {
         private bool isPlaying = true;
 
         // Args
-        private Arguments Args { get; } = Context.Get<Game, Arguments>();
+        private Arguments Args { get; set; } = default!;
         // Deps
         public Camera2 Camera { get; private set; } = default!;
         public World World { get; private set; } = default!;
@@ -31,6 +31,7 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
+            Args = Context.Get<Game, Arguments>();
             Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
             World = this.GetDependencyContainer().RequireDependency<World>( null );
             Player = gameObject.RequireComponent<Player>();
@@ -42,7 +43,7 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                await Player.SpawnAsync( World.PlayerSpawnPoints.First() );
+                await Player.SpawnAsync( World.PlayerSpawnPoints.First(), Camera );
             }
         }
         public void Update() {

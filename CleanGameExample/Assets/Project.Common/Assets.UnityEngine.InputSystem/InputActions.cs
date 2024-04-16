@@ -597,24 +597,6 @@ namespace UnityEngine.InputSystem
             ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
             ""actions"": [
                 {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""e5b0eea5-03e5-4ed2-89b0-916823234287"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ScrollWheel"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
@@ -651,13 +633,31 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""e5b0eea5-03e5-4ed2-89b0-916823234287"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""238aadac-14ef-4f30-8cc6-8846144fa749"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Crouch"",
@@ -669,7 +669,7 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Acceleration"",
+                    ""name"": ""Accelerate"",
                     ""type"": ""Button"",
                     ""id"": ""ad401a29-e425-4202-a82d-c3b83b63e53a"",
                     ""expectedControlType"": ""Button"",
@@ -813,28 +813,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""39f53890-9205-47a7-92b1-ff717cfc0fde"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95111174-d355-416b-af25-e4161c2f4c99"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -884,7 +862,7 @@ namespace UnityEngine.InputSystem
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Acceleration"",
+                    ""action"": ""Accelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -901,12 +879,34 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
+                    ""id"": ""39f53890-9205-47a7-92b1-ff717cfc0fde"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95111174-d355-416b-af25-e4161c2f4c99"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1c0d89db-72dc-42d7-910e-eed2fe034968"",
                     ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ScrollWheel"",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -992,15 +992,15 @@ namespace UnityEngine.InputSystem
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-            m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
-            m_Game_ScrollWheel = m_Game.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Game_Fire = m_Game.FindAction("Fire", throwIfNotFound: true);
             m_Game_Aim = m_Game.FindAction("Aim", throwIfNotFound: true);
             m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
             m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
+            m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
+            m_Game_Zoom = m_Game.FindAction("Zoom", throwIfNotFound: true);
             m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
             m_Game_Crouch = m_Game.FindAction("Crouch", throwIfNotFound: true);
-            m_Game_Acceleration = m_Game.FindAction("Acceleration", throwIfNotFound: true);
+            m_Game_Accelerate = m_Game.FindAction("Accelerate", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1196,28 +1196,28 @@ namespace UnityEngine.InputSystem
         // Game
         private readonly InputActionMap m_Game;
         private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
-        private readonly InputAction m_Game_Look;
-        private readonly InputAction m_Game_ScrollWheel;
         private readonly InputAction m_Game_Fire;
         private readonly InputAction m_Game_Aim;
         private readonly InputAction m_Game_Interact;
         private readonly InputAction m_Game_Move;
+        private readonly InputAction m_Game_Look;
+        private readonly InputAction m_Game_Zoom;
         private readonly InputAction m_Game_Jump;
         private readonly InputAction m_Game_Crouch;
-        private readonly InputAction m_Game_Acceleration;
+        private readonly InputAction m_Game_Accelerate;
         public struct GameActions
         {
             private @InputActions m_Wrapper;
             public GameActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Look => m_Wrapper.m_Game_Look;
-            public InputAction @ScrollWheel => m_Wrapper.m_Game_ScrollWheel;
             public InputAction @Fire => m_Wrapper.m_Game_Fire;
             public InputAction @Aim => m_Wrapper.m_Game_Aim;
             public InputAction @Interact => m_Wrapper.m_Game_Interact;
             public InputAction @Move => m_Wrapper.m_Game_Move;
+            public InputAction @Look => m_Wrapper.m_Game_Look;
+            public InputAction @Zoom => m_Wrapper.m_Game_Zoom;
             public InputAction @Jump => m_Wrapper.m_Game_Jump;
             public InputAction @Crouch => m_Wrapper.m_Game_Crouch;
-            public InputAction @Acceleration => m_Wrapper.m_Game_Acceleration;
+            public InputAction @Accelerate => m_Wrapper.m_Game_Accelerate;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1227,12 +1227,6 @@ namespace UnityEngine.InputSystem
             {
                 if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
-                @ScrollWheel.started += instance.OnScrollWheel;
-                @ScrollWheel.performed += instance.OnScrollWheel;
-                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -1245,25 +1239,25 @@ namespace UnityEngine.InputSystem
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
-                @Acceleration.started += instance.OnAcceleration;
-                @Acceleration.performed += instance.OnAcceleration;
-                @Acceleration.canceled += instance.OnAcceleration;
+                @Accelerate.started += instance.OnAccelerate;
+                @Accelerate.performed += instance.OnAccelerate;
+                @Accelerate.canceled += instance.OnAccelerate;
             }
 
             private void UnregisterCallbacks(IGameActions instance)
             {
-                @Look.started -= instance.OnLook;
-                @Look.performed -= instance.OnLook;
-                @Look.canceled -= instance.OnLook;
-                @ScrollWheel.started -= instance.OnScrollWheel;
-                @ScrollWheel.performed -= instance.OnScrollWheel;
-                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Fire.started -= instance.OnFire;
                 @Fire.performed -= instance.OnFire;
                 @Fire.canceled -= instance.OnFire;
@@ -1276,15 +1270,21 @@ namespace UnityEngine.InputSystem
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @Look.started -= instance.OnLook;
+                @Look.performed -= instance.OnLook;
+                @Look.canceled -= instance.OnLook;
+                @Zoom.started -= instance.OnZoom;
+                @Zoom.performed -= instance.OnZoom;
+                @Zoom.canceled -= instance.OnZoom;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
                 @Crouch.started -= instance.OnCrouch;
                 @Crouch.performed -= instance.OnCrouch;
                 @Crouch.canceled -= instance.OnCrouch;
-                @Acceleration.started -= instance.OnAcceleration;
-                @Acceleration.performed -= instance.OnAcceleration;
-                @Acceleration.canceled -= instance.OnAcceleration;
+                @Accelerate.started -= instance.OnAccelerate;
+                @Accelerate.performed -= instance.OnAccelerate;
+                @Accelerate.canceled -= instance.OnAccelerate;
             }
 
             public void RemoveCallbacks(IGameActions instance)
@@ -1364,15 +1364,15 @@ namespace UnityEngine.InputSystem
         }
         public interface IGameActions
         {
-            void OnLook(InputAction.CallbackContext context);
-            void OnScrollWheel(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnAim(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
+            void OnZoom(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
-            void OnAcceleration(InputAction.CallbackContext context);
+            void OnAccelerate(InputAction.CallbackContext context);
         }
     }
 }

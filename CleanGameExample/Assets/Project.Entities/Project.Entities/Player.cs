@@ -30,20 +30,22 @@ namespace Project.Entities {
 
         // Start
         public void Start() {
-            if (@lock.IsLocked) return;
-            using (@lock.Enter()) {
+            if (@lock.CanEnter) {
+                using (@lock.Enter()) {
+                }
             }
         }
         public void Update() {
-            if (@lock.IsLocked) return;
-            using (@lock.Enter()) {
+            if (@lock.CanEnter) {
+                using (@lock.Enter()) {
+                }
             }
         }
 
-        // Spawn
-        public async Task SpawnAsync(PlayerSpawnPoint point, Camera2 camera) {
+        // SpawnAsync
+        public async Task SpawnAsync(PlayerSpawnPoint point) {
             using (@lock.Enter()) {
-                using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( camera ) )) {
+                using (Context.Begin<Character, Character.Arguments>( new Character.Arguments() )) {
                     await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
                 }
             }

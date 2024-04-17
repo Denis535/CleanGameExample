@@ -9,7 +9,7 @@ namespace Project.Entities.Characters.Primary {
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
-        public record Arguments(Camera2 Camera);
+        public record Arguments();
 
         // Args
         private Arguments Args { get; set; } = default!;
@@ -40,7 +40,6 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            Args.Camera.SetTarget( transform );
         }
 
         // Input
@@ -56,7 +55,7 @@ namespace Project.Entities.Characters.Primary {
         // Input
         public void Move(Vector3? vector, bool isPressed, bool thisFrame) {
             if (vector.HasValue) {
-                Body.Move( GetMoveVector( vector.Value, Args.Camera.transform ) );
+                Body.Move( vector.Value );
             } else {
                 Body.Move( null );
             }
@@ -72,12 +71,6 @@ namespace Project.Entities.Characters.Primary {
         }
         public void Accelerate(bool isPressed, bool thisFrame) {
             Body.Accelerate( isPressed );
-        }
-
-        // Helpers
-        private static Vector3 GetMoveVector(Vector2 vector, Transform camera) {
-            var result = camera.TransformDirection( vector.x, 0, vector.y );
-            return new Vector3( result.x, 0, result.z ).normalized * vector.magnitude;
         }
 
     }

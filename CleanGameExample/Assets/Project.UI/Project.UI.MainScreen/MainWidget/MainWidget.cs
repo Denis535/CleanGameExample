@@ -71,8 +71,6 @@ namespace Project.UI.MainScreen {
         }
 
         // Update
-        public void FixedUpdate() {
-        }
         public void Update() {
             var widget = Descendants.FirstOrDefault( i => i.__GetView__()?.__GetVisualElement__().IsAttached() ?? false );
             if (widget is MainMenuWidget mainMenuWidget) {

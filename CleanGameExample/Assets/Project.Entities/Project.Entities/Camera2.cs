@@ -41,8 +41,8 @@ namespace Project.Entities {
         }
 
         // Input
-        public void SetTarget(Transform target) {
-            Target = GetTarget( target );
+        public void SetTarget(Transform target, Vector3 offset) {
+            Target = target.position + offset;
             Apply( transform, Target, Angles, Distance );
             HitPoint = Raycast( transform, out var hitObejct );
             HitObejct = hitObejct;
@@ -55,9 +55,6 @@ namespace Project.Entities {
         }
 
         // Helpers
-        private static Vector3 GetTarget(Transform target) {
-            return target.position + Vector3.up * 2;
-        }
         private static Vector2 GetAngles(Vector2 angles, Vector2 delta) {
             angles.x += delta.x * 0.15f;
             angles.y -= delta.y * 0.15f;

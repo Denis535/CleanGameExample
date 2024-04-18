@@ -75,11 +75,13 @@ namespace Project.Entities {
                 using (@lock.Enter()) {
                 }
             }
-            {
-                Camera.Rotate( Look.ReadValue<Vector2>() );
-                Camera.Zoom( Zoom.ReadValue<Vector2>().y );
-            }
             if (Character != null) {
+                {
+                    Camera.SetTarget( Character.transform, Vector3.up * 2 );
+                    Camera.Rotate( Look.ReadValue<Vector2>() );
+                    Camera.Zoom( Zoom.ReadValue<Vector2>().y );
+                    Camera.Apply();
+                }
                 {
                     Character.Fire( Fire.IsPressed(), Fire.WasPressedThisFrame() );
                     Character.Aim( Aim.IsPressed(), Aim.WasPressedThisFrame() );
@@ -108,9 +110,6 @@ namespace Project.Entities {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                 }
-            }
-            if (Player.Character != null) {
-                Camera.SetTarget( Player.Character.transform, Vector3.up * 2 );
             }
         }
 

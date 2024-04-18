@@ -43,15 +43,19 @@ namespace Project.Entities {
         // Input
         public void SetTarget(Transform target, Vector3 offset) {
             Target = target.position + offset;
-            Apply( transform, Target, Angles, Distance );
-            HitPoint = Raycast( transform, out var hitObejct );
-            HitObejct = hitObejct;
         }
         public void Rotate(Vector2 delta) {
             Angles = GetAngles( Angles, delta );
         }
         public void Zoom(float delta) {
             Distance = GetDistance( Distance, delta );
+        }
+
+        // Apply
+        public void Apply() {
+            Apply( transform, Target, Angles, Distance );
+            HitPoint = Raycast( transform, out var hitObejct );
+            HitObejct = hitObejct;
         }
 
         // Helpers

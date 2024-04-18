@@ -9,23 +9,18 @@ namespace Project.Entities.Characters.Primary {
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
-        public record Arguments();
+        public interface IContext : CharacterBody.IContext {
+            bool IsFirePressed();
+            bool IsAimPressed();
+            bool IsInteractPressed();
+        }
+        public record Arguments(IContext Context);
 
         // Args
         private Arguments Args { get; set; } = default!;
         // View
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
-        // Input
-        public bool IsFirePressed { get; private set; }
-        public bool IsAimPressed { get; private set; }
-        public bool IsInteractPressed { get; private set; }
-        // Input
-        public Vector3? MoveVector => Body.MoveVector;
-        public Vector3? LookTarget => Body.LookTarget;
-        public bool IsJumpPressed => Body.IsJumpPressed;
-        public bool IsCrouchPressed => Body.IsCrouchPressed;
-        public bool IsAcceleratePressed => Body.IsAcceleratePressed;
 
         // Awake
         public void Awake() {
@@ -40,37 +35,6 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-        }
-
-        // Input
-        public void Fire(bool isPressed, bool thisFrame) {
-            IsFirePressed = isPressed;
-        }
-        public void Aim(bool isPressed, bool thisFrame) {
-            IsAimPressed = isPressed;
-        }
-        public void Interact(bool isPressed, bool thisFrame) {
-            IsInteractPressed = thisFrame;
-        }
-        // Input
-        public void Move(Vector3? vector, bool isPressed, bool thisFrame) {
-            if (vector.HasValue) {
-                Body.Move( vector.Value );
-            } else {
-                Body.Move( null );
-            }
-        }
-        public void LookAt(Vector3? target, bool thisFrame) {
-            Body.LookAt( target );
-        }
-        public void Jump(bool isPressed, bool thisFrame) {
-            Body.Jump( isPressed );
-        }
-        public void Crouch(bool isPressed, bool thisFrame) {
-            Body.Crouch( isPressed );
-        }
-        public void Accelerate(bool isPressed, bool thisFrame) {
-            Body.Accelerate( isPressed );
         }
 
     }

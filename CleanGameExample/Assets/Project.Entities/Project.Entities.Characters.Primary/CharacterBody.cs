@@ -7,18 +7,23 @@ namespace Project.Entities.Characters.Primary {
     using UnityEngine.Framework.Entities;
 
     public class CharacterBody : EntityBodyBase {
+        public interface IContext {
+            Vector3? GetMoveVector(CharacterBody character);
+            Vector3? GetLookTarget(CharacterBody character);
+            bool IsJumpPressed(CharacterBody character, out float duration);
+            bool IsCrouchPressed(CharacterBody character);
+            bool IsAcceleratePressed(CharacterBody character);
+        }
+        public record Arguments(IContext Context);
 
+        // Args
+        private Arguments Args { get; set; } = default!;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
-        // Input
-        public Vector3? MoveVector { get; private set; }
-        public Vector3? LookTarget { get; private set; }
-        public bool IsJumpPressed { get; private set; }
-        public bool IsCrouchPressed { get; private set; }
-        public bool IsAcceleratePressed { get; private set; }
 
         // Awake
         public void Awake() {
+            Args = Context.Get<CharacterBody, Arguments>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         public void OnDestroy() {
@@ -28,29 +33,14 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            if (MoveVector.HasValue) {
-                Rigidbody.MovePosition( GetPosition( Rigidbody.position, MoveVector.Value, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed ) );
+            if (Args.Context.GetMoveVector( this ).HasValue) {
+                var position = GetPosition( Rigidbody.position, Args.Context.GetMoveVector( this )!.Value, Args.Context.IsJumpPressed( this, out _ ), Args.Context.IsCrouchPressed( this ), Args.Context.IsAcceleratePressed( this ) );
+                Rigidbody.MovePosition( position );
             }
-            if (LookTarget.HasValue) {
-                Rigidbody.MoveRotation( GetRotation( Rigidbody.rotation, Rigidbody.position, LookTarget.Value ) );
+            if (Args.Context.GetLookTarget( this ).HasValue) {
+                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, Args.Context.GetLookTarget( this )!.Value );
+                Rigidbody.MoveRotation( rotation );
             }
-        }
-
-        // Input
-        public void Move(Vector3? vector) {
-            MoveVector = vector;
-        }
-        public void LookAt(Vector3? target) {
-            LookTarget = target;
-        }
-        public void Jump(bool isPressed) {
-            IsJumpPressed = isPressed;
-        }
-        public void Crouch(bool isPressed) {
-            IsCrouchPressed = isPressed;
-        }
-        public void Accelerate(bool isPressed) {
-            IsAcceleratePressed = isPressed;
         }
 
         // Helpers

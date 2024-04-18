@@ -43,10 +43,12 @@ namespace Project.Entities {
         }
 
         // SpawnAsync
-        public async Task SpawnAsync(PlayerSpawnPoint point) {
+        public async Task SpawnAsync(PlayerSpawnPoint point, Character.IContext context) {
             using (@lock.Enter()) {
-                using (Context.Begin<Character, Character.Arguments>( new Character.Arguments() )) {
-                    await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
+                using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( context ) )) {
+                    using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( context ) )) {
+                        await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
+                    }
                 }
             }
         }

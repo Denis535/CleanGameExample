@@ -47,6 +47,12 @@ namespace UnityEngine.AddressableAssets {
                     public const string @World_03_Value = "Project.Entities.Worlds/World_03.unity";
                 }
                 public static class @Characters {
+                    public static class @Equipment {
+                        public const string @Gun_Blue_Value = "Project.Entities.Characters.Equipment/Gun_Blue.prefab";
+                        public const string @Gun_Gray_Value = "Project.Entities.Characters.Equipment/Gun_Gray.prefab";
+                        public const string @Gun_Green_Value = "Project.Entities.Characters.Equipment/Gun_Green.prefab";
+                        public const string @Gun_Red_Value = "Project.Entities.Characters.Equipment/Gun_Red.prefab";
+                    }
                     public static class @Primary {
                         public const string @Character_Blue_Value = "Project.Entities.Characters.Primary/Character_Blue.prefab";
                         public const string @Character_Gray_Value = "Project.Entities.Characters.Primary/Character_Gray.prefab";

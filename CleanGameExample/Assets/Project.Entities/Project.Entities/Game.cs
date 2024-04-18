@@ -11,7 +11,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Game : GameBase {
+    public class Game : GameBase, Character.IContext {
         public record Arguments(LevelEnum Level);
         private readonly Lock @lock = new Lock();
         private bool isPlaying = true;
@@ -38,15 +38,6 @@ namespace Project.Entities {
         }
         // Actions
         private InputActions Actions { get; set; } = default!;
-        private InputAction Fire => Actions.Game.Fire;
-        private InputAction Aim => Actions.Game.Aim;
-        private InputAction Interact => Actions.Game.Interact;
-        private InputAction Look => Actions.Game.Look;
-        private InputAction Zoom => Actions.Game.Zoom;
-        private InputAction Move => Actions.Game.Move;
-        private InputAction Jump => Actions.Game.Jump;
-        private InputAction Crouch => Actions.Game.Crouch;
-        private InputAction Accelerate => Actions.Game.Accelerate;
 
         // Awake
         public void Awake() {
@@ -66,7 +57,7 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
-                    await Player.SpawnAsync( World.PlayerSpawnPoints.First() );
+                    await Player.SpawnAsync( World.PlayerSpawnPoints.First(), this );
                 }
             }
         }
@@ -76,34 +67,10 @@ namespace Project.Entities {
                 }
             }
             if (Character != null) {
-                {
-                    Camera.SetTarget( Character.transform, Vector3.up * 2 );
-                    Camera.Rotate( Look.ReadValue<Vector2>() );
-                    Camera.Zoom( Zoom.ReadValue<Vector2>().y );
-                    Camera.Apply();
-                }
-                {
-                    Character.Fire( Fire.IsPressed(), Fire.WasPressedThisFrame() );
-                    Character.Aim( Aim.IsPressed(), Aim.WasPressedThisFrame() );
-                    Character.Interact( Interact.IsPressed(), Interact.WasPressedThisFrame() );
-                }
-                {
-                    Character.Move( Move.ReadValue<Vector2>().Convert( i => GetMoveVector( i, Camera.transform ) ), Move.IsPressed(), Move.WasPressedThisFrame() );
-                    Character.LookAt( null, false );
-                    if (Fire.IsPressed() || Aim.IsPressed() || Interact.IsPressed()) {
-                        if (Character.LookTarget == null) {
-                            Character.LookAt( Camera.HitPoint, Fire.WasPerformedThisFrame() || Aim.WasPerformedThisFrame() || Interact.WasPerformedThisFrame() );
-                        }
-                    }
-                    if (Character.MoveVector != null && Character.MoveVector.Value != default) {
-                        if (Character.LookTarget == null) {
-                            Character.LookAt( Character.transform.position + Character.MoveVector.Value * 128f, Move.WasPressedThisFrame() );
-                        }
-                    }
-                    Character.Jump( Jump.IsPressed(), Jump.WasPressedThisFrame() );
-                    Character.Crouch( Crouch.IsPressed(), Crouch.WasPressedThisFrame() );
-                    Character.Accelerate( Accelerate.IsPressed(), Accelerate.WasPressedThisFrame() );
-                }
+                Camera.SetTarget( Character.transform, Vector3.up * 2 );
+                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.Apply();
             }
         }
         public void LateUpdate() {
@@ -113,10 +80,43 @@ namespace Project.Entities {
             }
         }
 
-        // Heleprs
-        private static Vector3 GetMoveVector(Vector2 vector, Transform camera) {
-            var result = camera.TransformDirection( vector.x, 0, vector.y );
-            return new Vector3( result.x, 0, result.z ).normalized * vector.magnitude;
+        // Character.IContext
+        bool Character.IContext.IsFirePressed() {
+            return Actions.Game.Fire.IsPressed();
+        }
+        bool Character.IContext.IsAimPressed() {
+            return Actions.Game.Aim.IsPressed();
+        }
+        bool Character.IContext.IsInteractPressed() {
+            return Actions.Game.Interact.WasPressedThisFrame();
+        }
+        // CharacterBody.IContext
+        Vector3? CharacterBody.IContext.GetMoveVector(CharacterBody character) {
+            var vector2 = Actions.Game.Move.ReadValue<Vector2>();
+            var vector3 = Camera.transform.TransformDirection( vector2.x, 0, vector2.y );
+            return new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
+        }
+        Vector3? CharacterBody.IContext.GetLookTarget(CharacterBody character) {
+            if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
+                return Camera.HitPoint;
+            }
+            var vector2 = Actions.Game.Move.ReadValue<Vector2>();
+            if (vector2 != default) {
+                var vector3 = Camera.transform.TransformDirection( vector2.x, 0, vector2.y );
+                vector3 = new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
+                return character.transform.position + vector3 * 128f;
+            }
+            return null;
+        }
+        bool CharacterBody.IContext.IsJumpPressed(CharacterBody character, out float duration) {
+            duration = 0;
+            return Actions.Game.Jump.IsPressed();
+        }
+        bool CharacterBody.IContext.IsCrouchPressed(CharacterBody character) {
+            return Actions.Game.Crouch.IsPressed();
+        }
+        bool CharacterBody.IContext.IsAcceleratePressed(CharacterBody character) {
+            return Actions.Game.Accelerate.IsPressed();
         }
 
     }

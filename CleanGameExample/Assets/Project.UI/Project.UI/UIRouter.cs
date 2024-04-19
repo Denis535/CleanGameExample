@@ -113,11 +113,9 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 await UnloadSceneAsync_MainScene();
                 await Task.Delay( 3_000 );
-                using (Context.Begin<Game, Game.Arguments>( new Game.Arguments( level ) )) {
-                    using (Context.Begin<Player, Player.Arguments>( new Player.Arguments( character ) )) {
-                        await LoadSceneAsync_World( level );
-                        await LoadSceneAsync_GameScene();
-                    }
+                using (Context.Begin<Game, Game.Arguments>( new Game.Arguments( level, character ) )) {
+                    await LoadSceneAsync_World( level );
+                    await LoadSceneAsync_GameScene();
                 }
             }
             State = UIRouterState.GameSceneLoaded;

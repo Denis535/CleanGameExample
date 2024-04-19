@@ -12,7 +12,7 @@ namespace Project.Entities {
     using UnityEngine.InputSystem;
 
     public class Game : GameBase, Character.IContext {
-        public record Arguments(LevelEnum Level);
+        public record Arguments(LevelEnum Level, CharacterEnum Character);
         private readonly Lock @lock = new Lock();
         private bool isPlaying = true;
 
@@ -57,7 +57,7 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
-                    await Player.SpawnAsync( World.PlayerSpawnPoints.First(), this );
+                    await Player.SpawnAsync( World.PlayerSpawnPoints.First(), Args.Character, this );
                 }
             }
         }
@@ -125,5 +125,12 @@ namespace Project.Entities {
         Level1,
         Level2,
         Level3
+    }
+    // Character
+    public enum CharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
     }
 }

@@ -11,21 +11,17 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Player : PlayerBase {
-        public record Arguments(CharacterEnum Character);
         private readonly Lock @lock = new Lock();
 
-        // Args
-        private Arguments Args { get; set; } = default!;
         // Character
         private DynamicInstanceHandle<Character> CharacterInstance { get; } = new DynamicInstanceHandle<Character>();
         public Character? Character => CharacterInstance.ValueSafe;
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Player, Arguments>();
         }
         public void OnDestroy() {
-            CharacterInstance.ReleaseInstanceSafe();
+            CharacterInstance.ReleaseSafe();
         }
 
         // Start
@@ -43,11 +39,11 @@ namespace Project.Entities {
         }
 
         // SpawnAsync
-        public async Task SpawnAsync(PlayerSpawnPoint point, Character.IContext context) {
+        public async Task SpawnAsync(PlayerSpawnPoint point, CharacterEnum character, Character.IContext context) {
             using (@lock.Enter()) {
                 using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( context ) )) {
                     using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( context ) )) {
-                        await CharacterInstance.InstantiateAsync( GetCharacterAddress( Args.Character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
+                        await CharacterInstance.InstantiateAsync( GetCharacterAddress( character ), point.transform.position, point.transform.rotation, destroyCancellationToken );
                     }
                 }
             }
@@ -64,12 +60,5 @@ namespace Project.Entities {
             }
         }
 
-    }
-    // Character
-    public enum CharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
 }

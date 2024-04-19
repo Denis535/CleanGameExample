@@ -14,7 +14,7 @@ namespace Project.Entities {
 
     public class Player : PlayerBase, Character.IContext {
         public interface IContext {
-            ValueTask<Character> SpawnCharacterAsync(PlayerSpawnPoint point, Player player, CharacterEnum character, CancellationToken cancellationToken);
+            ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, Player player, CharacterEnum character, CancellationToken cancellationToken);
         }
         public record Arguments(IContext Context);
 
@@ -62,9 +62,18 @@ namespace Project.Entities {
             }
         }
 
+        // SetPlaying
+        public void SetPlaying(bool value) {
+            if (value) {
+                Actions.Enable();
+            } else {
+                Actions.Disable();
+            }
+        }
+
         // SpawnCharacterAsync
         public async ValueTask SpawnCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            Character = await Args.Context.SpawnCharacterAsync( point, this, character, cancellationToken );
+            Character = await Args.Context.SpawnPlayerCharacterAsync( point, this, character, cancellationToken );
         }
 
         // Character.IContext

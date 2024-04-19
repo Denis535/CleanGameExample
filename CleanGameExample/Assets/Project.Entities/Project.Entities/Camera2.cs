@@ -14,7 +14,7 @@ namespace Project.Entities {
         public Vector2 Angles { get; private set; } = new Vector2( 0, 30 );
         public float Distance { get; private set; } = 2.5f;
         // Hit
-        public (Vector3 Point, float Distance, GameObject? Object)? Hit;
+        public (Vector3 Point, float Distance, GameObject? Object)? Hit { get; private set; }
 
         // Awake
         public void Awake() {

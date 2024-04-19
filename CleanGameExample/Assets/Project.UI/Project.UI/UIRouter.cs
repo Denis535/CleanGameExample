@@ -162,23 +162,23 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Program() {
-            await Program.LoadAsync( LoadSceneMode.Single, false, default );
-            await Program.ActivateAsync( default );
+            await Program.LoadAsync( LoadSceneMode.Single, false );
+            await Program.ActivateAsync();
             SceneManager.SetActiveScene( Program.Value );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await MainScene.LoadAsync( LoadSceneMode.Additive, false, default );
-            await MainScene.ActivateAsync( default );
+            await MainScene.LoadAsync( LoadSceneMode.Additive, false );
+            await MainScene.ActivateAsync();
             SceneManager.SetActiveScene( MainScene.Value );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await GameScene.LoadAsync( LoadSceneMode.Additive, false, default );
-            await GameScene.ActivateAsync( default );
+            await GameScene.LoadAsync( LoadSceneMode.Additive, false );
+            await GameScene.ActivateAsync();
             SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(LevelEnum level) {
-            await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false, default );
-            await World.ActivateAsync( default );
+            await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false );
+            await World.ActivateAsync();
             SceneManager.SetActiveScene( World.Value );
         }
         private static string GetWorldAddress(LevelEnum level) {
@@ -191,13 +191,13 @@ namespace Project.UI {
         }
         // Helpers
         private async Task UnloadSceneAsync_MainScene() {
-            await MainScene.UnloadSafeAsync( default );
+            await MainScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_GameScene() {
-            await GameScene.UnloadSafeAsync( default );
+            await GameScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            await World.UnloadSafeAsync( default );
+            await World.UnloadSafeAsync();
         }
 
     }

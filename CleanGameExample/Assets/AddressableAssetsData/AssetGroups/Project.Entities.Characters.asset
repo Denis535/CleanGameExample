@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 634ac7b7c837ca64bbe290fafdd5d427
-    m_Address: Project.Entities.Characters.Equipment
+    m_Address: Project.Entities.Characters.Inventory
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -39,9 +39,9 @@ namespace Project.Entities {
             }
         }
         // Instances
-        private static List<InstanceHandle<Character>> CharacterInstances = new List<InstanceHandle<Character>>();
-        private static List<InstanceHandle<Transform>> EnemyInstances = new List<InstanceHandle<Transform>>();
-        private static List<InstanceHandle<Transform>> LootInstances = new List<InstanceHandle<Transform>>();
+        private List<InstanceHandle<Character>> Characters { get; } = new List<InstanceHandle<Character>>();
+        private List<InstanceHandle<Transform>> Enemies { get; } = new List<InstanceHandle<Transform>>();
+        private List<InstanceHandle<Transform>> Plunders { get; } = new List<InstanceHandle<Transform>>();
         // Actions
         private InputActions Actions { get; set; } = default!;
 
@@ -57,13 +57,13 @@ namespace Project.Entities {
             Actions.Enable();
         }
         public void OnDestroy() {
-            foreach (var instance in CharacterInstances) {
+            foreach (var instance in Characters) {
                 instance.ReleaseSafe();
             }
-            foreach (var instance in EnemyInstances) {
+            foreach (var instance in Enemies) {
                 instance.ReleaseSafe();
             }
-            foreach (var instance in LootInstances) {
+            foreach (var instance in Plunders) {
                 instance.ReleaseSafe();
             }
             Actions.Disable();
@@ -74,7 +74,17 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
-                    await Player.SpawnAsync( World.PlayerSpawnPoints.First(), Args.Character, destroyCancellationToken );
+                    var tasks = new List<Task>();
+                    {
+                        tasks.Add( Player.SpawnAsync( World.PlayerSpawnPoints.First(), Args.Character, destroyCancellationToken ).AsTask() );
+                    }
+                    foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
+                        tasks.Add( SpawnEnemyAsync( enemySpawnPoint, destroyCancellationToken ).AsTask() );
+                    }
+                    foreach (var lootSpawnPoint in World.LootSpawnPoints) {
+                        tasks.Add( SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask() );
+                    }
+                    await Task.WhenAll( tasks );
                 }
             }
         }
@@ -88,6 +98,11 @@ namespace Project.Entities {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
+            } else {
+                Camera.SetTarget( Vector3.up * 1024 );
+                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.Apply();
             }
         }
         public void LateUpdate() {
@@ -98,14 +113,8 @@ namespace Project.Entities {
         }
 
         // Player.IContext
-        async ValueTask<Character> Player.IContext.SpawnCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( this ) )) {
-                using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( this ) )) {
-                    var instance = new InstanceHandle<Character>( GetCharacterAddress( character ) );
-                    CharacterInstances.Add( instance );
-                    return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, transform, cancellationToken );
-                }
-            }
+        ValueTask<Character> Player.IContext.SpawnCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
+            return SpawnCharacterAsync( point, character, cancellationToken );
         }
         // Character.IContext
         bool Character.IContext.IsFirePressed() {
@@ -125,7 +134,7 @@ namespace Project.Entities {
         }
         Vector3? CharacterBody.IContext.GetLookTarget(CharacterBody character) {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                return Camera.HitPoint;
+                return Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
             }
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
             if (vector2 != default) {
@@ -146,13 +155,36 @@ namespace Project.Entities {
             return Actions.Game.Accelerate.IsPressed();
         }
 
+        // SpawnCharacterAsync
+        private async ValueTask<Character> SpawnCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
+            using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( this ) )) {
+                using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( this ) )) {
+                    var instance = new InstanceHandle<Character>( GetCharacterAddress( character ) );
+                    Characters.Add( instance );
+                    return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, transform, cancellationToken );
+                }
+            }
+        }
+        // SpawnEnemyAsync
+        private async ValueTask<Transform> SpawnEnemyAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
+            var instance = new InstanceHandle<Transform>( R.Project.Entities.Characters.Secondary.EnemyCharacter_Gray_Value );
+            Enemies.Add( instance );
+            return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, transform, cancellationToken );
+        }
+        // SpawnLootAsync
+        private async ValueTask<Transform> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
+            var instance = new InstanceHandle<Transform>( R.Project.Entities.Characters.Inventory.Gun_Gray_Value );
+            Plunders.Add( instance );
+            return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, transform, cancellationToken );
+        }
+
         // Heleprs
         private static string GetCharacterAddress(CharacterEnum character) {
             switch (character) {
-                case CharacterEnum.Gray: return R.Project.Entities.Characters.Primary.Character_Gray_Value;
-                case CharacterEnum.Red: return R.Project.Entities.Characters.Primary.Character_Red_Value;
-                case CharacterEnum.Green: return R.Project.Entities.Characters.Primary.Character_Green_Value;
-                case CharacterEnum.Blue: return R.Project.Entities.Characters.Primary.Character_Blue_Value;
+                case CharacterEnum.Gray: return R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value;
+                case CharacterEnum.Red: return R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value;
+                case CharacterEnum.Green: return R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value;
+                case CharacterEnum.Blue: return R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }

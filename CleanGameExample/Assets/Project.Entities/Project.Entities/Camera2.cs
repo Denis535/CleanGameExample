@@ -7,7 +7,6 @@ namespace Project.Entities {
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
-    [DefaultExecutionOrder( ScriptExecutionOrders.Entity )]
     public class Camera2 : EntityBase {
 
         // Transform
@@ -15,8 +14,7 @@ namespace Project.Entities {
         public Vector2 Angles { get; private set; } = new Vector2( 0, 30 );
         public float Distance { get; private set; } = 2.5f;
         // Hit
-        public Vector3? HitPoint { get; private set; }
-        public GameObject? HitObejct { get; private set; }
+        public (Vector3 Point, float Distance, GameObject? Object)? Hit;
 
         // Awake
         public void Awake() {
@@ -34,13 +32,16 @@ namespace Project.Entities {
 
         // OnDrawGizmos
         public void OnDrawGizmos() {
-            if (HitPoint != null) {
+            if (Hit != null) {
                 Gizmos.color = Color.red;
-                Gizmos.DrawSphere( HitPoint.Value, 0.1f );
+                Gizmos.DrawSphere( Hit.Value.Point, 0.1f );
             }
         }
 
         // Input
+        public void SetTarget(Vector3 position) {
+            Target = position;
+        }
         public void SetTarget(Transform target, Vector3 offset) {
             Target = target.position + offset;
         }
@@ -54,8 +55,11 @@ namespace Project.Entities {
         // Apply
         public void Apply() {
             Apply( transform, Target, Angles, Distance );
-            HitPoint = Raycast( transform, out var hitObejct );
-            HitObejct = hitObejct;
+            if (Raycast( transform, out var point, out var distance, out var @object )) {
+                Hit = new( point, distance, @object );
+            } else {
+                Hit = null;
+            }
         }
 
         // Helpers
@@ -76,23 +80,20 @@ namespace Project.Entities {
             transform.Translate( 0, 0.2f * Mathf.InverseLerp( 2, 4, distance ), 0, Space.World );
         }
         // Heleprs
-        private static Vector3? Raycast(Transform camera, out GameObject? @object) {
+        private static bool Raycast(Transform camera, out Vector3 point, out float distance, out GameObject? @object) {
             //var mask = ~0;
             //var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
-            //var hit = hits.FirstOrDefault();
-            //if (hit.collider) {
-            //    @object = hit.transform.gameObject;
-            //    return hit.point;
-            //}
-            //@object = null;
-            //return camera.TransformPoint( Vector3.forward * 128 );
             var mask = ~0;
             if (Physics.Raycast( camera.position, camera.forward, out var hit, 128, mask, QueryTriggerInteraction.Ignore )) {
+                point = hit.point;
+                distance = hit.distance;
                 @object = hit.transform.gameObject;
-                return hit.point;
+                return true;
             } else {
+                point = default;
+                distance = default;
                 @object = null;
-                return camera.TransformPoint( Vector3.forward * 128 );
+                return false;
             }
         }
 

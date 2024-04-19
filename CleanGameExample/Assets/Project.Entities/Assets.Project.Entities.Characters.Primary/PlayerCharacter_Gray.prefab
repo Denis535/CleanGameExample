@@ -95,12 +95,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6596323002675131578}
   - component: {fileID: 6788356895940231838}
-  - component: {fileID: 8811464504389356816}
+  - component: {fileID: 6144706860170176356}
   - component: {fileID: 6518252906731567334}
   - component: {fileID: 3860424786263033731}
   - component: {fileID: -4271825932746404092}
   m_Layer: 10
-  m_Name: Character_Green
+  m_Name: PlayerCharacter_Gray
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!54 &8811464504389356816
+--- !u!54 &6144706860170176356
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -444,7 +444,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9f486fbc1b6ccfa46b37ca60c1a8e9d8, type: 2}
+  - {fileID: 2100000, guid: 6cfd986784247ca489cedf142e5d1446, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

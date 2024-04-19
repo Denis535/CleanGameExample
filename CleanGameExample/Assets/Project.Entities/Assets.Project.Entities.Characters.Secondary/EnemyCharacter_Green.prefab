@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6cfd986784247ca489cedf142e5d1446, type: 2}
+  - {fileID: 2100000, guid: 9f486fbc1b6ccfa46b37ca60c1a8e9d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,10 +94,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6952417827834183038}
-  - component: {fileID: 6459235331469561388}
-  - component: {fileID: 5490147848539035243}
+  - component: {fileID: 664977363089201766}
+  - component: {fileID: -2095355249184656836}
   m_Layer: 10
-  m_Name: Enemy_Gray
+  m_Name: EnemyCharacter_Green
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ Transform:
   - {fileID: 3745277220882024768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6459235331469561388
+--- !u!65 &664977363089201766
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +140,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &5490147848539035243
+--- !u!54 &-2095355249184656836
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

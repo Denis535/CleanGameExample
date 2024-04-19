@@ -70,10 +70,6 @@ namespace Project.UI.GameScreen {
             }
         }
         public void LateUpdate() {
-            var camera = Game.Camera;
-            if (camera.Hit?.Object) {
-                
-            }
         }
 
         // Helpers

@@ -8,13 +8,13 @@ namespace Project.Entities {
     using Project.Entities.Characters.Primary;
     using Project.Entities.Worlds;
     using UnityEngine;
+    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
     public class Player : PlayerBase, Character.IContext {
         public interface IContext {
-            ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, Player player, CharacterEnum character, CancellationToken cancellationToken);
         }
         public record Arguments(IContext Context);
 
@@ -22,27 +22,23 @@ namespace Project.Entities {
         private Arguments Args { get; set; } = default!;
         // Deps
         public Camera2 Camera { get; private set; } = default!;
-        // Character
-        public Character? Character { get; set; }
+        // Instances
+        private List<InstanceHandle<Character>> Instances { get; } = new List<InstanceHandle<Character>>();
         // Actions
         private InputActions Actions { get; set; } = default!;
+        // Character
+        public Character? Character { get; set; }
 
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
             Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
             Actions = new InputActions();
-        }
-        public void OnDestroy() {
-            Actions.Dispose();
-        }
-
-        // OnEnable
-        public void OnEnable() {
             Actions.Enable();
         }
-        public void OnDisable() {
+        public void OnDestroy() {
             Actions.Disable();
+            Actions.Dispose();
         }
 
         // Start
@@ -71,9 +67,9 @@ namespace Project.Entities {
             }
         }
 
-        // SpawnCharacterAsync
-        public async ValueTask SpawnCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            Character = await Args.Context.SpawnPlayerCharacterAsync( point, this, character, cancellationToken );
+        // SpawnAsync
+        public async ValueTask SpawnAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
+            Character = await Instances.SpawnPlayerCharacterAsync( point, character, this, cancellationToken );
         }
 
         // Character.IContext

@@ -30,15 +30,7 @@ namespace Project.Entities {
         public void Update() {
         }
 
-        // OnDrawGizmos
-        public void OnDrawGizmos() {
-            if (Hit != null) {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere( Hit.Value.Point, 0.1f );
-            }
-        }
-
-        // Input
+        // Transform
         public void SetTarget(Vector3 position) {
             Target = position;
         }
@@ -59,6 +51,14 @@ namespace Project.Entities {
                 Hit = new( point, distance, @object );
             } else {
                 Hit = null;
+            }
+        }
+
+        // OnDrawGizmos
+        public void OnDrawGizmos() {
+            if (Hit != null) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere( Hit.Value.Point, 0.1f );
             }
         }
 

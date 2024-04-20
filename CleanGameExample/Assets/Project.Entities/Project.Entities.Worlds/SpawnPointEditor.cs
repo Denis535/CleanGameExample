@@ -9,20 +9,13 @@ namespace Project.Entities.Worlds {
     [CustomEditor( typeof( SpawnPoint ), true )]
     public class SpawnPointEditor : Editor {
 
+        // Target
         public SpawnPoint Target => (SpawnPoint) target;
 
         // Awake
         public void Awake() {
         }
         public void OnDestroy() {
-        }
-
-        // OnEnable
-        public void OnEnable() {
-            //Tools.hidden = true;
-        }
-        public void OnDisable() {
-            //Tools.hidden = false;
         }
 
         // OnInspectorGUI

@@ -13,14 +13,14 @@ namespace Project.Entities {
 
     public class Game : GameBase, Player.IContext {
         public record Arguments(LevelEnum Level, CharacterEnum Character);
+
         private readonly Lock @lock = new Lock();
+        private readonly List<InstanceHandle<Transform>> instances = new List<InstanceHandle<Transform>>();
 
         // Args
         private Arguments Args { get; set; } = default!;
         // Deps
         public World World { get; private set; } = default!;
-        // Instances
-        private List<InstanceHandle<Transform>> Instances { get; } = new List<InstanceHandle<Transform>>();
         // IsPlaying
         public bool IsPlaying { get; private set; }
         // Player
@@ -35,7 +35,7 @@ namespace Project.Entities {
             }
         }
         public void OnDestroy() {
-            foreach (var instance in Instances) {
+            foreach (var instance in instances) {
                 instance.ReleaseSafe();
             }
         }
@@ -49,10 +49,10 @@ namespace Project.Entities {
                         tasks.Add( Player.SpawnAsync( World.PlayerSpawnPoints.First(), Args.Character, destroyCancellationToken ).AsTask() );
                     }
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        tasks.Add( Instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask() );
+                        tasks.Add( instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask() );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        tasks.Add( Instances.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask() );
+                        tasks.Add( instances.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask() );
                     }
                     await Task.WhenAll( tasks );
                 }

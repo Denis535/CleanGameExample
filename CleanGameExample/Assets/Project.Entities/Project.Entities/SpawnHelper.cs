@@ -13,9 +13,9 @@ namespace Project.Entities {
     internal static class SpawnHelper {
 
         // Spawn
-        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this List<InstanceHandle<Character>> instances, PlayerSpawnPoint point, CharacterEnum character, Character.IContext context, CancellationToken cancellationToken) {
-            using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( context ) )) {
-                using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( context ) )) {
+        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this List<InstanceHandle<Character>> instances, PlayerSpawnPoint point, CharacterEnum character, Player player, CancellationToken cancellationToken) {
+            using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( player ) )) {
+                using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( player ) )) {
                     var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
                     instances.Add( instance );
                     return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, cancellationToken );

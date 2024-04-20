@@ -13,21 +13,21 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase, Character.IContext {
+    public class Player : PlayerBase, Character.IContext, CharacterBody.IContext {
         public interface IContext {
         }
         public record Arguments(IContext Context);
+
+        private readonly List<InstanceHandle<Character>> instances = new List<InstanceHandle<Character>>();
 
         // Args
         private Arguments Args { get; set; } = default!;
         // Deps
         public Camera2 Camera { get; private set; } = default!;
-        // Instances
-        private List<InstanceHandle<Character>> Instances { get; } = new List<InstanceHandle<Character>>();
-        // Actions
-        private InputActions Actions { get; set; } = default!;
         // Character
         public Character? Character { get; set; }
+        // Actions
+        private InputActions Actions { get; set; } = default!;
 
         // Awake
         public void Awake() {
@@ -37,6 +37,9 @@ namespace Project.Entities {
             Actions.Enable();
         }
         public void OnDestroy() {
+            foreach (var instance in instances) {
+                instance.ReleaseSafe();
+            }
             Actions.Disable();
             Actions.Dispose();
         }
@@ -69,7 +72,7 @@ namespace Project.Entities {
 
         // SpawnAsync
         public async ValueTask SpawnAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            Character = await Instances.SpawnPlayerCharacterAsync( point, character, this, cancellationToken );
+            Character = await instances.SpawnPlayerCharacterAsync( point, character, this, cancellationToken );
         }
 
         // Character.IContext

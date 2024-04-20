@@ -33,14 +33,21 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void Update() {
-            if (Args.Context.GetMoveVector( this ).HasValue) {
-                var position = GetPosition( Rigidbody.position, Args.Context.GetMoveVector( this )!.Value, Args.Context.IsJumpPressed( this, out _ ), Args.Context.IsCrouchPressed( this ), Args.Context.IsAcceleratePressed( this ) );
+            var moveVector = Args.Context.GetMoveVector( this );
+            var isJumpPressed = Args.Context.IsJumpPressed( this, out _ );
+            var isCrouchPressed = Args.Context.IsCrouchPressed( this );
+            var isAcceleratePressed = Args.Context.IsAcceleratePressed( this );
+            if (moveVector.HasValue) {
+                var position = GetPosition( Rigidbody.position, moveVector.Value, isJumpPressed, isCrouchPressed, isAcceleratePressed );
                 Rigidbody.MovePosition( position );
             }
-            if (Args.Context.GetLookTarget( this ).HasValue) {
-                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, Args.Context.GetLookTarget( this )!.Value );
+
+            var lookTarget = Args.Context.GetLookTarget( this );
+            if (lookTarget.HasValue) {
+                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
                 Rigidbody.MoveRotation( rotation );
             }
+
             Rigidbody.velocity = default;
             Rigidbody.angularVelocity = default;
         }

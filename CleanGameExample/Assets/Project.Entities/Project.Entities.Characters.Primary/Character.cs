@@ -9,7 +9,7 @@ namespace Project.Entities.Characters.Primary {
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
-        public interface IContext : CharacterBody.IContext {
+        public interface IContext {
             bool IsFirePressed();
             bool IsAimPressed();
             bool IsInteractPressed();

@@ -33,7 +33,7 @@ namespace Project.Entities {
             }
         }
         // Instances
-        private List<InstanceHandle<Character>> Characters { get; } = new List<InstanceHandle<Character>>();
+        private List<InstanceHandle<Character>> Players { get; } = new List<InstanceHandle<Character>>();
         private List<InstanceHandle<Transform>> Enemies { get; } = new List<InstanceHandle<Transform>>();
         private List<InstanceHandle<Transform>> Loots { get; } = new List<InstanceHandle<Transform>>();
 
@@ -47,7 +47,7 @@ namespace Project.Entities {
         }
         public void OnDestroy() {
             DestroyImmediate( Player );
-            foreach (var instance in Characters) {
+            foreach (var instance in Players) {
                 instance.ReleaseSafe();
             }
             foreach (var instance in Enemies) {
@@ -93,7 +93,7 @@ namespace Project.Entities {
             using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( player ) )) {
                 using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( player ) )) {
                     var instance = new InstanceHandle<Character>( GetPlayerCharacterAddress( character ) );
-                    Characters.Add( instance );
+                    Players.Add( instance );
                     return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, transform, cancellationToken );
                 }
             }

@@ -41,6 +41,8 @@ namespace Project.Entities.Characters.Primary {
                 var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, Args.Context.GetLookTarget( this )!.Value );
                 Rigidbody.MoveRotation( rotation );
             }
+            Rigidbody.velocity = default;
+            Rigidbody.angularVelocity = default;
         }
 
         // Helpers

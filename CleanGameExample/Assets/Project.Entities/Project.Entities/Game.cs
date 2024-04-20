@@ -30,7 +30,7 @@ namespace Project.Entities {
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
             World = this.GetDependencyContainer().RequireDependency<World>( null );
-            using (Context.Begin<Player, Player.Arguments>( new Player.Arguments( this ) )) {
+            using (Context.Begin<Player, Player.Arguments>( new Player.Arguments( Args.Character, this ) )) {
                 Player = gameObject.AddComponent<Player>();
             }
         }
@@ -46,7 +46,7 @@ namespace Project.Entities {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     {
-                        tasks.Add( Player.SpawnAsync( World.PlayerSpawnPoints.First(), Args.Character, destroyCancellationToken ).AsTask() );
+                        tasks.Add( Player.SpawnAsync( World.PlayerSpawnPoints.First(), destroyCancellationToken ).AsTask() );
                     }
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
                         tasks.Add( instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask() );

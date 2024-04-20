@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading;
     using System.Threading.Tasks;
     using Project.Entities.Characters.Primary;
@@ -16,7 +17,7 @@ namespace Project.Entities {
     public class Player : PlayerBase, Character.IContext, CharacterBody.IContext {
         public interface IContext {
         }
-        public record Arguments(IContext Context);
+        public record Arguments(CharacterEnum Character, IContext Context);
 
         private readonly List<InstanceHandle<Character>> instances = new List<InstanceHandle<Character>>();
 
@@ -28,6 +29,8 @@ namespace Project.Entities {
         public Character? Character { get; set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
+        // Hit
+        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
 
         // Awake
         public void Awake() {
@@ -53,11 +56,25 @@ namespace Project.Entities {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
+                if (Raycast( Camera.transform, out var point, out var distance, out var @object )) {
+                    Hit = new( point, distance, @object );
+                } else {
+                    Hit = null;
+                }
             } else {
                 Camera.SetTarget( Vector3.up * 1024 );
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
+                Hit = null;
+            }
+        }
+
+        // OnDrawGizmos
+        public void OnDrawGizmos() {
+            if (Hit != null) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere( Hit.Value.Point, 0.1f );
             }
         }
 
@@ -71,8 +88,8 @@ namespace Project.Entities {
         }
 
         // SpawnAsync
-        public async ValueTask SpawnAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            Character = await instances.SpawnPlayerCharacterAsync( point, character, this, cancellationToken );
+        public async ValueTask SpawnAsync(PlayerSpawnPoint point, CancellationToken cancellationToken) {
+            Character = await instances.SpawnPlayerCharacterAsync( point, Args.Character, this, cancellationToken );
         }
 
         // Character.IContext
@@ -93,7 +110,7 @@ namespace Project.Entities {
         }
         Vector3? CharacterBody.IContext.GetLookTarget(CharacterBody character) {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                return Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
+                return Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
             }
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
             if (vector2 != default) {
@@ -112,6 +129,24 @@ namespace Project.Entities {
         }
         bool CharacterBody.IContext.IsAcceleratePressed(CharacterBody character) {
             return Actions.Game.Accelerate.IsPressed();
+        }
+
+        // Heleprs
+        private static bool Raycast(Transform transform, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
+            //var mask = ~0;
+            //var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
+            var mask = ~0;
+            if (Physics.Raycast( transform.position, transform.forward, out var hit, 128, mask, QueryTriggerInteraction.Ignore )) {
+                point = hit.point;
+                distance = hit.distance;
+                @object = hit.transform.gameObject;
+                return true;
+            } else {
+                point = default;
+                distance = default;
+                @object = null;
+                return false;
+            }
         }
 
     }

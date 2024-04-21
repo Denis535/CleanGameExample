@@ -11,11 +11,11 @@ namespace Project.Entities {
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
-    public class Game : GameBase, Player.IContext {
+    public class Game : GameBase {
         public record Arguments(LevelEnum Level, CharacterEnum Character);
 
         private readonly Lock @lock = new Lock();
-        private readonly List<InstanceHandle<Transform>> instances = new List<InstanceHandle<Transform>>();
+        private readonly List<InstanceHandle> instances = new List<InstanceHandle>();
 
         // Args
         private Arguments Args { get; set; } = default!;
@@ -30,7 +30,7 @@ namespace Project.Entities {
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
             World = this.GetDependencyContainer().RequireDependency<World>( null );
-            using (Context.Begin<Player, Player.Arguments>( new Player.Arguments( Args.Character, this ) )) {
+            using (Context.Begin<Player, Player.Arguments>( new Player.Arguments() )) {
                 Player = gameObject.AddComponent<Player>();
             }
         }
@@ -45,16 +45,19 @@ namespace Project.Entities {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
-                    {
-                        tasks.Add( Player.SpawnAsync( World.PlayerSpawnPoints.First(), destroyCancellationToken ).AsTask() );
-                    }
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        tasks.Add( instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask() );
+                        var task = instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                        tasks.Add( task );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        tasks.Add( instances.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask() );
+                        var task = instances.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
+                        tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );
+                    {
+                        var character = await instances.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, destroyCancellationToken ).AsTask();
+                        Player.SetCharacter( character );
+                    }
                 }
             }
         }

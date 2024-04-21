@@ -4,31 +4,23 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Project.Entities.Characters.Primary;
-    using Project.Entities.Worlds;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
     public class Player : PlayerBase, Character.IContext, CharacterBody.IContext {
-        public interface IContext {
-        }
-        public record Arguments(CharacterEnum Character, IContext Context);
-
-        private readonly List<InstanceHandle<Character>> instances = new List<InstanceHandle<Character>>();
+        public record Arguments();
 
         // Args
         private Arguments Args { get; set; } = default!;
         // Deps
         public Camera2 Camera { get; private set; } = default!;
-        // Character
-        public Character? Character { get; set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
+        // Character
+        public Character? Character { get; private set; }
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
 
@@ -40,9 +32,6 @@ namespace Project.Entities {
             Actions.Enable();
         }
         public void OnDestroy() {
-            foreach (var instance in instances) {
-                instance.ReleaseSafe();
-            }
             Actions.Disable();
             Actions.Dispose();
         }
@@ -87,9 +76,9 @@ namespace Project.Entities {
             }
         }
 
-        // SpawnAsync
-        public async ValueTask SpawnAsync(PlayerSpawnPoint point, CancellationToken cancellationToken) {
-            Character = await instances.SpawnPlayerCharacterAsync( point, Args.Character, this, cancellationToken );
+        // SetCharacter
+        public void SetCharacter(Character? character) {
+            Character = character;
         }
 
         // Character.IContext

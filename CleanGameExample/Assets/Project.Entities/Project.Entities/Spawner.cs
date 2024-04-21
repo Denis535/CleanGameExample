@@ -10,10 +10,10 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    internal static class SpawnHelper {
+    internal static class Spawner {
 
         // Spawn
-        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this List<InstanceHandle<Character>> instances, PlayerSpawnPoint point, CharacterEnum character, Player player, CancellationToken cancellationToken) {
+        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this List<InstanceHandle> instances, PlayerSpawnPoint point, CharacterEnum character, Player player, CancellationToken cancellationToken) {
             using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( player ) )) {
                 using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( player ) )) {
                     var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
@@ -22,12 +22,12 @@ namespace Project.Entities {
                 }
             }
         }
-        public static async ValueTask<Transform> SpawnEnemyCharacterAsync(this List<InstanceHandle<Transform>> instances, EnemySpawnPoint point, CancellationToken cancellationToken) {
+        public static async ValueTask<Transform> SpawnEnemyCharacterAsync(this List<InstanceHandle> instances, EnemySpawnPoint point, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Transform>( GetEnemyCharacter() );
             instances.Add( instance );
             return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, cancellationToken );
         }
-        public static async ValueTask<Transform> SpawnLootAsync(this List<InstanceHandle<Transform>> instances, LootSpawnPoint point, CancellationToken cancellationToken) {
+        public static async ValueTask<Transform> SpawnLootAsync(this List<InstanceHandle> instances, LootSpawnPoint point, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Transform>( GetLoot() );
             instances.Add( instance );
             return await instance.InstantiateAsync( point.transform.position, point.transform.rotation, cancellationToken );

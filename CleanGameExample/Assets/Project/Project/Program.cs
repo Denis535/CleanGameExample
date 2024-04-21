@@ -25,7 +25,7 @@ namespace Project {
         //    var scene = SceneManager.GetActiveScene();
         //    if (scene.name == "Launcher") {
         //    } else
-        //    if (scene.name == "Program") {
+        //    if (scene.name == "Startup") {
         //    } else
         //    if (scene.name == "MainScene") {
         //    } else

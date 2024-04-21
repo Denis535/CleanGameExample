@@ -69,8 +69,8 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
-        // Program
-        private static SceneHandle Program { get; } = new SceneHandle( R.Project.Scenes.Program_Value );
+        // Startup
+        private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
         private DynamicSceneHandle World { get; } = new DynamicSceneHandle();
@@ -88,10 +88,10 @@ namespace Project.UI {
         }
 
         // LoadScene
-        public static async Task LoadProgramAsync() {
-            Release.LogFormat( "Load: Program" );
+        public static async Task LoadStartupAsync() {
+            Release.LogFormat( "Load: Startup" );
             using (@lock.Enter()) {
-                await LoadSceneAsync_Program();
+                await LoadSceneAsync_Startup();
             }
         }
         public async Task LoadMainSceneAsync() {
@@ -161,10 +161,10 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static async Task LoadSceneAsync_Program() {
-            await Program.LoadAsync( LoadSceneMode.Single, false );
-            await Program.ActivateAsync();
-            SceneManager.SetActiveScene( Program.Value );
+        private static async Task LoadSceneAsync_Startup() {
+            await Startup.LoadAsync( LoadSceneMode.Single, false );
+            await Startup.ActivateAsync();
+            SceneManager.SetActiveScene( Startup.Value );
         }
         public async Task LoadSceneAsync_MainScene() {
             await MainScene.LoadAsync( LoadSceneMode.Additive, false );

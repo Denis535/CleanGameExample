@@ -15,7 +15,7 @@ namespace Project.Entities {
         public record Arguments(LevelEnum Level, CharacterEnum Character);
 
         private readonly Lock @lock = new Lock();
-        private readonly List<InstanceHandle> instances = new List<InstanceHandle>();
+        internal readonly List<InstanceHandle> instances = new List<InstanceHandle>();
 
         // Args
         private Arguments Args { get; set; } = default!;
@@ -46,16 +46,16 @@ namespace Project.Entities {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        var task = instances.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = this.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        var task = instances.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = this.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );
                     {
-                        var character = await instances.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, destroyCancellationToken ).AsTask();
+                        var character = await this.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, destroyCancellationToken ).AsTask();
                         Player.SetCharacter( character );
                     }
                 }

@@ -68,7 +68,7 @@ namespace UnityEngine.AddressableAssets {
                 }
             }
             public static class @Scenes {
-                public const string @Program_Value = "Project.Scenes/Program.unity";
+                public const string @Startup_Value = "Project.Scenes/Startup.unity";
                 public const string @MainScene_Value = "Project.Scenes/MainScene.unity";
                 public const string @GameScene_Value = "Project.Scenes/GameScene.unity";
             }

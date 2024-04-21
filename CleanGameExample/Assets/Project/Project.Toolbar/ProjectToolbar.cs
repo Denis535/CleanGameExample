@@ -17,11 +17,9 @@ namespace Project.Toolbar {
         public static void LoadLauncher() {
             EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Launcher.unity" );
         }
-
-        // LoadScene
-        [MenuItem( "Project/Program", priority = 1 )]
-        public static void LoadProgram() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes/Program.unity" );
+        [MenuItem( "Project/Startup", priority = 1 )]
+        public static void LoadStartup() {
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes/Startup.unity" );
         }
         [MenuItem( "Project/Main Scene", priority = 2 )]
         public static void LoadMainScene() {

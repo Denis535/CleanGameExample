@@ -39,7 +39,7 @@ namespace Project {
         [InitializeOnLoadMethod]
         internal static void OnLoad() {
             if (!EditorApplication.isPlaying) {
-                //UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>( "Assets/Project/Assets.Project/Launcher.unity" );
+                UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>( "Assets/Project/Assets.Project.Scenes/Startup.unity" );
                 //EditorSceneManager.playModeStartScene = null;
             }
         }

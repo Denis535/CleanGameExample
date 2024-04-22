@@ -19,10 +19,10 @@ namespace Project.Entities {
 
         // Args
         private Arguments Args { get; set; } = default!;
-        // Deps
-        public World World { get; private set; } = default!;
         // IsPlaying
         public bool IsPlaying { get; private set; }
+        // Deps
+        public World World { get; private set; } = default!;
         // Player
         public Player Player { get; private set; } = default!;
 
@@ -44,6 +44,10 @@ namespace Project.Entities {
         public async void Start() {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
+                    {
+                        var character = await this.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, Player, destroyCancellationToken ).AsTask();
+                        Player.SetCharacter( character );
+                    }
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
                         var task = this.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
@@ -54,10 +58,6 @@ namespace Project.Entities {
                         tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );
-                    {
-                        var character = await this.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, destroyCancellationToken ).AsTask();
-                        Player.SetCharacter( character );
-                    }
                 }
             }
         }

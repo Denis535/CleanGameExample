@@ -41,15 +41,11 @@ namespace Project.Entities.Characters.Primary {
                 var position = GetPosition( Rigidbody.position, moveVector.Value, isJumpPressed, isCrouchPressed, isAcceleratePressed );
                 Rigidbody.MovePosition( position );
             }
-
             var lookTarget = Args.Context.GetLookTarget( this );
             if (lookTarget.HasValue) {
                 var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
                 Rigidbody.MoveRotation( rotation );
             }
-
-            Rigidbody.velocity = default;
-            Rigidbody.angularVelocity = default;
         }
 
         // Helpers

@@ -16,7 +16,6 @@ namespace Project {
         [SerializeField] private UIScreen uiScreen = default!;
         [SerializeField] private UIRouter uiRouter = default!;
         [SerializeField] private Application2 application = default!;
-        [SerializeField] private new Camera camera = default!;
         [SerializeField] private AudioMixer audioMixer = default!;
 
         // Deps
@@ -24,7 +23,6 @@ namespace Project {
         private UIScreen UIScreen => uiScreen;
         private UIRouter UIRouter => uiRouter;
         private Application2 Application => application;
-        private Camera Camera => camera;
         private AudioMixer AudioMixer => audioMixer;
         // Deps
         private Storage Storage { get; set; } = default!;
@@ -64,10 +62,6 @@ namespace Project {
             // App
             if (type == typeof( Application2 )) {
                 var result = Application;
-                return result;
-            }
-            if (type == typeof( Camera )) {
-                var result = Camera;
                 return result;
             }
             if (type == typeof( Storage )) {

@@ -10,7 +10,7 @@
       "url": "https://package.openupm.com"
     },
     "com.denis535.clean-architecture-game-framework": {
-      "version": "1.0.123",
+      "version": "1.0.124",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -61,15 +61,6 @@
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.cinemachine": {
-      "version": "2.9.7",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },
@@ -158,7 +149,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "16.0.5",
+      "version": "16.0.6",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -171,14 +162,14 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "16.0.5",
+      "version": "16.0.6",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.burst": "1.8.9",
-        "com.unity.render-pipelines.core": "16.0.5",
-        "com.unity.shadergraph": "16.0.5"
+        "com.unity.render-pipelines.core": "16.0.6",
+        "com.unity.shadergraph": "16.0.6"
       }
     },
     "com.unity.rendering.light-transport": {
@@ -249,11 +240,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "16.0.5",
+      "version": "16.0.6",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "16.0.5",
+        "com.unity.render-pipelines.core": "16.0.6",
         "com.unity.searcher": "4.9.2"
       }
     },
@@ -290,6 +281,12 @@
     "com.unity.modules.androidjni": {
       "version": "1.0.0",
       "depth": 2,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.modules.animation": {
+      "version": "1.0.0",
+      "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },

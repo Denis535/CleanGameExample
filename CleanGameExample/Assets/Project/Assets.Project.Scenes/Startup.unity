@@ -227,7 +227,6 @@ MonoBehaviour:
   uiScreen: {fileID: 938585823}
   uiRouter: {fileID: 3160590370860231193}
   application: {fileID: 3512483430981800128}
-  camera: {fileID: 856195493}
   audioMixer: {fileID: 24100000, guid: 90e2823520b580a47b2e95e06eac4ab7, type: 2}
 --- !u!114 &305890572
 MonoBehaviour:
@@ -361,7 +360,7 @@ GameObject:
   - component: {fileID: 856195495}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -406,10 +405,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
-  field of view: 60
+  far clip plane: 5000
+  field of view: 90
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -478,12 +477,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &856803555
 GameObject:
   m_ObjectHideFlags: 0

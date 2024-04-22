@@ -14,44 +14,8 @@ The project consists of the following modules:
 The project consists of the following namespaces:
 - Project
 - Project.UI
-- Project.UI.MainScreen
-- Project.UI.GameScreen
-- Project.UI.Common
 - Project.App
-- Project.Entities.MainScene
-- Project.Entities.GameScene
-- Project.Entities.WorldScene
-- Project.Entities.Common
-
-# Clean Architecture Game Framework
-This package contains classes that define the entire architecture of your game project and some other utilities.
-
-## Assemblies
-- CleanArchitectureGameFramework - additions.
-- CleanArchitectureGameFramework.Core - main.
-- CleanArchitectureGameFramework.Internal - utilities and helpers.
-
-## Namespaces
-- Framework - This namespace represents the root module.
-  - IDependencyContainer - This interface allows you to resolve your dependencies.
-  - Program - this class is responsible for the startup and global logic.
-- Framework.UI - this namespace represents the presentation (user interface) module.
-  - UIAudioTheme - this class is responsible for the audio theme.
-  - UIScreen - this class is responsible for the user interface. The user interface consists of the hierarchy of logical (business) units and the hierarchy of visual units.
-  - UIWidget - this class is responsible for the business logic of ui unit. This may contain (or not contain) the view.
-  - UIView - this class is responsible for the visual (view) logic of ui unit. This just contains the VisualElement, so it's essentially a wrapper for VisualElement.
-  - UIRouter - This class is responsible for the application state.
-- Framework.App - this namespace represents the application module.
-  - Application - this class is responsible for the application logic.
-  - Globals - this class provides you with the global values.
-- Framework.Entities - this namespace represents the domain (entities) module.
-  - Game - this class is responsible for the game rules and states.
-  - Player - this class is responsible for the player rules and states.
-  - World - This class is responsible for the world.
-  - WorldView - this class is responsible for the world's visual and audible aspects.
-  - Entity - this class is responsible for the scene's entity (player's avatar, AI agent or any other object).
-  - EntityView - this class is responsible for the entity's visual and audible aspects.
-  - EntityBody - this class is responsible for the entity's physical aspects.
+- Project.Entities
 
 # Setup
 - Install the "UIToolkit Theme Style Sheet" package (https://denis535.github.io/#uitoolkit-theme-style-sheet).

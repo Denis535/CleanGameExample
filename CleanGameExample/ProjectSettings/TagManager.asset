@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Character
-  - Main-Character
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -17,8 +15,8 @@ TagManager:
   - 
   - 
   - 
-  - Character
-  - Main-Character
+  - 
+  - 
   - 
   - 
   - 

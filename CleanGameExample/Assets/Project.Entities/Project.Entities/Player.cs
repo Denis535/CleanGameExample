@@ -5,6 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Project.Entities.Characters.Primary;
+    using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
@@ -16,7 +17,9 @@ namespace Project.Entities {
         // Args
         private Arguments Args { get; set; } = default!;
         // Deps
-        public Camera2 Camera { get; private set; } = default!;
+        private Game Game { get; set; } = default!;
+        private Camera2 Camera { get; set; } = default!;
+        private World World { get; set; } = default!;
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Character
@@ -27,7 +30,9 @@ namespace Project.Entities {
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
+            Game = this.GetDependencyContainer().RequireDependency<Game>( null );
             Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
+            World = this.GetDependencyContainer().RequireDependency<World>( null );
             Actions = new InputActions();
             Actions.Enable();
         }
@@ -41,7 +46,7 @@ namespace Project.Entities {
         }
         public void Update() {
             if (Character != null) {
-                Camera.SetTarget( Character.transform, Vector3.up * 2 );
+                Camera.SetUp( Character.transform, null, null );
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
@@ -51,7 +56,7 @@ namespace Project.Entities {
                     Hit = null;
                 }
             } else {
-                Camera.SetTarget( Vector3.up * 1024 );
+                Camera.SetUp( Vector3.up * 128, new Vector2( 0, 30 ), 3 );
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
@@ -79,6 +84,9 @@ namespace Project.Entities {
         // SetCharacter
         public void SetCharacter(Character? character) {
             Character = character;
+            if (Character != null) {
+                Camera.SetUp( Character.transform, new Vector2( 0, 30 ), 3 );
+            }
         }
 
         // Character.IContext
@@ -94,16 +102,16 @@ namespace Project.Entities {
         // CharacterBody.IContext
         Vector3? CharacterBody.IContext.GetMoveVector(CharacterBody character) {
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
-            var vector3 = Camera.transform.TransformDirection( vector2.x, 0, vector2.y );
+            var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
             return new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
         }
         Vector3? CharacterBody.IContext.GetLookTarget(CharacterBody character) {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                return Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
+                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
             }
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
             if (vector2 != default) {
-                var vector3 = Camera.transform.TransformDirection( vector2.x, 0, vector2.y );
+                var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
                 vector3 = new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
                 return character.transform.position + vector3 * 128f;
             }

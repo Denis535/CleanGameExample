@@ -1,11 +1,10 @@
 #nullable enable
-namespace UnityEngine.Framework.UI {
+namespace UnityEngine.UIElements {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
-    using UnityEngine.UIElements;
 
     public static class VisualElementFactory {
 

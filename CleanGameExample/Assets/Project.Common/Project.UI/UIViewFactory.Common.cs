@@ -1,12 +1,12 @@
 #nullable enable
-namespace UnityEngine.Framework.UI {
+namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static partial class UIFactory {
+    public static partial class UIViewFactory {
         public static class Common {
 
             public static Widget DialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
@@ -79,7 +79,7 @@ namespace UnityEngine.Framework.UI {
             }
 
             // SettingsWidget
-            public static Widget SettingsWidget(UIViewBase view, out Widget widget, out Label title, out TabView tabView, out Tab profileSettingsSlot, out Tab videoSettingsSlot, out Tab audioSettingsSlot, out Button okey, out Button back) {
+            public static Widget SettingsWidget(out Widget widget, out Label title, out TabView tabView, out Tab profileSettingsSlot, out Tab videoSettingsSlot, out Tab audioSettingsSlot, out Button okey, out Button back) {
                 using (VisualElementFactory.MediumWidget().AsScope( out widget )) {
                     using (VisualElementFactory.Card().AsScope()) {
                         using (VisualElementFactory.Header().AsScope()) {
@@ -100,7 +100,7 @@ namespace UnityEngine.Framework.UI {
                 }
                 return widget;
             }
-            public static VisualElement ProfileSettingsWidget(UIViewBase view, out VisualElement root, out TextField name) {
+            public static VisualElement ProfileSettingsWidget(out VisualElement root, out TextField name) {
                 using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
                     using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                         VisualElementFactory.TextField( "Name", null, 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
@@ -108,7 +108,7 @@ namespace UnityEngine.Framework.UI {
                 }
                 return root;
             }
-            public static VisualElement VideoSettingsWidget(UIViewBase view, out VisualElement root, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
+            public static VisualElement VideoSettingsWidget(out VisualElement root, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
                 using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
                     using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                         VisualElementFactory.ToggleField( "Full Screen", false ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
@@ -118,7 +118,7 @@ namespace UnityEngine.Framework.UI {
                 }
                 return root;
             }
-            public static VisualElement AudioSettingsWidget(UIViewBase view, out VisualElement root, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
+            public static VisualElement AudioSettingsWidget(out VisualElement root, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
                 using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
                     using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                         VisualElementFactory.SliderField( "Master Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );

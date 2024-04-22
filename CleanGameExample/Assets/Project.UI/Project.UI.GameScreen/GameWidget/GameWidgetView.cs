@@ -13,7 +13,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = UIFactory.Game.GameWidget( out var view );
+            VisualElement = UIViewFactory.Game.GameWidget( out var view );
             Widget = view.Wrap();
         }
         public override void Dispose() {

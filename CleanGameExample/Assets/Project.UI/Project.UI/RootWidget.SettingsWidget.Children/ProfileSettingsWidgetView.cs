@@ -14,7 +14,7 @@ namespace Project.UI {
 
         // Constructor
         public ProfileSettingsWidgetView() {
-            VisualElement = UIFactory.Common.ProfileSettingsWidget( this, out var root, out var name );
+            VisualElement = UIViewFactory.Common.ProfileSettingsWidget( out var root, out var name );
             Root = root.Wrap();
             Name = name.Wrap();
         }

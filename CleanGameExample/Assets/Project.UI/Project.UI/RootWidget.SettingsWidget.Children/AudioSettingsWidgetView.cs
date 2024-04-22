@@ -17,7 +17,7 @@ namespace Project.UI {
 
         // Constructor
         public AudioSettingsWidgetView() {
-            VisualElement = UIFactory.Common.AudioSettingsWidget( this, out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
+            VisualElement = UIViewFactory.Common.AudioSettingsWidget( out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
             Root = root.Wrap();
             MasterVolume = masterVolume.Wrap();
             MusicVolume = musicVolume.Wrap();

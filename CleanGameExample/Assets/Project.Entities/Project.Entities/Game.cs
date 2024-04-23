@@ -42,12 +42,10 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
+            var character = this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character, Player, Player );
+            Player.SetCharacter( character );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
-                    {
-                        var character = await this.SpawnPlayerCharacterAsync( World.PlayerSpawnPoints.First(), Args.Character, Player, Player, destroyCancellationToken ).AsTask();
-                        Player.SetCharacter( character );
-                    }
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
                         var task = this.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();

@@ -46,14 +46,19 @@ namespace Project.Entities {
         }
         public void Update() {
             if (Character != null) {
-                Camera.ManualUpdate( Character.transform, Actions.Game.Look.ReadValue<Vector2>(), Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.SetTarget( Character.transform.position );
+                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.Apply();
                 if (Raycast( Camera.transform, out var point, out var distance, out var @object )) {
                     Hit = new( point, distance, @object );
                 } else {
                     Hit = null;
                 }
             } else {
-                Camera.SetUp( Vector3.up * 128 );
+                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.Apply();
                 Hit = null;
             }
         }
@@ -79,7 +84,7 @@ namespace Project.Entities {
         public void SetCharacter(Character? character) {
             Character = character;
             if (Character != null) {
-                Camera.SetUp( Character.transform, new Vector2( 0, 30 ), 3 );
+                Camera.SetUp( Character.transform );
             }
         }
 

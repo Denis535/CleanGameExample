@@ -12,6 +12,13 @@ namespace Project.Entities {
 
     internal static class Spawner {
 
+        // SpawnPlayerCharacter
+        public static Character SpawnPlayerCharacter(this Game game, PlayerSpawnPoint point, CharacterEnum character, Character.IContext context, CharacterBody.IContext context2) {
+            var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
+            game.instances.Add( instance );
+            return instance.Instantiate( i => Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform, context, context2 ) );
+        }
+
         // SpawnPlayerCharacterAsync
         public static async ValueTask<Character> SpawnPlayerCharacterAsync(this Game game, PlayerSpawnPoint point, CharacterEnum character, Character.IContext context, CharacterBody.IContext context2, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );

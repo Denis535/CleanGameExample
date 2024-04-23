@@ -12,7 +12,10 @@ namespace Project.UI {
             // GameWidget
             public static Widget GameWidget(out Widget widget) {
                 using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
-                    VisualElementFactory.Label( "+" ).Classes( "font-size-400pc", "color-light", "position-absolute", "left-50pc", "top-50pc", "translate-x-n50pc", "translate-y-n50pc" ).AddToScope();
+                    VisualElementFactory.Label( "+" )
+                        .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
+                        .Style( i => i.translate = new StyleTranslate( new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) ) )
+                        .AddToScope();
                 }
                 return widget;
             }

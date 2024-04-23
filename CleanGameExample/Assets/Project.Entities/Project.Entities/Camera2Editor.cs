@@ -14,9 +14,9 @@ namespace Project.Entities {
         // OnInspectorGUI
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
-            EditorGUILayout.Vector3Field( "Target", Target.Target );
-            EditorGUILayout.Vector2Field( "Angles", Target.Angles );
-            EditorGUILayout.FloatField( "Distance", Target.Distance );
+            Target.Target = EditorGUILayout.Vector3Field( "Target", Target.Target );
+            Target.Angles = EditorGUILayout.Vector2Field( "Angles", Target.Angles );
+            Target.Distance = EditorGUILayout.FloatField( "Distance", Target.Distance );
         }
 
         // Helpers

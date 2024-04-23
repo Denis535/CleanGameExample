@@ -8,30 +8,26 @@ namespace Project.Entities {
 
     public class Camera2 : EntityBase {
 
-        private const float MinAngleY = -89;
-        private const float MaxAngleY = +89;
-        private const float MinDistance = 1;
-        private const float MaxDistance = 3;
+        private static readonly Vector2 DefaultAngles = new Vector2( 0, 30 );
+        private static readonly float DefaultDistance = 1.5f;
+        private static readonly float MinAngleY = -89;
+        private static readonly float MaxAngleY = +89;
+        private static readonly float MinDistance = 1;
+        private static readonly float MaxDistance = 3;
         private static readonly Vector3 TargetOffset1 = Vector3.up * 1.8f;
         private static readonly Vector3 TargetOffset2 = Vector3.up * 2.2f;
         private static readonly Vector3 CameraOffset1 = Vector3.right * 0.2f;
         private static readonly Vector3 CameraOffset2 = Vector3.right * 0.6f;
 
         // Transform
-        public Vector3 Target { get; private set; } = Vector3.zero;
-        public Vector2 Angles { get; private set; } = new Vector2( 0, 30 );
-        public float Distance { get; private set; } = 3f;
+        public Vector3 Target { get; set; } = Vector3.zero;
+        public Vector2 Angles { get; set; } = DefaultAngles;
+        public float Distance { get; set; } = DefaultDistance;
 
         // Awake
         public void Awake() {
         }
         public void OnDestroy() {
-        }
-
-        // Start
-        public void Start() {
-        }
-        public void Update() {
         }
 
         // OnDrawGizmosSelected
@@ -40,24 +36,37 @@ namespace Project.Entities {
             Gizmos.DrawSphere( Target, 0.01f );
         }
 
-        // Transform
-        public void SetUp(Transform? target, Vector2? angles, float? distance) {
-            SetUp( target?.position, angles, distance );
+        // SetUp
+        public void SetUp(Transform target) {
+            SetUp( target.position, DefaultAngles, DefaultDistance );
         }
-        public void SetUp(Vector3? target, Vector2? angles, float? distance) {
-            if (target.HasValue) Target = target.Value;
-            if (angles != null) Angles = angles.Value;
-            if (distance != null) Distance = distance.Value;
-        }
-        public void Rotate(Vector2 delta) {
-            Angles = GetAngles( Angles, delta );
-        }
-        public void Zoom(float delta) {
-            Distance = GetDistance( Distance, delta );
+        public void SetUp(Vector3 target) {
+            SetUp( target, DefaultAngles, DefaultDistance );
         }
 
-        // Apply
-        public void Apply() {
+        // SetUp
+        public void SetUp(Transform target, Vector2 angles, float distance) {
+            SetUp( target.position, angles, distance );
+        }
+        public void SetUp(Vector3 target, Vector2 angles, float distance) {
+            Target = target;
+            Angles = GetAngles( angles, default );
+            Distance = GetDistance( distance, default );
+            Apply( transform, Target, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
+            if (Camera.main != null && Camera.main.gameObject != gameObject) {
+                Camera.main.transform.localPosition = transform.localPosition;
+                Camera.main.transform.localRotation = transform.localRotation;
+            }
+        }
+
+        // ManualUpdate
+        public void ManualUpdate(Transform target, Vector2 rotate, float zoom) {
+            ManualUpdate( target.position, rotate, zoom );
+        }
+        public void ManualUpdate(Vector3 target, Vector2 rotate, float zoom) {
+            Target = target;
+            Angles = GetAngles( Angles, rotate );
+            Distance = GetDistance( Distance, zoom );
             Apply( transform, Target, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
             if (Camera.main != null && Camera.main.gameObject != gameObject) {
                 Camera.main.transform.localPosition = transform.localPosition;

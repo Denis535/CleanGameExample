@@ -46,20 +46,14 @@ namespace Project.Entities {
         }
         public void Update() {
             if (Character != null) {
-                Camera.SetUp( Character.transform, null, null );
-                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
-                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply();
+                Camera.ManualUpdate( Character.transform, Actions.Game.Look.ReadValue<Vector2>(), Actions.Game.Zoom.ReadValue<Vector2>().y );
                 if (Raycast( Camera.transform, out var point, out var distance, out var @object )) {
                     Hit = new( point, distance, @object );
                 } else {
                     Hit = null;
                 }
             } else {
-                Camera.SetUp( Vector3.up * 128, new Vector2( 0, 30 ), 3 );
-                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
-                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply();
+                Camera.SetUp( Vector3.up * 128 );
                 Hit = null;
             }
         }

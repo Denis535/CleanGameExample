@@ -10,8 +10,8 @@ namespace Project.Entities {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         public static readonly float DefaultDistance = 1.5f;
-        public static readonly float MinAngleX = -89;
-        public static readonly float MaxAngleX = +89;
+        public static readonly float MinAngleX = -88;
+        public static readonly float MaxAngleX = +88;
         public static readonly float MinDistance = 1;
         public static readonly float MaxDistance = 3;
         public static readonly Vector3 TargetOffset1 = Vector3.up * 1.8f;

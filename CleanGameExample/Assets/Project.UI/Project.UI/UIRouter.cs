@@ -162,22 +162,22 @@ namespace Project.UI {
 
         // Helpers
         private static async Task LoadSceneAsync_Startup() {
-            await Startup.LoadAsync( LoadSceneMode.Single, false );
+            await Startup.Load( LoadSceneMode.Single, false ).WaitAsync();
             await Startup.ActivateAsync();
             SceneManager.SetActiveScene( Startup.Value );
         }
         public async Task LoadSceneAsync_MainScene() {
-            await MainScene.LoadAsync( LoadSceneMode.Additive, false );
+            await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await MainScene.ActivateAsync();
             SceneManager.SetActiveScene( MainScene.Value );
         }
         public async Task LoadSceneAsync_GameScene() {
-            await GameScene.LoadAsync( LoadSceneMode.Additive, false );
+            await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await GameScene.ActivateAsync();
             SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(LevelEnum level) {
-            await World.LoadAsync( GetWorldAddress( level ), LoadSceneMode.Additive, false );
+            await World.Load( GetWorldAddress( level ), LoadSceneMode.Additive, false ).WaitAsync();
             await World.ActivateAsync();
             SceneManager.SetActiveScene( World.Value );
         }

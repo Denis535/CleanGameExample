@@ -34,7 +34,11 @@ namespace Project.Entities.Characters.Primary {
         // Start
         public void Start() {
         }
+        public void FixedUpdate() {
+            Body.UpdatePosition( Time.fixedDeltaTime );
+        }
         public void Update() {
+            Body.UpdateRotation( Time.deltaTime );
         }
 
     }

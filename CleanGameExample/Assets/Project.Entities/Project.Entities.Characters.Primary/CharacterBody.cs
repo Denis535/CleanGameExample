@@ -29,27 +29,27 @@ namespace Project.Entities.Characters.Primary {
         public void OnDestroy() {
         }
 
-        // Start
-        public void Start() {
-        }
-        public void Update() {
+        // Update
+        public void UpdatePosition(float deltaTime) {
             var moveVector = Args.Context.GetMoveVector( this );
             var isJumpPressed = Args.Context.IsJumpPressed( this, out _ );
             var isCrouchPressed = Args.Context.IsCrouchPressed( this );
             var isAcceleratePressed = Args.Context.IsAcceleratePressed( this );
             if (moveVector.HasValue) {
-                var position = GetPosition( Rigidbody.position, moveVector.Value, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+                var position = GetPosition( Rigidbody.position, moveVector.Value, isJumpPressed, isCrouchPressed, isAcceleratePressed, deltaTime );
                 Rigidbody.MovePosition( position );
             }
+        }
+        public void UpdateRotation(float deltaTime) {
             var lookTarget = Args.Context.GetLookTarget( this );
             if (lookTarget.HasValue) {
-                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
+                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value, deltaTime );
                 Rigidbody.MoveRotation( rotation );
             }
         }
 
         // Helpers
-        private static Vector3 GetPosition(Vector3 position, Vector3 move, bool jump, bool crouch, bool accelerate) {
+        private static Vector3 GetPosition(Vector3 position, Vector3 move, bool jump, bool crouch, bool accelerate, float deltaTime) {
             var velocity = Vector3.zero;
             if (move != default) {
                 if (accelerate) {
@@ -72,12 +72,12 @@ namespace Project.Entities.Characters.Primary {
                     velocity -= Vector3.up * 8;
                 }
             }
-            return position + velocity * Time.deltaTime;
+            return position + velocity * deltaTime;
         }
-        private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target) {
+        private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target, float deltaTime) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             var rotation2 = Quaternion.LookRotation( direction, Vector3.up );
-            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * Time.deltaTime );
+            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * dt );
             return rotation2;
         }
 

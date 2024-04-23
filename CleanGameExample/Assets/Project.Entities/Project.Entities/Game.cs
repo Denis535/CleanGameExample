@@ -19,10 +19,10 @@ namespace Project.Entities {
 
         // Args
         private Arguments Args { get; set; } = default!;
-        // IsPlaying
-        public bool IsPlaying { get; private set; }
         // Deps
         public World World { get; private set; } = default!;
+        // IsPlaying
+        public bool IsPlaying { get; private set; }
         // Player
         public Player Player { get; private set; } = default!;
 

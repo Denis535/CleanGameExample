@@ -4,6 +4,7 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Project.Entities.Characters.Primary;
     using Project.Entities.Worlds;
     using UnityEngine;
@@ -129,10 +130,10 @@ namespace Project.Entities {
 
         // Heleprs
         private static bool Raycast(Transform transform, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
-            //var mask = ~0;
-            //var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
             var mask = ~0;
-            if (Physics.Raycast( transform.position, transform.forward, out var hit, 128, mask, QueryTriggerInteraction.Ignore )) {
+            var hits = Physics.RaycastAll( transform.position, transform.forward, 128, mask, QueryTriggerInteraction.Ignore );
+            var hit = hits.SkipWhile( i => i.transform == transform ).FirstOrDefault();
+            if (hit.transform) {
                 point = hit.point;
                 distance = hit.distance;
                 @object = hit.transform.gameObject;

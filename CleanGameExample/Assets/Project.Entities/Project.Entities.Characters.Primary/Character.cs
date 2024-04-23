@@ -9,22 +9,20 @@ namespace Project.Entities.Characters.Primary {
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase {
-        public interface IContext {
+        public interface IInputActions : CharacterBody.IInputActions {
             bool IsFirePressed();
             bool IsAimPressed();
             bool IsInteractPressed();
         }
-        public record Arguments(IContext Context);
 
-        // Args
-        private Arguments Args { get; set; } = default!;
         // View
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
+        // Actions
+        public IInputActions? Actions { get; set; }
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Character, Arguments>();
             Body = gameObject.RequireComponent<CharacterBody>();
             View = gameObject.RequireComponent<CharacterView>();
         }
@@ -35,10 +33,10 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void FixedUpdate() {
-            Body.UpdatePosition( Time.fixedDeltaTime );
+            Body.UpdatePosition( Actions );
         }
         public void Update() {
-            Body.UpdateRotation( Time.deltaTime );
+            Body.UpdateRotation( Actions );
         }
 
     }

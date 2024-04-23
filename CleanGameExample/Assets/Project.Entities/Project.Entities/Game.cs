@@ -22,17 +22,15 @@ namespace Project.Entities {
         // Deps
         public World World { get; private set; } = default!;
         // IsPlaying
-        public bool IsPlaying { get; private set; }
+        public bool IsPlaying { get; private set; } = true;
         // Player
         public Player Player { get; private set; } = default!;
 
         // Awake
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
-            World = IDependencyContainer.Instance.RequireDependency<World>( null ); 
-            using (Context.Begin<Player, Player.Arguments>( new Player.Arguments() )) {
-                Player = gameObject.AddComponent<Player>();
-            }
+            World = IDependencyContainer.Instance.RequireDependency<World>( null );
+            Player = gameObject.AddComponent<Player>();
         }
         public void OnDestroy() {
             foreach (var instance in instances) {
@@ -40,9 +38,15 @@ namespace Project.Entities {
             }
         }
 
+        // SetPlaying
+        public void SetPlaying(bool value) {
+            IsPlaying = value;
+            Player.SetPlaying( value );
+        }
+
         // Start
         public async void Start() {
-            var character = this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character, Player, Player );
+            var character = this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character );
             Player.SetCharacter( character );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
@@ -64,12 +68,6 @@ namespace Project.Entities {
                 using (@lock.Enter()) {
                 }
             }
-        }
-
-        // SetPlaying
-        public void SetPlaying(bool value) {
-            IsPlaying = value;
-            Player.SetPlaying( value );
         }
 
     }

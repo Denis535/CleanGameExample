@@ -13,24 +13,17 @@ namespace Project.Entities {
     internal static class Spawner {
 
         // SpawnPlayerCharacter
-        public static Character SpawnPlayerCharacter(this Game game, PlayerSpawnPoint point, CharacterEnum character, Character.IContext context, CharacterBody.IContext context2) {
+        public static Character SpawnPlayerCharacter(this Game game, PlayerSpawnPoint point, CharacterEnum character) {
             var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
             game.instances.Add( instance );
-            return instance.Instantiate( i => Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform, context, context2 ) );
+            return instance.Instantiate( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform ) );
         }
 
         // SpawnPlayerCharacterAsync
-        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this Game game, PlayerSpawnPoint point, CharacterEnum character, Character.IContext context, CharacterBody.IContext context2, CancellationToken cancellationToken) {
+        public static async ValueTask<Character> SpawnPlayerCharacterAsync(this Game game, PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
             game.instances.Add( instance );
-            return await instance.InstantiateAsync( i => Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform, context, context2 ), cancellationToken );
-        }
-        private static Character Instantiate(Character prefab, Vector3 position, Quaternion rotation, Transform? parent, Character.IContext context, CharacterBody.IContext context2) {
-            using (Context.Begin<Character, Character.Arguments>( new Character.Arguments( context ) )) {
-                using (Context.Begin<CharacterBody, CharacterBody.Arguments>( new CharacterBody.Arguments( context2 ) )) {
-                    return UnityEngine.Object.Instantiate( prefab, position, rotation, parent );
-                }
-            }
+            return await instance.InstantiateAsync( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform ), cancellationToken );
         }
 
         // SpawnEnemyCharacterAsync

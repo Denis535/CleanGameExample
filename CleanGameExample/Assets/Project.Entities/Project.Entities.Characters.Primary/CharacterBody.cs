@@ -7,49 +7,47 @@ namespace Project.Entities.Characters.Primary {
     using UnityEngine.Framework.Entities;
 
     public class CharacterBody : EntityBodyBase {
-        public interface IContext {
-            Vector3? GetMoveVector(CharacterBody character);
-            Vector3? GetLookTarget(CharacterBody character);
-            bool IsJumpPressed(CharacterBody character, out float duration);
-            bool IsCrouchPressed(CharacterBody character);
-            bool IsAcceleratePressed(CharacterBody character);
+        public interface IInputActions {
+            Vector3? GetMoveVector();
+            Vector3? GetLookTarget();
+            bool IsJumpPressed(out float duration);
+            bool IsCrouchPressed();
+            bool IsAcceleratePressed();
         }
-        public record Arguments(IContext Context);
 
-        // Args
-        private Arguments Args { get; set; } = default!;
+        // DeltaTime
+        private static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
 
         // Awake
         public void Awake() {
-            Args = Context.Get<CharacterBody, Arguments>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         public void OnDestroy() {
         }
 
         // Update
-        public void UpdatePosition(float deltaTime) {
-            var moveVector = Args.Context.GetMoveVector( this );
-            var isJumpPressed = Args.Context.IsJumpPressed( this, out _ );
-            var isCrouchPressed = Args.Context.IsCrouchPressed( this );
-            var isAcceleratePressed = Args.Context.IsAcceleratePressed( this );
-            if (moveVector.HasValue) {
-                var position = GetPosition( Rigidbody.position, moveVector.Value, isJumpPressed, isCrouchPressed, isAcceleratePressed, deltaTime );
+        public void UpdatePosition(IInputActions? actions) {
+            var moveVector = actions?.GetMoveVector() ?? Vector3.zero;
+            var isJumpPressed = actions?.IsJumpPressed( out _ ) ?? false;
+            var isCrouchPressed = actions?.IsCrouchPressed() ?? false;
+            var isAcceleratePressed = actions?.IsAcceleratePressed() ?? false;
+            {
+                var position = GetPosition( Rigidbody.position, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
                 Rigidbody.MovePosition( position );
             }
         }
-        public void UpdateRotation(float deltaTime) {
-            var lookTarget = Args.Context.GetLookTarget( this );
+        public void UpdateRotation(IInputActions? actions) {
+            var lookTarget = actions?.GetLookTarget();
             if (lookTarget.HasValue) {
-                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value, deltaTime );
+                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
                 Rigidbody.MoveRotation( rotation );
             }
         }
 
         // Helpers
-        private static Vector3 GetPosition(Vector3 position, Vector3 move, bool jump, bool crouch, bool accelerate, float deltaTime) {
+        private static Vector3 GetPosition(Vector3 position, Vector3 move, bool jump, bool crouch, bool accelerate) {
             var velocity = Vector3.zero;
             if (move != default) {
                 if (accelerate) {
@@ -72,12 +70,12 @@ namespace Project.Entities.Characters.Primary {
                     velocity -= Vector3.up * 8;
                 }
             }
-            return position + velocity * deltaTime;
+            return position + velocity * DeltaTime;
         }
-        private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target, float deltaTime) {
+        private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             var rotation2 = Quaternion.LookRotation( direction, Vector3.up );
-            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * dt );
+            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * DeltaTime );
             return rotation2;
         }
 

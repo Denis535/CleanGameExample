@@ -12,34 +12,54 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase, Character.IContext, CharacterBody.IContext {
-        public record Arguments();
+    public class Player : PlayerBase, Character.IInputActions {
 
-        // Args
-        private Arguments Args { get; set; } = default!;
         // Deps
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         private World World { get; set; } = default!;
-        // Actions
-        private InputActions Actions { get; set; } = default!;
+        // IsPlaying
+        public bool IsPlaying { get; private set; } = true;
         // Character
         public Character? Character { get; private set; }
+        // Actions
+        private InputActions Actions { get; set; } = default!;
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Player, Arguments>();
             Game = IDependencyContainer.Instance.RequireDependency<Game>( null );
             Camera = IDependencyContainer.Instance.RequireDependency<Camera2>( null );
             World = IDependencyContainer.Instance.RequireDependency<World>( null );
             Actions = new InputActions();
-            Actions.Enable();
         }
         public void OnDestroy() {
-            Actions.Disable();
             Actions.Dispose();
+        }
+
+        // SetPlaying
+        public void SetPlaying(bool value) {
+            IsPlaying = value;
+            if (value) {
+                if (Character != null) Actions.Enable();
+            } else {
+                if (Character != null) Actions.Disable();
+            }
+        }
+
+        // SetCharacter
+        public void SetCharacter(Character? character) {
+            if (Character != null) {
+                if (IsPlaying) Actions.Disable();
+                Character.Actions = null;
+            }
+            Character = character;
+            if (Character != null) {
+                Camera.SetUp( Character.transform );
+                Character.Actions = this;
+                if (IsPlaying) Actions.Enable();
+            }
         }
 
         // Start
@@ -72,40 +92,23 @@ namespace Project.Entities {
             }
         }
 
-        // SetPlaying
-        public void SetPlaying(bool value) {
-            if (value) {
-                Actions.Enable();
-            } else {
-                Actions.Disable();
-            }
-        }
-
-        // SetCharacter
-        public void SetCharacter(Character? character) {
-            Character = character;
-            if (Character != null) {
-                Camera.SetUp( Character.transform );
-            }
-        }
-
-        // Character.IContext
-        bool Character.IContext.IsFirePressed() {
+        // Character.IInputActions
+        bool Character.IInputActions.IsFirePressed() {
             return Actions.Game.Fire.IsPressed();
         }
-        bool Character.IContext.IsAimPressed() {
+        bool Character.IInputActions.IsAimPressed() {
             return Actions.Game.Aim.IsPressed();
         }
-        bool Character.IContext.IsInteractPressed() {
+        bool Character.IInputActions.IsInteractPressed() {
             return Actions.Game.Interact.WasPressedThisFrame();
         }
-        // CharacterBody.IContext
-        Vector3? CharacterBody.IContext.GetMoveVector(CharacterBody character) {
+        // CharacterBody.IInputActions
+        Vector3? CharacterBody.IInputActions.GetMoveVector() {
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
             var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
             return new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
         }
-        Vector3? CharacterBody.IContext.GetLookTarget(CharacterBody character) {
+        Vector3? CharacterBody.IInputActions.GetLookTarget() {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
             }
@@ -113,18 +116,18 @@ namespace Project.Entities {
             if (vector2 != default) {
                 var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
                 vector3 = new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
-                return character.transform.position + vector3 * 128f;
+                return Character!.transform.position + vector3 * 128f;
             }
             return null;
         }
-        bool CharacterBody.IContext.IsJumpPressed(CharacterBody character, out float duration) {
+        bool CharacterBody.IInputActions.IsJumpPressed(out float duration) {
             duration = 0;
             return Actions.Game.Jump.IsPressed();
         }
-        bool CharacterBody.IContext.IsCrouchPressed(CharacterBody character) {
+        bool CharacterBody.IInputActions.IsCrouchPressed() {
             return Actions.Game.Crouch.IsPressed();
         }
-        bool CharacterBody.IContext.IsAcceleratePressed(CharacterBody character) {
+        bool CharacterBody.IInputActions.IsAcceleratePressed() {
             return Actions.Game.Accelerate.IsPressed();
         }
 

@@ -31,9 +31,9 @@ namespace Project.Entities {
         // Awake
         public void Awake() {
             Args = Context.Get<Player, Arguments>();
-            Game = this.GetDependencyContainer().RequireDependency<Game>( null );
-            Camera = this.GetDependencyContainer().RequireDependency<Camera2>( null );
-            World = this.GetDependencyContainer().RequireDependency<World>( null );
+            Game = IDependencyContainer.Instance.RequireDependency<Game>( null );
+            Camera = IDependencyContainer.Instance.RequireDependency<Camera2>( null );
+            World = IDependencyContainer.Instance.RequireDependency<World>( null );
             Actions = new InputActions();
             Actions.Enable();
         }

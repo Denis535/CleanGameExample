@@ -29,7 +29,7 @@ namespace Project.Entities {
         // Awake
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
-            World = this.GetDependencyContainer().RequireDependency<World>( null );
+            World = IDependencyContainer.Instance.RequireDependency<World>( null ); 
             using (Context.Begin<Player, Player.Arguments>( new Player.Arguments() )) {
                 Player = gameObject.AddComponent<Player>();
             }

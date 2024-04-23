@@ -15,7 +15,7 @@ namespace Project.UI {
 
         // Constructor
         public AudioSettingsWidget() {
-            AudioSettings = this.GetDependencyContainer().RequireDependency<Storage.AudioSettings>( null );
+            AudioSettings = IDependencyContainer.Instance.RequireDependency<Storage.AudioSettings>( null );
             View = CreateView( this, AudioSettings );
         }
         public override void Dispose() {

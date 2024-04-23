@@ -15,7 +15,7 @@ namespace Project.UI {
 
         // Constructor
         public ProfileSettingsWidget() {
-            ProfileSettings = this.GetDependencyContainer().RequireDependency<Storage.ProfileSettings>( null );
+            ProfileSettings = IDependencyContainer.Instance.RequireDependency<Storage.ProfileSettings>( null );
             View = CreateView( this, ProfileSettings );
         }
         public override void Dispose() {

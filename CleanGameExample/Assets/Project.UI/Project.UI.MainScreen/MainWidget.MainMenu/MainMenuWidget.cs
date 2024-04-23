@@ -17,7 +17,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidget() {
-            Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
+            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
             View = CreateView( this, Router );
         }
         public override void Dispose() {

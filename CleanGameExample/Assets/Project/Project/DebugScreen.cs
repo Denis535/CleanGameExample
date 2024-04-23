@@ -20,10 +20,10 @@ namespace Project {
 
         // Awake
         public void Awake() {
-            Theme = this.GetDependencyContainer().RequireDependency<UITheme>( null );
-            Screen = this.GetDependencyContainer().RequireDependency<UIScreen>( null );
-            Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
-            Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
+            Theme = IDependencyContainer.Instance.RequireDependency<UITheme>( null );
+            Screen = IDependencyContainer.Instance.RequireDependency<UIScreen>( null );
+            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
+            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
         }
         public void OnDestroy() {
         }

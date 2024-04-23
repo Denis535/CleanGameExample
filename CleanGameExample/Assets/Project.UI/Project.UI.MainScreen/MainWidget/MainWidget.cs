@@ -23,9 +23,9 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidget() {
-            Router = this.GetDependencyContainer().RequireDependency<UIRouter>( null );
-            Application = this.GetDependencyContainer().RequireDependency<Application2>( null );
-            Storage = this.GetDependencyContainer().RequireDependency<Storage>( null );
+            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
+            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Storage = IDependencyContainer.Instance.RequireDependency<Storage>( null );
             View = CreateView( this );
         }
         public override void Dispose() {

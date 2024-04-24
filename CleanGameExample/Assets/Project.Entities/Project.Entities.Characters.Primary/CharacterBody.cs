@@ -10,7 +10,7 @@ namespace Project.Entities.Characters.Primary {
         public interface IInputActions {
             Vector3? GetMoveVector();
             Vector3? GetLookTarget();
-            bool IsJumpPressed(out float duration);
+            bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
         }
@@ -30,7 +30,7 @@ namespace Project.Entities.Characters.Primary {
         // Update
         public void UpdatePosition(IInputActions? actions) {
             var moveVector = actions?.GetMoveVector() ?? Vector3.zero;
-            var isJumpPressed = actions?.IsJumpPressed( out _ ) ?? false;
+            var isJumpPressed = actions?.IsJumpPressed() ?? false;
             var isCrouchPressed = actions?.IsCrouchPressed() ?? false;
             var isAcceleratePressed = actions?.IsAcceleratePressed() ?? false;
             {

@@ -93,6 +93,10 @@ namespace Project.Entities {
         }
 
         // Character.IInputActions
+        bool Character.IInputActions.IsEnabled() {
+            return Actions.asset.enabled;
+        }
+        // Character.IInputActions
         bool Character.IInputActions.IsFirePressed() {
             return Actions.Game.Fire.IsPressed();
         }
@@ -102,13 +106,13 @@ namespace Project.Entities {
         bool Character.IInputActions.IsInteractPressed() {
             return Actions.Game.Interact.WasPressedThisFrame();
         }
-        // CharacterBody.IInputActions
-        Vector3? CharacterBody.IInputActions.GetMoveVector() {
+        // Character.IInputActions
+        Vector3? Character.IInputActions.GetMoveVector() {
             var vector2 = Actions.Game.Move.ReadValue<Vector2>();
             var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
             return new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
         }
-        Vector3? CharacterBody.IInputActions.GetLookTarget() {
+        Vector3? Character.IInputActions.GetLookTarget() {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
             }
@@ -120,14 +124,13 @@ namespace Project.Entities {
             }
             return null;
         }
-        bool CharacterBody.IInputActions.IsJumpPressed(out float duration) {
-            duration = 0;
+        bool Character.IInputActions.IsJumpPressed() {
             return Actions.Game.Jump.IsPressed();
         }
-        bool CharacterBody.IInputActions.IsCrouchPressed() {
+        bool Character.IInputActions.IsCrouchPressed() {
             return Actions.Game.Crouch.IsPressed();
         }
-        bool CharacterBody.IInputActions.IsAcceleratePressed() {
+        bool Character.IInputActions.IsAcceleratePressed() {
             return Actions.Game.Accelerate.IsPressed();
         }
 

@@ -46,8 +46,7 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            var character = this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character );
-            Player.SetCharacter( character );
+            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();

@@ -8,12 +8,22 @@ namespace Project.Entities.Characters.Primary {
 
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
-    public class Character : EntityBase {
-        public interface IInputActions : CharacterBody.IInputActions {
+    public class Character : EntityBase, CharacterBody.IInputActions {
+        public interface IInputActions {
+            bool IsEnabled();
             bool IsFirePressed();
             bool IsAimPressed();
             bool IsInteractPressed();
+            Vector3? GetMoveVector();
+            Vector3? GetLookTarget();
+            bool IsJumpPressed();
+            bool IsCrouchPressed();
+            bool IsAcceleratePressed();
         }
+
+        private bool isJumpPressed = false;
+        private bool isCrouchPressed = false;
+        private bool isAcceleratePressed = false;
 
         // View
         private CharacterBody Body { get; set; } = default!;
@@ -33,10 +43,48 @@ namespace Project.Entities.Characters.Primary {
         public void Start() {
         }
         public void FixedUpdate() {
-            Body.UpdatePosition( Actions );
+            Body.UpdatePosition( this );
         }
         public void Update() {
-            Body.UpdateRotation( Actions );
+            if (Actions != null && Actions.IsEnabled()) {
+                isJumpPressed |= Actions.IsJumpPressed();
+                isCrouchPressed |= Actions.IsCrouchPressed();
+                isAcceleratePressed |= Actions.IsAcceleratePressed();
+            } else {
+                isJumpPressed = false;
+                isCrouchPressed = false;
+                isAcceleratePressed = false;
+            }
+            Body.UpdateRotation( this );
+        }
+
+        // CharacterBody.IInputActions
+        Vector3? CharacterBody.IInputActions.GetMoveVector() {
+            return Actions?.GetMoveVector();
+        }
+        Vector3? CharacterBody.IInputActions.GetLookTarget() {
+            return Actions?.GetLookTarget();
+        }
+        bool CharacterBody.IInputActions.IsJumpPressed() {
+            try {
+                return isJumpPressed;
+            } finally {
+                isJumpPressed = false;
+            }
+        }
+        bool CharacterBody.IInputActions.IsCrouchPressed() {
+            try {
+                return isCrouchPressed;
+            } finally {
+                isCrouchPressed = false;
+            }
+        }
+        bool CharacterBody.IInputActions.IsAcceleratePressed() {
+            try {
+                return isAcceleratePressed;
+            } finally {
+                isAcceleratePressed = false;
+            }
         }
 
     }

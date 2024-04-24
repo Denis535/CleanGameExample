@@ -21,8 +21,8 @@ namespace Project.Entities {
         private Arguments Args { get; set; } = default!;
         // Deps
         public World World { get; private set; } = default!;
-        // IsPlaying
-        public bool IsPlaying { get; private set; } = true;
+        // IsPaused
+        public bool IsPaused { get; private set; } = true;
         // Player
         public Player Player { get; private set; } = default!;
 
@@ -38,10 +38,10 @@ namespace Project.Entities {
             }
         }
 
-        // SetPlaying
-        public void SetPlaying(bool value) {
-            IsPlaying = value;
-            Player.SetPlaying( value );
+        // SetPaused
+        public void SetPaused(bool value) {
+            IsPaused = value;
+            Player.SetPaused( value );
         }
 
         // Start

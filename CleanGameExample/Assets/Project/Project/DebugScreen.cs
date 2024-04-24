@@ -44,7 +44,7 @@ namespace Project {
                 if (Application.Game != null) {
                     // Game
                     GUILayout.Label( "Is Game Running: " + true );
-                    GUILayout.Label( "Is Game Playing: " + Application.Game.IsPlaying );
+                    GUILayout.Label( "Is Game Paused: " + Application.Game.IsPaused );
                     GUILayout.Space( 2 );
                 }
                 {

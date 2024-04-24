@@ -10,11 +10,13 @@ namespace Project.UI.GameScreen {
 
         // View
         public ElementWrapper Widget { get; }
+        public ElementWrapper Target { get; }
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = UIViewFactory.Game.GameWidget( out var view );
-            Widget = view.Wrap();
+            VisualElement = UIFactory.Game.GameWidget( out var widget, out var target );
+            Widget = widget.Wrap();
+            Target = target.Wrap();
         }
         public override void Dispose() {
             base.Dispose();

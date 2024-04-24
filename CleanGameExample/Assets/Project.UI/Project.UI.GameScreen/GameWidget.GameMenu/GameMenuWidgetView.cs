@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidgetView() {
-            VisualElement = UIViewFactory.Game.GameMenuWidget( out var widget, out var title, out var resume, out var settings, out var back );
+            VisualElement = UIFactory.Game.GameMenuWidget( out var widget, out var title, out var resume, out var settings, out var back );
             Widget = widget.Wrap();
             Title = title.Wrap();
             Resume = resume.Wrap();

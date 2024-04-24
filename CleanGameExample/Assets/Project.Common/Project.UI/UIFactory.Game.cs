@@ -6,16 +6,16 @@ namespace Project.UI {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static partial class UIViewFactory {
+    public static partial class UIFactory {
         public static class Game {
 
             // GameWidget
-            public static Widget GameWidget(out Widget widget) {
+            public static Widget GameWidget(out Widget widget, out VisualElement target) {
                 using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
                     VisualElementFactory.Label( "+" )
                         .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
-                        .Style( i => i.translate = new StyleTranslate( new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) ) )
-                        .AddToScope();
+                        .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) )
+                        .AddToScope( out target );
                 }
                 return widget;
             }

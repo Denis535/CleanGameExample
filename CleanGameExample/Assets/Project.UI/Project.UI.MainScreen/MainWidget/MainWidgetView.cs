@@ -14,7 +14,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidgetView() {
-            VisualElement = UIViewFactory.Main.MainWidget( out var widget );
+            VisualElement = UIFactory.Main.MainWidget( out var widget );
             Widget = widget.Wrap();
         }
         public override void Dispose() {

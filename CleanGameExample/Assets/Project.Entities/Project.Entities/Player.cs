@@ -18,8 +18,8 @@ namespace Project.Entities {
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         private World World { get; set; } = default!;
-        // IsPlaying
-        public bool IsPlaying { get; private set; } = true;
+        // IsPaused
+        public bool IsPaused { get; private set; }
         // Character
         public Character? Character { get; private set; }
         // Actions
@@ -38,27 +38,27 @@ namespace Project.Entities {
             Actions.Dispose();
         }
 
-        // SetPlaying
-        public void SetPlaying(bool value) {
-            IsPlaying = value;
-            if (value) {
-                if (Character != null) Actions.Enable();
-            } else {
+        // SetPaused
+        public void SetPaused(bool value) {
+            IsPaused = value;
+            if (IsPaused) {
                 if (Character != null) Actions.Disable();
+            } else {
+                if (Character != null) Actions.Enable();
             }
         }
 
         // SetCharacter
         public void SetCharacter(Character? character) {
             if (Character != null) {
-                if (IsPlaying) Actions.Disable();
                 Character.Actions = null;
+                if (!IsPaused) Actions.Disable();
             }
             Character = character;
             if (Character != null) {
                 Camera.SetUp( Character.transform );
                 Character.Actions = this;
-                if (IsPlaying) Actions.Enable();
+                if (!IsPaused) Actions.Enable();
             }
         }
 

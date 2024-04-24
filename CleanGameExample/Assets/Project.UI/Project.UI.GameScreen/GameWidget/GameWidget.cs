@@ -43,7 +43,7 @@ namespace Project.UI.GameScreen {
         public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
             base.OnBeforeDescendantAttach( descendant, argument );
             if (descendant is GameMenuWidget) {
-                Game.SetPlaying( false );
+                Game.SetPaused( true );
                 Actions.Disable();
                 Cursor.lockState = CursorLockMode.None;
             }
@@ -56,7 +56,7 @@ namespace Project.UI.GameScreen {
         }
         public override void OnAfterDescendantDetach(UIWidgetBase descendant, object? argument) {
             if (IsAttached && descendant is GameMenuWidget) {
-                Game.SetPlaying( true );
+                Game.SetPaused( false );
                 Actions.Enable();
                 Cursor.lockState = CursorLockMode.Locked;
             }

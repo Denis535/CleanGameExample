@@ -6,7 +6,7 @@ namespace Project.UI {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static partial class UIViewFactory {
+    public static partial class UIFactory {
         public static class Main {
 
             // MainWidget
@@ -56,7 +56,7 @@ namespace Project.UI {
                 }
                 return root;
             }
-            public static VisualElement MainMenuWidgetView_SelectYourCharacterView(out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
+            public static VisualElement MainMenuWidget_SelectYourCharacterView(out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
                 using (VisualElementFactory.View().AsScope( out root )) {
                     using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                         VisualElementFactory.Select( "Gray" ).AddToScope( out gray );

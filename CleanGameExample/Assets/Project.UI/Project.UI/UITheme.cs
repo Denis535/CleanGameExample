@@ -92,7 +92,7 @@ namespace Project.UI {
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
-            Pause( AudioSource, !Game!.IsPlaying );
+            Pause( AudioSource, !Game!.IsPaused );
         }
 
         // Helpers

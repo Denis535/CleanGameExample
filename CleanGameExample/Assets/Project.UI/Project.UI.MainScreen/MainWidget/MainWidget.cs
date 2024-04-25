@@ -9,7 +9,6 @@ namespace Project.UI.MainScreen {
     using Unity.Services.Authentication;
     using Unity.Services.Core;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
@@ -23,9 +22,9 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidget() {
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
-            Storage = IDependencyContainer.Instance.RequireDependency<Storage>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
+            Storage = UnityUtils.Container.RequireDependency<Storage>( null );
             View = CreateView( this );
         }
         public override void Dispose() {

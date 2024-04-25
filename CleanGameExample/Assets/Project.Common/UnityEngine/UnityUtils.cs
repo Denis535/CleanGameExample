@@ -9,6 +9,7 @@ namespace UnityEngine {
 
     public static class UnityUtils {
 
+        public static IDependencyContainer Container { get; set; } = default!;
         public static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
 
         static UnityUtils() {

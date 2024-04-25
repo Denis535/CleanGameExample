@@ -54,10 +54,10 @@ namespace Project {
         // Awake
         public new void Awake() {
             base.Awake();
-            Theme = IDependencyContainer.Instance.RequireDependency<UITheme>( null );
-            Screen = IDependencyContainer.Instance.RequireDependency<UIScreen>( null );
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Theme = UnityUtils.Container.RequireDependency<UITheme>( null );
+            Screen = UnityUtils.Container.RequireDependency<UIScreen>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
         }
         public new void OnDestroy() {
             base.OnDestroy();

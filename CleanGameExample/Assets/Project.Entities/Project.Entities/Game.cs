@@ -8,7 +8,6 @@ namespace Project.Entities {
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
@@ -29,7 +28,7 @@ namespace Project.Entities {
         // Awake
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
-            World = IDependencyContainer.Instance.RequireDependency<World>( null );
+            World = UnityUtils.Container.RequireDependency<World>( null );
             Player = gameObject.AddComponent<Player>();
         }
         public void OnDestroy() {

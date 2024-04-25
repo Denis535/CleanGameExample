@@ -6,7 +6,6 @@ namespace Project.UI.GameScreen {
     using Project.App;
     using Project.Entities;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
     using UnityEngine.InputSystem;
 
@@ -21,7 +20,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidget() {
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
             View = CreateView( this );
             Actions = new InputActions();
         }

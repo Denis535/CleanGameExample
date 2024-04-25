@@ -5,7 +5,6 @@ namespace Project.App {
     using System.Collections.Generic;
     using Project.Entities;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.App;
 
     public class Application2 : ApplicationBase {
@@ -24,7 +23,7 @@ namespace Project.App {
         // RunGame
         public void RunGame() {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
-            Game = IDependencyContainer.Instance.RequireDependency<Game>( null );
+            Game = UnityUtils.Container.RequireDependency<Game>( null );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );

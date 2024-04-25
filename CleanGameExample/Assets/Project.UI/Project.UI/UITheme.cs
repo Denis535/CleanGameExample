@@ -10,7 +10,6 @@ namespace Project.UI {
     using Project.Entities;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
 
     public class UITheme : UIAudioThemeBase {
@@ -36,8 +35,8 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {

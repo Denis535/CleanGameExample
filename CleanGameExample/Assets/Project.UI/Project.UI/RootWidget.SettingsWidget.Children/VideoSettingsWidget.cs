@@ -6,7 +6,6 @@ namespace Project.UI {
     using System.Linq;
     using Project.App;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
 
     public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
@@ -16,7 +15,7 @@ namespace Project.UI {
 
         // Constructor
         public VideoSettingsWidget() {
-            VideoSettings = IDependencyContainer.Instance.RequireDependency<Storage.VideoSettings>( null );
+            VideoSettings = UnityUtils.Container.RequireDependency<Storage.VideoSettings>( null );
             View = CreateView( this, VideoSettings );
         }
         public override void Dispose() {

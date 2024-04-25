@@ -8,7 +8,6 @@ namespace Project.UI {
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
@@ -23,8 +22,8 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };

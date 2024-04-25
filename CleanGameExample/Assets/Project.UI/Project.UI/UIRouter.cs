@@ -9,7 +9,6 @@ namespace Project.UI {
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
@@ -78,7 +77,7 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Application = IDependencyContainer.Instance.RequireDependency<Application2>( null );
+            Application = UnityUtils.Container.RequireDependency<Application2>( null );
 #if !UNITY_EDITOR
             UnityEngine.Application.wantsToQuit += OnQuit;
 #endif

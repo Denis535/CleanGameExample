@@ -6,7 +6,6 @@ namespace Project.UI.MainScreen {
     using System.Threading.Tasks;
     using Project.Entities;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
@@ -17,7 +16,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidget() {
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
             View = CreateView( this, Router );
         }
         public override void Dispose() {

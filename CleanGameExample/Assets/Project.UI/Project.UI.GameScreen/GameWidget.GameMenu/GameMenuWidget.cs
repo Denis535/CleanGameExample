@@ -5,7 +5,6 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.UI;
 
     public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
@@ -15,7 +14,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidget() {
-            Router = IDependencyContainer.Instance.RequireDependency<UIRouter>( null );
+            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
             View = CreateView( this, Router );
         }
         public override void Dispose() {

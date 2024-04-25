@@ -8,7 +8,6 @@ namespace Project {
     using Unity.Services.Authentication;
     using UnityEngine;
     using UnityEngine.Audio;
-    using UnityEngine.Framework;
 
     public class DependencyContainer : MonoBehaviour, IDependencyContainer {
 
@@ -34,18 +33,18 @@ namespace Project {
 
         // Awake
         public void Awake() {
-            IDependencyContainer.Instance = this;
             Storage = new Storage();
             ProfileSettings = new Storage.ProfileSettings();
             VideoSettings = new Storage.VideoSettings();
             AudioSettings = new Storage.AudioSettings( AudioMixer );
             Preferences = new Storage.Preferences();
+            UnityUtils.Container = this;
         }
         public void OnDestroy() {
         }
 
         // GetObject
-        object? IDependencyContainer.GetObject(Type type, object? argument) {
+        Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
             // UI
             if (type == typeof( UITheme )) {
                 var result = UITheme;
@@ -86,14 +85,14 @@ namespace Project {
             }
             if (type == typeof( IAuthenticationService )) {
                 var result = AuthenticationService;
-                return result;
+                return (object?) result;
             }
             // Misc
-            if (type.IsDescendentOf( typeof( MonoBehaviour ) )) {
-                var result = (MonoBehaviour) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
+            if (type.IsDescendentOf( typeof( Component ) )) {
+                var result = (Component) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
                 return result;
             }
-            if (type.HasElementType && type.GetElementType().IsDescendentOf( typeof( MonoBehaviour ) )) {
+            if (type.IsArray && type.GetElementType().IsDescendentOf( typeof( Component ) )) {
                 var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None );
                 var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
                 result.CopyTo( result2, 0 );

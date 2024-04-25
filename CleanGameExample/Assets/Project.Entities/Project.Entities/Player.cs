@@ -8,7 +8,6 @@ namespace Project.Entities {
     using Project.Entities.Characters.Primary;
     using Project.Entities.Worlds;
     using UnityEngine;
-    using UnityEngine.Framework;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
@@ -38,9 +37,9 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Game = IDependencyContainer.Instance.RequireDependency<Game>( null );
-            Camera = IDependencyContainer.Instance.RequireDependency<Camera2>( null );
-            World = IDependencyContainer.Instance.RequireDependency<World>( null );
+            Game = UnityUtils.Container.RequireDependency<Game>( null );
+            Camera = UnityUtils.Container.RequireDependency<Camera2>( null );
+            World = UnityUtils.Container.RequireDependency<World>( null );
             Actions = new InputActions();
         }
         public void OnDestroy() {

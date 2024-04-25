@@ -15,6 +15,7 @@ namespace Project.UI.GameScreen {
         // Deps
         private Application2 Application { get; }
         private Game Game => Application.Game!;
+        private Player Player => Application.Game!.Player;
         // Actions
         private InputActions Actions { get; }
 
@@ -65,6 +66,11 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
+            if (Player.Interactable) {
+                View.Target.IsActive = true;
+            } else {
+                View.Target.IsActive = false;
+            }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );
             }

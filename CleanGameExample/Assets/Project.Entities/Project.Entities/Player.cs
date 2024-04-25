@@ -26,6 +26,15 @@ namespace Project.Entities {
         private InputActions Actions { get; set; } = default!;
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
+        // Interactable
+        public GameObject? Interactable {
+            get {
+                if (Character != null && Hit != null && Vector3.Distance( Character.transform.position, Hit.Value.Point ) <= 2 && Hit.Value.Object.IsInteractable()) {
+                    return Hit?.Object;
+                }
+                return null;
+            }
+        }
 
         // Awake
         public void Awake() {
@@ -71,7 +80,7 @@ namespace Project.Entities {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
-                if (Raycast( Camera.transform, out var point, out var distance, out var @object )) {
+                if (Raycast( Camera.transform, Character.transform, out var point, out var distance, out var @object )) {
                     Hit = new( point, distance, @object );
                 } else {
                     Hit = null;
@@ -135,10 +144,10 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static bool Raycast(Transform transform, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
+        private static bool Raycast(Transform camera, Transform character, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
             var mask = ~0;
-            var hits = Physics.RaycastAll( transform.position, transform.forward, 128, mask, QueryTriggerInteraction.Ignore );
-            var hit = hits.SkipWhile( i => i.transform == transform ).FirstOrDefault();
+            var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
+            var hit = hits.Where( i => i.transform != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 point = hit.point;
                 distance = hit.distance;

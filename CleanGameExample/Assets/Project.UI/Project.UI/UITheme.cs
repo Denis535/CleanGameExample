@@ -28,8 +28,8 @@ namespace Project.UI {
         // Deps
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
-        private AudioSource AudioSource { get; set; } = default!;
         private Game? Game => Application.Game;
+        private AudioSource AudioSource { get; set; } = default!;
         // Theme
         private DynamicAssetHandle<AudioClip> Theme { get; } = new DynamicAssetHandle<AudioClip>();
 
@@ -92,7 +92,7 @@ namespace Project.UI {
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
-            Pause( AudioSource, !Game!.IsPaused );
+            Pause( AudioSource, Game!.IsPaused );
         }
 
         // Helpers

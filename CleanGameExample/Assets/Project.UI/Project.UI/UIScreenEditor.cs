@@ -29,21 +29,21 @@ namespace Project.UI {
             base.OnInspectorGUI();
             if (!EditorApplication.isPlaying) {
                 foreach (var method in typeof( UIFactory.Main ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
-                    if (GUILayout.Button( "Main / " + method.Name )) {
+                    if (Button( "Show Main / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
                 foreach (var method in typeof( UIFactory.Game ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
-                    if (GUILayout.Button( "Game / " + method.Name )) {
+                    if (Button( "Show Game / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
                 foreach (var method in typeof( UIFactory.Common ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
-                    if (GUILayout.Button( "Common / " + method.Name )) {
+                    if (Button( "Show Common / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
@@ -53,6 +53,14 @@ namespace Project.UI {
                     Document.rootVisualElement.Clear();
                 }
             }
+        }
+
+        // Helpers
+        private static bool Button(string text) {
+            var style = new GUIStyle( GUI.skin.button ) {
+                alignment = TextAnchor.MiddleLeft
+            };
+            return GUILayout.Button( text, style );
         }
 
     }

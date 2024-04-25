@@ -9,7 +9,11 @@ namespace UnityEngine {
 
     public static class UnityUtils {
 
-        // PlayAnimation
+        public static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
+
+        static UnityUtils() {
+        }
+
         public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
             await PlayAnimationAsync( @object, from, to, duration, onUpdate, onComplete, onCancel, cancellationToken );
         }

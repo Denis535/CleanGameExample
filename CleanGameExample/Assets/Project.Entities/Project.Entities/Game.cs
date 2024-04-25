@@ -15,19 +15,18 @@ namespace Project.Entities {
 
         private readonly Lock @lock = new Lock();
         internal readonly List<InstanceHandle> instances = new List<InstanceHandle>();
+        private Arguments args = default!;
 
-        // Args
-        private Arguments Args { get; set; } = default!;
+        // IsPaused
+        public bool IsPaused { get; private set; }
         // Deps
         public World World { get; private set; } = default!;
-        // IsPaused
-        public bool IsPaused { get; private set; } = true;
         // Player
         public Player Player { get; private set; } = default!;
 
         // Awake
         public void Awake() {
-            Args = Context.Get<Game, Arguments>();
+            args = Context.Get<Game, Arguments>();
             World = UnityUtils.Container.RequireDependency<World>( null );
             Player = gameObject.AddComponent<Player>();
         }
@@ -45,7 +44,7 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
+            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();

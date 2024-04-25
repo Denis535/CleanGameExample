@@ -13,12 +13,12 @@ namespace Project.Entities {
 
     public class Player : PlayerBase, Character.IInputActions {
 
+        // IsPaused
+        public bool IsPaused { get; private set; }
         // Deps
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         private World World { get; set; } = default!;
-        // IsPaused
-        public bool IsPaused { get; private set; }
         // Character
         public Character? Character { get; private set; }
         // Actions
@@ -28,7 +28,7 @@ namespace Project.Entities {
         // Interactable
         public GameObject? Interactable {
             get {
-                if (Character != null && Hit != null && Vector3.Distance( Character.transform.position, Hit.Value.Point ) <= 2 && Hit.Value.Object.IsInteractable()) {
+                if (Character != null && Hit != null && Vector3.Distance( Character.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsInteractable()) {
                     return Hit?.Object;
                 }
                 return null;

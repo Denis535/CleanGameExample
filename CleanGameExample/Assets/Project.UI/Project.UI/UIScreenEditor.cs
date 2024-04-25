@@ -14,14 +14,14 @@ namespace Project.UI {
     public class UIScreenEditor : UnityEngine.Framework.UI.UIScreenEditor {
 
         // Target
-        private new UIScreen Target => (UIScreen) target;
+        private UIScreen Target => (UIScreen) target;
         // Document
         private UIDocument Document => Target.GetComponentInChildren<UIDocument>();
 
         // Awake
-        public void Awake() {
+        public new void Awake() {
         }
-        public void OnDestroy() {
+        public new void OnDestroy() {
         }
 
         // OnInspectorGUI

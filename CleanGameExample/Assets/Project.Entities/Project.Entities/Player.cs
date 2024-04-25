@@ -5,7 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Project.Entities.Characters.Primary;
+    using Project.Entities.Characters;
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
@@ -37,9 +37,9 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            Game = UnityUtils.Container.RequireDependency<Game>( null );
-            Camera = UnityUtils.Container.RequireDependency<Camera2>( null );
-            World = UnityUtils.Container.RequireDependency<World>( null );
+            Game = Utils.Container.RequireDependency<Game>( null );
+            Camera = Utils.Container.RequireDependency<Camera2>( null );
+            World = Utils.Container.RequireDependency<World>( null );
             Actions = new InputActions();
         }
         public void OnDestroy() {
@@ -111,26 +111,34 @@ namespace Project.Entities {
         bool Character.IInputActions.IsAimPressed() {
             return Actions.Game.Aim.IsPressed();
         }
-        bool Character.IInputActions.IsInteractPressed() {
+        bool Character.IInputActions.IsInteractPressed(out GameObject? interactable) {
+            interactable = Interactable;
             return Actions.Game.Interact.WasPressedThisFrame();
         }
         // Character.IInputActions
-        Vector3? Character.IInputActions.GetMoveVector() {
-            var vector2 = Actions.Game.Move.ReadValue<Vector2>();
-            var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
-            return new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
+        bool Character.IInputActions.IsMovePressed(out Vector3 moveVector) {
+            if (Actions.Game.Move.IsPressed()) {
+                var vector = (Vector3) Actions.Game.Move.ReadValue<Vector2>();
+                moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Convert( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
+                return true;
+            } else {
+                moveVector = Vector3.zero;
+                return false;
+            }
         }
-        Vector3? Character.IInputActions.GetLookTarget() {
+        bool Character.IInputActions.IsLookPressed(out Vector3? lookTarget) {
             if (Actions.Game.Fire.IsPressed() || Actions.Game.Aim.IsPressed() || Actions.Game.Interact.IsPressed()) {
-                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128 + Vector3.up * 1.75f );
+                lookTarget = Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( new Vector3( 0, 1.75f, 128f ) );
+                return true;
             }
-            var vector2 = Actions.Game.Move.ReadValue<Vector2>();
-            if (vector2 != default) {
-                var vector3 = UnityEngine.Camera.main.transform.TransformDirection( vector2.x, 0, vector2.y );
-                vector3 = new Vector3( vector3.x, 0, vector3.z ).normalized * vector2.magnitude;
-                return Character!.transform.position + vector3 * 128f;
+            if (Actions.Game.Move.IsPressed()) {
+                var vector = (Vector3) Actions.Game.Move.ReadValue<Vector2>();
+                var moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Convert( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
+                lookTarget = Character!.transform.position + moveVector * 128f;
+                return true;
             }
-            return null;
+            lookTarget = null;
+            return false;
         }
         bool Character.IInputActions.IsJumpPressed() {
             return Actions.Game.Jump.IsPressed();

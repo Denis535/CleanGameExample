@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters.Primary {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -8,8 +8,8 @@ namespace Project.Entities.Characters.Primary {
 
     public class CharacterBody : EntityBodyBase {
         public interface IInputActions {
-            Vector3? GetMoveVector();
-            Vector3? GetLookTarget();
+            bool IsMovePressed(out Vector3 moveVector);
+            bool IsLookPressed(out Vector3? lookTarget);
             bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
@@ -27,20 +27,24 @@ namespace Project.Entities.Characters.Primary {
 
         // Update
         public void UpdatePosition(IInputActions? actions) {
-            var moveVector = actions?.GetMoveVector() ?? Vector3.zero;
-            var isJumpPressed = actions?.IsJumpPressed() ?? false;
-            var isCrouchPressed = actions?.IsCrouchPressed() ?? false;
-            var isAcceleratePressed = actions?.IsAcceleratePressed() ?? false;
-            {
-                var position = GetPosition( Rigidbody.position, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-                Rigidbody.MovePosition( position );
+            if (actions != null) {
+                var isMovePressed = actions.IsMovePressed( out var moveVector );
+                var isJumpPressed = actions.IsJumpPressed();
+                var isCrouchPressed = actions.IsCrouchPressed();
+                var isAcceleratePressed = actions.IsAcceleratePressed();
+                {
+                    var position = GetPosition( Rigidbody.position, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+                    Rigidbody.MovePosition( position );
+                }
             }
         }
         public void UpdateRotation(IInputActions? actions) {
-            var lookTarget = actions?.GetLookTarget();
-            if (lookTarget.HasValue) {
-                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
-                Rigidbody.MoveRotation( rotation );
+            if (actions != null) {
+                var isLookPressed = actions.IsLookPressed( out var lookTarget );
+                if (isLookPressed && lookTarget != null) {
+                    var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
+                    Rigidbody.MoveRotation( rotation );
+                }
             }
         }
 
@@ -68,7 +72,7 @@ namespace Project.Entities.Characters.Primary {
                     velocity -= Vector3.up * 5;
                 }
             }
-            return position + velocity * UnityUtils.DeltaTime;
+            return position + velocity * Utils.DeltaTime;
         }
         private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );

@@ -77,7 +77,7 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Application = UnityUtils.Container.RequireDependency<Application2>( null );
+            Application = Utils.Container.RequireDependency<Application2>( null );
 #if !UNITY_EDITOR
             UnityEngine.Application.wantsToQuit += OnQuit;
 #endif

@@ -14,11 +14,13 @@ namespace Project.Entities {
         public record Arguments(LevelEnum Level, CharacterEnum Character);
 
         private readonly Lock @lock = new Lock();
-        internal readonly List<InstanceHandle> instances = new List<InstanceHandle>();
-        private Arguments args = default!;
 
         // IsPaused
         public bool IsPaused { get; private set; }
+        // Instances
+        public IReadOnlyList<InstanceHandle> Instances { get; } = new List<InstanceHandle>();
+        // Args
+        private Arguments Args { get; set; } = default!;
         // Deps
         public World World { get; private set; } = default!;
         // Player
@@ -26,12 +28,12 @@ namespace Project.Entities {
 
         // Awake
         public void Awake() {
-            args = Context.Get<Game, Arguments>();
-            World = UnityUtils.Container.RequireDependency<World>( null );
+            Args = Context.Get<Game, Arguments>();
+            World = Utils.Container.RequireDependency<World>( null );
             Player = gameObject.AddComponent<Player>();
         }
         public void OnDestroy() {
-            foreach (var instance in instances) {
+            foreach (var instance in Instances) {
                 instance.ReleaseSafe();
             }
         }
@@ -44,7 +46,7 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), args.Character ) );
+            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();

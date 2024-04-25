@@ -38,7 +38,7 @@ namespace Project {
             VideoSettings = new Storage.VideoSettings();
             AudioSettings = new Storage.AudioSettings( AudioMixer );
             Preferences = new Storage.Preferences();
-            UnityUtils.Container = this;
+            Utils.Container = this;
         }
         public void OnDestroy() {
         }

@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters.Primary {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -8,16 +8,16 @@ namespace Project.Entities.Characters.Primary {
 
     public class CharacterView : EntityViewBase {
 
+        // Children
+        private Transform Body { get; set; } = default!;
+        private Transform Head { get; set; } = default!;
+
         // Awake
         public void Awake() {
+            Body = transform.Require( "Body" );
+            Head = transform.Require( "Head" );
         }
         public void OnDestroy() {
-        }
-
-        // Start
-        public void Start() {
-        }
-        public void Update() {
         }
 
     }

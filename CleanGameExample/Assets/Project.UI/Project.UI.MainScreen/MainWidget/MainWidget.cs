@@ -22,9 +22,9 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidget() {
-            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
-            Application = UnityUtils.Container.RequireDependency<Application2>( null );
-            Storage = UnityUtils.Container.RequireDependency<Storage>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>( null );
+            Application = Utils.Container.RequireDependency<Application2>( null );
+            Storage = Utils.Container.RequireDependency<Storage>( null );
             View = CreateView( this );
         }
         public override void Dispose() {

@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters.Primary {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace Project.Entities.Characters.Primary {
             bool IsEnabled();
             bool IsFirePressed();
             bool IsAimPressed();
-            bool IsInteractPressed();
-            Vector3? GetMoveVector();
-            Vector3? GetLookTarget();
+            bool IsInteractPressed(out GameObject? interactable);
+            bool IsMovePressed(out Vector3 moveVector);
+            bool IsLookPressed(out Vector3? lookTarget);
             bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
@@ -56,14 +56,33 @@ namespace Project.Entities.Characters.Primary {
                 isAcceleratePressed = false;
             }
             Body.UpdateRotation( this );
+            if (Actions != null && Actions.IsEnabled()) {
+                if (Actions.IsFirePressed()) {
+
+                }
+                if (Actions.IsAimPressed()) {
+
+                }
+                if (Actions.IsInteractPressed( out var interactable )) {
+
+                }
+            }
         }
 
         // CharacterBody.IInputActions
-        Vector3? CharacterBody.IInputActions.GetMoveVector() {
-            return Actions?.GetMoveVector();
+        bool CharacterBody.IInputActions.IsMovePressed(out Vector3 moveVector) {
+            if (Actions != null && Actions.IsEnabled()) {
+                return Actions.IsMovePressed( out moveVector );
+            }
+            moveVector = Vector3.zero;
+            return false;
         }
-        Vector3? CharacterBody.IInputActions.GetLookTarget() {
-            return Actions?.GetLookTarget();
+        bool CharacterBody.IInputActions.IsLookPressed(out Vector3? lookTarget) {
+            if (Actions != null && Actions.IsEnabled()) {
+                return Actions.IsLookPressed( out lookTarget );
+            }
+            lookTarget = null;
+            return false;
         }
         bool CharacterBody.IInputActions.IsJumpPressed() {
             try {

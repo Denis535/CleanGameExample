@@ -20,7 +20,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidget() {
-            Application = UnityUtils.Container.RequireDependency<Application2>( null );
+            Application = Utils.Container.RequireDependency<Application2>( null );
             View = CreateView( this );
             Actions = new InputActions();
         }

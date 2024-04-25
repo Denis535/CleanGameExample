@@ -35,8 +35,8 @@ namespace Project.UI {
         // Awake
         public new void Awake() {
             base.Awake();
-            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
-            Application = UnityUtils.Container.RequireDependency<Application2>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>( null );
+            Application = Utils.Container.RequireDependency<Application2>( null );
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
         public new void OnDestroy() {

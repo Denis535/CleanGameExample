@@ -14,7 +14,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidget() {
-            Router = UnityUtils.Container.RequireDependency<UIRouter>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>( null );
             View = CreateView( this, Router );
         }
         public override void Dispose() {

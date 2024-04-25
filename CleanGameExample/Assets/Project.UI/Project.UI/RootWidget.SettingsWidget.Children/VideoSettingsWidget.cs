@@ -15,7 +15,7 @@ namespace Project.UI {
 
         // Constructor
         public VideoSettingsWidget() {
-            VideoSettings = UnityUtils.Container.RequireDependency<Storage.VideoSettings>( null );
+            VideoSettings = Utils.Container.RequireDependency<Storage.VideoSettings>( null );
             View = CreateView( this, VideoSettings );
         }
         public override void Dispose() {

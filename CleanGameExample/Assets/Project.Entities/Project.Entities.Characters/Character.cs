@@ -15,7 +15,7 @@ namespace Project.Entities.Characters {
             bool IsAimPressed();
             bool IsInteractPressed(out GameObject? interactable);
             bool IsMovePressed(out Vector3 moveVector);
-            bool IsLookPressed(out Vector3? lookTarget);
+            bool IsLookPressed(out Vector3 lookTarget);
             bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
@@ -77,11 +77,11 @@ namespace Project.Entities.Characters {
             moveVector = Vector3.zero;
             return false;
         }
-        bool CharacterBody.IInputActions.IsLookPressed(out Vector3? lookTarget) {
+        bool CharacterBody.IInputActions.IsLookPressed(out Vector3 lookTarget) {
             if (Actions != null && Actions.IsEnabled()) {
                 return Actions.IsLookPressed( out lookTarget );
             }
-            lookTarget = null;
+            lookTarget = Vector3.zero;
             return false;
         }
         bool CharacterBody.IInputActions.IsJumpPressed() {

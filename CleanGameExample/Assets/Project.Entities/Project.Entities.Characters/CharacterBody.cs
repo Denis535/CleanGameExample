@@ -9,17 +9,19 @@ namespace Project.Entities.Characters {
     public class CharacterBody : EntityBodyBase {
         public interface IInputActions {
             bool IsMovePressed(out Vector3 moveVector);
-            bool IsLookPressed(out Vector3? lookTarget);
+            bool IsLookPressed(out Vector3 lookTarget);
             bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
         }
 
-        // Rigidbody
+        // Components
+        private Collider Collider { get; set; } = default!;
         private Rigidbody Rigidbody { get; set; } = default!;
 
         // Awake
         public void Awake() {
+            Collider = gameObject.RequireComponent<Collider>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         public void OnDestroy() {
@@ -42,7 +44,7 @@ namespace Project.Entities.Characters {
             if (actions != null) {
                 var isLookPressed = actions.IsLookPressed( out var lookTarget );
                 if (isLookPressed && lookTarget != null) {
-                    var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget.Value );
+                    var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget );
                     Rigidbody.MoveRotation( rotation );
                 }
             }

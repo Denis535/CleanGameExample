@@ -16,28 +16,28 @@ namespace Project.Entities {
         public static Character SpawnPlayerCharacter(this Game game, PlayerSpawnPoint point, CharacterEnum character) {
             var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
             ((IList<InstanceHandle>) game.Instances).Add( instance );
-            return instance.Instantiate( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform ) ).GetValue();
+            return instance.Instantiate( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation ) ).GetValue();
         }
 
         // SpawnPlayerCharacterAsync
         public static ValueTask<Character> SpawnPlayerCharacterAsync(this Game game, PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Character>( GetPlayerCharacter( character ) );
             ((IList<InstanceHandle>) game.Instances).Add( instance );
-            return instance.Instantiate( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation, game.transform ) ).GetValueAsync( cancellationToken );
+            return instance.Instantiate( i => UnityEngine.Object.Instantiate( i.RequireComponent<Character>(), point.transform.position, point.transform.rotation ) ).GetValueAsync( cancellationToken );
         }
 
         // SpawnEnemyCharacterAsync
         public static ValueTask<Transform> SpawnEnemyCharacterAsync(this Game game, EnemySpawnPoint point, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Transform>( GetEnemyCharacter() );
             ((IList<InstanceHandle>) game.Instances).Add( instance );
-            return instance.Instantiate( point.transform.position, point.transform.rotation, game.transform ).GetValueAsync( cancellationToken );
+            return instance.Instantiate( point.transform.position, point.transform.rotation ).GetValueAsync( cancellationToken );
         }
 
         // SpawnLootAsync
         public static ValueTask<Transform> SpawnLootAsync(this Game game, LootSpawnPoint point, CancellationToken cancellationToken) {
             var instance = new InstanceHandle<Transform>( GetLoot() );
             ((IList<InstanceHandle>) game.Instances).Add( instance );
-            return instance.Instantiate( point.transform.position, point.transform.rotation, game.transform ).GetValueAsync( cancellationToken );
+            return instance.Instantiate( point.transform.position, point.transform.rotation ).GetValueAsync( cancellationToken );
         }
 
         // Heleprs

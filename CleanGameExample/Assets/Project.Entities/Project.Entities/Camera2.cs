@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
@@ -22,9 +23,9 @@ namespace Project.Entities {
         public static readonly float DistanceInputSensitivity = 0.20f;
 
         // Target
-        public Vector3 Target { get; set; } = Vector3.zero;
-        public Vector2 Angles { get; set; } = DefaultAngles;
-        public float Distance { get; set; } = DefaultDistance;
+        public Character? Target { get; private set; }
+        public Vector2 Angles { get; private set; }
+        public float Distance { get; private set; }
 
         // Awake
         public void Awake() {
@@ -32,22 +33,13 @@ namespace Project.Entities {
         public void OnDestroy() {
         }
 
-        // OnDrawGizmosSelected
-        public void OnDrawGizmosSelected() {
-            Gizmos.color = Color.white;
-            Gizmos.DrawSphere( Target, 0.01f );
-        }
-
-        // SetUp
-        public void SetUp(Transform target) {
-            Target = target.position;
-            Angles = new Vector2( DefaultAngles.x, target.eulerAngles.y );
-            Distance = DefaultDistance;
-        }
-
         // SetTarget
-        public void SetTarget(Vector3 target) {
+        public void SetTarget(Character? target) {
             Target = target;
+            if (Target != null) {
+                Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
+                Distance = DefaultDistance;
+            }
         }
         public void SetAngles(Vector2 angles) {
             Angles = ClampAngles( angles );
@@ -66,7 +58,7 @@ namespace Project.Entities {
 
         // Apply
         public void Apply() {
-            Apply( transform, Target, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
+            Apply( transform, Target!.transform.position, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
             if (Camera.main != null && Camera.main.gameObject != gameObject) {
                 Camera.main.transform.localPosition = transform.localPosition;
                 Camera.main.transform.localRotation = transform.localRotation;

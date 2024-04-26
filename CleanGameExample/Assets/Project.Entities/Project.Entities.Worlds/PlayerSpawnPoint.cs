@@ -25,7 +25,7 @@ namespace Project.Entities.Worlds {
 
         // OnDrawGizmos
         private void OnDrawGizmos() {
-            var size = HandleUtility.GetHandleSize( transform.position ).Convert( i => Mathf.Clamp( i, 1f, 20f ) );
+            var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Mathf.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.green;
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.DrawSphere( Vector3.zero, size * 0.1f );

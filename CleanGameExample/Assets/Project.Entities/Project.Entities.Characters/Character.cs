@@ -58,13 +58,13 @@ namespace Project.Entities.Characters {
             Body.UpdateRotation( this );
             if (Actions != null && Actions.IsEnabled()) {
                 if (Actions.IsFirePressed()) {
-
+                    
                 }
                 if (Actions.IsAimPressed()) {
-
+                    
                 }
                 if (Actions.IsInteractPressed( out var interactable )) {
-
+                    
                 }
             }
         }

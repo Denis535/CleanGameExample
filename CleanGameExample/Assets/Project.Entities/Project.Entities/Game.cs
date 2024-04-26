@@ -7,7 +7,6 @@ namespace Project.Entities {
     using System.Threading.Tasks;
     using Project.Entities.Worlds;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
@@ -17,8 +16,6 @@ namespace Project.Entities {
 
         // IsPaused
         public bool IsPaused { get; private set; }
-        // Instances
-        public IReadOnlyList<InstanceHandle> Instances { get; } = new List<InstanceHandle>();
         // Args
         private Arguments Args { get; set; } = default!;
         // Deps
@@ -33,9 +30,7 @@ namespace Project.Entities {
             Player = gameObject.AddComponent<Player>();
         }
         public void OnDestroy() {
-            foreach (var instance in Instances) {
-                instance.ReleaseSafe();
-            }
+            Spawner.ReleaseAll();
         }
 
         // SetPaused
@@ -46,16 +41,16 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( this.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
+            Player.SetCharacter( Spawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        var task = this.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = Spawner.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        var task = this.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = Spawner.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );

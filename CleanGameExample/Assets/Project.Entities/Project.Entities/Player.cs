@@ -116,7 +116,7 @@ namespace Project.Entities {
         bool Character.IInputActions.IsMovePressed(out Vector3 moveVector) {
             if (Actions.Game.Move.IsPressed()) {
                 var vector = (Vector3) Actions.Game.Move.ReadValue<Vector2>();
-                moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Convert( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
+                moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
                 return true;
             } else {
                 moveVector = Vector3.zero;
@@ -130,7 +130,7 @@ namespace Project.Entities {
             }
             if (Actions.Game.Move.IsPressed()) {
                 var vector = (Vector3) Actions.Game.Move.ReadValue<Vector2>();
-                var moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Convert( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
+                var moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
                 lookTarget = Character!.transform.position + moveVector * 128f + Vector3.up * 1.75f;
                 return true;
             }

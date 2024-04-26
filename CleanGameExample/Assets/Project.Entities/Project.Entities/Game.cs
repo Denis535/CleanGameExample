@@ -30,7 +30,6 @@ namespace Project.Entities {
             Player = gameObject.AddComponent<Player>();
         }
         public void OnDestroy() {
-            Spawner.ReleaseAll();
         }
 
         // SetPaused

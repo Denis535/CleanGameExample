@@ -18,40 +18,62 @@ namespace Project.Entities {
 
         // Spawn
         public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, CharacterEnum character) {
-            return Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation ).GetValue();
+            return Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
         }
 
         // SpawnAsync
         public static ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            return Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation ).GetValueAsync( cancellationToken );
+            return InstantiateAsync<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
         }
         public static ValueTask<Transform> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
-            return Instantiate<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation ).GetValueAsync( cancellationToken );
+            return InstantiateAsync<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
         }
         public static ValueTask<Transform> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
-            return Instantiate<Transform>( GetLoot(), point.transform.position, point.transform.rotation ).GetValueAsync( cancellationToken );
+            return InstantiateAsync<Transform>( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
         }
 
         // Instantiate
-        public static InstanceHandle<T> Instantiate<T>(string key) where T : notnull, Component {
+        public static T Instantiate<T>(string key) where T : notnull, Component {
             var instance = new InstanceHandle<T>( key );
             Instances.Add( instance );
-            return instance.Instantiate();
+            return instance.Instantiate().GetValue();
         }
-        public static InstanceHandle<T> Instantiate<T>(string key, Transform? parent) where T : notnull, Component {
+        public static T Instantiate<T>(string key, Transform? parent) where T : notnull, Component {
             var instance = new InstanceHandle<T>( key );
             Instances.Add( instance );
-            return instance.Instantiate( parent );
+            return instance.Instantiate( parent ).GetValue();
         }
-        public static InstanceHandle<T> Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : notnull, Component {
+        public static T Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : notnull, Component {
             var instance = new InstanceHandle<T>( key );
             Instances.Add( instance );
-            return instance.Instantiate( position, rotation );
+            return instance.Instantiate( position, rotation ).GetValue();
         }
-        public static InstanceHandle<T> Instantiate<T>(string key, Vector3 position, Quaternion rotation, Transform? parent) where T : notnull, Component {
+        public static T Instantiate<T>(string key, Vector3 position, Quaternion rotation, Transform? parent) where T : notnull, Component {
             var instance = new InstanceHandle<T>( key );
             Instances.Add( instance );
-            return instance.Instantiate( position, rotation, parent );
+            return instance.Instantiate( position, rotation, parent ).GetValue();
+        }
+
+        // InstantiateAsync
+        public static ValueTask<T> InstantiateAsync<T>(string key, CancellationToken cancellationToken) where T : notnull, Component {
+            var instance = new InstanceHandle<T>( key );
+            Instances.Add( instance );
+            return instance.Instantiate().GetValueAsync( cancellationToken );
+        }
+        public static ValueTask<T> InstantiateAsync<T>(string key, Transform? parent, CancellationToken cancellationToken) where T : notnull, Component {
+            var instance = new InstanceHandle<T>( key );
+            Instances.Add( instance );
+            return instance.Instantiate( parent ).GetValueAsync( cancellationToken );
+        }
+        public static ValueTask<T> InstantiateAsync<T>(string key, Vector3 position, Quaternion rotation, CancellationToken cancellationToken) where T : notnull, Component {
+            var instance = new InstanceHandle<T>( key );
+            Instances.Add( instance );
+            return instance.Instantiate( position, rotation ).GetValueAsync( cancellationToken );
+        }
+        public static ValueTask<T> InstantiateAsync<T>(string key, Vector3 position, Quaternion rotation, Transform? parent, CancellationToken cancellationToken) where T : notnull, Component {
+            var instance = new InstanceHandle<T>( key );
+            Instances.Add( instance );
+            return instance.Instantiate( position, rotation, parent ).GetValueAsync( cancellationToken );
         }
 
         // Release

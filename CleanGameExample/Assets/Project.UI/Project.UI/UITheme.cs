@@ -30,7 +30,7 @@ namespace Project.UI {
         private Game? Game => Application.Game;
         private AudioSource AudioSource { get; set; } = default!;
         // Theme
-        private DynamicAssetHandle<AudioClip> Theme { get; } = new DynamicAssetHandle<AudioClip>();
+        private AssetHandleDynamic<AudioClip> Theme { get; } = new AssetHandleDynamic<AudioClip>();
 
         // Awake
         public new void Awake() {
@@ -64,12 +64,12 @@ namespace Project.UI {
             if (!Theme.IsValid) {
                 await Play( AudioSource, Theme, MainThemes.First(), destroyCancellationToken );
             } else
-            if (!MainThemes.Contains( Theme.Key )) {
+            if (!MainThemes.Contains( Theme.Handle.Key )) {
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, MainThemes.First(), destroyCancellationToken );
             } else
             if (!IsPlaying( AudioSource )) {
-                var next = GetNextValue( MainThemes, Theme.Key );
+                var next = GetNextValue( MainThemes, Theme.Handle.Key );
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
@@ -82,12 +82,12 @@ namespace Project.UI {
             if (!Theme.IsValid) {
                 await Play( AudioSource, Theme, GameThemes.First(), destroyCancellationToken );
             } else
-            if (!GameThemes.Contains( Theme.Key )) {
+            if (!GameThemes.Contains( Theme.Handle.Key )) {
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, GameThemes.First(), destroyCancellationToken );
             } else
             if (!IsPlaying( AudioSource )) {
-                var next = GetNextValue( GameThemes, Theme.Key );
+                var next = GetNextValue( GameThemes, Theme.Handle.Key );
                 Stop( AudioSource, Theme );
                 await Play( AudioSource, Theme, next, destroyCancellationToken );
             }
@@ -114,8 +114,10 @@ namespace Project.UI {
         private static bool IsPaused(AudioSource source) {
             return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length ) && !source.isPlaying;
         }
-        private static async Task Play(AudioSource source, DynamicAssetHandle<AudioClip> clip, string key, CancellationToken cancellationToken) {
-            Play( source, await clip.Load( key ).GetValueAsync( cancellationToken ) );
+        // Helpers
+        private static async Task Play(AudioSource source, AssetHandleDynamic<AudioClip> clip, string key, CancellationToken cancellationToken) {
+            var value = await clip.SetHandle( key ).Load().GetValueAsync( cancellationToken );
+            Play( source, value );
         }
         private static void Play(AudioSource source, AudioClip clip) {
             Assert.Operation.Message( $"You are trying to play {clip.name} clip but first you must stop old clip" ).Valid( source.clip == null );
@@ -131,9 +133,9 @@ namespace Project.UI {
                 source.UnPause();
             }
         }
-        private static void Stop(AudioSource source, DynamicAssetHandle<AudioClip> clip) {
+        private static void Stop(AudioSource source, AssetHandleDynamic<AudioClip> clip) {
             Stop( source );
-            clip.Release();
+            clip.Handle.Release();
         }
         private static void Stop(AudioSource source) {
             if (source.clip != null) {

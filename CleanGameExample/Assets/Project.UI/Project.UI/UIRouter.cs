@@ -72,7 +72,7 @@ namespace Project.UI {
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
-        private DynamicSceneHandle World { get; } = new DynamicSceneHandle();
+        private SceneHandleDynamic World { get; } = new SceneHandleDynamic();
 
         // Awake
         public new void Awake() {
@@ -176,10 +176,11 @@ namespace Project.UI {
             SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(LevelEnum level) {
-            await World.Load( GetWorldAddress( level ), LoadSceneMode.Additive, false ).WaitAsync();
-            await World.ActivateAsync();
-            SceneManager.SetActiveScene( World.Value );
+            await World.SetHandle( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();
+            await World.Handle.ActivateAsync();
+            SceneManager.SetActiveScene( World.Handle.Value );
         }
+        // Helpers
         private static string GetWorldAddress(LevelEnum level) {
             switch (level) {
                 case LevelEnum.Level1: return R.Project.Entities.Worlds.World_01_Value;
@@ -196,7 +197,7 @@ namespace Project.UI {
             await GameScene.UnloadSafeAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            await World.UnloadSafeAsync();
+            await World.Handle.UnloadSafeAsync();
         }
 
     }

@@ -14,130 +14,18 @@ namespace Project.Entities {
 
         // Spawn
         public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, CharacterEnum character) {
-            return Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
+            return Addressables2.Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
         }
 
         // SpawnAsync
         public static ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
-            return InstantiateAsync<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
+            return Addressables2.InstantiateAsync<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
         }
         public static ValueTask<Transform> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
-            return InstantiateAsync<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
+            return Addressables2.InstantiateAsync<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
         }
         public static ValueTask<Transform> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
-            return InstantiateAsync<Transform>( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
-        }
-
-        // Instantiate
-        public static T Instantiate<T>(string key) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = prefabHandle.WaitForCompletion();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3 );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static T Instantiate<T>(string key, Transform? parent) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = prefabHandle.WaitForCompletion();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, parent );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static T Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = prefabHandle.WaitForCompletion();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, position, rotation );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static T Instantiate<T>(string key, Vector3 position, Quaternion rotation, Transform? parent) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = prefabHandle.WaitForCompletion();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, position, rotation, parent );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-
-        // InstantiateAsync
-        public static async ValueTask<T> InstantiateAsync<T>(string key, CancellationToken cancellationToken) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = await prefabHandle.Task.WaitAsync( cancellationToken );
-                cancellationToken.ThrowIfCancellationRequested();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3 );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static async ValueTask<T> InstantiateAsync<T>(string key, Transform? parent, CancellationToken cancellationToken) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = await prefabHandle.Task.WaitAsync( cancellationToken );
-                cancellationToken.ThrowIfCancellationRequested();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, parent );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static async ValueTask<T> InstantiateAsync<T>(string key, Vector3 position, Quaternion rotation, CancellationToken cancellationToken) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = await prefabHandle.Task.WaitAsync( cancellationToken );
-                cancellationToken.ThrowIfCancellationRequested();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, position, rotation );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
-        }
-        public static async ValueTask<T> InstantiateAsync<T>(string key, Vector3 position, Quaternion rotation, Transform? parent, CancellationToken cancellationToken) where T : notnull, Component {
-            var prefabHandle = Addressables.LoadAssetAsync<GameObject>( key );
-            try {
-                var prefab2 = await prefabHandle.Task.WaitAsync( cancellationToken );
-                cancellationToken.ThrowIfCancellationRequested();
-                var prefab3 = prefab2.RequireComponent<T>();
-                var instance = GameObject.Instantiate( prefab3, position, rotation, parent );
-                instance.gameObject.AddAddressableInstance( prefabHandle );
-                return instance;
-            } catch {
-                Addressables.Release( prefabHandle );
-                throw;
-            }
+            return Addressables2.InstantiateAsync<Transform>( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
         }
 
         // Heleprs

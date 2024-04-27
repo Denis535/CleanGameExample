@@ -65,10 +65,12 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
-            if (Player.Interactable) {
-                View.Target.IsActive = true;
+            if (Player.Hit?.Object.IsEnemyCharacter() ?? false && Player.Hit.Value.Distance <= 16) {
+                View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Enemy );
+            } else if (Player.Interactable) {
+                View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Interactable );
             } else {
-                View.Target.IsActive = false;
+                View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Normal );
             }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 this.AttachChild( new GameMenuWidget() );

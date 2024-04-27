@@ -9,11 +9,28 @@ namespace Project.UI.GameScreen {
 
     public class GameWidgetView : UIViewBase {
         public class TargetWrapper : ElementWrapper {
-            public bool IsActive {
-                get => VisualElement.style.color == Color.red;
-                set => VisualElement.style.color = value ? Color.red : Color.white;
+            public enum Mode {
+                Normal,
+                Interactable,
+                Enemy,
             }
             public TargetWrapper(VisualElement visualElement) : base( visualElement ) {
+            }
+            public void SetMode(Mode value) {
+                switch (value) {
+                    case Mode.Normal:
+                        VisualElement.style.color = Color.white;
+                        break;
+                    case Mode.Interactable:
+                        VisualElement.style.color = Color.yellow;
+                        break;
+                    case Mode.Enemy:
+                        VisualElement.style.color = Color.red;
+                        break;
+                    default:
+                        Exceptions.Internal.NotSupported( $"Value {value} is supported" );
+                        break;
+                }
             }
         }
 

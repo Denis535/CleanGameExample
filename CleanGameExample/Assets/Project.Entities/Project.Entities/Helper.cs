@@ -5,9 +5,9 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    internal static class Helper {
+    public static class Helper {
 
-        // IsPlayerCharacter
+        // IsCharacter
         public static bool IsPlayerCharacter(this GameObject gameObject) {
             return gameObject.name.Contains( "PlayerCharacter" );
         }

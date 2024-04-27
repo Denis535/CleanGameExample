@@ -181,6 +181,22 @@ namespace Project.UI {
             SceneManager.SetActiveScene( World.Handle.Value );
         }
         // Helpers
+        private async Task UnloadSceneAsync_MainScene() {
+            if (MainScene.IsValid) {
+                await MainScene.UnloadSafeAsync();
+            }
+        }
+        private async Task UnloadSceneAsync_GameScene() {
+            if (GameScene.IsValid) {
+                await GameScene.UnloadSafeAsync();
+            }
+        }
+        private async Task UnloadSceneAsync_World() {
+            if (World.IsValid) {
+                await World.Handle.UnloadSafeAsync();
+            }
+        }
+        // Helpers
         private static string GetWorldAddress(LevelEnum level) {
             switch (level) {
                 case LevelEnum.Level1: return R.Project.Entities.Worlds.World_01_Value;
@@ -188,16 +204,6 @@ namespace Project.UI {
                 case LevelEnum.Level3: return R.Project.Entities.Worlds.World_03_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
-        }
-        // Helpers
-        private async Task UnloadSceneAsync_MainScene() {
-            await MainScene.UnloadSafeAsync();
-        }
-        private async Task UnloadSceneAsync_GameScene() {
-            await GameScene.UnloadSafeAsync();
-        }
-        private async Task UnloadSceneAsync_World() {
-            await World.Handle.UnloadSafeAsync();
         }
 
     }

@@ -34,10 +34,10 @@ namespace Project.Entities {
                 return null;
             }
         }
-        // Interactable
-        public GameObject? Interactable {
+        // Loot
+        public GameObject? Loot {
             get {
-                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsInteractable()) {
+                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsLoot()) {
                     return Hit?.Object;
                 }
                 return null;
@@ -118,7 +118,7 @@ namespace Project.Entities {
             return Actions.Game.Aim.IsPressed();
         }
         bool Character.IInputActions.IsInteractPressed(out GameObject? interactable) {
-            interactable = Interactable;
+            interactable = Enemy ?? Loot;
             return Actions.Game.Interact.WasPressedThisFrame();
         }
         // Character.IInputActions

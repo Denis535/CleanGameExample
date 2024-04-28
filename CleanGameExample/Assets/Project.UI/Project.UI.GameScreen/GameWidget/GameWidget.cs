@@ -67,8 +67,8 @@ namespace Project.UI.GameScreen {
         public void Update() {
             if (Player.Enemy) {
                 View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Enemy );
-            } else if (Player.Interactable) {
-                View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Interactable );
+            } else if (Player.Loot) {
+                View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Loot );
             } else {
                 View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Normal );
             }

@@ -7,16 +7,10 @@ namespace Project.Entities.Characters {
     using UnityEngine.Framework.Entities;
 
     public class CharacterBody : EntityBodyBase {
-        public interface IInputActions {
-            bool IsMovePressed(out Vector3 moveVector);
-            bool IsLookPressed(out Vector3 lookTarget);
-            bool IsJumpPressed();
-            bool IsCrouchPressed();
-            bool IsAcceleratePressed();
-        }
 
-        // Components
+        // Collider
         private Collider Collider { get; set; } = default!;
+        // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
 
         // Awake
@@ -28,25 +22,14 @@ namespace Project.Entities.Characters {
         }
 
         // Update
-        public void UpdatePosition(IInputActions? actions) {
-            if (actions != null) {
-                var isMovePressed = actions.IsMovePressed( out var moveVector );
-                var isJumpPressed = actions.IsJumpPressed();
-                var isCrouchPressed = actions.IsCrouchPressed();
-                var isAcceleratePressed = actions.IsAcceleratePressed();
-                {
-                    var position = GetPosition( Rigidbody.position, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-                    Rigidbody.MovePosition( position );
-                }
-            }
+        public void UpdatePosition(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            var position = GetPosition( Rigidbody.position, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            Rigidbody.MovePosition( position );
         }
-        public void UpdateRotation(IInputActions? actions) {
-            if (actions != null) {
-                var isLookPressed = actions.IsLookPressed( out var lookTarget );
-                if (isLookPressed && lookTarget != null) {
-                    var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget );
-                    Rigidbody.MoveRotation( rotation );
-                }
+        public void UpdateRotation(bool isLookPressed, Vector3 lookTarget) {
+            if (isLookPressed && lookTarget != null) {
+                var rotation = GetRotation( Rigidbody.rotation, Rigidbody.position, lookTarget );
+                Rigidbody.MoveRotation( rotation );
             }
         }
 

@@ -15,8 +15,8 @@ namespace Project.Entities {
             return gameObject.name.Contains( "Enemy" );
         }
 
-        // IsInteractable
-        public static bool IsInteractable(this GameObject gameObject) {
+        // IsLoot
+        public static bool IsLoot(this GameObject gameObject) {
             return gameObject.name.Contains( "Gun" );
         }
         public static bool IsWeapon(this GameObject gameObject) {

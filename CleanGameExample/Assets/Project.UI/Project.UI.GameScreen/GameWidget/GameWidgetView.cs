@@ -11,7 +11,7 @@ namespace Project.UI.GameScreen {
         public class TargetWrapper : ElementWrapper {
             public enum Mode {
                 Normal,
-                Interactable,
+                Loot,
                 Enemy,
             }
             public TargetWrapper(VisualElement visualElement) : base( visualElement ) {
@@ -21,7 +21,7 @@ namespace Project.UI.GameScreen {
                     case Mode.Normal:
                         VisualElement.style.color = Color.white;
                         break;
-                    case Mode.Interactable:
+                    case Mode.Loot:
                         VisualElement.style.color = Color.yellow;
                         break;
                     case Mode.Enemy:

@@ -12,7 +12,7 @@ namespace Project.UI.MainScreen {
 
     public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
 
-        // Objects
+        // UI
         private UIRouter Router { get; }
 
         // Constructor

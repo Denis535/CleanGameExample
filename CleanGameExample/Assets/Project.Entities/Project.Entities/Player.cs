@@ -15,7 +15,7 @@ namespace Project.Entities {
 
         // IsPaused
         public bool IsPaused { get; private set; }
-        // Objects
+        // Entities
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         public Character? Character { get; private set; }

@@ -17,7 +17,7 @@ namespace Project.Entities {
         public bool IsPaused { get; private set; }
         // Args
         private Arguments Args { get; set; } = default!;
-        // Objects
+        // Entities
         public Player Player { get; private set; } = default!;
         public World World { get; private set; } = default!;
 

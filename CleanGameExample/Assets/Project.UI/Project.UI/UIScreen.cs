@@ -13,8 +13,9 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase {
 
-        // Objects
+        // UI
         private UIRouter Router { get; set; } = default!;
+        // Application
         private Application2 Application { get; set; } = default!;
         // Widget
         private new UIRootWidget? Widget => (UIRootWidget?) base.Widget;

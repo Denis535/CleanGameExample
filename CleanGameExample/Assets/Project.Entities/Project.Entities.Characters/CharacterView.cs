@@ -8,7 +8,7 @@ namespace Project.Entities.Characters {
 
     public class CharacterView : EntityViewBase {
 
-        // Objects
+        // Components
         private Transform Body { get; set; } = default!;
         private Transform Head { get; set; } = default!;
 

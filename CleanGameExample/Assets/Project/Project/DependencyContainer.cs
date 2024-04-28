@@ -17,19 +17,21 @@ namespace Project {
         [SerializeField] private Application2 application = default!;
         [SerializeField] private AudioMixer audioMixer = default!;
 
-        // Objects
+        // UI
         private UITheme UITheme => uiTheme;
         private UIScreen UIScreen => uiScreen;
         private UIRouter UIRouter => uiRouter;
+        // Application
         private Application2 Application => application;
-        // Assets
+        // AudioMixer
         private AudioMixer AudioMixer => audioMixer;
-        // Misc
+        // Storage
         private Storage Storage { get; set; } = default!;
         private Storage.ProfileSettings ProfileSettings { get; set; } = default!;
         private Storage.VideoSettings VideoSettings { get; set; } = default!;
         private Storage.AudioSettings AudioSettings { get; set; } = default!;
         private Storage.Preferences Preferences { get; set; } = default!;
+        // AuthenticationService
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
 
         // Awake

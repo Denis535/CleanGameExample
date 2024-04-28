@@ -10,7 +10,7 @@ namespace Project.UI.GameScreen {
 
     public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
 
-        // Objects
+        // UI
         private UIRouter Router { get; }
 
         // Constructor

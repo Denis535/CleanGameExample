@@ -26,7 +26,7 @@ namespace Project.Entities.Characters {
         private bool isCrouchPressed = false;
         private bool isAcceleratePressed = false;
 
-        // Objects
+        // Components
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
         // Actions

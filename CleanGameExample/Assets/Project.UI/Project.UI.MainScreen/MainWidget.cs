@@ -15,8 +15,9 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase<MainWidgetView> {
 
-        // Objects
+        // UI
         private UIRouter Router { get; }
+        // Application
         private Application2 Application { get; }
         // Storage
         private Storage Storage { get; set; } = default!;

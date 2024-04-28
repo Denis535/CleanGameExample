@@ -66,7 +66,7 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
-        // Objects
+        // Application
         private Application2 Application { get; set; } = default!;
         // Scenes
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );

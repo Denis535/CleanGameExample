@@ -36,7 +36,7 @@ namespace Project.UI.Common {
             } else if (this is ErrorDialogWidget) {
                 View = (TView) (object) new ErrorDialogWidgetView();
             } else {
-                throw Exceptions.Internal.NotImplemented( $"DialogWidgetBase {this} is not implemented" );
+                throw Exceptions.Internal.NotSupported( $"DialogWidgetBase {this} is not supported" );
             }
             Title = title;
             Message = message;

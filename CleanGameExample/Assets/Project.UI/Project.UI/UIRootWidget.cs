@@ -10,10 +10,10 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class RootWidget : UIRootWidget {
+    public class UIRootWidget : UnityEngine.Framework.UI.UIRootWidget {
 
         // Constructor
-        public RootWidget() {
+        public UIRootWidget() {
             VisualElementFactory.OnWidgetAttach += visualElement => {
                 if (visualElement.focusController.focusedElement != null) return;
                 if (visualElement.LoadFocus()) return;

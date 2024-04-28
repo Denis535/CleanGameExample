@@ -62,7 +62,7 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else {
-                throw Exceptions.Internal.NotImplemented( $"DialogWidgetViewBase {this} is not implemented" );
+                throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {this} is not supported" );
             }
         }
         public override void Dispose() {

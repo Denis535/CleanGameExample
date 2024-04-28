@@ -17,7 +17,7 @@ namespace Project.UI {
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         // Widget
-        private new RootWidget? Widget => (RootWidget?) base.Widget;
+        private new UIRootWidget? Widget => (UIRootWidget?) base.Widget;
 
         // Awake
         public new void Awake() {
@@ -34,7 +34,7 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            this.AttachWidget( new RootWidget() );
+            this.AttachWidget( new UIRootWidget() );
         }
         public new void OnDestroy() {
             Widget!.DetachSelf();

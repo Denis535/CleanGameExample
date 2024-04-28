@@ -176,7 +176,7 @@ namespace Project.UI {
             SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(LevelEnum level) {
-            await World.SetHandle( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();
+            await World.SetUp( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();
             await World.Handle.ActivateAsync();
             SceneManager.SetActiveScene( World.Handle.Value );
         }

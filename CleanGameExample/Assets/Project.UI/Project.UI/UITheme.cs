@@ -119,7 +119,7 @@ namespace Project.UI {
         }
         // Helpers
         private static async Task Play(AudioSource source, AssetHandleDynamic<AudioClip> clip, string key, CancellationToken cancellationToken) {
-            var value = await clip.SetHandle( key ).Load().GetValueAsync( cancellationToken );
+            var value = await clip.SetUp( key ).Load().GetValueAsync( cancellationToken );
             Play( source, value );
         }
         private static void Play(AudioSource source, AudioClip clip) {

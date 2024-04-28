@@ -4,6 +4,7 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 

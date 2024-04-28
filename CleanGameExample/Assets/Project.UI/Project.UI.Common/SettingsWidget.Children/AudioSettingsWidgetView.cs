@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace Project.UI {
+namespace Project.UI.Common {
     using System;
     using System.Collections;
     using System.Collections.Generic;

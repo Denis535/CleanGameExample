@@ -40,16 +40,16 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( Spawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
+            Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        var task = Spawner.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = EntitySpawner.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        var task = Spawner.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = EntitySpawner.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );

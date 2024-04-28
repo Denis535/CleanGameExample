@@ -65,7 +65,7 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
-            if (Player.Hit?.Object.IsEnemyCharacter() ?? false && Player.Hit.Value.Distance <= 16) {
+            if (Player.Enemy) {
                 View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Enemy );
             } else if (Player.Interactable) {
                 View.Target.SetMode( GameWidgetView.TargetWrapper.Mode.Interactable );

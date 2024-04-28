@@ -24,11 +24,20 @@ namespace Project.Entities {
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
-        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
+        private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
+        // Enemy
+        public GameObject? Enemy {
+            get {
+                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f && Hit.Value.Object.IsEnemy()) {
+                    return Hit?.Object;
+                }
+                return null;
+            }
+        }
         // Interactable
         public GameObject? Interactable {
             get {
-                if (Character != null && Hit != null && Vector3.Distance( Character.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsInteractable()) {
+                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsInteractable()) {
                     return Hit?.Object;
                 }
                 return null;

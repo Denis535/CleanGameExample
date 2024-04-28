@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    internal static class Spawner {
+    internal static class EntitySpawner {
 
         // Spawn
         public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, CharacterEnum character) {

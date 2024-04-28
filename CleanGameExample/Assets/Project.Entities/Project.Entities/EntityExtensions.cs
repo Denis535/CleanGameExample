@@ -5,14 +5,14 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class Helper {
+    internal static class EntityExtensions {
 
         // IsCharacter
-        public static bool IsPlayerCharacter(this GameObject gameObject) {
-            return gameObject.name.Contains( "PlayerCharacter" );
+        public static bool IsPlayer(this GameObject gameObject) {
+            return gameObject.name.Contains( "Player" );
         }
-        public static bool IsEnemyCharacter(this GameObject gameObject) {
-            return gameObject.name.Contains( "EnemyCharacter" );
+        public static bool IsEnemy(this GameObject gameObject) {
+            return gameObject.name.Contains( "Enemy" );
         }
 
         // IsInteractable

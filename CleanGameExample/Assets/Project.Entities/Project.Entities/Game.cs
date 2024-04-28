@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Arguments(LevelEnum Level, CharacterEnum Character);
+        public record Arguments(LevelEnum Level, PlayerCharacterEnum Character);
         private readonly Lock @lock = new Lock();
 
         // IsPaused
@@ -38,12 +38,12 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( EntitySpawner.SpawnPlayer( World.PlayerSpawnPoints.First(), Args.Character ) );
+            Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     foreach (var point in World.EnemySpawnPoints) {
-                        var task = EntitySpawner.SpawnEnemyAsync( point, destroyCancellationToken ).AsTask();
+                        var task = EntitySpawner.SpawnEnemyCharacterAsync( point, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     foreach (var point in World.LootSpawnPoints) {
@@ -69,7 +69,7 @@ namespace Project.Entities {
         Level3
     }
     // Character
-    public enum CharacterEnum {
+    public enum PlayerCharacterEnum {
         Gray,
         Red,
         Green,

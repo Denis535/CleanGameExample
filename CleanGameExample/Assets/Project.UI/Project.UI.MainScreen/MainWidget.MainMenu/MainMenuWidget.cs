@@ -94,19 +94,19 @@ namespace Project.UI.MainScreen {
             } );
             view.Gray.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, CharacterEnum.Gray ).Throw();
+                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Gray ).Throw();
             } );
             view.Red.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, CharacterEnum.Red ).Throw();
+                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Red ).Throw();
             } );
             view.Green.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, CharacterEnum.Green ).Throw();
+                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Green ).Throw();
             } );
             view.Blue.OnClick( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, CharacterEnum.Blue ).Throw();
+                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Blue ).Throw();
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();

@@ -106,7 +106,7 @@ namespace Project.UI {
             }
             State = UIRouterState.MainSceneLoaded;
         }
-        public async Task LoadGameSceneAsync(LevelEnum level, CharacterEnum character) {
+        public async Task LoadGameSceneAsync(LevelEnum level, PlayerCharacterEnum character) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {

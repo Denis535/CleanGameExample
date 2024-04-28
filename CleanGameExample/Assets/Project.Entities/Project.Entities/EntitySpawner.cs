@@ -13,15 +13,15 @@ namespace Project.Entities {
     internal static class EntitySpawner {
 
         // Spawn
-        public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, CharacterEnum character) {
+        public static Character SpawnPlayer(PlayerSpawnPoint point, CharacterEnum character) {
             return Addressables2.Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
         }
 
         // SpawnAsync
-        public static ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
+        public static ValueTask<Character> SpawnPlayerAsync(PlayerSpawnPoint point, CharacterEnum character, CancellationToken cancellationToken) {
             return Addressables2.InstantiateAsync<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
         }
-        public static ValueTask<Transform> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
+        public static ValueTask<Transform> SpawnEnemyAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
             return Addressables2.InstantiateAsync<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
         }
         public static ValueTask<Transform> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {

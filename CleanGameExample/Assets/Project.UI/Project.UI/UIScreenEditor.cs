@@ -15,7 +15,6 @@ namespace Project.UI {
 
         // Target
         private UIScreen Target => (UIScreen) target;
-        // Document
         private UIDocument Document => Target.GetComponentInChildren<UIDocument>();
 
         // Awake

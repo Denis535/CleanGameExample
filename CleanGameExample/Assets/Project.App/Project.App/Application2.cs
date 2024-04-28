@@ -9,7 +9,7 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase {
 
-        // Game
+        // Objects
         public Game? Game { get; private set; }
 
         // Awake

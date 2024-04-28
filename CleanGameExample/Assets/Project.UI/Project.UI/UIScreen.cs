@@ -13,7 +13,7 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase {
 
-        // Deps
+        // Objects
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         // Widget

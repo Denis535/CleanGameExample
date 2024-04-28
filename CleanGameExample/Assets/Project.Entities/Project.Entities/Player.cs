@@ -15,11 +15,10 @@ namespace Project.Entities {
 
         // IsPaused
         public bool IsPaused { get; private set; }
-        // Deps
+        // Objects
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         private World World { get; set; } = default!;
-        // Character
         public Character? Character { get; private set; }
         // Actions
         private InputActions Actions { get; set; } = default!;

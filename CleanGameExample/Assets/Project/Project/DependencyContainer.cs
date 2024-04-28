@@ -17,13 +17,14 @@ namespace Project {
         [SerializeField] private Application2 application = default!;
         [SerializeField] private AudioMixer audioMixer = default!;
 
-        // Deps
+        // Objects
         private UITheme UITheme => uiTheme;
         private UIScreen UIScreen => uiScreen;
         private UIRouter UIRouter => uiRouter;
         private Application2 Application => application;
+        // Assets
         private AudioMixer AudioMixer => audioMixer;
-        // Deps
+        // Misc
         private Storage Storage { get; set; } = default!;
         private Storage.ProfileSettings ProfileSettings { get; set; } = default!;
         private Storage.VideoSettings VideoSettings { get; set; } = default!;

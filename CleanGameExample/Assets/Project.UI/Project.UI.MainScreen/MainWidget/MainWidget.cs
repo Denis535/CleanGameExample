@@ -14,10 +14,12 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase<MainWidgetView> {
 
-        // Deps
+        // Objects
         private UIRouter Router { get; }
         private Application2 Application { get; }
+        // Storage
         private Storage Storage { get; set; } = default!;
+        // AuthenticationService
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
 
         // Constructor

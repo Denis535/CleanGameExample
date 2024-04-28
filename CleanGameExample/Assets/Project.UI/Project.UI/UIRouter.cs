@@ -15,10 +15,8 @@ namespace Project.UI {
     public class UIRouter : UIRouterBase {
 
         private static readonly Lock @lock = new Lock();
-        private UIRouterState state;
+        private UIRouterState state = UIRouterState.None;
 
-        // Deps
-        private Application2 Application { get; set; } = default!;
         // State
         public UIRouterState State {
             get {
@@ -68,7 +66,9 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
-        // Startup
+        // Objects
+        private Application2 Application { get; set; } = default!;
+        // Scenes
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );

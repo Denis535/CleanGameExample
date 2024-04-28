@@ -11,7 +11,7 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
-        // Deps
+        // Objects
         private Application2 Application { get; }
         private Game Game => Application.Game!;
         private Player Player => Application.Game!.Player;

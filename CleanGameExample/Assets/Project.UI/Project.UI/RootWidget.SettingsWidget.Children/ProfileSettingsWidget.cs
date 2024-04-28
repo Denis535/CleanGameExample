@@ -9,7 +9,7 @@ namespace Project.UI {
 
     public class ProfileSettingsWidget : UIWidgetBase<ProfileSettingsWidgetView> {
 
-        // Deps
+        // ProfileSettings
         private Storage.ProfileSettings ProfileSettings { get; }
 
         // Constructor

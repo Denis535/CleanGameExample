@@ -11,16 +11,14 @@ namespace Project.Entities {
 
     public class Game : GameBase {
         public record Arguments(LevelEnum Level, CharacterEnum Character);
-
         private readonly Lock @lock = new Lock();
 
         // IsPaused
         public bool IsPaused { get; private set; }
         // Args
         private Arguments Args { get; set; } = default!;
-        // Deps
+        // Objects
         public World World { get; private set; } = default!;
-        // Player
         public Player Player { get; private set; } = default!;
 
         // Awake
@@ -40,12 +38,12 @@ namespace Project.Entities {
 
         // Start
         public async void Start() {
-            Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
+            Player.SetCharacter( EntitySpawner.SpawnPlayer( World.PlayerSpawnPoints.First(), Args.Character ) );
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
                     foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        var task = EntitySpawner.SpawnEnemyCharacterAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                        var task = EntitySpawner.SpawnEnemyAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     foreach (var lootSpawnPoint in World.LootSpawnPoints) {

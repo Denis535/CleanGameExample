@@ -8,9 +8,8 @@ namespace Project.Entities.Characters {
 
     public class CharacterBody : EntityBodyBase {
 
-        // Collider
+        // Objects
         private Collider Collider { get; set; } = default!;
-        // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
 
         // Awake

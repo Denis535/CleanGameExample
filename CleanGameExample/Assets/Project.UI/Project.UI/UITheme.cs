@@ -24,12 +24,12 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
-        // Deps
+        // Objects
         private UIRouter Router { get; set; } = default!;
         private Application2 Application { get; set; } = default!;
         private Game? Game => Application.Game;
         private AudioSource AudioSource { get; set; } = default!;
-        // Theme
+        // Assets
         private AssetHandleDynamic<AudioClip> Theme { get; } = new AssetHandleDynamic<AudioClip>();
 
         // Awake

@@ -15,7 +15,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView() {
-            VisualElement = UIFactory.MainMenuWidget( out var widget, out var title, out var contentSlot );
+            VisualElement = ViewFactory.MainMenuWidget( out var widget, out var title, out var contentSlot );
             Widget = widget.Wrap();
             Title = title.Wrap();
             ContentSlot = contentSlot.AsViewStackSlot<UIViewBase>();
@@ -36,7 +36,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_MainMenuView() {
-            VisualElement = UIFactory.MainMenuWidget_MainMenuView( out var root, out var startGame, out var settings, out var quit );
+            VisualElement = ViewFactory.MainMenuWidget_MainMenuView( out var root, out var startGame, out var settings, out var quit );
             Root = root.Wrap();
             StartGame = startGame.Wrap();
             Settings = settings.Wrap();
@@ -55,7 +55,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
-            VisualElement = UIFactory.MainMenuWidget_StartGameView( out var root, out var newGame, out var @continue, out var back );
+            VisualElement = ViewFactory.MainMenuWidget_StartGameView( out var root, out var newGame, out var @continue, out var back );
             Root = root.Wrap();
             NewGame = newGame.Wrap();
             Continue = @continue.Wrap();
@@ -75,7 +75,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
-            VisualElement = UIFactory.MainMenuWidget_SelectLevelView( out var root, out var level1, out var level2, out var level3, out var back );
+            VisualElement = ViewFactory.MainMenuWidget_SelectLevelView( out var root, out var level1, out var level2, out var level3, out var back );
             Root = root.Wrap();
             Level1 = level1.Wrap();
             Level2 = level2.Wrap();
@@ -97,7 +97,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectYourCharacterView() {
-            VisualElement = UIFactory.MainMenuWidget_SelectYourCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
+            VisualElement = ViewFactory.MainMenuWidget_SelectYourCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
             Root = root.Wrap();
             Gray = gray.Wrap();
             Red = red.Wrap();

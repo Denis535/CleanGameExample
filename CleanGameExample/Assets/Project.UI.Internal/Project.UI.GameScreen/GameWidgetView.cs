@@ -40,7 +40,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = UIFactory.GameWidget( out var widget, out var target );
+            VisualElement = ViewFactory.GameWidget( out var widget, out var target );
             Widget = widget.Wrap();
             Target = target.Wrap<TargetWrapper>();
         }

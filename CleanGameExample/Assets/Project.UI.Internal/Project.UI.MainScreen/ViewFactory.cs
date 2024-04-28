@@ -6,7 +6,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static class UIFactory {
+    public static class ViewFactory {
 
         // MainWidget
         public static Widget MainWidget(out Widget widget) {

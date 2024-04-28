@@ -6,7 +6,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static class UIFactory {
+    public static class ViewFactory {
 
         // GameWidget
         public static Widget GameWidget(out Widget widget, out VisualElement target) {

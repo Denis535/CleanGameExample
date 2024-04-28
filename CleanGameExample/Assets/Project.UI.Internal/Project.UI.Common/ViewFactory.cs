@@ -6,7 +6,7 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static class UIFactory {
+    public static class ViewFactory {
 
         public static Widget DialogWidget(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
             using (VisualElementFactory.DialogWidget().AsScope( out widget )) {

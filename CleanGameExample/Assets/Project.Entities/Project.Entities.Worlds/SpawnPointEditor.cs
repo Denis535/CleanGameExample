@@ -10,7 +10,7 @@ namespace Project.Entities.Worlds {
     public class SpawnPointEditor : Editor {
 
         // Target
-        public SpawnPoint Target => (SpawnPoint) target;
+        private SpawnPoint Target => (SpawnPoint) target;
 
         // Awake
         public void Awake() {

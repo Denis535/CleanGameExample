@@ -18,14 +18,14 @@ namespace Project.Entities {
         // Args
         private Arguments Args { get; set; } = default!;
         // Objects
-        public World World { get; private set; } = default!;
         public Player Player { get; private set; } = default!;
+        public World World { get; private set; } = default!;
 
         // Awake
         public void Awake() {
             Args = Context.Get<Game, Arguments>();
-            World = Utils.Container.RequireDependency<World>( null );
             Player = gameObject.AddComponent<Player>();
+            World = Utils.Container.RequireDependency<World>( null );
         }
         public void OnDestroy() {
         }
@@ -42,12 +42,12 @@ namespace Project.Entities {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                     var tasks = new List<Task>();
-                    foreach (var enemySpawnPoint in World.EnemySpawnPoints) {
-                        var task = EntitySpawner.SpawnEnemyAsync( enemySpawnPoint, destroyCancellationToken ).AsTask();
+                    foreach (var point in World.EnemySpawnPoints) {
+                        var task = EntitySpawner.SpawnEnemyAsync( point, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
-                    foreach (var lootSpawnPoint in World.LootSpawnPoints) {
-                        var task = EntitySpawner.SpawnLootAsync( lootSpawnPoint, destroyCancellationToken ).AsTask();
+                    foreach (var point in World.LootSpawnPoints) {
+                        var task = EntitySpawner.SpawnLootAsync( point, destroyCancellationToken ).AsTask();
                         tasks.Add( task );
                     }
                     await Task.WhenAll( tasks );

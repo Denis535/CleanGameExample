@@ -10,11 +10,6 @@ namespace Project.UI {
 
     public class SettingsWidget : UIWidgetBase<SettingsWidgetView> {
 
-        // Widgets
-        private ProfileSettingsWidget ProfileSettingsWidget => View.ProfileSettingsSlot.Widget!;
-        private VideoSettingsWidget VideoSettingsWidget => View.VideoSettingsSlot.Widget!;
-        private AudioSettingsWidget AudioSettingsWidget => View.AudioSettingsSlot.Widget!;
-
         // Constructor
         public SettingsWidget() {
             View = CreateView( this );

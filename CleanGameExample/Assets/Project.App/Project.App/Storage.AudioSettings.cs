@@ -17,7 +17,6 @@ namespace Project.App {
 
             // AudioMixer
             private AudioMixer AudioMixer { get; }
-            // Volume
             public float MasterVolume {
                 get => masterVolume;
                 set {

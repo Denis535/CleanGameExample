@@ -29,7 +29,7 @@ namespace Project.UI {
         private Application2 Application { get; set; } = default!;
         private Game? Game => Application.Game;
         private AudioSource AudioSource { get; set; } = default!;
-        // Assets
+        // Theme
         private AssetHandleDynamic<AudioClip> Theme { get; } = new AssetHandleDynamic<AudioClip>();
 
         // Awake

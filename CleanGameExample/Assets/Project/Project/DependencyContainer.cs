@@ -49,57 +49,57 @@ namespace Project {
             // UI
             if (type == typeof( UITheme )) {
                 var result = UITheme;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( UIScreen )) {
                 var result = UIScreen;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( UIRouter )) {
                 var result = UIRouter;
-                return result;
+                return new Option<object?>( result );
             }
             // App
             if (type == typeof( Application2 )) {
                 var result = Application;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( Storage )) {
                 var result = Storage;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( Storage.ProfileSettings )) {
                 var result = ProfileSettings;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( Storage.VideoSettings )) {
                 var result = VideoSettings;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( Storage.AudioSettings )) {
                 var result = AudioSettings;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( Storage.Preferences )) {
                 var result = Preferences;
-                return result;
+                return new Option<object?>( result );
             }
             if (type == typeof( IAuthenticationService )) {
                 var result = AuthenticationService;
-                return (object?) result;
+                return new Option<object?>( result );
             }
             // Misc
             if (type.IsDescendentOf( typeof( Component ) )) {
                 var result = (Component) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
-                return result;
+                return new Option<object?>( result );
             }
             if (type.IsArray && type.GetElementType().IsDescendentOf( typeof( Component ) )) {
                 var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None );
                 var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
                 result.CopyTo( result2, 0 );
-                return result2;
+                return new Option<object?>( result );
             }
-            return null;
+            return default;
         }
 
     }

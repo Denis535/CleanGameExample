@@ -18,13 +18,12 @@ namespace Project.Entities {
         // Objects
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
-        private World World { get; set; } = default!;
         public Character? Character { get; private set; }
+        private World World { get; set; } = default!;
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
         private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
-        // Enemy
         public GameObject? Enemy {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f && Hit.Value.Object.IsEnemy()) {
@@ -33,7 +32,6 @@ namespace Project.Entities {
                 return null;
             }
         }
-        // Loot
         public GameObject? Loot {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsLoot()) {

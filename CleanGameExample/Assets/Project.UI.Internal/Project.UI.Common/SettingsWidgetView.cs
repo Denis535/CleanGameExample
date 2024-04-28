@@ -5,11 +5,12 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class SettingsWidgetView : UIViewBase {
 
-        // View
-        public ElementWrapper Widget { get; }
+        // Root
+        public ElementWrapper Root { get; }
         public LabelWrapper Title { get; }
         public ElementWrapper TabView { get; }
         public WidgetSlotWrapper<UIWidgetBase> ProfileSettingsSlot { get; }
@@ -20,8 +21,8 @@ namespace Project.UI.Common {
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = ViewFactory.SettingsWidget( out var widget, out var title, out var tabView, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
-            Widget = widget.Wrap();
+            VisualElement = CommonViewFactory.SettingsWidget( out var root, out var title, out var tabView, out var profileSettingsSlot, out var videoSettingsSlot, out var audioSettingsSlot, out var okey, out var back );
+            Root = root.Wrap();
             Title = title.Wrap();
             TabView = tabView.Wrap();
             ProfileSettingsSlot = profileSettingsSlot.AsWidgetSlot<UIWidgetBase>();

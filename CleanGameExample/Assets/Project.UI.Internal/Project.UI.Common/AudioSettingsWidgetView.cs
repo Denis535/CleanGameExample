@@ -5,10 +5,11 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class AudioSettingsWidgetView : UIViewBase {
 
-        // View
+        // Root
         public ElementWrapper Root { get; }
         public SliderFieldWrapper<float> MasterVolume { get; }
         public SliderFieldWrapper<float> MusicVolume { get; }
@@ -17,7 +18,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public AudioSettingsWidgetView() {
-            VisualElement = ViewFactory.AudioSettingsWidget( out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
+            VisualElement = CommonViewFactory.AudioSettingsWidget( out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
             Root = root.Wrap();
             MasterVolume = masterVolume.Wrap();
             MusicVolume = musicVolume.Wrap();

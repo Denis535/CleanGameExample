@@ -5,16 +5,17 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
-        // View
+        // Root
         public ElementWrapper Root { get; }
         public TextFieldWrapper<string> Name { get; }
 
         // Constructor
         public ProfileSettingsWidgetView() {
-            VisualElement = ViewFactory.ProfileSettingsWidget( out var root, out var name );
+            VisualElement = CommonViewFactory.ProfileSettingsWidget( out var root, out var name );
             Root = root.Wrap();
             Name = name.Wrap();
         }

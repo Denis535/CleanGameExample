@@ -34,14 +34,14 @@ namespace Project.UI.GameScreen {
             }
         }
 
-        // View
-        public ElementWrapper Widget { get; }
+        // Root
+        public ElementWrapper Root { get; }
         public TargetWrapper Target { get; }
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = ViewFactory.GameWidget( out var widget, out var target );
-            Widget = widget.Wrap();
+            VisualElement = GameViewFactory.GameWidget( out var root, out var target );
+            Root = root.Wrap();
             Target = target.Wrap<TargetWrapper>();
         }
         public override void Dispose() {

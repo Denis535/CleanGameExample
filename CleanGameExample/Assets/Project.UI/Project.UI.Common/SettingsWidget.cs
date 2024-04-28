@@ -62,7 +62,7 @@ namespace Project.UI.Common {
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
-            view.Widget.OnChangeAny( evt => {
+            view.Root.OnChangeAny( evt => {
                 view.Okey.SetValid( view.TabView.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
             } );
             view.Okey.OnClick( evt => {

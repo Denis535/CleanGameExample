@@ -1,23 +1,22 @@
 #nullable enable
-namespace Project.UI.MainScreen {
+namespace UnityEngine.UIElements {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UIElements;
 
-    public static class ViewFactory {
+    public static class MainViewFactory {
 
         // MainWidget
-        public static Widget MainWidget(out Widget widget) {
-            using (VisualElementFactory.Widget().Name( "main-widget" ).AsScope( out widget )) {
+        public static Widget MainWidget(out Widget root) {
+            using (VisualElementFactory.Widget().Name( "main-widget" ).AsScope( out root )) {
             }
-            return widget;
+            return root;
         }
 
         // MainMenuWidget
-        public static Widget MainMenuWidget(out Widget widget, out Label title, out VisualElement contentSlot) {
-            using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
+        public static Widget MainMenuWidget(out Widget root, out Label title, out VisualElement contentSlot) {
+            using (VisualElementFactory.LeftWidget().AsScope( out root )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Main Menu" ).AddToScope( out title );
@@ -26,7 +25,7 @@ namespace Project.UI.MainScreen {
                     }
                 }
             }
-            return widget;
+            return root;
         }
         public static VisualElement MainMenuWidget_MainMenuView(out VisualElement root, out Button startGame, out Button settings, out Button quit) {
             using (VisualElementFactory.View().AsScope( out root )) {
@@ -69,13 +68,13 @@ namespace Project.UI.MainScreen {
         }
 
         // LoadingWidget
-        public static Widget LoadingWidget(out Widget widget, out Label loading) {
-            using (VisualElementFactory.Widget().AsScope( out widget )) {
+        public static Widget LoadingWidget(out Widget root, out Label loading) {
+            using (VisualElementFactory.Widget().AsScope( out root )) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-2pc", "grow-1", "justify-content-end", "align-items-center" ).AsScope()) {
                     VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold" ).AddToScope( out loading );
                 }
             }
-            return widget;
+            return root;
         }
 
     }

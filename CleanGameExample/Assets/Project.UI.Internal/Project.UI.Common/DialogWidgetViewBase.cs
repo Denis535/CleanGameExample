@@ -10,8 +10,8 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase, IModalWidgetView {
 
-        // View
-        public ElementWrapper Widget { get; }
+        // Root
+        public ElementWrapper Root { get; }
         public ElementWrapper Card { get; }
         public ElementWrapper Header { get; }
         public ElementWrapper Content { get; }
@@ -22,9 +22,9 @@ namespace Project.UI.Common {
         // Constructor
         public DialogWidgetViewBase() {
             if (this is DialogWidgetView) {
-                VisualElement = ViewFactory.DialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = CommonViewFactory.DialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
-                Widget = widget.Wrap();
+                Root = root.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -32,9 +32,9 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
-                VisualElement = ViewFactory.InfoDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = CommonViewFactory.InfoDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
-                Widget = widget.Wrap();
+                Root = root.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -42,9 +42,9 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
-                VisualElement = ViewFactory.WarningDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = CommonViewFactory.WarningDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
-                Widget = widget.Wrap();
+                Root = root.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -52,9 +52,9 @@ namespace Project.UI.Common {
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
-                VisualElement = ViewFactory.ErrorDialogWidget( out var widget, out var card, out var header, out var content, out var footer, out var title, out var message );
+                VisualElement = CommonViewFactory.ErrorDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
-                Widget = widget.Wrap();
+                Root = root.Wrap();
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();

@@ -5,18 +5,19 @@ namespace Project.UI.MainScreen {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MainMenuWidgetView : UIViewBase {
 
-        // View
-        public ElementWrapper Widget { get; }
+        // Root
+        public ElementWrapper Root { get; }
         public LabelWrapper Title { get; }
         public ViewStackSlotWrapper<UIViewBase> ContentSlot { get; }
 
         // Constructor
         public MainMenuWidgetView() {
-            VisualElement = ViewFactory.MainMenuWidget( out var widget, out var title, out var contentSlot );
-            Widget = widget.Wrap();
+            VisualElement = MainViewFactory.MainMenuWidget( out var root, out var title, out var contentSlot );
+            Root = root.Wrap();
             Title = title.Wrap();
             ContentSlot = contentSlot.AsViewStackSlot<UIViewBase>();
         }
@@ -36,7 +37,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_MainMenuView() {
-            VisualElement = ViewFactory.MainMenuWidget_MainMenuView( out var root, out var startGame, out var settings, out var quit );
+            VisualElement = MainViewFactory.MainMenuWidget_MainMenuView( out var root, out var startGame, out var settings, out var quit );
             Root = root.Wrap();
             StartGame = startGame.Wrap();
             Settings = settings.Wrap();
@@ -55,7 +56,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
-            VisualElement = ViewFactory.MainMenuWidget_StartGameView( out var root, out var newGame, out var @continue, out var back );
+            VisualElement = MainViewFactory.MainMenuWidget_StartGameView( out var root, out var newGame, out var @continue, out var back );
             Root = root.Wrap();
             NewGame = newGame.Wrap();
             Continue = @continue.Wrap();
@@ -75,7 +76,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
-            VisualElement = ViewFactory.MainMenuWidget_SelectLevelView( out var root, out var level1, out var level2, out var level3, out var back );
+            VisualElement = MainViewFactory.MainMenuWidget_SelectLevelView( out var root, out var level1, out var level2, out var level3, out var back );
             Root = root.Wrap();
             Level1 = level1.Wrap();
             Level2 = level2.Wrap();
@@ -97,7 +98,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectYourCharacterView() {
-            VisualElement = ViewFactory.MainMenuWidget_SelectYourCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
+            VisualElement = MainViewFactory.MainMenuWidget_SelectYourCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
             Root = root.Wrap();
             Gray = gray.Wrap();
             Red = red.Wrap();

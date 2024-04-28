@@ -9,13 +9,13 @@ namespace Project.UI.MainScreen {
 
     public class MainWidgetView : UIViewBase {
 
-        // View
-        public ElementWrapper Widget { get; }
+        // Root
+        public ElementWrapper Root { get; }
 
         // Constructor
         public MainWidgetView() {
-            VisualElement = ViewFactory.MainWidget( out var widget );
-            Widget = widget.Wrap();
+            VisualElement = MainViewFactory.MainWidget( out var root );
+            Root = root.Wrap();
         }
         public override void Dispose() {
             base.Dispose();

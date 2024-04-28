@@ -5,10 +5,11 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class VideoSettingsWidgetView : UIViewBase {
 
-        // View
+        // Root
         public ElementWrapper Root { get; }
         public ToggleFieldWrapper<bool> IsFullScreen { get; }
         public PopupFieldWrapper<object> ScreenResolution { get; }
@@ -16,7 +17,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public VideoSettingsWidgetView() {
-            VisualElement = ViewFactory.VideoSettingsWidget( out var root, out var isFullScreen, out var screenResolution, out var isVSync );
+            VisualElement = CommonViewFactory.VideoSettingsWidget( out var root, out var isFullScreen, out var screenResolution, out var isVSync );
             Root = root.Wrap();
             IsFullScreen = isFullScreen.Wrap();
             ScreenResolution = screenResolution.Wrap();

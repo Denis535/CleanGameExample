@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidget : UIWidgetBase<AudioSettingsWidgetView> {
 
-        // AudioSettings
+        // Storage
         private Storage.AudioSettings AudioSettings { get; }
 
         // Constructor

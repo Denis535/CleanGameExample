@@ -23,8 +23,8 @@ namespace Project.UI.Common {
         public DialogWidgetViewBase() {
             if (this is DialogWidgetView) {
                 VisualElement = CommonViewFactory.DialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Root = root.Wrap();
+                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -33,8 +33,8 @@ namespace Project.UI.Common {
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
                 VisualElement = CommonViewFactory.InfoDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Root = root.Wrap();
+                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -43,8 +43,8 @@ namespace Project.UI.Common {
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
                 VisualElement = CommonViewFactory.WarningDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Root = root.Wrap();
+                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
@@ -53,8 +53,8 @@ namespace Project.UI.Common {
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
                 VisualElement = CommonViewFactory.ErrorDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                VisualElement.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Root = root.Wrap();
+                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();

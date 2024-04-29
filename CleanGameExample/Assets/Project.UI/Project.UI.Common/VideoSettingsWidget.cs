@@ -10,7 +10,7 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
 
-        // VideoSettings
+        // Storage
         private Storage.VideoSettings VideoSettings { get; }
 
         // Constructor

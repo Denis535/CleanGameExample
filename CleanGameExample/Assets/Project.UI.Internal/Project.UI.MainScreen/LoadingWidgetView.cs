@@ -18,8 +18,8 @@ namespace Project.UI.MainScreen {
         // Constructor
         public LoadingWidgetView() {
             VisualElement = MainViewFactory.LoadingWidget( out var root, out var loading );
-            VisualElement.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
             Root = root.Wrap();
+            Root.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
             Loading = loading.Wrap();
         }
         public override void Dispose() {

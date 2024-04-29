@@ -21,12 +21,14 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // SetEffect
-        public void SetEffect(Color color, Vector2 position, float rotate, float scale) {
-            VisualElement.style.unityBackgroundImageTintColor = color;
-            VisualElement.style.translate = new Translate( position.x, position.y, 0 );
-            VisualElement.style.rotate = new Rotate( Angle.Degrees( rotate ) );
-            VisualElement.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
+    }
+    public static class VisualElementWrapperExtensions {
+
+        public static void SetBackgroundEffect(this ElementWrapper element, Color color, Vector2 translate, float rotate, float scale) {
+            element.__GetVisualElement__().style.unityBackgroundImageTintColor = color;
+            element.__GetVisualElement__().style.translate = new Translate( translate.x, translate.y );
+            element.__GetVisualElement__().style.rotate = new Rotate( Angle.Degrees( rotate ) );
+            element.__GetVisualElement__().style.scale = new Scale( new Vector3( scale, scale, 1 ) );
         }
 
     }

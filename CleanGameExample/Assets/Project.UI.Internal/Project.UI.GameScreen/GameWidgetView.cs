@@ -8,45 +8,45 @@ namespace Project.UI.GameScreen {
     using UnityEngine.UIElements;
 
     public class GameWidgetView : UIViewBase {
-        public class TargetWrapper : ElementWrapper {
-            public enum Mode {
-                Normal,
-                Loot,
-                Enemy,
-            }
-            public TargetWrapper(VisualElement visualElement) : base( visualElement ) {
-            }
-            public void SetMode(Mode value) {
-                switch (value) {
-                    case Mode.Normal:
-                        VisualElement.style.color = Color.white;
-                        break;
-                    case Mode.Loot:
-                        VisualElement.style.color = Color.yellow;
-                        break;
-                    case Mode.Enemy:
-                        VisualElement.style.color = Color.red;
-                        break;
-                    default:
-                        Exceptions.Internal.NotSupported( $"Value {value} is supported" );
-                        break;
-                }
-            }
-        }
 
         // Root
         public ElementWrapper Root { get; }
-        public TargetWrapper Target { get; }
+        public ElementWrapper Target { get; }
 
         // Constructor
         public GameWidgetView() {
             VisualElement = GameViewFactory.GameWidget( out var root, out var target );
             Root = root.Wrap();
-            Target = target.Wrap<TargetWrapper>();
+            Target = target.Wrap();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
+    }
+    public static class VisualElementWrapperExtensions {
+
+        public static void SetTargetMode(this ElementWrapper element, TargetMode value) {
+            switch (value) {
+                case TargetMode.Normal:
+                    element.__GetVisualElement__().style.color = Color.white;
+                    break;
+                case TargetMode.Loot:
+                    element.__GetVisualElement__().style.color = Color.yellow;
+                    break;
+                case TargetMode.Enemy:
+                    element.__GetVisualElement__().style.color = Color.red;
+                    break;
+                default:
+                    Exceptions.Internal.NotSupported( $"Value {value} is supported" );
+                    break;
+            }
+        }
+
+    }
+    public enum TargetMode {
+        Normal,
+        Loot,
+        Enemy,
     }
 }

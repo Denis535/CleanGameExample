@@ -79,31 +79,31 @@ namespace Project.UI.MainScreen {
             if (widget is MainMenuWidget mainMenuWidget) {
                 var view = mainMenuWidget.__GetView__().ContentSlot.Peek();
                 if (view is MainMenuWidgetView_MainMenuView) {
-                    View.SetEffect( Color.white, default, 0, 1.0f );
+                    View.Root.SetBackgroundEffect( Color.white, default, 0, 1.0f );
                     return;
                 }
                 if (view is MainMenuWidgetView_StartGameView) {
-                    View.SetEffect( Color.white, default, 1, 1.1f );
+                    View.Root.SetBackgroundEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectLevelView) {
-                    View.SetEffect( Color.white, default, 2, 1.2f );
+                    View.Root.SetBackgroundEffect( Color.white, default, 2, 1.2f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectYourCharacterView) {
-                    View.SetEffect( Color.white, default, 3, 1.3f );
+                    View.Root.SetBackgroundEffect( Color.white, default, 3, 1.3f );
                     return;
                 }
             }
             if (widget is LoadingWidget) {
-                View.SetEffect( Color.gray, default, 45, 2.5f );
+                View.Root.SetBackgroundEffect( Color.gray, default, 45, 2.5f );
                 return;
             }
             if (widget is SettingsWidget) {
-                View.SetEffect( Color.white, default, 1, 1.1f );
+                View.Root.SetBackgroundEffect( Color.white, default, 1, 1.1f );
                 return;
             }
-            View.SetEffect( Color.white, default, 0, 1 );
+            View.Root.SetBackgroundEffect( Color.white, default, 0, 1 );
         }
         public void LateUpdate() {
         }

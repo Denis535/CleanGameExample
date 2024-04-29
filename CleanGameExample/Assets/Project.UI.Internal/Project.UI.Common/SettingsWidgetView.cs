@@ -3,6 +3,7 @@ namespace Project.UI.Common {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
@@ -18,6 +19,8 @@ namespace Project.UI.Common {
         public WidgetSlotWrapper<UIWidgetBase> AudioSettingsSlot { get; }
         public ButtonWrapper Okey { get; }
         public ButtonWrapper Back { get; }
+        // Children
+        public override IReadOnlyList<UIViewBase> Children => Array2.Create( ProfileSettingsSlot.Child?.View, VideoSettingsSlot.Child?.View, AudioSettingsSlot.Child?.View ).OfType<UIViewBase>().ToList();
 
         // Constructor
         public SettingsWidgetView() {

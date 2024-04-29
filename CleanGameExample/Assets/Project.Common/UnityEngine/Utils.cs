@@ -48,7 +48,7 @@ namespace UnityEngine {
             Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
             Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
             Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            document.rootVisualElement.Add( widget.__GetView__()!.__GetVisualElement__() );
+            document.rootVisualElement.Add( widget.View!.__GetVisualElement__() );
         }
         public static void AddWidgetIfNeeded(this UIDocument document, UIWidgetBase widget) {
             Assert.Argument.Message( $"Argument 'document' must be non-null" ).NotNull( document is not null );
@@ -56,8 +56,8 @@ namespace UnityEngine {
             Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
             Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
             Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            if (!document.rootVisualElement.Contains( widget.__GetView__()!.__GetVisualElement__() )) {
-                document.rootVisualElement.Add( widget.__GetView__()!.__GetVisualElement__()! );
+            if (!document.rootVisualElement.Contains( widget.View!.__GetVisualElement__() )) {
+                document.rootVisualElement.Add( widget.View!.__GetVisualElement__()! );
             }
         }
         public static void RemoveWidget(this UIDocument document, UIWidgetBase widget) {
@@ -66,20 +66,23 @@ namespace UnityEngine {
             Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
             Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
             Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            document.rootVisualElement.Remove( widget.__GetView__()!.__GetVisualElement__() );
+            document.rootVisualElement.Remove( widget.View!.__GetVisualElement__() );
         }
 
-        // IsViewAttached
-        public static bool IsViewAttached(this UIWidgetBase widget) {
-            return widget.__GetView__()?.__GetVisualElement__().IsAttached() ?? false;
+        // IsAttached
+        public static bool IsAttached(this UIWidgetBase widget) {
+            return widget.View?.__GetVisualElement__().IsAttached() ?? false;
+        }
+        public static bool IsAttached(this UIViewBase view) {
+            return view.__GetVisualElement__().IsAttached();
         }
 
         // SaveFocus
         public static void SaveFocus(this UIWidgetBase widget) {
-            widget.__GetView__()!.__GetVisualElement__().SaveFocus();
+            widget.View!.__GetVisualElement__().SaveFocus();
         }
         public static bool LoadFocus(this UIWidgetBase widget) {
-            return widget.__GetView__()!.__GetVisualElement__().LoadFocus();
+            return widget.View!.__GetVisualElement__().LoadFocus();
         }
 
         // IsViewValid
@@ -117,7 +120,7 @@ namespace UnityEngine {
         public static void Push(this WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget, Func<UIWidgetBase, bool> isVisibleAlways) {
             var last = slot.Children.LastOrDefault();
             if (last != null && !isVisibleAlways( last )) {
-                slot.__GetVisualElement__().Remove( last.__GetView__()!.__GetVisualElement__() );
+                slot.__GetVisualElement__().Remove( last.View!.__GetVisualElement__() );
             }
             slot.Add( widget );
         }
@@ -126,7 +129,7 @@ namespace UnityEngine {
             slot.Remove( widget );
             var last = slot.Children.LastOrDefault();
             if (last != null && !isVisibleAlways( last )) {
-                slot.__GetVisualElement__().Add( last.__GetView__()!.__GetVisualElement__() );
+                slot.__GetVisualElement__().Add( last.View!.__GetVisualElement__() );
             }
         }
 

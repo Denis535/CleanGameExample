@@ -3,6 +3,7 @@ namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
@@ -13,6 +14,8 @@ namespace Project.UI.MainScreen {
         public ElementWrapper Root { get; }
         public LabelWrapper Title { get; }
         public ViewStackSlotWrapper<UIViewBase> ContentSlot { get; }
+        // Children
+        public override IReadOnlyList<UIViewBase> Children => ContentSlot.Children.ToList();
 
         // Constructor
         public MainMenuWidgetView() {

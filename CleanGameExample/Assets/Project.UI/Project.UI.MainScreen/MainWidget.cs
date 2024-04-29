@@ -72,33 +72,24 @@ namespace Project.UI.MainScreen {
         public override void OnDetach(object? argument) {
         }
 
+        // OnDescendantAttach
+        public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
+            base.OnBeforeDescendantAttach( descendant, argument );
+        }
+        public override void OnAfterDescendantAttach(UIWidgetBase descendant, object? argument) {
+            base.OnAfterDescendantAttach( descendant, argument );
+            //SetBackgroundEffect( View.Root, Descendants );
+        }
+        public override void OnBeforeDescendantDetach(UIWidgetBase descendant, object? argument) {
+            //SetBackgroundEffect( View.Root, Descendants );
+            base.OnBeforeDescendantDetach( descendant, argument );
+        }
+        public override void OnAfterDescendantDetach(UIWidgetBase descendant, object? argument) {
+            base.OnAfterDescendantDetach( descendant, argument );
+        }
+
         // Update
         public void Update() {
-            var view = GetCurrentView( this );
-            if (view is MainMenuWidgetView_MainMenuView) {
-                View.Root.SetBackgroundEffect( Color.white, default, 0, 1.0f );
-                return;
-            }
-            if (view is MainMenuWidgetView_StartGameView) {
-                View.Root.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-                return;
-            }
-            if (view is MainMenuWidgetView_SelectLevelView) {
-                View.Root.SetBackgroundEffect( Color.white, default, 2, 1.2f );
-                return;
-            }
-            if (view is MainMenuWidgetView_SelectYourCharacterView) {
-                View.Root.SetBackgroundEffect( Color.white, default, 3, 1.3f );
-                return;
-            }
-            if (view is SettingsWidgetView) {
-                View.Root.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-                return;
-            }
-            if (view is LoadingWidgetView) {
-                View.Root.SetBackgroundEffect( Color.gray, default, 45, 2.5f );
-                return;
-            }
         }
         public void LateUpdate() {
         }
@@ -110,14 +101,46 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static UIViewBase? GetCurrentView(UIWidgetBase widget2) {
-            var widget = widget2.Descendants.FirstOrDefault( i => i.IsViewAttached() );
-            if (widget is MainMenuWidget mainMenuWidget) {
-                var view = mainMenuWidget.__GetView__().ContentSlot.Peek();
-                return view;
-            }
-            return widget.__GetView__();
-        }
+        //private static void SetBackgroundEffect(ElementWrapper element, IReadOnlyList<UIWidgetBase> descendants) {
+        //    var widget = (UIWidgetBase?) descendants.FirstOrDefault( i => i.IsAttached() );
+        //    var view = widget?.View?.Children.LastOrDefault() ?? widget?.View;
+        //    if (view is MainMenuWidgetView_MainMenuView) {
+        //        element.SetBackgroundEffect( Color.white, default, 0, 1.0f );
+        //        return;
+        //    }
+        //    if (view is MainMenuWidgetView_StartGameView) {
+        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
+        //        return;
+        //    }
+        //    if (view is MainMenuWidgetView_SelectLevelView) {
+        //        element.SetBackgroundEffect( Color.white, default, 2, 1.2f );
+        //        return;
+        //    }
+        //    if (view is MainMenuWidgetView_SelectYourCharacterView) {
+        //        element.SetBackgroundEffect( Color.white, default, 3, 1.3f );
+        //        return;
+        //    }
+        //    if (view is SettingsWidgetView) {
+        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
+        //        return;
+        //    }
+        //    if (view is ProfileSettingsWidgetView) {
+        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
+        //        return;
+        //    }
+        //    if (view is AudioSettingsWidgetView) {
+        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
+        //        return;
+        //    }
+        //    if (view is VideoSettingsWidgetView) {
+        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
+        //        return;
+        //    }
+        //    if (view is LoadingWidgetView) {
+        //        element.SetBackgroundEffect( Color.gray, default, 45, 2.5f );
+        //        return;
+        //    }
+        //}
 
     }
 }

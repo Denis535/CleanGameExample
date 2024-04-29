@@ -3,7 +3,6 @@ namespace Project.UI.Common {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
@@ -63,7 +62,7 @@ namespace Project.UI.Common {
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
             view.Root.OnChangeAny( evt => {
-                view.Okey.SetValid( view.TabView.__GetVisualElement__().GetDescendants().All( i => i.IsValid() ) );
+                view.Okey.SetValid( view.TabView.IsViewValid() );
             } );
             view.Okey.OnClick( evt => {
                 if (view.Okey.IsValid()) {

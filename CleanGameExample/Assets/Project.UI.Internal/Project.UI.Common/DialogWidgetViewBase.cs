@@ -15,7 +15,7 @@ namespace Project.UI.Common {
         public ElementWrapper Card { get; }
         public ElementWrapper Header { get; }
         public ElementWrapper Content { get; }
-        public ElementWrapper Footer { get; }
+        public ListSlotWrapper<VisualElement> Footer { get; }
         public LabelWrapper Title { get; }
         public LabelWrapper Message { get; }
 
@@ -24,41 +24,41 @@ namespace Project.UI.Common {
             if (this is DialogWidgetView) {
                 VisualElement = CommonViewFactory.DialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Root = root.Wrap();
-                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
+                Root.OnAttachToPanel( PlayAppearance );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.Wrap();
+                Footer = footer.AsListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
                 VisualElement = CommonViewFactory.InfoDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Root = root.Wrap();
-                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
+                Root.OnAttachToPanel( PlayAppearance );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.Wrap();
+                Footer = footer.AsListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
                 VisualElement = CommonViewFactory.WarningDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Root = root.Wrap();
-                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
+                Root.OnAttachToPanel( PlayAppearance );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.Wrap();
+                Footer = footer.AsListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
                 VisualElement = CommonViewFactory.ErrorDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
                 Root = root.Wrap();
-                Root.OnAttachToPanel( evt => PlayAppearance( VisualElement ) );
+                Root.OnAttachToPanel( PlayAppearance );
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.Wrap();
+                Footer = footer.AsListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else {
@@ -77,7 +77,7 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.__GetVisualElement__().Add( button );
+            Footer.Add( button );
         }
         public void OnCancel(string text, Action? callback) {
             var button = VisualElementFactory.Cancel( text );
@@ -86,12 +86,13 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.__GetVisualElement__().Add( button );
+            Footer.Add( button );
         }
 
         // Helpers
-        private static void PlayAppearance(VisualElement element) {
-            var animation = ValueAnimation<float>.Create( element, Mathf.LerpUnclamped );
+        private static void PlayAppearance(EventBase evt) {
+            var target = (VisualElement) evt.target;
+            var animation = ValueAnimation<float>.Create( target, Mathf.LerpUnclamped );
             animation.valueUpdated = (view, t) => {
                 var tx = Easing.OutBack( Easing.InPower( t, 2 ), 4 );
                 var ty = Easing.OutBack( Easing.OutPower( t, 2 ), 4 );

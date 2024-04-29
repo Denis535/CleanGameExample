@@ -22,14 +22,4 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public static class VisualElementWrapperExtensions {
-
-        public static void SetBackgroundEffect(this ElementWrapper element, Color color, Vector2 translate, float rotate, float scale) {
-            element.__GetVisualElement__().style.unityBackgroundImageTintColor = color;
-            element.__GetVisualElement__().style.translate = new Translate( translate.x, translate.y );
-            element.__GetVisualElement__().style.rotate = new Rotate( Angle.Degrees( rotate ) );
-            element.__GetVisualElement__().style.scale = new Scale( new Vector3( scale, scale, 1 ) );
-        }
-
-    }
 }

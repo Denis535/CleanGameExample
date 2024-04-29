@@ -19,13 +19,13 @@ namespace Project.UI {
                 if (visualElement.LoadFocus()) return;
                 visualElement.Focus2();
             };
+            VisualElementFactory.OnWidgetDetach += visualElement => {
+                visualElement.SaveFocus();
+            };
             VisualElementFactory.OnViewAttach += visualElement => {
                 if (visualElement.focusController.focusedElement != null) return;
                 if (visualElement.LoadFocus()) return;
                 visualElement.Focus2();
-            };
-            VisualElementFactory.OnWidgetDetach += visualElement => {
-                visualElement.SaveFocus();
             };
             VisualElementFactory.OnViewDetach += visualElement => {
                 visualElement.SaveFocus();
@@ -47,7 +47,7 @@ namespace Project.UI {
         protected override void ShowDescendantWidget(UIWidgetBase widget) {
             if (widget.IsViewable) {
                 if (widget.IsModal()) {
-                    View.WidgetSlot.Widgets.LastOrDefault()?.__GetView__()!.__GetVisualElement__().SaveFocus();
+                    View.WidgetSlot.Children.LastOrDefault()?.SaveFocus();
                     View.WidgetSlot.SetEnabled( false );
                     ShowDescendantWidget( View.ModalWidgetSlot, widget );
                 } else {
@@ -59,9 +59,9 @@ namespace Project.UI {
             if (widget.IsViewable) {
                 if (widget.IsModal()) {
                     HideDescendantWidget( View.ModalWidgetSlot, widget );
-                    if (!View.ModalWidgetSlot.Widgets.Any()) {
+                    if (!View.ModalWidgetSlot.Children.Any()) {
                         View.WidgetSlot.SetEnabled( true );
-                        View.WidgetSlot.Widgets.LastOrDefault()?.__GetView__()!.__GetVisualElement__().LoadFocus();
+                        View.WidgetSlot.Children.LastOrDefault()?.LoadFocus();
                     }
                 } else {
                     HideDescendantWidget( View.WidgetSlot, widget );
@@ -71,19 +71,10 @@ namespace Project.UI {
 
         // ShowDescendantWidget
         protected override void ShowDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
-            var covered = slot.Widgets.LastOrDefault();
-            if (covered != null && covered is not MainWidget and not GameWidget) {
-                slot.__GetVisualElement__().Remove( covered.__GetView__()!.__GetVisualElement__() );
-            }
-            slot.Add( widget );
+            slot.Push( widget, i => i is MainWidget or GameWidget );
         }
         protected override void HideDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
-            Assert.Operation.Message( $"Widget {widget} must be last" ).Valid( widget == slot.Widgets.LastOrDefault() );
-            slot.Remove( widget );
-            var uncovered = slot.Widgets.LastOrDefault();
-            if (uncovered != null && uncovered is not MainWidget and not GameWidget) {
-                slot.__GetVisualElement__().Add( uncovered.__GetView__()!.__GetVisualElement__() );
-            }
+            slot.Pop( widget, i => i is MainWidget or GameWidget );
         }
 
         // Update

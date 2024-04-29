@@ -24,29 +24,4 @@ namespace Project.UI.GameScreen {
         }
 
     }
-    public static class VisualElementWrapperExtensions {
-
-        public static void SetTargetMode(this ElementWrapper element, TargetMode value) {
-            switch (value) {
-                case TargetMode.Normal:
-                    element.__GetVisualElement__().style.color = Color.white;
-                    break;
-                case TargetMode.Loot:
-                    element.__GetVisualElement__().style.color = Color.yellow;
-                    break;
-                case TargetMode.Enemy:
-                    element.__GetVisualElement__().style.color = Color.red;
-                    break;
-                default:
-                    Exceptions.Internal.NotSupported( $"Value {value} is supported" );
-                    break;
-            }
-        }
-
-    }
-    public enum TargetMode {
-        Normal,
-        Loot,
-        Enemy,
-    }
 }

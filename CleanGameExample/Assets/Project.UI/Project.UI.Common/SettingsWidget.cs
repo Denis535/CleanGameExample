@@ -62,7 +62,7 @@ namespace Project.UI.Common {
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
             view.Root.OnChangeAny( evt => {
-                view.Okey.SetValid( view.TabView.IsViewValid() );
+                view.Okey.SetValid( view.TabView.IsContentValid() );
             } );
             view.Okey.OnClick( evt => {
                 if (view.Okey.IsValid()) {

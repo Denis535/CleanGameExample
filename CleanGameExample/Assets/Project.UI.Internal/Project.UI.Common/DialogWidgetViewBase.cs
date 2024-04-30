@@ -73,7 +73,7 @@ namespace Project.UI.Common {
         public void OnSubmit(string text, Action? callback) {
             var button = VisualElementFactory.Submit( text );
             button.OnClick( evt => {
-                if (button.IsValid()) {
+                if (button.IsValidSelf()) {
                     callback?.Invoke();
                 }
             } );
@@ -82,7 +82,7 @@ namespace Project.UI.Common {
         public void OnCancel(string text, Action? callback) {
             var button = VisualElementFactory.Cancel( text );
             button.OnClick( evt => {
-                if (button.IsValid()) {
+                if (button.IsValidSelf()) {
                     callback?.Invoke();
                 }
             } );

@@ -68,11 +68,11 @@ namespace Project.UI {
         // AttachWidget
         protected override void __AttachWidget__(UIWidgetBase widget, object? argument) {
             base.__AttachWidget__( widget, argument );
-            Document.AddWidget( widget );
+            AddView( Document, widget.View! );
         }
         protected override void __DetachWidget__(UIWidgetBase widget, object? argument) {
             if (Document && Document.rootVisualElement != null) {
-                Document.RemoveWidget( widget );
+                RemoveView( Document, widget.View! );
             } else {
                 if (!Document) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
                 if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );

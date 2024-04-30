@@ -17,77 +17,17 @@ namespace UnityEngine {
         // DeltaTime
         public static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
 
-        // PlayAnimation
-        public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
-            await PlayAnimationAsync( @object, from, to, duration, onUpdate, onComplete, onCancel, cancellationToken );
-        }
-        public static async Task PlayAnimationAsync<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
-            var time = 0f;
-            while (!cancellationToken.IsCancellationRequested) {
-                var time01 = Mathf.InverseLerp( 0, duration, time );
-                var value = Mathf.Lerp( from, to, time01 );
-                onUpdate.Invoke( @object, value );
-                if (time < duration) {
-                    await Task.Yield();
-                    time += Time.unscaledDeltaTime;
-                } else {
-                    break;
-                }
-            }
-            if (!cancellationToken.IsCancellationRequested) {
-                onComplete?.Invoke( @object );
-            } else {
-                onCancel?.Invoke( @object );
-            }
-        }
-
-        // AddWidget
-        public static void AddWidget(this UIDocument document, UIWidgetBase widget) {
-            Assert.Argument.Message( $"Argument 'document' must be non-null" ).NotNull( document is not null );
-            Assert.Argument.Message( $"Argument 'document' {document} must be awakened" ).Valid( document.didAwake );
-            Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
-            Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
-            Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            document.rootVisualElement.Add( widget.View!.__GetVisualElement__() );
-        }
-        public static void AddWidgetIfNeeded(this UIDocument document, UIWidgetBase widget) {
-            Assert.Argument.Message( $"Argument 'document' must be non-null" ).NotNull( document is not null );
-            Assert.Argument.Message( $"Argument 'document' {document} must be awakened" ).Valid( document.didAwake );
-            Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
-            Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
-            Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            if (!document.rootVisualElement.Contains( widget.View!.__GetVisualElement__() )) {
-                document.rootVisualElement.Add( widget.View!.__GetVisualElement__()! );
-            }
-        }
-        public static void RemoveWidget(this UIDocument document, UIWidgetBase widget) {
-            Assert.Argument.Message( $"Argument 'document' must be non-null" ).NotNull( document is not null );
-            Assert.Argument.Message( $"Argument 'document' {document} must be awakened" ).Valid( document.didAwake );
-            Assert.Argument.Message( $"Argument 'document' {document} must be alive" ).Valid( document );
-            Assert.Argument.Message( $"Argument 'document' {document} must have rootVisualElement" ).Valid( document.rootVisualElement != null );
-            Assert.Argument.Message( $"Argument 'widget' must be non-null" ).NotNull( widget != null );
-            document.rootVisualElement.Remove( widget.View!.__GetVisualElement__() );
-        }
-
         // IsAttached
-        public static bool IsAttached(this UIWidgetBase widget) {
-            return widget.View?.__GetVisualElement__().IsAttached() ?? false;
-        }
         public static bool IsAttached(this UIViewBase view) {
             return view.__GetVisualElement__().IsAttached();
         }
-
-        // SaveFocus
-        public static void SaveFocus(this UIWidgetBase widget) {
-            widget.View!.__GetVisualElement__().SaveFocus();
-        }
-        public static bool LoadFocus(this UIWidgetBase widget) {
-            return widget.View!.__GetVisualElement__().LoadFocus();
+        public static bool IsDisplayedInHierarchy(this UIViewBase view) {
+            return view.__GetVisualElement__().IsDisplayedInHierarchy();
         }
 
-        // IsViewValid
-        public static bool IsViewValid(this ElementWrapper element) {
-            return element.__GetVisualElement__().GetDescendantsAndSelf().All( i => i.IsValid() );
+        // IsContentValid
+        public static bool IsContentValid(this ElementWrapper element) {
+            return element.__GetVisualElement__().IsContentValid();
         }
 
         // SetBackgroundEffect
@@ -130,6 +70,30 @@ namespace UnityEngine {
             var last = slot.Children.LastOrDefault();
             if (last != null && !isVisibleAlways( last )) {
                 slot.__GetVisualElement__().Add( last.View!.__GetVisualElement__() );
+            }
+        }
+
+        // PlayAnimation
+        public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
+            await PlayAnimationAsync( @object, from, to, duration, onUpdate, onComplete, onCancel, cancellationToken );
+        }
+        public static async Task PlayAnimationAsync<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
+            var time = 0f;
+            while (!cancellationToken.IsCancellationRequested) {
+                var time01 = Mathf.InverseLerp( 0, duration, time );
+                var value = Mathf.Lerp( from, to, time01 );
+                onUpdate.Invoke( @object, value );
+                if (time < duration) {
+                    await Task.Yield();
+                    time += Time.unscaledDeltaTime;
+                } else {
+                    break;
+                }
+            }
+            if (!cancellationToken.IsCancellationRequested) {
+                onComplete?.Invoke( @object );
+            } else {
+                onCancel?.Invoke( @object );
             }
         }
 

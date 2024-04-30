@@ -15,20 +15,24 @@ namespace Project.UI {
         // Constructor
         public UIRootWidget() {
             VisualElementFactory.OnWidgetAttach += visualElement => {
-                if (visualElement.focusController.focusedElement != null) return;
-                if (visualElement.LoadFocus()) return;
-                visualElement.Focus2();
-            };
-            VisualElementFactory.OnWidgetDetach += visualElement => {
-                visualElement.SaveFocus();
+                if (visualElement.focusController.focusedElement == null) {
+                    var view = (UIViewBase) visualElement.userData;
+                    if (!view.LoadFocus()) visualElement.Focus();
+                }
             };
             VisualElementFactory.OnViewAttach += visualElement => {
-                if (visualElement.focusController.focusedElement != null) return;
-                if (visualElement.LoadFocus()) return;
-                visualElement.Focus2();
+                if (visualElement.focusController.focusedElement == null) {
+                    var view = (UIViewBase) visualElement.userData;
+                    if (!view.LoadFocus()) visualElement.Focus();
+                }
+            };
+            VisualElementFactory.OnWidgetDetach += visualElement => {
+                var view = (UIViewBase) visualElement.userData;
+                view.SaveFocus();
             };
             VisualElementFactory.OnViewDetach += visualElement => {
-                visualElement.SaveFocus();
+                var view = (UIViewBase) visualElement.userData;
+                view.SaveFocus();
             };
         }
         public override void Dispose() {
@@ -47,8 +51,10 @@ namespace Project.UI {
         protected override void ShowDescendantWidget(UIWidgetBase widget) {
             if (widget.IsViewable) {
                 if (widget.IsModal()) {
-                    View.WidgetSlot.Children.LastOrDefault()?.SaveFocus();
-                    View.WidgetSlot.SetEnabled( false );
+                    {
+                        View.WidgetSlot.Children.LastOrDefault()?.View!.SaveFocus();
+                        View.WidgetSlot.SetEnabled( false );
+                    }
                     ShowDescendantWidget( View.ModalWidgetSlot, widget );
                 } else {
                     ShowDescendantWidget( View.WidgetSlot, widget );
@@ -61,7 +67,7 @@ namespace Project.UI {
                     HideDescendantWidget( View.ModalWidgetSlot, widget );
                     if (!View.ModalWidgetSlot.Children.Any()) {
                         View.WidgetSlot.SetEnabled( true );
-                        View.WidgetSlot.Children.LastOrDefault()?.LoadFocus();
+                        View.WidgetSlot.Children.LastOrDefault()?.View!.LoadFocus();
                     }
                 } else {
                     HideDescendantWidget( View.WidgetSlot, widget );

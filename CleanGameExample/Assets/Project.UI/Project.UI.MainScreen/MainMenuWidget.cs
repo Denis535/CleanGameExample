@@ -26,8 +26,10 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override void OnAttach(object? argument) {
+            ShowWidget( this );
         }
         public override void OnDetach(object? argument) {
+            HideWidget( this );
         }
 
         // Helpers

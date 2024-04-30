@@ -35,7 +35,7 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            this.AttachWidget( new UIRootWidget() );
+            AttachWidget( new UIRootWidget() );
         }
         public new void OnDestroy() {
             Widget.DetachSelf();
@@ -66,18 +66,18 @@ namespace Project.UI {
         }
 
         // AttachWidget
-        protected override void __AttachWidget__(UIWidgetBase widget, object? argument) {
-            base.__AttachWidget__( widget, argument );
+        public override void AttachWidget(UIWidgetBase widget, object? argument = null) {
+            base.AttachWidget( widget, argument );
             AddView( Document, widget.View! );
         }
-        protected override void __DetachWidget__(UIWidgetBase widget, object? argument) {
+        public override void DetachWidget(UIWidgetBase widget, object? argument = null) {
             if (Document && Document.rootVisualElement != null) {
                 RemoveView( Document, widget.View! );
             } else {
                 if (!Document) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
                 if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
             }
-            base.__DetachWidget__( widget, argument );
+            base.DetachWidget( widget, argument );
         }
 
         // Helpers

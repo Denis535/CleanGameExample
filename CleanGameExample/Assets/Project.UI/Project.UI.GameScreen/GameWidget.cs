@@ -34,8 +34,10 @@ namespace Project.UI.GameScreen {
         public override void OnAttach(object? argument) {
             Actions.Enable();
             Cursor.lockState = CursorLockMode.Locked;
+            ShowWidget( this );
         }
         public override void OnDetach(object? argument) {
+            HideWidget( this );
             Actions.Disable();
             Cursor.lockState = CursorLockMode.None;
         }
@@ -74,7 +76,7 @@ namespace Project.UI.GameScreen {
                 View.Target.SetTargetEffect( TargetEffect.Normal );
             }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
-                this.AttachChild( new GameMenuWidget() );
+                AttachChild( new GameMenuWidget() );
             }
         }
         public void LateUpdate() {

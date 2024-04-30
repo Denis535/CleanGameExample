@@ -12,9 +12,9 @@ namespace Project.UI.Common {
         // Constructor
         public SettingsWidget() {
             View = CreateView( this );
-            this.AttachChild( new ProfileSettingsWidget() );
-            this.AttachChild( new VideoSettingsWidget() );
-            this.AttachChild( new AudioSettingsWidget() );
+            AttachChild( new ProfileSettingsWidget() );
+            AttachChild( new VideoSettingsWidget() );
+            AttachChild( new AudioSettingsWidget() );
         }
         public override void Dispose() {
             base.Dispose();
@@ -22,12 +22,14 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
+            ShowWidget( this );
         }
         public override void OnDetach(object? argument) {
+            HideWidget( this );
         }
 
-        // ShowDescendantWidget
-        protected override void ShowDescendantWidget(UIWidgetBase widget) {
+        // ShowWidget
+        public override void ShowWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
                 View.ProfileSettingsSlot.Set( profileSettingsWidget );
                 return;
@@ -40,9 +42,9 @@ namespace Project.UI.Common {
                 View.AudioSettingsSlot.Set( audioSettingsWidget );
                 return;
             }
-            base.ShowDescendantWidget( widget );
+            base.ShowWidget( widget );
         }
-        protected override void HideDescendantWidget(UIWidgetBase widget) {
+        public override void HideWidget(UIWidgetBase widget) {
             if (widget is ProfileSettingsWidget profileSettingsWidget) {
                 View.ProfileSettingsSlot.Clear( profileSettingsWidget );
                 return;
@@ -55,7 +57,7 @@ namespace Project.UI.Common {
                 View.AudioSettingsSlot.Clear( audioSettingsWidget );
                 return;
             }
-            base.HideDescendantWidget( widget );
+            base.HideWidget( widget );
         }
 
         // Helpers

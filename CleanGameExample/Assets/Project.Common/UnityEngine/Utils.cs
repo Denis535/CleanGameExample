@@ -3,7 +3,6 @@ namespace UnityEngine {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using UnityEngine;
@@ -53,23 +52,6 @@ namespace UnityEngine {
                 default:
                     Exceptions.Internal.NotSupported( $"Value {value} is supported" );
                     break;
-            }
-        }
-
-        // Push
-        public static void Push(this WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget, Func<UIWidgetBase, bool> isVisibleAlways) {
-            var last = slot.Children.LastOrDefault();
-            if (last != null && !isVisibleAlways( last )) {
-                slot.__GetVisualElement__().Remove( last.View!.__GetVisualElement__() );
-            }
-            slot.Add( widget );
-        }
-        public static void Pop(this WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget, Func<UIWidgetBase, bool> isVisibleAlways) {
-            Assert.Operation.Message( $"Widget {widget} must be last" ).Valid( widget == slot.Children.LastOrDefault() );
-            slot.Remove( widget );
-            var last = slot.Children.LastOrDefault();
-            if (last != null && !isVisibleAlways( last )) {
-                slot.__GetVisualElement__().Add( last.View!.__GetVisualElement__() );
             }
         }
 

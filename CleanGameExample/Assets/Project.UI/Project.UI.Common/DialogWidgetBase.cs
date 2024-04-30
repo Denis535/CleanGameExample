@@ -48,8 +48,10 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
+            ShowWidget( this );
         }
         public override void OnDetach(object? argument) {
+            HideWidget( this );
         }
 
         // OnSubmit

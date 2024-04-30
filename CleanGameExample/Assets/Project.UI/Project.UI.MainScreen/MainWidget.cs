@@ -37,6 +37,7 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override async void OnAttach(object? argument) {
+            ShowWidget( this );
             // await MainScene
             if (!Router.IsMainSceneLoaded) {
                 while (!Router.IsMainSceneLoaded) {
@@ -51,7 +52,7 @@ namespace Project.UI.MainScreen {
                     await UnityServices.InitializeAsync( options );
                 } catch (Exception ex) {
                     var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    this.AttachChild( dialog );
+                    AttachChild( dialog );
                     return;
                 }
             }
@@ -63,14 +64,15 @@ namespace Project.UI.MainScreen {
                     await AuthenticationService.SignInAnonymouslyAsync( options );
                 } catch (Exception ex) {
                     var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    this.AttachChild( dialog );
+                    AttachChild( dialog );
                     return;
                 }
             }
             // Children
-            this.AttachChild( new MainMenuWidget() );
+            AttachChild( new MainMenuWidget() );
         }
         public override void OnDetach(object? argument) {
+            HideWidget( this );
         }
 
         // OnDescendantAttach

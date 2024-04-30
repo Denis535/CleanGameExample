@@ -15,16 +15,12 @@ namespace Project.UI {
         // Constructor
         public UIRootWidget() {
             VisualElementFactory.OnWidgetAttach += visualElement => {
-                if (visualElement.focusController.focusedElement == null) {
-                    var view = (UIViewBase) visualElement.userData;
-                    if (!view.LoadFocus()) visualElement.Focus();
-                }
+                var view = (UIViewBase) visualElement.userData;
+                if (!view.LoadFocus()) view.Focus();
             };
             VisualElementFactory.OnViewAttach += visualElement => {
-                if (visualElement.focusController.focusedElement == null) {
-                    var view = (UIViewBase) visualElement.userData;
-                    if (!view.LoadFocus()) visualElement.Focus();
-                }
+                var view = (UIViewBase) visualElement.userData;
+                if (!view.LoadFocus()) view.Focus();
             };
             VisualElementFactory.OnWidgetDetach += visualElement => {
                 var view = (UIViewBase) visualElement.userData;
@@ -41,46 +37,36 @@ namespace Project.UI {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            base.OnAttach( argument );
         }
         public override void OnDetach(object? argument) {
-            base.OnDetach( argument );
         }
 
-        // ShowDescendantWidget
-        protected override void ShowDescendantWidget(UIWidgetBase widget) {
+        // ShowWidget
+        public override void ShowWidget(UIWidgetBase widget) {
             if (widget.IsViewable) {
                 if (widget.IsModal()) {
                     {
                         View.WidgetSlot.Children.LastOrDefault()?.View!.SaveFocus();
                         View.WidgetSlot.SetEnabled( false );
                     }
-                    ShowDescendantWidget( View.ModalWidgetSlot, widget );
+                    Push( View.ModalWidgetSlot, widget, i => i is not MainWidget or GameWidget );
                 } else {
-                    ShowDescendantWidget( View.WidgetSlot, widget );
+                    Push( View.WidgetSlot, widget, i => i is not MainWidget or GameWidget );
                 }
             }
         }
-        protected override void HideDescendantWidget(UIWidgetBase widget) {
+        public override void HideWidget(UIWidgetBase widget) {
             if (widget.IsViewable) {
                 if (widget.IsModal()) {
-                    HideDescendantWidget( View.ModalWidgetSlot, widget );
+                    Pop( View.ModalWidgetSlot, widget, i => i is not MainWidget or GameWidget );
                     if (!View.ModalWidgetSlot.Children.Any()) {
                         View.WidgetSlot.SetEnabled( true );
                         View.WidgetSlot.Children.LastOrDefault()?.View!.LoadFocus();
                     }
                 } else {
-                    HideDescendantWidget( View.WidgetSlot, widget );
+                    Pop( View.WidgetSlot, widget, i => i is not MainWidget or GameWidget );
                 }
             }
-        }
-
-        // ShowDescendantWidget
-        protected override void ShowDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
-            slot.Push( widget, i => i is MainWidget or GameWidget );
-        }
-        protected override void HideDescendantWidget(WidgetListSlotWrapper<UIWidgetBase> slot, UIWidgetBase widget) {
-            slot.Pop( widget, i => i is MainWidget or GameWidget );
         }
 
         // Update

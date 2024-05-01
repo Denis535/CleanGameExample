@@ -48,6 +48,7 @@ namespace Project {
 
         // GetObject
         Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
+            this.Assert_IsValid();
             // UI
             if (type == typeof( UITheme )) {
                 var result = UITheme;

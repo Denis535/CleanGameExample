@@ -8,11 +8,9 @@ namespace Project.Entities.Worlds {
 
     public class World : WorldBase {
 
-        // PlayerSpawnPoints
+        // SpawnPoints
         public PlayerSpawnPoint[] PlayerSpawnPoints { get; private set; } = default!;
-        // EnemySpawnPoints
         public EnemySpawnPoint[] EnemySpawnPoints { get; private set; } = default!;
-        // LootSpawnPoints
         public LootSpawnPoint[] LootSpawnPoints { get; private set; } = default!;
 
         // Awake

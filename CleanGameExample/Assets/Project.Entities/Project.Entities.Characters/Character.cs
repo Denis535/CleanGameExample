@@ -76,7 +76,11 @@ namespace Project.Entities.Characters {
 
                 }
                 if (Actions.IsInteractPressed( out var interactable )) {
-
+                    if (interactable != null && interactable.IsWeapon()) {
+                        View.SetWeapon( interactable );
+                    } else {
+                        View.SetWeapon( null );
+                    }
                 }
             } else {
                 isJumpPressed = false;

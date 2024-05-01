@@ -90,7 +90,7 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static void PlayAppearance(EventBase evt) {
+        private static void PlayAppearance(AttachToPanelEvent evt) {
             var target = (VisualElement) evt.target;
             var animation = ValueAnimation<float>.Create( target, Mathf.LerpUnclamped );
             animation.valueUpdated = (view, t) => {

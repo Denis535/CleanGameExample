@@ -34,34 +34,19 @@ namespace Project.Entities {
         public void OnDestroy() {
         }
 
-        // SetTarget
-        //public void SetTarget(Character? target) {
-        //    Target = target;
-        //    if (Target != null) {
-        //        Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
-        //        Distance = DefaultDistance;
-        //    }
-        //}
-        public void SetAngles(Vector2 angles) {
-            Angles = ClampAngles( angles );
-        }
-        public void SetDistance(float distance) {
-            Distance = ClampDistance( distance );
-        }
-
         // Rotate
         public void Rotate(Vector2 delta) {
-            Assert.Operation.Message( $"Method 'Rotate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'Rotate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Angles = ClampAngles( GetAngles( Angles, delta ) );
         }
         public void Zoom(float delta) {
-            Assert.Operation.Message( $"Method 'Zoom' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'Zoom' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Distance = ClampDistance( GetDistance( Distance, delta ) );
         }
 
         // Apply
         public void Apply(Character target) {
-            Assert.Operation.Message( $"Method 'Apply' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'Apply' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (target != prevTarget) {
                 Angles = new Vector2( DefaultAngles.x, target.transform.eulerAngles.y );
                 Distance = DefaultDistance;

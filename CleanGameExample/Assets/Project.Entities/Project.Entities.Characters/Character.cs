@@ -21,13 +21,18 @@ namespace Project.Entities.Characters {
             bool IsInteractPressed(out GameObject? interactable);
         }
 
+        private bool fixedUpdateWasInvoked;
+        private bool isMovePressed;
+        private Vector3 moveVector;
+        private bool isJumpPressed;
+        private bool isCrouchPressed;
+        private bool isAcceleratePressed;
+
         // Components
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
         // Actions
         public IInputActions? Actions { get; set; }
-        // OnCameraUpdate
-        public event Action<Character>? OnCameraUpdate;
 
         // Awake
         public void Awake() {
@@ -41,14 +46,43 @@ namespace Project.Entities.Characters {
         public void Start() {
         }
         public void FixedUpdate() {
+            fixedUpdateWasInvoked = true;
+            if (Actions != null && Actions.IsEnabled()) {
+                Body.MovePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            }
+        }
+        public void Update() {
+            if (Actions != null && Actions.IsEnabled()) {
+                if (fixedUpdateWasInvoked) {
+                    fixedUpdateWasInvoked = false;
+                    isMovePressed = Actions.IsMovePressed( out moveVector );
+                    isJumpPressed = Actions.IsJumpPressed();
+                    isCrouchPressed = Actions.IsCrouchPressed();
+                    isAcceleratePressed = Actions.IsAcceleratePressed();
+                } else {
+                    if (Actions.IsMovePressed( out var moveVector_ )) {
+                        isMovePressed = true;
+                        moveVector = Vector3.Max( moveVector, moveVector_ );
+                    }
+                    if (Actions.IsJumpPressed()) {
+                        isJumpPressed = true;
+                    }
+                    if (Actions.IsCrouchPressed()) {
+                        isCrouchPressed = true;
+                    }
+                    if (Actions.IsAcceleratePressed()) {
+                        isAcceleratePressed = true;
+                    }
+                }
+            } else {
+                isMovePressed = false;
+                moveVector = default;
+                isJumpPressed = false;
+                isCrouchPressed = false;
+                isAcceleratePressed = false;
+            }
             if (Actions != null && Actions.IsEnabled()) {
                 {
-                    var isMovePressed = Actions.IsMovePressed( out var moveVector );
-                    var isJumpPressed = Actions.IsJumpPressed();
-                    var isCrouchPressed = Actions.IsCrouchPressed();
-                    var isAcceleratePressed = Actions.IsAcceleratePressed();
-                    Body.MovePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-                    OnCameraUpdate?.Invoke( this );
                     var isLookPressed = Actions.IsLookPressed( out var lookTarget );
                     Body.MoveRotation( isLookPressed, lookTarget );
                 }
@@ -66,8 +100,6 @@ namespace Project.Entities.Characters {
                     }
                 }
             }
-        }
-        public void Update() {
         }
 
     }

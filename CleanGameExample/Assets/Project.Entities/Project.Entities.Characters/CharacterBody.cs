@@ -18,17 +18,17 @@ namespace Project.Entities.Characters {
         public void OnDestroy() {
         }
 
-        // FixedUpdate
+        // Move
         public void MovePosition(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             var velocity = GetVelocity( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-            CharacterController.Move( velocity * Time.fixedDeltaTime );
+            CharacterController.Move( velocity * GetDeltaTime() );
         }
         public void MoveRotation(bool isLookPressed, Vector3 lookTarget) {
-            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (isLookPressed && lookTarget != null) {
                 var rotation = GetRotation( transform.localPosition, lookTarget );
-                transform.localRotation = rotation;
+                transform.localRotation = Quaternion.RotateTowards( transform.localRotation, rotation, 3 * 360 * GetDeltaTime() );
             }
         }
 
@@ -61,6 +61,10 @@ namespace Project.Entities.Characters {
         private static Quaternion GetRotation(Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             return Quaternion.LookRotation( direction, Vector3.up );
+        }
+        // Heleprs
+        private static float GetDeltaTime() {
+            return Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
         }
 
     }

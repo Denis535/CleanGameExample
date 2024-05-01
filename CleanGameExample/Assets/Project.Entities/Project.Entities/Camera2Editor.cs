@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters;
     using UnityEditor;
     using UnityEngine;
 
@@ -16,7 +15,6 @@ namespace Project.Entities {
         // OnInspectorGUI
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
-            EditorGUILayout.ObjectField( "Target", Target.Target, typeof( Character ), true );
             EditorGUILayout.Vector2Field( "Angles", Target.Angles );
             EditorGUILayout.FloatField( "Distance", Target.Distance );
         }

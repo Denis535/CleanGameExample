@@ -22,8 +22,9 @@ namespace Project.Entities {
         public static readonly float AnglesInputSensitivity = 0.15f;
         public static readonly float DistanceInputSensitivity = 0.20f;
 
-        // Target
-        public Character? Target { get; private set; }
+        private Character? prevTarget;
+
+        // Angles
         public Vector2 Angles { get; private set; }
         public float Distance { get; private set; }
 
@@ -34,13 +35,13 @@ namespace Project.Entities {
         }
 
         // SetTarget
-        public void SetTarget(Character? target) {
-            Target = target;
-            if (Target != null) {
-                Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
-                Distance = DefaultDistance;
-            }
-        }
+        //public void SetTarget(Character? target) {
+        //    Target = target;
+        //    if (Target != null) {
+        //        Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
+        //        Distance = DefaultDistance;
+        //    }
+        //}
         public void SetAngles(Vector2 angles) {
             Angles = ClampAngles( angles );
         }
@@ -59,12 +60,15 @@ namespace Project.Entities {
         }
 
         // Apply
-        public void Apply() {
-            Apply( transform, Target!.transform.position, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
-            if (Camera.main != null && Camera.main.gameObject != gameObject) {
-                Camera.main.transform.localPosition = transform.localPosition;
-                Camera.main.transform.localRotation = transform.localRotation;
+        public void Apply(Character target) {
+            Assert.Operation.Message( $"Method 'Apply' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            if (target != prevTarget) {
+                Angles = new Vector2( DefaultAngles.x, target.transform.eulerAngles.y );
+                Distance = DefaultDistance;
+                prevTarget = target;
             }
+            Apply( transform, target.transform.position, Angles, Distance, Mathf.InverseLerp( MinDistance, MaxDistance, Distance ) );
+            Apply( Camera.main, transform );
         }
 
         // Helpers
@@ -93,6 +97,10 @@ namespace Project.Entities {
             transform.localEulerAngles = angles;
             transform.Translate( 0, 0, -distance, Space.Self );
             transform.Translate( Vector3.LerpUnclamped( CameraOffset1, CameraOffset2, k ), Space.Self );
+        }
+        private static void Apply(Camera camera, Transform transform) {
+            camera.transform.localPosition = transform.localPosition;
+            camera.transform.localRotation = transform.localRotation;
         }
 
     }

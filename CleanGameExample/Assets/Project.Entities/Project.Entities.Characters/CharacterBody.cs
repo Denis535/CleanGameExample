@@ -9,13 +9,13 @@ namespace Project.Entities.Characters {
     public class CharacterBody : EntityBodyBase {
 
         // Components
-        private Collider Collider { get; set; } = default!;
         private Rigidbody Rigidbody { get; set; } = default!;
+        private Collider Collider { get; set; } = default!;
 
         // Awake
         public void Awake() {
-            Collider = gameObject.RequireComponent<Collider>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Collider = gameObject.RequireComponent<Collider>();
         }
         public void OnDestroy() {
         }
@@ -58,12 +58,12 @@ namespace Project.Entities.Characters {
                     velocity -= Vector3.up * 5;
                 }
             }
-            return position + velocity * Utils.DeltaTime;
+            return position + velocity * Time.fixedDeltaTime;
         }
         private static Quaternion GetRotation(Quaternion rotation, Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             var rotation2 = Quaternion.LookRotation( direction, Vector3.up );
-            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * Utils.DeltaTime );
+            //return Quaternion.RotateTowards( rotation, rotation2, 360f * 4f * Time.fixedDeltaTime );
             return rotation2;
         }
 

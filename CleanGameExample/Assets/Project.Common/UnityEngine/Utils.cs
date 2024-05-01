@@ -14,7 +14,7 @@ namespace UnityEngine {
         // Container
         public static IDependencyContainer Container { get; set; } = default!;
         // DeltaTime
-        public static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
+        //public static float DeltaTime => Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
 
         // IsAttached
         public static bool IsAttached(this UIViewBase view) {

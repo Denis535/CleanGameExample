@@ -65,13 +65,12 @@ namespace Project.Entities {
         // SetCharacter
         public void SetCharacter(Character? character) {
             if (Character != null) {
-                Camera.SetTarget( null );
                 Character.Actions = null;
                 if (!IsPaused) Actions.Disable();
+                Hit = null;
             }
             Character = character;
             if (Character != null) {
-                Camera.SetTarget( Character );
                 Character.Actions = this;
                 if (!IsPaused) Actions.Enable();
             }
@@ -81,12 +80,12 @@ namespace Project.Entities {
         public void Start() {
         }
         public void FixedUpdate() {
-            if (Character != null && Actions.asset.enabled) {
+            if (Actions.asset.enabled) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
             }
             if (Character != null) {
-                Camera.Apply();
+                Camera.Apply( Character );
                 if (Raycast( Camera.transform, Character.transform, out var point, out var distance, out var @object )) {
                     Hit = new( point, distance, @object );
                 } else {

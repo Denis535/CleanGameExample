@@ -27,10 +27,12 @@ namespace Project.Entities.Characters {
         // SetWeapon
         public void SetWeapon(GameObject? weapon, out GameObject? prevWeapon) {
             if (Weapon != null) {
+                prevWeapon = Weapon;
                 Weapon.GetComponent<Rigidbody>().isKinematic = false;
                 Weapon.transform.parent = null;
+            } else {
+                prevWeapon = null;
             }
-            prevWeapon = Weapon;
             if (weapon != null) {
                 weapon.GetComponent<Rigidbody>().isKinematic = true;
                 weapon.transform.parent = WeaponSlot;

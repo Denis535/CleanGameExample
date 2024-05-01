@@ -26,6 +26,8 @@ namespace Project.Entities.Characters {
         private CharacterView View { get; set; } = default!;
         // Actions
         public IInputActions? Actions { get; set; }
+        // OnCameraUpdate
+        public event Action<Character>? OnCameraUpdate;
 
         // Awake
         public void Awake() {
@@ -45,17 +47,16 @@ namespace Project.Entities.Characters {
                     var isJumpPressed = Actions.IsJumpPressed();
                     var isCrouchPressed = Actions.IsCrouchPressed();
                     var isAcceleratePressed = Actions.IsAcceleratePressed();
-                    Body.FixedUpdatePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-                }
-                {
+                    Body.MovePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+                    OnCameraUpdate?.Invoke( this );
                     var isLookPressed = Actions.IsLookPressed( out var lookTarget );
-                    Body.FixedUpdateRotation( isLookPressed, lookTarget );
+                    Body.MoveRotation( isLookPressed, lookTarget );
                 }
                 if (Actions.IsFirePressed()) {
-                    
+
                 }
                 if (Actions.IsAimPressed()) {
-                    
+
                 }
                 if (Actions.IsInteractPressed( out var interactable )) {
                     if (interactable != null && interactable.IsWeapon()) {

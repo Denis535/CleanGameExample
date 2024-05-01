@@ -66,12 +66,14 @@ namespace Project.Entities {
         public void SetCharacter(Character? character) {
             if (Character != null) {
                 Character.Actions = null;
+                Character.OnCameraUpdate -= OnCameraUpdate;
                 if (!IsPaused) Actions.Disable();
                 Hit = null;
             }
             Character = character;
             if (Character != null) {
                 Character.Actions = this;
+                Character.OnCameraUpdate += OnCameraUpdate;
                 if (!IsPaused) Actions.Enable();
             }
         }
@@ -80,22 +82,22 @@ namespace Project.Entities {
         public void Start() {
         }
         public void FixedUpdate() {
+        }
+        public void Update() {
+        }
+
+        // OnCameraUpdate
+        private void OnCameraUpdate(Character character) {
             if (Actions.asset.enabled) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
             }
-            if (Character != null) {
-                Camera.Apply( Character );
-                if (Raycast( Camera.transform, Character.transform, out var point, out var distance, out var @object )) {
-                    Hit = new( point, distance, @object );
-                } else {
-                    Hit = null;
-                }
+            Camera.Apply( character );
+            if (Raycast( Camera.transform, character.transform, out var point, out var distance, out var @object )) {
+                Hit = new( point, distance, @object );
             } else {
                 Hit = null;
             }
-        }
-        public void Update() {
         }
 
         // OnDrawGizmos

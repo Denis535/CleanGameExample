@@ -50,9 +50,11 @@ namespace Project.Entities {
 
         // Rotate
         public void Rotate(Vector2 delta) {
+            Assert.Operation.Message( $"Method 'Rotate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             Angles = ClampAngles( GetAngles( Angles, delta ) );
         }
         public void Zoom(float delta) {
+            Assert.Operation.Message( $"Method 'Zoom' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             Distance = ClampDistance( GetDistance( Distance, delta ) );
         }
 

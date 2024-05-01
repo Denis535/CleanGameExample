@@ -11,20 +11,15 @@ namespace Project.Entities.Characters {
     public class Character : EntityBase {
         public interface IInputActions {
             bool IsEnabled();
-            bool IsFirePressed();
-            bool IsAimPressed();
-            bool IsInteractPressed(out GameObject? interactable);
             bool IsMovePressed(out Vector3 moveVector);
             bool IsLookPressed(out Vector3 lookTarget);
             bool IsJumpPressed();
             bool IsCrouchPressed();
             bool IsAcceleratePressed();
+            bool IsFirePressed();
+            bool IsAimPressed();
+            bool IsInteractPressed(out GameObject? interactable);
         }
-
-        private bool fixedUpdateWasInvoked = false;
-        private bool isJumpPressed = false;
-        private bool isCrouchPressed = false;
-        private bool isAcceleratePressed = false;
 
         // Components
         private CharacterBody Body { get; set; } = default!;
@@ -44,49 +39,34 @@ namespace Project.Entities.Characters {
         public void Start() {
         }
         public void FixedUpdate() {
-            fixedUpdateWasInvoked = true;
             if (Actions != null && Actions.IsEnabled()) {
-                var isMovePressed = Actions.IsMovePressed( out var moveVector );
-                var isJumpPressed = this.isJumpPressed;
-                var isCrouchPressed = this.isCrouchPressed;
-                var isAcceleratePressed = this.isAcceleratePressed;
-                Body.UpdatePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-            }
-        }
-        public void Update() {
-            if (Actions != null && Actions.IsEnabled()) {
-                if (fixedUpdateWasInvoked) {
-                    fixedUpdateWasInvoked = false;
-                    isJumpPressed = Actions.IsJumpPressed();
-                    isCrouchPressed = Actions.IsCrouchPressed();
-                    isAcceleratePressed = Actions.IsAcceleratePressed();
-                } else {
-                    isJumpPressed |= Actions.IsJumpPressed();
-                    isCrouchPressed |= Actions.IsCrouchPressed();
-                    isAcceleratePressed |= Actions.IsAcceleratePressed();
+                {
+                    var isMovePressed = Actions.IsMovePressed( out var moveVector );
+                    var isJumpPressed = Actions.IsJumpPressed();
+                    var isCrouchPressed = Actions.IsCrouchPressed();
+                    var isAcceleratePressed = Actions.IsAcceleratePressed();
+                    Body.FixedUpdatePosition( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
                 }
                 {
                     var isLookPressed = Actions.IsLookPressed( out var lookTarget );
-                    Body.UpdateRotation( isLookPressed, lookTarget );
+                    Body.FixedUpdateRotation( isLookPressed, lookTarget );
                 }
                 if (Actions.IsFirePressed()) {
-
+                    
                 }
                 if (Actions.IsAimPressed()) {
-
+                    
                 }
                 if (Actions.IsInteractPressed( out var interactable )) {
                     if (interactable != null && interactable.IsWeapon()) {
-                        View.SetWeapon( interactable );
+                        View.SetWeapon( interactable, out var prevWeapon );
                     } else {
-                        View.SetWeapon( null );
+                        View.SetWeapon( null, out var prevWeapon );
                     }
                 }
-            } else {
-                isJumpPressed = false;
-                isCrouchPressed = false;
-                isAcceleratePressed = false;
             }
+        }
+        public void Update() {
         }
 
     }

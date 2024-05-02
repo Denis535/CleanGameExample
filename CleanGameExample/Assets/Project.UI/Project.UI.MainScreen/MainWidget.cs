@@ -91,7 +91,7 @@ namespace Project.UI.MainScreen {
 
         // Update
         public void Update() {
-            SetBackgroundEffect( View.Root, Descendants );
+            SetBackgroundEffect( View.Root, this.GetDescendants() );
         }
         public void LateUpdate() {
         }
@@ -103,9 +103,9 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static void SetBackgroundEffect(ElementWrapper element, IReadOnlyList<UIWidgetBase> descendants) {
+        private static void SetBackgroundEffect(ElementWrapper element, IEnumerable<UIWidgetBase> descendants) {
             var view = (UIViewBase?) descendants.Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
-            view = view?.Children.FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) ?? view;
+            view = view?.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) ?? view;
             // MainMenuWidgetView
             if (view is MainMenuWidgetView) {
                 element.SetBackgroundEffect( Color.white, default, 0, 1.0f );

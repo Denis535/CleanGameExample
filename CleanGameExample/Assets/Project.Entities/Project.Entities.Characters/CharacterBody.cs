@@ -21,8 +21,10 @@ namespace Project.Entities.Characters {
         // Move
         public void MovePosition(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            var velocity = GetVelocity( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-            CharacterController.Move( velocity * GetDeltaTime() );
+            if (isMovePressed || isJumpPressed || isCrouchPressed || isAcceleratePressed) {
+                var velocity = GetVelocity( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+                CharacterController.Move( velocity * GetDeltaTime() );
+            }
         }
         public void MoveRotation(bool isLookPressed, Vector3 lookTarget) {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );

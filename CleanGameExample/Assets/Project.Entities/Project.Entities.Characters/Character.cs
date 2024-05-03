@@ -14,7 +14,7 @@ namespace Project.Entities.Characters {
         private CharacterBody Body { get; set; } = default!;
         private CharacterView View { get; set; } = default!;
         // Actions
-        private InputActionsWrapper? Actions { get; set; }
+        private ICharacterInputActions? Actions { get; set; }
 
         // Awake
         public void Awake() {
@@ -25,8 +25,8 @@ namespace Project.Entities.Characters {
         }
 
         // SetActions
-        internal void SetActions(IInputActions? actions) {
-            Actions = actions != null ? new InputActionsWrapper( actions ) : null;
+        internal void SetActions(ICharacterInputActions? actions) {
+            Actions = actions;
         }
 
         // Start
@@ -45,10 +45,10 @@ namespace Project.Entities.Characters {
                     Body.MoveRotation( true, lookTarget );
                 } else {
                     if (Actions.IsMovePressed( out var moveVector )) {
-                        lookTarget = transform.position + moveVector * 128f + Vector3.up * 1.75f;
-                        Body.MoveRotation( true, lookTarget );
+                        Body.MoveRotation( true, transform.position + moveVector );
                     }
                 }
+                View.LookAt( lookTarget );
                 if (Actions.IsFirePressed()) {
 
                 }
@@ -66,8 +66,14 @@ namespace Project.Entities.Characters {
         }
 
     }
-    internal interface IInputActions {
+    // ICharacterInputActions
+    internal interface ICharacterInputActions {
+
         bool IsEnabled { get; }
+
+        void FixedUpdate();
+        void Update();
+
         bool IsMovePressed(out Vector3 moveVector);
         bool IsLookPressed(out Vector3 lookTarget);
         bool IsJumpPressed();
@@ -76,79 +82,107 @@ namespace Project.Entities.Characters {
         bool IsFirePressed();
         bool IsAimPressed();
         bool IsInteractPressed(out GameObject? interactable);
+
     }
-    internal class InputActionsWrapper {
+    internal abstract class CharacterInputActionsBase : ICharacterInputActions {
 
-        private readonly IInputActions @base;
         private bool fixedUpdateWasInvoked;
-        private bool isMovePressed;
-        private Vector3 moveVector;
-        private bool isJumpPressed;
-        private bool isCrouchPressed;
-        private bool isAcceleratePressed;
+        private bool isMovePressedCached;
+        private Vector3 moveVectorCached;
+        private bool isJumpPressedCached;
+        private bool isCrouchPressedCached;
+        private bool isAcceleratePressedCached;
 
-        public bool IsEnabled => @base.IsEnabled;
+        public abstract bool IsEnabled { get; }
 
-        public InputActionsWrapper(IInputActions @base) {
-            this.@base = @base;
+        public CharacterInputActionsBase() {
         }
 
         public void FixedUpdate() {
             Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            this.fixedUpdateWasInvoked = true;
+            fixedUpdateWasInvoked = true;
         }
         public void Update() {
-            // accumulate input actions that happened between fixed updates
+            // accumulate actions that happened between fixed updates
             Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (this.fixedUpdateWasInvoked) {
-                this.fixedUpdateWasInvoked = false;
-                this.isMovePressed = @base.IsMovePressed( out var moveVector );
-                this.moveVector = moveVector;
-                this.isJumpPressed = @base.IsJumpPressed();
-                this.isCrouchPressed = @base.IsCrouchPressed();
-                this.isAcceleratePressed = @base.IsAcceleratePressed();
+            if (IsEnabled) {
+                if (fixedUpdateWasInvoked) {
+                    fixedUpdateWasInvoked = false;
+                    isMovePressedCached = IsMovePressedInternal( out moveVectorCached );
+                    isJumpPressedCached = IsJumpPressedInternal();
+                    isCrouchPressedCached = IsCrouchPressedInternal();
+                    isAcceleratePressedCached = IsAcceleratePressedInternal();
+                } else {
+                    if (IsMovePressedInternal( out var moveVector )) {
+                        isMovePressedCached = true;
+                        moveVectorCached = Vector3.Max( moveVectorCached, moveVector );
+                    }
+                    if (IsJumpPressedInternal()) {
+                        isJumpPressedCached = true;
+                    }
+                    if (IsCrouchPressedInternal()) {
+                        isCrouchPressedCached = true;
+                    }
+                    if (IsAcceleratePressedInternal()) {
+                        isAcceleratePressedCached = true;
+                    }
+                }
             } else {
-                if (@base.IsMovePressed( out var moveVector )) {
-                    this.isMovePressed = true;
-                    this.moveVector = Vector3.Max( this.moveVector, moveVector );
-                }
-                if (@base.IsJumpPressed()) {
-                    this.isJumpPressed = true;
-                }
-                if (@base.IsCrouchPressed()) {
-                    this.isCrouchPressed = true;
-                }
-                if (@base.IsAcceleratePressed()) {
-                    this.isAcceleratePressed = true;
-                }
+                fixedUpdateWasInvoked = false;
+                isMovePressedCached = false;
+                moveVectorCached = Vector3.zero;
+                isJumpPressedCached = false;
+                isCrouchPressedCached = false;
+                isAcceleratePressedCached = false;
             }
         }
 
         public bool IsMovePressed(out Vector3 moveVector) {
-            moveVector = this.moveVector;
-            return isMovePressed;
+            if (Time.inFixedTimeStep) {
+                moveVector = moveVectorCached;
+                return isMovePressedCached;
+            }
+            return IsMovePressedInternal( out moveVector );
         }
         public bool IsLookPressed(out Vector3 lookTarget) {
-            return @base.IsLookPressed( out lookTarget );
+            return IsLookPressedInternal( out lookTarget );
         }
         public bool IsJumpPressed() {
-            return isJumpPressed;
+            if (Time.inFixedTimeStep) {
+                return isJumpPressedCached;
+            }
+            return IsJumpPressedInternal();
         }
         public bool IsCrouchPressed() {
-            return isCrouchPressed;
+            if (Time.inFixedTimeStep) {
+                return isCrouchPressedCached;
+            }
+            return IsCrouchPressedInternal();
         }
         public bool IsAcceleratePressed() {
-            return isAcceleratePressed;
+            if (Time.inFixedTimeStep) {
+                return isAcceleratePressedCached;
+            }
+            return IsAcceleratePressedInternal();
         }
         public bool IsFirePressed() {
-            return @base.IsFirePressed();
+            return IsFirePressedInternal();
         }
         public bool IsAimPressed() {
-            return @base.IsAimPressed();
+            return IsAimPressedInternal();
         }
         public bool IsInteractPressed(out GameObject? interactable) {
-            return @base.IsInteractPressed( out interactable );
+            return IsInteractPressedInternal( out interactable );
         }
+
+        protected abstract bool IsMovePressedInternal(out Vector3 moveVector);
+        protected abstract bool IsLookPressedInternal(out Vector3 lookTarget);
+        protected abstract bool IsJumpPressedInternal();
+        protected abstract bool IsCrouchPressedInternal();
+        protected abstract bool IsAcceleratePressedInternal();
+        protected abstract bool IsFirePressedInternal();
+        protected abstract bool IsAimPressedInternal();
+        protected abstract bool IsInteractPressedInternal(out GameObject? interactable);
 
     }
 }

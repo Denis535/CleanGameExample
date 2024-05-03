@@ -26,13 +26,19 @@ namespace Project.Entities.Characters {
 
         // LookAt
         public void LookAt(Vector3 target) {
-            Head.LookAt( target, Vector3.up );
-
-            //var direction = (target - Head.position).normalized;
-            //Head.forward = direction;
-            //Head.localRotation = Quaternion.LookRotation( direction );
-            //Head.localEulerAngles = Quaternion.LookRotation( direction ).eulerAngles;
-            //Debug.Log( Quaternion.LookRotation( direction ).eulerAngles );
+            var rotation = Head.localRotation;
+            Head.localRotation = Quaternion.identity;
+            var direction = Head.InverseTransformPoint( target );
+            var angles = Quaternion.LookRotation( direction ).eulerAngles;
+            if (angles.x > 180) angles.x -= 360;
+            if (angles.y > 180) angles.y -= 360;
+            if (angles.y >= -120 && angles.y <= 120) {
+                angles.x = Mathf.Clamp( angles.x, -80, 80 );
+                angles.y = Mathf.Clamp( angles.y, -80, 80 );
+                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.Euler( angles ), 3 * 360 * Time.deltaTime );
+            } else {
+                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 3 * 360 * Time.deltaTime );
+            }
         }
 
         // SetWeapon

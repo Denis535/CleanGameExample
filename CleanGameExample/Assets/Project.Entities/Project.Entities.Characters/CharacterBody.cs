@@ -29,8 +29,9 @@ namespace Project.Entities.Characters {
         public void MoveRotation(bool isLookPressed, Vector3 lookTarget) {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (isLookPressed) {
-                var rotation = GetRotation( transform.localPosition, lookTarget );
-                transform.localRotation = Quaternion.RotateTowards( transform.localRotation, rotation, 3 * 360 * GetDeltaTime() );
+                var rotation = transform.localRotation;
+                var rotation2 = GetRotation( transform.localPosition, lookTarget );
+                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
             }
         }
 

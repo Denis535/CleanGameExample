@@ -25,19 +25,36 @@ namespace Project.Entities.Characters {
         }
 
         // LookAt
-        public void LookAt(Vector3 target) {
+        public void LookAt(Vector3? target) {
             var rotation = Head.localRotation;
-            Head.localRotation = Quaternion.identity;
-            var direction = Head.InverseTransformPoint( target );
-            var angles = Quaternion.LookRotation( direction ).eulerAngles;
-            if (angles.x > 180) angles.x -= 360;
-            if (angles.y > 180) angles.y -= 360;
-            if (angles.y >= -120 && angles.y <= 120) {
-                angles.x = Mathf.Clamp( angles.x, -80, 80 );
-                angles.y = Mathf.Clamp( angles.y, -80, 80 );
-                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.Euler( angles ), 3 * 360 * Time.deltaTime );
+            if (target != null) {
+                Head.localRotation = Quaternion.identity;
+                var direction = Head.InverseTransformPoint( target.Value );
+                var rotation2 = GetHeadRotation( direction );
+                if (rotation2 != null) {
+                    Head.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                } else {
+                    Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                }
             } else {
-                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 3 * 360 * Time.deltaTime );
+                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+            }
+        }
+
+        // AimAt
+        public void AimAt(Vector3? target) {
+            var rotation = WeaponSlot.localRotation;
+            if (target != null) {
+                WeaponSlot.localRotation = Quaternion.identity;
+                var direction = WeaponSlot.InverseTransformPoint( target.Value );
+                var rotation2 = GetWeaponRotation( direction );
+                if (rotation2 != null) {
+                    WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                } else {
+                    WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                }
+            } else {
+                WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
             }
         }
 
@@ -56,6 +73,30 @@ namespace Project.Entities.Characters {
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;
             }
+        }
+
+        // Helpers
+        private static Quaternion? GetHeadRotation(Vector3 direction) {
+            var rotation = Quaternion.LookRotation( direction );
+            var angles = rotation.eulerAngles;
+            if (angles.x > 180) angles.x -= 360;
+            if (angles.y > 180) angles.y -= 360;
+            if (angles.y >= -120 && angles.y <= 120) {
+                angles.x = Mathf.Clamp( angles.x, -80, 80 );
+                angles.y = Mathf.Clamp( angles.y, -80, 80 );
+                return Quaternion.Euler( angles );
+            }
+            return null;
+        }
+        private static Quaternion? GetWeaponRotation(Vector3 direction) {
+            var rotation = Quaternion.LookRotation( direction );
+            var angles = rotation.eulerAngles;
+            if (angles.x > 180) angles.x -= 360;
+            if (angles.y > 180) angles.y -= 360;
+            if (angles.y >= -180 && angles.y <= 180) {
+                return Quaternion.Euler( angles );
+            }
+            return null;
         }
 
     }

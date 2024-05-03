@@ -148,7 +148,7 @@ namespace Project.Entities {
         protected override bool IsLookPressedInternal(out Vector3 lookTarget) {
             Assert.Operation.Message( $"Method 'IsLookPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             lookTarget = player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
-            return actions.Game.Fire.IsPressed() || actions.Game.Aim.IsPressed() || actions.Game.Interact.IsPressed();
+            return actions.Game.Fire.IsPressed() || actions.Game.Aim.IsPressed();
         }
         protected override bool IsJumpPressedInternal() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );

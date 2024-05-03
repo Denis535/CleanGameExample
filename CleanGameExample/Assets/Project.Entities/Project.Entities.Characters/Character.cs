@@ -43,12 +43,18 @@ namespace Project.Entities.Characters {
                 Actions.Update();
                 if (Actions.IsLookPressed( out var lookTarget )) {
                     Body.MoveRotation( true, lookTarget );
+                    View.LookAt( lookTarget );
+                    View.AimAt( lookTarget );
                 } else {
                     if (Actions.IsMovePressed( out var moveVector )) {
                         Body.MoveRotation( true, transform.position + moveVector );
+                        View.LookAt( null );
+                        View.AimAt( null );
+                    } else {
+                        View.LookAt( lookTarget );
+                        View.AimAt( null );
                     }
                 }
-                View.LookAt( lookTarget );
                 if (Actions.IsFirePressed()) {
 
                 }
@@ -134,39 +140,43 @@ namespace Project.Entities.Characters {
         private void Clear() {
             fixedUpdateWasInvoked = false;
             isMovePressedCached = false;
-            moveVectorCached = Vector3.zero;
+            moveVectorCached = default;
             isJumpPressedCached = false;
             isCrouchPressedCached = false;
             isAcceleratePressedCached = false;
         }
 
         public bool IsMovePressed(out Vector3 moveVector) {
-            if (Time.inFixedTimeStep) {
-                moveVector = moveVectorCached;
-                return isMovePressedCached;
+            if (IsEnabled) {
+                if (Time.inFixedTimeStep) { moveVector = moveVectorCached; return isMovePressedCached; }
+                return IsMovePressedInternal( out moveVector );
             }
-            return IsMovePressedInternal( out moveVector );
+            moveVector = default;
+            return false;
         }
         public bool IsLookPressed(out Vector3 lookTarget) {
             return IsLookPressedInternal( out lookTarget );
         }
         public bool IsJumpPressed() {
-            if (Time.inFixedTimeStep) {
-                return isJumpPressedCached;
+            if (IsEnabled) {
+                if (Time.inFixedTimeStep) return isJumpPressedCached;
+                return IsJumpPressedInternal();
             }
-            return IsJumpPressedInternal();
+            return false;
         }
         public bool IsCrouchPressed() {
-            if (Time.inFixedTimeStep) {
-                return isCrouchPressedCached;
+            if (IsEnabled) {
+                if (Time.inFixedTimeStep) return isCrouchPressedCached;
+                return IsCrouchPressedInternal();
             }
-            return IsCrouchPressedInternal();
+            return false;
         }
         public bool IsAcceleratePressed() {
-            if (Time.inFixedTimeStep) {
-                return isAcceleratePressedCached;
+            if (IsEnabled) {
+                if (Time.inFixedTimeStep) return isAcceleratePressedCached;
+                return IsAcceleratePressedInternal();
             }
-            return IsAcceleratePressedInternal();
+            return false;
         }
         public bool IsFirePressed() {
             return IsFirePressedInternal();

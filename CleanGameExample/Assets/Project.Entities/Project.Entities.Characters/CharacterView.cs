@@ -24,6 +24,17 @@ namespace Project.Entities.Characters {
         public void OnDestroy() {
         }
 
+        // LookAt
+        public void LookAt(Vector3 target) {
+            Head.LookAt( target, Vector3.up );
+
+            //var direction = (target - Head.position).normalized;
+            //Head.forward = direction;
+            //Head.localRotation = Quaternion.LookRotation( direction );
+            //Head.localEulerAngles = Quaternion.LookRotation( direction ).eulerAngles;
+            //Debug.Log( Quaternion.LookRotation( direction ).eulerAngles );
+        }
+
         // SetWeapon
         public void SetWeapon(GameObject? weapon, out GameObject? prevWeapon) {
             if (Weapon != null) {

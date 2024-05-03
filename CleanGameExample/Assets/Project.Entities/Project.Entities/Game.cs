@@ -31,9 +31,9 @@ namespace Project.Entities {
         }
 
         // SetPaused
-        public void SetPaused(bool value) {
-            IsPaused = value;
-            Player.SetPaused( value );
+        public void SetPaused(bool isPaused) {
+            IsPaused = isPaused;
+            Player.SetPaused( isPaused );
         }
 
         // Start

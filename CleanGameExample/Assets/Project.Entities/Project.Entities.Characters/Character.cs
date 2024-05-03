@@ -107,7 +107,6 @@ namespace Project.Entities.Characters {
             Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsEnabled) {
                 if (fixedUpdateWasInvoked) {
-                    fixedUpdateWasInvoked = false;
                     isMovePressedCached = IsMovePressedInternal( out moveVectorCached );
                     isJumpPressedCached = IsJumpPressedInternal();
                     isCrouchPressedCached = IsCrouchPressedInternal();
@@ -128,13 +127,17 @@ namespace Project.Entities.Characters {
                     }
                 }
             } else {
-                fixedUpdateWasInvoked = false;
-                isMovePressedCached = false;
-                moveVectorCached = Vector3.zero;
-                isJumpPressedCached = false;
-                isCrouchPressedCached = false;
-                isAcceleratePressedCached = false;
+                Clear();
             }
+        }
+
+        private void Clear() {
+            fixedUpdateWasInvoked = false;
+            isMovePressedCached = false;
+            moveVectorCached = Vector3.zero;
+            isJumpPressedCached = false;
+            isCrouchPressedCached = false;
+            isAcceleratePressedCached = false;
         }
 
         public bool IsMovePressed(out Vector3 moveVector) {

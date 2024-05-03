@@ -163,17 +163,14 @@ namespace Project.UI {
         private static async Task LoadSceneAsync_Startup() {
             await Startup.Load( LoadSceneMode.Single, false ).WaitAsync();
             await Startup.ActivateAsync();
-            SceneManager.SetActiveScene( Startup.Value );
         }
         public async Task LoadSceneAsync_MainScene() {
             await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await MainScene.ActivateAsync();
-            SceneManager.SetActiveScene( MainScene.Value );
         }
         public async Task LoadSceneAsync_GameScene() {
             await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await GameScene.ActivateAsync();
-            SceneManager.SetActiveScene( GameScene.Value );
         }
         public async Task LoadSceneAsync_World(LevelEnum level) {
             await World.SetUp( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();

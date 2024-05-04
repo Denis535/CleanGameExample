@@ -128,6 +128,7 @@ namespace Project.Entities {
         private readonly InputActions actions;
 
         public override bool IsEnabled => actions.asset.enabled;
+        public override Vector3 Target => player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
 
         public CharacterInputActions(Player player, InputActions actions) {
             this.player = player;
@@ -144,11 +145,6 @@ namespace Project.Entities {
                 moveVector = default;
                 return false;
             }
-        }
-        protected override bool IsLookPressedInternal(out Vector3 lookTarget) {
-            Assert.Operation.Message( $"Method 'IsLookPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            lookTarget = player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
-            return actions.Game.Fire.IsPressed() || actions.Game.Aim.IsPressed();
         }
         protected override bool IsJumpPressedInternal() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );

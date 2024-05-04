@@ -41,18 +41,35 @@ namespace Project.Entities.Characters {
         public void Update() {
             if (Actions != null) {
                 Actions.Update();
-                if (Actions.IsLookPressed( out var lookTarget )) {
-                    Body.MoveRotation( true, lookTarget );
-                    View.LookAt( lookTarget );
-                    View.AimAt( lookTarget );
-                } else {
-                    if (Actions.IsMovePressed( out var moveVector )) {
+                if (Actions.IsMovePressed( out var moveVector )) {
+                    if (Actions.IsAimPressed()) {
+                        var target = Actions.Target;
+                        Body.MoveRotation( true, target );
+                        View.LookAt( target );
+                        View.AimAt( target );
+                    } else if (Actions.IsFirePressed()) {
                         Body.MoveRotation( true, transform.position + moveVector );
                         View.LookAt( null );
                         View.AimAt( null );
                     } else {
-                        View.LookAt( lookTarget );
+                        Body.MoveRotation( true, transform.position + moveVector );
+                        View.LookAt( null );
                         View.AimAt( null );
+                    }
+                } else {
+                    if (Actions.IsAimPressed()) {
+                        var target = Actions.Target;
+                        Body.MoveRotation( true, target );
+                        View.LookAt( target );
+                        View.AimAt( target );
+                    } else if (Actions.IsFirePressed()) {
+                        var target = Actions.Target;
+                        View.LookAt( target );
+                        View.AimAt( target );
+                    } else {
+                        var target = Actions.Target;
+                        View.LookAt( target );
+                        View.AimAt( target );
                     }
                 }
                 if (Actions.IsFirePressed()) {
@@ -76,12 +93,12 @@ namespace Project.Entities.Characters {
     internal interface ICharacterInputActions {
 
         bool IsEnabled { get; }
+        Vector3 Target { get; }
 
         void FixedUpdate();
         void Update();
 
         bool IsMovePressed(out Vector3 moveVector);
-        bool IsLookPressed(out Vector3 lookTarget);
         bool IsJumpPressed();
         bool IsCrouchPressed();
         bool IsAcceleratePressed();
@@ -100,6 +117,7 @@ namespace Project.Entities.Characters {
         private bool isAcceleratePressedCached;
 
         public abstract bool IsEnabled { get; }
+        public abstract Vector3 Target { get; }
 
         public CharacterInputActionsBase() {
         }
@@ -154,9 +172,6 @@ namespace Project.Entities.Characters {
             moveVector = default;
             return false;
         }
-        public bool IsLookPressed(out Vector3 lookTarget) {
-            return IsLookPressedInternal( out lookTarget );
-        }
         public bool IsJumpPressed() {
             if (IsEnabled) {
                 if (Time.inFixedTimeStep) return isJumpPressedCached;
@@ -189,7 +204,6 @@ namespace Project.Entities.Characters {
         }
 
         protected abstract bool IsMovePressedInternal(out Vector3 moveVector);
-        protected abstract bool IsLookPressedInternal(out Vector3 lookTarget);
         protected abstract bool IsJumpPressedInternal();
         protected abstract bool IsCrouchPressedInternal();
         protected abstract bool IsAcceleratePressedInternal();

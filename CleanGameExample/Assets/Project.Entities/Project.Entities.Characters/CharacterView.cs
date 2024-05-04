@@ -81,7 +81,7 @@ namespace Project.Entities.Characters {
             var angles = rotation.eulerAngles;
             if (angles.x > 180) angles.x -= 360;
             if (angles.y > 180) angles.y -= 360;
-            if (angles.y >= -120 && angles.y <= 120) {
+            if (angles.y >= -80 && angles.y <= 80) {
                 angles.x = Mathf.Clamp( angles.x, -80, 80 );
                 angles.y = Mathf.Clamp( angles.y, -80, 80 );
                 return Quaternion.Euler( angles );
@@ -93,7 +93,8 @@ namespace Project.Entities.Characters {
             var angles = rotation.eulerAngles;
             if (angles.x > 180) angles.x -= 360;
             if (angles.y > 180) angles.y -= 360;
-            if (angles.y >= -180 && angles.y <= 180) {
+            if (angles.y >= -80 && angles.y <= 80) {
+                angles.y = Mathf.Clamp( angles.y, -80, 80 );
                 return Quaternion.Euler( angles );
             }
             return null;

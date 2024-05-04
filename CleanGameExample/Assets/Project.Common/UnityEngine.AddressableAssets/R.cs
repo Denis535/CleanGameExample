@@ -56,6 +56,7 @@ namespace UnityEngine.AddressableAssets {
                     public const string @PlayerCharacter_Green_Value = "Project.Entities.Characters/PlayerCharacter_Green.prefab";
                     public const string @PlayerCharacter_Red_Value = "Project.Entities.Characters/PlayerCharacter_Red.prefab";
                     public static class @Inventory {
+                        public const string @Bullet_Value = "Project.Entities.Characters.Inventory/Bullet.prefab";
                         public const string @Gun_Blue_Value = "Project.Entities.Characters.Inventory/Gun_Blue.prefab";
                         public const string @Gun_Gray_Value = "Project.Entities.Characters.Inventory/Gun_Gray.prefab";
                         public const string @Gun_Green_Value = "Project.Entities.Characters.Inventory/Gun_Green.prefab";

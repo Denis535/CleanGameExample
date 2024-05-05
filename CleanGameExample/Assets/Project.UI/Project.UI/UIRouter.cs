@@ -75,15 +75,13 @@ namespace Project.UI {
         private SceneHandleDynamic World { get; } = new SceneHandleDynamic();
 
         // Awake
-        public new void Awake() {
-            base.Awake();
+        public override void Awake() {
             Application = Utils.Container.RequireDependency<Application2>( null );
 #if !UNITY_EDITOR
             UnityEngine.Application.wantsToQuit += OnQuit;
 #endif
         }
-        public new void OnDestroy() {
-            base.OnDestroy();
+        public override void OnDestroy() {
         }
 
         // LoadScene

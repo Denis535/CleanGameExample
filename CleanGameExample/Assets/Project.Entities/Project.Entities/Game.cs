@@ -22,12 +22,12 @@ namespace Project.Entities {
         public World World { get; private set; } = default!;
 
         // Awake
-        public void Awake() {
+        public override void Awake() {
             Args = Context.Get<Game, Arguments>();
             Player = gameObject.AddComponent<Player>();
             World = Utils.Container.RequireDependency<World>( null );
         }
-        public void OnDestroy() {
+        public override void OnDestroy() {
         }
 
         // SetPaused

@@ -24,27 +24,25 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
+        // AudioSource
+        private AudioSource AudioSource { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
         // Application
         private Application2 Application { get; set; } = default!;
         // Entities
         private Game? Game => Application.Game;
-        // AudioSource
-        private AudioSource AudioSource { get; set; } = default!;
         // Theme
         private AssetHandleDynamic<AudioClip> Theme { get; } = new AssetHandleDynamic<AudioClip>();
 
         // Awake
-        public new void Awake() {
-            base.Awake();
+        public override void Awake() {
+            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
             Router = Utils.Container.RequireDependency<UIRouter>( null );
             Application = Utils.Container.RequireDependency<Application2>( null );
-            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
         }
-        public new void OnDestroy() {
+        public override void OnDestroy() {
             Stop( AudioSource, Theme );
-            base.OnDestroy();
         }
 
         // Start

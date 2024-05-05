@@ -17,10 +17,10 @@ namespace Project.Entities {
 
         // IsLoot
         public static bool IsLoot(this GameObject gameObject) {
-            return gameObject.name.Contains( "Gun" );
+            return gameObject.name.Contains( "Gun" ) && gameObject.transform.parent == null;
         }
         public static bool IsWeapon(this GameObject gameObject) {
-            return gameObject.name.Contains( "Gun" );
+            return gameObject.name.Contains( "Gun" ) && gameObject.transform.parent == null;
         }
 
     }

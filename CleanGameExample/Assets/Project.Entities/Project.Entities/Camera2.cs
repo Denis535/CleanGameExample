@@ -29,9 +29,9 @@ namespace Project.Entities {
         public float Distance { get; private set; }
 
         // Awake
-        public void Awake() {
+        public override void Awake() {
         }
-        public void OnDestroy() {
+        public override void OnDestroy() {
         }
 
         // Rotate

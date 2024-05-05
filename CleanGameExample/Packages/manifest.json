@@ -1,7 +1,8 @@
 {
   "dependencies": {
+    "com.denis535.addressables-extensions": "1.0.1",
     "com.denis535.addressables-source-generator": "1.0.35",
-    "com.denis535.clean-architecture-game-framework": "1.0.150",
+    "com.denis535.clean-architecture-game-framework": "1.0.153",
     "com.denis535.colorful-project-window": "1.0.29",
     "com.denis535.uitoolkit-theme-style-sheet": "https://github.com/Denis535/UIToolkitThemeStyleSheet.git?path=Packages/com.denis535.uitoolkit-theme-style-sheet",
     "com.unity.2d.sprite": "1.0.0",
@@ -35,8 +36,9 @@
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.denis535.clean-architecture-game-framework",
+        "com.denis535.addressables-extensions",
         "com.denis535.addressables-source-generator",
+        "com.denis535.clean-architecture-game-framework",
         "com.denis535.colorful-project-window"
       ]
     }

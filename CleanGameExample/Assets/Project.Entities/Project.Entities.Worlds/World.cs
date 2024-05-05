@@ -14,12 +14,12 @@ namespace Project.Entities.Worlds {
         public LootSpawnPoint[] LootSpawnPoints { get; private set; } = default!;
 
         // Awake
-        public void Awake() {
+        public override void Awake() {
             PlayerSpawnPoints = Object2.RequireObjectsByType<PlayerSpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
             EnemySpawnPoints = Object2.RequireObjectsByType<EnemySpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
             LootSpawnPoints = Object2.RequireObjectsByType<LootSpawnPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
         }
-        public void OnDestroy() {
+        public override void OnDestroy() {
         }
 
     }

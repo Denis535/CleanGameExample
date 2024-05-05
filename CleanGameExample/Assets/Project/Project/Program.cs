@@ -53,15 +53,13 @@ namespace Project {
         }
 
         // Awake
-        public new void Awake() {
-            base.Awake();
+        public override void Awake() {
             Theme = Utils.Container.RequireDependency<UITheme>( null );
             Screen = Utils.Container.RequireDependency<UIScreen>( null );
             Router = Utils.Container.RequireDependency<UIRouter>( null );
             Application = Utils.Container.RequireDependency<Application2>( null );
         }
-        public new void OnDestroy() {
-            base.OnDestroy();
+        public override void OnDestroy() {
         }
 
         // Start

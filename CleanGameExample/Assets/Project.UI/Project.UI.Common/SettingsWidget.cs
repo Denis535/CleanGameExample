@@ -22,10 +22,10 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            ShowWidget( this );
+            Show();
         }
         public override void OnDetach(object? argument) {
-            HideWidget( this );
+            Hide();
         }
 
         // ShowWidget

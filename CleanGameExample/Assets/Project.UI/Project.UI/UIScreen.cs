@@ -21,8 +21,8 @@ namespace Project.UI {
         private new UIRootWidget Widget => (UIRootWidget?) base.Widget!;
 
         // Awake
-        public new void Awake() {
-            base.Awake();
+        public override void Awake() {
+            Document = gameObject.RequireComponentInChildren<UIDocument>();
             Router = Utils.Container.RequireDependency<UIRouter>( null );
             Application = Utils.Container.RequireDependency<Application2>( null );
             VisualElementFactory.OnPlayClick += evt => { };
@@ -37,9 +37,8 @@ namespace Project.UI {
             VisualElementFactory.OnPlayErrorDialog += evt => { };
             AttachWidget( new UIRootWidget() );
         }
-        public new void OnDestroy() {
+        public override void OnDestroy() {
             Widget.DetachSelf();
-            base.OnDestroy();
         }
 
         // Start

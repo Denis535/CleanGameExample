@@ -37,7 +37,7 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override async void OnAttach(object? argument) {
-            ShowWidget( this );
+            Show();
             // await MainScene
             if (!Router.IsMainSceneLoaded) {
                 while (!Router.IsMainSceneLoaded) {
@@ -72,7 +72,7 @@ namespace Project.UI.MainScreen {
             AttachChild( new MainMenuWidget() );
         }
         public override void OnDetach(object? argument) {
-            HideWidget( this );
+            Hide();
         }
 
         // OnDescendantAttach

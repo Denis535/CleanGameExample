@@ -13,11 +13,9 @@ namespace Project.App {
         public Game? Game { get; private set; }
 
         // Awake
-        public new void Awake() {
-            base.Awake();
+        public override void Awake() {
         }
-        public new void OnDestroy() {
-            base.OnDestroy();
+        public override void OnDestroy() {
         }
 
         // RunGame

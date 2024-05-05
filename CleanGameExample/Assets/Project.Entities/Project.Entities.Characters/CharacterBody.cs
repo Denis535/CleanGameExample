@@ -10,27 +10,58 @@ namespace Project.Entities.Characters {
 
         // Components
         private CharacterController CharacterController { get; set; } = default!;
+        // Input
+        public bool IsMovePressed { get; private set; }
+        public Vector3 MoveVector { get; private set; }
+        public bool IsJumpPressed { get; private set; }
+        public bool IsCrouchPressed { get; private set; }
+        public bool IsAcceleratePressed { get; private set; }
+        // Input
+        public bool IsLookPressed { get; private set; }
+        public Vector3 LookTarget { get; private set; }
 
         // Awake
-        public void Awake() {
+        public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
         }
-        public void OnDestroy() {
+        public override void OnDestroy() {
         }
 
-        // Move
-        public void MovePosition(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+        // SetUp
+        public void SetUp(ref bool initialize, bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            if (initialize) {
+                initialize = false;
+                IsMovePressed = isMovePressed;
+                MoveVector = moveVector;
+                IsJumpPressed = isJumpPressed;
+                IsCrouchPressed = isCrouchPressed;
+                IsAcceleratePressed = isAcceleratePressed;
+            } else {
+                IsMovePressed |= isMovePressed;
+                MoveVector = Vector3.Max( MoveVector, moveVector );
+                IsJumpPressed |= isJumpPressed;
+                IsCrouchPressed |= isCrouchPressed;
+                IsAcceleratePressed |= isAcceleratePressed;
+            }
+        }
+        public void SetUp(bool isLookPressed, Vector3 lookTarget) {
+            IsLookPressed = isLookPressed;
+            LookTarget = lookTarget;
+        }
+
+        // Update
+        public void UpdatePosition() {
             Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            if (isMovePressed || isJumpPressed || isCrouchPressed || isAcceleratePressed) {
-                var velocity = GetVelocity( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
+                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
                 CharacterController.Move( velocity * GetDeltaTime() );
             }
         }
-        public void MoveRotation(bool isLookPressed, Vector3 lookTarget) {
+        public void UpdateRotation() {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (isLookPressed) {
+            if (IsLookPressed) {
                 var rotation = transform.localRotation;
-                var rotation2 = GetRotation( transform.localPosition, lookTarget );
+                var rotation2 = GetRotation( transform.localPosition, LookTarget );
                 transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
             }
         }

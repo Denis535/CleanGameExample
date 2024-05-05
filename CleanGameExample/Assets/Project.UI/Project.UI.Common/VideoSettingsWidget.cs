@@ -24,10 +24,10 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            ShowWidget( this );
+            Show();
         }
         public override void OnDetach(object? argument) {
-            HideWidget( this );
+            Hide();
             if (argument is DetachReason.Submit) {
                 VideoSettings.IsFullScreen = View.IsFullScreen.Value;
                 VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.Value!;

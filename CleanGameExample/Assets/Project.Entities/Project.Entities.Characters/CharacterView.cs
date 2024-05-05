@@ -16,16 +16,16 @@ namespace Project.Entities.Characters {
         public GameObject? Weapon => WeaponSlot.childCount > 0 ? WeaponSlot.GetChild( 0 )?.gameObject : null;
 
         // Awake
-        public void Awake() {
+        public override void Awake() {
             Body = transform.Require( "Body" );
             Head = transform.Require( "Head" );
             WeaponSlot = transform.Require( "WeaponSlot" );
         }
-        public void OnDestroy() {
+        public override void OnDestroy() {
         }
 
         // LookAt
-        public void LookAt(Vector3? target) {
+        public bool LookAt(Vector3? target) {
             var rotation = Head.localRotation;
             if (target != null) {
                 Head.localRotation = Quaternion.identity;
@@ -33,16 +33,19 @@ namespace Project.Entities.Characters {
                 var rotation2 = GetHeadRotation( direction );
                 if (rotation2 != null) {
                     Head.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    return true;
                 } else {
                     Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
                 }
             } else {
                 Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                return false;
             }
         }
 
         // AimAt
-        public void AimAt(Vector3? target) {
+        public bool AimAt(Vector3? target) {
             var rotation = WeaponSlot.localRotation;
             if (target != null) {
                 WeaponSlot.localRotation = Quaternion.identity;
@@ -50,11 +53,14 @@ namespace Project.Entities.Characters {
                 var rotation2 = GetWeaponRotation( direction );
                 if (rotation2 != null) {
                     WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    return true;
                 } else {
                     WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
                 }
             } else {
                 WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                return false;
             }
         }
 

@@ -34,10 +34,10 @@ namespace Project.UI.GameScreen {
         public override void OnAttach(object? argument) {
             Actions.Enable();
             Cursor.lockState = CursorLockMode.Locked;
-            ShowWidget( this );
+            Show();
         }
         public override void OnDetach(object? argument) {
-            HideWidget( this );
+            Hide();
             Actions.Disable();
             Cursor.lockState = CursorLockMode.None;
         }

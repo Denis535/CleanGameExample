@@ -24,10 +24,10 @@ namespace Project.UI.GameScreen {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            ShowWidget( this );
+            Show();
         }
         public override void OnDetach(object? argument) {
-            HideWidget( this );
+            Hide();
         }
 
         // Helpers

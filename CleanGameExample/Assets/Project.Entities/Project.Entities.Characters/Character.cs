@@ -8,13 +8,10 @@ namespace Project.Entities.Characters {
 
     [RequireComponent( typeof( CharacterBody ) )]
     [RequireComponent( typeof( CharacterView ) )]
-    public class Character : EntityBase {
+    public class Character : EntityBase<CharacterBody, CharacterView> {
 
         private bool fixedUpdateWasInvoked;
 
-        // Components
-        private CharacterBody Body { get; set; } = default!;
-        private CharacterView View { get; set; } = default!;
         // Actions
         private ICharacterInputActions? Actions { get; set; }
 

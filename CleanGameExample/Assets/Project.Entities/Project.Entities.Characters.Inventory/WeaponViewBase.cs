@@ -6,9 +6,12 @@ namespace Project.Entities.Characters.Inventory {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class WeaponView : EntityViewBase {
+    public abstract class WeaponViewBase : EntityViewBase {
 
-        protected Rigidbody Rigidbody { get; set; } = default!;
+        // Rigidbody
+        private Rigidbody Rigidbody { get; set; } = default!;
+        // IsRagdoll
+        public bool IsRagdoll { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 
         // Awake
         public override void Awake() {

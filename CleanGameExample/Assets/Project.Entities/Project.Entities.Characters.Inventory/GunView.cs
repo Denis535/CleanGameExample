@@ -5,12 +5,14 @@ namespace Project.Entities.Characters.Inventory {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class GunView : WeaponView {
+    public class GunView : WeaponViewBase {
 
         // Awake
         public override void Awake() {
+            base.Awake();
         }
         public override void OnDestroy() {
+            base.OnDestroy();
         }
 
     }

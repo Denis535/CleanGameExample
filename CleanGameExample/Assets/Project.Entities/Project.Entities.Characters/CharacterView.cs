@@ -66,15 +66,14 @@ namespace Project.Entities.Characters {
 
         // SetWeapon
         public void SetWeapon(GameObject? weapon, out GameObject? prevWeapon) {
+            prevWeapon = Weapon;
+            SetWeapon( weapon );
+        }
+        public void SetWeapon(GameObject? weapon) {
             if (Weapon != null) {
-                prevWeapon = Weapon;
-                Weapon.GetComponent<Rigidbody>().isKinematic = false;
                 Weapon.transform.parent = null;
-            } else {
-                prevWeapon = null;
             }
             if (weapon != null) {
-                weapon.GetComponent<Rigidbody>().isKinematic = true;
                 weapon.transform.parent = WeaponSlot;
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;

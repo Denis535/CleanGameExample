@@ -6,7 +6,7 @@ namespace Project.Entities.Characters.Inventory {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon<TView> : EntityBase<TView> where TView : WeaponView {
+    public abstract class WeaponBase<TView> : EntityBase<TView> where TView : WeaponViewBase {
 
         // Awake
         public override void Awake() {
@@ -17,6 +17,15 @@ namespace Project.Entities.Characters.Inventory {
 
         // Fire
         public abstract void Fire();
+
+        // OnTransformParentChanged
+        public void OnTransformParentChanged() {
+            if (transform.parent) {
+                View.IsRagdoll = false;
+            } else {
+                View.IsRagdoll = true;
+            }
+        }
 
     }
 }

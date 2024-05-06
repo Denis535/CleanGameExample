@@ -10,47 +10,69 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Arguments(LevelEnum Level, PlayerCharacterEnum Character);
         private readonly Lock @lock = new Lock();
 
-        // IsPaused
+        // State
+        public bool IsRunning { get; private set; }
         public bool IsPaused { get; private set; }
-        // Args
-        private Arguments Args { get; set; } = default!;
+        // Arguments
+        public LevelEnum? Level { get; private set; }
+        public PlayerCharacterEnum? Character { get; private set; }
         // Entities
-        public Player Player { get; private set; } = default!;
         public World World { get; private set; } = default!;
+        public Player Player { get; private set; } = default!;
 
         // Awake
         public override void Awake() {
-            Args = Context.Get<Game, Arguments>();
-            Player = gameObject.AddComponent<Player>();
-            World = Utils.Container.RequireDependency<World>( null );
         }
         public override void OnDestroy() {
         }
 
-        // SetPaused
-        public void SetPaused(bool isPaused) {
-            IsPaused = isPaused;
-            Player.SetPaused( isPaused );
+        // RunGame
+        public async void RunGame(LevelEnum level, PlayerCharacterEnum character) {
+            this.Validate();
+            Assert.Operation.Message( $"Game must be non-running" ).Valid( !IsRunning );
+            IsRunning = true;
+            Level = level;
+            Character = character;
+            World = Utils.Container.RequireDependency<World>( null );
+            Player = gameObject.AddComponent<Player>();
+            using (@lock.Enter()) {
+                Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), character ) );
+                var tasks = new List<Task>();
+                foreach (var point in World.EnemySpawnPoints) {
+                    tasks.Add( EntitySpawner.SpawnEnemyCharacterAsync( point, destroyCancellationToken ).AsTask() );
+                }
+                foreach (var point in World.LootSpawnPoints) {
+                    tasks.Add( EntitySpawner.SpawnLootAsync( point, destroyCancellationToken ).AsTask() );
+                }
+                await Task.WhenAll( tasks );
+            }
+        }
+        public void StopGame() {
+            this.Validate();
+            Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
+            IsRunning = false;
+        }
+
+        // Pause
+        public void Pause() {
+            Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
+            Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
+            IsPaused = true;
+            Player.Pause();
+        }
+        public void UnPause() {
+            Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
+            Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
+            IsPaused = false;
+            Player.UnPause();
         }
 
         // Start
-        public async void Start() {
-            Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), Args.Character ) );
+        public void Start() {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
-                    var tasks = new List<Task>();
-                    foreach (var point in World.EnemySpawnPoints) {
-                        var task = EntitySpawner.SpawnEnemyCharacterAsync( point, destroyCancellationToken ).AsTask();
-                        tasks.Add( task );
-                    }
-                    foreach (var point in World.LootSpawnPoints) {
-                        var task = EntitySpawner.SpawnLootAsync( point, destroyCancellationToken ).AsTask();
-                        tasks.Add( task );
-                    }
-                    await Task.WhenAll( tasks );
                 }
             }
         }

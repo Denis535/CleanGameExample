@@ -23,6 +23,8 @@ namespace Project.Entities.Characters {
             View = new CharacterView( gameObject );
         }
         public override void OnDestroy() {
+            Body.Dispose();
+            View.Dispose();
         }
 
         // SetActions

@@ -6,7 +6,7 @@ namespace Project.Entities.Characters.Inventory {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class WeaponBase<TView> : EntityBase<TView> where TView : WeaponViewBase {
+    public abstract class Weapon<TView> : EntityBase<TView> where TView : WeaponView {
 
         // View
         protected override TView View { get; set; } = default!;
@@ -30,7 +30,7 @@ namespace Project.Entities.Characters.Inventory {
         }
 
     }
-    public abstract class WeaponViewBase : EntityViewBase {
+    public abstract class WeaponView : EntityViewBase {
 
         // GameObject
         protected override GameObject GameObject { get; }
@@ -40,7 +40,7 @@ namespace Project.Entities.Characters.Inventory {
         public bool IsRagdoll { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 
         // Constructor
-        public WeaponViewBase(GameObject gameObject) {
+        public WeaponView(GameObject gameObject) {
             GameObject = gameObject;
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }

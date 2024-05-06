@@ -5,7 +5,7 @@ namespace Project.Entities.Characters.Inventory {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Gun : WeaponBase<GunView> {
+    public class Gun : Weapon<GunView> {
 
         // Awake
         public override void Awake() {
@@ -13,6 +13,7 @@ namespace Project.Entities.Characters.Inventory {
             View = new GunView( gameObject );
         }
         public override void OnDestroy() {
+            View.Dispose();
             base.OnDestroy();
         }
 
@@ -21,7 +22,7 @@ namespace Project.Entities.Characters.Inventory {
         }
 
     }
-    public class GunView : WeaponViewBase {
+    public class GunView : WeaponView {
 
         // Constructor
         public GunView(GameObject gameObject) : base( gameObject ) {

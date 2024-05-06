@@ -44,26 +44,12 @@ namespace Project {
                 }
                 if (Application.Game != null) {
                     // Game
-                    GUILayout.Label( "Is Game Running: " + true );
+                    GUILayout.Label( "Is Game Running: " + Application.Game.IsRunning );
                     GUILayout.Label( "Is Game Paused: " + Application.Game.IsPaused );
                     GUILayout.Space( 2 );
                 }
-                {
-                    // Misc
-                    //GUILayout.Label( "Is Focused: " + UnityEngine.Application.isFocused );
-                    //GUILayout.Label( "Focused Element: " + GetFocusedElement()?.Convert( GetDisplayString ) );
-                }
             }
         }
-
-        // Heleprs
-        //private static Focusable? GetFocusedElement() {
-        //    return EventSystem.current.currentSelectedGameObject?.GetComponent<PanelEventHandler>()?.panel.focusController.focusedElement;
-        //}
-        //private static string GetDisplayString(Focusable focusable) {
-        //    var element = (VisualElement) focusable;
-        //    return element.name.NullIfEmpty() ?? focusable.GetType().Name;
-        //}
 
     }
 }

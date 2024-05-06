@@ -14,7 +14,6 @@ namespace Project.UI {
     public class UIScreenEditor : UnityEngine.Framework.UI.UIScreenEditor {
 
         // Target
-        private UIScreen Target => (UIScreen) target;
         private UIDocument Document => Target.GetComponentInChildren<UIDocument>();
 
         // Awake

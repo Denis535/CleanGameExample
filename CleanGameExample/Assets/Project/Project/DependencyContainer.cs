@@ -48,23 +48,23 @@ namespace Project {
 
         // GetObject
         Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
-            this.Assert_IsValid();
+            this.Validate();
             // UI
             if (type == typeof( UITheme )) {
-                var result = UITheme;
+                var result = UITheme ?? throw Exceptions.Internal.NullReference( $"Reference 'UITheme' is null" );
                 return new Option<object?>( result );
             }
             if (type == typeof( UIScreen )) {
-                var result = UIScreen;
+                var result = UIScreen ?? throw Exceptions.Internal.NullReference( $"Reference 'UIScreen' is null" );
                 return new Option<object?>( result );
             }
             if (type == typeof( UIRouter )) {
-                var result = UIRouter;
+                var result = UIRouter ?? throw Exceptions.Internal.NullReference( $"Reference 'UIRouter' is null" );
                 return new Option<object?>( result );
             }
             // App
             if (type == typeof( Application2 )) {
-                var result = Application;
+                var result = Application ?? throw Exceptions.Internal.NullReference( $"Reference 'Application' is null" );
                 return new Option<object?>( result );
             }
             if (type == typeof( Storage )) {
@@ -92,15 +92,21 @@ namespace Project {
                 return new Option<object?>( result );
             }
             // Misc
-            if (type.IsDescendentOf( typeof( Component ) )) {
-                var result = (Component) FindAnyObjectByType( type, FindObjectsInactive.Exclude );
-                return new Option<object?>( result );
+            if (type.IsDescendentOf( typeof( UnityEngine.Object ) )) {
+                var result = FindAnyObjectByType( type, FindObjectsInactive.Exclude );
+                if (result is not null) {
+                    return new Option<object?>( result );
+                }
+                return default;
             }
-            if (type.IsArray && type.GetElementType().IsDescendentOf( typeof( Component ) )) {
-                var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-                var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
-                result.CopyTo( result2, 0 );
-                return new Option<object?>( result );
+            if (type.IsArray && type.GetElementType().IsDescendentOf( typeof( UnityEngine.Object ) )) {
+                var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None ).NullIfEmpty();
+                if (result is not null) {
+                    var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
+                    result.CopyTo( result2, 0 );
+                    return new Option<object?>( result );
+                }
+                return default;
             }
             return default;
         }

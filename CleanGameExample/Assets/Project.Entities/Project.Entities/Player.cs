@@ -13,13 +13,13 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
 
-        // IsPaused
+        // State
         public bool IsPaused { get; private set; }
         // Entities
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
-        public Character? Character { get; private set; }
         private World World { get; set; } = default!;
+        public Character? Character { get; private set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
@@ -52,14 +52,16 @@ namespace Project.Entities {
             Actions.Dispose();
         }
 
-        // SetPaused
-        public void SetPaused(bool isPaused) {
-            IsPaused = isPaused;
-            if (IsPaused) {
-                if (Character != null) Actions.Disable();
-            } else {
-                if (Character != null) Actions.Enable();
-            }
+        // Pause
+        public void Pause() {
+            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
+            IsPaused = true;
+            if (Character != null) Actions.Disable();
+        }
+        public void UnPause() {
+            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
+            IsPaused = false;
+            if (Character != null) Actions.Enable();
         }
 
         // SetCharacter

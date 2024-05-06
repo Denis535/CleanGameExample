@@ -23,6 +23,8 @@ namespace Project.UI.MainScreen {
         private Storage Storage { get; set; } = default!;
         // AuthenticationService
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
+        // View
+        public override MainWidgetView View { get; }
 
         // Constructor
         public MainWidget() {

@@ -8,6 +8,8 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetBase<TView> : UIWidgetBase<TView>, IModalWidget where TView : DialogWidgetViewBase {
 
+        // View
+        public override TView View { get; }
         // Title
         public string? Title {
             get => View.Title.Text;
@@ -26,18 +28,8 @@ namespace Project.UI.Common {
         }
 
         // Constructor
-        public DialogWidgetBase(string? title, string? message) {
-            if (this is DialogWidget) {
-                View = (TView) (object) new DialogWidgetView();
-            } else if (this is InfoDialogWidget) {
-                View = (TView) (object) new InfoDialogWidgetView();
-            } else if (this is WarningDialogWidget) {
-                View = (TView) (object) new WarningDialogWidgetView();
-            } else if (this is ErrorDialogWidget) {
-                View = (TView) (object) new ErrorDialogWidgetView();
-            } else {
-                throw Exceptions.Internal.NotSupported( $"DialogWidgetBase {this} is not supported" );
-            }
+        public DialogWidgetBase(TView view, string? title, string? message) {
+            View = view;
             Title = title;
             Message = message;
             View.Footer.SetDisplayed( false );
@@ -115,7 +107,7 @@ namespace Project.UI.Common {
     public class DialogWidget : DialogWidgetBase<DialogWidgetView> {
 
         // Constructor
-        public DialogWidget(string? title, string? message) : base( title, message ) {
+        public DialogWidget(string? title, string? message) : base( new DialogWidgetView(), title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -142,7 +134,7 @@ namespace Project.UI.Common {
     public class InfoDialogWidget : DialogWidgetBase<InfoDialogWidgetView> {
 
         // Constructor
-        public InfoDialogWidget(string? title, string? message) : base( title, message ) {
+        public InfoDialogWidget(string? title, string? message) : base( new InfoDialogWidgetView(), title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -169,7 +161,7 @@ namespace Project.UI.Common {
     public class WarningDialogWidget : DialogWidgetBase<WarningDialogWidgetView> {
 
         // Constructor
-        public WarningDialogWidget(string? title, string? message) : base( title, message ) {
+        public WarningDialogWidget(string? title, string? message) : base( new WarningDialogWidgetView(), title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -196,7 +188,7 @@ namespace Project.UI.Common {
     public class ErrorDialogWidget : DialogWidgetBase<ErrorDialogWidgetView> {
 
         // Constructor
-        public ErrorDialogWidget(string? title, string? message) : base( title, message ) {
+        public ErrorDialogWidget(string? title, string? message) : base( new ErrorDialogWidgetView(), title, message ) {
         }
         public override void Dispose() {
             base.Dispose();

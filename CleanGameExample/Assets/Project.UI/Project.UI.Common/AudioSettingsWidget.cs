@@ -9,6 +9,9 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidget : UIWidgetBase<AudioSettingsWidgetView> {
 
+        // View
+        public override AudioSettingsWidgetView View { get; }
+
         // Storage
         private Storage.AudioSettings AudioSettings { get; }
 

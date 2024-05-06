@@ -6,19 +6,21 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    [RequireComponent( typeof( CharacterBody ) )]
-    [RequireComponent( typeof( CharacterView ) )]
     public class Character : EntityBase<CharacterBody, CharacterView> {
 
         private bool fixedUpdateWasInvoked;
 
+        // Body
+        protected override CharacterBody Body { get; set; } = default!;
+        // View
+        protected override CharacterView View { get; set; } = default!;
         // Actions
         private ICharacterInputActions? Actions { get; set; }
 
         // Awake
         public override void Awake() {
-            Body = gameObject.RequireComponent<CharacterBody>();
-            View = gameObject.RequireComponent<CharacterView>();
+            Body = new CharacterBody( gameObject );
+            View = new CharacterView( gameObject );
         }
         public override void OnDestroy() {
         }
@@ -56,9 +58,9 @@ namespace Project.Entities.Characters {
                     View.LookAt( Actions.LookTarget );
                     View.AimAt( Actions.LookTarget );
                 } else {
-                    if (Actions.IsMovePressed( out var moveVector )) {
-                        View.LookAt( null );
-                        View.AimAt( null );
+                    if (Actions.IsMovePressed( out _ )) {
+                        View.LookAt( Actions.LookTarget );
+                        View.AimAt( Actions.LookTarget );
                     } else {
                         View.LookAt( Actions.LookTarget );
                         View.AimAt( Actions.LookTarget );

@@ -8,9 +8,11 @@ namespace Project.Entities.Characters.Inventory {
 
     public abstract class WeaponBase<TView> : EntityBase<TView> where TView : WeaponViewBase {
 
+        // View
+        protected override TView View { get; set; } = default!;
+
         // Awake
         public override void Awake() {
-            View = gameObject.RequireComponent<TView>();
         }
         public override void OnDestroy() {
         }
@@ -25,6 +27,24 @@ namespace Project.Entities.Characters.Inventory {
             } else {
                 View.IsRagdoll = true;
             }
+        }
+
+    }
+    public abstract class WeaponViewBase : EntityViewBase {
+
+        // GameObject
+        protected override GameObject GameObject { get; }
+        // Rigidbody
+        private Rigidbody Rigidbody { get; }
+        // IsRagdoll
+        public bool IsRagdoll { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
+
+        // Constructor
+        public WeaponViewBase(GameObject gameObject) {
+            GameObject = gameObject;
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+        }
+        public override void Dispose() {
         }
 
     }

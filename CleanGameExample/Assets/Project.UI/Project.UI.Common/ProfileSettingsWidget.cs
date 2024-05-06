@@ -11,6 +11,8 @@ namespace Project.UI.Common {
 
         // Storage
         private Storage.ProfileSettings ProfileSettings { get; }
+        // View
+        public override ProfileSettingsWidgetView View { get; }
 
         // Constructor
         public ProfileSettingsWidget() {

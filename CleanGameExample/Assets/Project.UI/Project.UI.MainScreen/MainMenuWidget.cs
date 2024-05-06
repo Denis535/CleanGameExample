@@ -14,6 +14,8 @@ namespace Project.UI.MainScreen {
 
         // UI
         private UIRouter Router { get; }
+        // View
+        public override MainMenuWidgetView View { get; }
 
         // Constructor
         public MainMenuWidget() {

@@ -8,20 +8,25 @@ namespace Project.Entities.Characters {
 
     public class CharacterView : EntityViewBase {
 
-        // Components
-        private Transform Body { get; set; } = default!;
-        private Transform Head { get; set; } = default!;
-        private Transform WeaponSlot { get; set; } = default!;
+        // GameObject
+        protected override GameObject GameObject { get; }
+        // Body
+        private Transform Body { get; }
+        // Head
+        private Transform Head { get; }
+        // WeaponSlot
+        private Transform WeaponSlot { get; }
         // Weapon
         public GameObject? Weapon => WeaponSlot.childCount > 0 ? WeaponSlot.GetChild( 0 )?.gameObject : null;
 
-        // Awake
-        public override void Awake() {
-            Body = transform.Require( "Body" );
-            Head = transform.Require( "Head" );
-            WeaponSlot = transform.Require( "WeaponSlot" );
+        // Constructor
+        public CharacterView(GameObject gameObject) {
+            GameObject = gameObject;
+            Body = gameObject.transform.Require( "Body" );
+            Head = gameObject.transform.Require( "Head" );
+            WeaponSlot = gameObject.transform.Require( "WeaponSlot" );
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
         }
 
         // LookAt

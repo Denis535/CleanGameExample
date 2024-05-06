@@ -12,6 +12,8 @@ namespace Project.UI.Common {
 
         // Storage
         private Storage.VideoSettings VideoSettings { get; }
+        // View
+        public override VideoSettingsWidgetView View { get; }
 
         // Constructor
         public VideoSettingsWidget() {

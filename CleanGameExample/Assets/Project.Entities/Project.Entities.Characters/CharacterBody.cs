@@ -8,8 +8,10 @@ namespace Project.Entities.Characters {
 
     public class CharacterBody : EntityBodyBase {
 
-        // Components
-        private CharacterController CharacterController { get; set; } = default!;
+        // GameObject
+        protected override GameObject GameObject { get; }
+        // CharacterController
+        private CharacterController CharacterController { get; }
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
@@ -20,11 +22,12 @@ namespace Project.Entities.Characters {
         public bool IsLookPressed { get; private set; }
         public Vector3 LookTarget { get; private set; }
 
-        // Awake
-        public override void Awake() {
+        // Constructor
+        public CharacterBody(GameObject gameObject) {
+            GameObject = gameObject;
             CharacterController = gameObject.RequireComponent<CharacterController>();
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
         }
 
         // SetUp
@@ -60,9 +63,9 @@ namespace Project.Entities.Characters {
         public void UpdateRotation() {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsLookPressed) {
-                var rotation = transform.localRotation;
-                var rotation2 = GetRotation( transform.localPosition, LookTarget );
-                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
+                var rotation = Transform.localRotation;
+                var rotation2 = GetRotation( Transform.localPosition, LookTarget );
+                Transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
             }
         }
 

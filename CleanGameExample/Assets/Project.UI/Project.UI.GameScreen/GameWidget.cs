@@ -16,6 +16,8 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         private Player Player => Application.Game!.Player;
+        // View
+        public override GameWidgetView View { get; }
         // Actions
         private InputActions Actions { get; }
 

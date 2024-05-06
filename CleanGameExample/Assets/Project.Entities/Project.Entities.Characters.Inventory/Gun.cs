@@ -10,6 +10,7 @@ namespace Project.Entities.Characters.Inventory {
         // Awake
         public override void Awake() {
             base.Awake();
+            View = new GunView( gameObject );
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -17,6 +18,16 @@ namespace Project.Entities.Characters.Inventory {
 
         // Fire
         public override void Fire() {
+        }
+
+    }
+    public class GunView : WeaponViewBase {
+
+        // Constructor
+        public GunView(GameObject gameObject) : base( gameObject ) {
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
     }

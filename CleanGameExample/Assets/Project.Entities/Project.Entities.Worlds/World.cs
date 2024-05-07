@@ -13,9 +13,9 @@ namespace Project.Entities.Worlds {
         private LootSpawnPoint[] lootSpawnPoints = default!;
 
         // SpawnPoints
-        public PlayerSpawnPoint[] PlayerSpawnPoints => this.Validate().playerSpawnPoints ?? throw Exceptions.Internal.NullReference( $"Reference 'PlayerSpawnPoints' is null" );
-        public EnemySpawnPoint[] EnemySpawnPoints => this.Validate().enemySpawnPoints ?? throw Exceptions.Internal.NullReference( $"Reference 'EnemySpawnPoints' is null" );
-        public LootSpawnPoint[] LootSpawnPoints => this.Validate().lootSpawnPoints ?? throw Exceptions.Internal.NullReference( $"Reference 'LootSpawnPoints' is null" );
+        public PlayerSpawnPoint[] PlayerSpawnPoints => this.Validate().playerSpawnPoints;
+        public EnemySpawnPoint[] EnemySpawnPoints => this.Validate().enemySpawnPoints;
+        public LootSpawnPoint[] LootSpawnPoints => this.Validate().lootSpawnPoints;
 
         // Awake
         public override void Awake() {

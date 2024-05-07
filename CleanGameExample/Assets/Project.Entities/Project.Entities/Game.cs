@@ -30,7 +30,6 @@ namespace Project.Entities {
 
         // RunGame
         public async void RunGame(LevelEnum level, PlayerCharacterEnum character) {
-            this.Validate();
             Assert.Operation.Message( $"Game must be non-running" ).Valid( !IsRunning );
             IsRunning = true;
             Level = level;
@@ -50,7 +49,6 @@ namespace Project.Entities {
             }
         }
         public void StopGame() {
-            this.Validate();
             Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
             IsRunning = false;
         }

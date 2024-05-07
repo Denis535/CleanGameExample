@@ -6,10 +6,10 @@ namespace Project.Entities.Characters.Inventory {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon<TView> : EntityBase<TView> where TView : WeaponView {
+    public abstract class Weapon : EntityBase<WeaponView> {
 
         // View
-        protected override TView View { get; set; } = default!;
+        protected override WeaponView View { get; set; } = default!;
 
         // Awake
         public override void Awake() {
@@ -22,10 +22,10 @@ namespace Project.Entities.Characters.Inventory {
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {
-            if (transform.parent) {
-                View.IsRagdoll = false;
+            if (transform.parent != null) {
+                View.IsPhysical = false;
             } else {
-                View.IsRagdoll = true;
+                View.IsPhysical = true;
             }
         }
 
@@ -36,8 +36,8 @@ namespace Project.Entities.Characters.Inventory {
         protected override GameObject GameObject { get; }
         // Rigidbody
         private Rigidbody Rigidbody { get; }
-        // IsRagdoll
-        public bool IsRagdoll { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
+        // IsPhysics
+        public bool IsPhysical { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 
         // Constructor
         public WeaponView(GameObject gameObject) {

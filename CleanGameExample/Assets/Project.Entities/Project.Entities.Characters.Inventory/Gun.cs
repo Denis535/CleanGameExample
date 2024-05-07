@@ -5,7 +5,10 @@ namespace Project.Entities.Characters.Inventory {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Gun : Weapon<GunView> {
+    public class Gun : Weapon {
+
+        // View
+        protected new GunView View { get => (GunView) base.View; set => base.View = value; }
 
         // Awake
         public override void Awake() {
@@ -19,6 +22,7 @@ namespace Project.Entities.Characters.Inventory {
 
         // Fire
         public override void Fire() {
+            Debug.Log( "Fire" );
         }
 
     }

@@ -3,6 +3,7 @@ namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Characters.Inventory;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
@@ -14,6 +15,8 @@ namespace Project.Entities.Characters {
         protected override CharacterBody Body { get; set; } = default!;
         // View
         protected override CharacterView View { get; set; } = default!;
+        // Weapon
+        private Weapon? Weapon => View.Weapon?.RequireComponent<Weapon>();
         // Actions
         private ICharacterInputActions? Actions { get; set; }
 
@@ -69,7 +72,7 @@ namespace Project.Entities.Characters {
                     }
                 }
                 if (Actions.IsFirePressed()) {
-
+                    Weapon?.Fire();
                 }
                 if (Actions.IsAimPressed()) {
 

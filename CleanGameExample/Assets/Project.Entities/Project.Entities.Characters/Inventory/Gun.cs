@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters.Inventory {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;

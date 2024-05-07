@@ -3,7 +3,6 @@ namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters.Inventory;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 

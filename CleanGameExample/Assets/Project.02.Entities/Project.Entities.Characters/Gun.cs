@@ -26,14 +26,4 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public class GunView : WeaponView {
-
-        // Constructor
-        public GunView(GameObject gameObject) : base( gameObject ) {
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-    }
 }

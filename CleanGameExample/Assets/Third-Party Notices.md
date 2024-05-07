@@ -7,6 +7,12 @@ The architecture game framework that helping you to develop your project followi
 - It's licensed under the MIT licence.
 - https://denis535.github.io/#clean-architecture-game-framework
 
+## Addressables Extensions
+This package is addition to Addressables giving you the ability to manage your assets in more convenient way.
+- This package is developed by Denis535.
+- It's licensed under the MIT licence.
+- https://denis535.github.io/#addressables-extensions
+
 ## Addressables Source Generator
 The addition to Addressables giving you the ability to reference assets in a very convenient way with compile time checking.
 - This package is developed by Denis535.

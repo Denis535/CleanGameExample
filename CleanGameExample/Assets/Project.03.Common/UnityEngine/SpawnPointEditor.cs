@@ -1,5 +1,6 @@
+#if UNITY_EDITOR
 #nullable enable
-namespace UnityEngine {
+namespace UnityEngine.Framework.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -71,3 +72,4 @@ namespace UnityEngine {
 
     }
 }
+#endif

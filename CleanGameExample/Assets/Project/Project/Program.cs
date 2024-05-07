@@ -3,6 +3,7 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Project.App;
     using Project.UI;
     using UnityEditor;
@@ -63,8 +64,8 @@ namespace Project {
         }
 
         // Start
-        public async void Start() {
-            await Router.LoadMainSceneAsync();
+        public void Start() {
+            Router.LoadMainSceneAsync().Throw();
         }
         public void Update() {
         }

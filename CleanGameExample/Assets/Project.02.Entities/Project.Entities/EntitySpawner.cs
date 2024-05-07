@@ -6,9 +6,9 @@ namespace Project.Entities {
     using System.Threading;
     using System.Threading.Tasks;
     using Project.Entities.Characters;
-    using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     internal static class EntitySpawner {
 

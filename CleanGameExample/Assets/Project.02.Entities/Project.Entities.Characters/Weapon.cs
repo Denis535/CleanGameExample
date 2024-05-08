@@ -10,12 +10,15 @@ namespace Project.Entities.Characters {
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
+        // Collider
+        protected Collider Collider { get; set; } = default!;
         // IsPhysics
         private bool IsPhysical { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 
         // Awake
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Collider = gameObject.RequireComponentInChildren<Collider>();
         }
         public override void OnDestroy() {
         }

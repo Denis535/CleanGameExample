@@ -8,8 +8,15 @@ namespace Project.Entities.Characters {
 
     public class Bullet : EntityBase {
 
+        // Rigidbody
+        private Rigidbody Rigidbody { get; set; } = default!;
+        // Collider
+        internal Collider Collider { get; private set; } = default!;
+
         // Awake
         public override void Awake() {
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Collider = gameObject.RequireComponentInChildren<Collider>();
         }
         public override void OnDestroy() {
         }

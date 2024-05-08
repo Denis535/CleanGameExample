@@ -14,7 +14,7 @@ namespace Project.Entities.Characters {
         // WeaponSlot
         private Transform WeaponSlot { get; set; } = default!;
         // Weapon
-        private Weapon? Weapon => WeaponSlot.childCount > 0 ? WeaponSlot.GetChild( 0 )?.gameObject?.RequireComponent<Weapon>() : null;
+        public Weapon? Weapon => GetWeapon( WeaponSlot );
         // Actions
         private ICharacterInputActions? Actions { get; set; }
 
@@ -56,15 +56,15 @@ namespace Project.Entities.Characters {
                     }
                 }
                 if (Actions.IsFirePressed() || Actions.IsAimPressed()) {
-                    LookAt( Actions.LookTarget );
-                    AimAt( Actions.LookTarget );
+                    LookAt( Head, Actions.LookTarget );
+                    AimAt( WeaponSlot, Actions.LookTarget );
                 } else {
                     if (Actions.IsMovePressed( out _ )) {
-                        LookAt( Actions.LookTarget );
-                        AimAt( Actions.LookTarget );
+                        LookAt( Head, Actions.LookTarget );
+                        AimAt( WeaponSlot, Actions.LookTarget );
                     } else {
-                        LookAt( Actions.LookTarget );
-                        AimAt( Actions.LookTarget );
+                        LookAt( Head, Actions.LookTarget );
+                        AimAt( WeaponSlot, Actions.LookTarget );
                     }
                 }
                 if (Actions.IsFirePressed()) {
@@ -75,71 +75,45 @@ namespace Project.Entities.Characters {
                 }
                 if (Actions.IsInteractPressed( out var interactable )) {
                     if (interactable != null && interactable.IsWeapon()) {
-                        SetWeapon( interactable.RequireComponent<Weapon>(), out var prevWeapon );
+                        SetWeapon( WeaponSlot, interactable.RequireComponent<Weapon>() );
                     } else {
-                        SetWeapon( null, out var prevWeapon );
+                        SetWeapon( WeaponSlot, null );
                     }
                 }
             }
         }
 
-        // LookAt
-        private bool LookAt(Vector3? target) {
-            var rotation = Head.localRotation;
-            if (target != null) {
-                Head.localRotation = Quaternion.identity;
-                var direction = Head.InverseTransformPoint( target.Value );
-                var rotation2 = GetHeadRotation( direction );
-                if (rotation2 != null) {
-                    Head.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
-                    return true;
-                } else {
-                    Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                    return false;
-                }
-            } else {
-                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                return false;
-            }
+        // Helpers
+        private static Weapon? GetWeapon(Transform transform) {
+            return transform.childCount > 0 ? transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
         }
-
-        // SetWeapon
-        private void SetWeapon(Weapon? weapon, out Weapon? prevWeapon) {
-            prevWeapon = Weapon;
-            SetWeapon( weapon );
-        }
-        private void SetWeapon(Weapon? weapon) {
-            if (Weapon != null) {
-                Weapon.transform.parent = null;
-            }
+        private static void SetWeapon(Transform transform, Weapon? weapon) {
+            transform.DetachChildren();
             if (weapon != null) {
-                weapon.transform.parent = WeaponSlot;
+                weapon.transform.parent = transform;
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;
             }
         }
-
-        // AimAt
-        private bool AimAt(Vector3? target) {
-            var rotation = WeaponSlot.localRotation;
+        // Helpers
+        private static bool LookAt(Transform transform, Vector3? target) {
+            var rotation = transform.localRotation;
             if (target != null) {
-                WeaponSlot.localRotation = Quaternion.identity;
-                var direction = WeaponSlot.InverseTransformPoint( target.Value );
-                var rotation2 = GetWeaponRotation( direction );
+                transform.localRotation = Quaternion.identity;
+                var direction = transform.InverseTransformPoint( target.Value );
+                var rotation2 = GetHeadRotation( direction );
                 if (rotation2 != null) {
-                    WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
                     return true;
                 } else {
-                    WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
                     return false;
                 }
             } else {
-                WeaponSlot.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
                 return false;
             }
         }
-
-        // Helpers
         private static Quaternion? GetHeadRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;
@@ -151,6 +125,25 @@ namespace Project.Entities.Characters {
                 return Quaternion.Euler( angles );
             }
             return null;
+        }
+        // Helpers
+        private static bool AimAt(Transform transform, Vector3? target) {
+            var rotation = transform.localRotation;
+            if (target != null) {
+                transform.localRotation = Quaternion.identity;
+                var direction = transform.InverseTransformPoint( target.Value );
+                var rotation2 = GetWeaponRotation( direction );
+                if (rotation2 != null) {
+                    transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    return true;
+                } else {
+                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
+                }
+            } else {
+                transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                return false;
+            }
         }
         private static Quaternion? GetWeaponRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );

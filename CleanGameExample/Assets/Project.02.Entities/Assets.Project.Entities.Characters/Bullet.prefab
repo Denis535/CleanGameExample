@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7424821742087770129}
   - component: {fileID: 6672935968361334293}
   - component: {fileID: 2739862526071751482}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 8241495868691982778}
   - component: {fileID: 7690299328463755087}
   - component: {fileID: 291264351272661977}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

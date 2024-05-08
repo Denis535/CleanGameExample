@@ -90,6 +90,33 @@ namespace Project.Tools {
             }
         }
 
+        // ShowAssets
+        [MenuItem( "Project/Show Assets", priority = 400 )]
+        public static void ShowAssets() {
+            foreach (var path in AssetDatabase.GetAllAssetPaths()) {
+                if (path.EndsWith( "/csc.rsp" )) {
+                    var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
+                    var importer = AssetImporter.GetAtPath( path );
+                    asset.hideFlags = HideFlags.None;
+                    //Debug.Log( path );
+                }
+            }
+        }
+
+        // HideAssets
+        [MenuItem( "Project/Hide Assets", priority = 401 )]
+        public static void HideAssets() {
+            foreach (var path in AssetDatabase.GetAllAssetPaths()) {
+                if (path.EndsWith( "/csc.rsp" )) {
+                    var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
+                    var importer = AssetImporter.GetAtPath( path );
+                    importer.hideFlags = HideFlags.HideInHierarchy;
+                    asset.hideFlags = HideFlags.HideInHierarchy;
+                    //Debug.Log( path );
+                }
+            }
+        }
+
     }
 }
 #endif

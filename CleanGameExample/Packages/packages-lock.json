@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.denis535.addressables-extensions": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.denis535.addressables-source-generator": {
-      "version": "1.0.35",
+      "version": "1.0.36",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -17,7 +17,7 @@
       "url": "https://package.openupm.com"
     },
     "com.denis535.clean-architecture-game-framework": {
-      "version": "1.0.159",
+      "version": "1.0.160",
       "depth": 0,
       "source": "registry",
       "dependencies": {

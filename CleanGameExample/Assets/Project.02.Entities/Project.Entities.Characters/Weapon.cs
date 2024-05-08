@@ -3,15 +3,19 @@ namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon : EntityBase<WeaponView> {
+    public abstract class Weapon : EntityBase {
 
-        // View
-        protected override WeaponView View { get; set; } = default!;
+        // Rigidbody
+        private Rigidbody Rigidbody { get; set; } = default!;
+        // IsPhysics
+        private bool IsPhysical { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 
         // Awake
         public override void Awake() {
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         public override void OnDestroy() {
         }
@@ -22,9 +26,9 @@ namespace Project.Entities.Characters {
         // OnTransformParentChanged
         public void OnTransformParentChanged() {
             if (transform.parent != null) {
-                View.IsPhysical = false;
+                IsPhysical = false;
             } else {
-                View.IsPhysical = true;
+                IsPhysical = true;
             }
         }
 

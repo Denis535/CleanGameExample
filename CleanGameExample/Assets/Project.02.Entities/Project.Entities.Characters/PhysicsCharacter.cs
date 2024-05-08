@@ -6,12 +6,12 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public class CharacterBody : EntityBodyBase {
+    public abstract class PhysicsCharacter : EntityBase {
 
-        // GameObject
-        protected override GameObject GameObject { get; }
+        private bool fixedUpdateWasInvoked;
+
         // CharacterController
-        private CharacterController CharacterController { get; }
+        private CharacterController CharacterController { get; set; } = default!;
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
@@ -23,17 +23,27 @@ namespace Project.Entities.Characters {
         public Vector3 LookTarget { get; private set; }
 
         // Constructor
-        public CharacterBody(GameObject gameObject) {
-            GameObject = gameObject;
+        public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
         }
-        public override void Dispose() {
+        public override void OnDestroy() {
         }
 
-        // SetUp
-        public void SetUp(ref bool initialize, bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            if (initialize) {
-                initialize = false;
+        // PhysicsFixedUpdate
+        public void PhysicsFixedUpdate() {
+            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            fixedUpdateWasInvoked = true;
+            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
+                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                CharacterController.Move( velocity * GetDeltaTime() );
+            }
+        }
+
+        // SetMovementInput
+        public void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (fixedUpdateWasInvoked) {
+                fixedUpdateWasInvoked = false;
                 IsMovePressed = isMovePressed;
                 MoveVector = moveVector;
                 IsJumpPressed = isJumpPressed;
@@ -47,25 +57,21 @@ namespace Project.Entities.Characters {
                 IsAcceleratePressed |= isAcceleratePressed;
             }
         }
-        public void SetUp(bool isLookPressed, Vector3 lookTarget) {
+
+        // SetLookInput
+        public void SetLookInput(bool isLookPressed, Vector3 lookTarget) {
+            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             IsLookPressed = isLookPressed;
             LookTarget = lookTarget;
         }
 
-        // Update
-        public void UpdatePosition() {
-            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.Move( velocity * GetDeltaTime() );
-            }
-        }
-        public void UpdateRotation() {
+        // PhysicsUpdate
+        public void PhysicsUpdate() {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsLookPressed) {
-                var rotation = Transform.localRotation;
-                var rotation2 = GetRotation( Transform.localPosition, LookTarget );
-                Transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
+                var rotation = transform.localRotation;
+                var rotation2 = GetRotation( transform.localPosition, LookTarget );
+                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
             }
         }
 

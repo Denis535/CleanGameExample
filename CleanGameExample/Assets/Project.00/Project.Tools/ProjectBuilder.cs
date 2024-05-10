@@ -12,8 +12,8 @@ namespace Project.Tools {
 
         // Build/Pre
         public static void PreBuild() {
-            new AddressableResourcesSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.03.Common/UnityEngine.AddressableAssets/R.cs", "UnityEngine.AddressableAssets", "R" );
-            new AddressableLabelsSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.03.Common/UnityEngine.AddressableAssets/L.cs", "UnityEngine.AddressableAssets", "L" );
+            new AddressableResourcesSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.04.Common/UnityEngine.AddressableAssets/R.cs", "UnityEngine.AddressableAssets", "R" );
+            new AddressableLabelsSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.04.Common/UnityEngine.AddressableAssets/L.cs", "UnityEngine.AddressableAssets", "L" );
         }
 
         // Build/Development

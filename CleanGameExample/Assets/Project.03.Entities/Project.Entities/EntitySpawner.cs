@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Project.Entities.Characters {
             return instance;
         }
         public static async ValueTask<GameObject> SpawnBulletAsync(Transform point, Gun gun, CancellationToken cancellationToken) {
-            var instance = await Addressables2.InstantiateAsync( R.Project.Entities.Characters.Bullet_Value, prefab => {
+            var instance = await Addressables2.InstantiateAsync( R.Project.Entities.Loots.Bullet_Value, prefab => {
                 return Object2.Instantiate( prefab, point.position, point.rotation, new Bullet.Args( gun ) );
             }, cancellationToken );
             return instance;
@@ -49,10 +49,10 @@ namespace Project.Entities.Characters {
         }
         private static string GetLoot() {
             var array = new[] {
-                R.Project.Entities.Characters.Gun_Gray_Value,
-                R.Project.Entities.Characters.Gun_Red_Value,
-                R.Project.Entities.Characters.Gun_Green_Value,
-                R.Project.Entities.Characters.Gun_Blue_Value,
+                R.Project.Entities.Loots.Gun_Gray_Value,
+                R.Project.Entities.Loots.Gun_Red_Value,
+                R.Project.Entities.Loots.Gun_Green_Value,
+                R.Project.Entities.Loots.Gun_Blue_Value,
             };
             return array[ UnityEngine.Random.Range( 0, array.Length ) ];
         }

@@ -5,7 +5,6 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Project.Entities.Characters;
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.AddressableAssets;

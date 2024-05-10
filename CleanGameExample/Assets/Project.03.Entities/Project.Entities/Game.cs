@@ -5,8 +5,10 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Project.Entities.Characters;
     using Project.Entities.Worlds;
     using UnityEngine;
+    using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
@@ -15,8 +17,9 @@ namespace Project.Entities {
         // State
         public bool IsRunning { get; private set; }
         public bool IsPaused { get; private set; }
-        // Arguments
+        // Level
         public LevelEnum? Level { get; private set; }
+        // Character
         public PlayerCharacterEnum? Character { get; private set; }
         // Entities
         public World World { get; private set; } = default!;
@@ -37,7 +40,7 @@ namespace Project.Entities {
             World = Utils.Container.RequireDependency<World>( null );
             Player = gameObject.AddComponent<Player>();
             using (@lock.Enter()) {
-                Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), character ) );
+                Player.SetCharacter( EntitySpawner.SpawnPlayerCharacter( World.PlayerSpawnPoints.First(), GetPlayerCharacter( character ) ) );
                 var tasks = new List<Task>();
                 foreach (var point in World.EnemySpawnPoints) {
                     tasks.Add( EntitySpawner.SpawnEnemyCharacterAsync( point, destroyCancellationToken ).AsTask() );
@@ -78,6 +81,17 @@ namespace Project.Entities {
             if (@lock.CanEnter) {
                 using (@lock.Enter()) {
                 }
+            }
+        }
+
+        // Helpers
+        private static string GetPlayerCharacter(PlayerCharacterEnum character) {
+            switch (character) {
+                case PlayerCharacterEnum.Gray: return R.Project.Entities.Characters.PlayerCharacter_Gray_Value;
+                case PlayerCharacterEnum.Red: return R.Project.Entities.Characters.PlayerCharacter_Red_Value;
+                case PlayerCharacterEnum.Green: return R.Project.Entities.Characters.PlayerCharacter_Green_Value;
+                case PlayerCharacterEnum.Blue: return R.Project.Entities.Characters.PlayerCharacter_Blue_Value;
+                default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }
 

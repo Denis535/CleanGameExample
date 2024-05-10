@@ -1,11 +1,11 @@
 #nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
-    internal static class EntityExtensions {
+    public static class EntityExtensions {
 
         // IsCharacter
         public static bool IsPlayer(this GameObject gameObject) {

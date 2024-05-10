@@ -30,7 +30,7 @@ namespace Project.Entities.Characters {
         }
 
         // SetActions
-        internal void SetActions(ICharacterInputActions? actions) {
+        public void SetActions(ICharacterInputActions? actions) {
             Actions = actions;
         }
 
@@ -159,7 +159,7 @@ namespace Project.Entities.Characters {
 
     }
     // ICharacterInputActions
-    internal interface ICharacterInputActions {
+    public interface ICharacterInputActions {
 
         bool IsEnabled { get; }
         Vector3 LookTarget { get; }

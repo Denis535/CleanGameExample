@@ -4,14 +4,13 @@ namespace Project.Entities.Characters {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
 
     public class Gun : Weapon {
 
+        private readonly Delay delay = new Delay( 0.2f );
+
         // BulletSpawnPoint
         private Transform BulletSpawnPoint { get; set; } = default!;
-        // FireTime
-        private TimePoint FireTime { get; set; }
 
         // Awake
         public override void Awake() {
@@ -24,11 +23,9 @@ namespace Project.Entities.Characters {
 
         // Fire
         public override async void Fire() {
-            if (FireTime.Duration >= 0.2f) {
-                FireTime = TimePoint.Now;
-                var bullet = await Addressables2.InstantiateAsync<Bullet>( R.Project.Entities.Characters.Bullet_Value, BulletSpawnPoint.position, BulletSpawnPoint.rotation, destroyCancellationToken );
-                Physics.IgnoreCollision( Collider, bullet.Collider );
-                Destroy( bullet.gameObject, 10 );
+            if (delay.IsCompleted) {
+                delay.Start();
+                await EntitySpawner.SpawnBulletAsync( BulletSpawnPoint, this, destroyCancellationToken );
             }
         }
 

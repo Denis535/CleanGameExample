@@ -11,7 +11,7 @@ namespace Project.Entities.Characters {
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
         // Collider
-        protected Collider Collider { get; set; } = default!;
+        internal Collider Collider { get; private set; } = default!;
         // IsPhysics
         private bool IsPhysical { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
 

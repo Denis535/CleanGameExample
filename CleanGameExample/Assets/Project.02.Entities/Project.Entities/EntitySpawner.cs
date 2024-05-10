@@ -14,18 +14,25 @@ namespace Project.Entities {
 
         // Spawn
         public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, PlayerCharacterEnum character) {
-            return Addressables2.Instantiate<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
+            var instance = Addressables2.Instantiate( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation );
+            return instance.RequireComponent<Character>();
         }
 
         // SpawnAsync
-        public static ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, PlayerCharacterEnum character, CancellationToken cancellationToken) {
-            return Addressables2.InstantiateAsync<Character>( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
+        public static async ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, PlayerCharacterEnum character, CancellationToken cancellationToken) {
+            var instance = await Addressables2.InstantiateAsync( GetPlayerCharacter( character ), point.transform.position, point.transform.rotation, cancellationToken );
+            return instance.RequireComponent<Character>();
         }
-        public static ValueTask<Transform> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
-            return Addressables2.InstantiateAsync<Transform>( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
+        public static async ValueTask SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
+            var instance = await Addressables2.InstantiateAsync( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
         }
-        public static ValueTask<Transform> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
-            return Addressables2.InstantiateAsync<Transform>( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
+        public static async ValueTask SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
+            var instance = await Addressables2.InstantiateAsync( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
+        }
+        public static async ValueTask SpawnBulletAsync(Transform point, Gun gun, CancellationToken cancellationToken) {
+            var instance = await Addressables2.InstantiateAsync( R.Project.Entities.Characters.Bullet_Value, prefab => {
+                return Object2.Instantiate( prefab, point.position, point.rotation, new Bullet.Args( gun ) );
+            }, cancellationToken );
         }
 
         // Heleprs

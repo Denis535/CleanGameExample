@@ -7,7 +7,6 @@ namespace Project.Entities {
     using System.Threading.Tasks;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public static class EntitySpawner {
 
@@ -40,10 +39,10 @@ namespace Project.Entities {
         // Heleprs
         private static string GetEnemyCharacter() {
             var array = new[] {
-                R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
-                R.Project.Entities.Characters.EnemyCharacter_Red_Value,
-                R.Project.Entities.Characters.EnemyCharacter_Green_Value,
-                R.Project.Entities.Characters.EnemyCharacter_Blue_Value
+                R.Project.Entities.Characters.Secondary.EnemyCharacter_Gray_Value,
+                R.Project.Entities.Characters.Secondary.EnemyCharacter_Red_Value,
+                R.Project.Entities.Characters.Secondary.EnemyCharacter_Green_Value,
+                R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
             };
             return array[ UnityEngine.Random.Range( 0, array.Length ) ];
         }

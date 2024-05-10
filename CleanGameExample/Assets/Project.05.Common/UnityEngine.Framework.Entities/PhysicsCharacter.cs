@@ -1,10 +1,9 @@
 #nullable enable
-namespace Project.Entities {
+namespace UnityEngine.Framework.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     public abstract class PhysicsCharacter : EntityBase {
 

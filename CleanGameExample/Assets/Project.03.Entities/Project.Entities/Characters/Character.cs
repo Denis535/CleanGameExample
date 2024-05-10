@@ -4,6 +4,7 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
 
     public class Character : PhysicsCharacter {
 

@@ -86,10 +86,10 @@ namespace Project.Entities {
         // Helpers
         private static string GetPlayerCharacter(PlayerCharacterEnum character) {
             switch (character) {
-                case PlayerCharacterEnum.Gray: return R.Project.Entities.Characters.PlayerCharacter_Gray_Value;
-                case PlayerCharacterEnum.Red: return R.Project.Entities.Characters.PlayerCharacter_Red_Value;
-                case PlayerCharacterEnum.Green: return R.Project.Entities.Characters.PlayerCharacter_Green_Value;
-                case PlayerCharacterEnum.Blue: return R.Project.Entities.Characters.PlayerCharacter_Blue_Value;
+                case PlayerCharacterEnum.Gray: return R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value;
+                case PlayerCharacterEnum.Red: return R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value;
+                case PlayerCharacterEnum.Green: return R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value;
+                case PlayerCharacterEnum.Blue: return R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Character {character} is not supported" );
             }
         }

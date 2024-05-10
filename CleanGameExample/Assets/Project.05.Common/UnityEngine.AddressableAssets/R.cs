@@ -41,11 +41,6 @@ namespace UnityEngine.AddressableAssets {
                 }
             }
             public static class @Entities {
-                public static class @Worlds {
-                    public const string @World_01_Value = "Project.Entities.Worlds/World_01.unity";
-                    public const string @World_02_Value = "Project.Entities.Worlds/World_02.unity";
-                    public const string @World_03_Value = "Project.Entities.Worlds/World_03.unity";
-                }
                 public static class @Characters {
                     public const string @EnemyCharacter_Blue_Value = "Project.Entities/Characters/EnemyCharacter_Blue.prefab";
                     public const string @EnemyCharacter_Gray_Value = "Project.Entities/Characters/EnemyCharacter_Gray.prefab";
@@ -63,6 +58,11 @@ namespace UnityEngine.AddressableAssets {
                     public const string @Gun_Green_Value = "Project.Entities/Loots/Gun_Green.prefab";
                     public const string @Gun_Red_Value = "Project.Entities/Loots/Gun_Red.prefab";
                 }
+            }
+            public static class @Worlds {
+                public const string @World_01_Value = "Project.Worlds/World_01.unity";
+                public const string @World_02_Value = "Project.Worlds/World_02.unity";
+                public const string @World_03_Value = "Project.Worlds/World_03.unity";
             }
             public static class @Scenes {
                 public const string @Startup_Value = "Project.Scenes/Startup.unity";

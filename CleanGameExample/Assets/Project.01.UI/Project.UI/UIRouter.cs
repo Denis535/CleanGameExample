@@ -189,9 +189,9 @@ namespace Project.UI {
         // Helpers
         private static string GetWorldAddress(LevelEnum level) {
             switch (level) {
-                case LevelEnum.Level1: return R.Project.Entities.Worlds.World_01_Value;
-                case LevelEnum.Level2: return R.Project.Entities.Worlds.World_02_Value;
-                case LevelEnum.Level3: return R.Project.Entities.Worlds.World_03_Value;
+                case LevelEnum.Level1: return R.Project.Worlds.World_01_Value;
+                case LevelEnum.Level2: return R.Project.Worlds.World_02_Value;
+                case LevelEnum.Level3: return R.Project.Worlds.World_03_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

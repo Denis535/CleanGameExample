@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Project.Entities.Worlds
+  m_Name: Project.Worlds
   m_EditorClassIdentifier: 
-  m_GroupName: Project.Entities.Worlds
+  m_GroupName: Project.Worlds
   m_Data:
     m_SerializedData: []
   m_GUID: 831488f813f9adc4ca8f7064be376bc4
   m_SerializeEntries:
   - m_GUID: fb6617524fb5d614a83686774212cf9c
-    m_Address: Project.Entities.Worlds
+    m_Address: Project.Worlds
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

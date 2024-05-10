@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Worlds {
+namespace Project.Worlds {
     using System;
     using System.Collections;
     using System.Collections.Generic;

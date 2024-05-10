@@ -5,7 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Project.Entities.Worlds;
+    using Project.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;

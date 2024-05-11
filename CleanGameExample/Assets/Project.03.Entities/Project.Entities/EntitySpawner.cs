@@ -11,15 +11,15 @@ namespace Project.Entities {
     public static class EntitySpawner {
 
         // Spawn
-        public static Character SpawnPlayerCharacter(PlayerSpawnPoint point, string key) {
+        public static PlayerCharacter SpawnPlayerCharacter(PlayerSpawnPoint point, string key) {
             var instance = Addressables2.Instantiate( key, point.transform.position, point.transform.rotation );
-            return instance.RequireComponent<Character>();
+            return instance.RequireComponent<PlayerCharacter>();
         }
 
         // SpawnAsync
-        public static async ValueTask<Character> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, string key, CancellationToken cancellationToken) {
+        public static async ValueTask<PlayerCharacter> SpawnPlayerCharacterAsync(PlayerSpawnPoint point, string key, CancellationToken cancellationToken) {
             var instance = await Addressables2.InstantiateAsync( key, point.transform.position, point.transform.rotation, cancellationToken );
-            return instance.RequireComponent<Character>();
+            return instance.RequireComponent<PlayerCharacter>();
         }
         public static async ValueTask<GameObject> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
             var instance = await Addressables2.InstantiateAsync( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );

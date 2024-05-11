@@ -8,80 +8,48 @@ namespace Project.Entities {
 
     public class Character : PhysicsCharacter {
 
-        // Body
-        private Transform Body { get; set; } = default!;
         // Head
         private Transform Head { get; set; } = default!;
+        // Body
+        private Transform Body { get; set; } = default!;
         // WeaponSlot
         private Transform WeaponSlot { get; set; } = default!;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
-        // Actions
-        private ICharacterInputActions? Actions { get; set; }
 
         // Awake
         public override void Awake() {
             base.Awake();
-            Body = gameObject.transform.Require( "Body" );
-            Head = gameObject.transform.Require( "Head" );
-            WeaponSlot = gameObject.transform.Require( "WeaponSlot" );
+            Head = transform.Require( "Head" );
+            Body = transform.Require( "Body" );
+            WeaponSlot = transform.Require( "WeaponSlot" );
         }
         public override void OnDestroy() {
             base.OnDestroy();
         }
 
-        // SetActions
-        public void SetActions(ICharacterInputActions? actions) {
-            Actions = actions;
+        // LookAt
+        public bool LookAt(Vector3? target) {
+            return LookAt( Head, target );
+        }
+
+        // AimAt
+        public bool AimAt(Vector3? target) {
+            return AimAt( WeaponSlot, target );
+        }
+
+        // SetWeapon
+        public void SetWeapon(Weapon? weapon) {
+            SetWeapon( WeaponSlot, weapon );
         }
 
         // Start
-        public void Start() {
+        public virtual void Start() {
         }
-        public void FixedUpdate() {
+        public virtual void FixedUpdate() {
             PhysicsFixedUpdate();
         }
-        public void Update() {
-            if (Actions != null) {
-                SetMovementInput( Actions.IsMovePressed( out var moveVector_ ), moveVector_, Actions.IsJumpPressed(), Actions.IsCrouchPressed(), Actions.IsAcceleratePressed() );
-                if (Actions.IsFirePressed() || Actions.IsAimPressed()) {
-                    SetLookInput( true, Actions.LookTarget );
-                    PhysicsUpdate();
-                } else {
-                    if (Actions.IsMovePressed( out var moveVector )) {
-                        SetLookInput( true, transform.position + moveVector );
-                        PhysicsUpdate();
-                    } else {
-                        SetLookInput( false, Actions.LookTarget );
-                        PhysicsUpdate();
-                    }
-                }
-                if (Actions.IsFirePressed() || Actions.IsAimPressed()) {
-                    LookAt( Head, Actions.LookTarget );
-                    AimAt( WeaponSlot, Actions.LookTarget );
-                } else {
-                    if (Actions.IsMovePressed( out _ )) {
-                        LookAt( Head, Actions.LookTarget );
-                        AimAt( WeaponSlot, Actions.LookTarget );
-                    } else {
-                        LookAt( Head, Actions.LookTarget );
-                        AimAt( WeaponSlot, Actions.LookTarget );
-                    }
-                }
-                if (Actions.IsFirePressed()) {
-                    Weapon?.Fire();
-                }
-                if (Actions.IsAimPressed()) {
-
-                }
-                if (Actions.IsInteractPressed( out var interactable )) {
-                    if (interactable != null && interactable.IsWeapon()) {
-                        SetWeapon( WeaponSlot, interactable.RequireComponent<Weapon>() );
-                    } else {
-                        SetWeapon( WeaponSlot, null );
-                    }
-                }
-            }
+        public virtual void Update() {
         }
 
         // Helpers
@@ -115,19 +83,6 @@ namespace Project.Entities {
                 return false;
             }
         }
-        private static Quaternion? GetHeadRotation(Vector3 direction) {
-            var rotation = Quaternion.LookRotation( direction );
-            var angles = rotation.eulerAngles;
-            if (angles.x > 180) angles.x -= 360;
-            if (angles.y > 180) angles.y -= 360;
-            if (angles.y >= -80 && angles.y <= 80) {
-                angles.x = Mathf.Clamp( angles.x, -80, 80 );
-                angles.y = Mathf.Clamp( angles.y, -80, 80 );
-                return Quaternion.Euler( angles );
-            }
-            return null;
-        }
-        // Helpers
         private static bool AimAt(Transform transform, Vector3? target) {
             var rotation = transform.localRotation;
             if (target != null) {
@@ -146,6 +101,19 @@ namespace Project.Entities {
                 return false;
             }
         }
+        // Helpers
+        private static Quaternion? GetHeadRotation(Vector3 direction) {
+            var rotation = Quaternion.LookRotation( direction );
+            var angles = rotation.eulerAngles;
+            if (angles.x > 180) angles.x -= 360;
+            if (angles.y > 180) angles.y -= 360;
+            if (angles.y >= -80 && angles.y <= 80) {
+                angles.x = Mathf.Clamp( angles.x, -80, 80 );
+                angles.y = Mathf.Clamp( angles.y, -80, 80 );
+                return Quaternion.Euler( angles );
+            }
+            return null;
+        }
         private static Quaternion? GetWeaponRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;
@@ -157,21 +125,6 @@ namespace Project.Entities {
             }
             return null;
         }
-
-    }
-    // ICharacterInputActions
-    public interface ICharacterInputActions {
-
-        bool IsEnabled { get; }
-        Vector3 LookTarget { get; }
-
-        bool IsMovePressed(out Vector3 moveVector);
-        bool IsJumpPressed();
-        bool IsCrouchPressed();
-        bool IsAcceleratePressed();
-        bool IsFirePressed();
-        bool IsAimPressed();
-        bool IsInteractPressed(out GameObject? interactable);
 
     }
 }

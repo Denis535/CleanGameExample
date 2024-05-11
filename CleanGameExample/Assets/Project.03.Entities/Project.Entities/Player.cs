@@ -18,7 +18,7 @@ namespace Project.Entities {
         private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
         private World World { get; set; } = default!;
-        public Character? Character { get; private set; }
+        public PlayerCharacter? Character { get; private set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
@@ -64,7 +64,7 @@ namespace Project.Entities {
         }
 
         // SetCharacter
-        public void SetCharacter(Character? character) {
+        public void SetCharacter(PlayerCharacter? character) {
             if (Character != null) {
                 Character.SetActions( null );
                 if (!IsPaused) Actions.Disable();

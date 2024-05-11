@@ -37,11 +37,11 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView();
-            view.ContentSlot.Push( CreateView_MainMenuView( widget, router ) );
+            view.ContentSlot.Push( CreateView_InitialView( widget, router ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIRouter router) {
-            var view = new MainMenuWidgetView_MainMenuView();
+        private static MainMenuWidgetView_InitialView CreateView_InitialView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView_InitialView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Main Menu";
             } );
@@ -79,21 +79,21 @@ namespace Project.UI.MainScreen {
                 widget.View.Title.Text = "Select Level";
             } );
             view.Level1.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, LevelEnum.Level1 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level1 ) );
             } );
             view.Level2.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, LevelEnum.Level2 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level2 ) );
             } );
             view.Level3.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectYourCharacterView( widget, router, LevelEnum.Level3 ) );
+                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level3 ) );
             } );
             view.Back.OnClick( evt => {
                 widget.View.ContentSlot.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectYourCharacterView CreateView_SelectYourCharacterView(MainMenuWidget widget, UIRouter router, LevelEnum level) {
-            var view = new MainMenuWidgetView_SelectYourCharacterView();
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, LevelEnum level) {
+            var view = new MainMenuWidgetView_SelectCharacterView();
             view.Root.OnAttachToPanel( evt => {
                 widget.View.Title.Text = "Select Your Character";
             } );

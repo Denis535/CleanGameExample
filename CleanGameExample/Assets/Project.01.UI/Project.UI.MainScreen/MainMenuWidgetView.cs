@@ -26,8 +26,8 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    // MainMenuView
-    public class MainMenuWidgetView_MainMenuView : UIViewBase {
+    // InitialView
+    public class MainMenuWidgetView_InitialView : UIViewBase {
 
         // View
         public ElementWrapper Root { get; }
@@ -36,8 +36,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Quit { get; }
 
         // Constructor
-        public MainMenuWidgetView_MainMenuView() {
-            VisualElement = MainViewFactory.MainMenuWidget_MainMenuView( out var root, out var startGame, out var settings, out var quit );
+        public MainMenuWidgetView_InitialView() {
+            VisualElement = MainViewFactory.MainMenuWidget_InitialView( out var root, out var startGame, out var settings, out var quit );
             Root = root.Wrap();
             StartGame = startGame.Wrap();
             Settings = settings.Wrap();
@@ -85,8 +85,8 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    // SelectYourCharacterView
-    public class MainMenuWidgetView_SelectYourCharacterView : UIViewBase {
+    // SelectCharacterView
+    public class MainMenuWidgetView_SelectCharacterView : UIViewBase {
 
         // View
         public ElementWrapper Root { get; }
@@ -97,8 +97,8 @@ namespace Project.UI.MainScreen {
         public ButtonWrapper Back { get; }
 
         // Constructor
-        public MainMenuWidgetView_SelectYourCharacterView() {
-            VisualElement = MainViewFactory.MainMenuWidget_SelectYourCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
+        public MainMenuWidgetView_SelectCharacterView() {
+            VisualElement = MainViewFactory.MainMenuWidget_SelectCharacterView( out var root, out var gray, out var red, out var green, out var blue, out var back );
             Root = root.Wrap();
             Gray = gray.Wrap();
             Red = red.Wrap();

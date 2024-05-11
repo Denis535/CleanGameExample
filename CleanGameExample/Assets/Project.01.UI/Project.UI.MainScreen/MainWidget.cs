@@ -113,7 +113,7 @@ namespace Project.UI.MainScreen {
                 element.SetBackgroundEffect( Color.white, default, 0, 1.0f );
                 return;
             }
-            if (view is MainMenuWidgetView_MainMenuView) {
+            if (view is MainMenuWidgetView_InitialView) {
                 element.SetBackgroundEffect( Color.white, default, 0, 1.0f );
                 return;
             }
@@ -125,7 +125,7 @@ namespace Project.UI.MainScreen {
                 element.SetBackgroundEffect( Color.white, default, 2, 1.2f );
                 return;
             }
-            if (view is MainMenuWidgetView_SelectYourCharacterView) {
+            if (view is MainMenuWidgetView_SelectCharacterView) {
                 element.SetBackgroundEffect( Color.white, default, 3, 1.3f );
                 return;
             }

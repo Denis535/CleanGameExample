@@ -27,7 +27,7 @@ namespace UnityEngine.UIElements {
             }
             return root;
         }
-        public static VisualElement MainMenuWidget_MainMenuView(out VisualElement root, out Button startGame, out Button settings, out Button quit) {
+        public static VisualElement MainMenuWidget_InitialView(out VisualElement root, out Button startGame, out Button settings, out Button quit) {
             using (VisualElementFactory.View().AsScope( out root )) {
                 VisualElementFactory.Select( "Start Game" ).AddToScope( out startGame );
                 VisualElementFactory.Select( "Settings" ).AddToScope( out settings );
@@ -54,7 +54,7 @@ namespace UnityEngine.UIElements {
             }
             return root;
         }
-        public static VisualElement MainMenuWidget_SelectYourCharacterView(out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
+        public static VisualElement MainMenuWidget_SelectCharacterView(out VisualElement root, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
             using (VisualElementFactory.View().AsScope( out root )) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     VisualElementFactory.Select( "Gray" ).AddToScope( out gray );

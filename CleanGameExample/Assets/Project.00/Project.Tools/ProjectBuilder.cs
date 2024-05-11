@@ -4,16 +4,17 @@ namespace Project.Tools {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEditor;
-    using UnityEditor.AddressableAssets;
     using UnityEngine;
+    using UnityEngine.AddressableAssets;
 
     public static class ProjectBuilder {
 
         // Build/Pre
         public static void PreBuild() {
-            new AddressableResourcesSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.05.Common/UnityEngine.AddressableAssets/R.cs", "UnityEngine.AddressableAssets", "R" );
-            new AddressableLabelsSourceGenerator().Generate( AddressableAssetSettingsDefaultObject.Settings, "Assets/Project.05.Common/UnityEngine.AddressableAssets/L.cs", "UnityEngine.AddressableAssets", "L" );
+            var generator = AssetDatabase.LoadAssetAtPath<AddressableSourceGenerator>( AssetDatabase.FindAssets( "t:AddressableSourceGenerator" ).Single().Chain( AssetDatabase.GUIDToAssetPath ) );
+            generator.Generate();
         }
 
         // Build/Development

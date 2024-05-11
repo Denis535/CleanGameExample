@@ -8,40 +8,39 @@ namespace Project.Tools {
     using UnityEditor;
     using UnityEditor.SceneManagement;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     public static class ProjectToolbar {
 
         // LoadScene
         [MenuItem( "Project/Launcher", priority = 0 )]
         public static void LoadLauncher() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Launcher.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.00/Assets.Project/Launcher.unity" );
         }
         [MenuItem( "Project/Startup", priority = 1 )]
         public static void LoadStartup() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes/Startup.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.00/Assets.Project.Scenes/Startup.unity" );
         }
         [MenuItem( "Project/Main Scene", priority = 2 )]
         public static void LoadMainScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes/MainScene.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.00/Assets.Project.Scenes/MainScene.unity" );
         }
         [MenuItem( "Project/Game Scene", priority = 3 )]
         public static void LoadGameScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Scenes/GameScene.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.00/Assets.Project.Scenes/GameScene.unity" );
         }
 
         // LoadScene
         [MenuItem( "Project/World 01", priority = 100 )]
         public static void LoadLevel1() {
-            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_01.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.04.Worlds/Assets.Project.Worlds/World_01.unity" );
         }
         [MenuItem( "Project/World 02", priority = 101 )]
         public static void LoadLevel2() {
-            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_02.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.04.Worlds/Assets.Project.Worlds/World_02.unity" );
         }
         [MenuItem( "Project/World 03", priority = 101 )]
         public static void LoadLevel3() {
-            EditorSceneManager.OpenScene( "Assets/Project.Entities/Assets.Project.Entities.Worlds/World_03.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project.04.Worlds/Assets.Project.Worlds/World_03.unity" );
         }
 
         // Build
@@ -90,32 +89,27 @@ namespace Project.Tools {
             }
         }
 
-        // ShowAssets
-        [MenuItem( "Project/Show Assets", priority = 400 )]
-        public static void ShowAssets() {
-            foreach (var path in AssetDatabase.GetAllAssetPaths()) {
-                if (path.EndsWith( "/csc.rsp" )) {
-                    var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
-                    var importer = AssetImporter.GetAtPath( path );
-                    asset.hideFlags = HideFlags.None;
-                    //Debug.Log( path );
-                }
-            }
-        }
+        //// ShowAssets
+        //[MenuItem( "Project/Show Assets", priority = 400 )]
+        //public static void ShowAssets() {
+        //    foreach (var path in AssetDatabase.GetAllAssetPaths()) {
+        //        if (path.EndsWith( "/csc.rsp" )) {
+        //            var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
+        //            var importer = AssetImporter.GetAtPath( path );
+        //        }
+        //    }
+        //}
 
-        // HideAssets
-        [MenuItem( "Project/Hide Assets", priority = 401 )]
-        public static void HideAssets() {
-            foreach (var path in AssetDatabase.GetAllAssetPaths()) {
-                if (path.EndsWith( "/csc.rsp" )) {
-                    var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
-                    var importer = AssetImporter.GetAtPath( path );
-                    importer.hideFlags = HideFlags.HideInHierarchy;
-                    asset.hideFlags = HideFlags.HideInHierarchy;
-                    //Debug.Log( path );
-                }
-            }
-        }
+        //// HideAssets
+        //[MenuItem( "Project/Hide Assets", priority = 401 )]
+        //public static void HideAssets() {
+        //    foreach (var path in AssetDatabase.GetAllAssetPaths()) {
+        //        if (path.EndsWith( "/csc.rsp" )) {
+        //            var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
+        //            var importer = AssetImporter.GetAtPath( path );
+        //        }
+        //    }
+        //}
 
     }
 }

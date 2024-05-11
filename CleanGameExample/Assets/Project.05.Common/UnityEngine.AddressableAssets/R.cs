@@ -41,8 +41,10 @@ namespace UnityEngine.AddressableAssets {
                 }
             }
             public static class @Entities {
+                public const string @Game_Value = "Project.Entities/Game.prefab";
                 public static class @Characters {
                     public static class @Primary {
+                        public const string @Camera_Value = "Project.Entities/Characters.Primary/Camera.prefab";
                         public const string @PlayerCharacter_Blue_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Blue.prefab";
                         public const string @PlayerCharacter_Gray_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Gray.prefab";
                         public const string @PlayerCharacter_Green_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Green.prefab";

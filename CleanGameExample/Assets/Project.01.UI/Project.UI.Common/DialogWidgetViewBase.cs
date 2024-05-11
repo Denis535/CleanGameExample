@@ -28,7 +28,7 @@ namespace Project.UI.Common {
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.AsListSlot<VisualElement>();
+                Footer = footer.AsElementListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is InfoDialogWidgetView) {
@@ -38,7 +38,7 @@ namespace Project.UI.Common {
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.AsListSlot<VisualElement>();
+                Footer = footer.AsElementListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is WarningDialogWidgetView) {
@@ -48,7 +48,7 @@ namespace Project.UI.Common {
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.AsListSlot<VisualElement>();
+                Footer = footer.AsElementListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else if (this is ErrorDialogWidgetView) {
@@ -58,7 +58,7 @@ namespace Project.UI.Common {
                 Card = card.Wrap();
                 Header = header.Wrap();
                 Content = content.Wrap();
-                Footer = footer.AsListSlot<VisualElement>();
+                Footer = footer.AsElementListSlot<VisualElement>();
                 Title = title.Wrap();
                 Message = message.Wrap();
             } else {

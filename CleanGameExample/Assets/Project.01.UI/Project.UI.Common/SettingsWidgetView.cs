@@ -13,9 +13,9 @@ namespace Project.UI.Common {
         public ElementWrapper Root { get; }
         public LabelWrapper Title { get; }
         public ElementWrapper TabView { get; }
-        public WidgetSlotWrapper<UIWidgetBase> ProfileSettingsSlot { get; }
-        public WidgetSlotWrapper<UIWidgetBase> VideoSettingsSlot { get; }
-        public WidgetSlotWrapper<UIWidgetBase> AudioSettingsSlot { get; }
+        public ViewSlotWrapper<ProfileSettingsWidgetView> ProfileSettingsSlot { get; }
+        public ViewSlotWrapper<VideoSettingsWidgetView> VideoSettingsSlot { get; }
+        public ViewSlotWrapper<AudioSettingsWidgetView> AudioSettingsSlot { get; }
         public ButtonWrapper Okey { get; }
         public ButtonWrapper Back { get; }
 
@@ -25,9 +25,9 @@ namespace Project.UI.Common {
             Root = root.Wrap();
             Title = title.Wrap();
             TabView = tabView.Wrap();
-            ProfileSettingsSlot = profileSettingsSlot.AsWidgetSlot<UIWidgetBase>();
-            VideoSettingsSlot = videoSettingsSlot.AsWidgetSlot<UIWidgetBase>();
-            AudioSettingsSlot = audioSettingsSlot.AsWidgetSlot<UIWidgetBase>();
+            ProfileSettingsSlot = profileSettingsSlot.AsViewSlot<ProfileSettingsWidgetView>();
+            VideoSettingsSlot = videoSettingsSlot.AsViewSlot<VideoSettingsWidgetView>();
+            AudioSettingsSlot = audioSettingsSlot.AsViewSlot<AudioSettingsWidgetView>();
             Okey = okey.Wrap();
             Back = back.Wrap();
         }

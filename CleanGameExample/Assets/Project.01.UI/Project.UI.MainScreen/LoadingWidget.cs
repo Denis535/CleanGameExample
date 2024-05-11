@@ -21,10 +21,10 @@ namespace Project.UI.MainScreen {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            Show();
+            ShowSelf();
         }
         public override void OnDetach(object? argument) {
-            Hide();
+            HideSelf();
         }
 
         // Helpers

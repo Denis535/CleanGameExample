@@ -26,10 +26,10 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            Show();
+            ShowSelf();
         }
         public override void OnDetach(object? argument) {
-            Hide();
+            HideSelf();
             if (argument is DetachReason.Submit) {
                 AudioSettings.MasterVolume = View.MasterVolume.Value;
                 AudioSettings.MusicVolume = View.MusicVolume.Value;

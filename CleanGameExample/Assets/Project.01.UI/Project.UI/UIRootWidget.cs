@@ -1,4 +1,4 @@
- #nullable enable
+#nullable enable
 namespace Project.UI {
     using System;
     using System.Collections;
@@ -41,31 +41,27 @@ namespace Project.UI {
         public override void OnDetach(object? argument) {
         }
 
-        // ShowWidget
-        public override void ShowWidget(UIWidgetBase widget) {
-            if (widget.IsViewable) {
-                if (widget.IsModal()) {
-                    {
-                        View.WidgetSlot.Children.LastOrDefault()?.View!.SaveFocus();
-                        View.WidgetSlot.SetEnabled( false );
-                    }
-                    Push( View.ModalWidgetSlot, widget, i => i is not MainWidget or GameWidget );
-                } else {
-                    Push( View.WidgetSlot, widget, i => i is not MainWidget or GameWidget );
+        // ShowView
+        public override void ShowView(UIViewBase view) {
+            if (view.IsModal()) {
+                {
+                    View.ViewSlot.Children.LastOrDefault().SaveFocus();
+                    View.ViewSlot.SetEnabled( false );
                 }
+                Push( View.ModalViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
+            } else {
+                Push( View.ViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
             }
         }
-        public override void HideWidget(UIWidgetBase widget) {
-            if (widget.IsViewable) {
-                if (widget.IsModal()) {
-                    Pop( View.ModalWidgetSlot, widget, i => i is not MainWidget or GameWidget );
-                    if (!View.ModalWidgetSlot.Children.Any()) {
-                        View.WidgetSlot.SetEnabled( true );
-                        View.WidgetSlot.Children.LastOrDefault()?.View!.LoadFocus();
-                    }
-                } else {
-                    Pop( View.WidgetSlot, widget, i => i is not MainWidget or GameWidget );
+        public override void HideView(UIViewBase view) {
+            if (view.IsModal()) {
+                Pop( View.ModalViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
+                if (!View.ModalViewSlot.Children.Any()) {
+                    View.ViewSlot.SetEnabled( true );
+                    View.ViewSlot.Children.LastOrDefault().LoadFocus();
                 }
+            } else {
+                Pop( View.ViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
             }
         }
 

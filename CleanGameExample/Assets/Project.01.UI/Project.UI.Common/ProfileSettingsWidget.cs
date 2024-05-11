@@ -25,10 +25,10 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            Show();
+            ShowSelf();
         }
         public override void OnDetach(object? argument) {
-            Hide();
+            HideSelf();
             if (argument is DetachReason.Submit) {
                 ProfileSettings.Name = View.Name.Value!;
                 ProfileSettings.Save();

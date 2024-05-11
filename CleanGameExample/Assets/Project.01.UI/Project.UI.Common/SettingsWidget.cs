@@ -25,42 +25,42 @@ namespace Project.UI.Common {
 
         // OnAttach
         public override void OnAttach(object? argument) {
-            Show();
+            ShowSelf();
         }
         public override void OnDetach(object? argument) {
-            Hide();
+            HideSelf();
         }
 
-        // ShowWidget
-        public override void ShowWidget(UIWidgetBase widget) {
-            if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsSlot.Set( profileSettingsWidget );
+        // ShowView
+        public override void ShowView(UIViewBase view) {
+            if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
+                View.ProfileSettingsSlot.Set( profileSettingsWidgetView );
                 return;
             }
-            if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsSlot.Set( videoSettingsWidget );
+            if (view is VideoSettingsWidgetView videoSettingsWidgetView) {
+                View.VideoSettingsSlot.Set( videoSettingsWidgetView );
                 return;
             }
-            if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsSlot.Set( audioSettingsWidget );
+            if (view is AudioSettingsWidgetView audioSettingsWidgetView) {
+                View.AudioSettingsSlot.Set( audioSettingsWidgetView );
                 return;
             }
-            base.ShowWidget( widget );
+            base.ShowView( view );
         }
-        public override void HideWidget(UIWidgetBase widget) {
-            if (widget is ProfileSettingsWidget profileSettingsWidget) {
-                View.ProfileSettingsSlot.Clear( profileSettingsWidget );
+        public override void HideView(UIViewBase view) {
+            if (view is ProfileSettingsWidgetView) {
+                View.ProfileSettingsSlot.Clear();
                 return;
             }
-            if (widget is VideoSettingsWidget videoSettingsWidget) {
-                View.VideoSettingsSlot.Clear( videoSettingsWidget );
+            if (view is VideoSettingsWidgetView) {
+                View.VideoSettingsSlot.Clear();
                 return;
             }
-            if (widget is AudioSettingsWidget audioSettingsWidget) {
-                View.AudioSettingsSlot.Clear( audioSettingsWidget );
+            if (view is AudioSettingsWidgetView) {
+                View.AudioSettingsSlot.Clear();
                 return;
             }
-            base.HideWidget( widget );
+            base.HideView( view );
         }
 
         // Helpers

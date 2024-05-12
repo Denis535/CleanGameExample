@@ -1,0 +1,32 @@
+{
+    "name": "Project",
+    "rootNamespace": "Project",
+    "references": [
+        "GUID:93298f9b491e92447a868e21801ae8d0",
+        "GUID:30a3c7890620f3f41b304c3ddc3c7c29",
+        "GUID:10210e901654ab64b8e05d8e7b7a6a60",
+        "GUID:eca870623b01eb2438a95139b22d9ec7",
+        "GUID:c0079727041c410469f5d7a2eaf9d49e",
+        "GUID:4e862f251e247d347ac3c34bf14f14cb",
+        "GUID:b3fe3ef184551854c9825e624a617826",
+        "GUID:5d84abae7084afd45a745ed680d4fb0e",
+        "GUID:8dd91c5906d12f348bfc27636c6be7b3",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:69448af7b92c7f342b298e06a37122aa",
+        "GUID:230fee457e192574d810867d3b93c60d",
+        "GUID:fe25561d224ed4743af4c60938a59d0b",
+        "GUID:5540e30183c82e84b954c033c388e06c",
+        "GUID:1800ae458ff5b439fb4a1aa353684cbb",
+        "GUID:4fcf9ee5ff5fbf74f8e3185541602359"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,16 +1,23 @@
 {
-    "name": "Project.Entities",
-    "rootNamespace": "Project.Entities",
+    "name": "Project.UI",
+    "rootNamespace": "Project.UI",
     "references": [
+        "GUID:30a3c7890620f3f41b304c3ddc3c7c29",
+        "GUID:10210e901654ab64b8e05d8e7b7a6a60",
+        "GUID:eca870623b01eb2438a95139b22d9ec7",
         "GUID:c0079727041c410469f5d7a2eaf9d49e",
         "GUID:4e862f251e247d347ac3c34bf14f14cb",
         "GUID:b3fe3ef184551854c9825e624a617826",
         "GUID:5d84abae7084afd45a745ed680d4fb0e",
         "GUID:8dd91c5906d12f348bfc27636c6be7b3",
+        "GUID:46823ce0bf49ac548b0182c513dd3fdb",
         "GUID:84651a3751eca9349aac36a66bba901b",
         "GUID:9e24947de15b9834991c9d8411ea37cf",
         "GUID:4b0b630b935beef48b5c4dd3e5453d1a",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:fe25561d224ed4743af4c60938a59d0b",
+        "GUID:5540e30183c82e84b954c033c388e06c",
+        "GUID:1800ae458ff5b439fb4a1aa353684cbb"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

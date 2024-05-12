@@ -8,28 +8,11 @@ namespace Project.UI {
     using Project.UI.MainScreen;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
     public class UIRootWidget : UnityEngine.Framework.UI.UIRootWidget {
 
         // Constructor
         public UIRootWidget() {
-            VisualElementFactory.OnWidgetAttach += visualElement => {
-                var view = (UIViewBase) visualElement.userData;
-                if (!view.LoadFocus()) view.Focus();
-            };
-            VisualElementFactory.OnViewAttach += visualElement => {
-                var view = (UIViewBase) visualElement.userData;
-                if (!view.LoadFocus()) view.Focus();
-            };
-            VisualElementFactory.OnWidgetDetach += visualElement => {
-                var view = (UIViewBase) visualElement.userData;
-                view.SaveFocus();
-            };
-            VisualElementFactory.OnViewDetach += visualElement => {
-                var view = (UIViewBase) visualElement.userData;
-                view.SaveFocus();
-            };
         }
         public override void Dispose() {
             base.Dispose();
@@ -43,25 +26,31 @@ namespace Project.UI {
 
         // ShowView
         public override void ShowView(UIViewBase view) {
-            if (view.IsModal()) {
-                {
-                    View.ViewSlot.Children.LastOrDefault().SaveFocus();
-                    View.ViewSlot.SetEnabled( false );
-                }
-                Push( View.ModalViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
+            if (!view.IsModal()) {
+                View.Views.LastOrDefault()?.SaveFocus();
+                View.AddView( view, i => i is MainWidgetView or GameWidgetView );
+                view.Focus();
             } else {
-                Push( View.ViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
+                if (View.ModalViews.Any()) {
+                    View.ModalViews.Last().SaveFocus();
+                } else {
+                    View.Views.LastOrDefault()?.SaveFocus();
+                }
+                View.AddModalView( view, i => true );
+                view.Focus();
             }
         }
         public override void HideView(UIViewBase view) {
-            if (view.IsModal()) {
-                Pop( View.ModalViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
-                if (!View.ModalViewSlot.Children.Any()) {
-                    View.ViewSlot.SetEnabled( true );
-                    View.ViewSlot.Children.LastOrDefault().LoadFocus();
-                }
+            if (!view.IsModal()) {
+                View.RemoveView( view, i => i is MainWidgetView or GameWidgetView );
+                View.Views.LastOrDefault()?.LoadFocus();
             } else {
-                Pop( View.ViewSlot, view, i => i is not MainWidgetView or GameWidgetView );
+                View.RemoveModalView( view, i => true );
+                if (View.ModalViews.Any()) {
+                    View.ModalViews.Last().LoadFocus();
+                } else {
+                    View.Views.LastOrDefault()?.LoadFocus();
+                }
             }
         }
 

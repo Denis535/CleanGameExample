@@ -6,6 +6,9 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Reflection;
     using System.Text;
+    using Project.UI.Common;
+    using Project.UI.GameScreen;
+    using Project.UI.MainScreen;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;
@@ -26,21 +29,21 @@ namespace Project.UI {
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
             if (!EditorApplication.isPlaying) {
-                foreach (var method in typeof( MainViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( MainScreen.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Main / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
-                foreach (var method in typeof( GameViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( GameScreen.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Game / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
-                foreach (var method in typeof( CommonViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( Common.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Common / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();

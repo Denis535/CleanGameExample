@@ -1,9 +1,11 @@
 #if UNITY_EDITOR
 #nullable enable
-namespace Project.Tools {
+namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Text;
     using UnityEditor;
     using UnityEditor.ColorfulProjectWindow;
@@ -18,7 +20,7 @@ namespace Project.Tools {
         }
 
         // Constructor
-        public ProjectWindow() : base( new[] { "Assets/Project" } ) {
+        public ProjectWindow() : base( GetModulePaths() ) {
         }
 
         // OnGUI
@@ -27,6 +29,18 @@ namespace Project.Tools {
         }
         protected override void OnGUI(Rect rect, string path, string module, string content) {
             base.OnGUI( rect, path, module, content );
+        }
+
+        // Helpers
+        private static string[] GetModulePaths() {
+            return AssetDatabase.GetAllAssetPaths()
+                .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
+                .Select( Path.GetDirectoryName )
+                .Select( i => i.Replace( '\\', '/' ) )
+                .Where( i => i.StartsWith( "Packages/" ) )
+                .Distinct()
+                .Prepend( "Assets/Project" )
+                .ToArray();
         }
 
     }

@@ -14,14 +14,14 @@ namespace Project.UI.Common {
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
 
-        // Values
+        // Props
         public bool IsFullScreen => isFullScreen.value;
         public object? ScreenResolution => screenResolution.value;
         public bool IsVSync => isVSync.value;
 
         // Constructor
         public VideoSettingsWidgetView(bool isFullScreen, (object? Value, object?[] Choices) screenResolution, bool isVSync) {
-            VisualElement = ViewFactory.VideoSettingsWidget( out _, out this.isFullScreen, out this.screenResolution, out this.isVSync );
+            VisualElement = VisualElementFactory_Common.VideoSettingsView( out this.isFullScreen, out this.screenResolution, out this.isVSync );
             this.isFullScreen.value = isFullScreen;
             this.screenResolution.value = screenResolution.Value;
             this.screenResolution.choices = screenResolution.Choices.ToList();
@@ -32,13 +32,13 @@ namespace Project.UI.Common {
         }
 
         // OnEvent
-        public void OnIsFullScreenChange(EventCallback<ChangeEvent<bool>> callback) {
+        public void OnIsFullScreen(EventCallback<ChangeEvent<bool>> callback) {
             isFullScreen.OnChange( callback );
         }
-        public void OnScreenResolutionChange(EventCallback<ChangeEvent<object?>> callback) {
+        public void OnScreenResolution(EventCallback<ChangeEvent<object?>> callback) {
             screenResolution.OnChange( callback );
         }
-        public void OnIsVSyncChange(EventCallback<ChangeEvent<bool>> callback) {
+        public void OnIsVSync(EventCallback<ChangeEvent<bool>> callback) {
             isVSync.OnChange( callback );
         }
 

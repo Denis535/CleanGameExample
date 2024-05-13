@@ -71,11 +71,11 @@ namespace Project.UI.GameScreen {
         // Update
         public void Update() {
             if (Player.Enemy) {
-                //View.Target.SetTargetEffect( TargetEffect.Enemy );
+                View.SetEffect( TargetEffect.Enemy );
             } else if (Player.Loot) {
-                //View.Target.SetTargetEffect( TargetEffect.Loot );
+                View.SetEffect( TargetEffect.Loot );
             } else {
-                //View.Target.SetTargetEffect( TargetEffect.Normal );
+                View.SetEffect( TargetEffect.Normal );
             }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
                 AttachChild( new GameMenuWidget() );

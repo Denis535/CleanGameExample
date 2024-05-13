@@ -67,7 +67,7 @@ namespace Project.UI.Common {
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
             view.OnOkey( evt => {
-                if (evt.target.IsValidSelf()) {
+                if (evt.GetTarget().IsValidSelf()) {
                     widget.DetachSelf( DetachReason.Submit );
                 }
             } );

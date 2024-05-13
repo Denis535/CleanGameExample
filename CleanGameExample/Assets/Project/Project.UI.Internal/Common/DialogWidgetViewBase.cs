@@ -35,26 +35,11 @@ namespace Project.UI.Common {
         }
 
         // Constructor
-        public DialogWidgetViewBase() {
-            if (this is DialogWidgetView) {
-                VisualElement = ViewFactory.DialogWidget( out _, out card, out header, out content, out footer, out title, out message );
-                VisualElement.OnAttachToPanel( PlayAppearance );
-                footer.SetDisplayed( false );
-            } else if (this is InfoDialogWidgetView) {
-                VisualElement = ViewFactory.InfoDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
-                VisualElement.OnAttachToPanel( PlayAppearance );
-                footer.SetDisplayed( false );
-            } else if (this is WarningDialogWidgetView) {
-                VisualElement = ViewFactory.WarningDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
-                VisualElement.OnAttachToPanel( PlayAppearance );
-                footer.SetDisplayed( false );
-            } else if (this is ErrorDialogWidgetView) {
-                VisualElement = ViewFactory.ErrorDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
-                VisualElement.OnAttachToPanel( PlayAppearance );
-                footer.SetDisplayed( false );
-            } else {
-                throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {this} is not supported" );
-            }
+        public DialogWidgetViewBase(string? title, string? message) {
+            VisualElement = CreateVisualElement( this, out card, out header, out content, out footer, out this.title, out this.message );
+            VisualElement.OnAttachToPanel( PlayAppearance );
+            Title = title;
+            Message = message;
         }
         public override void Dispose() {
             base.Dispose();
@@ -83,6 +68,38 @@ namespace Project.UI.Common {
         }
 
         // Helpers
+        private static VisualElement CreateVisualElement(DialogWidgetViewBase view, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            if (view is DialogWidgetView) {
+                var visualElement = VisualElementFactory_Common.DialogWidget( out card, out header, out content, out footer, out title, out message );
+                header.SetDisplayed( false );
+                content.SetDisplayed( false );
+                footer.SetDisplayed( false );
+                return visualElement;
+            }
+            if (view is InfoDialogWidgetView) {
+                var visualElement = VisualElementFactory_Common.InfoDialogWidget( out card, out header, out content, out footer, out title, out message );
+                header.SetDisplayed( false );
+                content.SetDisplayed( false );
+                footer.SetDisplayed( false );
+                return visualElement;
+            }
+            if (view is WarningDialogWidgetView) {
+                var visualElement = VisualElementFactory_Common.WarningDialogWidget( out card, out header, out content, out footer, out title, out message );
+                header.SetDisplayed( false );
+                content.SetDisplayed( false );
+                footer.SetDisplayed( false );
+                return visualElement;
+            }
+            if (view is ErrorDialogWidgetView) {
+                var visualElement = VisualElementFactory_Common.ErrorDialogWidget( out card, out header, out content, out footer, out title, out message );
+                header.SetDisplayed( false );
+                content.SetDisplayed( false );
+                footer.SetDisplayed( false );
+                return visualElement;
+            }
+            throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {view} is not supported" );
+        }
+        // Helpers
         private static void PlayAppearance(AttachToPanelEvent evt) {
             var target = (VisualElement) evt.target;
             var animation = ValueAnimation<float>.Create( target, Mathf.LerpUnclamped );
@@ -104,7 +121,7 @@ namespace Project.UI.Common {
     public class DialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public DialogWidgetView() {
+        public DialogWidgetView(string? title, string? message) : base( title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -115,7 +132,7 @@ namespace Project.UI.Common {
     public class InfoDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public InfoDialogWidgetView() {
+        public InfoDialogWidgetView(string? title, string? message) : base( title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -126,7 +143,7 @@ namespace Project.UI.Common {
     public class WarningDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public WarningDialogWidgetView() {
+        public WarningDialogWidgetView(string? title, string? message) : base( title, message ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -137,7 +154,7 @@ namespace Project.UI.Common {
     public class ErrorDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public ErrorDialogWidgetView() {
+        public ErrorDialogWidgetView(string? title, string? message) : base( title, message ) {
         }
         public override void Dispose() {
             base.Dispose();

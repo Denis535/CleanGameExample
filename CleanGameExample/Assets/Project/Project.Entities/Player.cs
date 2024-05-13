@@ -25,16 +25,18 @@ namespace Project.Entities {
         internal (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public GameObject? Enemy {
             get {
-                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f && Hit.Value.Object.IsEnemy()) {
-                    return Hit?.Object;
+                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f) {
+                    var @object = Hit.Value.Object.transform.root.gameObject;
+                    if (@object.IsEnemy()) return @object;
                 }
                 return null;
             }
         }
         public GameObject? Loot {
             get {
-                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f && Hit.Value.Object.IsLoot()) {
-                    return Hit?.Object;
+                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
+                    var @object = Hit.Value.Object.transform.root.gameObject;
+                    if (@object.IsLoot()) return @object;
                 }
                 return null;
             }

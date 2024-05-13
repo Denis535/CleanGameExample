@@ -43,13 +43,13 @@ namespace Project.UI.Common {
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
             var view = new VideoSettingsWidgetView( videoSettings.IsFullScreen, (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray()), videoSettings.IsVSync );
-            view.OnIsFullScreenChange( evt => {
+            view.OnIsFullScreen( evt => {
                 videoSettings.IsFullScreen = evt.newValue;
             } );
-            view.OnScreenResolutionChange( evt => {
+            view.OnScreenResolution( evt => {
                 videoSettings.ScreenResolution = (Resolution) evt.newValue!;
             } );
-            view.OnIsVSyncChange( evt => {
+            view.OnIsVSync( evt => {
                 videoSettings.IsVSync = evt.newValue;
             } );
             return view;

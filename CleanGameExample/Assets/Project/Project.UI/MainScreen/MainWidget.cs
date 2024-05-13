@@ -92,7 +92,7 @@ namespace Project.UI.MainScreen {
 
         // Update
         public void Update() {
-            //SetBackgroundEffect( View.Root, this.GetDescendants() );
+            View.SetEffect( this.GetDescendants().Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) );
         }
         public void LateUpdate() {
         }
@@ -102,55 +102,6 @@ namespace Project.UI.MainScreen {
             var view = new MainWidgetView();
             return view;
         }
-
-        //// Helpers
-        //private static void SetBackgroundEffect(ElementWrapper element, IEnumerable<UIWidgetBase> descendants) {
-        //    var view = (UIViewBase?) descendants.Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
-        //    view = view?.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) ?? view;
-        //    // MainMenuWidgetView
-        //    if (view is MainMenuWidgetView) {
-        //        element.SetBackgroundEffect( Color.white, default, 0, 1.0f );
-        //        return;
-        //    }
-        //    if (view is MainMenuWidgetView_InitialView) {
-        //        element.SetBackgroundEffect( Color.white, default, 0, 1.0f );
-        //        return;
-        //    }
-        //    if (view is MainMenuWidgetView_StartGameView) {
-        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-        //        return;
-        //    }
-        //    if (view is MainMenuWidgetView_SelectLevelView) {
-        //        element.SetBackgroundEffect( Color.white, default, 2, 1.2f );
-        //        return;
-        //    }
-        //    if (view is MainMenuWidgetView_SelectCharacterView) {
-        //        element.SetBackgroundEffect( Color.white, default, 3, 1.3f );
-        //        return;
-        //    }
-        //    // SettingsWidgetView
-        //    if (view is SettingsWidgetView) {
-        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-        //        return;
-        //    }
-        //    if (view is ProfileSettingsWidgetView) {
-        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-        //        return;
-        //    }
-        //    if (view is AudioSettingsWidgetView) {
-        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-        //        return;
-        //    }
-        //    if (view is VideoSettingsWidgetView) {
-        //        element.SetBackgroundEffect( Color.white, default, 1, 1.1f );
-        //        return;
-        //    }
-        //    // LoadingWidgetView
-        //    if (view is LoadingWidgetView) {
-        //        element.SetBackgroundEffect( Color.gray, default, 45, 2.5f );
-        //        return;
-        //    }
-        //}
 
     }
 }

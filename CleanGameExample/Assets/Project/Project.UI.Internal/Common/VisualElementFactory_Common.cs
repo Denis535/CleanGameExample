@@ -6,11 +6,11 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static class ViewFactory {
+    public static class VisualElementFactory_Common {
 
         // DialogWidget
-        public static Widget DialogWidget(out Widget root, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.DialogWidget().AsScope( out root )) {
+        public static Widget DialogWidget(out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.DialogWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.DialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -23,11 +23,11 @@ namespace Project.UI.Common {
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
                     }
                 }
+                return widget;
             }
-            return root;
         }
-        public static Widget InfoDialogWidget(out Widget root, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.InfoDialogWidget().AsScope( out root )) {
+        public static Widget InfoDialogWidget(out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.InfoDialogWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.InfoDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -40,11 +40,11 @@ namespace Project.UI.Common {
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
                     }
                 }
+                return widget;
             }
-            return root;
         }
-        public static Widget WarningDialogWidget(out Widget root, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.WarningDialogWidget().AsScope( out root )) {
+        public static Widget WarningDialogWidget(out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.WarningDialogWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.WarningDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -57,11 +57,11 @@ namespace Project.UI.Common {
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
                     }
                 }
+                return widget;
             }
-            return root;
         }
-        public static Widget ErrorDialogWidget(out Widget root, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.ErrorDialogWidget().AsScope( out root )) {
+        public static Widget ErrorDialogWidget(out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            using (VisualElementFactory.ErrorDialogWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.ErrorDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
                         VisualElementFactory.Label( null ).AddToScope( out title );
@@ -74,13 +74,13 @@ namespace Project.UI.Common {
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
                     }
                 }
+                return widget;
             }
-            return root;
         }
 
         // SettingsWidget
-        public static Widget SettingsWidget(out Widget root, out Label title, out TabView tabView, out Tab profileSettings, out Tab videoSettings, out Tab audioSettings, out Button okey, out Button back) {
-            using (VisualElementFactory.MediumWidget().AsScope( out root )) {
+        public static Widget SettingsWidget(out Label title, out TabView tabView, out Tab profileSettings, out Tab videoSettings, out Tab audioSettings, out Button okey, out Button back) {
+            using (VisualElementFactory.MediumWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Settings" ).AddToScope( out title );
@@ -97,37 +97,37 @@ namespace Project.UI.Common {
                         VisualElementFactory.Cancel( "Back" ).AddToScope( out back );
                     }
                 }
+                return widget;
             }
-            return root;
         }
-        public static VisualElement ProfileSettingsWidget(out VisualElement root, out TextField name) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
+        public static VisualElement ProfileSettingsView(out TextField name) {
+            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out var view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.TextField( "Name", null, 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
                 }
+                return view;
             }
-            return root;
         }
-        public static VisualElement VideoSettingsWidget(out VisualElement root, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
+        public static VisualElement VideoSettingsView(out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
+            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out var view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.ToggleField( "Full Screen", false ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
                     VisualElementFactory.PopupField( "Screen Resolution", null ).Classes( "label-width-25pc" ).AddToScope( out screenResolution );
                     VisualElementFactory.ToggleField( "V-Sync", false ).Classes( "label-width-25pc" ).AddToScope( out isVSync );
                 }
+                return view;
             }
-            return root;
         }
-        public static VisualElement AudioSettingsWidget(out VisualElement root, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out root )) {
+        public static VisualElement AudioSettingsView(out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
+            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out var view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.SliderField( "Master Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );
                     VisualElementFactory.SliderField( "Music Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out musicVolume );
                     VisualElementFactory.SliderField( "Sfx Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out sfxVolume );
                     VisualElementFactory.SliderField( "Game Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out gameVolume );
                 }
+                return view;
             }
-            return root;
         }
 
     }

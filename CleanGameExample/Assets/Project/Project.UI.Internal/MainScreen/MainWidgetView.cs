@@ -3,17 +3,75 @@ namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
+    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MainWidgetView : UIViewBase {
 
         // Constructor
         public MainWidgetView() {
-            VisualElement = ViewFactory.MainWidget( out _ );
+            VisualElement = VisualElementFactory_Main.MainWidget();
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // SetEffect
+        public void SetEffect(UIViewBase view) {
+            // MainMenuWidgetView
+            if (view is MainMenuWidgetView mainMenuWidgetView) {
+                view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+                if (view is MainMenuWidgetView_InitialView) {
+                    SetEffect( VisualElement, Color.white, default, 0, 1.0f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_StartGameView) {
+                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_SelectLevelView) {
+                    SetEffect( VisualElement, Color.white, default, 2, 1.2f );
+                    return;
+                }
+                if (view is MainMenuWidgetView_SelectCharacterView) {
+                    SetEffect( VisualElement, Color.white, default, 3, 1.3f );
+                    return;
+                }
+                return;
+            }
+            // SettingsWidgetView
+            if (view is SettingsWidgetView settingsWidgetView) {
+                view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+                if (view is ProfileSettingsWidgetView) {
+                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    return;
+                }
+                if (view is AudioSettingsWidgetView) {
+                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    return;
+                }
+                if (view is VideoSettingsWidgetView) {
+                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    return;
+                }
+                return;
+            }
+            // LoadingWidgetView
+            if (view is LoadingWidgetView loadingWidgetView) {
+                SetEffect( VisualElement, Color.gray, default, 45, 2.5f );
+                return;
+            }
+        }
+
+        // Helpers
+        private static void SetEffect(VisualElement element, Color color, Vector2 translate, float rotate, float scale) {
+            element.style.unityBackgroundImageTintColor = color;
+            element.style.translate = new Translate( translate.x, translate.y );
+            element.style.rotate = new Rotate( Angle.Degrees( rotate ) );
+            element.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
         }
 
     }

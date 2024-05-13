@@ -13,12 +13,12 @@ namespace Project.UI.MainScreen {
         private readonly Label title;
         private readonly VisualElement content;
 
-        // Values
+        // Props
         public string Title { get => title.text; set => title.text = value; }
 
         // Constructor
         public MainMenuWidgetView() {
-            VisualElement = ViewFactory.MainMenuWidget( out _, out title, out content );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget( out title, out content );
         }
         public override void Dispose() {
             base.Dispose();
@@ -41,6 +41,8 @@ namespace Project.UI.MainScreen {
             content.Children().LastOrDefault()?.SetDisplayed( false );
             content.Add( view.__GetVisualElement__() );
         }
+
+        // Pop
         public void Pop() {
             content.Remove( content.Children().Last() );
             content.Children().LastOrDefault()?.SetDisplayed( true );
@@ -56,7 +58,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_InitialView() {
-            VisualElement = ViewFactory.MainMenuWidget_InitialView( out _, out startGame, out settings, out quit );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_InitialView( out startGame, out settings, out quit );
         }
 
         // OnEvent
@@ -83,7 +85,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
-            VisualElement = ViewFactory.MainMenuWidget_StartGameView( out _, out newGame, out @continue, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_StartGameView( out newGame, out @continue, out back );
         }
 
         // OnEvent
@@ -111,7 +113,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
-            VisualElement = ViewFactory.MainMenuWidget_SelectLevelView( out _, out level1, out level2, out level3, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectLevelView( out level1, out level2, out level3, out back );
         }
 
         // OnEvent
@@ -143,7 +145,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectCharacterView() {
-            VisualElement = ViewFactory.MainMenuWidget_SelectCharacterView( out _, out gray, out red, out green, out blue, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectCharacterView( out gray, out red, out green, out blue, out back );
         }
 
         // OnEvent

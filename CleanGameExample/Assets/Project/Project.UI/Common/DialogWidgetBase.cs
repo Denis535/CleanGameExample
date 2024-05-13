@@ -22,10 +22,8 @@ namespace Project.UI.Common {
         }
 
         // Constructor
-        public DialogWidgetBase(TView view, string? title, string? message) {
+        public DialogWidgetBase(TView view) {
             View = view;
-            Title = title;
-            Message = message;
         }
         public override void Dispose() {
             base.Dispose();
@@ -96,7 +94,7 @@ namespace Project.UI.Common {
     public class DialogWidget : DialogWidgetBase<DialogWidgetView> {
 
         // Constructor
-        public DialogWidget(string? title, string? message) : base( new DialogWidgetView(), title, message ) {
+        public DialogWidget(string? title, string? message) : base( new DialogWidgetView( title, message ) ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -123,7 +121,7 @@ namespace Project.UI.Common {
     public class InfoDialogWidget : DialogWidgetBase<InfoDialogWidgetView> {
 
         // Constructor
-        public InfoDialogWidget(string? title, string? message) : base( new InfoDialogWidgetView(), title, message ) {
+        public InfoDialogWidget(string? title, string? message) : base( new InfoDialogWidgetView( title, message ) ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -150,7 +148,7 @@ namespace Project.UI.Common {
     public class WarningDialogWidget : DialogWidgetBase<WarningDialogWidgetView> {
 
         // Constructor
-        public WarningDialogWidget(string? title, string? message) : base( new WarningDialogWidgetView(), title, message ) {
+        public WarningDialogWidget(string? title, string? message) : base( new WarningDialogWidgetView( title, message ) ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -177,7 +175,7 @@ namespace Project.UI.Common {
     public class ErrorDialogWidget : DialogWidgetBase<ErrorDialogWidgetView> {
 
         // Constructor
-        public ErrorDialogWidget(string? title, string? message) : base( new ErrorDialogWidgetView(), title, message ) {
+        public ErrorDialogWidget(string? title, string? message) : base( new ErrorDialogWidgetView( title, message ) ) {
         }
         public override void Dispose() {
             base.Dispose();

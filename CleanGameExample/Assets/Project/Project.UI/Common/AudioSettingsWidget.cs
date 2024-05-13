@@ -44,16 +44,16 @@ namespace Project.UI.Common {
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, Storage.AudioSettings audioSettings) {
             var view = new AudioSettingsWidgetView( (audioSettings.MasterVolume, 0, 1), (audioSettings.MusicVolume, 0, 1), (audioSettings.SfxVolume, 0, 1), (audioSettings.GameVolume, 0, 1) );
-            view.OnMasterVolumeChange( evt => {
+            view.OnMasterVolume( evt => {
                 audioSettings.MasterVolume = evt.newValue;
             } );
-            view.OnMusicVolumeChange( evt => {
+            view.OnMusicVolume( evt => {
                 audioSettings.MusicVolume = evt.newValue;
             } );
-            view.OnSfxVolumeChange( evt => {
+            view.OnSfxVolume( evt => {
                 audioSettings.SfxVolume = evt.newValue;
             } );
-            view.OnGameVolumeChange( evt => {
+            view.OnGameVolume( evt => {
                 audioSettings.GameVolume = evt.newValue;
             } );
             return view;

@@ -26,21 +26,21 @@ namespace Project.UI {
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
             if (!EditorApplication.isPlaying) {
-                foreach (var method in typeof( MainScreen.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( MainScreen.VisualElementFactory_Main ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Main / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
-                foreach (var method in typeof( GameScreen.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( GameScreen.VisualElementFactory_Game ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Game / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();
                         Document.rootVisualElement.Add( element );
                     }
                 }
-                foreach (var method in typeof( Common.ViewFactory ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
+                foreach (var method in typeof( Common.VisualElementFactory_Common ).GetMethods( BindingFlags.Public | BindingFlags.Static )) {
                     if (Button( "Show Common / " + method.Name )) {
                         var element = (VisualElement) method.Invoke( null, new object?[ method.GetParameters().Length ] );
                         Document.rootVisualElement.Clear();

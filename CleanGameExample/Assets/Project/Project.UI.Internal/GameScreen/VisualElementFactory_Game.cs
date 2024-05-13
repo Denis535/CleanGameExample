@@ -6,22 +6,22 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.UIElements;
 
-    public static class ViewFactory {
+    public static class VisualElementFactory_Game {
 
         // GameWidget
-        public static Widget GameWidget(out Widget root, out VisualElement target) {
-            using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out root )) {
+        public static Widget GameWidget(out VisualElement target) {
+            using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out var widget )) {
                 VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) )
                     .AddToScope( out target );
+                return widget;
             }
-            return root;
         }
 
         // GameMenuWidget
-        public static Widget GameMenuWidget(out Widget root, out Label title, out Button resume, out Button settings, out Button back) {
-            using (VisualElementFactory.LeftWidget().AsScope( out root )) {
+        public static Widget GameMenuWidget(out Label title, out Button resume, out Button settings, out Button back) {
+            using (VisualElementFactory.LeftWidget().AsScope( out var widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Game Menu" ).AddToScope( out title );
@@ -32,8 +32,8 @@ namespace Project.UI.GameScreen {
                         VisualElementFactory.Select( "Back To Main Menu" ).AddToScope( out back );
                     }
                 }
+                return widget;
             }
-            return root;
         }
 
     }

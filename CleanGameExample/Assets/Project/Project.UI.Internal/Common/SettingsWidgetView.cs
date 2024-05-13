@@ -18,12 +18,12 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
-        // Values
+        // Props
         public string Title => title.text;
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = ViewFactory.SettingsWidget( out _, out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
+            VisualElement = VisualElementFactory_Common.SettingsWidget( out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
             VisualElement.OnChangeAny( evt => {
                 okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
             } );

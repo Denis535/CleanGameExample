@@ -15,8 +15,8 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public LoadingWidgetView() {
-            VisualElement = ViewFactory.LoadingWidget( out _, out loading );
-            loading.OnAttachToPanel( i => PlayLoadingAnimation( (Label) i.target ) );
+            VisualElement = VisualElementFactory_Main.LoadingWidget( out loading );
+            VisualElement.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
         }
         public override void Dispose() {
             base.Dispose();

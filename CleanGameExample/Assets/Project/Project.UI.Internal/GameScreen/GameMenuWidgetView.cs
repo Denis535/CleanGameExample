@@ -14,25 +14,25 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
-        // Values
+        // Props
         public string Title => title.text;
 
         // Constructor
         public GameMenuWidgetView() {
-            VisualElement = ViewFactory.GameMenuWidget( out _, out title, out resume, out settings, out back );
+            VisualElement = VisualElementFactory_Game.GameMenuWidget( out title, out resume, out settings, out back );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         // OnEvent
-        public void OnResumeClick(EventCallback<ClickEvent> callback) {
+        public void OnResume(EventCallback<ClickEvent> callback) {
             resume.OnClick( callback );
         }
-        public void OnSettingsClick(EventCallback<ClickEvent> callback) {
+        public void OnSettings(EventCallback<ClickEvent> callback) {
             settings.OnClick( callback );
         }
-        public void OnBackClick(EventCallback<ClickEvent> callback) {
+        public void OnBack(EventCallback<ClickEvent> callback) {
             back.OnClick( callback );
         }
 

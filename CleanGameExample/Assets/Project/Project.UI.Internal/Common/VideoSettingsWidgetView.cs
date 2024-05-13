@@ -10,6 +10,7 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidgetView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Toggle isFullScreen;
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
@@ -21,7 +22,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public VideoSettingsWidgetView(bool isFullScreen, (object? Value, object?[] Choices) screenResolution, bool isVSync) {
-            VisualElement = VisualElementFactory_Common.VideoSettingsView( out this.isFullScreen, out this.screenResolution, out this.isVSync );
+            VisualElement = VisualElementFactory_Common.VideoSettingsWidgetView( out view, out this.isFullScreen, out this.screenResolution, out this.isVSync );
             this.isFullScreen.value = isFullScreen;
             this.screenResolution.value = screenResolution.Value;
             this.screenResolution.choices = screenResolution.Choices.ToList();

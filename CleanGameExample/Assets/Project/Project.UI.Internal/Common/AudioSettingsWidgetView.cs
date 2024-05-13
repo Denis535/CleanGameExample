@@ -9,6 +9,7 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Slider masterVolume;
         private readonly Slider musicVolume;
         private readonly Slider sfxVolume;
@@ -22,7 +23,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public AudioSettingsWidgetView((float Value, float Min, float Max) masterVolume, (float Value, float Min, float Max) musicVolume, (float Value, float Min, float Max) sfxVolume, (float Value, float Min, float Max) gameVolume) {
-            VisualElement = VisualElementFactory_Common.AudioSettingsView( out this.masterVolume, out this.musicVolume, out this.sfxVolume, out this.gameVolume );
+            VisualElement = VisualElementFactory_Common.AudioSettingsWidgetView( out view, out this.masterVolume, out this.musicVolume, out this.sfxVolume, out this.gameVolume );
             this.masterVolume.value = masterVolume.Value;
             this.masterVolume.lowValue = masterVolume.Min;
             this.masterVolume.highValue = masterVolume.Max;

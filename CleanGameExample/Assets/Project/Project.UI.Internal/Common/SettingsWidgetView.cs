@@ -10,6 +10,7 @@ namespace Project.UI.Common {
 
     public class SettingsWidgetView : UIViewBase {
 
+        private readonly Widget widget;
         private readonly Label title;
         private readonly TabView tabView;
         private readonly Tab profileSettings;
@@ -23,8 +24,8 @@ namespace Project.UI.Common {
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.SettingsWidget( out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
-            VisualElement.OnChangeAny( evt => {
+            VisualElement = VisualElementFactory_Common.SettingsWidget( out widget, out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
+            widget.OnChangeAny( evt => {
                 okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }

@@ -10,6 +10,7 @@ namespace Project.UI.MainScreen {
 
     public class MainMenuWidgetView : UIViewBase {
 
+        private readonly Widget widget;
         private readonly Label title;
         private readonly VisualElement content;
 
@@ -18,7 +19,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget( out title, out content );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget( out widget, out title, out content );
         }
         public override void Dispose() {
             base.Dispose();
@@ -52,18 +53,19 @@ namespace Project.UI.MainScreen {
     // InitialView
     public class MainMenuWidgetView_InitialView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Button startGame;
         private readonly Button settings;
         private readonly Button quit;
 
         // Constructor
         public MainMenuWidgetView_InitialView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_InitialView( out startGame, out settings, out quit );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_InitialView( out view, out startGame, out settings, out quit );
         }
 
         // OnEvent
         public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            VisualElement.OnAttachToPanel( callback );
+            view.OnAttachToPanel( callback );
         }
         public void OnStartGame(EventCallback<ClickEvent> callback) {
             startGame.OnClick( callback );
@@ -79,18 +81,19 @@ namespace Project.UI.MainScreen {
     // StartGameView
     public class MainMenuWidgetView_StartGameView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Button newGame;
         private readonly Button @continue;
         private readonly Button back;
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_StartGameView( out newGame, out @continue, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_StartGameView( out view, out newGame, out @continue, out back );
         }
 
         // OnEvent
         public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            VisualElement.OnAttachToPanel( callback );
+            view.OnAttachToPanel( callback );
         }
         public void OnNewGame(EventCallback<ClickEvent> callback) {
             newGame.OnClick( callback );
@@ -106,6 +109,7 @@ namespace Project.UI.MainScreen {
     // SelectLevelView
     public class MainMenuWidgetView_SelectLevelView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Button level1;
         private readonly Button level2;
         private readonly Button level3;
@@ -113,12 +117,12 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectLevelView( out level1, out level2, out level3, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectLevelView( out view, out level1, out level2, out level3, out back );
         }
 
         // OnEvent
         public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            VisualElement.OnAttachToPanel( callback );
+            view.OnAttachToPanel( callback );
         }
         public void OnLevel1(EventCallback<ClickEvent> callback) {
             level1.OnClick( callback );
@@ -137,6 +141,7 @@ namespace Project.UI.MainScreen {
     // SelectCharacterView
     public class MainMenuWidgetView_SelectCharacterView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly Button gray;
         private readonly Button red;
         private readonly Button green;
@@ -145,12 +150,12 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidgetView_SelectCharacterView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectCharacterView( out gray, out red, out green, out blue, out back );
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectCharacterView( out view, out gray, out red, out green, out blue, out back );
         }
 
         // OnEvent
         public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            VisualElement.OnAttachToPanel( callback );
+            view.OnAttachToPanel( callback );
         }
         public void OnGray(EventCallback<ClickEvent> callback) {
             gray.OnClick( callback );

@@ -9,6 +9,7 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
+        private readonly VisualElement view;
         private readonly TextField name;
 
         // Props
@@ -16,7 +17,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public ProfileSettingsWidgetView(string name, Func<string?, bool> nameValidator) {
-            VisualElement = VisualElementFactory_Common.ProfileSettingsView( out this.name );
+            VisualElement = VisualElementFactory_Common.ProfileSettingsWidgetView( out view, out this.name );
             this.name.value = name;
             this.name.SetValid( nameValidator( this.name.value ) );
             this.name.OnChange( evt => {

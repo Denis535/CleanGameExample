@@ -9,11 +9,12 @@ namespace Project.UI.GameScreen {
 
     public class GameWidgetView : UIViewBase {
 
+        private readonly Widget widget;
         private readonly VisualElement target;
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = VisualElementFactory_Game.GameWidget( out target );
+            VisualElement = VisualElementFactory_Game.GameWidget( out widget, out target );
         }
         public override void Dispose() {
             base.Dispose();

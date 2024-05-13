@@ -11,12 +11,13 @@ namespace Project.UI.MainScreen {
 
     public class LoadingWidgetView : UIViewBase {
 
+        private readonly Widget widget;
         private readonly Label loading;
 
         // Constructor
         public LoadingWidgetView() {
-            VisualElement = VisualElementFactory_Main.LoadingWidget( out loading );
-            VisualElement.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
+            VisualElement = VisualElementFactory_Main.LoadingWidget( out widget, out loading );
+            widget.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
         }
         public override void Dispose() {
             base.Dispose();

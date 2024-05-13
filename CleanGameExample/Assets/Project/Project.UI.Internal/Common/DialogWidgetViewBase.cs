@@ -10,6 +10,7 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase, IModalWidgetView {
 
+        private readonly Widget widget;
         private readonly Card card;
         private readonly Header header;
         private readonly Content content;
@@ -36,8 +37,11 @@ namespace Project.UI.Common {
 
         // Constructor
         public DialogWidgetViewBase(string? title, string? message) {
-            VisualElement = CreateVisualElement( this, out card, out header, out content, out footer, out this.title, out this.message );
-            VisualElement.OnAttachToPanel( PlayAppearance );
+            VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out this.title, out this.message );
+            widget.OnAttachToPanel( PlayAppearance );
+            header.SetDisplayed( false );
+            content.SetDisplayed( false );
+            footer.SetDisplayed( false );
             Title = title;
             Message = message;
         }
@@ -68,34 +72,18 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static VisualElement CreateVisualElement(DialogWidgetViewBase view, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+        private static VisualElement CreateVisualElement(DialogWidgetViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
             if (view is DialogWidgetView) {
-                var visualElement = VisualElementFactory_Common.DialogWidget( out card, out header, out content, out footer, out title, out message );
-                header.SetDisplayed( false );
-                content.SetDisplayed( false );
-                footer.SetDisplayed( false );
-                return visualElement;
+                return VisualElementFactory_Common.DialogWidget( out widget, out card, out header, out content, out footer, out title, out message );
             }
             if (view is InfoDialogWidgetView) {
-                var visualElement = VisualElementFactory_Common.InfoDialogWidget( out card, out header, out content, out footer, out title, out message );
-                header.SetDisplayed( false );
-                content.SetDisplayed( false );
-                footer.SetDisplayed( false );
-                return visualElement;
+                return VisualElementFactory_Common.InfoDialogWidget( out widget, out card, out header, out content, out footer, out title, out message );
             }
             if (view is WarningDialogWidgetView) {
-                var visualElement = VisualElementFactory_Common.WarningDialogWidget( out card, out header, out content, out footer, out title, out message );
-                header.SetDisplayed( false );
-                content.SetDisplayed( false );
-                footer.SetDisplayed( false );
-                return visualElement;
+                return VisualElementFactory_Common.WarningDialogWidget( out widget, out card, out header, out content, out footer, out title, out message );
             }
             if (view is ErrorDialogWidgetView) {
-                var visualElement = VisualElementFactory_Common.ErrorDialogWidget( out card, out header, out content, out footer, out title, out message );
-                header.SetDisplayed( false );
-                content.SetDisplayed( false );
-                footer.SetDisplayed( false );
-                return visualElement;
+                return VisualElementFactory_Common.ErrorDialogWidget( out widget, out card, out header, out content, out footer, out title, out message );
             }
             throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {view} is not supported" );
         }

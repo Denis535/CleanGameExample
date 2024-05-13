@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.UI.GameScreen {
+namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -9,8 +9,8 @@ namespace Project.UI.GameScreen {
     public static class VisualElementFactory_Game {
 
         // GameWidget
-        public static Widget GameWidget(out VisualElement target) {
-            using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out var widget )) {
+        public static Widget GameWidget(out Widget widget, out VisualElement target) {
+            using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
                 VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) )
@@ -20,8 +20,8 @@ namespace Project.UI.GameScreen {
         }
 
         // GameMenuWidget
-        public static Widget GameMenuWidget(out Label title, out Button resume, out Button settings, out Button back) {
-            using (VisualElementFactory.LeftWidget().AsScope( out var widget )) {
+        public static Widget GameMenuWidget(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
+            using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Game Menu" ).AddToScope( out title );

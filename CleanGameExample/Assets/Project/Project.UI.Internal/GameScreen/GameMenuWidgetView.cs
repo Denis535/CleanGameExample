@@ -9,6 +9,7 @@ namespace Project.UI.GameScreen {
 
     public class GameMenuWidgetView : UIViewBase {
 
+        private readonly Widget widget;
         private readonly Label title;
         private readonly Button resume;
         private readonly Button settings;
@@ -19,7 +20,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidgetView() {
-            VisualElement = VisualElementFactory_Game.GameMenuWidget( out title, out resume, out settings, out back );
+            VisualElement = VisualElementFactory_Game.GameMenuWidget( out widget, out title, out resume, out settings, out back );
         }
         public override void Dispose() {
             base.Dispose();

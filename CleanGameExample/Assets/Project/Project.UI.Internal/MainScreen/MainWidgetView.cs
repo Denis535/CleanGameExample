@@ -11,9 +11,11 @@ namespace Project.UI.MainScreen {
 
     public class MainWidgetView : UIViewBase {
 
+        private readonly Widget widget;
+
         // Constructor
         public MainWidgetView() {
-            VisualElement = VisualElementFactory_Main.MainWidget();
+            VisualElement = VisualElementFactory_Main.MainWidget( out widget );
         }
         public override void Dispose() {
             base.Dispose();
@@ -25,19 +27,19 @@ namespace Project.UI.MainScreen {
             if (view is MainMenuWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_InitialView) {
-                    SetEffect( VisualElement, Color.white, default, 0, 1.0f );
+                    SetEffect( widget, Color.white, default, 0, 1.0f );
                     return;
                 }
                 if (view is MainMenuWidgetView_StartGameView) {
-                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    SetEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectLevelView) {
-                    SetEffect( VisualElement, Color.white, default, 2, 1.2f );
+                    SetEffect( widget, Color.white, default, 2, 1.2f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectCharacterView) {
-                    SetEffect( VisualElement, Color.white, default, 3, 1.3f );
+                    SetEffect( widget, Color.white, default, 3, 1.3f );
                     return;
                 }
                 return;
@@ -46,22 +48,22 @@ namespace Project.UI.MainScreen {
             if (view is SettingsWidgetView settingsWidgetView) {
                 view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is ProfileSettingsWidgetView) {
-                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    SetEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is AudioSettingsWidgetView) {
-                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    SetEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is VideoSettingsWidgetView) {
-                    SetEffect( VisualElement, Color.white, default, 1, 1.1f );
+                    SetEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 return;
             }
             // LoadingWidgetView
             if (view is LoadingWidgetView loadingWidgetView) {
-                SetEffect( VisualElement, Color.gray, default, 45, 2.5f );
+                SetEffect( widget, Color.gray, default, 45, 2.5f );
                 return;
             }
         }

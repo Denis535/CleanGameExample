@@ -109,7 +109,7 @@ namespace Project.Entities {
         private static bool Raycast(Transform camera, Transform character, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
             var mask = ~0;
             var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
-            var hit = hits.Where( i => !(i.transform == character || i.transform.IsChildOf( character )) ).OrderBy( i => i.distance ).FirstOrDefault();
+            var hit = hits.Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 point = hit.point;
                 distance = hit.distance;

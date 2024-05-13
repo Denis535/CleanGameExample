@@ -28,7 +28,7 @@ namespace Project.UI {
                 return widget;
             }
         }
-        public static VisualElement MainMenuWidget_InitialView(out VisualElement view, out Button startGame, out Button settings, out Button quit) {
+        public static VisualElement MainMenuWidget_MainMenuView(out VisualElement view, out Button startGame, out Button settings, out Button quit) {
             using (VisualElementFactory.View().AsScope( out view )) {
                 VisualElementFactory.Select( "Start Game" ).AddToScope( out startGame );
                 VisualElementFactory.Select( "Settings" ).AddToScope( out settings );

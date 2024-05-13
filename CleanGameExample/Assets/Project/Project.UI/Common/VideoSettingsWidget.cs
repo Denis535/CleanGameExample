@@ -32,7 +32,7 @@ namespace Project.UI.Common {
             HideSelf();
             if (argument is DetachReason.Submit) {
                 VideoSettings.IsFullScreen = View.IsFullScreen;
-                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution!;
+                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.Value!;
                 VideoSettings.IsVSync = View.IsVSync;
                 VideoSettings.Save();
             } else {
@@ -42,7 +42,11 @@ namespace Project.UI.Common {
 
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
-            var view = new VideoSettingsWidgetView( videoSettings.IsFullScreen, (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray()), videoSettings.IsVSync );
+            var view = new VideoSettingsWidgetView() {
+                IsFullScreen = videoSettings.IsFullScreen,
+                ScreenResolution = (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToList()),
+                IsVSync = videoSettings.IsVSync
+            };
             view.OnIsFullScreen( evt => {
                 videoSettings.IsFullScreen = evt.newValue;
             } );

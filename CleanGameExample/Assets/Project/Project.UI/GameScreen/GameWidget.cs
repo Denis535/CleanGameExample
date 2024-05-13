@@ -34,23 +34,23 @@ namespace Project.UI.GameScreen {
 
         // OnAttach
         public override void OnAttach(object? argument) {
+            ShowSelf();
             Actions.Enable();
             Cursor.lockState = CursorLockMode.Locked;
-            ShowSelf();
         }
         public override void OnDetach(object? argument) {
-            HideSelf();
-            Actions.Disable();
             Cursor.lockState = CursorLockMode.None;
+            Actions.Disable();
+            HideSelf();
         }
 
         // OnDescendantWidgetAttach
         public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
             base.OnBeforeDescendantAttach( descendant, argument );
             if (descendant is GameMenuWidget) {
-                Game.Pause();
-                Actions.Disable();
                 Cursor.lockState = CursorLockMode.None;
+                Actions.Disable();
+                Game.Pause();
             }
         }
         public override void OnAfterDescendantAttach(UIWidgetBase descendant, object? argument) {

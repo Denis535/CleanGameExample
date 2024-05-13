@@ -16,26 +16,26 @@ namespace Project.UI.Common {
         private readonly Slider gameVolume;
 
         // Props
-        public float MasterVolume => masterVolume.value;
-        public float MusicVolume => musicVolume.value;
-        public float SfxVolume => sfxVolume.value;
-        public float GameVolume => gameVolume.value;
+        public (float Value, float Min, float Max) MasterVolume {
+            get => masterVolume.GetValueMinMax();
+            init => masterVolume.GetValueMinMax( value );
+        }
+        public (float Value, float Min, float Max) MusicVolume {
+            get => musicVolume.GetValueMinMax();
+            init => musicVolume.GetValueMinMax( value );
+        }
+        public (float Value, float Min, float Max) SfxVolume {
+            get => sfxVolume.GetValueMinMax();
+            init => sfxVolume.GetValueMinMax( value );
+        }
+        public (float Value, float Min, float Max) GameVolume {
+            get => gameVolume.GetValueMinMax();
+            init => gameVolume.GetValueMinMax( value );
+        }
 
         // Constructor
-        public AudioSettingsWidgetView((float Value, float Min, float Max) masterVolume, (float Value, float Min, float Max) musicVolume, (float Value, float Min, float Max) sfxVolume, (float Value, float Min, float Max) gameVolume) {
-            VisualElement = VisualElementFactory_Common.AudioSettingsWidgetView( out view, out this.masterVolume, out this.musicVolume, out this.sfxVolume, out this.gameVolume );
-            this.masterVolume.value = masterVolume.Value;
-            this.masterVolume.lowValue = masterVolume.Min;
-            this.masterVolume.highValue = masterVolume.Max;
-            this.musicVolume.value = musicVolume.Value;
-            this.musicVolume.lowValue = musicVolume.Min;
-            this.musicVolume.highValue = musicVolume.Max;
-            this.sfxVolume.value = sfxVolume.Value;
-            this.sfxVolume.lowValue = sfxVolume.Min;
-            this.sfxVolume.highValue = sfxVolume.Max;
-            this.gameVolume.value = gameVolume.Value;
-            this.gameVolume.lowValue = gameVolume.Min;
-            this.gameVolume.highValue = gameVolume.Max;
+        public AudioSettingsWidgetView() {
+            VisualElement = VisualElementFactory_Common.AudioSettingsWidgetView( out view, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
         }
         public override void Dispose() {
             base.Dispose();

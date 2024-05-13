@@ -36,14 +36,12 @@ namespace Project.UI.Common {
         }
 
         // Constructor
-        public DialogWidgetViewBase(string? title, string? message) {
+        public DialogWidgetViewBase() {
             VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out this.title, out this.message );
             widget.OnAttachToPanel( PlayAppearance );
             header.SetDisplayed( false );
             content.SetDisplayed( false );
             footer.SetDisplayed( false );
-            Title = title;
-            Message = message;
         }
         public override void Dispose() {
             base.Dispose();
@@ -109,7 +107,7 @@ namespace Project.UI.Common {
     public class DialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public DialogWidgetView(string? title, string? message) : base( title, message ) {
+        public DialogWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();
@@ -120,7 +118,7 @@ namespace Project.UI.Common {
     public class InfoDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public InfoDialogWidgetView(string? title, string? message) : base( title, message ) {
+        public InfoDialogWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();
@@ -131,7 +129,7 @@ namespace Project.UI.Common {
     public class WarningDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public WarningDialogWidgetView(string? title, string? message) : base( title, message ) {
+        public WarningDialogWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();
@@ -142,7 +140,7 @@ namespace Project.UI.Common {
     public class ErrorDialogWidgetView : DialogWidgetViewBase {
 
         // Constructor
-        public ErrorDialogWidgetView(string? title, string? message) : base( title, message ) {
+        public ErrorDialogWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();

@@ -36,7 +36,7 @@ namespace Project.UI {
                 } else {
                     View.Views.LastOrDefault()?.SaveFocus();
                 }
-                View.AddModalView( view, i => true );
+                View.AddModalView( view, i => false );
                 view.Focus();
             }
         }
@@ -45,7 +45,7 @@ namespace Project.UI {
                 View.RemoveView( view, i => i is MainWidgetView or GameWidgetView );
                 View.Views.LastOrDefault()?.LoadFocus();
             } else {
-                View.RemoveModalView( view, i => true );
+                View.RemoveModalView( view, i => false );
                 if (View.ModalViews.Any()) {
                     View.ModalViews.Last().LoadFocus();
                 } else {

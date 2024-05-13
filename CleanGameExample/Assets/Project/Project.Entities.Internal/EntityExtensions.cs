@@ -8,6 +8,9 @@ namespace Project.Entities {
     public static class EntityExtensions {
 
         // IsCharacter
+        public static bool IsCharacter(this GameObject gameObject) {
+            return gameObject.name.Contains( "Character" );
+        }
         public static bool IsPlayer(this GameObject gameObject) {
             return gameObject.name.Contains( "Player" );
         }
@@ -21,6 +24,9 @@ namespace Project.Entities {
         }
         public static bool IsWeapon(this GameObject gameObject) {
             return gameObject.name.Contains( "Gun" ) && gameObject.transform.parent == null;
+        }
+        public static bool IsBullet(this GameObject gameObject) {
+            return gameObject.name.Contains( "Bullet" ) && gameObject.transform.parent == null;
         }
 
     }

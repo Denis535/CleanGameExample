@@ -31,10 +31,10 @@ namespace Project.UI.Common {
         public override void OnDetach(object? argument) {
             HideSelf();
             if (argument is DetachReason.Submit) {
-                AudioSettings.MasterVolume = View.MasterVolume;
-                AudioSettings.MusicVolume = View.MusicVolume;
-                AudioSettings.SfxVolume = View.SfxVolume;
-                AudioSettings.GameVolume = View.GameVolume;
+                AudioSettings.MasterVolume = View.MasterVolume.Value;
+                AudioSettings.MusicVolume = View.MusicVolume.Value;
+                AudioSettings.SfxVolume = View.SfxVolume.Value;
+                AudioSettings.GameVolume = View.GameVolume.Value;
                 AudioSettings.Save();
             } else {
                 AudioSettings.Load();
@@ -43,7 +43,12 @@ namespace Project.UI.Common {
 
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, Storage.AudioSettings audioSettings) {
-            var view = new AudioSettingsWidgetView( (audioSettings.MasterVolume, 0, 1), (audioSettings.MusicVolume, 0, 1), (audioSettings.SfxVolume, 0, 1), (audioSettings.GameVolume, 0, 1) );
+            var view = new AudioSettingsWidgetView() {
+                MasterVolume = (audioSettings.MasterVolume, 0, 1),
+                MusicVolume = (audioSettings.MusicVolume, 0, 1),
+                SfxVolume = (audioSettings.SfxVolume, 0, 1),
+                GameVolume = (audioSettings.GameVolume, 0, 1),
+            };
             view.OnMasterVolume( evt => {
                 audioSettings.MasterVolume = evt.newValue;
             } );

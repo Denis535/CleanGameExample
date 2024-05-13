@@ -13,15 +13,20 @@ namespace Project.UI.Common {
         private readonly TextField name;
 
         // Props
-        public string Name => name.value;
+        public string Name {
+            get => name.value;
+            init => name.value = value;
+        }
+        public Func<string?, bool> NameValidator { get; init; } = default!;
 
         // Constructor
-        public ProfileSettingsWidgetView(string name, Func<string?, bool> nameValidator) {
-            VisualElement = VisualElementFactory_Common.ProfileSettingsWidgetView( out view, out this.name );
-            this.name.value = name;
-            this.name.SetValid( nameValidator( this.name.value ) );
-            this.name.OnChange( evt => {
-                this.name.SetValid( nameValidator( this.name.value ) );
+        public ProfileSettingsWidgetView() {
+            VisualElement = VisualElementFactory_Common.ProfileSettingsWidgetView( out view, out name );
+            view.OnAttachToPanel( evt => {
+                name.SetValid( NameValidator( name.value ) );
+            } );
+            name.OnChange( evt => {
+                name.SetValid( NameValidator( name.value ) );
             } );
         }
         public override void Dispose() {

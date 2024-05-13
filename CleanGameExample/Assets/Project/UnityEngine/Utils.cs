@@ -22,6 +22,22 @@ namespace UnityEngine {
             return view.__GetVisualElement__().IsDisplayedInHierarchy();
         }
 
+        // GetMinMax
+        public static (T Value, T Min, T Max) GetValueMinMax<T>(this BaseSlider<T> field) where T : IComparable<T> {
+            return (field.value, field.lowValue, field.highValue);
+        }
+        public static void GetValueMinMax<T>(this BaseSlider<T> field, (T Value, T Min, T Max) value) where T : IComparable<T> {
+            (field.value, field.lowValue, field.highValue) = value;
+        }
+
+        // GetValueChoices
+        public static (T Value, List<T> Choices) GetValueChoices<T>(this PopupField<T> field) {
+            return (field.value, field.choices);
+        }
+        public static void SetValueChoices<T>(this PopupField<T> field, (T Value, List<T> Choices) value) {
+            (field.value, field.choices) = value;
+        }
+
         // PlayAnimation
         public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
             await PlayAnimationAsync( @object, from, to, duration, onUpdate, onComplete, onCancel, cancellationToken );

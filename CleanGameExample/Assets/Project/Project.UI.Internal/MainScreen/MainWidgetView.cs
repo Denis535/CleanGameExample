@@ -26,7 +26,7 @@ namespace Project.UI.MainScreen {
             // MainMenuWidgetView
             if (view is MainMenuWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
-                if (view is MainMenuWidgetView_InitialView) {
+                if (view is MainMenuWidgetView_MainMenuView) {
                     SetEffect( widget, Color.white, default, 0, 1.0f );
                     return;
                 }

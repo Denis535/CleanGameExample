@@ -15,7 +15,7 @@ namespace Project.UI.MainScreen {
         private readonly VisualElement content;
 
         // Props
-        public string Title { get => title.text; set => title.text = value; }
+        public string Title => title.text;
 
         // Constructor
         public MainMenuWidgetView() {
@@ -26,32 +26,54 @@ namespace Project.UI.MainScreen {
         }
 
         // Push
-        public void Push(MainMenuWidgetView_InitialView view) {
+        public void Push(MainMenuWidgetView_MainMenuView view) {
             content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view.__GetVisualElement__() );
+            content.Add( view );
+            title.text = GetTitle( view );
         }
         public void Push(MainMenuWidgetView_StartGameView view) {
             content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view.__GetVisualElement__() );
+            content.Add( view );
+            title.text = GetTitle( view );
         }
         public void Push(MainMenuWidgetView_SelectLevelView view) {
             content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view.__GetVisualElement__() );
+            content.Add( view );
+            title.text = GetTitle( view );
         }
         public void Push(MainMenuWidgetView_SelectCharacterView view) {
             content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view.__GetVisualElement__() );
+            content.Add( view );
+            title.text = GetTitle( view );
         }
 
         // Pop
         public void Pop() {
             content.Remove( content.Children().Last() );
             content.Children().LastOrDefault()?.SetDisplayed( true );
+            title.text = GetTitle( content.Children().Last().GetView() );
+        }
+
+        // Helpers
+        private static string GetTitle(UIViewBase view) {
+            if (view is MainMenuWidgetView_MainMenuView) {
+                return "Main Menu";
+            }
+            if (view is MainMenuWidgetView_StartGameView) {
+                return "Start Game";
+            }
+            if (view is MainMenuWidgetView_SelectLevelView) {
+                return "Select Level";
+            }
+            if (view is MainMenuWidgetView_SelectCharacterView) {
+                return "Select Your Character";
+            }
+            throw Exceptions.Internal.NotSupported( $"View {view} is not supported" );
         }
 
     }
-    // InitialView
-    public class MainMenuWidgetView_InitialView : UIViewBase {
+    // MainMenuView
+    public class MainMenuWidgetView_MainMenuView : UIViewBase {
 
         private readonly VisualElement view;
         private readonly Button startGame;
@@ -59,14 +81,11 @@ namespace Project.UI.MainScreen {
         private readonly Button quit;
 
         // Constructor
-        public MainMenuWidgetView_InitialView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_InitialView( out view, out startGame, out settings, out quit );
+        public MainMenuWidgetView_MainMenuView() {
+            VisualElement = VisualElementFactory_Main.MainMenuWidget_MainMenuView( out view, out startGame, out settings, out quit );
         }
 
         // OnEvent
-        public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            view.OnAttachToPanel( callback );
-        }
         public void OnStartGame(EventCallback<ClickEvent> callback) {
             startGame.OnClick( callback );
         }
@@ -92,9 +111,6 @@ namespace Project.UI.MainScreen {
         }
 
         // OnEvent
-        public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            view.OnAttachToPanel( callback );
-        }
         public void OnNewGame(EventCallback<ClickEvent> callback) {
             newGame.OnClick( callback );
         }
@@ -121,9 +137,6 @@ namespace Project.UI.MainScreen {
         }
 
         // OnEvent
-        public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            view.OnAttachToPanel( callback );
-        }
         public void OnLevel1(EventCallback<ClickEvent> callback) {
             level1.OnClick( callback );
         }
@@ -154,9 +167,6 @@ namespace Project.UI.MainScreen {
         }
 
         // OnEvent
-        public void OnAttachToPanel(EventCallback<AttachToPanelEvent> callback) {
-            view.OnAttachToPanel( callback );
-        }
         public void OnGray(EventCallback<ClickEvent> callback) {
             gray.OnClick( callback );
         }

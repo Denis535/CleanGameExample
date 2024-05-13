@@ -36,14 +36,11 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView();
-            view.Push( CreateView_InitialView( widget, router ) );
+            view.Push( CreateView_MainMenuView( widget, router ) );
             return view;
         }
-        private static MainMenuWidgetView_InitialView CreateView_InitialView(MainMenuWidget widget, UIRouter router) {
-            var view = new MainMenuWidgetView_InitialView();
-            view.OnAttachToPanel( evt => {
-                widget.View.Title = "Main Menu";
-            } );
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIRouter router) {
+            var view = new MainMenuWidgetView_MainMenuView();
             view.OnStartGame( evt => {
                 widget.View.Push( CreateView_StartGameView( widget, router ) );
             } );
@@ -58,9 +55,6 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_StartGameView();
-            view.OnAttachToPanel( evt => {
-                widget.View.Title = "Start Game";
-            } );
             view.OnNewGame( evt => {
                 widget.View.Push( CreateView_SelectLevelView( widget, router ) );
             } );
@@ -74,9 +68,6 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_SelectLevelView();
-            view.OnAttachToPanel( evt => {
-                widget.View.Title = "Select Level";
-            } );
             view.OnLevel1( evt => {
                 widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level1 ) );
             } );
@@ -93,9 +84,6 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, LevelEnum level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
-            view.OnAttachToPanel( evt => {
-                widget.View.Title = "Select Your Character";
-            } );
             view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, PlayerCharacterEnum.Gray ).Throw();

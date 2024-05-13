@@ -39,7 +39,10 @@ namespace Project.UI.Common {
 
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, Storage.ProfileSettings profileSettings) {
-            var view = new ProfileSettingsWidgetView( profileSettings.Name, profileSettings.IsNameValid );
+            var view = new ProfileSettingsWidgetView() {
+                Name = profileSettings.Name,
+                NameValidator = profileSettings.IsNameValid
+            };
             return view;
         }
 

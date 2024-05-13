@@ -3,6 +3,7 @@ namespace UnityEngine {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using UnityEngine;
@@ -22,36 +23,44 @@ namespace UnityEngine {
             return view.__GetVisualElement__().IsDisplayedInHierarchy();
         }
 
-        // IsContentValid
-        public static bool IsContentValid(this ElementWrapper element) {
-            return element.__GetVisualElement__().IsContentValid();
+        // IsValid
+        public static bool IsValidSelf(this IEventHandler element) {
+            return ((VisualElement) element).IsValidSelf();
+        }
+        public static bool IsValidInHierarchy(this IEventHandler element) {
+            return ((VisualElement) element).IsValidInHierarchy();
         }
 
-        // SetBackgroundEffect
-        public static void SetBackgroundEffect(this ElementWrapper element, Color color, Vector2 translate, float rotate, float scale) {
-            element.GetStyle().unityBackgroundImageTintColor = color;
-            element.GetStyle().translate = new Translate( translate.x, translate.y );
-            element.GetStyle().rotate = new Rotate( Angle.Degrees( rotate ) );
-            element.GetStyle().scale = new Scale( new Vector3( scale, scale, 1 ) );
-        }
+        //// IsContentValid
+        //public static bool IsContentValid(this ElementWrapper element) {
+        //    return element.__GetVisualElement__().IsContentValid();
+        //}
 
-        // SetTargetEffect
-        public static void SetTargetEffect(this ElementWrapper element, TargetEffect value) {
-            switch (value) {
-                case TargetEffect.Normal:
-                    element.GetStyle().color = Color.white;
-                    break;
-                case TargetEffect.Loot:
-                    element.GetStyle().color = Color.yellow;
-                    break;
-                case TargetEffect.Enemy:
-                    element.GetStyle().color = Color.red;
-                    break;
-                default:
-                    Exceptions.Internal.NotSupported( $"Value {value} is supported" );
-                    break;
-            }
-        }
+        //// SetBackgroundEffect
+        //public static void SetBackgroundEffect(this ElementWrapper element, Color color, Vector2 translate, float rotate, float scale) {
+        //    element.GetStyle().unityBackgroundImageTintColor = color;
+        //    element.GetStyle().translate = new Translate( translate.x, translate.y );
+        //    element.GetStyle().rotate = new Rotate( Angle.Degrees( rotate ) );
+        //    element.GetStyle().scale = new Scale( new Vector3( scale, scale, 1 ) );
+        //}
+
+        //// SetTargetEffect
+        //public static void SetTargetEffect(this ElementWrapper element, TargetEffect value) {
+        //    switch (value) {
+        //        case TargetEffect.Normal:
+        //            element.GetStyle().color = Color.white;
+        //            break;
+        //        case TargetEffect.Loot:
+        //            element.GetStyle().color = Color.yellow;
+        //            break;
+        //        case TargetEffect.Enemy:
+        //            element.GetStyle().color = Color.red;
+        //            break;
+        //        default:
+        //            Exceptions.Internal.NotSupported( $"Value {value} is supported" );
+        //            break;
+        //    }
+        //}
 
         // PlayAnimation
         public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {

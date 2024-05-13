@@ -8,7 +8,6 @@ namespace Project.UI.MainScreen {
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
     public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
 
@@ -37,21 +36,21 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView();
-            view.ContentSlot.Push( CreateView_InitialView( widget, router ) );
+            view.Push( CreateView_InitialView( widget, router ) );
             return view;
         }
         private static MainMenuWidgetView_InitialView CreateView_InitialView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_InitialView();
-            view.Root.OnAttachToPanel( evt => {
-                widget.View.Title.Text = "Main Menu";
+            view.OnAttachToPanel( evt => {
+                widget.View.Title = "Main Menu";
             } );
-            view.StartGame.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_StartGameView( widget, router ) );
+            view.OnStartGame( evt => {
+                widget.View.Push( CreateView_StartGameView( widget, router ) );
             } );
-            view.Settings.OnClick( evt => {
+            view.OnSettings( evt => {
                 widget.AttachChild( new SettingsWidget() );
             } );
-            view.Quit.OnClick( evt => {
+            view.OnQuit( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
                 widget.AttachChild( dialog );
             } );
@@ -59,62 +58,62 @@ namespace Project.UI.MainScreen {
         }
         private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_StartGameView();
-            view.Root.OnAttachToPanel( evt => {
-                widget.View.Title.Text = "Start Game";
+            view.OnAttachToPanel( evt => {
+                widget.View.Title = "Start Game";
             } );
-            view.NewGame.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, router ) );
+            view.OnNewGame( evt => {
+                widget.View.Push( CreateView_SelectLevelView( widget, router ) );
             } );
-            view.Continue.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectLevelView( widget, router ) );
+            view.OnContinue( evt => {
+                widget.View.Push( CreateView_SelectLevelView( widget, router ) );
             } );
-            view.Back.OnClick( evt => {
-                widget.View.ContentSlot.Pop();
+            view.OnBack( evt => {
+                widget.View.Pop();
             } );
             return view;
         }
         private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_SelectLevelView();
-            view.Root.OnAttachToPanel( evt => {
-                widget.View.Title.Text = "Select Level";
+            view.OnAttachToPanel( evt => {
+                widget.View.Title = "Select Level";
             } );
-            view.Level1.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level1 ) );
+            view.OnLevel1( evt => {
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level1 ) );
             } );
-            view.Level2.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level2 ) );
+            view.OnLevel2( evt => {
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level2 ) );
             } );
-            view.Level3.OnClick( evt => {
-                widget.View.ContentSlot.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level3 ) );
+            view.OnLevel3( evt => {
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level3 ) );
             } );
-            view.Back.OnClick( evt => {
-                widget.View.ContentSlot.Pop();
+            view.OnBack( evt => {
+                widget.View.Pop();
             } );
             return view;
         }
         private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, LevelEnum level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
-            view.Root.OnAttachToPanel( evt => {
-                widget.View.Title.Text = "Select Your Character";
+            view.OnAttachToPanel( evt => {
+                widget.View.Title = "Select Your Character";
             } );
-            view.Gray.OnClick( evt => {
+            view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, PlayerCharacterEnum.Gray ).Throw();
             } );
-            view.Red.OnClick( evt => {
+            view.OnRed( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, PlayerCharacterEnum.Red ).Throw();
             } );
-            view.Green.OnClick( evt => {
+            view.OnGreen( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, PlayerCharacterEnum.Green ).Throw();
             } );
-            view.Blue.OnClick( evt => {
+            view.OnBlue( evt => {
                 widget.AttachChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, PlayerCharacterEnum.Blue ).Throw();
             } );
-            view.Back.OnClick( evt => {
-                widget.View.ContentSlot.Pop();
+            view.OnBack( evt => {
+                widget.View.Pop();
             } );
             return view;
         }

@@ -6,9 +6,6 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Reflection;
     using System.Text;
-    using Project.UI.Common;
-    using Project.UI.GameScreen;
-    using Project.UI.MainScreen;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;

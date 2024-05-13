@@ -15,8 +15,8 @@
   padding-top: 0px;
   padding-bottom: 0px;
 }
-.root-widget .view-slot,
-.root-widget .modal-view-slot {
+.root-widget .views,
+.root-widget .modal-views {
   position: absolute;
   width: 100%;
   height: 100%;

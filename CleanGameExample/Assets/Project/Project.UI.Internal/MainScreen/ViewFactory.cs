@@ -16,13 +16,13 @@ namespace Project.UI.MainScreen {
         }
 
         // MainMenuWidget
-        public static Widget MainMenuWidget(out Widget root, out Label title, out VisualElement contentSlot) {
+        public static Widget MainMenuWidget(out Widget root, out Label title, out VisualElement content) {
             using (VisualElementFactory.LeftWidget().AsScope( out root )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Main Menu" ).AddToScope( out title );
                     }
-                    using (VisualElementFactory.Content().AsScope( out contentSlot )) {
+                    using (VisualElementFactory.Content().AsScope( out content )) {
                     }
                 }
             }

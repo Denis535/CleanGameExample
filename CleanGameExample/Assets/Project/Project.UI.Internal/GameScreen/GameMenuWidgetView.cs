@@ -9,24 +9,31 @@ namespace Project.UI.GameScreen {
 
     public class GameMenuWidgetView : UIViewBase {
 
-        // Root
-        public ElementWrapper Root { get; }
-        public LabelWrapper Title { get; }
-        public ButtonWrapper Resume { get; }
-        public ButtonWrapper Settings { get; }
-        public ButtonWrapper Back { get; }
+        private readonly Label title;
+        private readonly Button resume;
+        private readonly Button settings;
+        private readonly Button back;
+
+        // Values
+        public string Title => title.text;
 
         // Constructor
         public GameMenuWidgetView() {
-            VisualElement = ViewFactory.GameMenuWidget( out var root, out var title, out var resume, out var settings, out var back );
-            Root = root.Wrap();
-            Title = title.Wrap();
-            Resume = resume.Wrap();
-            Settings = settings.Wrap();
-            Back = back.Wrap();
+            VisualElement = ViewFactory.GameMenuWidget( out _, out title, out resume, out settings, out back );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // OnEvent
+        public void OnResumeClick(EventCallback<ClickEvent> callback) {
+            resume.OnClick( callback );
+        }
+        public void OnSettingsClick(EventCallback<ClickEvent> callback) {
+            settings.OnClick( callback );
+        }
+        public void OnBackClick(EventCallback<ClickEvent> callback) {
+            back.OnClick( callback );
         }
 
     }

@@ -9,24 +9,49 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase {
 
-        // Root
-        public ElementWrapper Root { get; }
-        public SliderFieldWrapper<float> MasterVolume { get; }
-        public SliderFieldWrapper<float> MusicVolume { get; }
-        public SliderFieldWrapper<float> SfxVolume { get; }
-        public SliderFieldWrapper<float> GameVolume { get; }
+        private readonly Slider masterVolume;
+        private readonly Slider musicVolume;
+        private readonly Slider sfxVolume;
+        private readonly Slider gameVolume;
+
+        // Values
+        public float MasterVolume => masterVolume.value;
+        public float MusicVolume => musicVolume.value;
+        public float SfxVolume => sfxVolume.value;
+        public float GameVolume => gameVolume.value;
 
         // Constructor
-        public AudioSettingsWidgetView() {
-            VisualElement = ViewFactory.AudioSettingsWidget( out var root, out var masterVolume, out var musicVolume, out var sfxVolume, out var gameVolume );
-            Root = root.Wrap();
-            MasterVolume = masterVolume.Wrap();
-            MusicVolume = musicVolume.Wrap();
-            SfxVolume = sfxVolume.Wrap();
-            GameVolume = gameVolume.Wrap();
+        public AudioSettingsWidgetView((float Value, float Min, float Max) masterVolume, (float Value, float Min, float Max) musicVolume, (float Value, float Min, float Max) sfxVolume, (float Value, float Min, float Max) gameVolume) {
+            VisualElement = ViewFactory.AudioSettingsWidget( out _, out this.masterVolume, out this.musicVolume, out this.sfxVolume, out this.gameVolume );
+            this.masterVolume.value = masterVolume.Value;
+            this.masterVolume.lowValue = masterVolume.Min;
+            this.masterVolume.highValue = masterVolume.Max;
+            this.musicVolume.value = musicVolume.Value;
+            this.musicVolume.lowValue = musicVolume.Min;
+            this.musicVolume.highValue = musicVolume.Max;
+            this.sfxVolume.value = sfxVolume.Value;
+            this.sfxVolume.lowValue = sfxVolume.Min;
+            this.sfxVolume.highValue = sfxVolume.Max;
+            this.gameVolume.value = gameVolume.Value;
+            this.gameVolume.lowValue = gameVolume.Min;
+            this.gameVolume.highValue = gameVolume.Max;
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // OnEvent
+        public void OnMasterVolumeChange(EventCallback<ChangeEvent<float>> callback) {
+            masterVolume.OnChange( callback );
+        }
+        public void OnMusicVolumeChange(EventCallback<ChangeEvent<float>> callback) {
+            musicVolume.OnChange( callback );
+        }
+        public void OnSfxVolumeChange(EventCallback<ChangeEvent<float>> callback) {
+            sfxVolume.OnChange( callback );
+        }
+        public void OnGameVolumeChange(EventCallback<ChangeEvent<float>> callback) {
+            gameVolume.OnChange( callback );
         }
 
     }

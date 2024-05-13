@@ -79,7 +79,7 @@ namespace Project.UI.Common {
         }
 
         // SettingsWidget
-        public static Widget SettingsWidget(out Widget root, out Label title, out TabView tabView, out Tab profileSettingsSlot, out Tab videoSettingsSlot, out Tab audioSettingsSlot, out Button okey, out Button back) {
+        public static Widget SettingsWidget(out Widget root, out Label title, out TabView tabView, out Tab profileSettings, out Tab videoSettings, out Tab audioSettings, out Button okey, out Button back) {
             using (VisualElementFactory.MediumWidget().AsScope( out root )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -87,9 +87,9 @@ namespace Project.UI.Common {
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).AsScope( out tabView )) {
-                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettingsSlot );
-                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettingsSlot );
-                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettingsSlot );
+                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettings );
+                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettings );
+                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettings );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {

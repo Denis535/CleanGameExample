@@ -9,15 +9,19 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
-        // Root
-        public ElementWrapper Root { get; }
-        public TextFieldWrapper<string> Name { get; }
+        private readonly TextField name;
+
+        // Values
+        public string Name => name.value;
 
         // Constructor
-        public ProfileSettingsWidgetView() {
-            VisualElement = ViewFactory.ProfileSettingsWidget( out var root, out var name );
-            Root = root.Wrap();
-            Name = name.Wrap();
+        public ProfileSettingsWidgetView(string name, Func<string?, bool> nameValidator) {
+            VisualElement = ViewFactory.ProfileSettingsWidget( out _, out this.name );
+            this.name.value = name;
+            this.name.SetValid( nameValidator( this.name.value ) );
+            this.name.OnChange( evt => {
+                this.name.SetValid( nameValidator( this.name.value ) );
+            } );
         }
         public override void Dispose() {
             base.Dispose();

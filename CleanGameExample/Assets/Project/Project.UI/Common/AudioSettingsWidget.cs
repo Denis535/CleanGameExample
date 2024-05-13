@@ -31,10 +31,10 @@ namespace Project.UI.Common {
         public override void OnDetach(object? argument) {
             HideSelf();
             if (argument is DetachReason.Submit) {
-                AudioSettings.MasterVolume = View.MasterVolume.Value;
-                AudioSettings.MusicVolume = View.MusicVolume.Value;
-                AudioSettings.SfxVolume = View.SfxVolume.Value;
-                AudioSettings.GameVolume = View.GameVolume.Value;
+                AudioSettings.MasterVolume = View.MasterVolume;
+                AudioSettings.MusicVolume = View.MusicVolume;
+                AudioSettings.SfxVolume = View.SfxVolume;
+                AudioSettings.GameVolume = View.GameVolume;
                 AudioSettings.Save();
             } else {
                 AudioSettings.Load();
@@ -43,23 +43,17 @@ namespace Project.UI.Common {
 
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, Storage.AudioSettings audioSettings) {
-            var view = new AudioSettingsWidgetView();
-            view.Root.OnAttachToPanel( evt => {
-                view.MasterVolume.ValueMinMax = (audioSettings.MasterVolume, 0, 1);
-                view.MusicVolume.ValueMinMax = (audioSettings.MusicVolume, 0, 1);
-                view.SfxVolume.ValueMinMax = (audioSettings.SfxVolume, 0, 1);
-                view.GameVolume.ValueMinMax = (audioSettings.GameVolume, 0, 1);
-            } );
-            view.MasterVolume.OnChange( evt => {
+            var view = new AudioSettingsWidgetView( (audioSettings.MasterVolume, 0, 1), (audioSettings.MusicVolume, 0, 1), (audioSettings.SfxVolume, 0, 1), (audioSettings.GameVolume, 0, 1) );
+            view.OnMasterVolumeChange( evt => {
                 audioSettings.MasterVolume = evt.newValue;
             } );
-            view.MusicVolume.OnChange( evt => {
+            view.OnMusicVolumeChange( evt => {
                 audioSettings.MusicVolume = evt.newValue;
             } );
-            view.SfxVolume.OnChange( evt => {
+            view.OnSfxVolumeChange( evt => {
                 audioSettings.SfxVolume = evt.newValue;
             } );
-            view.GameVolume.OnChange( evt => {
+            view.OnGameVolumeChange( evt => {
                 audioSettings.GameVolume = evt.newValue;
             } );
             return view;

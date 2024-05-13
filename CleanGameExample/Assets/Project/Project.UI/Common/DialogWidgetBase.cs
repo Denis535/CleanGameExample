@@ -12,19 +12,13 @@ namespace Project.UI.Common {
         public override TView View { get; }
         // Title
         public string? Title {
-            get => View.Title.Text;
-            set {
-                View.Title.Text = value;
-                View.Header.SetDisplayed( value != null );
-            }
+            get => View.Title;
+            set => View.Title = value;
         }
         // Message
         public string? Message {
-            get => View.Message.Text;
-            set {
-                View.Message.Text = value;
-                View.Content.SetDisplayed( value != null );
-            }
+            get => View.Message;
+            set => View.Message = value;
         }
 
         // Constructor
@@ -32,7 +26,6 @@ namespace Project.UI.Common {
             View = view;
             Title = title;
             Message = message;
-            View.Footer.SetDisplayed( false );
         }
         public override void Dispose() {
             base.Dispose();
@@ -52,7 +45,6 @@ namespace Project.UI.Common {
                 callback?.Invoke();
                 this.DetachSelf();
             } );
-            View.Footer.SetDisplayed( true );
             return this;
         }
         public DialogWidgetBase<TView> OnCancel(string text, Action? callback) {
@@ -60,7 +52,6 @@ namespace Project.UI.Common {
                 callback?.Invoke();
                 this.DetachSelf();
             } );
-            View.Footer.SetDisplayed( true );
             return this;
         }
 
@@ -72,7 +63,6 @@ namespace Project.UI.Common {
         //        tcs.TrySetResult( null );
         //        this.DetachSelf();
         //    } );
-        //    View.Footer.IsDisplayed = true;
         //    {
         //        var cancellationTokenRegistration = default( CancellationTokenRegistration );
         //        cancellationTokenRegistration = cancellationToken.Register( () => {
@@ -90,7 +80,6 @@ namespace Project.UI.Common {
         //        tcs.TrySetResult( null );
         //        this.DetachSelf();
         //    } );
-        //    View.Footer.IsDisplayed = true;
         //    {
         //        var cancellationTokenRegistration = default( CancellationTokenRegistration );
         //        cancellationTokenRegistration = cancellationToken.Register( () => {

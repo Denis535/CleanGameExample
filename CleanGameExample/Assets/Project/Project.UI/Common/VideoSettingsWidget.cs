@@ -31,9 +31,9 @@ namespace Project.UI.Common {
         public override void OnDetach(object? argument) {
             HideSelf();
             if (argument is DetachReason.Submit) {
-                VideoSettings.IsFullScreen = View.IsFullScreen.Value;
-                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.Value!;
-                VideoSettings.IsVSync = View.IsVSync.Value;
+                VideoSettings.IsFullScreen = View.IsFullScreen;
+                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution!;
+                VideoSettings.IsVSync = View.IsVSync;
                 VideoSettings.Save();
             } else {
                 VideoSettings.Load();
@@ -42,19 +42,14 @@ namespace Project.UI.Common {
 
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
-            var view = new VideoSettingsWidgetView();
-            view.Root.OnAttachToPanel( evt => {
-                view.IsFullScreen.Value = videoSettings.IsFullScreen;
-                view.ScreenResolution.ValueChoices = (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray());
-                view.IsVSync.Value = videoSettings.IsVSync;
-            } );
-            view.IsFullScreen.OnChange( evt => {
+            var view = new VideoSettingsWidgetView( videoSettings.IsFullScreen, (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToArray()), videoSettings.IsVSync );
+            view.OnIsFullScreenChange( evt => {
                 videoSettings.IsFullScreen = evt.newValue;
             } );
-            view.ScreenResolution.OnChange( evt => {
+            view.OnScreenResolutionChange( evt => {
                 videoSettings.ScreenResolution = (Resolution) evt.newValue!;
             } );
-            view.IsVSync.OnChange( evt => {
+            view.OnIsVSyncChange( evt => {
                 videoSettings.IsVSync = evt.newValue;
             } );
             return view;

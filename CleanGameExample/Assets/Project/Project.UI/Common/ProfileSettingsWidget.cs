@@ -30,7 +30,7 @@ namespace Project.UI.Common {
         public override void OnDetach(object? argument) {
             HideSelf();
             if (argument is DetachReason.Submit) {
-                ProfileSettings.Name = View.Name.Value!;
+                ProfileSettings.Name = View.Name;
                 ProfileSettings.Save();
             } else {
                 ProfileSettings.Load();
@@ -39,14 +39,7 @@ namespace Project.UI.Common {
 
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, Storage.ProfileSettings profileSettings) {
-            var view = new ProfileSettingsWidgetView();
-            view.Root.OnAttachToPanel( evt => {
-                view.Name.Value = profileSettings.Name;
-                view.Name.SetValid( profileSettings.IsNameValid( view.Name.Value ) );
-            } );
-            view.Name.OnChange( evt => {
-                view.Name.SetValid( profileSettings.IsNameValid( evt.newValue! ) );
-            } );
+            var view = new ProfileSettingsWidgetView( profileSettings.Name, profileSettings.IsNameValid );
             return view;
         }
 

@@ -34,30 +34,30 @@ namespace Project.UI.Common {
         // ShowView
         public override void ShowView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
-                View.ProfileSettingsSlot.Set( profileSettingsWidgetView );
+                View.Add( profileSettingsWidgetView );
                 return;
             }
             if (view is VideoSettingsWidgetView videoSettingsWidgetView) {
-                View.VideoSettingsSlot.Set( videoSettingsWidgetView );
+                View.Add( videoSettingsWidgetView );
                 return;
             }
             if (view is AudioSettingsWidgetView audioSettingsWidgetView) {
-                View.AudioSettingsSlot.Set( audioSettingsWidgetView );
+                View.Add( audioSettingsWidgetView );
                 return;
             }
             base.ShowView( view );
         }
         public override void HideView(UIViewBase view) {
-            if (view is ProfileSettingsWidgetView) {
-                View.ProfileSettingsSlot.Clear();
+            if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
+                View.Remove( profileSettingsWidgetView );
                 return;
             }
-            if (view is VideoSettingsWidgetView) {
-                View.VideoSettingsSlot.Clear();
+            if (view is VideoSettingsWidgetView videoSettingsWidgetView) {
+                View.Remove( videoSettingsWidgetView );
                 return;
             }
-            if (view is AudioSettingsWidgetView) {
-                View.AudioSettingsSlot.Clear();
+            if (view is AudioSettingsWidgetView audioSettingsWidgetView) {
+                View.Remove( audioSettingsWidgetView );
                 return;
             }
             base.HideView( view );
@@ -66,15 +66,12 @@ namespace Project.UI.Common {
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
-            view.Root.OnChangeAny( evt => {
-                view.Okey.SetValid( view.TabView.IsContentValid() );
-            } );
-            view.Okey.OnClick( evt => {
-                if (view.Okey.IsValid()) {
+            view.OnOkey( evt => {
+                if (evt.target.IsValidSelf()) {
                     widget.DetachSelf( DetachReason.Submit );
                 }
             } );
-            view.Back.OnClick( evt => {
+            view.OnBack( evt => {
                 widget.DetachSelf( DetachReason.Cancel );
             } );
             return view;

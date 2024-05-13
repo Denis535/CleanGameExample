@@ -10,57 +10,48 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase, IModalWidgetView {
 
-        // Root
-        public ElementWrapper Root { get; }
-        public ElementWrapper Card { get; }
-        public ElementWrapper Header { get; }
-        public ElementWrapper Content { get; }
-        public ListSlotWrapper<VisualElement> Footer { get; }
-        public LabelWrapper Title { get; }
-        public LabelWrapper Message { get; }
+        private readonly Card card;
+        private readonly Header header;
+        private readonly Content content;
+        private readonly Footer footer;
+        private readonly Label title;
+        private readonly Label message;
+
+        // Title
+        public string? Title {
+            get => title.text;
+            set {
+                title.text = value;
+                header.SetDisplayed( value != null );
+            }
+        }
+        // Message
+        public string? Message {
+            get => message.text;
+            set {
+                message.text = value;
+                content.SetDisplayed( value != null );
+            }
+        }
 
         // Constructor
         public DialogWidgetViewBase() {
             if (this is DialogWidgetView) {
-                VisualElement = ViewFactory.DialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                Root = root.Wrap();
-                Root.OnAttachToPanel( PlayAppearance );
-                Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.AsElementListSlot<VisualElement>();
-                Title = title.Wrap();
-                Message = message.Wrap();
+                VisualElement = ViewFactory.DialogWidget( out _, out card, out header, out content, out footer, out title, out message );
+                VisualElement.OnAttachToPanel( PlayAppearance );
+                footer.SetDisplayed( false );
             } else if (this is InfoDialogWidgetView) {
-                VisualElement = ViewFactory.InfoDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                Root = root.Wrap();
-                Root.OnAttachToPanel( PlayAppearance );
-                Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.AsElementListSlot<VisualElement>();
-                Title = title.Wrap();
-                Message = message.Wrap();
+                VisualElement = ViewFactory.InfoDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
+                VisualElement.OnAttachToPanel( PlayAppearance );
+                footer.SetDisplayed( false );
             } else if (this is WarningDialogWidgetView) {
-                VisualElement = ViewFactory.WarningDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                Root = root.Wrap();
-                Root.OnAttachToPanel( PlayAppearance );
-                Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.AsElementListSlot<VisualElement>();
-                Title = title.Wrap();
-                Message = message.Wrap();
+                VisualElement = ViewFactory.WarningDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
+                VisualElement.OnAttachToPanel( PlayAppearance );
+                footer.SetDisplayed( false );
             } else if (this is ErrorDialogWidgetView) {
-                VisualElement = ViewFactory.ErrorDialogWidget( out var root, out var card, out var header, out var content, out var footer, out var title, out var message );
-                Root = root.Wrap();
-                Root.OnAttachToPanel( PlayAppearance );
-                Card = card.Wrap();
-                Header = header.Wrap();
-                Content = content.Wrap();
-                Footer = footer.AsElementListSlot<VisualElement>();
-                Title = title.Wrap();
-                Message = message.Wrap();
+                VisualElement = ViewFactory.ErrorDialogWidget( out _, out card, out header, out content, out footer, out title, out message );
+                VisualElement.OnAttachToPanel( PlayAppearance );
+                footer.SetDisplayed( false );
             } else {
                 throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {this} is not supported" );
             }
@@ -77,7 +68,8 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.Add( button );
+            footer.Add( button );
+            footer.SetDisplayed( true );
         }
         public void OnCancel(string text, Action? callback) {
             var button = VisualElementFactory.Cancel( text );
@@ -86,7 +78,8 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            Footer.Add( button );
+            footer.Add( button );
+            footer.SetDisplayed( true );
         }
 
         // Helpers

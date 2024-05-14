@@ -27,25 +27,16 @@ namespace Project.UI.MainScreen {
 
         // Push
         public void Push(UIViewBase view) {
-            var covered = content.Children().LastOrDefault();
-            if (covered != null) {
-                covered.GetView().SaveFocus();
-                covered.SetDisplayed( false );
-            }
-            content.Add( view );
-            view.Focus();
             title.text = GetTitle( view );
+            content.Add( view );
+            Recalculate( this.GetChildren().ToArray() );
         }
 
         // Pop
         public void Pop() {
             content.Remove( content.Children().Last() );
-            var uncovered = content.Children().LastOrDefault();
-            if (uncovered != null) {
-                uncovered.SetDisplayed( true );
-                uncovered.GetView().LoadFocus();
-                title.text = GetTitle( uncovered.GetView() );
-            }
+            Recalculate( this.GetChildren().ToArray() );
+            title.text = GetTitle( content.Children().Last().GetView() );
         }
 
         // Helpers
@@ -63,6 +54,23 @@ namespace Project.UI.MainScreen {
                 return "Select Your Character";
             }
             throw Exceptions.Internal.NotSupported( $"View {view} is not supported" );
+        }
+        // Helpers
+        private static void Recalculate(UIViewBase[] views) {
+            for (var i = 0; i < views.Length; i++) {
+                var view = views[ i ];
+                var next = views.ElementAtOrDefault( i + 1 );
+                Recalculate( view, next );
+            }
+        }
+        private static void Recalculate(UIViewBase view, UIViewBase? next) {
+            if (next != null) {
+                if (view.IsDisplayedSelf()) view.SaveFocus();
+                view.SetDisplayed( false );
+            } else {
+                view.SetDisplayed( true );
+                if (!view.LoadFocus()) view.Focus();
+            }
         }
 
     }

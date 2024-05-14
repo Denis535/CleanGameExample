@@ -18,8 +18,27 @@ namespace UnityEngine {
         public static bool IsAttached(this UIViewBase view) {
             return view.__GetVisualElement__().IsAttached();
         }
+
+        // IsEnabledSelf
+        public static bool IsEnabledSelf(this UIViewBase view) {
+            return view.__GetVisualElement__().enabledSelf;
+        }
+        public static bool IsEnabledInHierarchy(this UIViewBase view) {
+            return view.__GetVisualElement__().enabledInHierarchy;
+        }
+        public static void SetEnabled(this UIViewBase view, bool value) {
+            view.__GetVisualElement__().SetEnabled( value );
+        }
+
+        // IsDisplayedSelf
+        public static bool IsDisplayedSelf(this UIViewBase view) {
+            return view.__GetVisualElement__().IsDisplayedSelf();
+        }
         public static bool IsDisplayedInHierarchy(this UIViewBase view) {
             return view.__GetVisualElement__().IsDisplayedInHierarchy();
+        }
+        public static void SetDisplayed(this UIViewBase view, bool value) {
+            view.__GetVisualElement__().SetDisplayed( value );
         }
 
         // GetMinMax

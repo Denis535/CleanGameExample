@@ -10,16 +10,6 @@ namespace Project.UI.Common {
 
         // View
         public override TView View { get; }
-        // Title
-        public string? Title {
-            get => View.Title;
-            set => View.Title = value;
-        }
-        // Message
-        public string? Message {
-            get => View.Message;
-            set => View.Message = value;
-        }
 
         // Constructor
         public DialogWidgetBase(TView view) {

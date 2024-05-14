@@ -213,23 +213,53 @@ namespace Project.UI {
             return result;
         }
 
-        // Select
+        // Button
         public static Button Select(string? text) {
-            var result = Create<Button>( null, null );
+            var result = Create<Button>( null, "select" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
+        public static Button ResumeSelect(string? text) {
+            var result = Create<Button>( null, "resume" );
+            result.text = text;
+            result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
+            result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
+            return result;
+        }
+        public static Button BackSelect(string? text) {
+            var result = Create<Button>( null, "back" );
+            result.text = text;
+            result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
+            result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
+            return result;
+        }
+        public static Button ExitSelect(string? text) {
+            var result = Create<Button>( null, "exit" );
+            result.text = text;
+            result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
+            result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
+            return result;
+        }
+        public static Button QuitSelect(string? text) {
+            var result = Create<Button>( null, "quit" );
+            result.text = text;
+            result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
+            result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
+            return result;
+        }
+
+        // Button
         public static Button Submit(string? text) {
-            var result = Create<Button>( null, null );
+            var result = Create<Button>( null, "submit" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySubmit?.Invoke( evt ) );
             return result;
         }
         public static Button Cancel(string? text) {
-            var result = Create<Button>( null, null );
+            var result = Create<Button>( null, "cancel" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlayCancel?.Invoke( evt ) );

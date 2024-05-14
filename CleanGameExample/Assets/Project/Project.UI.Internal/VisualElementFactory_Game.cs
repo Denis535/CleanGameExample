@@ -27,9 +27,9 @@ namespace Project.UI {
                         VisualElementFactory.Label( "Game Menu" ).AddToScope( out title );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
-                        VisualElementFactory.Select( "Resume" ).AddToScope( out resume );
+                        VisualElementFactory.ResumeSelect( "Resume" ).AddToScope( out resume );
                         VisualElementFactory.Select( "Settings" ).AddToScope( out settings );
-                        VisualElementFactory.Select( "Back To Main Menu" ).AddToScope( out back );
+                        VisualElementFactory.BackSelect( "Back To Main Menu" ).AddToScope( out back );
                     }
                 }
                 return widget;

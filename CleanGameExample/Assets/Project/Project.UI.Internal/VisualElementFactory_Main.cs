@@ -32,7 +32,7 @@ namespace Project.UI {
             using (VisualElementFactory.View().AsScope( out view )) {
                 VisualElementFactory.Select( "Start Game" ).AddToScope( out startGame );
                 VisualElementFactory.Select( "Settings" ).AddToScope( out settings );
-                VisualElementFactory.Select( "Quit" ).AddToScope( out quit );
+                VisualElementFactory.QuitSelect( "Quit" ).AddToScope( out quit );
                 return view;
             }
         }
@@ -40,7 +40,7 @@ namespace Project.UI {
             using (VisualElementFactory.View().AsScope( out view )) {
                 VisualElementFactory.Select( "New Game" ).AddToScope( out newGame );
                 VisualElementFactory.Select( "Continue" ).AddToScope( out @continue );
-                VisualElementFactory.Select( "Back" ).AddToScope( out back );
+                VisualElementFactory.BackSelect( "Back" ).AddToScope( out back );
                 return view;
             }
         }
@@ -51,7 +51,7 @@ namespace Project.UI {
                     VisualElementFactory.Select( "Level 2" ).AddToScope( out level2 );
                     VisualElementFactory.Select( "Level 3" ).AddToScope( out level3 );
                 }
-                VisualElementFactory.Select( "Back" ).AddToScope( out back );
+                VisualElementFactory.BackSelect( "Back" ).AddToScope( out back );
                 return view;
             }
         }
@@ -63,7 +63,7 @@ namespace Project.UI {
                     VisualElementFactory.Select( "Green" ).AddToScope( out green );
                     VisualElementFactory.Select( "Blue" ).AddToScope( out blue );
                 }
-                VisualElementFactory.Select( "Back" ).AddToScope( out back );
+                VisualElementFactory.BackSelect( "Back" ).AddToScope( out back );
                 return view;
             }
         }

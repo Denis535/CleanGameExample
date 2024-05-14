@@ -26,32 +26,26 @@ namespace Project.UI.MainScreen {
         }
 
         // Push
-        public void Push(MainMenuWidgetView_MainMenuView view) {
-            content.Children().LastOrDefault()?.SetDisplayed( false );
+        public void Push(UIViewBase view) {
+            var covered = content.Children().LastOrDefault();
+            if (covered != null) {
+                covered.GetView().SaveFocus();
+                covered.SetDisplayed( false );
+            }
             content.Add( view );
-            title.text = GetTitle( view );
-        }
-        public void Push(MainMenuWidgetView_StartGameView view) {
-            content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view );
-            title.text = GetTitle( view );
-        }
-        public void Push(MainMenuWidgetView_SelectLevelView view) {
-            content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view );
-            title.text = GetTitle( view );
-        }
-        public void Push(MainMenuWidgetView_SelectCharacterView view) {
-            content.Children().LastOrDefault()?.SetDisplayed( false );
-            content.Add( view );
+            view.Focus();
             title.text = GetTitle( view );
         }
 
         // Pop
         public void Pop() {
             content.Remove( content.Children().Last() );
-            content.Children().LastOrDefault()?.SetDisplayed( true );
-            title.text = GetTitle( content.Children().Last().GetView() );
+            var uncovered = content.Children().LastOrDefault();
+            if (uncovered != null) {
+                uncovered.SetDisplayed( true );
+                uncovered.GetView().LoadFocus();
+                title.text = GetTitle( uncovered.GetView() );
+            }
         }
 
         // Helpers

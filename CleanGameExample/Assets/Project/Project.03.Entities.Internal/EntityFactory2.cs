@@ -7,7 +7,7 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory {
+    public static class EntityFactory2 {
 
         // PlayerCharacter
         public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
@@ -18,9 +18,9 @@ namespace Project.Entities {
                 PlayerCharacterEnum.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
-            var handle = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( handle.GetResult<PlayerCharacter>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( handle ) );
+            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
+            var instance = Object2.Instantiate( prefab.GetResult<PlayerCharacter>(), position, rotation, null );
+            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
 
@@ -33,9 +33,9 @@ namespace Project.Entities {
                 R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            var handle = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( handle.GetResult<EnemyCharacter>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( handle ) );
+            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
+            var instance = Object2.Instantiate( prefab.GetResult<EnemyCharacter>(), position, rotation, null );
+            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
 
@@ -48,17 +48,17 @@ namespace Project.Entities {
                 R.Project.Entities.Misc.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            var handle = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( handle.GetResult<Gun>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( handle ) );
+            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
+            var instance = Object2.Instantiate( prefab.GetResult<Gun>(), position, rotation, null );
+            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
 
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
-            var handle = Addressables.LoadAssetAsync<GameObject>( R.Project.Entities.Misc.Bullet_Value );
-            var instance = Object2.Instantiate( handle.GetResult<Bullet>(), position, rotation, new Bullet.Args( gun, force ) );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( handle ) );
+            var prefab = Addressables.LoadAssetAsync<GameObject>( R.Project.Entities.Misc.Bullet_Value );
+            var instance = Object2.Instantiate( prefab.GetResult<Bullet>(), position, rotation, new Bullet.Args( gun, force ) );
+            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
 

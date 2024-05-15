@@ -25,7 +25,7 @@ namespace Project.Entities {
         public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                EntityFactory.Bullet( BulletSpawnPoint.position, BulletSpawnPoint.rotation, this, 50 );
+                EntityFactory2.Bullet( BulletSpawnPoint.position, BulletSpawnPoint.rotation, this, 50 );
             }
         }
 

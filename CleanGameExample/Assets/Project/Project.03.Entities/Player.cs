@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
@@ -14,8 +13,8 @@ namespace Project.Entities {
         // State
         public bool IsPaused { get; private set; }
         // Entities
-        private Camera2 Camera { get; set; } = default!;
         public PlayerCharacter? Character { get; private set; }
+        private Camera2? Camera { get; set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
@@ -41,7 +40,6 @@ namespace Project.Entities {
 
         // Awake
         public override void Awake() {
-            Camera = Utils.Container.RequireDependency<Camera2>( null );
             Actions = new InputActions();
         }
         public override void OnDestroy() {
@@ -72,23 +70,20 @@ namespace Project.Entities {
                 Character.SetActions( new PlayerCharacterInputActions( Actions, this ) );
                 if (!IsPaused) Actions.Enable();
             }
+            if (Camera == null) {
+                Camera = EntityFactory.Camera();
+            }
         }
 
         // Start
         public void Start() {
         }
         public void Update() {
-            if (Actions.asset.enabled) {
+            if (Character != null && Camera != null) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
-            }
-            if (Character != null) {
                 Camera.Apply( Character );
-                if (Raycast( Camera.transform, Character.transform, out var point, out var distance, out var @object )) {
-                    Hit = new( point, distance, @object );
-                } else {
-                    Hit = null;
-                }
+                Hit = Raycast( Character.transform, Camera.transform );
             }
         }
 
@@ -101,20 +96,14 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static bool Raycast(Transform camera, Transform character, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
+        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform character, Transform camera) {
             var mask = ~0 & ~LayerMask.GetMask( "Bullet" );
             var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
             var hit = hits.Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
-                point = hit.point;
-                distance = hit.distance;
-                @object = hit.transform.gameObject;
-                return true;
+                return (hit.point, hit.distance, hit.transform.gameObject);
             } else {
-                point = default;
-                distance = default;
-                @object = null;
-                return false;
+                return null;
             }
         }
 

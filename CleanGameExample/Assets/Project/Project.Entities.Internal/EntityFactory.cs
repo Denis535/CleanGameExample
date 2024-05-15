@@ -42,10 +42,10 @@ namespace Project.Entities {
         // Gun
         public static Gun Gun(Vector3 position, Quaternion rotation) {
             var keys = new[] {
-                R.Project.Entities.Loots.Gun_Gray_Value,
-                R.Project.Entities.Loots.Gun_Red_Value,
-                R.Project.Entities.Loots.Gun_Green_Value,
-                R.Project.Entities.Loots.Gun_Blue_Value,
+                R.Project.Entities.Misc.Gun_Gray_Value,
+                R.Project.Entities.Misc.Gun_Red_Value,
+                R.Project.Entities.Misc.Gun_Green_Value,
+                R.Project.Entities.Misc.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
             var handle = Addressables.LoadAssetAsync<GameObject>( key );
@@ -56,7 +56,7 @@ namespace Project.Entities {
 
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
-            var handle = Addressables.LoadAssetAsync<GameObject>( R.Project.Entities.Loots.Bullet_Value );
+            var handle = Addressables.LoadAssetAsync<GameObject>( R.Project.Entities.Misc.Bullet_Value );
             var instance = Object2.Instantiate( handle.GetResult<Bullet>(), position, rotation, new Bullet.Args( gun, force ) );
             instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( handle ) );
             return instance;

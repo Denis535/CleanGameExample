@@ -22,18 +22,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 925374fb0fa1f8e40b9210efb3615f67
-    m_Address: Project.UI.MainScreen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8251838560314614e9a9acfabad511f5
-    m_Address: Project.UI.GameScreen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ac661e7ac31a4044d942b100b0c8a0b5
-    m_Address: Project.UI.Common
+  - m_GUID: 186ff454600b43c449aba1bd1b2bd1b2
+    m_Address: Project.App
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

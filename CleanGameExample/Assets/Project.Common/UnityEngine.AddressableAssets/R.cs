@@ -18,19 +18,19 @@ namespace UnityEngine.AddressableAssets {
                 public const string @PanelSettings_Value = "Project.UI/PanelSettings.asset";
                 public static class @MainScreen {
                     public static class @Images {
-                        public const string @Background_Value = "Project.UI.MainScreen/Images/Background.png";
+                        public const string @Background_Value = "Project.UI/MainScreen/Images/Background.png";
                         public static class @Background {
-                            public const string @Background_Value = "Project.UI.MainScreen/Images/Background.png[Background]";
+                            public const string @Background_Value = "Project.UI/MainScreen/Images/Background.png[Background]";
                         }
                     }
                     public static class @Music {
-                        public const string @Theme_Value = "Project.UI.MainScreen/Music/Theme #Slowly Building Motif.wav";
+                        public const string @Theme_Value = "Project.UI/MainScreen/Music/Theme #Slowly Building Motif.wav";
                     }
                 }
                 public static class @GameScreen {
                     public static class @Music {
-                        public const string @Theme_1_Value = "Project.UI.GameScreen/Music/Theme_1 #Long Calm Ambience.wav";
-                        public const string @Theme_2_Value = "Project.UI.GameScreen/Music/Theme_2 #Warm Guitar Swells.wav";
+                        public const string @Theme_1_Value = "Project.UI/GameScreen/Music/Theme_1 #Long Calm Ambience.wav";
+                        public const string @Theme_2_Value = "Project.UI/GameScreen/Music/Theme_2 #Warm Guitar Swells.wav";
                     }
                 }
                 public static class @StyleSheets {
@@ -57,12 +57,12 @@ namespace UnityEngine.AddressableAssets {
                         public const string @EnemyCharacter_Red_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Red.prefab";
                     }
                 }
-                public static class @Loots {
-                    public const string @Bullet_Value = "Project.Entities/Loots/Bullet.prefab";
-                    public const string @Gun_Blue_Value = "Project.Entities/Loots/Gun_Blue.prefab";
-                    public const string @Gun_Gray_Value = "Project.Entities/Loots/Gun_Gray.prefab";
-                    public const string @Gun_Green_Value = "Project.Entities/Loots/Gun_Green.prefab";
-                    public const string @Gun_Red_Value = "Project.Entities/Loots/Gun_Red.prefab";
+                public static class @Misc {
+                    public const string @Bullet_Value = "Project.Entities/Misc/Bullet.prefab";
+                    public const string @Gun_Blue_Value = "Project.Entities/Misc/Gun_Blue.prefab";
+                    public const string @Gun_Gray_Value = "Project.Entities/Misc/Gun_Gray.prefab";
+                    public const string @Gun_Green_Value = "Project.Entities/Misc/Gun_Green.prefab";
+                    public const string @Gun_Red_Value = "Project.Entities/Misc/Gun_Red.prefab";
                 }
             }
             public static class @Worlds {

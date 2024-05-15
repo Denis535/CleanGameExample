@@ -18,29 +18,29 @@ namespace Project {
         }
         [MenuItem( "Project/Startup", priority = 1 )]
         public static void LoadStartup() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Scenes/Startup.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/Startup.unity" );
         }
         [MenuItem( "Project/Main Scene", priority = 2 )]
         public static void LoadMainScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Scenes/MainScene.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/MainScene.unity" );
         }
         [MenuItem( "Project/Game Scene", priority = 3 )]
         public static void LoadGameScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project/Scenes/GameScene.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/GameScene.unity" );
         }
 
         // LoadScene
         [MenuItem( "Project/World 01", priority = 100 )]
         public static void LoadLevel1() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Worlds/World_01.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_01.unity" );
         }
         [MenuItem( "Project/World 02", priority = 101 )]
         public static void LoadLevel2() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Worlds/World_02.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_02.unity" );
         }
         [MenuItem( "Project/World 03", priority = 101 )]
         public static void LoadLevel3() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.Worlds/World_03.unity" );
+            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_03.unity" );
         }
 
         // Build

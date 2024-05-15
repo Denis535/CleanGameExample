@@ -30,13 +30,17 @@ namespace Project {
 
         // Helpers
         private static string[] GetModulePaths() {
-            return AssetDatabase.GetAllAssetPaths()
-                .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
-                .Select( Path.GetDirectoryName )
-                .Select( i => i.Replace( '\\', '/' ) )
-                .Where( i => i.StartsWith( "Packages/" ) )
-                .Distinct()
-                .Prepend( "Assets/Project" )
+            return Enumerable.Empty<string>()
+                .Append( "Assets/Project" )
+                .Append( "Assets/Project.Common" )
+                .Concat(
+                    AssetDatabase.GetAllAssetPaths()
+                    .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
+                    .Select( Path.GetDirectoryName )
+                    .Select( i => i.Replace( '\\', '/' ) )
+                    .Where( i => i.StartsWith( "Packages/" ) )
+                    .Distinct()
+                )
                 .ToArray();
         }
 

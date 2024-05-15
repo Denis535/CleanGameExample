@@ -74,6 +74,13 @@ namespace Project.Entities {
         }
 
     }
+    // PlayerCharacter
+    public enum PlayerCharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
+    }
     // IPlayerCharacterInputActions
     public interface IPlayerCharacterInputActions {
 
@@ -88,12 +95,5 @@ namespace Project.Entities {
         bool IsAimPressed();
         bool IsInteractPressed(out GameObject? interactable);
 
-    }
-    // PlayerCharacter
-    public enum PlayerCharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
 }

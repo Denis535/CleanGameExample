@@ -5,7 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class GameObjectExtensions {
+    public static class EntityExtensions {
 
         // IsCharacter
         public static bool IsCharacter(this GameObject gameObject) {
@@ -21,6 +21,9 @@ namespace Project.Entities {
         // IsWeapon
         public static bool IsWeapon(this GameObject gameObject) {
             return gameObject.GetComponent<Weapon>() != null && gameObject.transform.parent == null;
+        }
+        public static bool IsGun(this GameObject gameObject) {
+            return gameObject.GetComponent<Gun>() != null && gameObject.transform.parent == null;
         }
 
         // IsBullet

@@ -36,12 +36,15 @@ namespace Project.Entities {
             Level = level;
             Player = gameObject.AddComponent<Player>();
             World = Utils.Container.RequireDependency<World>( null );
-            Player.SetCharacter( Spawner.SpawnPlayerCharacter( character, World.PlayerSpawnPoints.First() ) );
+            {
+                var point = World.PlayerSpawnPoints.First();
+                Player.SetCharacter( EntityFactory.PlayerCharacter( character, point.transform.position, point.transform.rotation ) );
+            }
             foreach (var point in World.EnemySpawnPoints) {
-                Spawner.SpawnEnemyCharacter( point );
+                EntityFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
             }
             foreach (var point in World.LootSpawnPoints) {
-                Spawner.SpawnWeapon( point );
+                EntityFactory.Gun( point.transform.position, point.transform.rotation );
             }
         }
         public void StopGame() {

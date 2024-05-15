@@ -10,12 +10,12 @@ namespace Project.Entities {
     public static class EntityFactory2 {
 
         // PlayerCharacter
-        public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
+        public static PlayerCharacter PlayerCharacter(PlayerCharacterType character, Vector3 position, Quaternion rotation) {
             var key = character switch {
-                PlayerCharacterEnum.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
-                PlayerCharacterEnum.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
-                PlayerCharacterEnum.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
-                PlayerCharacterEnum.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
+                PlayerCharacterType.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
+                PlayerCharacterType.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
+                PlayerCharacterType.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
+                PlayerCharacterType.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
             var prefab = Addressables.LoadAssetAsync<GameObject>( key );

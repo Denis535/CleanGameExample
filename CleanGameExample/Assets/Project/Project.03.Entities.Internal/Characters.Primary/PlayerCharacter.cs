@@ -8,7 +8,7 @@ namespace Project.Entities {
     public class PlayerCharacter : Character {
 
         // Actions
-        private IPlayerCharacterInputActions? Actions { get; set; }
+        public IPlayerCharacterInputActions? Actions { get; set; }
 
         // Awake
         public override void Awake() {
@@ -16,11 +16,6 @@ namespace Project.Entities {
         }
         public override void OnDestroy() {
             base.OnDestroy();
-        }
-
-        // SetActions
-        public void SetActions(IPlayerCharacterInputActions? actions) {
-            Actions = actions;
         }
 
         // Start
@@ -74,8 +69,8 @@ namespace Project.Entities {
         }
 
     }
-    // PlayerCharacter
-    public enum PlayerCharacterEnum {
+    // PlayerCharacterType
+    public enum PlayerCharacterType {
         Gray,
         Red,
         Green,

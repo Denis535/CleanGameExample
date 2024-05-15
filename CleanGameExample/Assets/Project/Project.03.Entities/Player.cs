@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
@@ -11,10 +12,12 @@ namespace Project.Entities {
     public class Player : PlayerBase {
 
         // State
+        [MemberNotNullWhen( true, "Camera", "Character" )]
+        public bool IsRunning { get; private set; }
         public bool IsPaused { get; private set; }
         // Entities
-        public PlayerCharacter? Character { get; private set; }
         private Camera2? Camera { get; set; }
+        public PlayerCharacter? Character { get; private set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
         // Hit
@@ -46,40 +49,40 @@ namespace Project.Entities {
             Actions.Dispose();
         }
 
-        // Pause
-        public void Pause() {
-            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
-            IsPaused = true;
-            if (Character != null) Actions.Disable();
+        // RunGame
+        public void RunGame(Camera2 camera, PlayerCharacter character) {
+            Assert.Operation.Message( $"Player must be non-running" ).Valid( !IsRunning );
+            IsRunning = true;
+            Camera = camera;
+            Character = character;
+            Character.Actions = new PlayerCharacterInputActions( Actions, this );
+            Actions.Enable();
         }
-        public void UnPause() {
-            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
-            IsPaused = false;
-            if (Character != null) Actions.Enable();
+        public void StopGame() {
+            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
+            IsRunning = false;
+            Actions.Disable();
         }
 
-        // SetCharacter
-        public void SetCharacter(PlayerCharacter? character) {
-            if (Character != null) {
-                Character.SetActions( null );
-                if (!IsPaused) Actions.Disable();
-                Hit = null;
-            }
-            Character = character;
-            if (Character != null) {
-                Character.SetActions( new PlayerCharacterInputActions( Actions, this ) );
-                if (!IsPaused) Actions.Enable();
-            }
-            if (Camera == null) {
-                Camera = EntityFactory.Camera();
-            }
+        // Pause
+        public void Pause() {
+            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
+            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
+            IsPaused = true;
+            Actions.Disable();
+        }
+        public void UnPause() {
+            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
+            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
+            IsPaused = false;
+            Actions.Enable();
         }
 
         // Start
         public void Start() {
         }
         public void Update() {
-            if (Character != null && Camera != null) {
+            if (IsRunning) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply( Character );

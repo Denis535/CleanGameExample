@@ -15,7 +15,7 @@ namespace Project.UI.GameScreen {
         private Application2 Application { get; }
         // Entities
         private Game Game => Application.Game!;
-        private Player Player => Application.Game!.Player;
+        private Player? Player => Application.Game!.Player;
         // View
         public override GameWidgetView View { get; }
         // Actions
@@ -70,9 +70,9 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
-            if (Player.Enemy) {
+            if (Player?.Enemy) {
                 View.SetEffect( TargetEffect.Enemy );
-            } else if (Player.Loot) {
+            } else if (Player?.Loot) {
                 View.SetEffect( TargetEffect.Loot );
             } else {
                 View.SetEffect( TargetEffect.Normal );

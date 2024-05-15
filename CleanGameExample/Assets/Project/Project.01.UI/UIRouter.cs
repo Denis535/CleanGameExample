@@ -109,7 +109,7 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(PlayerCharacterEnum character, LevelEnum level) {
+        public async Task LoadGameSceneAsync(PlayerCharacterType character, LevelType level) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
@@ -188,11 +188,11 @@ namespace Project.UI {
             SceneManager.SetActiveScene( World.Handle.Value );
         }
         // Helpers
-        private static string GetWorldAddress(LevelEnum level) {
+        private static string GetWorldAddress(LevelType level) {
             switch (level) {
-                case LevelEnum.Level1: return R.Project.Worlds.World_01_Value;
-                case LevelEnum.Level2: return R.Project.Worlds.World_02_Value;
-                case LevelEnum.Level3: return R.Project.Worlds.World_03_Value;
+                case LevelType.Level1: return R.Project.Worlds.World_01_Value;
+                case LevelType.Level2: return R.Project.Worlds.World_02_Value;
+                case LevelType.Level3: return R.Project.Worlds.World_03_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

@@ -70,36 +70,36 @@ namespace Project.UI.MainScreen {
         private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIRouter router) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level1 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelType.Level1 ) );
             } );
             view.OnLevel2( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level2 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelType.Level2 ) );
             } );
             view.OnLevel3( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelEnum.Level3 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, router, LevelType.Level3 ) );
             } );
             view.OnBack( evt => {
                 widget.View.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, LevelEnum level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, LevelType level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( PlayerCharacterEnum.Gray, level ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterType.Gray, level ).Throw();
             } );
             view.OnRed( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( PlayerCharacterEnum.Red, level ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterType.Red, level ).Throw();
             } );
             view.OnGreen( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( PlayerCharacterEnum.Green, level ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterType.Green, level ).Throw();
             } );
             view.OnBlue( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( PlayerCharacterEnum.Blue, level ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterType.Blue, level ).Throw();
             } );
             view.OnBack( evt => {
                 widget.View.Pop();

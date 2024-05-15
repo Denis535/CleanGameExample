@@ -20,7 +20,7 @@ namespace Project.App {
         }
 
         // RunGame
-        public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
+        public void RunGame(PlayerCharacterType character, LevelType level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = Utils.Container.RequireDependency<Game>( null );
             Game.RunGame( character, level );

@@ -11,18 +11,18 @@ namespace Project.Entities {
 
     public class Game : GameBase {
 
-        private readonly Lock @lock = new Lock();
-
         // State
         [MemberNotNullWhen( true, "Player", "World" )]
         public bool IsRunning { get; private set; }
         public bool IsPaused { get; private set; }
-        // Character
-        public PlayerCharacterEnum? Character { get; private set; }
-        // Level
-        public LevelEnum? Level { get; private set; }
+        // PlayerCharacterType
+        public PlayerCharacterType? PlayerCharacterType { get; private set; }
+        // LevelType
+        public LevelType? LevelType { get; private set; }
         // Entities
         public Player? Player { get; private set; }
+        private Camera2? PlayerCamera { get; set; }
+        private PlayerCharacter? PlayerCharacter { get; set; }
         public World? World { get; private set; }
 
         // Awake
@@ -32,16 +32,18 @@ namespace Project.Entities {
         }
 
         // RunGame
-        public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
+        public void RunGame(PlayerCharacterType playerCharacterType, LevelType levelType) {
             Assert.Operation.Message( $"Game must be non-running" ).Valid( !IsRunning );
             IsRunning = true;
-            Character = character;
-            Level = level;
+            PlayerCharacterType = playerCharacterType;
+            LevelType = levelType;
             Player = gameObject.AddComponent<Player>();
             World = Utils.Container.RequireDependency<World>( null );
             {
                 var point = World.PlayerSpawnPoints.First();
-                Player.SetCharacter( EntityFactory2.PlayerCharacter( character, point.transform.position, point.transform.rotation ) );
+                PlayerCamera = EntityFactory.Camera();
+                PlayerCharacter = EntityFactory2.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
+                Player.RunGame( PlayerCamera, PlayerCharacter );
             }
             foreach (var point in World.EnemySpawnPoints) {
                 EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );
@@ -53,6 +55,7 @@ namespace Project.Entities {
         public void StopGame() {
             Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
             IsRunning = false;
+            Player.StopGame();
         }
 
         // Pause
@@ -71,15 +74,9 @@ namespace Project.Entities {
 
         // Start
         public void Start() {
-            if (@lock.CanEnter) {
-                using (@lock.Enter()) {
-                }
-            }
         }
         public void Update() {
-            if (@lock.CanEnter) {
-                using (@lock.Enter()) {
-                }
+            if (IsRunning) {
             }
         }
 

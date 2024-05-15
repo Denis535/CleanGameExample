@@ -5,7 +5,6 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Project.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
@@ -15,9 +14,7 @@ namespace Project.Entities {
         // State
         public bool IsPaused { get; private set; }
         // Entities
-        private Game Game { get; set; } = default!;
         private Camera2 Camera { get; set; } = default!;
-        private World World { get; set; } = default!;
         public PlayerCharacter? Character { get; private set; }
         // Actions
         private InputActions Actions { get; set; } = default!;
@@ -36,7 +33,7 @@ namespace Project.Entities {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    if (@object.IsLoot()) return @object;
+                    if (@object.IsWeapon()) return @object;
                 }
                 return null;
             }
@@ -44,9 +41,7 @@ namespace Project.Entities {
 
         // Awake
         public override void Awake() {
-            Game = Utils.Container.RequireDependency<Game>( null );
             Camera = Utils.Container.RequireDependency<Camera2>( null );
-            World = Utils.Container.RequireDependency<World>( null );
             Actions = new InputActions();
         }
         public override void OnDestroy() {
@@ -74,7 +69,7 @@ namespace Project.Entities {
             }
             Character = character;
             if (Character != null) {
-                Character.SetActions( new CharacterInputActions( Actions, this ) );
+                Character.SetActions( new PlayerCharacterInputActions( Actions, this ) );
                 if (!IsPaused) Actions.Enable();
             }
         }
@@ -124,8 +119,8 @@ namespace Project.Entities {
         }
 
     }
-    // CharacterInputActions
-    internal class CharacterInputActions : ICharacterInputActions {
+    // PlayerCharacterInputActions
+    internal class PlayerCharacterInputActions : IPlayerCharacterInputActions {
 
         private readonly InputActions actions;
         private readonly Player player;
@@ -133,7 +128,7 @@ namespace Project.Entities {
         public bool IsEnabled => actions.asset.enabled;
         public Vector3 LookTarget => player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
 
-        public CharacterInputActions(InputActions actions, Player player) {
+        public PlayerCharacterInputActions(InputActions actions, Player player) {
             this.actions = actions;
             this.player = player;
         }

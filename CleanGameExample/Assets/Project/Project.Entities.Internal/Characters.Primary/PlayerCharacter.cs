@@ -8,7 +8,7 @@ namespace Project.Entities {
     public class PlayerCharacter : Character {
 
         // Actions
-        private ICharacterInputActions? Actions { get; set; }
+        private IPlayerCharacterInputActions? Actions { get; set; }
 
         // Awake
         public override void Awake() {
@@ -19,7 +19,7 @@ namespace Project.Entities {
         }
 
         // SetActions
-        public void SetActions(ICharacterInputActions? actions) {
+        public void SetActions(IPlayerCharacterInputActions? actions) {
             Actions = actions;
         }
 
@@ -74,8 +74,8 @@ namespace Project.Entities {
         }
 
     }
-    // ICharacterInputActions
-    public interface ICharacterInputActions {
+    // IPlayerCharacterInputActions
+    public interface IPlayerCharacterInputActions {
 
         bool IsEnabled { get; }
         Vector3 LookTarget { get; }
@@ -88,5 +88,12 @@ namespace Project.Entities {
         bool IsAimPressed();
         bool IsInteractPressed(out GameObject? interactable);
 
+    }
+    // PlayerCharacter
+    public enum PlayerCharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
     }
 }

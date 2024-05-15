@@ -22,10 +22,10 @@ namespace Project.Entities {
         }
 
         // Fire
-        public override async void Fire() {
+        public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                await EntitySpawner.SpawnBulletAsync( BulletSpawnPoint, this, destroyCancellationToken );
+                Spawner.SpawnBullet( BulletSpawnPoint, this, 50 );
             }
         }
 

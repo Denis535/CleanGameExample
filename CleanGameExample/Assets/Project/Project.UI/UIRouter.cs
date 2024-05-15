@@ -6,6 +6,7 @@ namespace Project.UI {
     using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
+    using Project.Worlds;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
@@ -108,7 +109,7 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(LevelEnum level, PlayerCharacterEnum character) {
+        public async Task LoadGameSceneAsync(PlayerCharacterEnum character, LevelEnum level) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
@@ -116,7 +117,7 @@ namespace Project.UI {
                     await LoadSceneAsync_GameScene( GetWorldAddress( level ) );
                     State = UIRouterState.GameSceneLoaded;
                 }
-                Application.RunGame( level, character );
+                Application.RunGame( character, level );
             }
         }
 

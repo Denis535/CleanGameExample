@@ -7,7 +7,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Bullet : EntityBase {
-        public record Args(Gun Gun);
+        public record Args(Gun Gun, float Force);
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
@@ -19,8 +19,8 @@ namespace Project.Entities {
             var args = Context.GetValue<Args>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
-            Rigidbody.AddForce( args.Gun.transform.forward * 100, ForceMode.Impulse );
             Physics.IgnoreCollision( Collider, args.Gun.Collider );
+            Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
             Destroy( gameObject, 10 );
         }
         public override void OnDestroy() {

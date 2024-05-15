@@ -4,6 +4,7 @@ namespace Project.App {
     using System.Collections;
     using System.Collections.Generic;
     using Project.Entities;
+    using Project.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.App;
 
@@ -19,10 +20,10 @@ namespace Project.App {
         }
 
         // RunGame
-        public void RunGame(LevelEnum level, PlayerCharacterEnum character) {
+        public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = Utils.Container.RequireDependency<Game>( null );
-            Game.RunGame( level, character );
+            Game.RunGame( character, level );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );

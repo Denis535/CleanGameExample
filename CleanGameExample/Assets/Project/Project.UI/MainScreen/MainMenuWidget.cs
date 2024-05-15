@@ -6,6 +6,7 @@ namespace Project.UI.MainScreen {
     using System.Threading.Tasks;
     using Project.Entities;
     using Project.UI.Common;
+    using Project.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
@@ -86,19 +87,19 @@ namespace Project.UI.MainScreen {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Gray ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterEnum.Gray, level ).Throw();
             } );
             view.OnRed( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Red ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterEnum.Red, level ).Throw();
             } );
             view.OnGreen( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Green ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterEnum.Green, level ).Throw();
             } );
             view.OnBlue( evt => {
                 widget.AttachChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, PlayerCharacterEnum.Blue ).Throw();
+                router.LoadGameSceneAsync( PlayerCharacterEnum.Blue, level ).Throw();
             } );
             view.OnBack( evt => {
                 widget.View.Pop();

@@ -27,4 +27,9 @@ namespace Project.Worlds {
         }
 
     }
+    public enum LevelEnum {
+        Level1,
+        Level2,
+        Level3
+    }
 }

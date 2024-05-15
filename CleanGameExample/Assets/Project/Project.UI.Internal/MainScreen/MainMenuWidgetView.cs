@@ -29,13 +29,13 @@ namespace Project.UI.MainScreen {
         public void Push(UIViewBase view) {
             title.text = GetTitle( view );
             content.Add( view );
-            Recalculate( this.GetChildren().ToArray() );
+            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
         }
 
         // Pop
         public void Pop() {
             content.Remove( content.Children().Last() );
-            Recalculate( this.GetChildren().ToArray() );
+            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
             title.text = GetTitle( content.Children().Last().GetView() );
         }
 

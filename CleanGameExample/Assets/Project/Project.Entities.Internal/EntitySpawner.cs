@@ -21,10 +21,12 @@ namespace Project.Entities {
             var instance = await Addressables2.InstantiateAsync( key, point.transform.position, point.transform.rotation, cancellationToken );
             return instance.RequireComponent<PlayerCharacter>();
         }
-        public static async ValueTask<GameObject> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
+        public static async ValueTask<EnemyCharacter> SpawnEnemyCharacterAsync(EnemySpawnPoint point, CancellationToken cancellationToken) {
             var instance = await Addressables2.InstantiateAsync( GetEnemyCharacter(), point.transform.position, point.transform.rotation, cancellationToken );
-            return instance;
+            return instance.RequireComponent<EnemyCharacter>();
         }
+
+        // SpawnAsync
         public static async ValueTask<GameObject> SpawnLootAsync(LootSpawnPoint point, CancellationToken cancellationToken) {
             var instance = await Addressables2.InstantiateAsync( GetLoot(), point.transform.position, point.transform.rotation, cancellationToken );
             return instance;

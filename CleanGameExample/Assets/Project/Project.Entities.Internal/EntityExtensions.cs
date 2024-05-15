@@ -9,24 +9,26 @@ namespace Project.Entities {
 
         // IsCharacter
         public static bool IsCharacter(this GameObject gameObject) {
-            return gameObject.name.Contains( "Character" );
+            return gameObject.GetComponent<Character>() != null;
         }
         public static bool IsPlayer(this GameObject gameObject) {
-            return gameObject.name.Contains( "Player" );
+            return gameObject.GetComponent<PlayerCharacter>() != null;
         }
         public static bool IsEnemy(this GameObject gameObject) {
-            return gameObject.name.Contains( "Enemy" );
+            return gameObject.GetComponent<EnemyCharacter>() != null;
         }
 
         // IsLoot
         public static bool IsLoot(this GameObject gameObject) {
-            return gameObject.name.Contains( "Gun" ) && gameObject.transform.parent == null;
+            return gameObject.GetComponent<Weapon>() != null && gameObject.transform.parent == null;
         }
         public static bool IsWeapon(this GameObject gameObject) {
-            return gameObject.name.Contains( "Gun" ) && gameObject.transform.parent == null;
+            return gameObject.GetComponent<Weapon>() != null && gameObject.transform.parent == null;
         }
+
+        // IsBullet
         public static bool IsBullet(this GameObject gameObject) {
-            return gameObject.name.Contains( "Bullet" ) && gameObject.transform.parent == null;
+            return gameObject.GetComponent<Bullet>() != null && gameObject.transform.parent == null;
         }
 
     }

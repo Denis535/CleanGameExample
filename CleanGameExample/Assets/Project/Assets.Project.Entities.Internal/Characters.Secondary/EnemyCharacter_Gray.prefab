@@ -513,6 +513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952417827834183038}
   - component: {fileID: -730198053166776320}
+  - component: {fileID: -5523722555421692247}
   m_Layer: 10
   m_Name: EnemyCharacter_Gray
   m_TagString: Character
@@ -564,3 +565,15 @@ CharacterController:
   m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-5523722555421692247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565432254321492734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050092f84267d6d47b1784d5f6ca7e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

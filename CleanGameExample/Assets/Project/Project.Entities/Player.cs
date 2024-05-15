@@ -107,7 +107,7 @@ namespace Project.Entities {
 
         // Heleprs
         private static bool Raycast(Transform camera, Transform character, out Vector3 point, out float distance, [NotNullWhen( true )] out GameObject? @object) {
-            var mask = ~0;
+            var mask = ~0 & ~LayerMask.GetMask( "Bullet" );
             var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
             var hit = hits.Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {

@@ -10,7 +10,6 @@ namespace Project.Entities {
     using UnityEngine.InputSystem;
 
     public class Player : PlayerBase {
-        public record Args();
 
         // State
         [MemberNotNullWhen( true, "Camera", "Character" )]
@@ -20,7 +19,7 @@ namespace Project.Entities {
         private Camera2? Camera { get; set; }
         public PlayerCharacter? Character { get; private set; }
         // Actions
-        private InputActions Actions { get; set; } = default!;
+        private InputActions Actions { get; }
         // Hit
         internal (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public GameObject? Enemy {
@@ -42,11 +41,11 @@ namespace Project.Entities {
             }
         }
 
-        // Awake
-        public override void Awake() {
+        // Constructor
+        public Player() {
             Actions = new InputActions();
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
             Actions.Dispose();
         }
 
@@ -79,9 +78,7 @@ namespace Project.Entities {
             Actions.Enable();
         }
 
-        // Start
-        public void Start() {
-        }
+        // Update
         public void Update() {
             if (IsRunning) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
@@ -89,6 +86,8 @@ namespace Project.Entities {
                 Camera.Apply( Character );
                 Hit = Raycast( Camera.transform, Character.transform );
             }
+        }
+        public void LateUpdate() {
         }
 
         // OnDrawGizmos

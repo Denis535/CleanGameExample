@@ -11,17 +11,14 @@ namespace Project.Entities {
 
         // Game
         public static Game Game(PlayerCharacterType character, LevelType level) {
-            return Instantiate<Game>( R.Project.Entities.Game_Value, new Game.Args( character, level ) );
-        }
-        public static Player AddPlayer(this Game game) {
-            using (Context.Begin( new Player.Args() )) {
-                return game.gameObject.AddComponent<Player>();
+            using (Context.Begin( new Game.Args( character, level ) )) {
+                return Instantiate<Game>( R.Project.Entities.Game_Value );
             }
         }
 
         // Camera
         public static Camera2 Camera() {
-            return Instantiate<Camera2>( R.Project.Entities.Camera_Value, null );
+            return Instantiate<Camera2>( R.Project.Entities.Camera_Value );
         }
 
         // PlayerCharacter
@@ -33,7 +30,7 @@ namespace Project.Entities {
                 PlayerCharacterType.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
-            return Instantiate<PlayerCharacter>( key, null, position, rotation );
+            return Instantiate<PlayerCharacter>( key, position, rotation );
         }
 
         // EnemyCharacter
@@ -45,25 +42,25 @@ namespace Project.Entities {
                 R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            return Instantiate<EnemyCharacter>( key, null, position, rotation );
+            return Instantiate<EnemyCharacter>( key, position, rotation );
         }
 
         // Helpers
-        private static T Instantiate<T>(string key, object? arguments) where T : MonoBehaviour {
+        private static T Instantiate<T>(string key) where T : MonoBehaviour {
             var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<T>(), arguments );
+            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>() );
             instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
-        private static T Instantiate<T>(string key, object? arguments, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
+        private static T Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
             var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<T>(), arguments, position, rotation );
+            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>(), position, rotation );
             instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }
-        private static T Instantiate<T>(string key, object? arguments, Transform parent) where T : MonoBehaviour {
+        private static T Instantiate<T>(string key, Transform parent) where T : MonoBehaviour {
             var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<T>(), arguments, parent );
+            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>(), parent );
             instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }

@@ -21,24 +21,25 @@ namespace Project.Entities {
         // LevelType
         public LevelType LevelType { get; private set; }
         // Entities
-        public Player? Player { get; private set; }
-        public World? World { get; private set; }
+        public Player Player { get; private set; } = default!;
+        public World World { get; private set; } = default!;
 
         // Awake
         public override void Awake() {
             var args = Context.GetValue<Args>();
             PlayerCharacterType = args.PlayerCharacterType;
             LevelType = args.LevelType;
+            Player = new Player();
+            World = Utils.Container.RequireDependency<World>( null );
         }
         public override void OnDestroy() {
+            Player.Dispose();
         }
 
         // RunGame
         public void RunGame() {
             Assert.Operation.Message( $"Game must be non-running" ).Valid( !IsRunning );
             IsRunning = true;
-            Player = this.AddPlayer();
-            World = Utils.Container.RequireDependency<World>( null );
             {
                 var point = World.PlayerSpawnPoints.First();
                 var camera = EntityFactory.Camera();
@@ -77,6 +78,12 @@ namespace Project.Entities {
         }
         public void Update() {
             if (IsRunning) {
+                Player.Update();
+            }
+        }
+        public void LateUpdate() {
+            if (IsRunning) {
+                Player.LateUpdate();
             }
         }
 

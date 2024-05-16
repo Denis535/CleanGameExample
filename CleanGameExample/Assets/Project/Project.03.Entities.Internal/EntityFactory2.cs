@@ -18,10 +18,7 @@ namespace Project.Entities {
                 PlayerCharacterType.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<PlayerCharacter>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
+            return Instantiate<PlayerCharacter>( key, null, position, rotation );
         }
 
         // EnemyCharacter
@@ -33,10 +30,7 @@ namespace Project.Entities {
                 R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<EnemyCharacter>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
+            return Instantiate<EnemyCharacter>( key, null, position, rotation );
         }
 
         // Gun
@@ -48,16 +42,34 @@ namespace Project.Entities {
                 R.Project.Entities.Misc.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = Object2.Instantiate( prefab.GetResult<Gun>(), position, rotation, null );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
+            return Instantiate<Gun>( key, null, position, rotation );
+        }
+        public static Gun Gun(Transform parent) {
+            var keys = new[] {
+                R.Project.Entities.Misc.Gun_Gray_Value,
+                R.Project.Entities.Misc.Gun_Red_Value,
+                R.Project.Entities.Misc.Gun_Green_Value,
+                R.Project.Entities.Misc.Gun_Blue_Value,
+            };
+            var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
+            return Instantiate<Gun>( key, null, parent );
         }
 
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
-            var prefab = Addressables.LoadAssetAsync<GameObject>( R.Project.Entities.Misc.Bullet_Value );
-            var instance = Object2.Instantiate( prefab.GetResult<Bullet>(), position, rotation, new Bullet.Args( gun, force ) );
+            return Instantiate<Bullet>( R.Project.Entities.Misc.Bullet_Value, new Bullet.Args( gun, force ), position, rotation );
+        }
+
+        // Helpers
+        private static T Instantiate<T>(string key, object? arguments, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
+            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
+            var instance = Object2.Instantiate( prefab.GetResult<T>(), arguments, position, rotation );
+            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
+            return instance;
+        }
+        private static T Instantiate<T>(string key, object? arguments, Transform parent) where T : MonoBehaviour {
+            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
+            var instance = Object2.Instantiate( prefab.GetResult<T>(), arguments, parent );
             instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
             return instance;
         }

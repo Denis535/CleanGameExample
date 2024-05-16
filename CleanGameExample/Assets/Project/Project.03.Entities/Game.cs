@@ -21,8 +21,6 @@ namespace Project.Entities {
         public LevelType? LevelType { get; private set; }
         // Entities
         public Player? Player { get; private set; }
-        private Camera2? PlayerCamera { get; set; }
-        private PlayerCharacter? PlayerCharacter { get; set; }
         public World? World { get; private set; }
 
         // Awake
@@ -41,9 +39,9 @@ namespace Project.Entities {
             World = Utils.Container.RequireDependency<World>( null );
             {
                 var point = World.PlayerSpawnPoints.First();
-                PlayerCamera = EntityFactory.Camera();
-                PlayerCharacter = EntityFactory2.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
-                Player.RunGame( PlayerCamera, PlayerCharacter );
+                var camera = EntityFactory.Camera();
+                var character = EntityFactory2.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
+                Player.RunGame( camera, character );
             }
             foreach (var point in World.EnemySpawnPoints) {
                 EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );

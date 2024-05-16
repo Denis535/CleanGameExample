@@ -86,7 +86,7 @@ namespace Project.Entities {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply( Character );
-                Hit = Raycast( Character.transform, Camera.transform );
+                Hit = Raycast( Camera.transform, Character.transform );
             }
         }
 
@@ -99,7 +99,7 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform character, Transform camera) {
+        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform camera, Transform character) {
             var mask = ~0 & ~LayerMask.GetMask( "Bullet" );
             var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
             var hit = hits.Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();

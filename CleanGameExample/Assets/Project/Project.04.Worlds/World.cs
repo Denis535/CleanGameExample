@@ -27,10 +27,4 @@ namespace Project.Worlds {
         }
 
     }
-    // LevelType
-    public enum LevelType {
-        Level1,
-        Level2,
-        Level3
-    }
 }

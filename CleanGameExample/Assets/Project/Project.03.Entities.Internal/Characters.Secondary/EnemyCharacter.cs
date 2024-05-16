@@ -17,10 +17,9 @@ namespace Project.Entities {
 
         // Start
         public override void Start() {
-            base.Start();
         }
         public override void FixedUpdate() {
-            base.FixedUpdate();
+            PhysicsFixedUpdate();
         }
         public override void Update() {
         }

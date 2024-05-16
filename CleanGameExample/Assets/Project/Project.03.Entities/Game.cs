@@ -35,16 +35,16 @@ namespace Project.Entities {
             IsRunning = true;
             PlayerCharacterType = playerCharacterType;
             LevelType = levelType;
-            Player = gameObject.AddComponent<Player>();
+            Player = this.AddPlayer();
             World = Utils.Container.RequireDependency<World>( null );
             {
                 var point = World.PlayerSpawnPoints.First();
                 var camera = EntityFactory.Camera();
-                var character = EntityFactory2.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
+                var character = EntityFactory.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
                 Player.RunGame( camera, character );
             }
             foreach (var point in World.EnemySpawnPoints) {
-                EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );
+                EntityFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
             }
             foreach (var point in World.LootSpawnPoints) {
                 EntityFactory2.Gun( point.transform.position, point.transform.rotation );
@@ -78,5 +78,18 @@ namespace Project.Entities {
             }
         }
 
+    }
+    // PlayerCharacterType
+    public enum PlayerCharacterType {
+        Gray,
+        Red,
+        Green,
+        Blue
+    }
+    // LevelType
+    public enum LevelType {
+        Level1,
+        Level2,
+        Level3
     }
 }

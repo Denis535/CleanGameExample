@@ -20,10 +20,9 @@ namespace Project.Entities {
 
         // Start
         public override void Start() {
-            base.Start();
         }
         public override void FixedUpdate() {
-            base.FixedUpdate();
+            PhysicsFixedUpdate();
         }
         public override void Update() {
             if (Actions != null) {
@@ -68,13 +67,6 @@ namespace Project.Entities {
             }
         }
 
-    }
-    // PlayerCharacterType
-    public enum PlayerCharacterType {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
     // IPlayerCharacterInputActions
     public interface IPlayerCharacterInputActions {

@@ -6,7 +6,7 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public class Character : PhysicsCharacter {
+    public abstract class Character : PhysicsCharacter {
 
         // Head
         private Transform Head { get; set; } = default!;
@@ -28,6 +28,11 @@ namespace Project.Entities {
             base.OnDestroy();
         }
 
+        // Start
+        public abstract void Start();
+        public abstract void FixedUpdate();
+        public abstract void Update();
+
         // LookAt
         public bool LookAt(Vector3? target) {
             return LookAt( Head, target );
@@ -41,15 +46,6 @@ namespace Project.Entities {
         // SetWeapon
         public void SetWeapon(Weapon? weapon) {
             SetWeapon( WeaponSlot, weapon );
-        }
-
-        // Start
-        public virtual void Start() {
-        }
-        public virtual void FixedUpdate() {
-            PhysicsFixedUpdate();
-        }
-        public virtual void Update() {
         }
 
         // Helpers

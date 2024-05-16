@@ -9,30 +9,6 @@ namespace Project.Entities {
 
     public static class EntityFactory2 {
 
-        // PlayerCharacter
-        public static PlayerCharacter PlayerCharacter(PlayerCharacterType character, Vector3 position, Quaternion rotation) {
-            var key = character switch {
-                PlayerCharacterType.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
-                PlayerCharacterType.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
-                PlayerCharacterType.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
-                PlayerCharacterType.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
-                _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
-            };
-            return Instantiate<PlayerCharacter>( key, null, position, rotation );
-        }
-
-        // EnemyCharacter
-        public static EnemyCharacter EnemyCharacter(Vector3 position, Quaternion rotation) {
-            var keys = new[] {
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Gray_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Red_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Green_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
-            };
-            var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            return Instantiate<EnemyCharacter>( key, null, position, rotation );
-        }
-
         // Gun
         public static Gun Gun(Vector3 position, Quaternion rotation) {
             var keys = new[] {

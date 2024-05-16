@@ -19,6 +19,7 @@ namespace Project.Entities {
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
+            IsPhysical = transform.parent == null;
         }
         public override void OnDestroy() {
         }
@@ -28,11 +29,7 @@ namespace Project.Entities {
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {
-            if (transform.parent != null) {
-                IsPhysical = false;
-            } else {
-                IsPhysical = true;
-            }
+            IsPhysical = transform.parent == null;
         }
 
     }

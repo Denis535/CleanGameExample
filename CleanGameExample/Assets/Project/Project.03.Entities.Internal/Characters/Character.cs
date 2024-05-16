@@ -9,11 +9,11 @@ namespace Project.Entities {
     public abstract class Character : PhysicsCharacter {
 
         // Head
-        private Transform Head { get; set; } = default!;
+        protected Transform Head { get; private set; } = default!;
         // Body
-        private Transform Body { get; set; } = default!;
+        protected Transform Body { get; private set; } = default!;
         // WeaponSlot
-        private Transform WeaponSlot { get; set; } = default!;
+        protected Transform WeaponSlot { get; private set; } = default!;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
 

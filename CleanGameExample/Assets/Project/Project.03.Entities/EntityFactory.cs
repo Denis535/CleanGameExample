@@ -9,9 +9,14 @@ namespace Project.Entities {
 
     public static class EntityFactory {
 
-        // AddPlayer
+        // Game
+        public static Game Game(PlayerCharacterType character, LevelType level) {
+            return Instantiate<Game>( R.Project.Entities.Game_Value, new Game.Args( character, level ) );
+        }
         public static Player AddPlayer(this Game game) {
-            return game.gameObject.AddComponent<Player>();
+            using (Context.Begin( new Player.Args() )) {
+                return game.gameObject.AddComponent<Player>();
+            }
         }
 
         // Camera

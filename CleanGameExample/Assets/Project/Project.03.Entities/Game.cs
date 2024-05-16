@@ -10,37 +10,39 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
+        public record Args(PlayerCharacterType PlayerCharacterType, LevelType LevelType);
 
         // State
         [MemberNotNullWhen( true, "Player", "World" )]
         public bool IsRunning { get; private set; }
         public bool IsPaused { get; private set; }
         // PlayerCharacterType
-        public PlayerCharacterType? PlayerCharacterType { get; private set; }
+        public PlayerCharacterType PlayerCharacterType { get; private set; }
         // LevelType
-        public LevelType? LevelType { get; private set; }
+        public LevelType LevelType { get; private set; }
         // Entities
         public Player? Player { get; private set; }
         public World? World { get; private set; }
 
         // Awake
         public override void Awake() {
+            var args = Context.GetValue<Args>();
+            PlayerCharacterType = args.PlayerCharacterType;
+            LevelType = args.LevelType;
         }
         public override void OnDestroy() {
         }
 
         // RunGame
-        public void RunGame(PlayerCharacterType playerCharacterType, LevelType levelType) {
+        public void RunGame() {
             Assert.Operation.Message( $"Game must be non-running" ).Valid( !IsRunning );
             IsRunning = true;
-            PlayerCharacterType = playerCharacterType;
-            LevelType = levelType;
             Player = this.AddPlayer();
             World = Utils.Container.RequireDependency<World>( null );
             {
                 var point = World.PlayerSpawnPoints.First();
                 var camera = EntityFactory.Camera();
-                var character = EntityFactory.PlayerCharacter( playerCharacterType, point.transform.position, point.transform.rotation );
+                var character = EntityFactory.PlayerCharacter( PlayerCharacterType, point.transform.position, point.transform.rotation );
                 Player.RunGame( camera, character );
             }
             foreach (var point in World.EnemySpawnPoints) {

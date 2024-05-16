@@ -10,6 +10,7 @@ namespace Project.Entities {
     using UnityEngine.InputSystem;
 
     public class Player : PlayerBase {
+        public record Args();
 
         // State
         [MemberNotNullWhen( true, "Camera", "Character" )]

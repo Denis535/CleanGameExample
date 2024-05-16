@@ -6,7 +6,6 @@ namespace Project.UI {
     using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
-    using Project.Worlds;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;

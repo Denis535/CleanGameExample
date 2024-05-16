@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
@@ -11,12 +10,10 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
 
-        // State
-        [MemberNotNullWhen( true, "Camera", "Character" )]
-        public bool IsRunning { get; private set; }
-        public bool IsPaused { get; private set; }
+        // PlayerCharacterType
+        public PlayerCharacterType CharacterType { get; }
         // Entities
-        private Camera2? Camera { get; set; }
+        public Camera2? Camera { get; private set; }
         public PlayerCharacter? Character { get; private set; }
         // Actions
         private InputActions Actions { get; }
@@ -42,45 +39,34 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player() {
+        public Player(PlayerCharacterType characterType) {
+            CharacterType = characterType;
             Actions = new InputActions();
+            Actions.Enable();
         }
         public override void Dispose() {
             Actions.Dispose();
         }
 
-        // RunGame
-        public void RunGame(Camera2 camera, PlayerCharacter character) {
-            Assert.Operation.Message( $"Player must be non-running" ).Valid( !IsRunning );
-            IsRunning = true;
+        // SetCamera
+        public void SetCamera(Camera2 camera) {
             Camera = camera;
-            Character = character;
-            Character.Actions = new PlayerCharacterInputActions( Actions, this );
-            Actions.Enable();
-        }
-        public void StopGame() {
-            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
-            IsRunning = false;
-            Actions.Disable();
         }
 
-        // Pause
-        public void Pause() {
-            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
-            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
-            IsPaused = true;
-            Actions.Disable();
+        // SetCharacter
+        public void SetCharacter(PlayerCharacter character) {
+            Character = character;
+            Character.Actions = new PlayerCharacterInputActions( Actions, this );
         }
-        public void UnPause() {
-            Assert.Operation.Message( $"Player must be running" ).Valid( IsRunning );
-            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
-            IsPaused = false;
-            Actions.Enable();
+
+        // SetInputEnabled
+        public void SetInputEnabled(bool value) {
+            if (value) Actions.Enable(); else Actions.Disable();
         }
 
         // Update
         public void Update() {
-            if (IsRunning) {
+            if (Camera != null && Character != null) {
                 Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply( Character );
@@ -88,14 +74,6 @@ namespace Project.Entities {
             }
         }
         public void LateUpdate() {
-        }
-
-        // OnDrawGizmos
-        public void OnDrawGizmos() {
-            if (Hit != null) {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere( Hit.Value.Point, 0.1f );
-            }
         }
 
         // Heleprs

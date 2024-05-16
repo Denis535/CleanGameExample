@@ -22,11 +22,10 @@ namespace Project.App {
         public void RunGame(PlayerCharacterType character, LevelType level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = EntityFactory.Game( character, level );
-            Game.RunGame();
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
-            Game.StopGame();
+            GameObject.DestroyImmediate( Game );
             Game = null;
         }
 

@@ -8,7 +8,8 @@ namespace Project.Entities {
 
     public class EnemyCharacter : Character {
 
-        private EnemyContext Context { get; set; }
+        // Context
+        private EnemyCharacterContext Context { get; set; }
 
         // Awake
         public override void Awake() {
@@ -27,19 +28,32 @@ namespace Project.Entities {
             Context = GetContext( transform );
         }
         public override void Update() {
+            if (Context.Player != null) {
+                var target = Context.Player.transform.position + Vector3.up * 1.75f;
+                SetLookInput( true, target );
+                PhysicsUpdate();
+                LookAt( target );
+                AimAt( target );
+                Weapon?.Fire();
+            } else {
+                SetLookInput( false, LookTarget );
+                PhysicsUpdate();
+                LookAt( null );
+                AimAt( null );
+            }
         }
 
         // Heleprs
-        private static EnemyContext GetContext(Transform transform) {
+        private static EnemyCharacterContext GetContext(Transform transform) {
             var mask = ~0 & ~LayerMask.GetMask( "Bullet" );
             var colliders = Physics.OverlapSphere( transform.position, 16, mask, QueryTriggerInteraction.Ignore );
-            return new EnemyContext() {
-                Player = colliders.Where( i => i.transform.parent == null ).Select( i => i.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
+            return new EnemyCharacterContext() {
+                Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
 
     }
-    internal struct EnemyContext {
-        public PlayerCharacter Player { get; init; }
+    internal struct EnemyCharacterContext {
+        public PlayerCharacter? Player { get; init; }
     }
 }

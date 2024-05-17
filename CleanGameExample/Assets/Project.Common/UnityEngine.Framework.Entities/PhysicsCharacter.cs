@@ -24,18 +24,9 @@ namespace UnityEngine.Framework.Entities {
         // Constructor
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
+            CharacterController.enabled = false;
         }
         public override void OnDestroy() {
-        }
-
-        // PhysicsFixedUpdate
-        public void PhysicsFixedUpdate() {
-            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            fixedUpdateWasInvoked = true;
-            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.Move( velocity * GetDeltaTime() );
-            }
         }
 
         // SetMovementInput
@@ -54,6 +45,18 @@ namespace UnityEngine.Framework.Entities {
                 IsJumpPressed |= isJumpPressed;
                 IsCrouchPressed |= isCrouchPressed;
                 IsAcceleratePressed |= isAcceleratePressed;
+            }
+        }
+
+        // PhysicsFixedUpdate
+        public void PhysicsFixedUpdate() {
+            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            fixedUpdateWasInvoked = true;
+            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
+                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                CharacterController.enabled = true;
+                CharacterController.Move( velocity * GetDeltaTime() );
+                CharacterController.enabled = false;
             }
         }
 

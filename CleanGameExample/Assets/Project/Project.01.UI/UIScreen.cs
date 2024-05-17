@@ -38,7 +38,9 @@ namespace Project.UI {
             AttachWidget( new UIRootWidget() );
         }
         public override void OnDestroy() {
-            Widget.DetachSelf();
+            if (Widget.View.IsAttached()) {
+                Widget.DetachSelf();
+            }
         }
 
         // Start

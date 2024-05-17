@@ -12,13 +12,16 @@ namespace Project.Entities {
         private Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         internal Collider Collider { get; private set; } = default!;
+        // SpawnPoint
+        protected SpawnPoint SpawnPoint { get; private set; } = default!;
         // IsPhysics
-        private bool IsPhysical { get => !Rigidbody.isKinematic; set => Rigidbody.isKinematic = !value; }
+        protected bool IsPhysical { get => !Rigidbody.isKinematic; private set => Rigidbody.isKinematic = !value; }
 
         // Awake
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
+            SpawnPoint = gameObject.RequireComponentInChildren<SpawnPoint>();
             IsPhysical = transform.parent == null;
         }
         public override void OnDestroy() {

@@ -9,13 +9,9 @@ namespace Project.Entities {
 
         private readonly Delay delay = new Delay( 0.2f );
 
-        // BulletSpawnPoint
-        private Transform BulletSpawnPoint { get; set; } = default!;
-
         // Awake
         public override void Awake() {
             base.Awake();
-            BulletSpawnPoint = transform.Find( "BulletSpawnPoint" );
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -25,7 +21,7 @@ namespace Project.Entities {
         public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                EntityFactory2.Bullet( BulletSpawnPoint.position, BulletSpawnPoint.rotation, this, 50 );
+                EntityFactory2.Bullet( SpawnPoint.transform.position, SpawnPoint.transform.rotation, this, 50 );
             }
         }
 

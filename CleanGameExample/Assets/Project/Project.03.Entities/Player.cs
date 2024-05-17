@@ -46,6 +46,7 @@ namespace Project.Entities {
         }
         public override void Dispose() {
             Actions.Dispose();
+            base.Dispose();
         }
 
         // SetCamera

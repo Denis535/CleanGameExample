@@ -11,15 +11,9 @@ namespace UnityEngine {
 #if UNITY_EDITOR
         // OnValidate
         public void OnValidate() {
-            gameObject.name = GetType().Name;
+            if (!gameObject.name.EndsWith( GetType().Name )) gameObject.name += GetType().Name;
         }
 #endif
-
-        // Awake
-        public void Awake() {
-        }
-        public void OnDestroy() {
-        }
 
         // OnDrawGizmos
         public void OnDrawGizmos() {

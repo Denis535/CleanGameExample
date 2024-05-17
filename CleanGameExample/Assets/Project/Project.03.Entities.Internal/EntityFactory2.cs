@@ -12,20 +12,20 @@ namespace Project.Entities {
         // Gun
         public static Gun Gun(Vector3 position, Quaternion rotation) {
             var keys = new[] {
-                R.Project.Entities.Misc.Gun_Gray_Value,
-                R.Project.Entities.Misc.Gun_Red_Value,
-                R.Project.Entities.Misc.Gun_Green_Value,
-                R.Project.Entities.Misc.Gun_Blue_Value,
+                R.Project.Entities.Objects.Gun_Gray_Value,
+                R.Project.Entities.Objects.Gun_Red_Value,
+                R.Project.Entities.Objects.Gun_Green_Value,
+                R.Project.Entities.Objects.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
             return Instantiate<Gun>( key, position, rotation );
         }
         public static Gun Gun(Transform parent) {
             var keys = new[] {
-                R.Project.Entities.Misc.Gun_Gray_Value,
-                R.Project.Entities.Misc.Gun_Red_Value,
-                R.Project.Entities.Misc.Gun_Green_Value,
-                R.Project.Entities.Misc.Gun_Blue_Value,
+                R.Project.Entities.Objects.Gun_Gray_Value,
+                R.Project.Entities.Objects.Gun_Red_Value,
+                R.Project.Entities.Objects.Gun_Green_Value,
+                R.Project.Entities.Objects.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
             return Instantiate<Gun>( key, parent );
@@ -34,7 +34,7 @@ namespace Project.Entities {
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
             using (Context.Begin( new Bullet.Args( gun, force ) )) {
-                return Instantiate<Bullet>( R.Project.Entities.Misc.Bullet_Value, position, rotation );
+                return Instantiate<Bullet>( R.Project.Entities.Objects.Bullet_Value, position, rotation );
             }
         }
 

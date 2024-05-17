@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Character
-  - Loot
+  - Object
   - Bullet
   layers:
   - Default
@@ -19,7 +19,7 @@ TagManager:
   - 
   - 
   - Character
-  - Loot
+  - Object
   - Bullet
   - 
   - 

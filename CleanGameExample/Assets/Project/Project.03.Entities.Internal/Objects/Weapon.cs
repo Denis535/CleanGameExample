@@ -15,7 +15,13 @@ namespace Project.Entities {
         // SpawnPoint
         protected SpawnPoint SpawnPoint { get; private set; } = default!;
         // IsPhysics
-        protected bool IsPhysical { get => !Rigidbody.isKinematic; private set => Rigidbody.isKinematic = !value; }
+        protected bool IsPhysical {
+            get => !Rigidbody.isKinematic;
+            private set {
+                Rigidbody.isKinematic = !value;
+                Rigidbody.detectCollisions = value;
+            }
+        }
 
         // Awake
         public override void Awake() {

@@ -20,12 +20,6 @@ namespace UnityEngine {
         }
 #endif
 
-        // Awake
-        public new void Awake() {
-        }
-        public new void OnDestroy() {
-        }
-
         // OnDrawGizmos
         public new void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Mathf.Clamp( i, 1f, 20f ) );

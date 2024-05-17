@@ -24,7 +24,6 @@ namespace UnityEngine.Framework.Entities {
         // Constructor
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
-            CharacterController.enabled = false;
         }
         public override void OnDestroy() {
         }
@@ -54,9 +53,7 @@ namespace UnityEngine.Framework.Entities {
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
                 var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.enabled = true;
                 CharacterController.Move( velocity * GetDeltaTime() );
-                CharacterController.enabled = false;
             }
         }
 

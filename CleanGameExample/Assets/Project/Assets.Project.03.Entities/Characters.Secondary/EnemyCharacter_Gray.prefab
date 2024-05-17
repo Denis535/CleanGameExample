@@ -106,7 +106,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -289,6 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1446049927350958001}
+  - component: {fileID: 8757575737455727999}
   m_Layer: 10
   m_Name: WeaponSlot
   m_TagString: Untagged
@@ -311,6 +312,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6952417827834183038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8757575737455727999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223363282232702055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8527348fbf3f0c49ae5fdaca51cb201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6672284114709840737
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +427,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

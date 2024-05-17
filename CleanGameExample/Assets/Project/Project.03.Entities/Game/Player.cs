@@ -79,11 +79,11 @@ namespace Project.Entities {
 
         // Heleprs
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform camera, Transform character) {
-            var mask = ~0 & ~LayerMask.GetMask( "Bullet" );
+            var mask = ~0 & ~LayerMask2.BulletMask;
             var hits = Physics.RaycastAll( camera.position, camera.forward, 128, mask, QueryTriggerInteraction.Ignore );
             var hit = hits.Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
-                return (hit.point, hit.distance, hit.transform.gameObject);
+                return (hit.point, hit.distance, hit.collider.gameObject);
             } else {
                 return null;
             }

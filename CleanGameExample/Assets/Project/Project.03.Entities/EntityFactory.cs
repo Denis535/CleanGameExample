@@ -12,13 +12,13 @@ namespace Project.Entities {
         // Game
         public static Game Game(PlayerCharacterType character, LevelType level) {
             using (Context.Begin( new Game.Args( character, level ) )) {
-                return Instantiate<Game>( R.Project.Entities.Game_Value );
+                return Instantiate<Game>( R.Project.Entities.Game.Game_Value );
             }
         }
 
         // Camera
         public static Camera2 Camera() {
-            return Instantiate<Camera2>( R.Project.Entities.Camera_Value );
+            return Instantiate<Camera2>( R.Project.Entities.Camera.Camera_Value );
         }
 
         // PlayerCharacter

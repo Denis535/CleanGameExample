@@ -7,34 +7,34 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory2 {
+    public static class EntityFactory {
 
         // Gun
+        public static void Gun(Slot slot) {
+            var keys = new[] {
+                R.Project.Entities.Weapons.Gun_Gray_Value,
+                R.Project.Entities.Weapons.Gun_Red_Value,
+                R.Project.Entities.Weapons.Gun_Green_Value,
+                R.Project.Entities.Weapons.Gun_Blue_Value,
+            };
+            var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
+            Instantiate<Gun>( key, slot.transform );
+        }
         public static Gun Gun(Vector3 position, Quaternion rotation) {
             var keys = new[] {
-                R.Project.Entities.Objects.Gun_Gray_Value,
-                R.Project.Entities.Objects.Gun_Red_Value,
-                R.Project.Entities.Objects.Gun_Green_Value,
-                R.Project.Entities.Objects.Gun_Blue_Value,
+                R.Project.Entities.Weapons.Gun_Gray_Value,
+                R.Project.Entities.Weapons.Gun_Red_Value,
+                R.Project.Entities.Weapons.Gun_Green_Value,
+                R.Project.Entities.Weapons.Gun_Blue_Value,
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
             return Instantiate<Gun>( key, position, rotation );
-        }
-        public static Gun Gun(Transform parent) {
-            var keys = new[] {
-                R.Project.Entities.Objects.Gun_Gray_Value,
-                R.Project.Entities.Objects.Gun_Red_Value,
-                R.Project.Entities.Objects.Gun_Green_Value,
-                R.Project.Entities.Objects.Gun_Blue_Value,
-            };
-            var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            return Instantiate<Gun>( key, parent );
         }
 
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
             using (Context.Begin( new Bullet.Args( gun, force ) )) {
-                return Instantiate<Bullet>( R.Project.Entities.Objects.Bullet_Value, position, rotation );
+                return Instantiate<Bullet>( R.Project.Entities.Weapons.Bullet_Value, position, rotation );
             }
         }
 

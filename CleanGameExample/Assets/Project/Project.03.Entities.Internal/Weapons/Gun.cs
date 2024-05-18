@@ -21,7 +21,7 @@ namespace Project.Entities {
         public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                EntityFactory2.Bullet( SpawnPoint.transform.position, SpawnPoint.transform.rotation, this, 20 );
+                EntityFactory.Bullet( SpawnPoint.transform.position, SpawnPoint.transform.rotation, this, 20 );
             }
         }
 

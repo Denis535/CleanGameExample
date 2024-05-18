@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Entity
   - Character
-  - Object
-  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -18,9 +17,9 @@ TagManager:
   - 
   - 
   - 
-  - Character
-  - Object
-  - Bullet
+  - Entity
+  - Trivial-Entity
+  - 
   - 
   - 
   - 

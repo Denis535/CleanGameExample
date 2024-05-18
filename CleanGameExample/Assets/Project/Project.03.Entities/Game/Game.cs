@@ -46,15 +46,15 @@ namespace Project.Entities {
         public void Start() {
             {
                 var point = World.PlayerSpawnPoints.First();
-                Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( EntityFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCamera( EntityFactory2.Camera() );
+                Player.SetCharacter( EntityFactory2.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( Player.Camera != null && !IsPaused );
             }
             foreach (var point in World.EnemySpawnPoints) {
-                EntityFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
+                EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );
             }
             foreach (var point in World.LootSpawnPoints) {
-                EntityFactory2.Gun( point.transform.position, point.transform.rotation );
+                EntityFactory.Gun( point.transform.position, point.transform.rotation );
             }
         }
         public void Update() {

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 830394248469184407}
   - component: {fileID: 7248588519052496415}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

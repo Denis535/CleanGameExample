@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: -5523722555421692247}
   m_Layer: 10
   m_Name: EnemyCharacter
-  m_TagString: Character
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

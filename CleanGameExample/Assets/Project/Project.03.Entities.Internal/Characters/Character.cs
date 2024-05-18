@@ -13,16 +13,22 @@ namespace Project.Entities {
         // Body
         protected Transform Body { get; private set; } = default!;
         // WeaponSlot
-        protected Transform WeaponSlot { get; private set; } = default!;
+        protected Slot WeaponSlot { get; private set; } = default!;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
+
+#if UNITY_EDITOR
+        // OnValidate
+        public void OnValidate() {
+        }
+#endif
 
         // Awake
         public override void Awake() {
             base.Awake();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
-            WeaponSlot = transform.Require( "WeaponSlot" );
+            WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -40,7 +46,7 @@ namespace Project.Entities {
 
         // AimAt
         public bool AimAt(Vector3? target) {
-            return AimAt( WeaponSlot, target );
+            return AimAt( WeaponSlot.transform, target );
         }
 
         // SetWeapon
@@ -49,13 +55,13 @@ namespace Project.Entities {
         }
 
         // Helpers
-        private static Weapon? GetWeapon(Transform transform) {
-            return transform.childCount > 0 ? transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
+        private static Weapon? GetWeapon(Slot slot) {
+            return slot.transform.childCount > 0 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
         }
-        private static void SetWeapon(Transform transform, Weapon? weapon) {
-            transform.DetachChildren();
+        private static void SetWeapon(Slot slot, Weapon? weapon) {
+            slot.transform.DetachChildren();
             if (weapon != null) {
-                weapon.transform.parent = transform;
+                weapon.transform.parent = slot.transform;
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;
             }

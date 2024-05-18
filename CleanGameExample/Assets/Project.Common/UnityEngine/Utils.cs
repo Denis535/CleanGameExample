@@ -88,16 +88,14 @@ namespace UnityEngine {
     }
     public static class Tags {
 
-        public static string Character { get; } = "Character";
-        public static string Object { get; } = "Object";
-        public static string Bullet { get; } = "Bullet";
+        public static string Entity { get; } = "Entity";
 
     }
     public static class Layers {
 
-        public static int CharacterMask { get; } = GetMask( "Character" );
-        public static int ObjectMask { get; } = GetMask( "Object" );
-        public static int BulletMask { get; } = GetMask( "Bullet" );
+        public static int EntityMask { get; } = GetMask( "Entity" );
+        public static int TrivialEntityMask { get; } = GetMask( "Trivial-Entity" );
+        //public static int CharacterConstollerMask { get; } = GetMask( "Character-Constoller" );
 
         public static int GetMask(string name) {
             return 1 << GetLayer( name );

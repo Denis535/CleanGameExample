@@ -7,7 +7,7 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory {
+    public static class EntityFactory2 {
 
         // Game
         public static Game Game(PlayerCharacterEnum character, LevelEnum level) {

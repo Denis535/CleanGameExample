@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 2675597347273499829, guid: 8b028960af38ed34ca778761eed5be6a,
         type: 3}
       propertyPath: m_Name
-      value: PlayerCharacter
+      value: PlayerCharacter_Gray
       objectReference: {fileID: 0}
     - target: {fileID: 6596323002675131578, guid: 8b028960af38ed34ca778761eed5be6a,
         type: 3}

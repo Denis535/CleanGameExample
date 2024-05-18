@@ -34,7 +34,7 @@ namespace Project.Entities {
                 PhysicsUpdate();
                 LookAt( target );
                 AimAt( target );
-                //Weapon?.Fire();
+                Weapon?.Fire();
             } else {
                 SetLookInput( false, LookTarget );
                 PhysicsUpdate();
@@ -45,8 +45,8 @@ namespace Project.Entities {
 
         // Heleprs
         private static EnemyCharacterContext GetContext(Transform transform) {
-            var mask = ~0 & ~LayerMask2.BulletMask;
-            var colliders = Physics.OverlapSphere( transform.position, 16, mask, QueryTriggerInteraction.Ignore );
+            var mask = ~0 & ~Layers.BulletMask;
+            var colliders = Physics.OverlapSphere( transform.position, 8, mask, QueryTriggerInteraction.Ignore );
             return new EnemyCharacterContext() {
                 Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };

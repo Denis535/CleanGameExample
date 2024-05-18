@@ -10,7 +10,7 @@ namespace Project.Entities {
     public static class EntityFactory {
 
         // Game
-        public static Game Game(PlayerCharacterType character, LevelType level) {
+        public static Game Game(PlayerCharacterEnum character, LevelEnum level) {
             using (Context.Begin( new Game.Args( character, level ) )) {
                 return Instantiate<Game>( R.Project.Entities.Game.Game_Value );
             }
@@ -22,12 +22,12 @@ namespace Project.Entities {
         }
 
         // PlayerCharacter
-        public static PlayerCharacter PlayerCharacter(PlayerCharacterType character, Vector3 position, Quaternion rotation) {
+        public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
             var key = character switch {
-                PlayerCharacterType.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
-                PlayerCharacterType.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
-                PlayerCharacterType.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
-                PlayerCharacterType.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
+                PlayerCharacterEnum.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
+                PlayerCharacterEnum.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
+                PlayerCharacterEnum.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
+                PlayerCharacterEnum.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
             return Instantiate<PlayerCharacter>( key, position, rotation );

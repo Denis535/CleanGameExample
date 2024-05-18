@@ -13,6 +13,8 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase {
 
+        // Document
+        private UIDocument Document { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
         // Application
@@ -69,11 +71,11 @@ namespace Project.UI {
         // AttachWidget
         public override void AttachWidget(UIWidgetBase widget, object? argument = null) {
             base.AttachWidget( widget, argument );
-            AddView( Document, widget.View! );
+            Document.Add( widget.View! );
         }
         public override void DetachWidget(UIWidgetBase widget, object? argument = null) {
             if (Document && Document.rootVisualElement != null) {
-                RemoveView( Document, widget.View! );
+                Document.Remove( widget.View! );
             } else {
                 if (!Document) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
                 if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );

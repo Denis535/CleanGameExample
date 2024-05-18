@@ -17,10 +17,7 @@ namespace Project.Entities {
         // IsPhysics
         protected bool IsPhysical {
             get => !Rigidbody.isKinematic;
-            private set {
-                Rigidbody.isKinematic = !value;
-                Rigidbody.detectCollisions = value;
-            }
+            private set => Rigidbody.isKinematic = !value;
         }
 
         // Awake

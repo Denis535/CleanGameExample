@@ -19,7 +19,7 @@ namespace Project.App {
         }
 
         // RunGame
-        public void RunGame(PlayerCharacterType character, LevelType level) {
+        public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Game = EntityFactory.Game( character, level );
         }

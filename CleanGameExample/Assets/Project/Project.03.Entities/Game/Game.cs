@@ -9,10 +9,12 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Args(PlayerCharacterType PlayerCharacterType, LevelType LevelType);
+        public record Args(PlayerCharacterEnum Character, LevelEnum Level);
 
         // State
         public bool IsPaused { get; private set; }
+        // LevelEnum
+        public LevelEnum LevelEnum { get; private set; }
         // Entities
         public Player Player { get; private set; } = default!;
         public World World { get; private set; } = default!;
@@ -20,7 +22,8 @@ namespace Project.Entities {
         // Awake
         public override void Awake() {
             var args = Context.GetValue<Args>();
-            Player = new Player( args.PlayerCharacterType );
+            LevelEnum = args.Level;
+            Player = new Player( args.Character );
             World = Utils.Container.RequireDependency<World>( null );
         }
         public override void OnDestroy() {
@@ -44,7 +47,7 @@ namespace Project.Entities {
             {
                 var point = World.PlayerSpawnPoints.First();
                 Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( EntityFactory.PlayerCharacter( Player.CharacterType, point.transform.position, point.transform.rotation ) );
+                Player.SetCharacter( EntityFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( Player.Camera != null && !IsPaused );
             }
             foreach (var point in World.EnemySpawnPoints) {
@@ -62,15 +65,15 @@ namespace Project.Entities {
         }
 
     }
-    // PlayerCharacterType
-    public enum PlayerCharacterType {
+    // PlayerCharacterEnum
+    public enum PlayerCharacterEnum {
         Gray,
         Red,
         Green,
         Blue
     }
-    // LevelType
-    public enum LevelType {
+    // LevelEnum
+    public enum LevelEnum {
         Level1,
         Level2,
         Level3

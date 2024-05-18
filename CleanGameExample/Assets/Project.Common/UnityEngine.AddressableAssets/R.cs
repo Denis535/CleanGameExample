@@ -46,12 +46,14 @@ namespace UnityEngine.AddressableAssets {
                 }
                 public static class @Characters {
                     public static class @Primary {
+                        public const string @PlayerCharacter_Value = "Project.Entities/Characters.Primary/PlayerCharacter.prefab";
                         public const string @PlayerCharacter_Blue_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Blue.prefab";
                         public const string @PlayerCharacter_Gray_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Gray.prefab";
                         public const string @PlayerCharacter_Green_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Green.prefab";
                         public const string @PlayerCharacter_Red_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Red.prefab";
                     }
                     public static class @Secondary {
+                        public const string @EnemyCharacter_Value = "Project.Entities/Characters.Secondary/EnemyCharacter.prefab";
                         public const string @EnemyCharacter_Blue_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Blue.prefab";
                         public const string @EnemyCharacter_Gray_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Gray.prefab";
                         public const string @EnemyCharacter_Green_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Green.prefab";
@@ -63,6 +65,7 @@ namespace UnityEngine.AddressableAssets {
                 }
                 public static class @Objects {
                     public const string @Bullet_Value = "Project.Entities/Objects/Bullet.prefab";
+                    public const string @Gun_Value = "Project.Entities/Objects/Gun.prefab";
                     public const string @Gun_Blue_Value = "Project.Entities/Objects/Gun_Blue.prefab";
                     public const string @Gun_Gray_Value = "Project.Entities/Objects/Gun_Gray.prefab";
                     public const string @Gun_Green_Value = "Project.Entities/Objects/Gun_Green.prefab";

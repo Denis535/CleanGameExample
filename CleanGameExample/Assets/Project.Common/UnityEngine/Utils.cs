@@ -86,8 +86,17 @@ namespace UnityEngine {
         }
 
     }
-    public static class LayerMask2 {
+    public static class Tags {
 
+        public static string Character { get; } = "Character";
+        public static string Object { get; } = "Object";
+        public static string Bullet { get; } = "Bullet";
+
+    }
+    public static class Layers {
+
+        public static int CharacterMask { get; } = GetMask( "Character" );
+        public static int ObjectMask { get; } = GetMask( "Object" );
         public static int BulletMask { get; } = GetMask( "Bullet" );
 
         public static int GetMask(string name) {

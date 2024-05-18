@@ -21,9 +21,10 @@ namespace UnityEngine.Framework.Entities {
         public bool IsLookPressed { get; private set; }
         public Vector3 LookTarget { get; private set; }
 
-        // Constructor
+        // Awake
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
+            CharacterController.enabled = false;
         }
         public override void OnDestroy() {
         }
@@ -53,7 +54,9 @@ namespace UnityEngine.Framework.Entities {
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
                 var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.Move( velocity * GetDeltaTime() );
+                CharacterController.enabled = true;
+                CharacterController.Move( velocity * Time.fixedDeltaTime );
+                CharacterController.enabled = false;
             }
         }
 
@@ -70,7 +73,7 @@ namespace UnityEngine.Framework.Entities {
             if (IsLookPressed) {
                 var rotation = transform.localRotation;
                 var rotation2 = GetRotation( transform.localPosition, LookTarget );
-                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * GetDeltaTime() );
+                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * Time.deltaTime );
             }
         }
 
@@ -103,10 +106,6 @@ namespace UnityEngine.Framework.Entities {
         private static Quaternion GetRotation(Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             return Quaternion.LookRotation( direction, Vector3.up );
-        }
-        // Heleprs
-        private static float GetDeltaTime() {
-            return Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
         }
 
     }

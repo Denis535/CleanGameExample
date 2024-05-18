@@ -7,7 +7,7 @@ namespace Project.Entities {
 
     public class Gun : Weapon {
 
-        private readonly Delay delay = new Delay( 0.2f );
+        private readonly Delay delay = new Delay( 0.25f );
 
         // Awake
         public override void Awake() {

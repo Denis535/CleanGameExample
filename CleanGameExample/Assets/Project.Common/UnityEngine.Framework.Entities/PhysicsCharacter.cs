@@ -24,6 +24,7 @@ namespace UnityEngine.Framework.Entities {
         // Awake
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
+            CharacterController.detectCollisions = false;
         }
         public override void OnDestroy() {
         }
@@ -53,7 +54,9 @@ namespace UnityEngine.Framework.Entities {
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
                 var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                CharacterController.detectCollisions = true;
                 CharacterController.Move( velocity * Time.fixedDeltaTime );
+                CharacterController.detectCollisions = false;
             }
         }
 
@@ -72,6 +75,11 @@ namespace UnityEngine.Framework.Entities {
                 var rotation2 = GetRotation( transform.localPosition, LookTarget );
                 transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * Time.deltaTime );
             }
+        }
+
+        // OnControllerColliderHit
+        public void OnControllerColliderHit(ControllerColliderHit hit) {
+            hit.rigidbody?.WakeUp();
         }
 
         // Helpers

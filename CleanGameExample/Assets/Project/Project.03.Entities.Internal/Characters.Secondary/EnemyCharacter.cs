@@ -45,7 +45,7 @@ namespace Project.Entities {
 
         // Heleprs
         private static EnemyCharacterContext GetContext(Transform transform) {
-            var mask = ~0;
+            var mask = ~0 & ~Layers.TrivialEntityMask;
             var colliders = Physics.OverlapSphere( transform.position, 8, mask, QueryTriggerInteraction.Ignore );
             return new EnemyCharacterContext() {
                 Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )

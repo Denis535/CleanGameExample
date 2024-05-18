@@ -95,7 +95,6 @@ namespace UnityEngine {
 
         public static int EntityMask { get; } = GetMask( "Entity" );
         public static int TrivialEntityMask { get; } = GetMask( "Trivial-Entity" );
-        //public static int CharacterConstollerMask { get; } = GetMask( "Character-Constoller" );
 
         public static int GetMask(string name) {
             return 1 << GetLayer( name );

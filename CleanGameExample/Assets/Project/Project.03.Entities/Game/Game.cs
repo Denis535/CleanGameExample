@@ -13,10 +13,9 @@ namespace Project.Entities {
 
         // State
         public bool IsPaused { get; private set; }
-        // LevelEnum
-        public LevelEnum LevelEnum { get; private set; }
         // Entities
         public Player Player { get; private set; } = default!;
+        public LevelEnum LevelEnum { get; private set; }
         public World World { get; private set; } = default!;
 
         // Awake

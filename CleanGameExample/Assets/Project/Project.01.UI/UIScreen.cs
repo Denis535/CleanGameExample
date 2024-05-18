@@ -40,9 +40,7 @@ namespace Project.UI {
             AttachWidget( new UIRootWidget() );
         }
         public override void OnDestroy() {
-            if (Widget.View.IsAttached()) {
-                Widget.DetachSelf();
-            }
+            Widget.DetachSelf();
         }
 
         // Start

@@ -5,10 +5,17 @@ namespace UnityEngine.Framework.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    // Note: Character consists of CharacterController and its internal colliders (head, body, hands, legs, weapon, etc).
+    // Note: Character consists of character-controller and its internals (head, body, hands, legs, weapon, etc).
+    // Note: Character-controller should collide only with other character-controllers and don't affect other colliders or rays.
+    // Note: While not moving character-controller can collide only with other character-controllers.
+    // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
     public abstract class PhysicsCharacter : EntityBase {
 
         private bool fixedUpdateWasInvoked;
+
+        // ExcludeLayersMask
+        private static LayerMask ExcludeLayersMask_Inactive => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
+        private static LayerMask ExcludeLayersMask_Active => Masks.CharacterEntityInternal; // Exclude CharacterEntityInternal layer
 
         // CharacterController
         private CharacterController CharacterController { get; set; } = default!;
@@ -25,7 +32,7 @@ namespace UnityEngine.Framework.Entities {
         // Awake
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
-            CharacterController.detectCollisions = false;
+            CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
         }
         public override void OnDestroy() {
         }
@@ -55,7 +62,9 @@ namespace UnityEngine.Framework.Entities {
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
                 var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                CharacterController.excludeLayers = ExcludeLayersMask_Active;
                 CharacterController.Move( velocity * Time.fixedDeltaTime );
+                CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
             }
         }
 

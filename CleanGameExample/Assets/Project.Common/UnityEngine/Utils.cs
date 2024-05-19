@@ -93,13 +93,13 @@ namespace UnityEngine {
         public static readonly Collider[] ColliderBuffer = new Collider[ 256 ];
 
         public static IEnumerable<RaycastHit> RaycastAll(Vector3 position, Vector3 direction, float maxDistance) {
-            var mask = ~0 & ~Layers.CharacterEntity & ~Layers.TrivialMask;
+            var mask = ~0 & ~Masks.CharacterEntity & ~Masks.Trivial; // excludeCharacterEntity and Trivial
             var count = Physics.RaycastNonAlloc( position, direction, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
             return RaycastHitBuffer.Take( count );
         }
 
         public static IEnumerable<Collider> OverlapSphere(Vector3 position, float radius) {
-            var mask = ~0 & ~Layers.CharacterEntityInternal & ~Layers.TrivialMask;
+            var mask = ~0 & ~Masks.CharacterEntityInternal & ~Masks.Trivial; // exclude CharacterEntityInternal and Trivial
             var count = Physics.OverlapSphereNonAlloc( position, radius, ColliderBuffer, mask, QueryTriggerInteraction.Ignore );
             return ColliderBuffer.Take( count );
         }
@@ -112,14 +112,11 @@ namespace UnityEngine {
     }
     public static class Layers {
 
-        public static int EntityMask { get; } = GetMask( "Entity" );
-        public static int CharacterEntity { get; } = GetMask( "Character-Entity" );
-        public static int CharacterEntityInternal { get; } = GetMask( "Character-Entity-Internal" );
-        public static int TrivialMask { get; } = GetMask( "Trivial" );
+        public static int Entity { get; } = GetLayer( "Entity" );
+        public static int CharacterEntity { get; } = GetLayer( "Character-Entity" );
+        public static int CharacterEntityInternal { get; } = GetLayer( "Character-Entity-Internal" );
+        public static int Trivial { get; } = GetLayer( "Trivial" );
 
-        public static int GetMask(string name) {
-            return 1 << GetLayer( name );
-        }
         public static int GetLayer(string name) {
             var layer = LayerMask.NameToLayer( name );
             Assert.Operation.Message( $"Can not find {name} layer" ).Valid( layer != -1 );
@@ -132,12 +129,24 @@ namespace UnityEngine {
         }
 
     }
+    public static class Masks {
+
+        public static int Entity { get; } = GetMask( "Entity" );
+        public static int CharacterEntity { get; } = GetMask( "Character-Entity" );
+        public static int CharacterEntityInternal { get; } = GetMask( "Character-Entity-Internal" );
+        public static int Trivial { get; } = GetMask( "Trivial" );
+
+        public static int GetMask(string name) {
+            return 1 << Layers.GetLayer( name );
+        }
+
+    }
     public class Delay {
 
         public float Interval { get; }
         public float? StartTime { get; private set; }
         public float? EndTime => StartTime.HasValue ? StartTime.Value + Interval : null;
-        public float Left => StartTime.HasValue ? Math.Max( StartTime.Value + Interval - Time.time, 0 ) : 0;
+        public float? Left => StartTime.HasValue ? Math.Max( StartTime.Value + Interval - Time.time, 0 ) : null;
         public bool IsCompleted => StartTime.HasValue ? (StartTime.Value + Interval - Time.time) <= 0 : true;
 
         public Delay(float interval) {

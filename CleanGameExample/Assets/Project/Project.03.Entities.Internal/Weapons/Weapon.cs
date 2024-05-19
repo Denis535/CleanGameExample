@@ -9,9 +9,9 @@ namespace Project.Entities {
     public abstract class Weapon : EntityBase {
 
         // Rigidbody
-        private Rigidbody Rigidbody { get; set; } = default!;
+        protected Rigidbody Rigidbody { get; set; } = default!;
         // Collider
-        internal Collider Collider { get; private set; } = default!;
+        protected Collider Collider { get; private set; } = default!;
         // SpawnPoint
         protected SpawnPoint SpawnPoint { get; private set; } = default!;
         // IsFree

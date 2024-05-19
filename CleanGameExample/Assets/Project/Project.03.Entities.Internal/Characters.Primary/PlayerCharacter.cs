@@ -45,10 +45,10 @@ namespace Project.Entities {
                 } else {
                     if (Actions.IsMovePressed( out _ )) {
                         LookAt( Actions.LookTarget );
-                        AimAt( Actions.LookTarget );
+                        AimAt( null );
                     } else {
                         LookAt( Actions.LookTarget );
-                        AimAt( Actions.LookTarget );
+                        AimAt( null );
                     }
                 }
                 if (Actions.IsFirePressed()) {

@@ -32,8 +32,8 @@ namespace Project.Entities {
         }
 
         // Bullet
-        public static Bullet Bullet(Vector3 position, Quaternion rotation, Gun gun, float force) {
-            using (Context.Begin( new Bullet.Args( gun, force ) )) {
+        public static Bullet Bullet(Vector3 position, Quaternion rotation, float force) {
+            using (Context.Begin( new Bullet.Args( force ) )) {
                 return Instantiate<Bullet>( R.Project.Entities.Weapons.Bullet_Value, position, rotation );
             }
         }

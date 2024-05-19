@@ -48,7 +48,7 @@ namespace Project.Entities {
 
         // Heleprs
         private static Context_ GetContext(Transform transform) {
-            var colliders = Physics2.OverlapSphere( transform, 8 );
+            var colliders = Physics2.OverlapSphere( transform.position, 8 );
             return new Context_() {
                 Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };

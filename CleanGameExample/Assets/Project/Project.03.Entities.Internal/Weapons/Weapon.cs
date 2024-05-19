@@ -14,11 +14,12 @@ namespace Project.Entities {
         internal Collider Collider { get; private set; } = default!;
         // SpawnPoint
         protected SpawnPoint SpawnPoint { get; private set; } = default!;
-        // IsPhysics
-        protected bool IsPhysical {
+        // IsFree
+        public bool IsFree {
             get => !Rigidbody.isKinematic;
             private set {
                 Rigidbody.isKinematic = !value;
+                Rigidbody.detectCollisions = value;
             }
         }
 
@@ -27,7 +28,7 @@ namespace Project.Entities {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
             SpawnPoint = gameObject.RequireComponentInChildren<SpawnPoint>();
-            IsPhysical = transform.parent == null;
+            IsFree = transform.parent == null;
         }
         public override void OnDestroy() {
         }
@@ -37,7 +38,7 @@ namespace Project.Entities {
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {
-            IsPhysical = transform.parent == null;
+            IsFree = transform.parent == null;
         }
 
     }

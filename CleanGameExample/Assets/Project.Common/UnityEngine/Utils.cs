@@ -92,18 +92,16 @@ namespace UnityEngine {
         public static readonly RaycastHit[] RaycastHitBuffer = new RaycastHit[ 256 ];
         public static readonly Collider[] ColliderBuffer = new Collider[ 256 ];
 
-        // RaycastAll
-        public static IEnumerable<RaycastHit> RaycastAll(Transform ray, float maxDistance) {
-            var mask = ~0 & ~Layers.TrivialMask;
-            var count = Physics.RaycastNonAlloc( ray.position, ray.forward, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
-            return RaycastHitBuffer.Take( count ).Where( i => i.collider is not CharacterController );
+        public static IEnumerable<RaycastHit> RaycastAll(Vector3 position, Vector3 direction, float maxDistance) {
+            var mask = ~0 & ~Layers.CharacterEntity & ~Layers.TrivialMask;
+            var count = Physics.RaycastNonAlloc( position, direction, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
+            return RaycastHitBuffer.Take( count );
         }
 
-        // OverlapSphere
-        public static IEnumerable<Collider> OverlapSphere(Transform transform, float radius) {
-            var mask = ~0 & ~Layers.TrivialMask;
-            var count = Physics.OverlapSphereNonAlloc( transform.position, radius, ColliderBuffer, mask, QueryTriggerInteraction.Ignore );
-            return ColliderBuffer.Take( count ).Where( i => i is not CharacterController );
+        public static IEnumerable<Collider> OverlapSphere(Vector3 position, float radius) {
+            var mask = ~0 & ~Layers.CharacterEntityInternal & ~Layers.TrivialMask;
+            var count = Physics.OverlapSphereNonAlloc( position, radius, ColliderBuffer, mask, QueryTriggerInteraction.Ignore );
+            return ColliderBuffer.Take( count );
         }
 
     }
@@ -115,6 +113,8 @@ namespace UnityEngine {
     public static class Layers {
 
         public static int EntityMask { get; } = GetMask( "Entity" );
+        public static int CharacterEntity { get; } = GetMask( "Character-Entity" );
+        public static int CharacterEntityInternal { get; } = GetMask( "Character-Entity-Internal" );
         public static int TrivialMask { get; } = GetMask( "Trivial" );
 
         public static int GetMask(string name) {
@@ -129,6 +129,27 @@ namespace UnityEngine {
             var name = LayerMask.LayerToName( layer );
             Assert.Operation.Message( $"Can not find {layer} layer name" ).Valid( name != null );
             return name;
+        }
+
+    }
+    public class Delay {
+
+        public float Interval { get; }
+        public float? StartTime { get; private set; }
+        public float? EndTime => StartTime.HasValue ? StartTime.Value + Interval : null;
+        public float Left => StartTime.HasValue ? Math.Max( StartTime.Value + Interval - Time.time, 0 ) : 0;
+        public bool IsCompleted => StartTime.HasValue ? (StartTime.Value + Interval - Time.time) <= 0 : true;
+
+        public Delay(float interval) {
+            Interval = interval;
+        }
+
+        public void Start() {
+            StartTime = Time.time;
+        }
+
+        public override string ToString() {
+            return "Delay: " + Interval;
         }
 
     }

@@ -5,6 +5,7 @@ namespace UnityEngine.Framework.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
+    // Note: Character consists of CharacterController and its internal colliders (head, body, hands, legs, weapon, etc).
     public abstract class PhysicsCharacter : EntityBase {
 
         private bool fixedUpdateWasInvoked;

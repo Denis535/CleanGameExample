@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3778303671815374908}
   - component: {fileID: 9222974171862713818}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: WeaponSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 2272325331459209956}
   - component: {fileID: 3029342745144835806}
   - component: {fileID: 7731921126550233755}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 6596323002675131578}
   - component: {fileID: 1792516787036207607}
   - component: {fileID: 4183714055160291129}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: PlayerCharacter
   m_TagString: Entity
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.8
-  m_Radius: 0.3
+  m_Radius: 0.28
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 2632964050619071538}
   - component: {fileID: 3855606226391773630}
   - component: {fileID: 37307423080307669}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ Transform:
   m_GameObject: {fileID: 4466324736846106255}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0.02}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 7790041934921701072}
   - component: {fileID: 6745088857663701652}
   - component: {fileID: 692130507164166130}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 7228035373021547069}
   - component: {fileID: 2745356741263156602}
   - component: {fileID: 5242437335705086426}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

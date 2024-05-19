@@ -56,18 +56,6 @@ namespace UnityEngine.Framework.Entities {
             }
         }
 
-        // PhysicsFixedUpdate
-        public void PhysicsFixedUpdate() {
-            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            fixedUpdateWasInvoked = true;
-            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.excludeLayers = ExcludeLayersMask_Active;
-                CharacterController.Move( velocity * Time.fixedDeltaTime );
-                CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
-            }
-        }
-
         // SetLookInput
         public void SetLookInput(bool isLookPressed, Vector3 lookTarget) {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
@@ -75,14 +63,35 @@ namespace UnityEngine.Framework.Entities {
             LookTarget = lookTarget;
         }
 
+        // PhysicsFixedUpdate
+        public void PhysicsFixedUpdate() {
+            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            fixedUpdateWasInvoked = true;
+            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
+                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                Move( velocity );
+            }
+        }
+
         // PhysicsUpdate
         public void PhysicsUpdate() {
             Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsLookPressed) {
-                var rotation = transform.localRotation;
-                var rotation2 = GetRotation( transform.localPosition, LookTarget );
-                transform.localRotation = Quaternion.RotateTowards( rotation, rotation2, 3 * 360 * Time.deltaTime );
+                var rotation = GetRotation( transform.localPosition, LookTarget );
+                Rotate( rotation );
             }
+        }
+
+        // Move
+        protected virtual void Move(Vector3 velocity) {
+            CharacterController.excludeLayers = ExcludeLayersMask_Active;
+            CharacterController.Move( velocity * Time.fixedDeltaTime );
+            CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
+        }
+
+        // Rotate
+        protected virtual void Rotate(Quaternion rotation) {
+            transform.localRotation = Quaternion.RotateTowards( transform.localRotation, rotation, 3 * 360 * Time.deltaTime );
         }
 
         // OnControllerColliderHit

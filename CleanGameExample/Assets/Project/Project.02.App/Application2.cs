@@ -27,6 +27,8 @@ namespace Project.App {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             GameObject.DestroyImmediate( Game );
             Game = null;
+            Array.Clear( Physics2.RaycastHitBuffer, 0, Physics2.RaycastHitBuffer.Length );
+            Array.Clear( Physics2.ColliderBuffer, 0, Physics2.ColliderBuffer.Length );
         }
 
     }

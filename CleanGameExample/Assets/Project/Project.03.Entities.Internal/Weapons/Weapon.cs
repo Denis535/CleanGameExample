@@ -19,7 +19,6 @@ namespace Project.Entities {
             get => !Rigidbody.isKinematic;
             private set {
                 Rigidbody.isKinematic = !value;
-                //Rigidbody.detectCollisions = value;
             }
         }
 

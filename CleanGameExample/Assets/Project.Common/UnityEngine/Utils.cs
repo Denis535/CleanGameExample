@@ -3,6 +3,7 @@ namespace UnityEngine {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using UnityEngine;
@@ -86,6 +87,26 @@ namespace UnityEngine {
         }
 
     }
+    public static class Physics2 {
+
+        public static readonly RaycastHit[] RaycastHitBuffer = new RaycastHit[ 256 ];
+        public static readonly Collider[] ColliderBuffer = new Collider[ 256 ];
+
+        // RaycastAll
+        public static IEnumerable<RaycastHit> RaycastAll(Transform ray, float maxDistance) {
+            var mask = ~0 & ~Layers.TrivialMask;
+            var count = Physics.RaycastNonAlloc( ray.position, ray.forward, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
+            return RaycastHitBuffer.Take( count ).Where( i => i.collider is not CharacterController );
+        }
+
+        // OverlapSphere
+        public static IEnumerable<Collider> OverlapSphere(Transform transform, float radius) {
+            var mask = ~0 & ~Layers.TrivialMask;
+            var count = Physics.OverlapSphereNonAlloc( transform.position, radius, ColliderBuffer, mask, QueryTriggerInteraction.Ignore );
+            return ColliderBuffer.Take( count ).Where( i => i is not CharacterController );
+        }
+
+    }
     public static class Tags {
 
         public static string Entity { get; } = "Entity";
@@ -94,7 +115,7 @@ namespace UnityEngine {
     public static class Layers {
 
         public static int EntityMask { get; } = GetMask( "Entity" );
-        public static int TrivialEntityMask { get; } = GetMask( "Trivial-Entity" );
+        public static int TrivialMask { get; } = GetMask( "Trivial" );
 
         public static int GetMask(string name) {
             return 1 << GetLayer( name );

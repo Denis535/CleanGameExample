@@ -7,9 +7,12 @@ namespace Project.Entities {
     using UnityEngine;
 
     public class EnemyCharacter : Character {
+        private struct Context_ {
+            public PlayerCharacter? Player { get; init; }
+        }
 
         // Context
-        private EnemyCharacterContext Context { get; set; }
+        private Context_ Context { get; set; }
 
         // Awake
         public override void Awake() {
@@ -44,16 +47,12 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static EnemyCharacterContext GetContext(Transform transform) {
-            var mask = ~0 & ~Layers.TrivialEntityMask;
-            var colliders = Physics.OverlapSphere( transform.position, 8, mask, QueryTriggerInteraction.Ignore );
-            return new EnemyCharacterContext() {
+        private static Context_ GetContext(Transform transform) {
+            var colliders = Physics2.OverlapSphere( transform, 8 );
+            return new Context_() {
                 Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
 
-    }
-    internal struct EnemyCharacterContext {
-        public PlayerCharacter? Player { get; init; }
     }
 }

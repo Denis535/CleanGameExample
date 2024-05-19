@@ -54,9 +54,7 @@ namespace UnityEngine.Framework.Entities {
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
                 var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                CharacterController.detectCollisions = true;
                 CharacterController.Move( velocity * Time.fixedDeltaTime );
-                CharacterController.detectCollisions = false;
             }
         }
 

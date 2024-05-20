@@ -24,7 +24,7 @@ namespace Project.Entities {
 
         // Start
         public override void Start() {
-            EntityFactory.Gun( WeaponSlot );
+            WeaponFactory.Gun( WeaponSlot );
         }
         public override void FixedUpdate() {
             PhysicsFixedUpdate();

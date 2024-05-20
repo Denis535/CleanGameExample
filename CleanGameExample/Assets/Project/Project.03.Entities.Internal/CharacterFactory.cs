@@ -7,19 +7,7 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory2 {
-
-        // Game
-        public static Game Game(PlayerCharacterEnum character, LevelEnum level) {
-            using (Context.Begin( new Game.Args( character, level ) )) {
-                return Instantiate<Game>( R.Project.Entities.Game.Game_Value );
-            }
-        }
-
-        // Camera
-        public static Camera2 Camera() {
-            return Instantiate<Camera2>( R.Project.Entities.Camera.Camera_Value );
-        }
+    public static class CharacterFactory {
 
         // PlayerCharacter
         public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
@@ -46,12 +34,6 @@ namespace Project.Entities {
         }
 
         // Helpers
-        private static T Instantiate<T>(string key) where T : MonoBehaviour {
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>() );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
-        }
         private static T Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
             var prefab = Addressables.LoadAssetAsync<GameObject>( key );
             var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>(), position, rotation );

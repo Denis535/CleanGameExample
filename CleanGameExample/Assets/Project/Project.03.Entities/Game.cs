@@ -45,15 +45,15 @@ namespace Project.Entities {
         public void Start() {
             {
                 var point = World.PlayerSpawnPoints.First();
-                Player.SetCamera( EntityFactory2.Camera() );
-                Player.SetCharacter( EntityFactory2.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCamera( GameFactory.Camera() );
+                Player.SetCharacter( CharacterFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( Player.Camera != null && !IsPaused );
             }
             foreach (var point in World.EnemySpawnPoints) {
-                EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );
+                CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
             }
             foreach (var point in World.LootSpawnPoints) {
-                EntityFactory.Gun( point.transform.position, point.transform.rotation );
+                WeaponFactory.Gun( point.transform.position, point.transform.rotation );
             }
         }
         public void Update() {
@@ -63,13 +63,6 @@ namespace Project.Entities {
             Player.LateUpdate();
         }
 
-    }
-    // PlayerCharacterEnum
-    public enum PlayerCharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
     // LevelEnum
     public enum LevelEnum {

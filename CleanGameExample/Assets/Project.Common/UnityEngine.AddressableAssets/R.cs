@@ -41,9 +41,8 @@ namespace UnityEngine.AddressableAssets {
                 }
             }
             public static class @Entities {
-                public static class @Camera {
-                    public const string @Camera_Value = "Project.Entities/Camera/Camera.prefab";
-                }
+                public const string @Camera_Value = "Project.Entities/Camera.prefab";
+                public const string @Game_Value = "Project.Entities/Game.prefab";
                 public static class @Characters {
                     public static class @Primary {
                         public const string @PlayerCharacter_Value = "Project.Entities/Characters.Primary/PlayerCharacter.prefab";
@@ -59,9 +58,6 @@ namespace UnityEngine.AddressableAssets {
                         public const string @EnemyCharacter_Green_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Green.prefab";
                         public const string @EnemyCharacter_Red_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Red.prefab";
                     }
-                }
-                public static class @Game {
-                    public const string @Game_Value = "Project.Entities/Game/Game.prefab";
                 }
                 public static class @Weapons {
                     public const string @Bullet_Value = "Project.Entities/Weapons/Bullet.prefab";

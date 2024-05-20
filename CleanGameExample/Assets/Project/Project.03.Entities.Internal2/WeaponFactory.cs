@@ -7,7 +7,7 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory {
+    public static class WeaponFactory {
 
         // Gun
         public static void Gun(Slot slot) {

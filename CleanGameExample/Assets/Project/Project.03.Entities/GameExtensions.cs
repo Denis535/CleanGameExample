@@ -5,7 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class EntityExtensions2 {
+    public static class GameExtensions {
 
     }
 }

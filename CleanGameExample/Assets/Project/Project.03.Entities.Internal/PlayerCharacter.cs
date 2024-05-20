@@ -68,6 +68,13 @@ namespace Project.Entities {
         }
 
     }
+    // PlayerCharacterEnum
+    public enum PlayerCharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
+    }
     // IPlayerCharacterInputActions
     public interface IPlayerCharacterInputActions {
 

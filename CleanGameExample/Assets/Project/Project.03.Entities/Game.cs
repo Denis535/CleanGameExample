@@ -44,7 +44,7 @@ namespace Project.Entities {
         public void Start() {
             {
                 var point = World.PlayerSpawnPoints.First();
-                Player.SetCamera( GameFactory.Camera() );
+                Player.SetCamera( EntityFactory.Camera() );
                 Player.SetCharacter( CharacterFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( Player.Camera != null && !IsPaused );
             }

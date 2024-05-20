@@ -5,7 +5,6 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.ResourceManagement.AsyncOperations;
 
     public static class CharacterFactory {
 
@@ -18,7 +17,7 @@ namespace Project.Entities {
                 PlayerCharacterEnum.Blue => R.Project.Entities.Characters.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
-            return Instantiate<PlayerCharacter>( key, position, rotation );
+            return EntityFactory.Instantiate<PlayerCharacter>( key, position, rotation );
         }
 
         // EnemyCharacter
@@ -30,21 +29,7 @@ namespace Project.Entities {
                 R.Project.Entities.Characters.EnemyCharacter_Blue_Value
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
-            return Instantiate<EnemyCharacter>( key, position, rotation );
-        }
-
-        // Helpers
-        private static T Instantiate<T>(string key, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>(), position, rotation );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
-        }
-        private static T Instantiate<T>(string key, Transform parent) where T : MonoBehaviour {
-            var prefab = Addressables.LoadAssetAsync<GameObject>( key );
-            var instance = UnityEngine.Object.Instantiate( prefab.GetResult<T>(), parent );
-            instance.destroyCancellationToken.Register( () => Addressables.ReleaseInstance( prefab ) );
-            return instance;
+            return EntityFactory.Instantiate<EnemyCharacter>( key, position, rotation );
         }
 
     }

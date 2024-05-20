@@ -6,7 +6,6 @@ namespace Project.UI.MainScreen {
     using System.Threading.Tasks;
     using Project.Entities;
     using Project.UI.Common;
-    using Project.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 

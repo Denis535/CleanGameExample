@@ -25,5 +25,12 @@ namespace Project.Entities {
         public override void OnDestroy() {
         }
 
+        // OnCollisionEnter
+        public void OnCollisionEnter(Collision collision) {
+            if (enabled) {
+                enabled = false;
+            }
+        }
+
     }
 }

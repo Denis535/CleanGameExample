@@ -21,12 +21,18 @@ namespace Project.App {
         // RunGame
         public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
+            WeaponFactory.Initialize();
+            CharacterFactory.Initialize();
+            EntityFactory.Initialize();
             Game = EntityFactory.Game( character, level );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             GameObject.DestroyImmediate( Game );
             Game = null;
+            EntityFactory.Deinitialize();
+            CharacterFactory.Deinitialize();
+            WeaponFactory.Deinitialize();
             Array.Clear( Physics2.RaycastHitBuffer, 0, Physics2.RaycastHitBuffer.Length );
             Array.Clear( Physics2.ColliderBuffer, 0, Physics2.ColliderBuffer.Length );
         }

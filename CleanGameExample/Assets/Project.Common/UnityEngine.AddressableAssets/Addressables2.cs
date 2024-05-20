@@ -6,7 +6,7 @@ namespace UnityEngine.AddressableAssets {
     using UnityEngine;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public static class EntityFactory {
+    public static class Addressables2 {
 
         // Instantiate
         public static T Instantiate<T>(string key) where T : MonoBehaviour {

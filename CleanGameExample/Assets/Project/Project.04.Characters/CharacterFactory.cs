@@ -12,10 +12,10 @@ namespace Project.Entities {
         // PlayerCharacter
         public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
             var key = character switch {
-                PlayerCharacterEnum.Gray => R.Project.Entities.Characters.Primary.PlayerCharacter_Gray_Value,
-                PlayerCharacterEnum.Red => R.Project.Entities.Characters.Primary.PlayerCharacter_Red_Value,
-                PlayerCharacterEnum.Green => R.Project.Entities.Characters.Primary.PlayerCharacter_Green_Value,
-                PlayerCharacterEnum.Blue => R.Project.Entities.Characters.Primary.PlayerCharacter_Blue_Value,
+                PlayerCharacterEnum.Gray => R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
+                PlayerCharacterEnum.Red => R.Project.Entities.Characters.PlayerCharacter_Red_Value,
+                PlayerCharacterEnum.Green => R.Project.Entities.Characters.PlayerCharacter_Green_Value,
+                PlayerCharacterEnum.Blue => R.Project.Entities.Characters.PlayerCharacter_Blue_Value,
                 _ => throw Exceptions.Internal.NotSupported( $"PlayerCharacter {character} is not supported" )
             };
             return Instantiate<PlayerCharacter>( key, position, rotation );
@@ -24,10 +24,10 @@ namespace Project.Entities {
         // EnemyCharacter
         public static EnemyCharacter EnemyCharacter(Vector3 position, Quaternion rotation) {
             var keys = new[] {
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Gray_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Red_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Green_Value,
-                R.Project.Entities.Characters.Secondary.EnemyCharacter_Blue_Value
+                R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
+                R.Project.Entities.Characters.EnemyCharacter_Red_Value,
+                R.Project.Entities.Characters.EnemyCharacter_Green_Value,
+                R.Project.Entities.Characters.EnemyCharacter_Blue_Value
             };
             var key = keys[ UnityEngine.Random.Range( 0, keys.Length ) ];
             return Instantiate<EnemyCharacter>( key, position, rotation );

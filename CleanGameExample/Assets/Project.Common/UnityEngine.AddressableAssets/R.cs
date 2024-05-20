@@ -43,35 +43,31 @@ namespace UnityEngine.AddressableAssets {
             public static class @Entities {
                 public const string @Camera_Value = "Project.Entities/Camera.prefab";
                 public const string @Game_Value = "Project.Entities/Game.prefab";
+                public static class @Worlds {
+                    public const string @World_01_Value = "Project.Entities.Worlds/World_01.unity";
+                    public const string @World_02_Value = "Project.Entities.Worlds/World_02.unity";
+                    public const string @World_03_Value = "Project.Entities.Worlds/World_03.unity";
+                }
                 public static class @Characters {
-                    public static class @Primary {
-                        public const string @PlayerCharacter_Value = "Project.Entities/Characters.Primary/PlayerCharacter.prefab";
-                        public const string @PlayerCharacter_Blue_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Blue.prefab";
-                        public const string @PlayerCharacter_Gray_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Gray.prefab";
-                        public const string @PlayerCharacter_Green_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Green.prefab";
-                        public const string @PlayerCharacter_Red_Value = "Project.Entities/Characters.Primary/PlayerCharacter_Red.prefab";
-                    }
-                    public static class @Secondary {
-                        public const string @EnemyCharacter_Value = "Project.Entities/Characters.Secondary/EnemyCharacter.prefab";
-                        public const string @EnemyCharacter_Blue_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Blue.prefab";
-                        public const string @EnemyCharacter_Gray_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Gray.prefab";
-                        public const string @EnemyCharacter_Green_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Green.prefab";
-                        public const string @EnemyCharacter_Red_Value = "Project.Entities/Characters.Secondary/EnemyCharacter_Red.prefab";
-                    }
+                    public const string @EnemyCharacter_Value = "Project.Entities.Characters/EnemyCharacter.prefab";
+                    public const string @EnemyCharacter_Blue_Value = "Project.Entities.Characters/EnemyCharacter_Blue.prefab";
+                    public const string @EnemyCharacter_Gray_Value = "Project.Entities.Characters/EnemyCharacter_Gray.prefab";
+                    public const string @EnemyCharacter_Green_Value = "Project.Entities.Characters/EnemyCharacter_Green.prefab";
+                    public const string @EnemyCharacter_Red_Value = "Project.Entities.Characters/EnemyCharacter_Red.prefab";
+                    public const string @PlayerCharacter_Value = "Project.Entities.Characters/PlayerCharacter.prefab";
+                    public const string @PlayerCharacter_Blue_Value = "Project.Entities.Characters/PlayerCharacter_Blue.prefab";
+                    public const string @PlayerCharacter_Gray_Value = "Project.Entities.Characters/PlayerCharacter_Gray.prefab";
+                    public const string @PlayerCharacter_Green_Value = "Project.Entities.Characters/PlayerCharacter_Green.prefab";
+                    public const string @PlayerCharacter_Red_Value = "Project.Entities.Characters/PlayerCharacter_Red.prefab";
                 }
                 public static class @Weapons {
-                    public const string @Bullet_Value = "Project.Entities/Weapons/Bullet.prefab";
-                    public const string @Gun_Value = "Project.Entities/Weapons/Gun.prefab";
-                    public const string @Gun_Blue_Value = "Project.Entities/Weapons/Gun_Blue.prefab";
-                    public const string @Gun_Gray_Value = "Project.Entities/Weapons/Gun_Gray.prefab";
-                    public const string @Gun_Green_Value = "Project.Entities/Weapons/Gun_Green.prefab";
-                    public const string @Gun_Red_Value = "Project.Entities/Weapons/Gun_Red.prefab";
+                    public const string @Bullet_Value = "Project.Entities.Weapons/Bullet.prefab";
+                    public const string @Gun_Value = "Project.Entities.Weapons/Gun.prefab";
+                    public const string @Gun_Blue_Value = "Project.Entities.Weapons/Gun_Blue.prefab";
+                    public const string @Gun_Gray_Value = "Project.Entities.Weapons/Gun_Gray.prefab";
+                    public const string @Gun_Green_Value = "Project.Entities.Weapons/Gun_Green.prefab";
+                    public const string @Gun_Red_Value = "Project.Entities.Weapons/Gun_Red.prefab";
                 }
-            }
-            public static class @Worlds {
-                public const string @World_01_Value = "Project.Worlds/World_01.unity";
-                public const string @World_02_Value = "Project.Worlds/World_02.unity";
-                public const string @World_03_Value = "Project.Worlds/World_03.unity";
             }
             public static class @Scenes {
                 public const string @Startup_Value = "Project/Scenes/Startup.unity";

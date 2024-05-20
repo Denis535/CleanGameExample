@@ -4,6 +4,8 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Text;
     using UnityEditor;
     using UnityEditor.SceneManagement;
@@ -14,33 +16,40 @@ namespace Project {
         // LoadScene
         [MenuItem( "Project/Launcher", priority = 0 )]
         public static void LoadLauncher() {
-            EditorSceneManager.OpenScene( "Assets/Project/Launcher.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "Launcher.unity" );
+            EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/Startup", priority = 1 )]
         public static void LoadStartup() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/Startup.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "Startup.unity" );
+            EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/Main Scene", priority = 2 )]
         public static void LoadMainScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/MainScene.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "MainScene.unity" );
+            EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/Game Scene", priority = 3 )]
         public static void LoadGameScene() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.00/Scenes/GameScene.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "GameScene.unity" );
+            EditorSceneManager.OpenScene( path );
         }
 
         // LoadScene
         [MenuItem( "Project/World 01", priority = 100 )]
         public static void LoadLevel1() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_01.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_01.unity" );
+            EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/World 02", priority = 101 )]
         public static void LoadLevel2() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_02.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_02.unity" );
+            EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/World 03", priority = 101 )]
         public static void LoadLevel3() {
-            EditorSceneManager.OpenScene( "Assets/Project/Assets.Project.04.Worlds/World_03.unity" );
+            var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_03.unity" );
+            EditorSceneManager.OpenScene( path );
         }
 
         // Build
@@ -88,28 +97,6 @@ namespace Project {
                 go.transform.position = hit.point;
             }
         }
-
-        //// ShowAssets
-        //[MenuItem( "Project/Show Assets", priority = 400 )]
-        //public static void ShowAssets() {
-        //    foreach (var path in AssetDatabase.GetAllAssetPaths()) {
-        //        if (path.EndsWith( "/csc.rsp" )) {
-        //            var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
-        //            var importer = AssetImporter.GetAtPath( path );
-        //        }
-        //    }
-        //}
-
-        //// HideAssets
-        //[MenuItem( "Project/Hide Assets", priority = 401 )]
-        //public static void HideAssets() {
-        //    foreach (var path in AssetDatabase.GetAllAssetPaths()) {
-        //        if (path.EndsWith( "/csc.rsp" )) {
-        //            var asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>( path );
-        //            var importer = AssetImporter.GetAtPath( path );
-        //        }
-        //    }
-        //}
 
     }
 }

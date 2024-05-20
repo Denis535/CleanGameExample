@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Project.Worlds
+  m_Name: Project.Entities.Characters
   m_EditorClassIdentifier: 
-  m_GroupName: Project.Worlds
+  m_GroupName: Project.Entities.Characters
   m_Data:
     m_SerializedData: []
-  m_GUID: 831488f813f9adc4ca8f7064be376bc4
+  m_GUID: 2f96b6367c2d768498ca6304ae2558cc
   m_SerializeEntries:
-  - m_GUID: fb6617524fb5d614a83686774212cf9c
-    m_Address: Project.Worlds
+  - m_GUID: 365c006b10ba4084db9b67c6f9682b2e
+    m_Address: Project.Entities.Characters
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 8c8417ae2abb549498500522f9dbf026, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a0d1370929f0db544b926be7277849cb, type: 2}
-    - {fileID: 11400000, guid: 4d03ed45d70e89642b12caf2fad43b16, type: 2}
+    - {fileID: 11400000, guid: 7e074abb0dfee4d488ec7d1d1c0f466e, type: 2}
+    - {fileID: 11400000, guid: 51bfcc7956c97e34c8650b00ca838203, type: 2}

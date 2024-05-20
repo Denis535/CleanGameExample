@@ -24,8 +24,19 @@ namespace Project {
         }
 
         // OnGUI
-        protected override void OnGUI(string guid, Rect rect) {
-            base.OnGUI( guid, rect );
+        protected override void OnGUI(Rect rect, string path) {
+            base.OnGUI( rect, path );
+        }
+
+        // DrawModule
+        protected override void DrawModule(Rect rect, string path, string module) {
+            base.DrawModule( rect, path, module );
+        }
+        protected override void DrawContent(Rect rect, string path, string module, string content) {
+            if (Path.GetExtension( path ) is ".asmdef" or ".asmref") {
+                return;
+            }
+            base.DrawContent( rect, path, module, content );
         }
 
         // Helpers

@@ -5,7 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class EntityExtensions {
+    public static class ThingExtensions {
 
         // IsWeapon
         public static bool IsWeapon(this GameObject gameObject) {

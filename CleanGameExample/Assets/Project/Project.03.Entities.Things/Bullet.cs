@@ -28,6 +28,7 @@ namespace Project.Entities.Things {
         // OnCollisionEnter
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
+                var damageable = collision.gameObject.GetComponent<IDamageable>();
                 enabled = false;
             }
         }

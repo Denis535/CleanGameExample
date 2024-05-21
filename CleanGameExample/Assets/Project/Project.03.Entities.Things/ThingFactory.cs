@@ -6,7 +6,7 @@ namespace Project.Entities.Things {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class EntityFactory3 {
+    public static class ThingFactory {
 
         private static readonly string[] Weapons = new[] {
             R.Project.Entities.Things.Gun_Gray_Value,

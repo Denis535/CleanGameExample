@@ -7,7 +7,7 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Character : PhysicsCharacter {
+    public abstract class Character : PhysicsCharacter, IDamageable {
 
         // Head
         protected Transform Head { get; private set; } = default!;

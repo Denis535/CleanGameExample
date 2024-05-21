@@ -48,14 +48,14 @@ namespace Project.Entities {
             {
                 var point = World.PlayerPoints.First();
                 Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( EntityFactory2.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCharacter( CharacterFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( Player.Camera != null && !IsPaused );
             }
             foreach (var point in World.EnemyPoints) {
-                EntityFactory2.EnemyCharacter( point.transform.position, point.transform.rotation );
+                CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
             }
             foreach (var point in World.LootPoints) {
-                EntityFactory3.Gun( point.transform.position, point.transform.rotation );
+                ThingFactory.Gun( point.transform.position, point.transform.rotation );
             }
         }
         public void Update() {

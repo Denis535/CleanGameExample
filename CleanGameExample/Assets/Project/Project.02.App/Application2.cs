@@ -23,8 +23,8 @@ namespace Project.App {
         // RunGame
         public void RunGame(PlayerCharacterEnum character, LevelEnum level) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
-            EntityFactory3.Initialize();
-            EntityFactory2.Initialize();
+            ThingFactory.Initialize();
+            CharacterFactory.Initialize();
             EntityFactory.Initialize();
             Game = EntityFactory.Game( character, level );
         }
@@ -33,8 +33,8 @@ namespace Project.App {
             GameObject.DestroyImmediate( Game );
             Game = null;
             EntityFactory.Deinitialize();
-            EntityFactory2.Deinitialize();
-            EntityFactory3.Deinitialize();
+            CharacterFactory.Deinitialize();
+            ThingFactory.Deinitialize();
             Array.Clear( Physics2.RaycastHitBuffer, 0, Physics2.RaycastHitBuffer.Length );
             Array.Clear( Physics2.ColliderBuffer, 0, Physics2.ColliderBuffer.Length );
         }

@@ -9,10 +9,10 @@ namespace Project.Entities {
     public static class EntityFactory3 {
 
         private static readonly string[] Weapons = new[] {
-            R.Project.Entities.Characters.Gun_Gray_Value,
-            R.Project.Entities.Characters.Gun_Red_Value,
-            R.Project.Entities.Characters.Gun_Green_Value,
-            R.Project.Entities.Characters.Gun_Blue_Value,
+            R.Project.Entities.Secondary.Gun_Gray_Value,
+            R.Project.Entities.Secondary.Gun_Red_Value,
+            R.Project.Entities.Secondary.Gun_Green_Value,
+            R.Project.Entities.Secondary.Gun_Blue_Value,
         };
 
         // Initialize
@@ -34,7 +34,7 @@ namespace Project.Entities {
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, float force) {
             using (Context.Begin( new Bullet.Args( force ) )) {
-                return Addressables2.Instantiate<Bullet>( R.Project.Entities.Characters.Bullet_Value, position, rotation );
+                return Addressables2.Instantiate<Bullet>( R.Project.Entities.Secondary.Bullet_Value, position, rotation );
             }
         }
 

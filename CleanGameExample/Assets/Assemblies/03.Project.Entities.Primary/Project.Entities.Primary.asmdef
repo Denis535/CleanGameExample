@@ -1,5 +1,5 @@
 {
-    "name": "Project.Entities.Characters",
+    "name": "Project.Entities.Primary",
     "rootNamespace": "Project.Entities",
     "references": [
         "GUID:5b490aa62349a9b48b2cdab160ee1bec",

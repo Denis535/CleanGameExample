@@ -9,16 +9,16 @@ namespace Project.Entities {
     public static class EntityFactory2 {
 
         private static string[] PlayerCharacters = new[] {
-            R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Red_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Green_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Blue_Value
+            R.Project.Entities.Primary.PlayerCharacter_Gray_Value,
+            R.Project.Entities.Primary.PlayerCharacter_Red_Value,
+            R.Project.Entities.Primary.PlayerCharacter_Green_Value,
+            R.Project.Entities.Primary.PlayerCharacter_Blue_Value
         };
         private static string[] EnemyCharacters = new[] {
-            R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Red_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Green_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Blue_Value
+            R.Project.Entities.Primary.EnemyCharacter_Gray_Value,
+            R.Project.Entities.Primary.EnemyCharacter_Red_Value,
+            R.Project.Entities.Primary.EnemyCharacter_Green_Value,
+            R.Project.Entities.Primary.EnemyCharacter_Blue_Value
         };
 
         // Initialize

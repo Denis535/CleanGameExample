@@ -6,7 +6,7 @@ namespace UnityEngine {
     using UnityEditor;
     using UnityEngine;
 
-    public class SpawnPoint : MonoBehaviour {
+    public class Point : MonoBehaviour {
 
 #if UNITY_EDITOR
         // OnValidate

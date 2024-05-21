@@ -5,7 +5,7 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class CharacterExtensions {
+    public static class EntityExtensions {
 
         // IsCharacter
         public static bool IsCharacter(this GameObject gameObject) {

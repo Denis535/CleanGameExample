@@ -6,7 +6,7 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class CharacterFactory {
+    public static class EntityFactory2 {
 
         private static string[] PlayerCharacters = new[] {
             R.Project.Entities.Characters.PlayerCharacter_Gray_Value,

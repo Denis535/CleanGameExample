@@ -72,28 +72,28 @@ namespace Project {
             EditorUtility.RevealInFinder( path );
         }
 
-        // SpawnPoint
-        [MenuItem( "Project/Player Spawn Point", priority = 300 )]
-        public static void PlayerSpawnPoint() {
+        // Point
+        [MenuItem( "Project/Player Point", priority = 300 )]
+        public static void PlayerPoint() {
             var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
             if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "PlayerSpawnPoint", typeof( PlayerSpawnPoint ) );
+                var go = Selection.activeGameObject = new GameObject( "PlayerPoint", typeof( PlayerPoint ) );
                 go.transform.position = hit.point;
             }
         }
-        [MenuItem( "Project/Enemy Spawn Point", priority = 301 )]
-        public static void EnemySpawnPoint() {
+        [MenuItem( "Project/Enemy Point", priority = 301 )]
+        public static void EnemyPoint() {
             var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
             if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "EnemySpawnPoint", typeof( EnemySpawnPoint ) );
+                var go = Selection.activeGameObject = new GameObject( "EnemyPoint", typeof( EnemyPoint ) );
                 go.transform.position = hit.point;
             }
         }
-        [MenuItem( "Project/Loot Spawn Point", priority = 302 )]
-        public static void LootSpawnPoint() {
+        [MenuItem( "Project/Loot Point", priority = 302 )]
+        public static void LootPoint() {
             var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
             if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "LootSpawnPoint", typeof( LootSpawnPoint ) );
+                var go = Selection.activeGameObject = new GameObject( "LootPoint", typeof( LootPoint ) );
                 go.transform.position = hit.point;
             }
         }

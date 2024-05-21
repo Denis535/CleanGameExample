@@ -6,7 +6,7 @@ namespace UnityEngine {
     using UnityEditor;
     using UnityEngine;
 
-    public class PlayerSpawnPoint : SpawnPoint {
+    public class PlayerPoint : Point {
 
 #if UNITY_EDITOR
         // OnValidate

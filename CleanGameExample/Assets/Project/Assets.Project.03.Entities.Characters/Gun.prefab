@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1438031218309721147}
   - component: {fileID: 2035152129874659886}
   m_Layer: 10
-  m_Name: BulletSpawnPoint
+  m_Name: BulletPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 463298025776794539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d146e81ece46114094a90ce9266736c, type: 3}
+  m_Script: {fileID: 11500000, guid: 15f316bf9a0347a4a8ed453dadd44f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4933057593969538340

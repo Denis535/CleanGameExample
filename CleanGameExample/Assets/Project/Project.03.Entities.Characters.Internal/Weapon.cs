@@ -12,8 +12,6 @@ namespace Project.Entities {
         protected Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         protected Collider Collider { get; private set; } = default!;
-        // SpawnPoint
-        protected SpawnPoint SpawnPoint { get; private set; } = default!;
         // IsFree
         public bool IsFree {
             get => !Rigidbody.isKinematic;
@@ -27,7 +25,6 @@ namespace Project.Entities {
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
-            SpawnPoint = gameObject.RequireComponentInChildren<SpawnPoint>();
             IsFree = transform.parent == null;
         }
         public override void OnDestroy() {

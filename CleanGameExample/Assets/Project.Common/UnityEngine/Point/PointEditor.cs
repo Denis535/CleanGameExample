@@ -7,17 +7,11 @@ namespace UnityEngine {
     using UnityEditor;
     using UnityEngine;
 
-    [CustomEditor( typeof( SpawnPoint ), true )]
-    public class SpawnPointEditor : Editor {
+    [CustomEditor( typeof( Point ), true )]
+    public class PointEditor : Editor {
 
         // Target
-        private SpawnPoint Target => (SpawnPoint) target;
-
-        // Awake
-        public void Awake() {
-        }
-        public void OnDestroy() {
-        }
+        private Point Target => (Point) target;
 
         // OnInspectorGUI
         public override void OnInspectorGUI() {

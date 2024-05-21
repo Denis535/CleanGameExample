@@ -1,5 +1,5 @@
 {
-    "name": "Project.Entities.Secondary",
+    "name": "Project.Entities.Things",
     "rootNamespace": "Project.Entities",
     "references": [
         "GUID:4e862f251e247d347ac3c34bf14f14cb",

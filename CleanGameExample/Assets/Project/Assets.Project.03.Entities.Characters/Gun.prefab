@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1438031218309721147}
-  - component: {fileID: 2035152129874659886}
+  - component: {fileID: 8022493041183640077}
   m_Layer: 10
   m_Name: BulletPoint
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8672355077323030708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2035152129874659886
+--- !u!114 &8022493041183640077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 463298025776794539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f316bf9a0347a4a8ed453dadd44f62, type: 3}
+  m_Script: {fileID: 11500000, guid: 952ab1be63f9f414bbf3a3002197522d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4933057593969538340

@@ -9,13 +9,13 @@ namespace Project.Entities {
 
         private readonly Delay delay = new Delay( 0.25f );
 
-        // BulletPoint
-        protected Point BulletPoint { get; private set; } = default!;
+        // FirePoint
+        protected FirePoint FirePoint { get; private set; } = default!;
 
         // Awake
         public override void Awake() {
             base.Awake();
-            BulletPoint = gameObject.RequireComponentInChildren<Point>();
+            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -25,7 +25,7 @@ namespace Project.Entities {
         public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = EntityFactory3.Bullet( BulletPoint.transform.position, BulletPoint.transform.rotation, 5 );
+                var bullet = EntityFactory3.Bullet( FirePoint.transform.position, FirePoint.transform.rotation, 5 );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
             }
         }

@@ -6,12 +6,12 @@ namespace UnityEngine {
     using UnityEditor;
     using UnityEngine;
 
-    public class Point : MonoBehaviour {
+    public abstract class Point : MonoBehaviour {
 
 #if UNITY_EDITOR
         // OnValidate
         public void OnValidate() {
-            if (!gameObject.name.EndsWith( GetType().Name )) gameObject.name += GetType().Name;
+            gameObject.name = GetType().Name;
         }
 #endif
 

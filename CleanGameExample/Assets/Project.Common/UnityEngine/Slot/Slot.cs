@@ -10,7 +10,7 @@ namespace UnityEngine {
 #if UNITY_EDITOR
         // OnValidate
         public void OnValidate() {
-            if (!gameObject.name.EndsWith( GetType().Name )) gameObject.name += GetType().Name;
+            Debug.Assert( gameObject.name.EndsWith( "Slot" ), $"GameObject {gameObject} must have name ending with 'Slot'", gameObject );
         }
 #endif
 

@@ -4,6 +4,8 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Project.Entities.Characters;
+    using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;

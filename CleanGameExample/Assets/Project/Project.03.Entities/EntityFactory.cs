@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 

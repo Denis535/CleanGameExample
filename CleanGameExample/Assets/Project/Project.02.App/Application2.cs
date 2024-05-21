@@ -4,6 +4,8 @@ namespace Project.App {
     using System.Collections;
     using System.Collections.Generic;
     using Project.Entities;
+    using Project.Entities.Characters;
+    using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.Framework.App;
 

@@ -1,9 +1,10 @@
 #nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Project.Entities.Things;
     using UnityEngine;
 
     public class EnemyCharacter : Character {

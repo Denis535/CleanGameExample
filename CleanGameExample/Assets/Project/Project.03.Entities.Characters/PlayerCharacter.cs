@@ -1,8 +1,9 @@
 #nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Things;
     using UnityEngine;
 
     public class PlayerCharacter : Character {

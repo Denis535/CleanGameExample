@@ -7,12 +7,16 @@ namespace Project.Entities.Things {
     using UnityEngine.Framework.Entities;
 
     public class Bullet : EntityBase {
-        public record Args(float Force);
+        public record Args(IDamageable Owner, Weapon Weapon, float Force);
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         internal Collider Collider { get; set; } = default!;
+        // Owner
+        private IDamageable Owner { get; set; } = default!;
+        // Weapon
+        private Weapon Weapon { get; set; } = default!;
 
         // Awake
         public override void Awake() {
@@ -20,6 +24,8 @@ namespace Project.Entities.Things {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
             Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
+            Owner = args.Owner;
+            Weapon = args.Weapon;
             Destroy( gameObject, 10 );
         }
         public override void OnDestroy() {
@@ -28,7 +34,8 @@ namespace Project.Entities.Things {
         // OnCollisionEnter
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
-                var damageable = collision.gameObject.GetComponent<IDamageable>();
+                var damageable = collision.transform.root.GetComponent<IDamageable>();
+                //damageable?.OnDamage( 5, transform.position, transform.forward );
                 enabled = false;
             }
         }

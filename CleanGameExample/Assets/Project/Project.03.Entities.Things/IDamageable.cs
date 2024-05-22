@@ -6,5 +6,8 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IDamageable {
+
+        void OnDamage(float damage, Vector3 point, Vector3 direction);
+
     }
 }

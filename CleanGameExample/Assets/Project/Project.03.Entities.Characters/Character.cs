@@ -40,6 +40,11 @@ namespace Project.Entities.Characters {
         public abstract void FixedUpdate();
         public abstract void Update();
 
+        // OnDamage
+        public void OnDamage(float damage, Vector3 point, Vector3 direction) {
+            Debug.Log( "OnDamage: " + this );
+        }
+
         // LookAt
         public bool LookAt(Vector3? target) {
             return LookAt( Head, target );

@@ -14,6 +14,8 @@ namespace Project.Entities.Things {
         protected Collider Collider { get; private set; } = default!;
         // IsAttached
         public bool IsAttached => transform.parent != null;
+        // Owner
+        public IDamageable Owner => transform.parent.gameObject.RequireComponentInParent<IDamageable>();
 
         // Awake
         public override void Awake() {

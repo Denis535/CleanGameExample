@@ -25,7 +25,7 @@ namespace Project.Entities.Things {
         public override void Fire() {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = ThingFactory.Bullet( FirePoint.transform.position, FirePoint.transform.rotation, 5 );
+                var bullet = ThingFactory.Bullet( FirePoint.transform.position, FirePoint.transform.rotation, Owner, this, 5 );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
             }
         }

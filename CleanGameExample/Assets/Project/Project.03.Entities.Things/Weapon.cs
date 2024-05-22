@@ -12,20 +12,14 @@ namespace Project.Entities.Things {
         protected Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         protected Collider Collider { get; private set; } = default!;
-        // IsFree
-        public bool IsFree {
-            get => !Rigidbody.isKinematic;
-            private set {
-                Rigidbody.isKinematic = !value;
-                Rigidbody.detectCollisions = value;
-            }
-        }
+        // IsAttached
+        public bool IsAttached => transform.parent != null;
 
         // Awake
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
-            IsFree = transform.parent == null;
+            SetPhysical( Rigidbody, transform.parent == null );
         }
         public override void OnDestroy() {
         }
@@ -35,7 +29,15 @@ namespace Project.Entities.Things {
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {
-            IsFree = transform.parent == null;
+            SetPhysical( Rigidbody, transform.parent == null );
+        }
+
+        // Helpers
+        private static void SetPhysical(Rigidbody rigidbody, bool value) {
+            rigidbody.isKinematic = !value;
+            foreach (var transform in rigidbody.GetComponentsInChildren<Transform>()) {
+                transform.gameObject.layer = value ? Layers.Entity : Layers.CharacterEntityInternal;
+            }
         }
 
     }

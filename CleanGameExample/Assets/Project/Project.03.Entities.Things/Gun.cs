@@ -10,7 +10,7 @@ namespace Project.Entities.Things {
         private readonly Delay delay = new Delay( 0.25f );
 
         // FirePoint
-        protected FirePoint FirePoint { get; private set; } = default!;
+        private FirePoint FirePoint { get; set; } = default!;
 
         // Awake
         public override void Awake() {

@@ -32,18 +32,20 @@ namespace Project.Entities.Characters {
             Context = GetContext( transform );
         }
         public override void Update() {
-            if (Context.Player != null) {
-                var target = Context.Player.transform.position + Vector3.up * 1.75f;
-                SetLookInput( true, target );
-                PhysicsUpdate();
-                LookAt( target );
-                AimAt( target );
-                Weapon?.Fire();
-            } else {
-                SetLookInput( false, LookTarget );
-                PhysicsUpdate();
-                LookAt( null );
-                AimAt( null );
+            if (IsAlive) {
+                if (Context.Player != null) {
+                    var target = Context.Player.transform.position + Vector3.up * 1.75f;
+                    SetLookInput( true, target );
+                    PhysicsUpdate();
+                    LookAt( target );
+                    AimAt( target );
+                    Weapon?.Fire();
+                } else {
+                    SetLookInput( false, LookTarget );
+                    PhysicsUpdate();
+                    LookAt( null );
+                    AimAt( null );
+                }
             }
         }
 

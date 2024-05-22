@@ -12,12 +12,12 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
 
+        // Input
+        private InputActions Input { get; }
         // Entities
         public Camera2? Camera { get; private set; }
         public PlayerCharacterEnum CharacterEnum { get; }
         public PlayerCharacter? Character { get; private set; }
-        // Actions
-        private InputActions Actions { get; }
         // Hit
         internal (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public GameObject? Enemy {
@@ -41,13 +41,17 @@ namespace Project.Entities {
 
         // Constructor
         public Player(PlayerCharacterEnum character) {
+            Input = new InputActions();
             CharacterEnum = character;
-            Actions = new InputActions();
-            Actions.Enable();
         }
         public override void Dispose() {
-            Actions.Dispose();
+            Input.Dispose();
             base.Dispose();
+        }
+
+        // SetInputEnabled
+        public void SetInputEnabled(bool value) {
+            if (value) Input.Enable(); else Input.Disable();
         }
 
         // SetCamera
@@ -58,19 +62,14 @@ namespace Project.Entities {
         // SetCharacter
         public void SetCharacter(PlayerCharacter character) {
             Character = character;
-            Character.Actions = new PlayerCharacterInputActions( Actions, this );
-        }
-
-        // SetInputEnabled
-        public void SetInputEnabled(bool value) {
-            if (value) Actions.Enable(); else Actions.Disable();
+            Character.Input = new PlayerCharacterInput( Input, this );
         }
 
         // Update
         public void Update() {
             if (Camera != null && Character != null) {
-                Camera.Rotate( Actions.Game.Look.ReadValue<Vector2>() );
-                Camera.Zoom( Actions.Game.Zoom.ReadValue<Vector2>().y );
+                Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Input.Game.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply( Character );
                 Hit = Raycast( Camera.transform, Character.transform );
             }
@@ -89,24 +88,24 @@ namespace Project.Entities {
         }
 
     }
-    // PlayerCharacterInputActions
-    internal class PlayerCharacterInputActions : IPlayerCharacterInputActions {
+    // PlayerCharacterInput
+    internal class PlayerCharacterInput : IPlayerCharacterInput {
 
-        private readonly InputActions actions;
+        private readonly InputActions input;
         private readonly Player player;
 
-        public bool IsEnabled => actions.asset.enabled;
+        public bool IsEnabled => input.asset.enabled;
         public Vector3 LookTarget => player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
 
-        public PlayerCharacterInputActions(InputActions actions, Player player) {
-            this.actions = actions;
+        public PlayerCharacterInput(InputActions input, Player player) {
+            this.input = input;
             this.player = player;
         }
 
         public bool IsMovePressed(out Vector3 moveVector) {
             Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (actions.Game.Move.IsPressed()) {
-                var vector = (Vector3) actions.Game.Move.ReadValue<Vector2>();
+            if (input.Game.Move.IsPressed()) {
+                var vector = (Vector3) input.Game.Move.ReadValue<Vector2>();
                 moveVector = Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
                 return true;
             } else {
@@ -116,28 +115,28 @@ namespace Project.Entities {
         }
         public bool IsJumpPressed() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return actions.Game.Jump.IsPressed();
+            return input.Game.Jump.IsPressed();
         }
         public bool IsCrouchPressed() {
             Assert.Operation.Message( $"Method 'IsCrouchPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return actions.Game.Crouch.IsPressed();
+            return input.Game.Crouch.IsPressed();
         }
         public bool IsAcceleratePressed() {
             Assert.Operation.Message( $"Method 'IsAcceleratePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return actions.Game.Accelerate.IsPressed();
+            return input.Game.Accelerate.IsPressed();
         }
         public bool IsFirePressed() {
             Assert.Operation.Message( $"Method 'IsFirePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return actions.Game.Fire.IsPressed();
+            return input.Game.Fire.IsPressed();
         }
         public bool IsAimPressed() {
             Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return actions.Game.Aim.IsPressed();
+            return input.Game.Aim.IsPressed();
         }
         public bool IsInteractPressed(out GameObject? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             interactable = player.Enemy ?? player.Loot;
-            return actions.Game.Interact.WasPressedThisFrame();
+            return input.Game.Interact.WasPressedThisFrame();
         }
 
     }

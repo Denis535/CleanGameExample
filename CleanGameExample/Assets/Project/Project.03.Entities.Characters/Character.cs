@@ -17,6 +17,8 @@ namespace Project.Entities.Characters {
         protected Slot WeaponSlot { get; private set; } = default!;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
+        // IsAlive
+        public bool IsAlive => CharacterController.enabled;
 
 #if UNITY_EDITOR
         // OnValidate
@@ -40,9 +42,9 @@ namespace Project.Entities.Characters {
         public abstract void FixedUpdate();
         public abstract void Update();
 
-        // OnDamage
-        public void OnDamage(float damage, Vector3 point, Vector3 direction) {
-            Debug.Log( "OnDamage: " + this );
+        // AimAt
+        public bool AimAt(Vector3? target) {
+            return AimAt( WeaponSlot.transform, target );
         }
 
         // LookAt
@@ -50,14 +52,23 @@ namespace Project.Entities.Characters {
             return LookAt( Head, target );
         }
 
-        // AimAt
-        public bool AimAt(Vector3? target) {
-            return AimAt( WeaponSlot.transform, target );
-        }
-
         // SetWeapon
         public void SetWeapon(Weapon? weapon) {
             SetWeapon( WeaponSlot, weapon );
+        }
+
+        // OnDamage
+        public virtual void OnDamage(float damage, Vector3 point, Vector3 direction) {
+            if (IsAlive) {
+                OnDead();
+            }
+        }
+
+        // OnDead
+        public virtual void OnDead() {
+            WeaponSlot.transform.DetachChildren();
+            CharacterController.enabled = false;
+            Rigidbody.isKinematic = false;
         }
 
         // Helpers

@@ -8,8 +8,8 @@ namespace Project.Entities.Characters {
 
     public class PlayerCharacter : Character {
 
-        // Actions
-        public IPlayerCharacterInputActions? Actions { get; set; }
+        // Input
+        public IPlayerCharacterInput? Input { get; set; }
 
         // Awake
         public override void Awake() {
@@ -26,39 +26,39 @@ namespace Project.Entities.Characters {
             PhysicsFixedUpdate();
         }
         public override void Update() {
-            if (Actions != null) {
-                SetMovementInput( Actions.IsMovePressed( out var moveVector_ ), moveVector_, Actions.IsJumpPressed(), Actions.IsCrouchPressed(), Actions.IsAcceleratePressed() );
-                if (Actions.IsFirePressed() || Actions.IsAimPressed()) {
-                    SetLookInput( true, Actions.LookTarget );
+            if (IsAlive && Input != null) {
+                SetMovementInput( Input.IsMovePressed( out var moveVector_ ), moveVector_, Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
+                if (Input.IsFirePressed() || Input.IsAimPressed()) {
+                    SetLookInput( true, Input.LookTarget );
                     PhysicsUpdate();
                 } else {
-                    if (Actions.IsMovePressed( out var moveVector )) {
+                    if (Input.IsMovePressed( out var moveVector )) {
                         SetLookInput( true, transform.position + moveVector );
                         PhysicsUpdate();
                     } else {
-                        SetLookInput( false, Actions.LookTarget );
+                        SetLookInput( false, Input.LookTarget );
                         PhysicsUpdate();
                     }
                 }
-                if (Actions.IsFirePressed() || Actions.IsAimPressed()) {
-                    LookAt( Actions.LookTarget );
-                    AimAt( Actions.LookTarget );
+                if (Input.IsFirePressed() || Input.IsAimPressed()) {
+                    LookAt( Input.LookTarget );
+                    AimAt( Input.LookTarget );
                 } else {
-                    if (Actions.IsMovePressed( out _ )) {
-                        LookAt( Actions.LookTarget );
+                    if (Input.IsMovePressed( out _ )) {
+                        LookAt( Input.LookTarget );
                         AimAt( null );
                     } else {
-                        LookAt( Actions.LookTarget );
+                        LookAt( Input.LookTarget );
                         AimAt( null );
                     }
                 }
-                if (Actions.IsFirePressed()) {
+                if (Input.IsFirePressed()) {
                     Weapon?.Fire();
                 }
-                if (Actions.IsAimPressed()) {
+                if (Input.IsAimPressed()) {
 
                 }
-                if (Actions.IsInteractPressed( out var interactable )) {
+                if (Input.IsInteractPressed( out var interactable )) {
                     if (interactable != null && interactable.IsWeapon()) {
                         SetWeapon( interactable.RequireComponent<Weapon>() );
                     } else {
@@ -76,8 +76,8 @@ namespace Project.Entities.Characters {
         Green,
         Blue
     }
-    // IPlayerCharacterInputActions
-    public interface IPlayerCharacterInputActions {
+    // IPlayerCharacterInput
+    public interface IPlayerCharacterInput {
 
         bool IsEnabled { get; }
         Vector3 LookTarget { get; }

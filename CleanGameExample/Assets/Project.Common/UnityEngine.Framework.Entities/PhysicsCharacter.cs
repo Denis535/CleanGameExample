@@ -18,7 +18,9 @@ namespace UnityEngine.Framework.Entities {
         private static LayerMask ExcludeLayersMask_Active => Masks.CharacterEntityInternal; // Exclude CharacterEntityInternal layer
 
         // CharacterController
-        private CharacterController CharacterController { get; set; } = default!;
+        protected CharacterController CharacterController { get; set; } = default!;
+        // Rigidbody
+        protected Rigidbody Rigidbody { get; set; } = default!;
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
@@ -33,6 +35,8 @@ namespace UnityEngine.Framework.Entities {
         public override void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
             CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Rigidbody.isKinematic = true;
         }
         public override void OnDestroy() {
         }

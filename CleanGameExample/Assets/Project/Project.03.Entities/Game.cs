@@ -35,12 +35,12 @@ namespace Project.Entities {
         public void Pause() {
             Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
             IsPaused = true;
-            Player.SetInputEnabled( Player.Camera != null && !IsPaused );
+            Player.SetInputEnabled( !IsPaused && Player.Camera != null );
         }
         public void UnPause() {
             Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
             IsPaused = false;
-            Player.SetInputEnabled( Player.Camera != null && !IsPaused );
+            Player.SetInputEnabled( !IsPaused && Player.Camera != null );
         }
 
         // Start
@@ -49,7 +49,7 @@ namespace Project.Entities {
                 var point = World.PlayerPoints.First();
                 Player.SetCamera( EntityFactory.Camera() );
                 Player.SetCharacter( CharacterFactory.PlayerCharacter( Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
-                Player.SetInputEnabled( Player.Camera != null && !IsPaused );
+                Player.SetInputEnabled( !IsPaused && Player.Camera != null );
             }
             foreach (var point in World.EnemyPoints) {
                 CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation );

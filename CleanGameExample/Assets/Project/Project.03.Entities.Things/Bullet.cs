@@ -35,7 +35,7 @@ namespace Project.Entities.Things {
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
-                damageable?.OnDamage( 5, transform.position, transform.forward );
+                damageable?.OnDamage( 5, Rigidbody.position, Rigidbody.velocity.normalized );
                 enabled = false;
             }
         }

@@ -7,10 +7,13 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
+    [RequireComponent( typeof( CharacterPhysics ) )]
     public abstract class Character : EntityBase, IDamageable {
 
-        // PhysicsCharacter
-        private PhysicsCharacter PhysicsCharacter { get; set; } = default!;
+        // CharacterPhysics
+        private CharacterPhysics CharacterPhysics { get; set; } = default!;
+        // IsAlive
+        public bool IsAlive { get => CharacterPhysics.enabled; private set => CharacterPhysics.enabled = value; }
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
@@ -19,12 +22,10 @@ namespace Project.Entities.Characters {
         protected Slot WeaponSlot { get; private set; } = default!;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
-        // IsAlive
-        public bool IsAlive => PhysicsCharacter.enabled;
 
         // Awake
         public override void Awake() {
-            PhysicsCharacter = gameObject.RequireComponent<PhysicsCharacter>();
+            CharacterPhysics = gameObject.RequireComponent<CharacterPhysics>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
@@ -36,8 +37,8 @@ namespace Project.Entities.Characters {
         public virtual void Start() {
         }
         public virtual void FixedUpdate() {
-            if (PhysicsCharacter.enabled) {
-                PhysicsCharacter.PhysicsFixedUpdate();
+            if (CharacterPhysics.enabled) {
+                CharacterPhysics.PhysicsFixedUpdate();
             }
         }
         public virtual void Update() {
@@ -46,18 +47,18 @@ namespace Project.Entities.Characters {
         // SetMovementInput
         protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            PhysicsCharacter.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            CharacterPhysics.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // RotateAt
         protected void RotateAt(Vector3? target) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             if (target != null) {
-                PhysicsCharacter.SetLookInput( true, target.Value );
-                PhysicsCharacter.PhysicsUpdate();
+                CharacterPhysics.SetLookInput( true, target.Value );
+                CharacterPhysics.PhysicsUpdate();
             } else {
-                PhysicsCharacter.SetLookInput( false, PhysicsCharacter.LookTarget );
-                PhysicsCharacter.PhysicsUpdate();
+                CharacterPhysics.SetLookInput( false, CharacterPhysics.LookTarget );
+                CharacterPhysics.PhysicsUpdate();
             }
         }
 
@@ -85,16 +86,17 @@ namespace Project.Entities.Characters {
         }
         protected virtual void OnDamage(float damage, Vector3 point, Vector3 direction) {
             if (IsAlive) {
-                OnDead();
+                OnDead( point, direction );
             }
         }
 
         // OnDead
-        protected virtual void OnDead() {
-            PhysicsCharacter.enabled = false;
+        protected virtual void OnDead(Vector3 point, Vector3 direction) {
+            IsAlive = false;
+            SetWeapon( WeaponSlot, null );
             var rigidbody = gameObject.AddComponent<Rigidbody>();
             rigidbody.mass = 90;
-            WeaponSlot.transform.DetachChildren();
+            rigidbody.AddForceAtPosition( direction * 10, point, ForceMode.Impulse );
         }
 
         // Helpers
@@ -138,6 +140,10 @@ namespace Project.Entities.Characters {
             return slot.transform.childCount > 0 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
         }
         private static void SetWeapon(Slot slot, Weapon? weapon) {
+            var prevWeapon = GetWeapon( slot );
+            if (prevWeapon) {
+                
+            }
             slot.transform.DetachChildren();
             if (weapon != null) {
                 weapon.transform.parent = slot.transform;

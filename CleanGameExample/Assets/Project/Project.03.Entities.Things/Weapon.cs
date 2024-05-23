@@ -37,9 +37,6 @@ namespace Project.Entities.Things {
         // Helpers
         private static void SetPhysical(Rigidbody rigidbody, bool value) {
             rigidbody.isKinematic = !value;
-            foreach (var transform in rigidbody.GetComponentsInChildren<Transform>()) {
-                transform.gameObject.layer = value ? Layers.Entity : Layers.CharacterEntityInternal;
-            }
         }
 
     }

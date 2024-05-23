@@ -17,6 +17,20 @@ namespace Project.Entities.Worlds {
         public EnemyPoint[] EnemyPoints => this.Validate().enemyPoints;
         public LootPoint[] LootPoints => this.Validate().lootPoints;
 
+#if UNITY_EDITOR
+        //public void OnValidate() {
+        //    foreach (var gameObject in GameObject.FindObjectsByType<GameObject>( FindObjectsInactive.Include, FindObjectsSortMode.None )) {
+        //        if (gameObject != base.gameObject) {
+        //            if (gameObject.isStatic) {
+        //                gameObject.transform.parent = base.transform;
+        //            } else {
+        //                gameObject.transform.parent = null;
+        //            }
+        //        }
+        //    }
+        //}
+#endif
+
         // Awake
         public override void Awake() {
             playerPoints = Object2.RequireObjectsByType<PlayerPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );

@@ -9,7 +9,8 @@ namespace UnityEngine {
     // Note: Character-controller should collide only with other character-controllers and don't affect other colliders or rays.
     // Note: While not moving character-controller can collide only with other character-controllers.
     // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
-    public class PhysicsCharacter : MonoBehaviour {
+    [RequireComponent( typeof( CharacterController ) )]
+    public class CharacterPhysics : MonoBehaviour {
 
         private bool fixedUpdateWasInvoked;
 
@@ -30,18 +31,18 @@ namespace UnityEngine {
         public Vector3 LookTarget { get; private set; }
 
         // Awake
-        public virtual void Awake() {
+        protected virtual void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
             CharacterController.excludeLayers = ExcludeLayers_Inactive;
         }
-        public virtual void OnDestroy() {
+        protected virtual void OnDestroy() {
         }
 
         // OnEnable
-        public void OnEnable() {
+        protected void OnEnable() {
             CharacterController.enabled = true;
         }
-        public void OnDisable() {
+        protected void OnDisable() {
             CharacterController.enabled = false;
         }
 

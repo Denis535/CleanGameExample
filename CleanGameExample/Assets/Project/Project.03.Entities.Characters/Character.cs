@@ -7,8 +7,10 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Character : PhysicsCharacter, IDamageable {
+    public abstract class Character : EntityBase, IDamageable {
 
+        // PhysicsCharacter
+        private PhysicsCharacter PhysicsCharacter { get; set; }
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
@@ -18,57 +20,94 @@ namespace Project.Entities.Characters {
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
         // IsAlive
-        public bool IsAlive => CharacterController.enabled;
-
-#if UNITY_EDITOR
-        // OnValidate
-        public void OnValidate() {
-        }
-#endif
+        public bool IsAlive => PhysicsCharacter != null;
 
         // Awake
         public override void Awake() {
-            base.Awake();
+            PhysicsCharacter = gameObject.RequireComponent<PhysicsCharacter>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
         }
         public override void OnDestroy() {
-            base.OnDestroy();
         }
 
         // Start
-        public abstract void Start();
-        public abstract void FixedUpdate();
-        public abstract void Update();
+        public virtual void Start() {
+        }
+        public virtual void FixedUpdate() {
+            if (PhysicsCharacter.enabled) {
+                PhysicsCharacter.PhysicsFixedUpdate();
+            }
+        }
+        public virtual void Update() {
+        }
+
+        // SetMovementInput
+        protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            PhysicsCharacter.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        }
+
+        // RotateAt
+        protected void RotateAt(Vector3? target) {
+            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            if (target != null) {
+                PhysicsCharacter.SetLookInput( true, target.Value );
+                PhysicsCharacter.PhysicsUpdate();
+            } else {
+                PhysicsCharacter.SetLookInput( false, PhysicsCharacter.LookTarget );
+                PhysicsCharacter.PhysicsUpdate();
+            }
+        }
 
         // AimAt
-        public bool AimAt(Vector3? target) {
+        protected bool AimAt(Vector3? target) {
+            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
             return AimAt( WeaponSlot.transform, target );
         }
 
         // LookAt
-        public bool LookAt(Vector3? target) {
+        protected bool LookAt(Vector3? target) {
+            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
             return LookAt( Head, target );
         }
 
         // SetWeapon
-        public void SetWeapon(Weapon? weapon) {
+        protected void SetWeapon(Weapon? weapon) {
+            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
+            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
             SetWeapon( WeaponSlot, weapon );
         }
 
         // OnDamage
-        public virtual void OnDamage(float damage, Vector3 point, Vector3 direction) {
+        void IDamageable.OnDamage(float damage, Vector3 point, Vector3 direction) {
+            OnDamage( damage, point, direction );
+        }
+        protected virtual void OnDamage(float damage, Vector3 point, Vector3 direction) {
             if (IsAlive) {
                 OnDead();
             }
         }
 
         // OnDead
-        public virtual void OnDead() {
+        protected virtual void OnDead() {
             WeaponSlot.transform.DetachChildren();
-            CharacterController.enabled = false;
-            Rigidbody.isKinematic = false;
+            PhysicsCharacter.enabled = false;
         }
 
         // Helpers

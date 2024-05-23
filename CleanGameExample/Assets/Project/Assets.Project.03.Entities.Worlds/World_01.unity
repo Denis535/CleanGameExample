@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 164820912}
   - component: {fileID: 164820913}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: EnemyPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +309,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324533714}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 452731317}
   - component: {fileID: 452731318}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 720900185}
   - component: {fileID: 720900186}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 997525846}
   - component: {fileID: 997525847}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 1002329745}
   - component: {fileID: 1002329746}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -815,7 +815,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007618951}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -845,7 +845,7 @@ GameObject:
   - component: {fileID: 1010650153}
   - component: {fileID: 1010650154}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -889,7 +889,7 @@ GameObject:
   - component: {fileID: 1029360434}
   - component: {fileID: 1029360435}
   m_Layer: 0
-  m_Name: PlayerSpawnPoint
+  m_Name: PlayerPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 1072986741}
   - component: {fileID: 1072986742}
   m_Layer: 0
-  m_Name: PlayerSpawnPoint
+  m_Name: PlayerPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1037,7 +1037,7 @@ GameObject:
   - component: {fileID: 1207371332}
   - component: {fileID: 1207371333}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: EnemyPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 1567415247}
   - component: {fileID: 1567415248}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: EnemyPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1125,7 +1125,7 @@ GameObject:
   - component: {fileID: 1590072686}
   - component: {fileID: 1590072687}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 1635446659}
   - component: {fileID: 1635446660}
   m_Layer: 0
-  m_Name: PlayerSpawnPoint
+  m_Name: PlayerPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1230,8 +1230,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739045946}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1348,7 +1348,7 @@ GameObject:
   - component: {fileID: 1747749849}
   - component: {fileID: 1747749850}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1392,7 +1392,7 @@ GameObject:
   - component: {fileID: 1895832878}
   - component: {fileID: 1895832879}
   m_Layer: 0
-  m_Name: PlayerSpawnPoint
+  m_Name: PlayerPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,7 +1436,7 @@ GameObject:
   - component: {fileID: 1990853921}
   - component: {fileID: 1990853922}
   m_Layer: 0
-  m_Name: LootSpawnPoint
+  m_Name: LootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1587,7 +1587,7 @@ GameObject:
   - component: {fileID: 2080873512}
   - component: {fileID: 2080873513}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: EnemyPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

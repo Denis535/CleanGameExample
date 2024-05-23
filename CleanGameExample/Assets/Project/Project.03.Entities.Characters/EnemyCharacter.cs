@@ -28,25 +28,25 @@ namespace Project.Entities.Characters {
             ThingFactory.Gun( WeaponSlot );
         }
         public override void FixedUpdate() {
-            PhysicsFixedUpdate();
+            base.FixedUpdate();
             Context = GetContext( transform );
         }
         public override void Update() {
-            if (IsAlive) {
-                if (Context.Player != null) {
-                    var target = Context.Player.transform.position + Vector3.up * 1.75f;
-                    SetLookInput( true, target );
-                    PhysicsUpdate();
-                    LookAt( target );
-                    AimAt( target );
-                    Weapon?.Fire();
-                } else {
-                    SetLookInput( false, LookTarget );
-                    PhysicsUpdate();
-                    LookAt( null );
-                    AimAt( null );
-                }
-            }
+            //if (IsAlive) {
+            //    if (Context.Player != null) {
+            //        var target = Context.Player.transform.position + Vector3.up * 1.75f;
+            //        PhysicsCharacter!.SetLookInput( true, target );
+            //        PhysicsCharacter!.PhysicsUpdate();
+            //        LookAt( target );
+            //        AimAt( target );
+            //        Weapon?.Fire();
+            //    } else {
+            //        PhysicsCharacter!.SetLookInput( false, PhysicsCharacter!.LookTarget );
+            //        PhysicsCharacter!.PhysicsUpdate();
+            //        LookAt( null );
+            //        AimAt( null );
+            //    }
+            //}
         }
 
         // Heleprs

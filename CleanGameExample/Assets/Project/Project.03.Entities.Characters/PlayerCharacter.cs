@@ -23,21 +23,18 @@ namespace Project.Entities.Characters {
         public override void Start() {
         }
         public override void FixedUpdate() {
-            PhysicsFixedUpdate();
+            base.FixedUpdate();
         }
         public override void Update() {
             if (IsAlive && Input != null) {
                 SetMovementInput( Input.IsMovePressed( out var moveVector_ ), moveVector_, Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
                 if (Input.IsFirePressed() || Input.IsAimPressed()) {
-                    SetLookInput( true, Input.LookTarget );
-                    PhysicsUpdate();
+                    RotateAt( Input.LookTarget );
                 } else {
                     if (Input.IsMovePressed( out var moveVector )) {
-                        SetLookInput( true, transform.position + moveVector );
-                        PhysicsUpdate();
+                        RotateAt( transform.position + moveVector );
                     } else {
-                        SetLookInput( false, Input.LookTarget );
-                        PhysicsUpdate();
+                        RotateAt( null );
                     }
                 }
                 if (Input.IsFirePressed() || Input.IsAimPressed()) {

@@ -1,5 +1,5 @@
 #nullable enable
-namespace UnityEngine.Framework.Entities {
+namespace UnityEngine {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -9,18 +9,16 @@ namespace UnityEngine.Framework.Entities {
     // Note: Character-controller should collide only with other character-controllers and don't affect other colliders or rays.
     // Note: While not moving character-controller can collide only with other character-controllers.
     // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
-    public abstract class PhysicsCharacter : EntityBase {
+    public class PhysicsCharacter : MonoBehaviour {
 
         private bool fixedUpdateWasInvoked;
 
-        // ExcludeLayersMask
-        private static LayerMask ExcludeLayersMask_Inactive => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
-        private static LayerMask ExcludeLayersMask_Active => Masks.CharacterEntityInternal; // Exclude CharacterEntityInternal layer
+        // ExcludeLayers
+        private static LayerMask ExcludeLayers_Inactive => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
+        private static LayerMask ExcludeLayers_Active => Masks.CharacterEntityInternal; // Exclude CharacterEntityInternal layer
 
         // CharacterController
-        protected CharacterController CharacterController { get; set; } = default!;
-        // Rigidbody
-        protected Rigidbody Rigidbody { get; set; } = default!;
+        protected CharacterController CharacterController { get; private set; } = default!;
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
@@ -32,18 +30,27 @@ namespace UnityEngine.Framework.Entities {
         public Vector3 LookTarget { get; private set; }
 
         // Awake
-        public override void Awake() {
+        public virtual void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
-            CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            Rigidbody.isKinematic = true;
+            CharacterController.excludeLayers = ExcludeLayers_Inactive;
         }
-        public override void OnDestroy() {
+        public virtual void OnDestroy() {
+        }
+
+        // OnEnable
+        public void OnEnable() {
+            CharacterController.enabled = true;
+        }
+        public void OnDisable() {
+            CharacterController.enabled = false;
         }
 
         // SetMovementInput
         public void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'SetMovementInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (fixedUpdateWasInvoked) {
                 fixedUpdateWasInvoked = false;
                 IsMovePressed = isMovePressed;
@@ -62,35 +69,45 @@ namespace UnityEngine.Framework.Entities {
 
         // SetLookInput
         public void SetLookInput(bool isLookPressed, Vector3 lookTarget) {
-            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'SetLookInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             IsLookPressed = isLookPressed;
             LookTarget = lookTarget;
         }
 
         // PhysicsFixedUpdate
-        public void PhysicsFixedUpdate() {
-            Assert.Operation.Message( $"Method 'MovePosition' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+        public virtual void PhysicsFixedUpdate() {
+            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'PhysicsFixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             fixedUpdateWasInvoked = true;
             if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                var velocity = GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
-                Move( velocity );
+                Move( GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed ) );
             }
         }
 
         // PhysicsUpdate
-        public void PhysicsUpdate() {
-            Assert.Operation.Message( $"Method 'MoveRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        public virtual void PhysicsUpdate() {
+            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Initialized( didAwake );
+            Assert.Object.Message( $"PhysicsCharacter {this} must be alive" ).Alive( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'PhysicsUpdate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsLookPressed) {
-                var rotation = GetRotation( transform.localPosition, LookTarget );
-                Rotate( rotation );
+                Rotate( GetRotation( transform.localPosition, LookTarget ) );
             }
         }
 
         // Move
-        protected virtual void Move(Vector3 velocity) {
-            CharacterController.excludeLayers = ExcludeLayersMask_Active;
-            CharacterController.Move( velocity * Time.fixedDeltaTime );
-            CharacterController.excludeLayers = ExcludeLayersMask_Inactive;
+        protected virtual CollisionFlags Move(Vector3 velocity) {
+            try {
+                CharacterController.excludeLayers = ExcludeLayers_Active;
+                return CharacterController.Move( velocity * Time.fixedDeltaTime );
+            } finally {
+                CharacterController.excludeLayers = ExcludeLayers_Inactive;
+            }
         }
 
         // Rotate
@@ -99,7 +116,7 @@ namespace UnityEngine.Framework.Entities {
         }
 
         // OnControllerColliderHit
-        public void OnControllerColliderHit(ControllerColliderHit hit) {
+        protected virtual void OnControllerColliderHit(ControllerColliderHit hit) {
             hit.rigidbody?.WakeUp();
         }
 

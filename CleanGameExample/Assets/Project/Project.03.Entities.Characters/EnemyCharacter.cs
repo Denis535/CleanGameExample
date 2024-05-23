@@ -32,21 +32,19 @@ namespace Project.Entities.Characters {
             Context = GetContext( transform );
         }
         public override void Update() {
-            //if (IsAlive) {
-            //    if (Context.Player != null) {
-            //        var target = Context.Player.transform.position + Vector3.up * 1.75f;
-            //        PhysicsCharacter!.SetLookInput( true, target );
-            //        PhysicsCharacter!.PhysicsUpdate();
-            //        LookAt( target );
-            //        AimAt( target );
-            //        Weapon?.Fire();
-            //    } else {
-            //        PhysicsCharacter!.SetLookInput( false, PhysicsCharacter!.LookTarget );
-            //        PhysicsCharacter!.PhysicsUpdate();
-            //        LookAt( null );
-            //        AimAt( null );
-            //    }
-            //}
+            if (IsAlive) {
+                if (Context.Player != null) {
+                    var target = Context.Player.transform.position + Vector3.up * 1.75f;
+                    RotateAt( target );
+                    LookAt( target );
+                    AimAt( target );
+                    Weapon?.Fire();
+                } else {
+                    RotateAt( null );
+                    LookAt( null );
+                    AimAt( null );
+                }
+            }
         }
 
         // Heleprs

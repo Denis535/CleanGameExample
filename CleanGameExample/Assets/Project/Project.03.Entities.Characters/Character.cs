@@ -10,7 +10,7 @@ namespace Project.Entities.Characters {
     public abstract class Character : EntityBase, IDamageable {
 
         // PhysicsCharacter
-        private PhysicsCharacter PhysicsCharacter { get; set; }
+        private PhysicsCharacter PhysicsCharacter { get; set; } = default!;
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
@@ -20,7 +20,7 @@ namespace Project.Entities.Characters {
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
         // IsAlive
-        public bool IsAlive => PhysicsCharacter != null;
+        public bool IsAlive => PhysicsCharacter.enabled;
 
         // Awake
         public override void Awake() {
@@ -45,19 +45,13 @@ namespace Project.Entities.Characters {
 
         // SetMovementInput
         protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             PhysicsCharacter.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // RotateAt
         protected void RotateAt(Vector3? target) {
-            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             if (target != null) {
                 PhysicsCharacter.SetLookInput( true, target.Value );
                 PhysicsCharacter.PhysicsUpdate();
@@ -67,30 +61,21 @@ namespace Project.Entities.Characters {
             }
         }
 
-        // AimAt
-        protected bool AimAt(Vector3? target) {
-            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
-            return AimAt( WeaponSlot.transform, target );
-        }
-
         // LookAt
         protected bool LookAt(Vector3? target) {
-            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             return LookAt( Head, target );
+        }
+
+        // AimAt
+        protected bool AimAt(Vector3? target) {
+            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
+            return AimAt( WeaponSlot.transform, target );
         }
 
         // SetWeapon
         protected void SetWeapon(Weapon? weapon) {
-            Assert.Object.Message( $"Character {this} must be awakened" ).Initialized( didAwake );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( this );
-            Assert.Operation.Message( $"Character {this} must be enabled" ).Valid( enabled );
-            Assert.Object.Message( $"Character {this} must be alive" ).Alive( IsAlive );
+            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             SetWeapon( WeaponSlot, weapon );
         }
 
@@ -106,22 +91,12 @@ namespace Project.Entities.Characters {
 
         // OnDead
         protected virtual void OnDead() {
-            WeaponSlot.transform.DetachChildren();
             PhysicsCharacter.enabled = false;
+            var rigidbody = gameObject.AddComponent<Rigidbody>();
+            rigidbody.mass = 90;
+            WeaponSlot.transform.DetachChildren();
         }
 
-        // Helpers
-        private static Weapon? GetWeapon(Slot slot) {
-            return slot.transform.childCount > 0 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
-        }
-        private static void SetWeapon(Slot slot, Weapon? weapon) {
-            slot.transform.DetachChildren();
-            if (weapon != null) {
-                weapon.transform.parent = slot.transform;
-                weapon.transform.localPosition = Vector3.zero;
-                weapon.transform.localRotation = Quaternion.identity;
-            }
-        }
         // Helpers
         private static bool LookAt(Transform transform, Vector3? target) {
             var rotation = transform.localRotation;
@@ -157,6 +132,17 @@ namespace Project.Entities.Characters {
             } else {
                 transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
                 return false;
+            }
+        }
+        private static Weapon? GetWeapon(Slot slot) {
+            return slot.transform.childCount > 0 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
+        }
+        private static void SetWeapon(Slot slot, Weapon? weapon) {
+            slot.transform.DetachChildren();
+            if (weapon != null) {
+                weapon.transform.parent = slot.transform;
+                weapon.transform.localPosition = Vector3.zero;
+                weapon.transform.localRotation = Quaternion.identity;
             }
         }
         // Helpers

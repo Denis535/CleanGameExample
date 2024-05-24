@@ -15,14 +15,14 @@ namespace Project.Entities.Characters {
         private CharacterPhysics CharacterPhysics { get; set; } = default!;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
-        // IsAlive
-        public bool IsAlive => CharacterPhysics.enabled;
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
         protected Transform Body { get; private set; } = default!;
         // WeaponSlot
         protected Slot WeaponSlot { get; private set; } = default!;
+        // IsAlive
+        public bool IsAlive => CharacterPhysics.enabled;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
 
@@ -100,7 +100,7 @@ namespace Project.Entities.Characters {
             gameObject.SetLayerRecursively( Layers.Entity );
             CharacterPhysics.enabled = false;
             Rigidbody.isKinematic = false;
-            Rigidbody.AddForceAtPosition( direction * 10, point, ForceMode.Impulse );
+            Rigidbody.AddForceAtPosition( direction * 5, point, ForceMode.Impulse );
         }
 
         // Helpers

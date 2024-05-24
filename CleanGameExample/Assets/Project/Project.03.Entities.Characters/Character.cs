@@ -8,12 +8,15 @@ namespace Project.Entities.Characters {
     using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( CharacterPhysics ) )]
+    [RequireComponent( typeof( Rigidbody ) )]
     public abstract class Character : EntityBase, IDamageable {
 
         // CharacterPhysics
         private CharacterPhysics CharacterPhysics { get; set; } = default!;
+        // Rigidbody
+        private Rigidbody Rigidbody { get; set; } = default!;
         // IsAlive
-        public bool IsAlive { get => CharacterPhysics.enabled; private set => CharacterPhysics.enabled = value; }
+        public bool IsAlive => CharacterPhysics.enabled;
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
@@ -26,6 +29,7 @@ namespace Project.Entities.Characters {
         // Awake
         public override void Awake() {
             CharacterPhysics = gameObject.RequireComponent<CharacterPhysics>();
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
@@ -92,11 +96,11 @@ namespace Project.Entities.Characters {
 
         // OnDead
         protected virtual void OnDead(Vector3 point, Vector3 direction) {
-            IsAlive = false;
             SetWeapon( WeaponSlot, null );
-            var rigidbody = gameObject.AddComponent<Rigidbody>();
-            rigidbody.mass = 90;
-            rigidbody.AddForceAtPosition( direction * 10, point, ForceMode.Impulse );
+            gameObject.SetLayerRecursively( Layers.Entity );
+            CharacterPhysics.enabled = false;
+            Rigidbody.isKinematic = false;
+            Rigidbody.AddForceAtPosition( direction * 10, point, ForceMode.Impulse );
         }
 
         // Helpers
@@ -137,18 +141,19 @@ namespace Project.Entities.Characters {
             }
         }
         private static Weapon? GetWeapon(Slot slot) {
-            return slot.transform.childCount > 0 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
+            return slot.transform.childCount >= 1 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
         }
         private static void SetWeapon(Slot slot, Weapon? weapon) {
             var prevWeapon = GetWeapon( slot );
-            if (prevWeapon) {
-                
+            if (prevWeapon != null) {
+                prevWeapon.transform.parent = null;
+                prevWeapon.gameObject.SetLayerRecursively( Layers.Entity );
             }
-            slot.transform.DetachChildren();
             if (weapon != null) {
                 weapon.transform.parent = slot.transform;
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;
+                weapon.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
             }
         }
         // Helpers

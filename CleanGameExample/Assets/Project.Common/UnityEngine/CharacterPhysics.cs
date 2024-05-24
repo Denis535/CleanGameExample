@@ -15,8 +15,8 @@ namespace UnityEngine {
         private bool fixedUpdateWasInvoked;
 
         // ExcludeLayers
-        private static LayerMask ExcludeLayers_Inactive => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
-        private static LayerMask ExcludeLayers_Active => Masks.CharacterEntityInternal; // Exclude CharacterEntityInternal layer
+        private static LayerMask ExcludeLayers_Default => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
+        private static LayerMask ExcludeLayers_WhenMoving => Masks.CharacterEntityInternal; // Exclude only CharacterEntityInternal layer
 
         // CharacterController
         protected CharacterController CharacterController { get; private set; } = default!;
@@ -33,7 +33,7 @@ namespace UnityEngine {
         // Awake
         protected virtual void Awake() {
             CharacterController = gameObject.RequireComponent<CharacterController>();
-            CharacterController.excludeLayers = ExcludeLayers_Inactive;
+            CharacterController.excludeLayers = ExcludeLayers_Default;
         }
         protected virtual void OnDestroy() {
         }
@@ -104,10 +104,10 @@ namespace UnityEngine {
         // Move
         protected virtual CollisionFlags Move(Vector3 velocity) {
             try {
-                CharacterController.excludeLayers = ExcludeLayers_Active;
+                CharacterController.excludeLayers = ExcludeLayers_WhenMoving;
                 return CharacterController.Move( velocity * Time.fixedDeltaTime );
             } finally {
-                CharacterController.excludeLayers = ExcludeLayers_Inactive;
+                CharacterController.excludeLayers = ExcludeLayers_Default;
             }
         }
 

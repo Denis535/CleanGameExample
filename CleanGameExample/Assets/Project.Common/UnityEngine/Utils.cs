@@ -21,6 +21,34 @@ namespace UnityEngine {
             }
         }
 
+        // Instantiate
+        public static T Instantiate<T>(this GameObject prefab) where T : MonoBehaviour {
+            return Object.Instantiate( prefab.RequireComponent<T>() );
+        }
+        public static T Instantiate<T>(this GameObject prefab, Vector3 position, Quaternion rotation) where T : MonoBehaviour {
+            return Object.Instantiate( prefab.RequireComponent<T>(), position, rotation );
+        }
+        public static T Instantiate<T>(this GameObject prefab, Transform? parent) where T : MonoBehaviour {
+            return Object.Instantiate( prefab.RequireComponent<T>(), parent );
+        }
+        public static T Instantiate<T>(this GameObject prefab, Transform? parent, bool worldPositionStays) where T : MonoBehaviour {
+            return Object.Instantiate( prefab.RequireComponent<T>(), parent, worldPositionStays );
+        }
+        public static T Instantiate<T>(this GameObject prefab, Vector3 position, Quaternion rotation, Transform? parent) where T : MonoBehaviour {
+            return Object.Instantiate( prefab.RequireComponent<T>(), position, rotation, parent );
+        }
+
+        // GetRandomValue
+        public static T GetRandomValue<T>(this T[] values) {
+            return values[ Random.Range( 0, values.Length ) ];
+        }
+        public static T GetRandomValue<T>(this IList<T> values) {
+            return values[ Random.Range( 0, values.Count ) ];
+        }
+        public static T GetRandomValue<T>(this IReadOnlyList<T> values) {
+            return values[ Random.Range( 0, values.Count ) ];
+        }
+
         // PlayAnimation
         //public static async void PlayAnimation<T>(T @object, float from, float to, float duration, Action<T, float> onUpdate, Action<T>? onComplete, Action<T>? onCancel, CancellationToken cancellationToken) {
         //    await PlayAnimationAsync( @object, from, to, duration, onUpdate, onComplete, onCancel, cancellationToken );

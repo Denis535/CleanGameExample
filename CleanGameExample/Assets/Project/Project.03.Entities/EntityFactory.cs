@@ -9,22 +9,29 @@ namespace Project.Entities {
 
     public static class EntityFactory {
 
+        private static readonly AssetHandle<GameObject> GamePrefab = new AssetHandle<GameObject>( R.Project.Entities.Game_Value );
+        private static readonly AssetHandle<GameObject> CameraPrefab = new AssetHandle<GameObject>( R.Project.Entities.Camera_Value );
+
         // Initialize
         public static void Initialize() {
+            GamePrefab.Load().Wait();
+            CameraPrefab.Load().Wait();
         }
         public static void Deinitialize() {
+            GamePrefab.Release();
+            CameraPrefab.Release();
         }
 
         // Game
         public static Game Game(PlayerCharacterEnum character, LevelEnum level) {
             using (Context.Begin( new Game.Args( character, level ) )) {
-                return Addressables2.Instantiate<Game>( R.Project.Entities.Game_Value );
+                return GamePrefab.Value.Instantiate<Game>();
             }
         }
 
         // Camera
         public static Camera2 Camera() {
-            return Addressables2.Instantiate<Camera2>( R.Project.Entities.Camera_Value );
+            return CameraPrefab.Value.Instantiate<Camera2>();
         }
 
     }

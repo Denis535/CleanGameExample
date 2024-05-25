@@ -8,35 +8,37 @@ namespace Project.Entities.Characters {
 
     public static class CharacterFactory {
 
-        private static string[] PlayerCharacters = new[] {
+        private static readonly AssetListHandle<GameObject> PlayerCharacterPrefabs = new AssetListHandle<GameObject>( new[] {
             R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
             R.Project.Entities.Characters.PlayerCharacter_Red_Value,
             R.Project.Entities.Characters.PlayerCharacter_Green_Value,
             R.Project.Entities.Characters.PlayerCharacter_Blue_Value
-        };
-        private static string[] EnemyCharacters = new[] {
+        } );
+        private static readonly AssetListHandle<GameObject> EnemyCharacterPrefabs = new AssetListHandle<GameObject>( new[] {
             R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
             R.Project.Entities.Characters.EnemyCharacter_Red_Value,
             R.Project.Entities.Characters.EnemyCharacter_Green_Value,
             R.Project.Entities.Characters.EnemyCharacter_Blue_Value
-        };
+        } );
 
         // Initialize
         public static void Initialize() {
+            PlayerCharacterPrefabs.Load().Wait();
+            EnemyCharacterPrefabs.Load().Wait();
         }
         public static void Deinitialize() {
+            PlayerCharacterPrefabs.Release();
+            EnemyCharacterPrefabs.Release();
         }
 
         // PlayerCharacter
         public static PlayerCharacter PlayerCharacter(PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
-            var key = PlayerCharacters[ (int) character ];
-            return Addressables2.Instantiate<PlayerCharacter>( key, position, rotation );
+            return PlayerCharacterPrefabs.Values[ (int) character ].Instantiate<PlayerCharacter>( position, rotation );
         }
 
         // EnemyCharacter
         public static EnemyCharacter EnemyCharacter(Vector3 position, Quaternion rotation) {
-            var key = EnemyCharacters[ UnityEngine.Random.Range( 0, EnemyCharacters.Length ) ];
-            return Addressables2.Instantiate<EnemyCharacter>( key, position, rotation );
+            return EnemyCharacterPrefabs.Values.GetRandomValue().Instantiate<EnemyCharacter>( position, rotation );
         }
 
     }

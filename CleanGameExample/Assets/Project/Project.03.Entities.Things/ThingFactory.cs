@@ -8,33 +8,36 @@ namespace Project.Entities.Things {
 
     public static class ThingFactory {
 
-        private static readonly string[] Weapons = new[] {
+        private static readonly AssetListHandle<GameObject> WeaponPrefabs = new AssetListHandle<GameObject>( new[] {
             R.Project.Entities.Things.Gun_Gray_Value,
             R.Project.Entities.Things.Gun_Red_Value,
             R.Project.Entities.Things.Gun_Green_Value,
             R.Project.Entities.Things.Gun_Blue_Value,
-        };
+        } );
+        private static readonly AssetHandle<GameObject> BulletPrefab = new AssetHandle<GameObject>( R.Project.Entities.Things.Bullet_Value );
 
         // Initialize
         public static void Initialize() {
+            WeaponPrefabs.Load().Wait();
+            BulletPrefab.Load().Wait();
         }
         public static void Deinitialize() {
+            WeaponPrefabs.Release();
+            BulletPrefab.Release();
         }
 
         // Gun
         public static Gun Gun(Vector3 position, Quaternion rotation) {
-            var key = Weapons[ UnityEngine.Random.Range( 0, Weapons.Length ) ];
-            return Addressables2.Instantiate<Gun>( key, position, rotation );
+            return WeaponPrefabs.Values.GetRandomValue().Instantiate<Gun>( position, rotation );
         }
         public static void Gun(Slot slot) {
-            var key = Weapons[ UnityEngine.Random.Range( 0, Weapons.Length ) ];
-            Addressables2.Instantiate<Gun>( key, slot.transform );
+            WeaponPrefabs.Values.GetRandomValue().Instantiate<Gun>( slot.transform );
         }
 
         // Bullet
         public static Bullet Bullet(Vector3 position, Quaternion rotation, IDamageable owner, Weapon weapon, float force) {
             using (Context.Begin( new Bullet.Args( owner, weapon, force ) )) {
-                return Addressables2.Instantiate<Bullet>( R.Project.Entities.Things.Bullet_Value, position, rotation );
+                return BulletPrefab.Value.Instantiate<Bullet>( position, rotation );
             }
         }
 

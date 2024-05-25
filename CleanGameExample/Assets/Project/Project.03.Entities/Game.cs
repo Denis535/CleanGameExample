@@ -19,13 +19,16 @@ namespace Project.Entities {
         public Player Player { get; private set; } = default!;
         public LevelEnum LevelEnum { get; private set; }
         public World World { get; private set; } = default!;
+        private List<EnemyCharacter> Enemies_ { get; set; } = default!;
+        public IReadOnlyList<EnemyCharacter> Enemies => Enemies_;
 
         // Awake
         public override void Awake() {
             var args = Context.GetValue<Args>();
-            LevelEnum = args.Level;
             Player = new Player( args.Character );
+            LevelEnum = args.Level;
             World = Utils.Container.RequireDependency<World>( null );
+            Enemies_ = new List<EnemyCharacter>();
         }
         public override void OnDestroy() {
             Player.Dispose();
@@ -52,7 +55,7 @@ namespace Project.Entities {
                 Player.SetInputEnabled( !IsPaused && Player.Camera != null );
             }
             foreach (var point in World.EnemyPoints) {
-                CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation );
+                Enemies_.Add( CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation ) );
             }
             foreach (var point in World.LootPoints) {
                 ThingFactory.Gun( point.transform.position, point.transform.rotation );

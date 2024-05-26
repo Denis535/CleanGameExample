@@ -23,8 +23,8 @@ namespace Project.Entities {
         }
 
         // Game
-        public static Game Game(PlayerCharacterEnum character, LevelEnum level) {
-            using (Context.Begin( new Game.Args( character, level ) )) {
+        public static Game Game(LevelEnum level, string name, PlayerCharacterEnum character) {
+            using (Context.Begin( new Game.Args( level, name, character ) )) {
                 return GamePrefab.Value.Instantiate<Game>();
             }
         }

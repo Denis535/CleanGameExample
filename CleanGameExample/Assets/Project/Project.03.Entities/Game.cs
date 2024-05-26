@@ -11,24 +11,25 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase {
-        public record Args(PlayerCharacterEnum Character, LevelEnum Level);
+        public record Args(LevelEnum Level, string Name, PlayerCharacterEnum Character);
 
         // State
         public bool IsPaused { get; private set; }
+        // Level
+        public LevelEnum LevelEnum { get; private set; }
         // Entities
         public Player Player { get; private set; } = default!;
-        public LevelEnum LevelEnum { get; private set; }
-        public World World { get; private set; } = default!;
         private List<EnemyCharacter> Enemies_ { get; set; } = default!;
         public IReadOnlyList<EnemyCharacter> Enemies => Enemies_;
+        public World World { get; private set; } = default!;
 
         // Awake
         public override void Awake() {
             var args = Context.GetValue<Args>();
-            Player = new Player( args.Character );
             LevelEnum = args.Level;
-            World = Utils.Container.RequireDependency<World>( null );
+            Player = new Player( args.Name, args.Character );
             Enemies_ = new List<EnemyCharacter>();
+            World = Utils.Container.RequireDependency<World>( null );
         }
         public override void OnDestroy() {
             Player.Dispose();

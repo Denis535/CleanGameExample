@@ -12,11 +12,14 @@ namespace Project.Entities {
 
     public class Player : PlayerBase {
 
+        // Name
+        public string Name { get; }
+        // Character
+        public PlayerCharacterEnum CharacterEnum { get; }
         // Input
         private InputActions Input { get; }
         // Entities
         public Camera2? Camera { get; private set; }
-        public PlayerCharacterEnum CharacterEnum { get; }
         public PlayerCharacter? Character { get; private set; }
         // Hit
         internal (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
@@ -40,9 +43,10 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(PlayerCharacterEnum character) {
-            Input = new InputActions();
+        public Player(string name, PlayerCharacterEnum character) {
+            Name = name;
             CharacterEnum = character;
+            Input = new InputActions();
         }
         public override void Dispose() {
             Input.Dispose();

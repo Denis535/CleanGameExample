@@ -16,7 +16,7 @@ namespace Project.UI.MainScreen {
 
         // UI
         private UIRouter Router { get; }
-        // Application
+        // App
         private Application2 Application { get; }
         // Storage
         private Storage Storage { get; set; } = default!;

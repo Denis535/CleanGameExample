@@ -27,7 +27,7 @@ namespace Project.UI {
         private AudioSource AudioSource { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
-        // Application
+        // App
         private Application2 Application { get; set; } = default!;
         // Entities
         private Game? Game => Application.Game;

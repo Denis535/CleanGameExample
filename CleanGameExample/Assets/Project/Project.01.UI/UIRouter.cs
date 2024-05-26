@@ -67,7 +67,7 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
-        // Application
+        // App
         private Application2 Application { get; set; } = default!;
         // Scenes
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
@@ -109,7 +109,7 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(PlayerCharacterEnum character, LevelEnum level) {
+        public async Task LoadGameSceneAsync(LevelEnum level, string name, PlayerCharacterEnum character) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
@@ -117,7 +117,7 @@ namespace Project.UI {
                     await LoadSceneAsync_GameScene( GetWorldAddress( level ) );
                     State = UIRouterState.GameSceneLoaded;
                 }
-                Application.RunGame( character, level );
+                Application.RunGame( level, name, character );
             }
         }
 

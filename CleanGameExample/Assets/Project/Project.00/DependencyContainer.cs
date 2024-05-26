@@ -21,18 +21,16 @@ namespace Project {
         private UITheme UITheme => uiTheme;
         private UIScreen UIScreen => uiScreen;
         private UIRouter UIRouter => uiRouter;
-        // Application
+        // App
         private Application2 Application => application;
-        // AudioMixer
-        private AudioMixer AudioMixer => audioMixer;
-        // Storage
         private Storage Storage { get; set; } = default!;
         private Storage.ProfileSettings ProfileSettings { get; set; } = default!;
         private Storage.VideoSettings VideoSettings { get; set; } = default!;
         private Storage.AudioSettings AudioSettings { get; set; } = default!;
         private Storage.Preferences Preferences { get; set; } = default!;
-        // AuthenticationService
         private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
+        // AudioMixer
+        private AudioMixer AudioMixer => audioMixer;
 
         // Awake
         public void Awake() {

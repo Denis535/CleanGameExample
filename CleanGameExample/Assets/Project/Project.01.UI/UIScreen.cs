@@ -17,7 +17,7 @@ namespace Project.UI {
         private UIDocument Document { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
-        // Application
+        // App
         private Application2 Application { get; set; } = default!;
         // Widget
         private new UIRootWidget Widget => (UIRootWidget?) base.Widget!;

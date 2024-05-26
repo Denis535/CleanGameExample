@@ -8,7 +8,7 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class EnemyCharacter : Character {
-        public record Args();
+        public record Args(IGame game);
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
@@ -36,7 +36,7 @@ namespace Project.Entities.Characters {
         public override void Update() {
             if (IsAlive) {
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    var target = Environment.Player.transform.position + Vector3.up * 1.75f;
+                    var target = GetTarget( Environment.Player );
                     RotateAt( target );
                     LookAt( target );
                     AimAt( target );
@@ -64,6 +64,9 @@ namespace Project.Entities.Characters {
             return new Environment_() {
                 Player = Physics2.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
+        }
+        private static Vector3 GetTarget(PlayerCharacter player) {
+            return player.transform.position + Vector3.up * 1.75f;
         }
 
     }

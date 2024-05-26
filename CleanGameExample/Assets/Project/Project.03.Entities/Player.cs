@@ -23,20 +23,20 @@ namespace Project.Entities {
         public PlayerCharacter? Character { get; private set; }
         // Hit
         private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
-        public GameObject? Enemy {
+        public EnemyCharacter? Enemy {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<EnemyCharacter>()?.gameObject;
+                    return @object.GetComponent<EnemyCharacter>();
                 }
                 return null;
             }
         }
-        public GameObject? Loot {
+        public EntityBase? Loot {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<Weapon>()?.gameObject;
+                    return @object.GetComponent<Weapon>();
                 }
                 return null;
             }
@@ -81,8 +81,9 @@ namespace Project.Entities {
         }
 
         // IPlayer
-        bool IPlayer.IsEnabled => Input.asset.enabled;
-        Vector3 IPlayer.LookTarget => Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+        Vector3 IPlayer.GetLookTarget() {
+            return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+        }
         bool IPlayer.IsMovePressed(out Vector3 moveVector) {
             Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Game.Move.IsPressed()) {
@@ -114,7 +115,7 @@ namespace Project.Entities {
             Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Game.Aim.IsPressed();
         }
-        bool IPlayer.IsInteractPressed(out GameObject? interactable) {
+        bool IPlayer.IsInteractPressed(out EntityBase? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             interactable = Enemy ?? Loot;
             return Input.Game.Interact.WasPressedThisFrame();

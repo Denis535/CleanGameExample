@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public class Game : GameBase {
+    public class Game : GameBase, IGame {
         public record Args(LevelEnum Level, string Name, PlayerCharacterEnum Character);
 
         // State
@@ -52,11 +52,11 @@ namespace Project.Entities {
             {
                 var point = World.PlayerPoints.First();
                 Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( CharacterFactory.PlayerCharacter( Player, Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCharacter( CharacterFactory.PlayerCharacter( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( !IsPaused && Player.Camera != null );
             }
             foreach (var point in World.EnemyPoints) {
-                Enemies_.Add( CharacterFactory.EnemyCharacter( point.transform.position, point.transform.rotation ) );
+                Enemies_.Add( CharacterFactory.EnemyCharacter( this, point.transform.position, point.transform.rotation ) );
             }
             foreach (var point in World.LootPoints) {
                 ThingFactory.Gun( point.transform.position, point.transform.rotation );

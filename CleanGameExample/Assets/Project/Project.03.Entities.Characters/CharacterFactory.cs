@@ -32,15 +32,15 @@ namespace Project.Entities.Characters {
         }
 
         // PlayerCharacter
-        public static PlayerCharacter PlayerCharacter(IPlayer player, PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new PlayerCharacter.Args( player ) )) {
+        public static PlayerCharacter PlayerCharacter(IGame game, IPlayer player, PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new PlayerCharacter.Args( game, player ) )) {
                 return PlayerCharacterPrefabs.Values[ (int) character ].Instantiate<PlayerCharacter>( position, rotation );
             }
         }
 
         // EnemyCharacter
-        public static EnemyCharacter EnemyCharacter(Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new EnemyCharacter.Args() )) {
+        public static EnemyCharacter EnemyCharacter(IGame game, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new EnemyCharacter.Args( game ) )) {
                 return EnemyCharacterPrefabs.Values.GetRandomValue().Instantiate<EnemyCharacter>( position, rotation );
             }
         }

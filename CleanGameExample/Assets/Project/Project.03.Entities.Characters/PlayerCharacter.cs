@@ -7,7 +7,7 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class PlayerCharacter : Character {
-        public record Args(IPlayer Player);
+        public record Args(IGame game, IPlayer Player);
 
         // Player
         public IPlayer Player { get; private set; } = default!;
@@ -31,32 +31,14 @@ namespace Project.Entities.Characters {
         public override void Update() {
             if (IsAlive) {
                 SetMovementInput( Player.IsMovePressed( out var moveVector_ ), moveVector_, Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
-                if (Player.IsFirePressed() || Player.IsAimPressed()) {
-                    RotateAt( Player.LookTarget );
-                } else {
-                    if (Player.IsMovePressed( out var moveVector )) {
-                        RotateAt( transform.position + moveVector );
-                    } else {
-                        RotateAt( null );
-                    }
-                }
-                if (Player.IsFirePressed() || Player.IsAimPressed()) {
-                    LookAt( Player.LookTarget );
-                    AimAt( Player.LookTarget );
-                } else {
-                    if (Player.IsMovePressed( out _ )) {
-                        LookAt( Player.LookTarget );
-                        AimAt( null );
-                    } else {
-                        LookAt( Player.LookTarget );
-                        AimAt( null );
-                    }
+                RotateAt( GetTarget( Player, this ) );
+                LookAt( GetLookTarget( Player ) );
+                AimAt( GetAimTarget( Player ) );
+                if (Player.IsAimPressed()) {
+                    
                 }
                 if (Player.IsFirePressed()) {
                     Weapon?.Fire();
-                }
-                if (Player.IsAimPressed()) {
-
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     var weapon = interactable?.GetComponent<Weapon>();
@@ -79,30 +61,34 @@ namespace Project.Entities.Characters {
             base.OnDead( point, direction );
         }
 
-    }
-    // IPlayer
-    public interface IPlayer {
+        // Helpers
+        private static Vector3? GetTarget(IPlayer player, PlayerCharacter character) {
+            if (player.IsAimPressed() || player.IsFirePressed()) {
+                return player.GetLookTarget();
+            }
+            if (player.IsMovePressed( out var moveVector )) {
+                return character.transform.position + moveVector;
+            }
+            return null;
+        }
+        private static Vector3? GetLookTarget(IPlayer player) {
+            if (player.IsAimPressed() || player.IsFirePressed()) {
+                return player.GetLookTarget();
+            }
+            if (player.IsMovePressed( out _ )) {
+                return player.GetLookTarget();
+            }
+            return player.GetLookTarget();
+        }
+        private static Vector3? GetAimTarget(IPlayer player) {
+            if (player.IsAimPressed() || player.IsFirePressed()) {
+                return player.GetLookTarget();
+            }
+            if (player.IsMovePressed( out _ )) {
+                return null;
+            }
+            return null;
+        }
 
-        string Name { get; }
-        PlayerCharacterEnum CharacterEnum { get; }
-
-        bool IsEnabled { get; }
-        Vector3 LookTarget { get; }
-
-        bool IsMovePressed(out Vector3 moveVector);
-        bool IsJumpPressed();
-        bool IsCrouchPressed();
-        bool IsAcceleratePressed();
-        bool IsFirePressed();
-        bool IsAimPressed();
-        bool IsInteractPressed(out GameObject? interactable);
-
-    }
-    // PlayerCharacterEnum
-    public enum PlayerCharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
     }
 }

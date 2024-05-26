@@ -7,8 +7,10 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class PlayerCharacter : Character {
-        public record Args(IGame game, IPlayer Player);
+        public record Args(IGame Game, IPlayer Player);
 
+        // Game
+        private IGame Game { get; set; } = default!;
         // Player
         public IPlayer Player { get; private set; } = default!;
 
@@ -16,6 +18,7 @@ namespace Project.Entities.Characters {
         public override void Awake() {
             base.Awake();
             var args = Context.GetValue<Args>();
+            Game = args.Game;
             Player = args.Player;
         }
         public override void OnDestroy() {
@@ -35,7 +38,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Player ) );
                 AimAt( GetAimTarget( Player ) );
                 if (Player.IsAimPressed()) {
-                    
+
                 }
                 if (Player.IsFirePressed()) {
                     Weapon?.Fire();

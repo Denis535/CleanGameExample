@@ -8,11 +8,13 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class EnemyCharacter : Character {
-        public record Args(IGame game);
+        public record Args(IGame Game);
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
 
+        // Game
+        private IGame Game { get; set; } = default!;
         // Environment
         private Environment_ Environment { get; set; }
 
@@ -20,6 +22,7 @@ namespace Project.Entities.Characters {
         public override void Awake() {
             base.Awake();
             var args = Context.GetValue<Args>();
+            Game = args.Game;
         }
         public override void OnDestroy() {
             base.OnDestroy();

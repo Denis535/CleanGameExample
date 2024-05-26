@@ -52,7 +52,7 @@ namespace Project.Entities {
             {
                 var point = World.PlayerPoints.First();
                 Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( CharacterFactory.PlayerCharacter( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCharacter( CharacterFactory.PlayerCharacter( this, Player, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( !IsPaused && Player.Camera != null );
             }
             foreach (var point in World.EnemyPoints) {
@@ -67,6 +67,11 @@ namespace Project.Entities {
         }
         public void LateUpdate() {
             Player.LateUpdate();
+        }
+
+        void IGame.OnDamage(Character character, Character damager, Weapon weapon) {
+        }
+        void IGame.OnKill(Character character, Character killer, Weapon weapon) {
         }
 
     }

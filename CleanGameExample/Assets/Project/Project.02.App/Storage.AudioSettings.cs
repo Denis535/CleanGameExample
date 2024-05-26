@@ -47,7 +47,7 @@ namespace Project.App {
             }
 
             // Constructor
-            public AudioSettings(AudioMixer audioMixer) {
+            internal AudioSettings(AudioMixer audioMixer) {
                 AudioMixer = audioMixer;
                 Load();
             }

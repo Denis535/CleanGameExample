@@ -15,7 +15,7 @@ namespace Project.App {
         public string? Profile { get; }
 
         // Constructor
-        public Storage() {
+        internal Storage() {
             //var args = Environment.GetCommandLineArgs();
             //Debug.Log( "Arguments: " + args.Join( ", " ) );
             Profile = GetCommandLineArgument( "--profile" );

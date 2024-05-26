@@ -18,18 +18,15 @@ namespace Project.UI.MainScreen {
         private UIRouter Router { get; }
         // App
         private Application2 Application { get; }
-        // Storage
-        private Storage Storage { get; set; } = default!;
-        // AuthenticationService
-        private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
+        private Storage Storage => Application.Storage;
+        private IAuthenticationService AuthenticationService => Application.AuthenticationService;
         // View
         public override MainWidgetView View { get; }
 
         // Constructor
         public MainWidget() {
-            Router = Utils.Container.RequireDependency<UIRouter>( null );
-            Application = Utils.Container.RequireDependency<Application2>( null );
-            Storage = Utils.Container.RequireDependency<Storage>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>();
+            Application = Utils.Container.RequireDependency<Application2>();
             View = CreateView( this );
         }
         public override void Dispose() {

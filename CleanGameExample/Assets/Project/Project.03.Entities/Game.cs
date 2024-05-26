@@ -29,7 +29,7 @@ namespace Project.Entities {
             LevelEnum = args.Level;
             Player = new Player( args.Name, args.Character );
             Enemies_ = new List<EnemyCharacter>();
-            World = Utils.Container.RequireDependency<World>( null );
+            World = Utils.Container.RequireDependency<World>();
         }
         public override void OnDestroy() {
             Player.Dispose();

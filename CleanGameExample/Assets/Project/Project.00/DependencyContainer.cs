@@ -5,9 +5,7 @@ namespace Project {
     using System.Collections.Generic;
     using Project.App;
     using Project.UI;
-    using Unity.Services.Authentication;
     using UnityEngine;
-    using UnityEngine.Audio;
 
     public class DependencyContainer : MonoBehaviour, IDependencyContainer {
 
@@ -15,7 +13,6 @@ namespace Project {
         [SerializeField] private UIScreen uiScreen = default!;
         [SerializeField] private UIRouter uiRouter = default!;
         [SerializeField] private Application2 application = default!;
-        [SerializeField] private AudioMixer audioMixer = default!;
 
         // UI
         private UITheme UITheme => uiTheme;
@@ -23,22 +20,9 @@ namespace Project {
         private UIRouter UIRouter => uiRouter;
         // App
         private Application2 Application => application;
-        private Storage Storage { get; set; } = default!;
-        private Storage.ProfileSettings ProfileSettings { get; set; } = default!;
-        private Storage.VideoSettings VideoSettings { get; set; } = default!;
-        private Storage.AudioSettings AudioSettings { get; set; } = default!;
-        private Storage.Preferences Preferences { get; set; } = default!;
-        private IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
-        // AudioMixer
-        private AudioMixer AudioMixer => audioMixer;
 
         // Awake
         public void Awake() {
-            Storage = new Storage();
-            ProfileSettings = new Storage.ProfileSettings();
-            VideoSettings = new Storage.VideoSettings();
-            AudioSettings = new Storage.AudioSettings( AudioMixer );
-            Preferences = new Storage.Preferences();
             Utils.Container = this;
         }
         public void OnDestroy() {
@@ -63,30 +47,6 @@ namespace Project {
             // App
             if (type == typeof( Application2 )) {
                 var result = Application ?? throw Exceptions.Internal.NullReference( $"Reference 'Application' is null" );
-                return new Option<object?>( result );
-            }
-            if (type == typeof( Storage )) {
-                var result = Storage;
-                return new Option<object?>( result );
-            }
-            if (type == typeof( Storage.ProfileSettings )) {
-                var result = ProfileSettings;
-                return new Option<object?>( result );
-            }
-            if (type == typeof( Storage.VideoSettings )) {
-                var result = VideoSettings;
-                return new Option<object?>( result );
-            }
-            if (type == typeof( Storage.AudioSettings )) {
-                var result = AudioSettings;
-                return new Option<object?>( result );
-            }
-            if (type == typeof( Storage.Preferences )) {
-                var result = Preferences;
-                return new Option<object?>( result );
-            }
-            if (type == typeof( IAuthenticationService )) {
-                var result = AuthenticationService;
                 return new Option<object?>( result );
             }
             // Misc

@@ -10,14 +10,15 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
 
-        // Storage
-        private Storage.VideoSettings VideoSettings { get; }
+        // App
+        private Application2 Application { get; }
+        private Storage.VideoSettings VideoSettings => Application.VideoSettings;
         // View
         public override VideoSettingsWidgetView View { get; }
 
         // Constructor
         public VideoSettingsWidget() {
-            VideoSettings = Utils.Container.RequireDependency<Storage.VideoSettings>( null );
+            Application = Utils.Container.RequireDependency<Application2>();
             View = CreateView( this, VideoSettings );
         }
         public override void Dispose() {

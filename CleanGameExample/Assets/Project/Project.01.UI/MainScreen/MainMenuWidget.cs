@@ -16,14 +16,15 @@ namespace Project.UI.MainScreen {
         // UI
         private UIRouter Router { get; }
         // App
-        private Storage.ProfileSettings ProfileSettings { get; }
+        private Application2 Application { get; }
+        private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
         public override MainMenuWidgetView View { get; }
 
         // Constructor
         public MainMenuWidget() {
-            Router = Utils.Container.RequireDependency<UIRouter>( null );
-            ProfileSettings = Utils.Container.RequireDependency<Storage.ProfileSettings>();
+            Router = Utils.Container.RequireDependency<UIRouter>();
+            Application = Utils.Container.RequireDependency<Application2>();
             View = CreateView( this, Router, ProfileSettings );
         }
         public override void Dispose() {

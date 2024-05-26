@@ -25,8 +25,8 @@ namespace Project.UI {
         // Awake
         public override void Awake() {
             Document = gameObject.RequireComponentInChildren<UIDocument>();
-            Router = Utils.Container.RequireDependency<UIRouter>( null );
-            Application = Utils.Container.RequireDependency<Application2>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>();
+            Application = Utils.Container.RequireDependency<Application2>();
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };

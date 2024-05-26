@@ -37,8 +37,8 @@ namespace Project.UI {
         // Awake
         public override void Awake() {
             AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
-            Router = Utils.Container.RequireDependency<UIRouter>( null );
-            Application = Utils.Container.RequireDependency<Application2>( null );
+            Router = Utils.Container.RequireDependency<UIRouter>();
+            Application = Utils.Container.RequireDependency<Application2>();
         }
         public override void OnDestroy() {
             if (Theme != null) {

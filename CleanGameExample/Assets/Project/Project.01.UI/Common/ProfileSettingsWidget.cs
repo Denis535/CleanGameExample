@@ -9,14 +9,15 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidget : UIWidgetBase<ProfileSettingsWidgetView> {
 
-        // Storage
-        private Storage.ProfileSettings ProfileSettings { get; }
+        // App
+        private Application2 Application { get; }
+        private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
         public override ProfileSettingsWidgetView View { get; }
 
         // Constructor
         public ProfileSettingsWidget() {
-            ProfileSettings = Utils.Container.RequireDependency<Storage.ProfileSettings>( null );
+            Application = Utils.Container.RequireDependency<Application2>();
             View = CreateView( this, ProfileSettings );
         }
         public override void Dispose() {

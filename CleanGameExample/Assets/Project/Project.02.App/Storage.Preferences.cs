@@ -10,7 +10,7 @@ namespace Project.App {
         public class Preferences : StorageBase {
 
             // Constructor
-            public Preferences() {
+            internal Preferences() {
                 Load();
             }
 

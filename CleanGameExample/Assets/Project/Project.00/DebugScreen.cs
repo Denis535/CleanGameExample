@@ -21,10 +21,10 @@ namespace Project {
 
         // Awake
         public void Awake() {
-            Theme = Utils.Container.RequireDependency<UITheme>( null );
-            Screen = Utils.Container.RequireDependency<UIScreen>( null );
-            Router = Utils.Container.RequireDependency<UIRouter>( null );
-            Application = Utils.Container.RequireDependency<Application2>( null );
+            Theme = Utils.Container.RequireDependency<UITheme>();
+            Screen = Utils.Container.RequireDependency<UIScreen>();
+            Router = Utils.Container.RequireDependency<UIRouter>();
+            Application = Utils.Container.RequireDependency<Application2>();
         }
         public void OnDestroy() {
         }

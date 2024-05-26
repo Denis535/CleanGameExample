@@ -9,15 +9,15 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidget : UIWidgetBase<AudioSettingsWidgetView> {
 
+        // App
+        private Application2 Application { get; }
+        private Storage.AudioSettings AudioSettings => Application.AudioSettings;
         // View
         public override AudioSettingsWidgetView View { get; }
 
-        // Storage
-        private Storage.AudioSettings AudioSettings { get; }
-
         // Constructor
         public AudioSettingsWidget() {
-            AudioSettings = Utils.Container.RequireDependency<Storage.AudioSettings>( null );
+            Application = Utils.Container.RequireDependency<Application2>();
             View = CreateView( this, AudioSettings );
         }
         public override void Dispose() {

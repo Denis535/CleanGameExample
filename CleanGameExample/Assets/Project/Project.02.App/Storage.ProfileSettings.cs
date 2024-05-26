@@ -22,7 +22,7 @@ namespace Project.App {
             }
 
             // Constructor
-            public ProfileSettings() {
+            internal ProfileSettings() {
                 Load();
             }
 

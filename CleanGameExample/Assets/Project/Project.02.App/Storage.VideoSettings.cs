@@ -40,7 +40,7 @@ namespace Project.App {
             }
 
             // Constructor
-            public VideoSettings() {
+            internal VideoSettings() {
                 Load();
             }
 

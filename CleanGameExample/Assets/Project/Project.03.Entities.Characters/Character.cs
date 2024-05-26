@@ -9,8 +9,10 @@ namespace Project.Entities.Characters {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( CharacterPhysics ) )]
-    public abstract class Character : EntityBase, IDamageable {
+    public abstract class Character : EntityBase, IDamager, IDamageable {
 
+        // IsAlive
+        public bool IsAlive => CharacterPhysics.enabled;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
         // CharacterPhysics
@@ -21,8 +23,6 @@ namespace Project.Entities.Characters {
         protected Transform Body { get; private set; } = default!;
         // WeaponSlot
         protected Slot WeaponSlot { get; private set; } = default!;
-        // IsAlive
-        public bool IsAlive => CharacterPhysics.enabled;
         // Weapon
         public Weapon? Weapon => GetWeapon( WeaponSlot );
 
@@ -85,22 +85,17 @@ namespace Project.Entities.Characters {
         }
 
         // OnDamage
-        void IDamageable.OnDamage(float damage, Vector3 point, Vector3 direction) {
-            OnDamage( damage, point, direction );
+        void IDamageable.OnDamage(IDamager damager, Weapon weapon, float damage, Vector3 point, Vector3 direction) {
+            OnDamage( damager, weapon, damage, point, direction );
         }
-        protected virtual void OnDamage(float damage, Vector3 point, Vector3 direction) {
+        protected virtual void OnDamage(IDamager damager, Weapon weapon, float damage, Vector3 point, Vector3 direction) {
             if (IsAlive) {
-                OnDead( point, direction );
+                SetWeapon( WeaponSlot, null );
+                gameObject.SetLayerRecursively( Layers.Entity );
+                CharacterPhysics.enabled = false;
+                Rigidbody.isKinematic = false;
+                Rigidbody.AddForceAtPosition( direction * 5, point, ForceMode.Impulse );
             }
-        }
-
-        // OnDead
-        protected virtual void OnDead(Vector3 point, Vector3 direction) {
-            SetWeapon( WeaponSlot, null );
-            gameObject.SetLayerRecursively( Layers.Entity );
-            CharacterPhysics.enabled = false;
-            Rigidbody.isKinematic = false;
-            Rigidbody.AddForceAtPosition( direction * 5, point, ForceMode.Impulse );
         }
 
         // Helpers

@@ -12,10 +12,6 @@ namespace Project.Entities.Things {
         protected Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         protected Collider Collider { get; private set; } = default!;
-        // IsAttached
-        public bool IsAttached => transform.parent != null;
-        // Owner
-        public IDamageable Owner => transform.parent.gameObject.RequireComponentInParent<IDamageable>();
 
         // Awake
         public override void Awake() {
@@ -27,7 +23,7 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public abstract void Fire();
+        public abstract void Fire(IDamager damager);
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {

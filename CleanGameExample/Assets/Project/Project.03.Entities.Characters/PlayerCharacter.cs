@@ -12,7 +12,7 @@ namespace Project.Entities.Characters {
         // Game
         private IGame Game { get; set; } = default!;
         // Player
-        public IPlayer Player { get; private set; } = default!;
+        private IPlayer Player { get; set; } = default!;
 
         // Awake
         public override void Awake() {
@@ -41,7 +41,7 @@ namespace Project.Entities.Characters {
 
                 }
                 if (Player.IsFirePressed()) {
-                    Weapon?.Fire();
+                    Weapon?.Fire( this );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     var weapon = interactable?.GetComponent<Weapon>();
@@ -52,16 +52,6 @@ namespace Project.Entities.Characters {
                     }
                 }
             }
-        }
-
-        // OnDamage
-        protected override void OnDamage(float damage, Vector3 point, Vector3 direction) {
-            base.OnDamage( damage, point, direction );
-        }
-
-        // OnDead
-        protected override void OnDead(Vector3 point, Vector3 direction) {
-            base.OnDead( point, direction );
         }
 
         // Helpers

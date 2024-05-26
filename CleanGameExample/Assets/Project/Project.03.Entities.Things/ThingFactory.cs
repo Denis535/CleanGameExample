@@ -35,8 +35,8 @@ namespace Project.Entities.Things {
         }
 
         // Bullet
-        public static Bullet Bullet(Vector3 position, Quaternion rotation, IDamageable owner, Weapon weapon, float force) {
-            using (Context.Begin( new Bullet.Args( owner, weapon, force ) )) {
+        public static Bullet Bullet(IDamager damager, Weapon weapon, float force, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Bullet.Args( damager, weapon, force ) )) {
                 return BulletPrefab.Value.Instantiate<Bullet>( position, rotation );
             }
         }

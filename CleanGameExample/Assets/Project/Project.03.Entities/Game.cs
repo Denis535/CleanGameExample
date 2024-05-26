@@ -69,11 +69,6 @@ namespace Project.Entities {
             Player.LateUpdate();
         }
 
-        void IGame.OnDamage(Character character, Character damager, Weapon weapon) {
-        }
-        void IGame.OnKill(Character character, Character killer, Weapon weapon) {
-        }
-
     }
     // LevelEnum
     public enum LevelEnum {

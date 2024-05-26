@@ -22,10 +22,10 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public override void Fire() {
+        public override void Fire(IDamager damager) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = ThingFactory.Bullet( FirePoint.transform.position, FirePoint.transform.rotation, Owner, this, 5 );
+                var bullet = ThingFactory.Bullet( damager, this, 5, FirePoint.transform.position, FirePoint.transform.rotation );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
             }
         }

@@ -43,23 +43,13 @@ namespace Project.Entities.Characters {
                     RotateAt( target );
                     LookAt( target );
                     AimAt( target );
-                    Weapon?.Fire();
+                    Weapon?.Fire( this );
                 } else {
                     RotateAt( null );
                     LookAt( null );
                     AimAt( null );
                 }
             }
-        }
-
-        // OnDamage
-        protected override void OnDamage(float damage, Vector3 point, Vector3 direction) {
-            base.OnDamage( damage, point, direction );
-        }
-
-        // OnDead
-        protected override void OnDead(Vector3 point, Vector3 direction) {
-            base.OnDead( point, direction );
         }
 
         // Heleprs

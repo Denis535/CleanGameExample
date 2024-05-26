@@ -7,13 +7,16 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class PlayerCharacter : Character {
+        public record Args(IPlayer Player);
 
-        // Input
-        public IPlayerCharacterInput? Input { get; set; }
+        // Player
+        public IPlayer Player { get; private set; } = default!;
 
         // Awake
         public override void Awake() {
             base.Awake();
+            var args = Context.GetValue<Args>();
+            Player = args.Player;
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -26,38 +29,39 @@ namespace Project.Entities.Characters {
             base.FixedUpdate();
         }
         public override void Update() {
-            if (IsAlive && Input != null) {
-                SetMovementInput( Input.IsMovePressed( out var moveVector_ ), moveVector_, Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
-                if (Input.IsFirePressed() || Input.IsAimPressed()) {
-                    RotateAt( Input.LookTarget );
+            if (IsAlive) {
+                SetMovementInput( Player.IsMovePressed( out var moveVector_ ), moveVector_, Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
+                if (Player.IsFirePressed() || Player.IsAimPressed()) {
+                    RotateAt( Player.LookTarget );
                 } else {
-                    if (Input.IsMovePressed( out var moveVector )) {
+                    if (Player.IsMovePressed( out var moveVector )) {
                         RotateAt( transform.position + moveVector );
                     } else {
                         RotateAt( null );
                     }
                 }
-                if (Input.IsFirePressed() || Input.IsAimPressed()) {
-                    LookAt( Input.LookTarget );
-                    AimAt( Input.LookTarget );
+                if (Player.IsFirePressed() || Player.IsAimPressed()) {
+                    LookAt( Player.LookTarget );
+                    AimAt( Player.LookTarget );
                 } else {
-                    if (Input.IsMovePressed( out _ )) {
-                        LookAt( Input.LookTarget );
+                    if (Player.IsMovePressed( out _ )) {
+                        LookAt( Player.LookTarget );
                         AimAt( null );
                     } else {
-                        LookAt( Input.LookTarget );
+                        LookAt( Player.LookTarget );
                         AimAt( null );
                     }
                 }
-                if (Input.IsFirePressed()) {
+                if (Player.IsFirePressed()) {
                     Weapon?.Fire();
                 }
-                if (Input.IsAimPressed()) {
+                if (Player.IsAimPressed()) {
 
                 }
-                if (Input.IsInteractPressed( out var interactable )) {
-                    if (interactable != null && interactable.IsWeapon()) {
-                        SetWeapon( interactable.RequireComponent<Weapon>() );
+                if (Player.IsInteractPressed( out var interactable )) {
+                    var weapon = interactable?.GetComponent<Weapon>();
+                    if (weapon != null) {
+                        SetWeapon( weapon );
                     } else {
                         SetWeapon( null );
                     }
@@ -65,16 +69,22 @@ namespace Project.Entities.Characters {
             }
         }
 
+        // OnDamage
+        protected override void OnDamage(float damage, Vector3 point, Vector3 direction) {
+            base.OnDamage( damage, point, direction );
+        }
+
+        // OnDead
+        protected override void OnDead(Vector3 point, Vector3 direction) {
+            base.OnDead( point, direction );
+        }
+
     }
-    // PlayerCharacterEnum
-    public enum PlayerCharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
-    }
-    // IPlayerCharacterInput
-    public interface IPlayerCharacterInput {
+    // IPlayer
+    public interface IPlayer {
+
+        string Name { get; }
+        PlayerCharacterEnum CharacterEnum { get; }
 
         bool IsEnabled { get; }
         Vector3 LookTarget { get; }
@@ -87,5 +97,12 @@ namespace Project.Entities.Characters {
         bool IsAimPressed();
         bool IsInteractPressed(out GameObject? interactable);
 
+    }
+    // PlayerCharacterEnum
+    public enum PlayerCharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
     }
 }

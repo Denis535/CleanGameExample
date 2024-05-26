@@ -7,14 +7,14 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    [RequireComponent( typeof( CharacterPhysics ) )]
     [RequireComponent( typeof( Rigidbody ) )]
+    [RequireComponent( typeof( CharacterPhysics ) )]
     public abstract class Character : EntityBase, IDamageable {
 
-        // CharacterPhysics
-        private CharacterPhysics CharacterPhysics { get; set; } = default!;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
+        // CharacterPhysics
+        private CharacterPhysics CharacterPhysics { get; set; } = default!;
         // Head
         protected Transform Head { get; private set; } = default!;
         // Body
@@ -28,8 +28,8 @@ namespace Project.Entities.Characters {
 
         // Awake
         public override void Awake() {
-            CharacterPhysics = gameObject.RequireComponent<CharacterPhysics>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            CharacterPhysics = gameObject.RequireComponent<CharacterPhysics>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();

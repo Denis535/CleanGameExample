@@ -8,16 +8,18 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class EnemyCharacter : Character {
-        private struct Context_ {
+        public record Args();
+        private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
 
-        // Context
-        private Context_ Context { get; set; }
+        // Environment
+        private Environment_ Environment { get; set; }
 
         // Awake
         public override void Awake() {
             base.Awake();
+            var args = Context.GetValue<Args>();
         }
         public override void OnDestroy() {
             base.OnDestroy();
@@ -29,12 +31,12 @@ namespace Project.Entities.Characters {
         }
         public override void FixedUpdate() {
             base.FixedUpdate();
-            Context = GetContext( transform );
+            Environment = GetEnvironment( transform );
         }
         public override void Update() {
             if (IsAlive) {
-                if (Context.Player != null) {
-                    var target = Context.Player.transform.position + Vector3.up * 1.75f;
+                if (Environment.Player != null && Environment.Player.IsAlive) {
+                    var target = Environment.Player.transform.position + Vector3.up * 1.75f;
                     RotateAt( target );
                     LookAt( target );
                     AimAt( target );
@@ -47,11 +49,20 @@ namespace Project.Entities.Characters {
             }
         }
 
+        // OnDamage
+        protected override void OnDamage(float damage, Vector3 point, Vector3 direction) {
+            base.OnDamage( damage, point, direction );
+        }
+
+        // OnDead
+        protected override void OnDead(Vector3 point, Vector3 direction) {
+            base.OnDead( point, direction );
+        }
+
         // Heleprs
-        private static Context_ GetContext(Transform transform) {
-            var colliders = Physics2.OverlapSphere( transform.position, 8 );
-            return new Context_() {
-                Player = colliders.Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
+        private static Environment_ GetEnvironment(Transform transform) {
+            return new Environment_() {
+                Player = Physics2.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
 

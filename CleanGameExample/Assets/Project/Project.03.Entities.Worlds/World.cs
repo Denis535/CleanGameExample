@@ -19,12 +19,14 @@ namespace Project.Entities.Worlds {
 
 #if UNITY_EDITOR
         public void OnValidate() {
-            foreach (var gameObject in gameObject.scene.GetRootGameObjects()) {
-                if (gameObject != base.gameObject) {
-                    if (gameObject.isStatic) {
-                        gameObject.transform.parent = base.transform;
-                    } else {
-                        gameObject.transform.parent = null;
+            if (!Application.isPlaying) {
+                foreach (var gameObject in gameObject.scene.GetRootGameObjects()) {
+                    if (gameObject != base.gameObject) {
+                        if (gameObject.isStatic) {
+                            gameObject.transform.parent = base.transform;
+                        } else {
+                            gameObject.transform.parent = null;
+                        }
                     }
                 }
             }

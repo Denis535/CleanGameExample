@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase {
+    public class Player : PlayerBase, IPlayer {
 
         // Name
         public string Name { get; }
@@ -22,12 +22,12 @@ namespace Project.Entities {
         public Camera2? Camera { get; private set; }
         public PlayerCharacter? Character { get; private set; }
         // Hit
-        internal (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
+        private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public GameObject? Enemy {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    if (@object.IsEnemy()) return @object;
+                    return @object.GetComponent<EnemyCharacter>()?.gameObject;
                 }
                 return null;
             }
@@ -36,7 +36,7 @@ namespace Project.Entities {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    if (@object.IsWeapon()) return @object;
+                    return @object.GetComponent<Weapon>()?.gameObject;
                 }
                 return null;
             }
@@ -66,7 +66,6 @@ namespace Project.Entities {
         // SetCharacter
         public void SetCharacter(PlayerCharacter character) {
             Character = character;
-            Character.Input = new PlayerCharacterInput( Input, this );
         }
 
         // Update
@@ -81,6 +80,46 @@ namespace Project.Entities {
         public void LateUpdate() {
         }
 
+        // IPlayer
+        bool IPlayer.IsEnabled => Input.asset.enabled;
+        Vector3 IPlayer.LookTarget => Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+        bool IPlayer.IsMovePressed(out Vector3 moveVector) {
+            Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (Input.Game.Move.IsPressed()) {
+                var vector = (Vector3) Input.Game.Move.ReadValue<Vector2>();
+                moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
+                return true;
+            } else {
+                moveVector = default;
+                return false;
+            }
+        }
+        bool IPlayer.IsJumpPressed() {
+            Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Game.Jump.IsPressed();
+        }
+        bool IPlayer.IsCrouchPressed() {
+            Assert.Operation.Message( $"Method 'IsCrouchPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Game.Crouch.IsPressed();
+        }
+        bool IPlayer.IsAcceleratePressed() {
+            Assert.Operation.Message( $"Method 'IsAcceleratePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Game.Accelerate.IsPressed();
+        }
+        bool IPlayer.IsFirePressed() {
+            Assert.Operation.Message( $"Method 'IsFirePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Game.Fire.IsPressed();
+        }
+        bool IPlayer.IsAimPressed() {
+            Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Game.Aim.IsPressed();
+        }
+        bool IPlayer.IsInteractPressed(out GameObject? interactable) {
+            Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            interactable = Enemy ?? Loot;
+            return Input.Game.Interact.WasPressedThisFrame();
+        }
+
         // Heleprs
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform ray, Transform ignore) {
             var hit = Physics2.RaycastAll( ray.position, ray.forward, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
@@ -89,58 +128,6 @@ namespace Project.Entities {
             } else {
                 return null;
             }
-        }
-
-    }
-    // PlayerCharacterInput
-    internal class PlayerCharacterInput : IPlayerCharacterInput {
-
-        private readonly InputActions input;
-        private readonly Player player;
-
-        public bool IsEnabled => input.asset.enabled;
-        public Vector3 LookTarget => player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
-
-        public PlayerCharacterInput(InputActions input, Player player) {
-            this.input = input;
-            this.player = player;
-        }
-
-        public bool IsMovePressed(out Vector3 moveVector) {
-            Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (input.Game.Move.IsPressed()) {
-                var vector = (Vector3) input.Game.Move.ReadValue<Vector2>();
-                moveVector = Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
-                return true;
-            } else {
-                moveVector = default;
-                return false;
-            }
-        }
-        public bool IsJumpPressed() {
-            Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return input.Game.Jump.IsPressed();
-        }
-        public bool IsCrouchPressed() {
-            Assert.Operation.Message( $"Method 'IsCrouchPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return input.Game.Crouch.IsPressed();
-        }
-        public bool IsAcceleratePressed() {
-            Assert.Operation.Message( $"Method 'IsAcceleratePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return input.Game.Accelerate.IsPressed();
-        }
-        public bool IsFirePressed() {
-            Assert.Operation.Message( $"Method 'IsFirePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return input.Game.Fire.IsPressed();
-        }
-        public bool IsAimPressed() {
-            Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return input.Game.Aim.IsPressed();
-        }
-        public bool IsInteractPressed(out GameObject? interactable) {
-            Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            interactable = player.Enemy ?? player.Loot;
-            return input.Game.Interact.WasPressedThisFrame();
         }
 
     }

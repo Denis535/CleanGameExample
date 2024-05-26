@@ -227,7 +227,6 @@ MonoBehaviour:
   uiScreen: {fileID: 938585823}
   uiRouter: {fileID: 3160590370860231193}
   application: {fileID: 3512483430981800128}
-  audioMixer: {fileID: 24100000, guid: 90e2823520b580a47b2e95e06eac4ab7, type: 2}
 --- !u!114 &305890572
 MonoBehaviour:
   m_ObjectHideFlags: 0

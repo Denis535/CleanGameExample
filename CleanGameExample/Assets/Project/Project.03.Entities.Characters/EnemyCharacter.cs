@@ -38,16 +38,17 @@ namespace Project.Entities.Characters {
         }
         public override void Update() {
             if (IsAlive) {
+                RotateAt( GetTarget( Environment ) );
+                LookAt( GetLookTarget( Environment ) );
+                AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    var target = GetTarget( Environment.Player );
-                    RotateAt( target );
-                    LookAt( target );
-                    AimAt( target );
-                    Weapon?.Fire( this );
-                } else {
-                    RotateAt( null );
-                    LookAt( null );
-                    AimAt( null );
+                    if (Weapon != null) {
+                        if (Weapon is Gun gun) {
+                            gun.Fire( this, null );
+                        } else {
+                            throw Exceptions.Internal.NotSupported( $"Weapon {Weapon} is not supported" );
+                        }
+                    }
                 }
             }
         }
@@ -58,8 +59,33 @@ namespace Project.Entities.Characters {
                 Player = Physics2.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
-        private static Vector3 GetTarget(PlayerCharacter player) {
-            return player.transform.position + Vector3.up * 1.75f;
+        // Heleprs
+        private static Vector3? GetTarget(Environment_ environment) {
+            if (environment.Player != null) {
+                if (environment.Player.IsAlive) {
+                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                }
+                return null;
+            }
+            return null;
+        }
+        private static Vector3? GetLookTarget(Environment_ environment) {
+            if (environment.Player != null) {
+                if (environment.Player.IsAlive) {
+                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                }
+                return environment.Player.transform.position;
+            }
+            return null;
+        }
+        private static Vector3? GetAimTarget(Environment_ environment) {
+            if (environment.Player != null) {
+                if (environment.Player.IsAlive) {
+                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                }
+                return null;
+            }
+            return null;
         }
 
     }

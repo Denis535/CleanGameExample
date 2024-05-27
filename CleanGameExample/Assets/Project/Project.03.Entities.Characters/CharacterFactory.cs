@@ -32,9 +32,9 @@ namespace Project.Entities.Characters {
         }
 
         // PlayerCharacter
-        public static PlayerCharacter PlayerCharacter(IGame game, IPlayer player, Vector3 position, Quaternion rotation) {
+        public static PlayerCharacter PlayerCharacter(IGame game, IPlayer player, PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new PlayerCharacter.Args( game, player ) )) {
-                return PlayerCharacterPrefabs.Values[ (int) player.CharacterEnum ].Instantiate<PlayerCharacter>( position, rotation );
+                return PlayerCharacterPrefabs.Values[ (int) character ].Instantiate<PlayerCharacter>( position, rotation );
             }
         }
 

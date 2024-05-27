@@ -8,8 +8,6 @@ namespace Project.Entities.Characters {
 
     public interface IPlayer {
         string Name { get; }
-        PlayerCharacterEnum CharacterEnum { get; }
-
         Vector3 GetLookTarget();
         bool IsMovePressed(out Vector3 moveVector);
         bool IsJumpPressed();

@@ -7,7 +7,5 @@ namespace Project.Entities.Things {
     public interface IWeapon {
         GameObject gameObject { get; }
         Transform transform { get; }
-
-        void Fire(IDamager damager);
     }
 }

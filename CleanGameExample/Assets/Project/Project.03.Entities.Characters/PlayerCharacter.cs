@@ -38,10 +38,16 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Player ) );
                 AimAt( GetAimTarget( Player ) );
                 if (Player.IsAimPressed()) {
-
+                    
                 }
                 if (Player.IsFirePressed()) {
-                    Weapon?.Fire( this );
+                    if (Weapon != null) {
+                        if (Weapon is Gun gun) {
+                            gun.Fire( this, null );
+                        } else {
+                            throw Exceptions.Internal.NotSupported( $"Weapon {Weapon} is not supported" );
+                        }
+                    }
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     if (interactable is IWeapon weapon) {

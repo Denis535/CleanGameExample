@@ -7,24 +7,28 @@ namespace Project.Entities.Things {
     using UnityEngine.Framework.Entities;
 
     public class Bullet : EntityBase {
-        public record Args(IDamager Damager, Gun Gun, float Force);
+        public record Args(IDamager Damager, Gun Gun, float Force, OnDamageCallback? OnDamage);
+        public delegate void OnDamageCallback(IDamageable damageable, Bullet bullet);
 
-        // Damager
-        public IDamager Damager { get; private set; } = default!;
-        // Weapon
-        public Gun Gun { get; private set; } = default!;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
         // Collider
         internal Collider Collider { get; set; } = default!;
+        // Damager
+        public IDamager Damager { get; private set; } = default!;
+        // Weapon
+        public Gun Gun { get; private set; } = default!;
+        // OnDamage
+        private OnDamageCallback? OnDamage { get; set; } = default!;
 
         // Awake
         public override void Awake() {
             var args = Context.GetValue<Args>();
-            Damager = args.Damager;
-            Gun = args.Gun;
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
+            Damager = args.Damager;
+            Gun = args.Gun;
+            OnDamage = args.OnDamage;
             Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
             Destroy( gameObject, 10 );
         }
@@ -37,6 +41,7 @@ namespace Project.Entities.Things {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
                     damageable.OnDamage( this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
+                    OnDamage?.Invoke( damageable, this );
                 }
                 enabled = false;
             }

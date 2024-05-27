@@ -89,11 +89,11 @@ namespace Project {
                 go.transform.position = hit.point;
             }
         }
-        [MenuItem( "Project/Loot Point", priority = 302 )]
-        public static void LootPoint() {
+        [MenuItem( "Project/Thing Point", priority = 302 )]
+        public static void ThingPoint() {
             var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
             if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "LootPoint", typeof( LootPoint ) );
+                var go = Selection.activeGameObject = new GameObject( "ThingPoint", typeof( ThingPoint ) );
                 go.transform.position = hit.point;
             }
         }

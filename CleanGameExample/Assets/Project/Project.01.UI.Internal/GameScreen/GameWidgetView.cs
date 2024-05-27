@@ -26,11 +26,11 @@ namespace Project.UI.GameScreen {
                 case TargetEffect.Normal:
                     target.style.color = Color.white;
                     break;
-                case TargetEffect.Loot:
-                    target.style.color = Color.yellow;
-                    break;
                 case TargetEffect.Enemy:
                     target.style.color = Color.red;
+                    break;
+                case TargetEffect.Thing:
+                    target.style.color = Color.yellow;
                     break;
                 default:
                     Exceptions.Internal.NotSupported( $"Value {value} is supported" );
@@ -41,7 +41,7 @@ namespace Project.UI.GameScreen {
     }
     public enum TargetEffect {
         Normal,
-        Loot,
         Enemy,
+        Thing,
     }
 }

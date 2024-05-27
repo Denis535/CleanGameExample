@@ -10,7 +10,7 @@ namespace UnityEngine {
     // Note: While not moving character-controller can collide only with other character-controllers.
     // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
     [RequireComponent( typeof( CharacterController ) )]
-    public class CharacterPhysics : MonoBehaviour {
+    public class CharacterBody : MonoBehaviour {
 
         private bool fixedUpdateWasInvoked;
 
@@ -18,8 +18,8 @@ namespace UnityEngine {
         private static LayerMask ExcludeLayers_Default => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
         private static LayerMask ExcludeLayers_WhenMoving => Masks.CharacterEntityInternal; // Exclude only CharacterEntityInternal layer
 
-        // CharacterController
-        protected CharacterController CharacterController { get; private set; } = default!;
+        // Collider
+        protected CharacterController Collider { get; private set; } = default!;
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
@@ -32,18 +32,18 @@ namespace UnityEngine {
 
         // Awake
         protected virtual void Awake() {
-            CharacterController = gameObject.RequireComponent<CharacterController>();
-            CharacterController.excludeLayers = ExcludeLayers_Default;
+            Collider = gameObject.RequireComponent<CharacterController>();
+            Collider.excludeLayers = ExcludeLayers_Default;
         }
         protected virtual void OnDestroy() {
         }
 
         // OnEnable
         protected void OnEnable() {
-            CharacterController.enabled = true;
+            Collider.enabled = true;
         }
         protected void OnDisable() {
-            CharacterController.enabled = false;
+            Collider.enabled = false;
         }
 
         // SetMovementInput
@@ -104,10 +104,10 @@ namespace UnityEngine {
         // Move
         protected virtual CollisionFlags Move(Vector3 velocity) {
             try {
-                CharacterController.excludeLayers = ExcludeLayers_WhenMoving;
-                return CharacterController.Move( velocity * Time.fixedDeltaTime );
+                Collider.excludeLayers = ExcludeLayers_WhenMoving;
+                return Collider.Move( velocity * Time.fixedDeltaTime );
             } finally {
-                CharacterController.excludeLayers = ExcludeLayers_Default;
+                Collider.excludeLayers = ExcludeLayers_Default;
             }
         }
 

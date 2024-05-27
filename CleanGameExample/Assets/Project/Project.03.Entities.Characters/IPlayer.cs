@@ -7,7 +7,6 @@ namespace Project.Entities.Characters {
     using UnityEngine.Framework.Entities;
 
     public interface IPlayer {
-
         string Name { get; }
         PlayerCharacterEnum CharacterEnum { get; }
 
@@ -19,7 +18,6 @@ namespace Project.Entities.Characters {
         bool IsFirePressed();
         bool IsAimPressed();
         bool IsInteractPressed(out EntityBase? interactable);
-
     }
     public enum PlayerCharacterEnum {
         Gray,

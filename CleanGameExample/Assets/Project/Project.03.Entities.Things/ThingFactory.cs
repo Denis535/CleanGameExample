@@ -30,13 +30,13 @@ namespace Project.Entities.Things {
         public static Gun Gun(Vector3 position, Quaternion rotation) {
             return WeaponPrefabs.Values.GetRandomValue().Instantiate<Gun>( position, rotation );
         }
-        public static void Gun(Slot slot) {
-            WeaponPrefabs.Values.GetRandomValue().Instantiate<Gun>( slot.transform );
+        public static Gun Gun() {
+            return WeaponPrefabs.Values.GetRandomValue().Instantiate<Gun>();
         }
 
         // Bullet
-        public static Bullet Bullet(IDamager damager, Weapon weapon, float force, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Bullet.Args( damager, weapon, force ) )) {
+        public static Bullet Bullet(IDamager damager, Gun gun, float force, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Bullet.Args( damager, gun, force ) )) {
                 return BulletPrefab.Value.Instantiate<Bullet>( position, rotation );
             }
         }

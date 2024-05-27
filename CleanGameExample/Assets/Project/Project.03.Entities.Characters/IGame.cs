@@ -6,6 +6,5 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public interface IGame {
-
     }
 }

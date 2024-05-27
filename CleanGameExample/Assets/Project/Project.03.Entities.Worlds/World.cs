@@ -10,12 +10,12 @@ namespace Project.Entities.Worlds {
 
         private PlayerPoint[] playerPoints = default!;
         private EnemyPoint[] enemyPoints = default!;
-        private LootPoint[] lootPoints = default!;
+        private ThingPoint[] thingPoints = default!;
 
         // Points
         public PlayerPoint[] PlayerPoints => this.Validate().playerPoints;
         public EnemyPoint[] EnemyPoints => this.Validate().enemyPoints;
-        public LootPoint[] LootPoints => this.Validate().lootPoints;
+        public ThingPoint[] ThingPoints => this.Validate().thingPoints;
 
 #if UNITY_EDITOR
         public void OnValidate() {
@@ -37,7 +37,7 @@ namespace Project.Entities.Worlds {
         public override void Awake() {
             playerPoints = Object2.RequireObjectsByType<PlayerPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
             enemyPoints = Object2.RequireObjectsByType<EnemyPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-            lootPoints = Object2.RequireObjectsByType<LootPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+            thingPoints = Object2.RequireObjectsByType<ThingPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
         }
         public override void OnDestroy() {
         }

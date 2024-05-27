@@ -5,7 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Gun : Weapon {
+    public class Gun : Thing, IWeapon {
 
         private readonly Delay delay = new Delay( 0.25f );
 
@@ -22,7 +22,7 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public override void Fire(IDamager damager) {
+        public void Fire(IDamager damager) {
             if (delay.IsCompleted) {
                 delay.Start();
                 var bullet = ThingFactory.Bullet( damager, this, 5, FirePoint.transform.position, FirePoint.transform.rotation );

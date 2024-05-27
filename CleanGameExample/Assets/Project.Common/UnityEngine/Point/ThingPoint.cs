@@ -6,7 +6,7 @@ namespace UnityEngine {
     using UnityEditor;
     using UnityEngine;
 
-    public class LootPoint : Point {
+    public class ThingPoint : Point {
 
 #if UNITY_EDITOR
         // OnValidate

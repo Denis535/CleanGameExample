@@ -58,7 +58,7 @@ namespace Project.Entities {
             foreach (var point in World.EnemyPoints) {
                 Enemies_.Add( CharacterFactory.EnemyCharacter( this, point.transform.position, point.transform.rotation ) );
             }
-            foreach (var point in World.LootPoints) {
+            foreach (var point in World.ThingPoints) {
                 ThingFactory.Gun( point.transform.position, point.transform.rotation );
             }
         }

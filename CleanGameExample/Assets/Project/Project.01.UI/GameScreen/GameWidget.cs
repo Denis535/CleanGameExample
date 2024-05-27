@@ -70,10 +70,10 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
-            if (Player?.Enemy) {
+            if (Player?.Thing) {
+                View.SetEffect( TargetEffect.Thing );
+            } else if (Player?.Enemy) {
                 View.SetEffect( TargetEffect.Enemy );
-            } else if (Player?.Loot) {
-                View.SetEffect( TargetEffect.Loot );
             } else {
                 View.SetEffect( TargetEffect.Normal );
             }

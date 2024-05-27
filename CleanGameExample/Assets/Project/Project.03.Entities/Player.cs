@@ -32,11 +32,11 @@ namespace Project.Entities {
                 return null;
             }
         }
-        public EntityBase? Loot {
+        public Thing? Thing {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<Weapon>();
+                    return @object.GetComponent<Thing>();
                 }
                 return null;
             }
@@ -117,7 +117,7 @@ namespace Project.Entities {
         }
         bool IPlayer.IsInteractPressed(out EntityBase? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            interactable = Enemy ?? Loot;
+            interactable = (EntityBase?) Enemy ?? Thing;
             return Input.Game.Interact.WasPressedThisFrame();
         }
 

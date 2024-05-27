@@ -44,8 +44,7 @@ namespace Project.Entities.Characters {
                     Weapon?.Fire( this );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
-                    var weapon = interactable?.GetComponent<Weapon>();
-                    if (weapon != null) {
+                    if (interactable is IWeapon weapon) {
                         SetWeapon( weapon );
                     } else {
                         SetWeapon( null );

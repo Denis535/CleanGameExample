@@ -30,7 +30,7 @@ namespace Project.Entities.Characters {
 
         // Start
         public override void Start() {
-            ThingFactory.Gun( WeaponSlot );
+            SetWeapon( ThingFactory.Gun() );
         }
         public override void FixedUpdate() {
             base.FixedUpdate();

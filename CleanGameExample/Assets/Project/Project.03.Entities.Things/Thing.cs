@@ -6,10 +6,10 @@ namespace Project.Entities.Things {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon : EntityBase {
+    public abstract class Thing : EntityBase {
 
         // Rigidbody
-        protected Rigidbody Rigidbody { get; set; } = default!;
+        protected Rigidbody Rigidbody { get; private set; } = default!;
         // Collider
         protected Collider Collider { get; private set; } = default!;
 
@@ -21,9 +21,6 @@ namespace Project.Entities.Things {
         }
         public override void OnDestroy() {
         }
-
-        // Fire
-        public abstract void Fire(IDamager damager);
 
         // OnTransformParentChanged
         public void OnTransformParentChanged() {

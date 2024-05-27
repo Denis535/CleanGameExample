@@ -8,28 +8,28 @@ namespace Project.Entities.Characters {
     using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
-    [RequireComponent( typeof( CharacterPhysics ) )]
+    [RequireComponent( typeof( CharacterBody ) )]
     public abstract class Character : EntityBase, IDamager, IDamageable {
 
-        // IsAlive
-        public bool IsAlive => CharacterPhysics.enabled;
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
-        // CharacterPhysics
-        private CharacterPhysics CharacterPhysics { get; set; } = default!;
+        // CharacterBody
+        private CharacterBody CharacterBody { get; set; } = default!;
         // Head
-        protected Transform Head { get; private set; } = default!;
+        private Transform Head { get; set; } = default!;
         // Body
-        protected Transform Body { get; private set; } = default!;
+        private Transform Body { get; set; } = default!;
         // WeaponSlot
-        protected Slot WeaponSlot { get; private set; } = default!;
+        private Slot WeaponSlot { get; set; } = default!;
+        // IsAlive
+        public bool IsAlive => CharacterBody.enabled;
         // Weapon
-        public Weapon? Weapon => GetWeapon( WeaponSlot );
+        public IWeapon? Weapon => GetWeapon( WeaponSlot );
 
         // Awake
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            CharacterPhysics = gameObject.RequireComponent<CharacterPhysics>();
+            CharacterBody = gameObject.RequireComponent<CharacterBody>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
@@ -41,8 +41,8 @@ namespace Project.Entities.Characters {
         public virtual void Start() {
         }
         public virtual void FixedUpdate() {
-            if (CharacterPhysics.enabled) {
-                CharacterPhysics.PhysicsFixedUpdate();
+            if (CharacterBody.enabled) {
+                CharacterBody.PhysicsFixedUpdate();
             }
         }
         public virtual void Update() {
@@ -51,18 +51,18 @@ namespace Project.Entities.Characters {
         // SetMovementInput
         protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            CharacterPhysics.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            CharacterBody.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // RotateAt
         protected void RotateAt(Vector3? target) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             if (target != null) {
-                CharacterPhysics.SetLookInput( true, target.Value );
-                CharacterPhysics.PhysicsUpdate();
+                CharacterBody.SetLookInput( true, target.Value );
+                CharacterBody.PhysicsUpdate();
             } else {
-                CharacterPhysics.SetLookInput( false, CharacterPhysics.LookTarget );
-                CharacterPhysics.PhysicsUpdate();
+                CharacterBody.SetLookInput( false, CharacterBody.LookTarget );
+                CharacterBody.PhysicsUpdate();
             }
         }
 
@@ -79,20 +79,20 @@ namespace Project.Entities.Characters {
         }
 
         // SetWeapon
-        protected void SetWeapon(Weapon? weapon) {
+        protected void SetWeapon(IWeapon? weapon) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             SetWeapon( WeaponSlot, weapon );
         }
 
         // OnDamage
-        void IDamageable.OnDamage(IDamager damager, Weapon weapon, float damage, Vector3 point, Vector3 direction) {
-            OnDamage( damager, weapon, damage, point, direction );
+        void IDamageable.OnDamage(Bullet bullet, float damage, Vector3 point, Vector3 direction) {
+            OnDamage( bullet, damage, point, direction );
         }
-        protected virtual void OnDamage(IDamager damager, Weapon weapon, float damage, Vector3 point, Vector3 direction) {
+        protected virtual void OnDamage(Bullet bullet, float damage, Vector3 point, Vector3 direction) {
             if (IsAlive) {
-                SetWeapon( WeaponSlot, null );
+                SetWeapon( null );
                 gameObject.SetLayerRecursively( Layers.Entity );
-                CharacterPhysics.enabled = false;
+                CharacterBody.enabled = false;
                 Rigidbody.isKinematic = false;
                 Rigidbody.AddForceAtPosition( direction * 5, point, ForceMode.Impulse );
             }
@@ -135,20 +135,20 @@ namespace Project.Entities.Characters {
                 return false;
             }
         }
-        private static Weapon? GetWeapon(Slot slot) {
-            return slot.transform.childCount >= 1 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<Weapon>() : null;
+        private static IWeapon? GetWeapon(Slot slot) {
+            return slot.transform.childCount >= 1 ? slot.transform.GetChild( 0 )?.gameObject.RequireComponent<IWeapon>() : null;
         }
-        private static void SetWeapon(Slot slot, Weapon? weapon) {
+        private static void SetWeapon(Slot slot, IWeapon? weapon) {
             var prevWeapon = GetWeapon( slot );
             if (prevWeapon != null) {
-                prevWeapon.transform.parent = null;
                 prevWeapon.gameObject.SetLayerRecursively( Layers.Entity );
+                prevWeapon.transform.SetParent( null, true );
             }
             if (weapon != null) {
-                weapon.transform.parent = slot.transform;
+                weapon.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
                 weapon.transform.localPosition = Vector3.zero;
                 weapon.transform.localRotation = Quaternion.identity;
-                weapon.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
+                weapon.transform.SetParent( slot.transform, false );
             }
         }
         // Helpers

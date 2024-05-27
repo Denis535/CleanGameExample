@@ -51,18 +51,24 @@ namespace Project.App {
         // RunGame
         public void RunGame(LevelEnum level, string name, PlayerCharacterEnum character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( game is null );
-            EntityFactory.Initialize();
-            CharacterFactory.Initialize();
-            ThingFactory.Initialize();
-            game = EntityFactory.Game( level, name, character );
+            GameFactory.Initialize();
+            CameraFactory.Initialize();
+            PlayerCharacterFactory.Initialize();
+            EnemyCharacterFactory.Initialize();
+            GunFactory.Initialize();
+            BulletFactory.Initialize();
+            game = GameFactory.Create( level, name, character );
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( game is not null );
             GameObject.DestroyImmediate( game );
             game = null;
-            EntityFactory.Deinitialize();
-            CharacterFactory.Deinitialize();
-            ThingFactory.Deinitialize();
+            GameFactory.Deinitialize();
+            CameraFactory.Deinitialize();
+            PlayerCharacterFactory.Deinitialize();
+            EnemyCharacterFactory.Deinitialize();
+            GunFactory.Deinitialize();
+            BulletFactory.Deinitialize();
             Array.Clear( Physics2.RaycastHitBuffer, 0, Physics2.RaycastHitBuffer.Length );
             Array.Clear( Physics2.ColliderBuffer, 0, Physics2.ColliderBuffer.Length );
         }

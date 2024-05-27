@@ -8,7 +8,6 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class EnemyCharacter : Character {
-        public record Args(IGame Game);
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
@@ -21,7 +20,9 @@ namespace Project.Entities.Characters {
         // Awake
         public override void Awake() {
             base.Awake();
-            var args = Context.GetValue<Args>();
+            Awake( Context.GetValue<EnemyCharacterFactory.Args>() );
+        }
+        private void Awake(EnemyCharacterFactory.Args args) {
             Game = args.Game;
         }
         public override void OnDestroy() {
@@ -30,7 +31,7 @@ namespace Project.Entities.Characters {
 
         // Start
         public override void Start() {
-            SetWeapon( ThingFactory.Gun() );
+            SetWeapon( GunFactory.Create() );
         }
         public override void FixedUpdate() {
             base.FixedUpdate();

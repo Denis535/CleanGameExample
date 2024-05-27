@@ -7,7 +7,6 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public class PlayerCharacter : Character {
-        public record Args(IGame Game, IPlayer Player);
 
         // Game
         private IGame Game { get; set; } = default!;
@@ -17,7 +16,9 @@ namespace Project.Entities.Characters {
         // Awake
         public override void Awake() {
             base.Awake();
-            var args = Context.GetValue<Args>();
+            Awake( Context.GetValue<PlayerCharacterFactory.Args>() );
+        }
+        private void Awake(PlayerCharacterFactory.Args args) {
             Game = args.Game;
             Player = args.Player;
         }
@@ -38,7 +39,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Player ) );
                 AimAt( GetAimTarget( Player ) );
                 if (Player.IsAimPressed()) {
-                    
+
                 }
                 if (Player.IsFirePressed()) {
                     if (Weapon != null) {

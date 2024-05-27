@@ -7,7 +7,6 @@ namespace Project.Entities.Things {
     using UnityEngine.Framework.Entities;
 
     public class Bullet : EntityBase {
-        public record Args(IDamager Damager, Gun Gun, float Force, OnDamageCallback? OnDamage);
         public delegate void OnDamageCallback(IDamageable damageable, Bullet bullet);
 
         // Rigidbody
@@ -23,7 +22,9 @@ namespace Project.Entities.Things {
 
         // Awake
         public override void Awake() {
-            var args = Context.GetValue<Args>();
+            Awake( Context.GetValue<BulletFactory.Args>() );
+        }
+        private void Awake(BulletFactory.Args args) {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
             Damager = args.Damager;

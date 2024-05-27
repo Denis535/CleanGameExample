@@ -7,31 +7,43 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class EntityFactory {
+    // Game
+    public static class GameFactory {
+        public record Args(LevelEnum Level, string Name, PlayerCharacterEnum Character);
 
-        private static readonly AssetHandle<GameObject> GamePrefab = new AssetHandle<GameObject>( R.Project.Entities.Game_Value );
-        private static readonly AssetHandle<GameObject> CameraPrefab = new AssetHandle<GameObject>( R.Project.Entities.Camera_Value );
+        private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Game_Value );
 
-        // Initialize
         public static void Initialize() {
-            GamePrefab.Load().Wait();
-            CameraPrefab.Load().Wait();
+            Prefab.Load().Wait();
         }
         public static void Deinitialize() {
-            GamePrefab.Release();
-            CameraPrefab.Release();
+            Prefab.Release();
         }
 
-        // Game
-        public static Game Game(LevelEnum level, string name, PlayerCharacterEnum character) {
-            using (Context.Begin( new Game.Args( level, name, character ) )) {
-                return GamePrefab.Value.Instantiate<Game>();
+        public static Game Create(LevelEnum level, string name, PlayerCharacterEnum character) {
+            using (Context.Begin( new Args( level, name, character ) )) {
+                return Prefab.Value.Instantiate<Game>();
             }
         }
 
-        // Camera
+    }
+    // Camera
+    public static class CameraFactory {
+        public record Args();
+
+        private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Camera_Value );
+
+        public static void Initialize() {
+            Prefab.Load().Wait();
+        }
+        public static void Deinitialize() {
+            Prefab.Release();
+        }
+
         public static Camera2 Camera() {
-            return CameraPrefab.Value.Instantiate<Camera2>();
+            using (Context.Begin( new Args() )) {
+                return Prefab.Value.Instantiate<Camera2>();
+            }
         }
 
     }

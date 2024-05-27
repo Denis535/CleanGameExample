@@ -11,7 +11,6 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public class Game : GameBase, IGame {
-        public record Args(LevelEnum Level, string Name, PlayerCharacterEnum Character);
 
         // State
         public bool IsPaused { get; private set; }
@@ -25,7 +24,9 @@ namespace Project.Entities {
 
         // Awake
         public override void Awake() {
-            var args = Context.GetValue<Args>();
+            Awake( Context.GetValue<GameFactory.Args>() );
+        }
+        private void Awake(GameFactory.Args args) {
             LevelEnum = args.Level;
             Player = new Player( args.Name, args.Character );
             Enemies_ = new List<EnemyCharacter>();
@@ -51,15 +52,15 @@ namespace Project.Entities {
         public void Start() {
             {
                 var point = World.PlayerPoints.First();
-                Player.SetCamera( EntityFactory.Camera() );
-                Player.SetCharacter( CharacterFactory.PlayerCharacter( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
+                Player.SetCamera( CameraFactory.Camera() );
+                Player.SetCharacter( PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation ) );
                 Player.SetInputEnabled( !IsPaused && Player.Camera != null );
             }
             foreach (var point in World.EnemyPoints) {
-                Enemies_.Add( CharacterFactory.EnemyCharacter( this, point.transform.position, point.transform.rotation ) );
+                Enemies_.Add( EnemyCharacterFactory.Create( this, point.transform.position, point.transform.rotation ) );
             }
             foreach (var point in World.ThingPoints) {
-                ThingFactory.Gun( point.transform.position, point.transform.rotation );
+                GunFactory.Create( point.transform.position, point.transform.rotation );
             }
         }
         public void Update() {

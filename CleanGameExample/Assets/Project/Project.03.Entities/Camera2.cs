@@ -61,7 +61,7 @@ namespace Project.Entities {
                 transform.localPosition = target.transform.position;
                 transform.localEulerAngles = Angles;
                 transform.Translate( 0, 0, -Distance, Space.Self );
-                transform.Translate( target.transform.up * 1.0f, Space.World );
+                transform.Translate( target.transform.up * 1.5f, Space.World );
             }
             Apply( Camera.main, transform );
         }

@@ -15,6 +15,9 @@ namespace Project.Entities.Things {
         // Awake
         public override void Awake() {
             base.Awake();
+            Awake( Context.GetValue<GunFactory.Args>() );
+        }
+        private void Awake(GunFactory.Args args) {
             FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         public override void OnDestroy() {
@@ -25,7 +28,7 @@ namespace Project.Entities.Things {
         public void Fire(IDamager damager, Bullet.OnDamageCallback? onDamage) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = ThingFactory.Bullet( damager, this, 5, onDamage, FirePoint.transform.position, FirePoint.transform.rotation );
+                var bullet = BulletFactory.Create( damager, this, 5, onDamage, FirePoint.transform.position, FirePoint.transform.rotation );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
             }
         }

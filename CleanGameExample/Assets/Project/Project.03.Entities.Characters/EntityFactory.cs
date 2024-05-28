@@ -10,7 +10,7 @@ namespace Project.Entities.Characters {
     public static class PlayerCharacterFactory {
         public record Args(IGame Game, IPlayer Player);
 
-        private static readonly AssetListHandle<GameObject> Prefabs = new AssetListHandle<GameObject>( new[] {
+        private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
             R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
             R.Project.Entities.Characters.PlayerCharacter_Red_Value,
             R.Project.Entities.Characters.PlayerCharacter_Green_Value,
@@ -26,7 +26,7 @@ namespace Project.Entities.Characters {
 
         public static PlayerCharacter Create(IGame game, IPlayer player, PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args( game, player ) )) {
-                return Prefabs.Values[ (int) character ].Instantiate<PlayerCharacter>( position, rotation );
+                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) character ], position, rotation );
             }
         }
 
@@ -35,7 +35,7 @@ namespace Project.Entities.Characters {
     public static class EnemyCharacterFactory {
         public record Args(IGame Game);
 
-        private static readonly AssetListHandle<GameObject> Prefabs = new AssetListHandle<GameObject>( new[] {
+        private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
             R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
             R.Project.Entities.Characters.EnemyCharacter_Red_Value,
             R.Project.Entities.Characters.EnemyCharacter_Green_Value,
@@ -51,7 +51,7 @@ namespace Project.Entities.Characters {
 
         public static EnemyCharacter Create(IGame game, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args( game ) )) {
-                return Prefabs.Values.GetRandomValue().Instantiate<EnemyCharacter>( position, rotation );
+                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandomValue(), position, rotation );
             }
         }
 

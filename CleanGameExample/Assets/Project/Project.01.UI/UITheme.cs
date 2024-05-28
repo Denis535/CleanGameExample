@@ -73,7 +73,7 @@ namespace Project.UI {
                 }
                 Theme = MainThemes.First();
                 await Theme.Load().WaitAsync( destroyCancellationToken );
-                Play( AudioSource, Theme.Value );
+                Play( AudioSource, Theme.GetValue() );
             }
             if (!IsPlaying( AudioSource )) {
                 var next = GetNextValue( MainThemes, Theme );
@@ -84,7 +84,7 @@ namespace Project.UI {
                 }
                 Theme = next;
                 await Theme.Load().WaitAsync( destroyCancellationToken );
-                Play( AudioSource, Theme.Value );
+                Play( AudioSource, Theme.GetValue() );
             }
             if (Router.IsGameSceneLoading) {
                 AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
@@ -100,7 +100,7 @@ namespace Project.UI {
                 }
                 Theme = GameThemes.First();
                 await Theme.Load().WaitAsync( destroyCancellationToken );
-                Play( AudioSource, Theme.Value );
+                Play( AudioSource, Theme.GetValue() );
             }
             if (!IsPlaying( AudioSource )) {
                 var next = GetNextValue( GameThemes, Theme );
@@ -111,7 +111,7 @@ namespace Project.UI {
                 }
                 Theme = next;
                 await Theme.Load().WaitAsync( destroyCancellationToken );
-                Play( AudioSource, Theme.Value );
+                Play( AudioSource, Theme.GetValue() );
             }
             Pause( AudioSource, Game!.IsPaused );
         }

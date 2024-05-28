@@ -165,7 +165,7 @@ namespace Project.UI {
         private static async Task LoadSceneAsync_Startup() {
             await Startup.Load( LoadSceneMode.Single, false ).WaitAsync();
             await Startup.ActivateAsync();
-            SceneManager.SetActiveScene( Startup.Value );
+            SceneManager.SetActiveScene( await Startup.GetValueAsync() );
         }
         public async Task LoadSceneAsync_MainScene() {
             if (World.IsValid) await World.Handle.UnloadSafeAsync();
@@ -173,7 +173,7 @@ namespace Project.UI {
 
             await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await MainScene.ActivateAsync();
-            SceneManager.SetActiveScene( MainScene.Value );
+            SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
         }
         public async Task LoadSceneAsync_GameScene(string world) {
             await MainScene.UnloadSafeAsync();
@@ -181,11 +181,11 @@ namespace Project.UI {
 
             await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await GameScene.ActivateAsync();
-            SceneManager.SetActiveScene( GameScene.Value );
+            SceneManager.SetActiveScene( await GameScene.GetValueAsync() );
 
             await World.SetUp( world ).Load( LoadSceneMode.Additive, false ).WaitAsync();
             await World.Handle.ActivateAsync();
-            SceneManager.SetActiveScene( World.Handle.Value );
+            SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
         }
         // Helpers
         private static string GetWorldAddress(LevelEnum level) {

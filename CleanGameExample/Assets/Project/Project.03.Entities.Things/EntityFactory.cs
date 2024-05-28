@@ -10,7 +10,7 @@ namespace Project.Entities.Things {
     public static class GunFactory {
         public record Args();
 
-        private static readonly AssetListHandle<GameObject> Prefabs = new AssetListHandle<GameObject>( new[] {
+        private static readonly PrefabListHandle<Gun> Prefabs = new PrefabListHandle<Gun>( new[] {
             R.Project.Entities.Things.Gun_Gray_Value,
             R.Project.Entities.Things.Gun_Red_Value,
             R.Project.Entities.Things.Gun_Green_Value,
@@ -26,12 +26,12 @@ namespace Project.Entities.Things {
 
         public static Gun Create() {
             using (Context.Begin( new Args() )) {
-                return Prefabs.Values.GetRandomValue().Instantiate<Gun>();
+                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandomValue() );
             }
         }
         public static Gun Create(Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args() )) {
-                return Prefabs.Values.GetRandomValue().Instantiate<Gun>( position, rotation );
+                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandomValue(), position, rotation );
             }
         }
 
@@ -40,7 +40,7 @@ namespace Project.Entities.Things {
     public static class BulletFactory {
         public record Args(IDamager Damager, Gun Gun, float Force, BulletHitCallback? Callback);
 
-        private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Things.Bullet_Value );
+        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Bullet_Value );
 
         public static void Initialize() {
             Prefab.Load().Wait();
@@ -51,7 +51,7 @@ namespace Project.Entities.Things {
 
         public static Bullet Create(IDamager damager, Gun gun, float force, BulletHitCallback? callback, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args( damager, gun, force, callback ) )) {
-                return Prefab.Value.Instantiate<Bullet>( position, rotation );
+                return GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation );
             }
         }
 

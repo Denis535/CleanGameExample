@@ -11,7 +11,7 @@ namespace Project.Entities {
     public static class GameFactory {
         public record Args(LevelEnum Level, string Name, PlayerCharacterEnum Character);
 
-        private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Game_Value );
+        private static readonly PrefabHandle<Game> Prefab = new PrefabHandle<Game>( R.Project.Entities.Game_Value );
 
         public static void Initialize() {
             Prefab.Load().Wait();
@@ -22,16 +22,15 @@ namespace Project.Entities {
 
         public static Game Create(LevelEnum level, string name, PlayerCharacterEnum character) {
             using (Context.Begin( new Args( level, name, character ) )) {
-                return Prefab.Value.Instantiate<Game>();
+                return GameObject.Instantiate( Prefab.GetValue() );
             }
         }
 
     }
     // Camera
     public static class CameraFactory {
-        public record Args();
 
-        private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Camera_Value );
+        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Camera_Value );
 
         public static void Initialize() {
             Prefab.Load().Wait();
@@ -41,9 +40,7 @@ namespace Project.Entities {
         }
 
         public static Camera2 Camera() {
-            using (Context.Begin( new Args() )) {
-                return Prefab.Value.Instantiate<Camera2>();
-            }
+            return GameObject.Instantiate( Prefab.GetValue() );
         }
 
     }

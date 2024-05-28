@@ -1,3 +1,4 @@
+#nullable enable
 namespace Project.Entities.Things {
     using System;
     using System.Collections;
@@ -5,7 +6,6 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IWeapon {
-        GameObject gameObject { get; }
-        Transform transform { get; }
+        void Fire(IDamager damager, OnDamageCallback? onDamage);
     }
 }

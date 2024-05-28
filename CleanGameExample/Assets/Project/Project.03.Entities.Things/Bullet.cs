@@ -7,7 +7,6 @@ namespace Project.Entities.Things {
     using UnityEngine.Framework.Entities;
 
     public class Bullet : EntityBase {
-        public delegate void OnDamageCallback(IDamageable damageable, Bullet bullet);
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
@@ -41,8 +40,9 @@ namespace Project.Entities.Things {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
-                    damageable.OnDamage( this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
-                    OnDamage?.Invoke( damageable, this );
+                    var info = new GunDamageInfo( Damager, Gun, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
+                    var isKilled = damageable.OnDamage( info );
+                    OnDamage?.Invoke( info, damageable, isKilled );
                 }
                 enabled = false;
             }

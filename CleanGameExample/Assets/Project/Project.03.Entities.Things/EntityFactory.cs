@@ -38,7 +38,7 @@ namespace Project.Entities.Things {
     }
     // Bullet
     public static class BulletFactory {
-        public record Args(IDamager Damager, Gun Gun, float Force, Bullet.OnDamageCallback? OnDamage);
+        public record Args(IDamager Damager, Gun Gun, float Force, OnDamageCallback? OnDamage);
 
         private static readonly AssetHandle<GameObject> Prefab = new AssetHandle<GameObject>( R.Project.Entities.Things.Bullet_Value );
 
@@ -49,7 +49,7 @@ namespace Project.Entities.Things {
             Prefab.Release();
         }
 
-        public static Bullet Create(IDamager damager, Gun gun, float force, Bullet.OnDamageCallback? onDamage, Vector3 position, Quaternion rotation) {
+        public static Bullet Create(IDamager damager, Gun gun, float force, OnDamageCallback? onDamage, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args( damager, gun, force, onDamage ) )) {
                 return Prefab.Value.Instantiate<Bullet>( position, rotation );
             }

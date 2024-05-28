@@ -42,13 +42,7 @@ namespace Project.Entities.Characters {
 
                 }
                 if (Player.IsFirePressed()) {
-                    if (Weapon != null) {
-                        if (Weapon is Gun gun) {
-                            gun.Fire( this, null );
-                        } else {
-                            throw Exceptions.Internal.NotSupported( $"Weapon {Weapon} is not supported" );
-                        }
-                    }
+                    Weapon?.Fire( this, null );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     if (interactable is IWeapon weapon) {

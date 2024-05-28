@@ -85,17 +85,27 @@ namespace Project.Entities.Characters {
         }
 
         // OnDamage
-        void IDamageable.OnDamage(Bullet bullet, float damage, Vector3 point, Vector3 direction) {
-            OnDamage( bullet, damage, point, direction );
+        bool IDamageable.OnDamage(DamageInfo info) {
+            return OnDamage( info );
         }
-        protected virtual void OnDamage(Bullet bullet, float damage, Vector3 point, Vector3 direction) {
+        protected virtual bool OnDamage(DamageInfo info) {
+            switch (info) {
+                case GunDamageInfo gunDamageInfo:
+                    return OnDamage( gunDamageInfo );
+                default:
+                    throw Exceptions.Internal.NotSupported( $"DamageInfo {info} is not supported" );
+            }
+        }
+        protected virtual bool OnDamage(GunDamageInfo info) {
             if (IsAlive) {
                 SetWeapon( null );
                 gameObject.SetLayerRecursively( Layers.Entity );
                 CharacterBody.enabled = false;
                 Rigidbody.isKinematic = false;
-                Rigidbody.AddForceAtPosition( direction * 5, point, ForceMode.Impulse );
+                Rigidbody.AddForceAtPosition( info.Direction * 5, info.Point, ForceMode.Impulse );
+                return true;
             }
+            return false;
         }
 
         // Helpers
@@ -141,14 +151,16 @@ namespace Project.Entities.Characters {
         private static void SetWeapon(Slot slot, IWeapon? weapon) {
             var prevWeapon = GetWeapon( slot );
             if (prevWeapon != null) {
-                prevWeapon.gameObject.SetLayerRecursively( Layers.Entity );
-                prevWeapon.transform.SetParent( null, true );
+                var prevWeapon_ = (MonoBehaviour) prevWeapon;
+                prevWeapon_.gameObject.SetLayerRecursively( Layers.Entity );
+                prevWeapon_.transform.SetParent( null, true );
             }
             if (weapon != null) {
-                weapon.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
-                weapon.transform.localPosition = Vector3.zero;
-                weapon.transform.localRotation = Quaternion.identity;
-                weapon.transform.SetParent( slot.transform, false );
+                var weapon_ = (MonoBehaviour) weapon;
+                weapon_.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
+                weapon_.transform.localPosition = Vector3.zero;
+                weapon_.transform.localRotation = Quaternion.identity;
+                weapon_.transform.SetParent( slot.transform, false );
             }
         }
         // Helpers

@@ -43,13 +43,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Environment ) );
                 AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    if (Weapon != null) {
-                        if (Weapon is Gun gun) {
-                            gun.Fire( this, null );
-                        } else {
-                            throw Exceptions.Internal.NotSupported( $"Weapon {Weapon} is not supported" );
-                        }
-                    }
+                    Weapon?.Fire( this, null );
                 }
             }
         }

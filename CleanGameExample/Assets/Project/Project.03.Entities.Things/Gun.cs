@@ -25,7 +25,7 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public void Fire(IDamager damager, Bullet.OnDamageCallback? onDamage) {
+        public void Fire(IDamager damager, OnDamageCallback? onDamage) {
             if (delay.IsCompleted) {
                 delay.Start();
                 var bullet = BulletFactory.Create( damager, this, 5, onDamage, FirePoint.transform.position, FirePoint.transform.rotation );

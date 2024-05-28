@@ -85,17 +85,20 @@ namespace Project.Entities.Characters {
         }
 
         // OnDamage
-        void IDamageable.OnDamage(BulletHitInfo info) {
-            OnDamage( info );
+        void IDamageable.OnDamage(BulletHitInfo info, out bool isKilled) {
+            OnDamage( info, out isKilled );
         }
-        protected virtual void OnDamage(BulletHitInfo info) {
+        protected virtual void OnDamage(BulletHitInfo info, out bool isKilled) {
             if (IsAlive) {
                 SetWeapon( null );
                 gameObject.SetLayerRecursively( Layers.Entity );
                 CharacterBody.enabled = false;
                 Rigidbody.isKinematic = false;
                 Rigidbody.AddForceAtPosition( info.Direction * 5, info.Point, ForceMode.Impulse );
+                isKilled = true;
+                return;
             }
+            isKilled = false;
         }
 
         // Helpers

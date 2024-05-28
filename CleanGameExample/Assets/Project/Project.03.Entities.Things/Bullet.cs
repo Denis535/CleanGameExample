@@ -41,10 +41,8 @@ namespace Project.Entities.Things {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
                     var info = new BulletHitInfo( Damager, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
-                    var isAlive = damageable.IsAlive;
-                    damageable.OnDamage( info );
-                    var isAlive2 = damageable.IsAlive;
-                    Callback?.Invoke( damageable, info, isAlive == true && isAlive2 == false );
+                    damageable.OnDamage( info, out var isKilled );
+                    Callback?.Invoke( damageable, info, isKilled );
                 }
                 enabled = false;
             }

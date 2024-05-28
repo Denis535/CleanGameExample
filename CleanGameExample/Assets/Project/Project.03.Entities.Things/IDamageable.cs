@@ -6,8 +6,7 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IDamageable {
-        bool IsAlive { get; }
-        void OnDamage(BulletHitInfo info);
+        void OnDamage(BulletHitInfo info, out bool isKilled);
     }
     // HitInfo
     public record BulletHitInfo(IDamager Damager, Bullet Bullet, float Damage, Vector3 Point, Vector3 Direction);

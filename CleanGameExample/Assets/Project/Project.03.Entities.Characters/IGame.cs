@@ -6,5 +6,6 @@ namespace Project.Entities.Characters {
     using UnityEngine;
 
     public interface IGame {
+        void OnDamage(Character damager, Character character, bool isKilled);
     }
 }

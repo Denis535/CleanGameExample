@@ -17,10 +17,4 @@ namespace Project.Entities.Characters {
         bool IsAimPressed();
         bool IsInteractPressed(out EntityBase? interactable);
     }
-    public enum PlayerCharacterEnum {
-        Gray,
-        Red,
-        Green,
-        Blue
-    }
 }

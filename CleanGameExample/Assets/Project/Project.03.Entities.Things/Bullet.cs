@@ -17,7 +17,7 @@ namespace Project.Entities.Things {
         // Weapon
         public Gun Gun { get; private set; } = default!;
         // OnDamage
-        private OnDamageCallback? OnDamage { get; set; } = default!;
+        private BulletHitCallback? Callback { get; set; } = default!;
 
         // Awake
         public override void Awake() {
@@ -28,7 +28,7 @@ namespace Project.Entities.Things {
             Collider = gameObject.RequireComponentInChildren<Collider>();
             Damager = args.Damager;
             Gun = args.Gun;
-            OnDamage = args.OnDamage;
+            Callback = args.Callback;
             Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
             Destroy( gameObject, 10 );
         }
@@ -40,9 +40,11 @@ namespace Project.Entities.Things {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
-                    var info = new GunDamageInfo( Damager, Gun, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
-                    var isKilled = damageable.OnDamage( info );
-                    OnDamage?.Invoke( info, damageable, isKilled );
+                    var info = new BulletHitInfo( Damager, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
+                    var isAlive = damageable.IsAlive;
+                    damageable.OnDamage( info );
+                    var isAlive2 = damageable.IsAlive;
+                    Callback?.Invoke( damageable, info, isAlive == true && isAlive2 == false );
                 }
                 enabled = false;
             }

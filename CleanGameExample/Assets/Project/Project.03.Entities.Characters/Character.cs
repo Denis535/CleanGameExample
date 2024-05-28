@@ -85,27 +85,17 @@ namespace Project.Entities.Characters {
         }
 
         // OnDamage
-        bool IDamageable.OnDamage(DamageInfo info) {
-            return OnDamage( info );
+        void IDamageable.OnDamage(BulletHitInfo info) {
+            OnDamage( info );
         }
-        protected virtual bool OnDamage(DamageInfo info) {
-            switch (info) {
-                case GunDamageInfo gunDamageInfo:
-                    return OnDamage( gunDamageInfo );
-                default:
-                    throw Exceptions.Internal.NotSupported( $"DamageInfo {info} is not supported" );
-            }
-        }
-        protected virtual bool OnDamage(GunDamageInfo info) {
+        protected virtual void OnDamage(BulletHitInfo info) {
             if (IsAlive) {
                 SetWeapon( null );
                 gameObject.SetLayerRecursively( Layers.Entity );
                 CharacterBody.enabled = false;
                 Rigidbody.isKinematic = false;
                 Rigidbody.AddForceAtPosition( info.Direction * 5, info.Point, ForceMode.Impulse );
-                return true;
             }
-            return false;
         }
 
         // Helpers

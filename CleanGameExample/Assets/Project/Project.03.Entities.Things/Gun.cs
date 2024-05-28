@@ -25,10 +25,10 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public void Fire(IDamager damager, OnDamageCallback? onDamage) {
+        public void Fire(IDamager damager, BulletHitCallback? callback) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = BulletFactory.Create( damager, this, 5, onDamage, FirePoint.transform.position, FirePoint.transform.rotation );
+                var bullet = BulletFactory.Create( damager, this, 5, callback, FirePoint.transform.position, FirePoint.transform.rotation );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
             }
         }

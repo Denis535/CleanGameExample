@@ -84,4 +84,10 @@ namespace Project.Entities.Characters {
         }
 
     }
+    public enum PlayerCharacterEnum {
+        Gray,
+        Red,
+        Green,
+        Blue
+    }
 }

@@ -39,7 +39,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Player ) );
                 AimAt( GetAimTarget( Player ) );
                 if (Player.IsAimPressed()) {
-
+                    
                 }
                 if (Player.IsFirePressed()) {
                     Weapon?.Fire( this );

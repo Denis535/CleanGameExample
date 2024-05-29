@@ -10,10 +10,63 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase, IPlayer {
+    public abstract class PlayerBase2 : PlayerBase {
 
         // Name
         public string Name { get; }
+        // IsPaused
+        public bool IsPaused { get; private set; }
+        // OnPauseEvent
+        public event Action? OnPauseEvent;
+        public event Action? OnUnPauseEvent;
+        // State
+        public PlayerState State { get; private set; }
+        // OnStateEvent
+        public event Action? OnWinEvent;
+        public event Action? OnLoseEvent;
+
+        // Constructor
+        public PlayerBase2(string name) {
+            Name = name;
+        }
+
+        // Start
+        public abstract void Start();
+        public abstract void Update();
+        public abstract void LateUpdate();
+
+        // Pause
+        public virtual void Pause() {
+            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
+            IsPaused = true;
+            OnPauseEvent?.Invoke();
+        }
+        public virtual void UnPause() {
+            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
+            IsPaused = false;
+            OnUnPauseEvent?.Invoke();
+        }
+
+        // SetState
+        public virtual void SetWin() {
+            Assert.Operation.Message( $"PlayerState {State} must be none" ).Valid( State is PlayerState.None );
+            State = PlayerState.Win;
+            OnWinEvent?.Invoke();
+        }
+        public virtual void SetLose() {
+            Assert.Operation.Message( $"PlayerState {State} must be none" ).Valid( State is PlayerState.None );
+            State = PlayerState.Lose;
+            OnLoseEvent?.Invoke();
+        }
+
+    }
+    public enum PlayerState {
+        None,
+        Win,
+        Lose
+    }
+    public class Player : PlayerBase2, IPlayer {
+
         // Character
         public PlayerCharacterEnum CharacterEnum { get; }
         // Entities
@@ -43,8 +96,7 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(string name, PlayerCharacterEnum character) {
-            Name = name;
+        public Player(string name, PlayerCharacterEnum character) : base( name ) {
             CharacterEnum = character;
             Input = new InputActions();
         }
@@ -53,23 +105,10 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // SetCamera
-        public void SetCamera(Camera2 camera) {
-            Camera = camera;
+        // Start
+        public override void Start() {
         }
-
-        // SetCharacter
-        public void SetCharacter(PlayerCharacter character) {
-            Character = character;
-        }
-
-        // SetInputEnabled
-        public void SetInputEnabled(bool value) {
-            if (value) Input.Enable(); else Input.Disable();
-        }
-
-        // Update
-        public void Update() {
+        public override void Update() {
             if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Game.Zoom.ReadValue<Vector2>().y );
@@ -77,7 +116,29 @@ namespace Project.Entities {
                 Hit = Raycast( Camera.transform, Character.transform );
             }
         }
-        public void LateUpdate() {
+        public override void LateUpdate() {
+        }
+
+        // Pause
+        public override void Pause() {
+            base.Pause();
+            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
+        }
+        public override void UnPause() {
+            base.UnPause();
+            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
+        }
+
+        // SetCamera
+        public void SetCamera(Camera2? camera) {
+            Camera = camera;
+            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
+        }
+
+        // SetCharacter
+        public void SetCharacter(PlayerCharacter? character) {
+            Character = character;
+            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
         }
 
         // IPlayer

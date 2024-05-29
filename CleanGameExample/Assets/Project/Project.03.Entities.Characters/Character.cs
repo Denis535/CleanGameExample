@@ -39,17 +39,6 @@ namespace Project.Entities.Characters {
         public override void OnDestroy() {
         }
 
-        // Start
-        public virtual void Start() {
-        }
-        public virtual void FixedUpdate() {
-            if (CharacterBody.enabled) {
-                CharacterBody.PhysicsFixedUpdate();
-            }
-        }
-        public virtual void Update() {
-        }
-
         // SetMovementInput
         protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
@@ -84,6 +73,17 @@ namespace Project.Entities.Characters {
         protected void SetWeapon(IWeapon? weapon) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             SetWeapon( WeaponSlot, weapon );
+        }
+
+        // Start
+        public virtual void Start() {
+        }
+        public virtual void FixedUpdate() {
+            if (CharacterBody.enabled) {
+                CharacterBody.PhysicsFixedUpdate();
+            }
+        }
+        public virtual void Update() {
         }
 
         // OnDamage

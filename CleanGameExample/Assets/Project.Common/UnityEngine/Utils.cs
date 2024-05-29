@@ -6,6 +6,7 @@ namespace UnityEngine {
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
 
     public static class Utils {
@@ -68,6 +69,11 @@ namespace UnityEngine {
         //        onCancel?.Invoke( @object );
         //    }
         //}
+
+        // SetEnabled
+        public static void SetEnabled(this InputActions input, bool value) {
+            if (value) input.Enable(); else input.Disable();
+        }
 
     }
     public static class UIViewExtensions {

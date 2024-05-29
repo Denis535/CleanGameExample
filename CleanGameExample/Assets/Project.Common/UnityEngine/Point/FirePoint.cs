@@ -6,6 +6,5 @@ namespace UnityEngine {
     using UnityEngine;
 
     public class FirePoint : Point {
-
     }
 }

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 #nullable enable
 namespace Project.Entities {
     using System;
@@ -21,3 +22,4 @@ namespace Project.Entities {
 
     }
 }
+#endif

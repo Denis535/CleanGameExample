@@ -14,10 +14,8 @@ namespace Project.Entities.Things {
         internal Collider Collider { get; set; } = default!;
         // Damager
         public IDamager Damager { get; private set; } = default!;
-        // Weapon
+        // Gun
         public Gun Gun { get; private set; } = default!;
-        // OnDamage
-        private BulletHitCallback? Callback { get; set; } = default!;
 
         // Awake
         public override void Awake() {
@@ -28,7 +26,6 @@ namespace Project.Entities.Things {
             Collider = gameObject.RequireComponentInChildren<Collider>();
             Damager = args.Damager;
             Gun = args.Gun;
-            Callback = args.Callback;
             Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
             Destroy( gameObject, 10 );
         }
@@ -42,7 +39,6 @@ namespace Project.Entities.Things {
                 if (damageable != null && damageable != Damager) {
                     var info = new BulletHitInfo( Damager, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
                     damageable.OnDamage( info, out var isKilled );
-                    Callback?.Invoke( damageable, info, isKilled );
                 }
                 enabled = false;
             }

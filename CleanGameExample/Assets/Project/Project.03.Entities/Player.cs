@@ -16,11 +16,11 @@ namespace Project.Entities {
         public string Name { get; }
         // Character
         public PlayerCharacterEnum CharacterEnum { get; }
-        // Input
-        private InputActions Input { get; }
         // Entities
         public Camera2? Camera { get; private set; }
         public PlayerCharacter? Character { get; private set; }
+        // Input
+        private InputActions Input { get; }
         // Hit
         private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public EnemyCharacter? Enemy {
@@ -53,11 +53,6 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // SetInputEnabled
-        public void SetInputEnabled(bool value) {
-            if (value) Input.Enable(); else Input.Disable();
-        }
-
         // SetCamera
         public void SetCamera(Camera2 camera) {
             Camera = camera;
@@ -66,6 +61,11 @@ namespace Project.Entities {
         // SetCharacter
         public void SetCharacter(PlayerCharacter character) {
             Character = character;
+        }
+
+        // SetInputEnabled
+        public void SetInputEnabled(bool value) {
+            if (value) Input.Enable(); else Input.Disable();
         }
 
         // Update

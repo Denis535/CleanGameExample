@@ -11,5 +11,5 @@ namespace Project.Entities.Things {
     // HitInfo
     public record BulletHitInfo(IDamager Damager, Bullet Bullet, float Damage, Vector3 Point, Vector3 Direction);
     // HitCallback
-    public delegate void BulletHitCallback(IDamageable damageable, BulletHitInfo info, bool isKilled);
+    //public delegate void BulletHitCallback(IDamageable damageable, BulletHitInfo info, bool isKilled);
 }

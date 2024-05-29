@@ -6,6 +6,6 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IWeapon {
-        void Fire(IDamager damager, BulletHitCallback? callback);
+        void Fire(IDamager damager);
     }
 }

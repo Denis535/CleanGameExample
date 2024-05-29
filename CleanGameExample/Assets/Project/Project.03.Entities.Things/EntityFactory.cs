@@ -38,7 +38,7 @@ namespace Project.Entities.Things {
     }
     // Bullet
     public static class BulletFactory {
-        public record Args(IDamager Damager, Gun Gun, float Force, BulletHitCallback? Callback);
+        public record Args(IDamager Damager, Gun Gun, float Force);
 
         private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Bullet_Value );
 
@@ -49,8 +49,8 @@ namespace Project.Entities.Things {
             Prefab.Release();
         }
 
-        public static Bullet Create(IDamager damager, Gun gun, float force, BulletHitCallback? callback, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args( damager, gun, force, callback ) )) {
+        public static Bullet Create(IDamager damager, Gun gun, float force, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args( damager, gun, force ) )) {
                 return GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation );
             }
         }

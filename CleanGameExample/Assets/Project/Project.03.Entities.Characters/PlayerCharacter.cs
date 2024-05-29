@@ -42,7 +42,7 @@ namespace Project.Entities.Characters {
 
                 }
                 if (Player.IsFirePressed()) {
-                    Weapon?.Fire( this, null );
+                    Weapon?.Fire( this );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     if (interactable is IWeapon weapon) {

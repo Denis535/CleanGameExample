@@ -43,7 +43,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Environment ) );
                 AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    Weapon?.Fire( this, null );
+                    Weapon?.Fire( this );
                 }
             }
         }

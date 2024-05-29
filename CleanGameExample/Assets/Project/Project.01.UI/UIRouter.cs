@@ -7,23 +7,19 @@ namespace Project.UI {
     using Project.App;
     using Project.Entities;
     using Project.Entities.Characters;
-    using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
-    public class UIRouter : UIRouterBase {
+    public abstract class UIRouterBase2 : UIRouterBase {
 
-        private static readonly Lock @lock = new Lock();
         private UIRouterState state = UIRouterState.None;
 
         // State
         public UIRouterState State {
-            get {
-                return state;
-            }
-            private set {
+            get => state;
+            protected set {
                 switch (value) {
                     // MainScene
                     case UIRouterState.MainSceneLoading:
@@ -67,9 +63,36 @@ namespace Project.UI {
         // State/Quit
         public bool IsQuitting => state == UIRouterState.Quitting;
         public bool IsQuited => state == UIRouterState.Quited;
+
+        // Awake
+        public override void Awake() {
+            Application.wantsToQuit += OnQuit;
+        }
+        public override void OnDestroy() {
+        }
+
+        // Quit
+        public virtual void Quit() {
+            if (OnQuit()) {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.ExitPlaymode();
+#else
+                Application.Quit();
+#endif
+            }
+        }
+        protected virtual bool OnQuit() {
+            return true;
+        }
+
+    }
+    public class UIRouter : UIRouterBase2 {
+
+        private static readonly Lock @lock = new Lock();
+
         // App
         private Application2 Application { get; set; } = default!;
-        // Scenes
+        // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
@@ -77,12 +100,11 @@ namespace Project.UI {
 
         // Awake
         public override void Awake() {
+            base.Awake();
             Application = Utils.Container.RequireDependency<Application2>();
-#if !UNITY_EDITOR
-            UnityEngine.Application.wantsToQuit += OnQuit;
-#endif
         }
         public override void OnDestroy() {
+            base.OnDestroy();
         }
 
         // LoadStartupAsync
@@ -121,26 +143,18 @@ namespace Project.UI {
             }
         }
 
-#if UNITY_EDITOR
         // Quit
-        public void Quit() {
+        public override void Quit() {
             Release.Log( "Quit" );
-            OnQuitAsync();
+            base.Quit();
         }
-#else
-        // Quit
-        public void Quit() {
-            Release.Log( "Quit" );
-            UnityEngine.Application.Quit();
-        }
-        private bool OnQuit() {
-            if (!IsQuited) {
+        protected override bool OnQuit() {
+            if (State != UIRouterState.Quited) {
                 OnQuitAsync();
                 return false;
             }
             return true;
         }
-#endif
         private async void OnQuitAsync() {
             using (@lock.Enter()) {
                 if (Application.Game != null) {
@@ -154,11 +168,7 @@ namespace Project.UI {
                     State = UIRouterState.Quited;
                 }
             }
-#if UNITY_EDITOR
-            EditorApplication.ExitPlaymode();
-#else
-            UnityEngine.Application.Quit();
-#endif
+            Quit();
         }
 
         // Helpers

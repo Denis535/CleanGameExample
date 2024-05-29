@@ -59,6 +59,8 @@ namespace Project.Entities {
         private void Awake(GameFactory.Args args) {
             LevelEnum = args.Level;
             Player = new Player( args.Name, args.Character );
+            Player.OnWinEvent += () => Debug.Log( "OnWin" );
+            Player.OnLoseEvent += () => Debug.Log( "OnLose" );
             World = Utils.Container.RequireDependency<World>();
         }
         public override void OnDestroy() {
@@ -69,8 +71,9 @@ namespace Project.Entities {
         public override void Start() {
             {
                 Player.Start();
-                Player.SetCamera( CameraFactory.Camera() );
-                Player.SetCharacter( SpawnPlayerCharacter( World.PlayerPoints.First() ) );
+                Player.Camera = CameraFactory.Camera();
+                Player.Character = SpawnPlayerCharacter( World.PlayerPoints.First() );
+                Player.IsInputEnabled = true;
             }
             foreach (var point in World.EnemyPoints) {
                 SpawnEnemyCharacter( point );
@@ -88,27 +91,41 @@ namespace Project.Entities {
 
         // Pause
         public override void Pause() {
+            Player.IsInputEnabled = false;
             base.Pause();
-            Player.Pause();
         }
         public override void UnPause() {
+            Player.IsInputEnabled = true;
             base.UnPause();
-            Player.UnPause();
         }
 
         // SpawnEntity
         private PlayerCharacter SpawnPlayerCharacter(PlayerPoint point) {
             var character_ = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
+            character_.OnDamageEvent += i => OnPlayerCharacterDamage( character_, i );
             OnPlayerCharacterSpawn?.Invoke( character_ );
             return character_;
         }
         private void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacterFactory.Create( this, point.transform.position, point.transform.rotation );
+            character.OnDamageEvent += i => OnEnemyCharacterDamage( character, i );
             OnEnemyCharacterSpawn?.Invoke( character );
         }
         private void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
             OnThingSpawn?.Invoke( thing );
+        }
+
+        // OnCharacterDamage
+        private void OnPlayerCharacterDamage(PlayerCharacter character, DamageInfo info) {
+            if (!character.IsAlive) {
+                Player.OnLose();
+            }
+        }
+        private void OnEnemyCharacterDamage(EnemyCharacter character, DamageInfo info) {
+            if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
+                Player.OnWin();
+            }
         }
 
     }

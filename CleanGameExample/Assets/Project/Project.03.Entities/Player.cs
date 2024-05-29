@@ -14,14 +14,12 @@ namespace Project.Entities {
 
         // Name
         public string Name { get; }
-        // IsPaused
-        public bool IsPaused { get; private set; }
-        // OnPauseEvent
-        public event Action? OnPauseEvent;
-        public event Action? OnUnPauseEvent;
         // State
-        public PlayerState State { get; private set; }
-        // OnStateEvent
+        public PlayerState State { get; private set; } = PlayerState.None;
+        // State/IsWin
+        public bool IsWin => State is PlayerState.Win;
+        public bool IsLose => State is PlayerState.Lose;
+        // OnWinEvent
         public event Action? OnWinEvent;
         public event Action? OnLoseEvent;
 
@@ -35,45 +33,51 @@ namespace Project.Entities {
         public abstract void Update();
         public abstract void LateUpdate();
 
-        // Pause
-        public virtual void Pause() {
-            Assert.Operation.Message( $"Player must be non-paused" ).Valid( !IsPaused );
-            IsPaused = true;
-            OnPauseEvent?.Invoke();
-        }
-        public virtual void UnPause() {
-            Assert.Operation.Message( $"Player must be paused" ).Valid( IsPaused );
-            IsPaused = false;
-            OnUnPauseEvent?.Invoke();
-        }
-
-        // SetState
-        public virtual void SetWin() {
-            Assert.Operation.Message( $"PlayerState {State} must be none" ).Valid( State is PlayerState.None );
+        // OnWin
+        public virtual void OnWin() {
+            Assert.Operation.Message( $"State {State} must be none" ).Valid( State is PlayerState.None );
             State = PlayerState.Win;
             OnWinEvent?.Invoke();
         }
-        public virtual void SetLose() {
-            Assert.Operation.Message( $"PlayerState {State} must be none" ).Valid( State is PlayerState.None );
+        public virtual void OnLose() {
+            Assert.Operation.Message( $"State {State} must be none" ).Valid( State is PlayerState.None );
             State = PlayerState.Lose;
             OnLoseEvent?.Invoke();
         }
 
     }
-    public enum PlayerState {
-        None,
-        Win,
-        Lose
-    }
     public class Player : PlayerBase2, IPlayer {
+
+        private Camera2? camera;
+        private PlayerCharacter? character;
+        private bool isInputEnabled;
 
         // Character
         public PlayerCharacterEnum CharacterEnum { get; }
         // Entities
-        public Camera2? Camera { get; private set; }
-        public PlayerCharacter? Character { get; private set; }
+        public Camera2? Camera {
+            get => camera;
+            set {
+                camera = value;
+                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
+            }
+        }
+        public PlayerCharacter? Character {
+            get => character;
+            set {
+                character = value;
+                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
+            }
+        }
         // Input
         private InputActions Input { get; }
+        public bool IsInputEnabled {
+            get => isInputEnabled;
+            set {
+                isInputEnabled = value;
+                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
+            }
+        }
         // Hit
         private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public EnemyCharacter? Enemy {
@@ -119,26 +123,12 @@ namespace Project.Entities {
         public override void LateUpdate() {
         }
 
-        // Pause
-        public override void Pause() {
-            base.Pause();
-            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
+        // OnWin
+        public override void OnWin() {
+            base.OnWin();
         }
-        public override void UnPause() {
-            base.UnPause();
-            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
-        }
-
-        // SetCamera
-        public void SetCamera(Camera2? camera) {
-            Camera = camera;
-            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
-        }
-
-        // SetCharacter
-        public void SetCharacter(PlayerCharacter? character) {
-            Character = character;
-            Input.SetEnabled( !IsPaused && Camera != null && Character != null );
+        public override void OnLose() {
+            base.OnLose();
         }
 
         // IPlayer
@@ -192,5 +182,10 @@ namespace Project.Entities {
             }
         }
 
+    }
+    public enum PlayerState {
+        None,
+        Win,
+        Lose
     }
 }

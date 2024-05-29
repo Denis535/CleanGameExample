@@ -25,6 +25,8 @@ namespace Project.Entities.Characters {
         public bool IsAlive => CharacterBody.enabled;
         // Weapon
         public IWeapon? Weapon => GetWeapon( WeaponSlot );
+        // OnDamageEvent
+        public event Action<DamageInfo>? OnDamageEvent;
 
         // Awake
         public override void Awake() {
@@ -85,20 +87,16 @@ namespace Project.Entities.Characters {
         }
 
         // OnDamage
-        void IDamageable.OnDamage(BulletHitInfo info, out bool isKilled) {
-            OnDamage( info, out isKilled );
+        void IDamageable.OnDamage(DamageInfo info) {
+            OnDamage( info );
         }
-        protected virtual void OnDamage(BulletHitInfo info, out bool isKilled) {
+        protected virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
                 SetWeapon( null );
-                gameObject.SetLayerRecursively( Layers.Entity );
-                CharacterBody.enabled = false;
-                Rigidbody.isKinematic = false;
+                SetPhysical( this, true );
                 Rigidbody.AddForceAtPosition( info.Direction * 5, info.Point, ForceMode.Impulse );
-                isKilled = true;
-                return;
+                OnDamageEvent?.Invoke( info );
             }
-            isKilled = false;
         }
 
         // Helpers
@@ -144,16 +142,10 @@ namespace Project.Entities.Characters {
         private static void SetWeapon(Slot slot, IWeapon? weapon) {
             var prevWeapon = GetWeapon( slot );
             if (prevWeapon != null) {
-                var prevWeapon_ = (MonoBehaviour) prevWeapon;
-                prevWeapon_.gameObject.SetLayerRecursively( Layers.Entity );
-                prevWeapon_.transform.SetParent( null, true );
+                SetPhysical( (Thing) prevWeapon, null );
             }
             if (weapon != null) {
-                var weapon_ = (MonoBehaviour) weapon;
-                weapon_.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
-                weapon_.transform.localPosition = Vector3.zero;
-                weapon_.transform.localRotation = Quaternion.identity;
-                weapon_.transform.SetParent( slot.transform, false );
+                SetPhysical( (Thing) weapon, slot.transform );
             }
         }
         // Helpers
@@ -179,6 +171,31 @@ namespace Project.Entities.Characters {
                 return Quaternion.Euler( angles );
             }
             return null;
+        }
+        // Helpers
+        private static void SetPhysical(Character character, bool value) {
+            if (value) {
+                character.gameObject.SetLayerRecursively( Layers.Entity );
+                character.Rigidbody.isKinematic = false;
+                character.CharacterBody.enabled = false;
+            } else {
+                character.gameObject.SetLayerRecursively( Layers.CharacterEntity, Layers.CharacterEntityInternal );
+                character.Rigidbody.isKinematic = true;
+                character.CharacterBody.enabled = true;
+            }
+        }
+        private static void SetPhysical(Thing thing, Transform? parent) {
+            if (parent != null) {
+                thing.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
+                thing.transform.localPosition = Vector3.zero;
+                thing.transform.localRotation = Quaternion.identity;
+                thing.transform.SetParent( parent, false );
+                thing.GetComponent<Rigidbody>().isKinematic = true;
+            } else {
+                thing.gameObject.SetLayerRecursively( Layers.Entity );
+                thing.transform.SetParent( null, true );
+                thing.GetComponent<Rigidbody>().isKinematic = false;
+            }
         }
 
     }

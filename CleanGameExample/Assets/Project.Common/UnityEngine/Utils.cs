@@ -13,11 +13,24 @@ namespace UnityEngine {
         // Container
         public static IDependencyContainer Container { get; set; } = default!;
 
+        // SetLayer
+        public static void SetLayer(this GameObject gameObject, int layer) {
+            gameObject.layer = layer;
+        }
+
         // SetLayerRecursively
         public static void SetLayerRecursively(this GameObject gameObject, int layer) {
             gameObject.layer = layer;
             for (var i = 0; i < gameObject.transform.childCount; i++) {
                 gameObject.transform.GetChild( i ).gameObject.SetLayerRecursively( layer );
+            }
+        }
+
+        // SetLayerRecursively
+        public static void SetLayerRecursively(this GameObject gameObject, int layer, int layer2) {
+            gameObject.layer = layer;
+            for (var i = 0; i < gameObject.transform.childCount; i++) {
+                gameObject.transform.GetChild( i ).gameObject.SetLayerRecursively( layer2 );
             }
         }
 

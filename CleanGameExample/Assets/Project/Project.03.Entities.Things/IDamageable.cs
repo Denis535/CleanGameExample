@@ -6,10 +6,9 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IDamageable {
-        void OnDamage(BulletHitInfo info, out bool isKilled);
+        void OnDamage(DamageInfo info);
     }
-    // HitInfo
-    public record BulletHitInfo(IDamager Damager, Bullet Bullet, float Damage, Vector3 Point, Vector3 Direction);
-    // HitCallback
-    //public delegate void BulletHitCallback(IDamageable damageable, BulletHitInfo info, bool isKilled);
+    // DamageInfo
+    public abstract record DamageInfo(IDamager Damager, float Damage, Vector3 Point, Vector3 Direction);
+    public record BulletDamageInfo(IDamager Damager, float Damage, Vector3 Point, Vector3 Direction, Bullet Bullet) : DamageInfo( Damager, Damage, Point, Direction );
 }

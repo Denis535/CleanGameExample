@@ -37,8 +37,7 @@ namespace Project.Entities.Things {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
-                    var info = new BulletHitInfo( Damager, this, 5, Rigidbody.position, Rigidbody.velocity.normalized );
-                    damageable.OnDamage( info, out var isKilled );
+                    damageable.OnDamage( new BulletDamageInfo( Damager, 5, Rigidbody.position, Rigidbody.velocity.normalized, this ) );
                 }
                 enabled = false;
             }

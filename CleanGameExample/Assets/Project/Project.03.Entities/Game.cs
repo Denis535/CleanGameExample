@@ -70,10 +70,6 @@ namespace Project.Entities {
             Player.LateUpdate();
         }
 
-        // IGame
-        void IGame.OnDamage(Character damager, Character character, bool isKilled) {
-        }
-
     }
     // LevelEnum
     public enum LevelEnum {

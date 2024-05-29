@@ -48,12 +48,6 @@ namespace Project.Entities.Characters {
             }
         }
 
-        // OnDamage
-        protected override void OnDamage(BulletHitInfo info, out bool isKilled) {
-            base.OnDamage( info, out isKilled );
-            Game.OnDamage( (Character) info.Damager, this, isKilled );
-        }
-
         // Heleprs
         private static Environment_ GetEnvironment(Transform transform) {
             return new Environment_() {

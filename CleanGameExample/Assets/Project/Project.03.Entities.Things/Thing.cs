@@ -19,19 +19,8 @@ namespace Project.Entities.Things {
         public override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
-            SetPhysical( Rigidbody, transform.parent == null );
         }
         public override void OnDestroy() {
-        }
-
-        // OnTransformParentChanged
-        public void OnTransformParentChanged() {
-            SetPhysical( Rigidbody, transform.parent == null );
-        }
-
-        // Helpers
-        private static void SetPhysical(Rigidbody rigidbody, bool value) {
-            rigidbody.isKinematic = !value;
         }
 
     }

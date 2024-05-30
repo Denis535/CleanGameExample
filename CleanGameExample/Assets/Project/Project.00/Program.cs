@@ -10,6 +10,9 @@ namespace Project {
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Framework;
+    using UnityEngine.Framework.App;
+    using UnityEngine.Framework.Entities;
+    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
     public class Program : ProgramBase, IDependencyContainer {
@@ -57,13 +60,13 @@ namespace Project {
         }
 
         // Awake
-        public override void Awake() {
+        protected override void Awake() {
             Application = new Application2( this );
             Router = new UIRouter( this );
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
         }
-        public override void OnDestroy() {
+        protected override void OnDestroy() {
         }
 
         // Start
@@ -85,18 +88,22 @@ namespace Project {
         Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
             this.Validate();
             // UI
-            if (type == typeof( UITheme )) {
+            if (type.IsAssignableTo( typeof( UIThemeBase ) )) {
                 return new Option<object?>( Theme ?? throw Exceptions.Internal.NullReference( $"Reference 'Theme' is null" ) );
             }
-            if (type == typeof( UIScreen )) {
+            if (type.IsAssignableTo( typeof( UIScreenBase ) )) {
                 return new Option<object?>( Screen ?? throw Exceptions.Internal.NullReference( $"Reference 'Screen' is null" ) );
             }
-            if (type == typeof( UIRouter )) {
+            if (type.IsAssignableTo( typeof( UIRouterBase ) )) {
                 return new Option<object?>( Router ?? throw Exceptions.Internal.NullReference( $"Reference 'Router' is null" ) );
             }
             // App
-            if (type == typeof( Application2 )) {
+            if (type.IsAssignableTo( typeof( ApplicationBase ) )) {
                 return new Option<object?>( Application ?? throw Exceptions.Internal.NullReference( $"Reference 'Application' is null" ) );
+            }
+            // Entities
+            if (type.IsAssignableTo( typeof( GameBase ) )) {
+                return new Option<object?>( Game );
             }
             // Misc
             if (type == typeof( AudioSource ) && (string?) argument == "MusicAudioSource") {
@@ -121,14 +128,14 @@ namespace Project {
                 return default;
             }
             // Misc
-            if (type.IsDescendentOf( typeof( UnityEngine.Object ) )) {
+            if (type.IsAssignableTo( typeof( UnityEngine.Object ) )) {
                 var result = FindAnyObjectByType( type, FindObjectsInactive.Exclude );
                 if (result is not null) {
                     return new Option<object?>( result );
                 }
                 return default;
             }
-            if (type.IsArray && type.GetElementType().IsDescendentOf( typeof( UnityEngine.Object ) )) {
+            if (type.IsArray && type.GetElementType().IsAssignableTo( typeof( UnityEngine.Object ) )) {
                 var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None ).NullIfEmpty();
                 if (result is not null) {
                     var result2 = Array.CreateInstance( type.GetElementType(), result.Length );

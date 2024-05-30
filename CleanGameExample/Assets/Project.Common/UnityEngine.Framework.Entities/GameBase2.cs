@@ -9,7 +9,7 @@ namespace UnityEngine.Framework.Entities {
 
         // State
         public GameState State { get; private set; }
-        public bool IRunning => State is GameState.Running;
+        public bool IsRunning => State is GameState.Running;
         public bool IsStopped => State is GameState.Stopped;
         // IsPaused
         public bool IsPaused { get; private set; }
@@ -39,11 +39,13 @@ namespace UnityEngine.Framework.Entities {
 
         // Pause
         public virtual void Pause() {
+            Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
             Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
             IsPaused = true;
             OnPauseEvent?.Invoke();
         }
         public virtual void UnPause() {
+            Assert.Operation.Message( $"Game must be running" ).Valid( IsRunning );
             Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
             IsPaused = false;
             OnUnPauseEvent?.Invoke();

@@ -58,9 +58,11 @@ namespace Project.App {
             GunFactory.Initialize();
             BulletFactory.Initialize();
             game = GameFactory.Create( level, name, character );
+            game.RunGame();
         }
         public void StopGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( game is not null );
+            game.StopGame();
             GameObject.DestroyImmediate( game );
             game = null;
             GameFactory.Deinitialize();

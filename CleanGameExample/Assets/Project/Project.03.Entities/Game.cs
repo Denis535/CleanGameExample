@@ -29,18 +29,16 @@ namespace Project.Entities {
         private void Awake(GameFactory.Args args) {
             LevelEnum = args.Level;
             Player = new Player( args.Name, args.Character );
-            Player.OnWinEvent += () => Debug.Log( "OnWin" );
-            Player.OnLoseEvent += () => Debug.Log( "OnLose" );
+            //Player.OnWinEvent += () => Debug.Log( "OnWin" );
+            //Player.OnLoseEvent += () => Debug.Log( "OnLose" );
             World = Utils.Container.RequireDependency<World>();
-            SetRunning();
         }
         public override void OnDestroy() {
-            SetStopped();
             Player.Dispose();
         }
 
-        // Start
-        public override void Start() {
+        // RunGame
+        public void RunGame() {
             {
                 Player.Start();
                 Player.Camera = CameraFactory.Camera();
@@ -53,6 +51,14 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
+            SetRunning();
+        }
+        public void StopGame() {
+            SetStopped();
+        }
+
+        // Start
+        public override void Start() {
         }
         public override void Update() {
             Player.Update();
@@ -63,12 +69,12 @@ namespace Project.Entities {
 
         // Pause
         public override void Pause() {
-            Player.IsInputEnabled = false;
             base.Pause();
+            Player.IsInputEnabled = false;
         }
         public override void UnPause() {
-            Player.IsInputEnabled = true;
             base.UnPause();
+            Player.IsInputEnabled = true;
         }
 
         // SpawnEntity

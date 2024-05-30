@@ -11,7 +11,7 @@ namespace Project.UI {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
 
-    public class UITheme : UIAudioThemeBase {
+    public class UITheme : UIAudioThemeBase2 {
 
         private static readonly AssetHandle<AudioClip>[] MainThemes = GetShuffled( new[] {
              new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Theme_Value )
@@ -23,8 +23,6 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
-        // AudioSource
-        private AudioSource AudioSource { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
         // App
@@ -36,7 +34,7 @@ namespace Project.UI {
 
         // Awake
         public override void Awake() {
-            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
+            base.Awake();
             Router = Utils.Container.RequireDependency<UIRouter>();
             Application = Utils.Container.RequireDependency<Application2>();
         }
@@ -46,14 +44,15 @@ namespace Project.UI {
                 Theme.Release();
                 Theme = null;
             }
+            base.OnDestroy();
         }
 
         // Start
-        public void Start() {
+        public override void Start() {
             using (@lock.Enter()) {
             }
         }
-        public async void Update() {
+        public override async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
                 if (IsMainTheme( Router.State )) {
@@ -115,46 +114,7 @@ namespace Project.UI {
             }
             Pause( AudioSource, Game!.IsPaused );
         }
-
-        // Helpers
-        private static bool IsMainTheme(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return true;
-            }
-            return false;
-        }
-        private static bool IsGameTheme(UIRouterState state) {
-            if (state is UIRouterState.GameSceneLoaded) {
-                return true;
-            }
-            return false;
-        }
-        // Helpers
-        private static bool IsPlaying(AudioSource source) {
-            return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length );
-        }
-        private static bool IsPaused(AudioSource source) {
-            return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length ) && !source.isPlaying;
-        }
-        // Helpers
-        private static void Play(AudioSource source, AudioClip clip) {
-            Assert.Operation.Message( $"AudioClip {source.clip} must be null" ).Valid( source.clip == null );
-            source.clip = clip;
-            source.volume = 1;
-            source.pitch = 1;
-            source.Play();
-        }
-        private static void Pause(AudioSource source, bool value) {
-            if (value) {
-                source.Pause();
-            } else {
-                source.UnPause();
-            }
-        }
-        private static void Stop(AudioSource source) {
-            Assert.Operation.Message( $"AudioClip must be non-null" ).Valid( source.clip != null );
-            source.Stop();
-            source.clip = null;
+        public override void LateUpdate() {
         }
 
     }

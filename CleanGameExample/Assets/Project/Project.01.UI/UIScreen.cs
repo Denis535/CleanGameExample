@@ -11,10 +11,8 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UIScreen : UIScreenBase {
+    public class UIScreen : UIScreenBase2 {
 
-        // Document
-        private UIDocument Document { get; set; } = default!;
         // UI
         private UIRouter Router { get; set; } = default!;
         // App
@@ -24,9 +22,10 @@ namespace Project.UI {
 
         // Awake
         public override void Awake() {
-            Document = gameObject.RequireComponentInChildren<UIDocument>();
+            base.Awake();
             Router = Utils.Container.RequireDependency<UIRouter>();
             Application = Utils.Container.RequireDependency<Application2>();
+            AttachWidget( new UIRootWidget() );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -37,16 +36,16 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            AttachWidget( new UIRootWidget() );
         }
         public override void OnDestroy() {
             Widget.DetachSelf();
+            base.OnDestroy();
         }
 
         // Start
-        public void Start() {
+        public override void Start() {
         }
-        public void Update() {
+        public override void Update() {
             if (IsMainScreen( Router.State )) {
                 if (Widget.Children.FirstOrDefault() is not MainWidget) {
                     Widget.DetachChildren();
@@ -62,7 +61,7 @@ namespace Project.UI {
             }
             Widget.Update();
         }
-        public void LateUpdate() {
+        public override void LateUpdate() {
             Widget.LateUpdate();
         }
 
@@ -79,20 +78,6 @@ namespace Project.UI {
                 if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
             }
             base.DetachWidget( widget, argument );
-        }
-
-        // Helpers
-        private static bool IsMainScreen(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return true;
-            }
-            return false;
-        }
-        private static bool IsGameScreen(UIRouterState state) {
-            if (state is UIRouterState.GameSceneLoaded) {
-                return true;
-            }
-            return false;
         }
 
     }

@@ -22,10 +22,10 @@ namespace Project.UI.MainScreen {
         public override MainMenuWidgetView View { get; }
 
         // Constructor
-        public MainMenuWidget() {
-            Router = Utils.Container.RequireDependency<UIRouter>();
-            Application = Utils.Container.RequireDependency<Application2>();
-            View = CreateView( this, Router, ProfileSettings );
+        public MainMenuWidget(IDependencyContainer container) {
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
+            View = CreateView( this, container, Router, ProfileSettings );
         }
         public override void Dispose() {
             base.Dispose();
@@ -40,18 +40,18 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MainMenuWidgetView CreateView(MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView CreateView(MainMenuWidget widget, IDependencyContainer container, UIRouter router, Storage.ProfileSettings profileSettings) {
             var view = new MainMenuWidgetView();
-            view.Push( CreateView_MainMenuView( widget, router, profileSettings ) );
+            view.Push( CreateView_MainMenuView( widget, container, router, profileSettings ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget, IDependencyContainer container, UIRouter router, Storage.ProfileSettings profileSettings) {
             var view = new MainMenuWidgetView_MainMenuView();
             view.OnStartGame( evt => {
-                widget.View.Push( CreateView_StartGameView( widget, router, profileSettings ) );
+                widget.View.Push( CreateView_StartGameView( widget, container, router, profileSettings ) );
             } );
             view.OnSettings( evt => {
-                widget.AttachChild( new SettingsWidget() );
+                widget.AttachChild( new SettingsWidget( container ) );
             } );
             view.OnQuit( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
@@ -59,36 +59,36 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget, IDependencyContainer container, UIRouter router, Storage.ProfileSettings profileSettings) {
             var view = new MainMenuWidgetView_StartGameView();
             view.OnNewGame( evt => {
-                widget.View.Push( CreateView_SelectLevelView( widget, router, profileSettings ) );
+                widget.View.Push( CreateView_SelectLevelView( widget, container, router, profileSettings ) );
             } );
             view.OnContinue( evt => {
-                widget.View.Push( CreateView_SelectLevelView( widget, router, profileSettings ) );
+                widget.View.Push( CreateView_SelectLevelView( widget, container, router, profileSettings ) );
             } );
             view.OnBack( evt => {
                 widget.View.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget, IDependencyContainer container, UIRouter router, Storage.ProfileSettings profileSettings) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, profileSettings, LevelEnum.Level1 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, container, router, profileSettings, LevelEnum.Level1 ) );
             } );
             view.OnLevel2( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, profileSettings, LevelEnum.Level2 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, container, router, profileSettings, LevelEnum.Level2 ) );
             } );
             view.OnLevel3( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( widget, router, profileSettings, LevelEnum.Level3 ) );
+                widget.View.Push( CreateView_SelectCharacterView( widget, container, router, profileSettings, LevelEnum.Level3 ) );
             } );
             view.OnBack( evt => {
                 widget.View.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings, LevelEnum level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, IDependencyContainer container, UIRouter router, Storage.ProfileSettings profileSettings, LevelEnum level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );

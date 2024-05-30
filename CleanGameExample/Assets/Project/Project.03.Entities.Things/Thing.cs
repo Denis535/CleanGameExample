@@ -4,9 +4,8 @@ namespace Project.Entities.Things {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
-    public abstract class Thing : EntityBase {
+    public abstract class Thing : MonoBehaviour {
 
         // Rigidbody
         protected Rigidbody Rigidbody { get; private set; } = default!;
@@ -16,11 +15,11 @@ namespace Project.Entities.Things {
         public bool IsAttached => transform.parent != null;
 
         // Awake
-        public override void Awake() {
+        public virtual void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
         }
-        public override void OnDestroy() {
+        public virtual void OnDestroy() {
         }
 
     }

@@ -130,9 +130,9 @@ namespace Project.Entities {
             Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Game.Aim.IsPressed();
         }
-        bool IPlayer.IsInteractPressed(out EntityBase? interactable) {
+        bool IPlayer.IsInteractPressed(out MonoBehaviour? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            interactable = (EntityBase?) Enemy ?? Thing;
+            interactable = (MonoBehaviour?) Enemy ?? Thing;
             return Input.Game.Interact.WasPressedThisFrame();
         }
 

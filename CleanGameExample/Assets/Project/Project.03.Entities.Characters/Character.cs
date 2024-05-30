@@ -5,11 +5,10 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using Project.Entities.Things;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( CharacterBody ) )]
-    public abstract class Character : EntityBase, IDamager, IDamageable {
+    public abstract class Character : MonoBehaviour, IDamager, IDamageable {
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
@@ -29,14 +28,14 @@ namespace Project.Entities.Characters {
         public event Action<DamageInfo>? OnDamageEvent;
 
         // Awake
-        public override void Awake() {
+        public virtual void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             CharacterBody = gameObject.RequireComponent<CharacterBody>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
         }
-        public override void OnDestroy() {
+        public virtual void OnDestroy() {
         }
 
         // Start

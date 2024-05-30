@@ -5,20 +5,20 @@ namespace UnityEngine.Framework.UI {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public abstract class UIAudioThemeBase2 : UIAudioThemeBase {
+    public abstract class UIThemeBase2 : UIThemeBase {
 
         // AudioSource
-        protected AudioSource AudioSource { get; private set; } = default!;
+        protected AudioSource AudioSource { get; }
 
-        // Awake
-        public override void Awake() {
-            AudioSource = gameObject.RequireComponentInChildren<AudioSource>();
+        // Constructor
+        public UIThemeBase2(AudioSource audioSource) {
+            AudioSource = audioSource;
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
+            base.Dispose();
         }
 
-        // Start
-        public abstract void Start();
+        // Update
         public abstract void Update();
         public abstract void LateUpdate();
 

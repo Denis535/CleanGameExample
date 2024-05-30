@@ -13,11 +13,11 @@ namespace Project.UI.Common {
         public override SettingsWidgetView View { get; }
 
         // Constructor
-        public SettingsWidget() {
+        public SettingsWidget(IDependencyContainer container) {
             View = CreateView( this );
-            AttachChild( new ProfileSettingsWidget() );
-            AttachChild( new VideoSettingsWidget() );
-            AttachChild( new AudioSettingsWidget() );
+            AttachChild( new ProfileSettingsWidget( container ) );
+            AttachChild( new VideoSettingsWidget( container ) );
+            AttachChild( new AudioSettingsWidget( container ) );
         }
         public override void Dispose() {
             base.Dispose();

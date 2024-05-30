@@ -16,8 +16,8 @@ namespace Project.UI.Common {
         public override AudioSettingsWidgetView View { get; }
 
         // Constructor
-        public AudioSettingsWidget() {
-            Application = Utils.Container.RequireDependency<Application2>();
+        public AudioSettingsWidget(IDependencyContainer container) {
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this, AudioSettings );
         }
         public override void Dispose() {

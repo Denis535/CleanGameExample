@@ -13,18 +13,20 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase2 {
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
-        private UIRouter Router { get; set; } = default!;
+        private UIRouter Router { get; }
         // App
-        private Application2 Application { get; set; } = default!;
+        private Application2 Application { get; }
         // Widget
         private new UIRootWidget Widget => (UIRootWidget?) base.Widget!;
 
-        // Awake
-        public override void Awake() {
-            base.Awake();
-            Router = Utils.Container.RequireDependency<UIRouter>();
-            Application = Utils.Container.RequireDependency<Application2>();
+        // Constructor
+        public UIScreen(IDependencyContainer container) : base( container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
+            Container = container;
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
             AttachWidget( new UIRootWidget() );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
@@ -37,24 +39,22 @@ namespace Project.UI {
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
             Widget.DetachSelf();
-            base.OnDestroy();
+            base.Dispose();
         }
 
-        // Start
-        public override void Start() {
-        }
+        // Update
         public override void Update() {
             if (IsMainScreen( Router.State )) {
                 if (Widget.Children.FirstOrDefault() is not MainWidget) {
                     Widget.DetachChildren();
-                    Widget.AttachChild( new MainWidget() );
+                    Widget.AttachChild( new MainWidget( Container ) );
                 }
             } else if (IsGameScreen( Router.State )) {
                 if (Widget.Children.FirstOrDefault() is not GameWidget) {
                     Widget.DetachChildren();
-                    Widget.AttachChild( new GameWidget() );
+                    Widget.AttachChild( new GameWidget( Container ) );
                 }
             } else {
                 Widget!.DetachChildren();

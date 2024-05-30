@@ -23,11 +23,12 @@ namespace UnityEngine.Framework.UI {
         public event Action? OnQuittingEvent;
         public event Action? OnQuitedEvent;
 
-        // Awake
-        public override void Awake() {
+        // Constructor
+        public UIRouterBase2() {
             Application.wantsToQuit += OnQuit;
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
+            base.Dispose();
         }
 
         // SetState

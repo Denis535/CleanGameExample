@@ -21,6 +21,9 @@ namespace UnityEngine.Framework.Entities {
         public PlayerBase2(string name) {
             Name = name;
         }
+        public override void Dispose() {
+            base.Dispose();
+        }
 
         // Start
         public abstract void Start();

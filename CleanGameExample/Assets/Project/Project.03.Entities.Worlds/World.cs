@@ -4,9 +4,8 @@ namespace Project.Entities.Worlds {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
-    public class World : WorldBase {
+    public class World : MonoBehaviour {
 
         private PlayerPoint[] playerPoints = default!;
         private EnemyPoint[] enemyPoints = default!;
@@ -34,12 +33,12 @@ namespace Project.Entities.Worlds {
 #endif
 
         // Awake
-        public override void Awake() {
+        public void Awake() {
             playerPoints = Object2.RequireObjectsByType<PlayerPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
             enemyPoints = Object2.RequireObjectsByType<EnemyPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
             thingPoints = Object2.RequireObjectsByType<ThingPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
         }
-        public override void OnDestroy() {
+        public void OnDestroy() {
         }
 
     }

@@ -11,6 +11,8 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
+        // Container
+        private IDependencyContainer Container { get; set; }
         // App
         private Application2 Application { get; }
         // Entities
@@ -22,8 +24,9 @@ namespace Project.UI.GameScreen {
         private InputActions Actions { get; }
 
         // Constructor
-        public GameWidget() {
-            Application = Utils.Container.RequireDependency<Application2>();
+        public GameWidget(IDependencyContainer container) {
+            Container = container;
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this );
             Actions = new InputActions();
         }
@@ -78,7 +81,7 @@ namespace Project.UI.GameScreen {
                 View.SetEffect( TargetEffect.Normal );
             }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
-                AttachChild( new GameMenuWidget() );
+                AttachChild( new GameMenuWidget( Container ) );
             }
         }
         public void LateUpdate() {

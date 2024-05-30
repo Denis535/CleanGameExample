@@ -11,7 +11,7 @@ namespace Project.UI {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
 
-    public class UITheme : UIAudioThemeBase2 {
+    public class UITheme : UIThemeBase2 {
 
         private static readonly AssetHandle<AudioClip>[] MainThemes = GetShuffled( new[] {
              new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Theme_Value )
@@ -23,35 +23,32 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
-        private UIRouter Router { get; set; } = default!;
+        private UIRouter Router { get; }
         // App
-        private Application2 Application { get; set; } = default!;
+        private Application2 Application { get; }
         // Entities
         private Game? Game => Application.Game;
         // Theme
         private AssetHandle<AudioClip>? Theme { get; set; }
 
-        // Awake
-        public override void Awake() {
-            base.Awake();
-            Router = Utils.Container.RequireDependency<UIRouter>();
-            Application = Utils.Container.RequireDependency<Application2>();
+        // Constructor
+        public UITheme(IDependencyContainer container) : base( container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
+            Container = container;
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
             if (Theme != null) {
                 Stop( AudioSource );
                 Theme.Release();
                 Theme = null;
             }
-            base.OnDestroy();
         }
 
-        // Start
-        public override void Start() {
-            using (@lock.Enter()) {
-            }
-        }
+        // Update
         public override async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
@@ -71,7 +68,7 @@ namespace Project.UI {
                     Theme = null;
                 }
                 Theme = MainThemes.First();
-                await Theme.Load().WaitAsync( destroyCancellationToken );
+                await Theme.Load().WaitAsync( DisposeCancellationToken );
                 Play( AudioSource, Theme.GetValue() );
             }
             if (!IsPlaying( AudioSource )) {
@@ -82,7 +79,7 @@ namespace Project.UI {
                     Theme = null;
                 }
                 Theme = next;
-                await Theme.Load().WaitAsync( destroyCancellationToken );
+                await Theme.Load().WaitAsync( DisposeCancellationToken );
                 Play( AudioSource, Theme.GetValue() );
             }
             if (Router.IsGameSceneLoading) {
@@ -98,7 +95,7 @@ namespace Project.UI {
                     Theme = null;
                 }
                 Theme = GameThemes.First();
-                await Theme.Load().WaitAsync( destroyCancellationToken );
+                await Theme.Load().WaitAsync( DisposeCancellationToken );
                 Play( AudioSource, Theme.GetValue() );
             }
             if (!IsPlaying( AudioSource )) {
@@ -109,7 +106,7 @@ namespace Project.UI {
                     Theme = null;
                 }
                 Theme = next;
-                await Theme.Load().WaitAsync( destroyCancellationToken );
+                await Theme.Load().WaitAsync( DisposeCancellationToken );
                 Play( AudioSource, Theme.GetValue() );
             }
             Pause( AudioSource, Game!.IsPaused );

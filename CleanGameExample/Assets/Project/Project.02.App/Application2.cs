@@ -15,57 +15,46 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase {
 
-        private Storage storage = default!;
-        private Storage.ProfileSettings profileSettings = default!;
-        private Storage.VideoSettings videoSettings = default!;
-        private Storage.AudioSettings audioSettings = default!;
-        private Storage.Preferences preferences = default!;
-        private Game? game;
-
+        // Container
+        private IDependencyContainer Container { get; }
         // App
-        public Storage Storage => this.Validate().storage;
-        public Storage.ProfileSettings ProfileSettings => this.Validate().profileSettings;
-        public Storage.VideoSettings VideoSettings => this.Validate().videoSettings;
-        public Storage.AudioSettings AudioSettings => this.Validate().audioSettings;
-        public Storage.Preferences Preferences => this.Validate().preferences;
-        public IAuthenticationService AuthenticationService {
-            get {
-                this.Validate();
-                return Unity.Services.Authentication.AuthenticationService.Instance;
-            }
-        }
+        public Storage Storage { get; }
+        public Storage.ProfileSettings ProfileSettings { get; }
+        public Storage.VideoSettings VideoSettings { get; }
+        public Storage.AudioSettings AudioSettings { get; }
+        public Storage.Preferences Preferences { get; }
+        public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
         // Entities
-        public Game? Game => this.Validate().game;
+        public Game? Game { get; private set; }
 
         // Awake
-        public override void Awake() {
-            storage = new Storage();
-            profileSettings = new Storage.ProfileSettings();
-            videoSettings = new Storage.VideoSettings();
-            audioSettings = new Storage.AudioSettings( Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult() );
-            preferences = new Storage.Preferences();
+        public Application2(IDependencyContainer container) {
+            Container = container;
+            Storage = new Storage();
+            ProfileSettings = new Storage.ProfileSettings();
+            VideoSettings = new Storage.VideoSettings();
+            AudioSettings = new Storage.AudioSettings( Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult() );
+            Preferences = new Storage.Preferences();
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
         }
 
         // RunGame
         public void RunGame(LevelEnum level, string name, PlayerCharacterEnum character) {
-            Assert.Operation.Message( $"Game must be null" ).Valid( game is null );
-            GameFactory.Initialize();
+            Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             CameraFactory.Initialize();
             PlayerCharacterFactory.Initialize();
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            game = GameFactory.Create( level, name, character );
-            game.RunGame();
+            Game = new Game( level, name, character );
+            Game.RunGame();
         }
         public void StopGame() {
-            Assert.Operation.Message( $"Game must be non-null" ).Valid( game is not null );
-            game.StopGame();
-            GameObject.DestroyImmediate( game );
-            game = null;
-            GameFactory.Deinitialize();
+            Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
+            Game.StopGame();
+            Game.Dispose();
+            Game = null;
             CameraFactory.Deinitialize();
             PlayerCharacterFactory.Deinitialize();
             EnemyCharacterFactory.Deinitialize();

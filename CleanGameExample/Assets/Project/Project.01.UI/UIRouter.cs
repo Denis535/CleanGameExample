@@ -17,20 +17,19 @@ namespace Project.UI {
         private static readonly Lock @lock = new Lock();
 
         // App
-        private Application2 Application { get; set; } = default!;
+        private Application2 Application { get; }
         // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
         private SceneHandleDynamic World { get; } = new SceneHandleDynamic();
 
-        // Awake
-        public override void Awake() {
-            base.Awake();
-            Application = Utils.Container.RequireDependency<Application2>();
+        // Constructor
+        public UIRouter(IDependencyContainer container) {
+            Application = container.RequireDependency<Application2>();
         }
-        public override void OnDestroy() {
-            base.OnDestroy();
+        public override void Dispose() {
+            base.Dispose();
         }
 
         // LoadStartupAsync

@@ -11,9 +11,6 @@ namespace UnityEngine {
 
     public static class Utils {
 
-        // Container
-        public static IDependencyContainer Container { get; set; } = default!;
-
         // SetLayer
         public static void SetLayer(this GameObject gameObject, int layer) {
             gameObject.layer = layer;

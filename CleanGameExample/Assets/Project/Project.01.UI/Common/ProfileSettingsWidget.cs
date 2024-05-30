@@ -16,8 +16,8 @@ namespace Project.UI.Common {
         public override ProfileSettingsWidgetView View { get; }
 
         // Constructor
-        public ProfileSettingsWidget() {
-            Application = Utils.Container.RequireDependency<Application2>();
+        public ProfileSettingsWidget(IDependencyContainer container) {
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this, ProfileSettings );
         }
         public override void Dispose() {

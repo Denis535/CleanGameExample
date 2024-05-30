@@ -15,6 +15,6 @@ namespace Project.Entities.Characters {
         bool IsAcceleratePressed();
         bool IsFirePressed();
         bool IsAimPressed();
-        bool IsInteractPressed(out EntityBase? interactable);
+        bool IsInteractPressed(out MonoBehaviour? interactable);
     }
 }

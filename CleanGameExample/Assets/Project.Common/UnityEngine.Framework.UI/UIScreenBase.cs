@@ -9,17 +9,20 @@ namespace UnityEngine.Framework.UI {
     public abstract class UIScreenBase2 : UIScreenBase {
 
         // Document
-        protected UIDocument Document { get; private set; } = default!;
+        protected UIDocument Document { get; }
+        // AudioSource
+        protected AudioSource AudioSource { get; }
 
-        // Awake
-        public override void Awake() {
-            Document = gameObject.RequireComponentInChildren<UIDocument>();
+        // Constructor
+        public UIScreenBase2(UIDocument document, AudioSource audioSource) {
+            Document = document;
+            AudioSource = audioSource;
         }
-        public override void OnDestroy() {
+        public override void Dispose() {
+            base.Dispose();
         }
 
-        // Start
-        public abstract void Start();
+        // Update
         public abstract void Update();
         public abstract void LateUpdate();
 

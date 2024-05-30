@@ -17,8 +17,8 @@ namespace Project.UI.Common {
         public override VideoSettingsWidgetView View { get; }
 
         // Constructor
-        public VideoSettingsWidget() {
-            Application = Utils.Container.RequireDependency<Application2>();
+        public VideoSettingsWidget(IDependencyContainer container) {
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this, VideoSettings );
         }
         public override void Dispose() {

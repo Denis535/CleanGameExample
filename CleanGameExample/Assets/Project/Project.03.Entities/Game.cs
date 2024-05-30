@@ -13,27 +13,22 @@ namespace Project.Entities {
     public class Game : GameBase2, IGame {
 
         // Level
-        public LevelEnum LevelEnum { get; private set; }
+        public LevelEnum LevelEnum { get; }
         // Entities
-        public Player Player { get; private set; } = default!;
-        public World World { get; private set; } = default!;
+        public Player Player { get; }
+        public World World { get; }
         // OnEntitySpawn
         public event Action<PlayerCharacter>? OnPlayerCharacterSpawn;
         public event Action<EnemyCharacter>? OnEnemyCharacterSpawn;
         public event Action<Thing>? OnThingSpawn;
 
-        // Awake
-        public override void Awake() {
-            Awake( Context.GetValue<GameFactory.Args>() );
+        // Constructor
+        public Game(LevelEnum Level, string Name, PlayerCharacterEnum Character) {
+            LevelEnum = Level;
+            Player = new Player( Name, Character );
+            World = Object2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
         }
-        private void Awake(GameFactory.Args args) {
-            LevelEnum = args.Level;
-            Player = new Player( args.Name, args.Character );
-            //Player.OnWinEvent += () => Debug.Log( "OnWin" );
-            //Player.OnLoseEvent += () => Debug.Log( "OnLose" );
-            World = Utils.Container.RequireDependency<World>();
-        }
-        public override void OnDestroy() {
+        public override void Dispose() {
             Player.Dispose();
         }
 
@@ -57,9 +52,7 @@ namespace Project.Entities {
             SetStopped();
         }
 
-        // Start
-        public override void Start() {
-        }
+        // Update
         public override void Update() {
             Player.Update();
         }

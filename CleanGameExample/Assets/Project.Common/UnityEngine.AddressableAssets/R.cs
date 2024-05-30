@@ -42,7 +42,6 @@ namespace UnityEngine.AddressableAssets {
             }
             public static class @Entities {
                 public const string @Camera_Value = "Project.Entities/Camera.prefab";
-                public const string @Game_Value = "Project.Entities/Game.prefab";
                 public static class @Worlds {
                     public const string @World_01_Value = "Project.Entities.Worlds/World_01.unity";
                     public const string @World_02_Value = "Project.Entities.Worlds/World_02.unity";

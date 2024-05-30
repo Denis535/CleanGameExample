@@ -16,9 +16,9 @@ namespace Project.UI.GameScreen {
         public override GameMenuWidgetView View { get; }
 
         // Constructor
-        public GameMenuWidget() {
-            Router = Utils.Container.RequireDependency<UIRouter>();
-            View = CreateView( this, Router );
+        public GameMenuWidget(IDependencyContainer container) {
+            Router = container.RequireDependency<UIRouter>();
+            View = CreateView( this, container, Router );
         }
         public override void Dispose() {
             base.Dispose();
@@ -33,13 +33,13 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameMenuWidgetView CreateView(GameMenuWidget widget, UIRouter router) {
+        private static GameMenuWidgetView CreateView(GameMenuWidget widget, IDependencyContainer container, UIRouter router) {
             var view = new GameMenuWidgetView();
             view.OnResume( evt => {
                 widget.DetachSelf();
             } );
             view.OnSettings( evt => {
-                widget.AttachChild( new SettingsWidget() );
+                widget.AttachChild( new SettingsWidget( container ) );
             } );
             view.OnBack( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );

@@ -14,6 +14,8 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase<MainWidgetView> {
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -24,9 +26,10 @@ namespace Project.UI.MainScreen {
         public override MainWidgetView View { get; }
 
         // Constructor
-        public MainWidget() {
-            Router = Utils.Container.RequireDependency<UIRouter>();
-            Application = Utils.Container.RequireDependency<Application2>();
+        public MainWidget(IDependencyContainer container) {
+            Container = container;
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -67,7 +70,7 @@ namespace Project.UI.MainScreen {
                 }
             }
             // Children
-            AttachChild( new MainMenuWidget() );
+            AttachChild( new MainMenuWidget( Container ) );
         }
         public override void OnDetach(object? argument) {
             HideSelf();

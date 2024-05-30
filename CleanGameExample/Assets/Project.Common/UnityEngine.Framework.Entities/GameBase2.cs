@@ -20,8 +20,14 @@ namespace UnityEngine.Framework.Entities {
         public event Action? OnPauseEvent;
         public event Action? OnUnPauseEvent;
 
-        // Start
-        public abstract void Start();
+        // Constructor
+        public GameBase2() {
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        // Update
         public abstract void Update();
         public abstract void LateUpdate();
 

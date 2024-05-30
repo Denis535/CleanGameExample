@@ -73,9 +73,7 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // Start
-        public override void Start() {
-        }
+        // Update
         public override void Update() {
             if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );

@@ -23,10 +23,10 @@ namespace Project.Entities {
         public event Action<Thing>? OnThingSpawn;
 
         // Constructor
-        public Game(LevelEnum Level, string Name, PlayerCharacterEnum Character) {
+        public Game(IDependencyContainer container, LevelEnum Level, string Name, PlayerCharacterEnum Character) {
             LevelEnum = Level;
             Player = new Player( Name, Character );
-            World = Object2.RequireAnyObjectByType<World>( FindObjectsInactive.Exclude );
+            World = container.RequireDependency<World>();
         }
         public override void Dispose() {
             Player.Dispose();
@@ -35,7 +35,6 @@ namespace Project.Entities {
         // RunGame
         public void RunGame() {
             {
-                Player.Start();
                 Player.Camera = CameraFactory.Camera();
                 Player.Character = SpawnPlayerCharacter( World.PlayerPoints.First() );
                 Player.IsInputEnabled = true;

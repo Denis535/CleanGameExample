@@ -47,7 +47,7 @@ namespace Project.App {
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            Game = new Game( level, name, character );
+            Game = new Game( Container, level, name, character );
             Game.RunGame();
         }
         public void StopGame() {

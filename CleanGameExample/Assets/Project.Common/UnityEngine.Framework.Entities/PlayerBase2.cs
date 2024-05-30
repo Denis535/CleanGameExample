@@ -25,8 +25,7 @@ namespace UnityEngine.Framework.Entities {
             base.Dispose();
         }
 
-        // Start
-        public abstract void Start();
+        // Update
         public abstract void Update();
         public abstract void LateUpdate();
 

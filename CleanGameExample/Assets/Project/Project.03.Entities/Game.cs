@@ -10,36 +10,6 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class GameBase2 : GameBase {
-
-        // IsPaused
-        public bool IsPaused { get; private set; }
-        // OnPauseEvent
-        public event Action? OnPauseEvent;
-        public event Action? OnUnPauseEvent;
-
-        // Constructor
-        public GameBase2() {
-        }
-
-        // Start
-        public abstract void Start();
-        public abstract void Update();
-        public abstract void LateUpdate();
-
-        // Pause
-        public virtual void Pause() {
-            Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
-            IsPaused = true;
-            OnPauseEvent?.Invoke();
-        }
-        public virtual void UnPause() {
-            Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
-            IsPaused = false;
-            OnUnPauseEvent?.Invoke();
-        }
-
-    }
     public class Game : GameBase2, IGame {
 
         // Level

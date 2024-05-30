@@ -38,8 +38,8 @@ namespace Project {
                     GUILayout.Space( 2 );
                 }
                 {
-                    // State
-                    GUILayout.Label( "State: " + Router.State );
+                    // UI
+                    GUILayout.Label( "Router: " + Router.State );
                     GUILayout.Space( 2 );
                 }
                 if (Application.Game != null) {

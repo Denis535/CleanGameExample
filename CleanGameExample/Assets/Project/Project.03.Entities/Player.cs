@@ -10,42 +10,6 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class PlayerBase2 : PlayerBase {
-
-        // Name
-        public string Name { get; }
-        // State
-        public PlayerState State { get; private set; } = PlayerState.None;
-        // State/IsWin
-        public bool IsWin => State is PlayerState.Win;
-        public bool IsLose => State is PlayerState.Lose;
-        // OnWinEvent
-        public event Action? OnWinEvent;
-        public event Action? OnLoseEvent;
-
-        // Constructor
-        public PlayerBase2(string name) {
-            Name = name;
-        }
-
-        // Start
-        public abstract void Start();
-        public abstract void Update();
-        public abstract void LateUpdate();
-
-        // OnWin
-        public virtual void OnWin() {
-            Assert.Operation.Message( $"State {State} must be none" ).Valid( State is PlayerState.None );
-            State = PlayerState.Win;
-            OnWinEvent?.Invoke();
-        }
-        public virtual void OnLose() {
-            Assert.Operation.Message( $"State {State} must be none" ).Valid( State is PlayerState.None );
-            State = PlayerState.Lose;
-            OnLoseEvent?.Invoke();
-        }
-
-    }
     public class Player : PlayerBase2, IPlayer {
 
         private Camera2? camera;
@@ -124,10 +88,10 @@ namespace Project.Entities {
         }
 
         // OnWin
-        public override void OnWin() {
+        public new void OnWin() {
             base.OnWin();
         }
-        public override void OnLose() {
+        public new void OnLose() {
             base.OnLose();
         }
 

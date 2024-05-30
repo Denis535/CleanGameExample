@@ -12,80 +12,6 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
-    public abstract class UIRouterBase2 : UIRouterBase {
-
-        private UIRouterState state = UIRouterState.None;
-
-        // State
-        public UIRouterState State {
-            get => state;
-            protected set {
-                switch (value) {
-                    // MainScene
-                    case UIRouterState.MainSceneLoading:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.GameSceneLoaded );
-                        state = value;
-                        break;
-                    case UIRouterState.MainSceneLoaded:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.MainSceneLoading );
-                        state = value;
-                        break;
-                    // GameScene
-                    case UIRouterState.GameSceneLoading:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.None or UIRouterState.MainSceneLoaded );
-                        state = value;
-                        break;
-                    case UIRouterState.GameSceneLoaded:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.GameSceneLoading );
-                        state = value;
-                        break;
-                    // Quit
-                    case UIRouterState.Quitting:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
-                        state = value;
-                        break;
-                    case UIRouterState.Quited:
-                        Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( state is UIRouterState.Quitting );
-                        state = value;
-                        break;
-                    // Misc
-                    default:
-                        throw Exceptions.Internal.NotSupported( $"Transition from {state} to {value} is not supported" );
-                }
-            }
-        }
-        // State/MainScene
-        public bool IsMainSceneLoading => state == UIRouterState.MainSceneLoading;
-        public bool IsMainSceneLoaded => state == UIRouterState.MainSceneLoaded;
-        // State/GameScene
-        public bool IsGameSceneLoading => state == UIRouterState.GameSceneLoading;
-        public bool IsGameSceneLoaded => state == UIRouterState.GameSceneLoaded;
-        // State/Quit
-        public bool IsQuitting => state == UIRouterState.Quitting;
-        public bool IsQuited => state == UIRouterState.Quited;
-
-        // Awake
-        public override void Awake() {
-            Application.wantsToQuit += OnQuit;
-        }
-        public override void OnDestroy() {
-        }
-
-        // Quit
-        public virtual void Quit() {
-            if (OnQuit()) {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.ExitPlaymode();
-#else
-                Application.Quit();
-#endif
-            }
-        }
-        protected virtual bool OnQuit() {
-            return true;
-        }
-
-    }
     public class UIRouter : UIRouterBase2 {
 
         private static readonly Lock @lock = new Lock();
@@ -123,9 +49,9 @@ namespace Project.UI {
                     Application.StopGame();
                 }
                 {
-                    State = UIRouterState.MainSceneLoading;
+                    OnMainSceneLoading();
                     await LoadSceneAsync_MainScene();
-                    State = UIRouterState.MainSceneLoaded;
+                    OnMainSceneLoaded();
                 }
             }
         }
@@ -135,9 +61,9 @@ namespace Project.UI {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
-                    State = UIRouterState.GameSceneLoading;
+                    OnGameSceneLoading();
                     await LoadSceneAsync_GameScene( GetWorldAddress( level ) );
-                    State = UIRouterState.GameSceneLoaded;
+                    OnGameSceneLoaded();
                 }
                 Application.RunGame( level, name, character );
             }
@@ -149,7 +75,7 @@ namespace Project.UI {
             base.Quit();
         }
         protected override bool OnQuit() {
-            if (State != UIRouterState.Quited) {
+            if (!IsQuited) {
                 OnQuitAsync();
                 return false;
             }
@@ -161,11 +87,11 @@ namespace Project.UI {
                     Application.StopGame();
                 }
                 {
-                    State = UIRouterState.Quitting;
+                    OnQuitting();
                     if (World.IsValid) await World.Handle.UnloadSafeAsync();
                     await GameScene.UnloadSafeAsync();
                     await MainScene.UnloadSafeAsync();
-                    State = UIRouterState.Quited;
+                    OnQuited();
                 }
             }
             Quit();
@@ -207,18 +133,5 @@ namespace Project.UI {
             }
         }
 
-    }
-    // UIRouterState
-    public enum UIRouterState {
-        None,
-        // MainScene
-        MainSceneLoading,
-        MainSceneLoaded,
-        // GameScene
-        GameSceneLoading,
-        GameSceneLoaded,
-        // Quit
-        Quitting,
-        Quited,
     }
 }

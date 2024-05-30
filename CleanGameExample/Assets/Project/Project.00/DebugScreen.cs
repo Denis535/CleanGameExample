@@ -39,13 +39,13 @@ namespace Project {
                 }
                 {
                     // UI
-                    GUILayout.Label( "Router: " + Router.State );
+                    GUILayout.Label( "Router State: " + Router.State );
                     GUILayout.Space( 2 );
                 }
                 if (Application.Game != null) {
                     // Game
-                    GUILayout.Label( "Is Game Running: " + true );
-                    GUILayout.Label( "Is Game Paused: " + Application.Game.IsPaused );
+                    GUILayout.Label( "Game State: " + Application.Game.State );
+                    GUILayout.Label( "Game Paused: " + Application.Game.IsPaused );
                     GUILayout.Space( 2 );
                 }
             }

@@ -88,11 +88,11 @@ namespace Project.Entities {
         }
 
         // OnWin
-        public new void OnWin() {
-            base.OnWin();
+        public void OnWin() {
+            SetWin();
         }
-        public new void OnLose() {
-            base.OnLose();
+        public void OnLose() {
+            SetLose();
         }
 
         // IPlayer

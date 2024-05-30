@@ -30,33 +30,33 @@ namespace UnityEngine.Framework.UI {
         public override void OnDestroy() {
         }
 
-        // OnState
-        protected void OnMainSceneLoading() {
+        // SetState
+        protected void SetMainSceneLoading() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.MainSceneLoading} is invalid" ).Valid( State is UIRouterState.None or UIRouterState.GameSceneLoaded );
             State = UIRouterState.MainSceneLoading;
             OnMainSceneLoadingEvent?.Invoke();
         }
-        protected void OnMainSceneLoaded() {
+        protected void SetMainSceneLoaded() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.MainSceneLoaded} is invalid" ).Valid( State is UIRouterState.MainSceneLoading );
             State = UIRouterState.MainSceneLoaded;
             OnMainSceneLoadedEvent?.Invoke();
         }
-        protected void OnGameSceneLoading() {
+        protected void SetGameSceneLoading() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.GameSceneLoading} is invalid" ).Valid( State is UIRouterState.None or UIRouterState.MainSceneLoaded );
             State = UIRouterState.GameSceneLoading;
             OnGameSceneLoadingEvent?.Invoke();
         }
-        protected void OnGameSceneLoaded() {
+        protected void SetGameSceneLoaded() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.GameSceneLoaded} is invalid" ).Valid( State is UIRouterState.GameSceneLoading );
             State = UIRouterState.GameSceneLoaded;
             OnGameSceneLoadedEvent?.Invoke();
         }
-        protected void OnQuitting() {
+        protected void SetQuitting() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Quitting} is invalid" ).Valid( State is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
             State = UIRouterState.Quitting;
             OnQuittingEvent?.Invoke();
         }
-        protected void OnQuited() {
+        protected void SetQuited() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Quited} is invalid" ).Valid( State is UIRouterState.Quitting );
             State = UIRouterState.Quited;
             OnQuitedEvent?.Invoke();

@@ -49,9 +49,9 @@ namespace Project.UI {
                     Application.StopGame();
                 }
                 {
-                    OnMainSceneLoading();
+                    SetMainSceneLoading();
                     await LoadSceneAsync_MainScene();
-                    OnMainSceneLoaded();
+                    SetMainSceneLoaded();
                 }
             }
         }
@@ -61,9 +61,9 @@ namespace Project.UI {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
-                    OnGameSceneLoading();
+                    SetGameSceneLoading();
                     await LoadSceneAsync_GameScene( GetWorldAddress( level ) );
-                    OnGameSceneLoaded();
+                    SetGameSceneLoaded();
                 }
                 Application.RunGame( level, name, character );
             }
@@ -87,11 +87,11 @@ namespace Project.UI {
                     Application.StopGame();
                 }
                 {
-                    OnQuitting();
+                    SetQuitting();
                     if (World.IsValid) await World.Handle.UnloadSafeAsync();
                     await GameScene.UnloadSafeAsync();
                     await MainScene.UnloadSafeAsync();
-                    OnQuited();
+                    SetQuited();
                 }
             }
             Quit();

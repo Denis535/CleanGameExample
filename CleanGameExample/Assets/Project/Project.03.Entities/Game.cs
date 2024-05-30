@@ -32,8 +32,10 @@ namespace Project.Entities {
             Player.OnWinEvent += () => Debug.Log( "OnWin" );
             Player.OnLoseEvent += () => Debug.Log( "OnLose" );
             World = Utils.Container.RequireDependency<World>();
+            SetRunning();
         }
         public override void OnDestroy() {
+            SetStopped();
             Player.Dispose();
         }
 

@@ -7,8 +7,15 @@ namespace UnityEngine.Framework.Entities {
 
     public abstract class GameBase2 : GameBase {
 
+        // State
+        public GameState State { get; private set; }
+        public bool IRunning => State is GameState.Running;
+        public bool IsStopped => State is GameState.Stopped;
         // IsPaused
         public bool IsPaused { get; private set; }
+        // OnStateEvent
+        public event Action? OnRunningEvent;
+        public event Action? OnStoppedEvent;
         // OnPauseEvent
         public event Action? OnPauseEvent;
         public event Action? OnUnPauseEvent;
@@ -17,6 +24,18 @@ namespace UnityEngine.Framework.Entities {
         public abstract void Start();
         public abstract void Update();
         public abstract void LateUpdate();
+
+        // SetState
+        protected void SetRunning() {
+            Assert.Operation.Message( $"Transition from {State} to {GameState.Running} is invalid" ).Valid( State is GameState.None );
+            State = GameState.Running;
+            OnRunningEvent?.Invoke();
+        }
+        protected void SetStopped() {
+            Assert.Operation.Message( $"Transition from {State} to {GameState.Stopped} is invalid" ).Valid( State is GameState.Running );
+            State = GameState.Stopped;
+            OnStoppedEvent?.Invoke();
+        }
 
         // Pause
         public virtual void Pause() {
@@ -30,5 +49,10 @@ namespace UnityEngine.Framework.Entities {
             OnUnPauseEvent?.Invoke();
         }
 
+    }
+    public enum GameState {
+        None,
+        Running,
+        Stopped
     }
 }

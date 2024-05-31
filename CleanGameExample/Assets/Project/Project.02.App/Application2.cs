@@ -15,8 +15,6 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase2 {
 
-        // Container
-        private IDependencyContainer Container { get; }
         // App
         public Storage Storage { get; }
         public Storage.ProfileSettings ProfileSettings { get; }
@@ -25,11 +23,13 @@ namespace Project.App {
         public Storage.Preferences Preferences { get; }
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
         // Entities
-        public new Game? Game { get => (Game?) base.Game; private set => base.Game = value; }
+        public Game? Game { get; set; }
+        // OnGameEvent
+        public event Action<Game>? OnGameCreate;
+        public event Action<Game>? OnGameDestroy;
 
         // Constructor
-        public Application2(IDependencyContainer container) {
-            Container = container;
+        public Application2(IDependencyContainer container) : base( container ) {
             Storage = new Storage();
             ProfileSettings = new Storage.ProfileSettings();
             VideoSettings = new Storage.VideoSettings();
@@ -37,6 +37,7 @@ namespace Project.App {
             Preferences = new Storage.Preferences();
         }
         public override void Dispose() {
+            Addressables.Release( AudioSettings.AudioMixer );
         }
 
         // CreateGame
@@ -48,9 +49,11 @@ namespace Project.App {
             GunFactory.Initialize();
             BulletFactory.Initialize();
             Game = new Game( Container, level, name, character );
+            OnGameCreate?.Invoke( Game );
         }
         public void DestroyGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
+            OnGameDestroy?.Invoke( Game );
             Game.Dispose();
             Game = null;
             CameraFactory.Deinitialize();

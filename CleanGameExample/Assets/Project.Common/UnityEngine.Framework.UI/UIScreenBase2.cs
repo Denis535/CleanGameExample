@@ -8,13 +8,16 @@ namespace UnityEngine.Framework.UI {
 
     public abstract class UIScreenBase2 : UIScreenBase {
 
+        // Container
+        protected IDependencyContainer Container { get; }
         // Document
         protected UIDocument Document { get; }
         // AudioSource
         protected AudioSource AudioSource { get; }
 
         // Constructor
-        public UIScreenBase2(UIDocument document, AudioSource audioSource) {
+        public UIScreenBase2(IDependencyContainer container, UIDocument document, AudioSource audioSource) {
+            Container = container;
             Document = document;
             AudioSource = audioSource;
         }

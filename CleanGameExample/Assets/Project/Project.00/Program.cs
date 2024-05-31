@@ -66,7 +66,7 @@ namespace Project {
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
             UnityEngine.Application.wantsToQuit += () => {
-                if (!Router.IsUnloaded) {
+                if (!Router.IsQuited) {
                     Router.Quit();
                     return false;
                 }

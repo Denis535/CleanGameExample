@@ -7,11 +7,14 @@ namespace UnityEngine.Framework.UI {
 
     public abstract class UIThemeBase2 : UIThemeBase {
 
+        // Container
+        protected IDependencyContainer Container { get; }
         // AudioSource
         protected AudioSource AudioSource { get; }
 
         // Constructor
-        public UIThemeBase2(AudioSource audioSource) {
+        public UIThemeBase2(IDependencyContainer container, AudioSource audioSource) {
+            Container = container;
             AudioSource = audioSource;
         }
         public override void Dispose() {
@@ -36,12 +39,6 @@ namespace UnityEngine.Framework.UI {
             return false;
         }
         // Helpers
-        protected static bool IsPlaying(AudioSource source) {
-            return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length );
-        }
-        protected static bool IsPaused(AudioSource source) {
-            return source.clip is not null && !source.isPlaying && !Mathf.Approximately( source.time, source.clip.length );
-        }
         protected static void Play(AudioSource source, AudioClip clip) {
             Assert.Operation.Message( $"AudioClip {source.clip} must be null" ).Valid( source.clip == null );
             source.clip = clip;
@@ -60,6 +57,9 @@ namespace UnityEngine.Framework.UI {
             Assert.Operation.Message( $"AudioClip must be non-null" ).Valid( source.clip != null );
             source.Stop();
             source.clip = null;
+        }
+        protected static bool IsCompleted(AudioSource source) {
+            return source.clip is not null && Mathf.Approximately( source.time, source.clip.length );
         }
 
     }

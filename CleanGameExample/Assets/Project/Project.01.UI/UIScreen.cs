@@ -13,8 +13,6 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase2 {
 
-        // Container
-        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -23,21 +21,20 @@ namespace Project.UI {
         private new UIRootWidget Widget => (UIRootWidget?) base.Widget!;
 
         // Constructor
-        public UIScreen(IDependencyContainer container) : base( container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
-            Container = container;
+        public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             AttachWidget( new UIRootWidget() );
-            Router.OnStateChangeEvent += state => {
+            Router.OnStateChangeEvent += (state, prev) => {
                 if (IsMainScreen( state )) {
                     if (Widget.Children.FirstOrDefault() is not MainWidget) {
                         Widget.DetachChildren();
-                        Widget.AttachChild( new MainWidget( Container ) );
+                        Widget.AttachChild( new MainWidget( container ) );
                     }
                 } else if (IsGameScreen( state )) {
                     if (Widget.Children.FirstOrDefault() is not GameWidget) {
                         Widget.DetachChildren();
-                        Widget.AttachChild( new GameWidget( Container ) );
+                        Widget.AttachChild( new GameWidget( container ) );
                     }
                 } else {
                     Widget!.DetachChildren();

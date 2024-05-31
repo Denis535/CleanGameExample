@@ -3,33 +3,32 @@ namespace UnityEngine.Framework.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
-    using UnityEditor;
     using UnityEngine;
 
     public abstract class UIRouterBase2 : UIRouterBase {
 
+        // Container
+        protected IDependencyContainer Container { get; }
         // State
         public UIRouterState State { get; private set; }
         public bool IsMainSceneLoading => State == UIRouterState.MainSceneLoading;
         public bool IsMainSceneLoaded => State == UIRouterState.MainSceneLoaded;
         public bool IsGameSceneLoading => State == UIRouterState.GameSceneLoading;
         public bool IsGameSceneLoaded => State == UIRouterState.GameSceneLoaded;
-        public bool IsUnloading => State == UIRouterState.Unloading;
-        public bool IsUnloaded => State == UIRouterState.Unloaded;
+        public bool IsQuitting => State == UIRouterState.Quitting;
+        public bool IsQuited => State == UIRouterState.Quited;
         // OnStateEvent
-        public event Action<UIRouterState>? OnStateChangeEvent;
+        public event Action<UIRouterState, UIRouterState>? OnStateChangeEvent;
         public event Action? OnMainSceneLoadingEvent;
         public event Action? OnMainSceneLoadedEvent;
         public event Action? OnGameSceneLoadingEvent;
         public event Action? OnGameSceneLoadedEvent;
-        public event Action? OnUnloadingEvent;
-        public event Action? OnUnloadedEvent;
-        // OnQuitEvent
-        public event Action? OnQuitEvent;
+        public event Action? OnQuittingEvent;
+        public event Action? OnQuitedEvent;
 
         // Constructor
-        public UIRouterBase2() {
+        public UIRouterBase2(IDependencyContainer container) {
+            Container = container;
         }
         public override void Dispose() {
             base.Dispose();
@@ -38,44 +37,45 @@ namespace UnityEngine.Framework.UI {
         // SetState
         protected void SetMainSceneLoading() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.MainSceneLoading} is invalid" ).Valid( State is UIRouterState.None or UIRouterState.GameSceneLoaded );
+            var prev = State;
             State = UIRouterState.MainSceneLoading;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnMainSceneLoadingEvent?.Invoke();
         }
         protected void SetMainSceneLoaded() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.MainSceneLoaded} is invalid" ).Valid( State is UIRouterState.MainSceneLoading );
+            var prev = State;
             State = UIRouterState.MainSceneLoaded;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnMainSceneLoadedEvent?.Invoke();
         }
         protected void SetGameSceneLoading() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.GameSceneLoading} is invalid" ).Valid( State is UIRouterState.None or UIRouterState.MainSceneLoaded );
+            var prev = State;
             State = UIRouterState.GameSceneLoading;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnGameSceneLoadingEvent?.Invoke();
         }
         protected void SetGameSceneLoaded() {
             Assert.Operation.Message( $"Transition from {State} to {UIRouterState.GameSceneLoaded} is invalid" ).Valid( State is UIRouterState.GameSceneLoading );
+            var prev = State;
             State = UIRouterState.GameSceneLoaded;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnGameSceneLoadedEvent?.Invoke();
         }
-        protected void SetUnloading() {
-            Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Unloading} is invalid" ).Valid( State is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
-            State = UIRouterState.Unloading;
-            OnStateChangeEvent?.Invoke( State );
-            OnUnloadingEvent?.Invoke();
+        protected void SetQuitting() {
+            Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Quitting} is invalid" ).Valid( State is UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoaded );
+            var prev = State;
+            State = UIRouterState.Quitting;
+            OnStateChangeEvent?.Invoke( State, prev );
+            OnQuittingEvent?.Invoke();
         }
-        protected void SetUnloaded() {
-            Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Unloaded} is invalid" ).Valid( State is UIRouterState.Unloading );
-            State = UIRouterState.Unloaded;
-            OnStateChangeEvent?.Invoke( State );
-            OnUnloadedEvent?.Invoke();
-        }
-
-        // Quit
-        public virtual void Quit() {
-            OnQuitEvent?.Invoke();
+        protected void SetQuited() {
+            Assert.Operation.Message( $"Transition from {State} to {UIRouterState.Quited} is invalid" ).Valid( State is UIRouterState.Quitting );
+            var prev = State;
+            State = UIRouterState.Quited;
+            OnStateChangeEvent?.Invoke( State, prev );
+            OnQuitedEvent?.Invoke();
         }
 
     }
@@ -87,8 +87,8 @@ namespace UnityEngine.Framework.UI {
         // GameSceneLoading
         GameSceneLoading,
         GameSceneLoaded,
-        // Unloading
-        Unloading,
-        Unloaded,
+        // Quitting
+        Quitting,
+        Quited,
     }
 }

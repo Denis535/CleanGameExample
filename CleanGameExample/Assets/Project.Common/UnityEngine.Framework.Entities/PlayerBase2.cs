@@ -14,7 +14,7 @@ namespace UnityEngine.Framework.Entities {
         public bool IsWin => State is PlayerState.Win;
         public bool IsLose => State is PlayerState.Lose;
         // OnStateEvent
-        public event Action<PlayerState>? OnStateChangeEvent;
+        public event Action<PlayerState, PlayerState>? OnStateChangeEvent;
         public event Action? OnWinEvent;
         public event Action? OnLoseEvent;
 
@@ -33,14 +33,16 @@ namespace UnityEngine.Framework.Entities {
         // SetState
         protected void SetWin() {
             Assert.Operation.Message( $"Transition from {State} to {PlayerState.Win} is invalid" ).Valid( State is PlayerState.None );
+            var prev = State;
             State = PlayerState.Win;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnWinEvent?.Invoke();
         }
         protected void SetLose() {
             Assert.Operation.Message( $"Transition from {State} to {PlayerState.Lose} is invalid" ).Valid( State is PlayerState.None );
+            var prev = State;
             State = PlayerState.Lose;
-            OnStateChangeEvent?.Invoke( State );
+            OnStateChangeEvent?.Invoke( State, prev );
             OnLoseEvent?.Invoke();
         }
 

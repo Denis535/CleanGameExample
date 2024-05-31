@@ -11,8 +11,6 @@ namespace Project {
     [DefaultExecutionOrder( 1 )]
     public class DebugScreen : MonoBehaviour {
 
-        // Container
-        private IDependencyContainer Container { get; set; } = default!;
         // UI
         private UITheme Theme { get; set; } = default!;
         private UIScreen Screen { get; set; } = default!;
@@ -22,11 +20,11 @@ namespace Project {
 
         // Awake
         public void Awake() {
-            Container = gameObject.RequireComponent<IDependencyContainer>();
-            Theme = Container.RequireDependency<UITheme>();
-            Screen = Container.RequireDependency<UIScreen>();
-            Router = Container.RequireDependency<UIRouter>();
-            Application = Container.RequireDependency<Application2>();
+            var container = gameObject.RequireComponent<IDependencyContainer>();
+            Theme = container.RequireDependency<UITheme>();
+            Screen = container.RequireDependency<UIScreen>();
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
         }
         public void OnDestroy() {
         }

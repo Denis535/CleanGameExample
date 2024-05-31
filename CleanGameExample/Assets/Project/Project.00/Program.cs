@@ -42,10 +42,15 @@ namespace Project {
         //}
 #endif
 
+        // OnLoad
+        [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
+        private static void OnLoad() {
+        }
+
 #if UNITY_EDITOR
         // OnLoad
         [InitializeOnLoadMethod]
-        internal static void OnLoad() {
+        private static void OnLoad_Editor() {
             if (!EditorApplication.isPlaying) {
                 UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>( "Assets/Project/Assets.Project.00/Scenes/Startup.unity" );
                 //EditorSceneManager.playModeStartScene = null;
@@ -53,20 +58,26 @@ namespace Project {
         }
 #endif
 
-        // OnLoad
-        [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
-        internal static void OnLoad2() {
-            VisualElementFactory.StringSelector = GetDisplayString;
-        }
-
         // Awake
         protected override void Awake() {
+            VisualElementFactory.StringSelector = GetDisplayString;
             Application = new Application2( this );
             Router = new UIRouter( this );
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
+            UnityEngine.Application.wantsToQuit += () => {
+                if (!Router.IsUnloaded) {
+                    Router.Quit();
+                    return false;
+                }
+                return true;
+            };
         }
         protected override void OnDestroy() {
+            Theme.Dispose();
+            Screen.Dispose();
+            Router.Dispose();
+            Application.Dispose();
         }
 
         // Start
@@ -84,7 +95,7 @@ namespace Project {
             Game?.LateUpdate();
         }
 
-        // GetObject
+        // IDependencyContainer
         Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
             this.Validate();
             // UI

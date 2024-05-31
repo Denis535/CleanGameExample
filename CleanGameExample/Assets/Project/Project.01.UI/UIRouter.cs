@@ -7,6 +7,7 @@ namespace Project.UI {
     using Project.App;
     using Project.Entities;
     using Project.Entities.Characters;
+    using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
@@ -69,31 +70,26 @@ namespace Project.UI {
         }
 
         // Quit
-        public override void Quit() {
+        public override async void Quit() {
             Release.Log( "Quit" );
             base.Quit();
-        }
-        protected override bool OnQuit() {
-            if (!IsQuited) {
-                OnQuitAsync();
-                return false;
-            }
-            return true;
-        }
-        private async void OnQuitAsync() {
             using (@lock.Enter()) {
                 if (Application.Game != null) {
                     Application.DestroyGame();
                 }
                 {
-                    SetQuitting();
+                    SetUnloading();
                     if (World.IsValid) await World.Handle.UnloadSafeAsync();
                     await GameScene.UnloadSafeAsync();
                     await MainScene.UnloadSafeAsync();
-                    SetQuited();
+                    SetUnloaded();
                 }
             }
-            Quit();
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            UnityEngine.Application.Quit();
+#endif
         }
 
         // Helpers

@@ -28,6 +28,21 @@ namespace Project.UI {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             AttachWidget( new UIRootWidget() );
+            Router.OnStateChangeEvent += state => {
+                if (IsMainScreen( state )) {
+                    if (Widget.Children.FirstOrDefault() is not MainWidget) {
+                        Widget.DetachChildren();
+                        Widget.AttachChild( new MainWidget( Container ) );
+                    }
+                } else if (IsGameScreen( state )) {
+                    if (Widget.Children.FirstOrDefault() is not GameWidget) {
+                        Widget.DetachChildren();
+                        Widget.AttachChild( new GameWidget( Container ) );
+                    }
+                } else {
+                    Widget!.DetachChildren();
+                }
+            };
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -46,19 +61,6 @@ namespace Project.UI {
 
         // Update
         public override void Update() {
-            if (IsMainScreen( Router )) {
-                if (Widget.Children.FirstOrDefault() is not MainWidget) {
-                    Widget.DetachChildren();
-                    Widget.AttachChild( new MainWidget( Container ) );
-                }
-            } else if (IsGameScreen( Router )) {
-                if (Widget.Children.FirstOrDefault() is not GameWidget) {
-                    Widget.DetachChildren();
-                    Widget.AttachChild( new GameWidget( Container ) );
-                }
-            } else {
-                Widget!.DetachChildren();
-            }
             Widget.Update();
         }
         public override void LateUpdate() {

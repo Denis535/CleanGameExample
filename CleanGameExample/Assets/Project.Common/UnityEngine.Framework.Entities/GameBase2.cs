@@ -14,6 +14,7 @@ namespace UnityEngine.Framework.Entities {
         // IsPaused
         public bool IsPaused { get; private set; }
         // OnStateEvent
+        public event Action<GameState>? OnStateChangeEvent;
         public event Action? OnRunningEvent;
         public event Action? OnStoppedEvent;
         // OnPauseEvent
@@ -35,11 +36,13 @@ namespace UnityEngine.Framework.Entities {
         protected void SetRunning() {
             Assert.Operation.Message( $"Transition from {State} to {GameState.Running} is invalid" ).Valid( State is GameState.None );
             State = GameState.Running;
+            OnStateChangeEvent?.Invoke( State );
             OnRunningEvent?.Invoke();
         }
         protected void SetStopped() {
             Assert.Operation.Message( $"Transition from {State} to {GameState.Stopped} is invalid" ).Valid( State is GameState.Running );
             State = GameState.Stopped;
+            OnStateChangeEvent?.Invoke( State );
             OnStoppedEvent?.Invoke();
         }
 

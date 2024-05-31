@@ -39,6 +39,8 @@ namespace Project.UI {
             Container = container;
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
+            Router.OnStateChangeEvent += state => {
+            };
         }
         public override void Dispose() {
             if (Theme != null) {
@@ -52,10 +54,10 @@ namespace Project.UI {
         public override async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                if (IsMainTheme( Router )) {
+                if (IsMainTheme( Router.State )) {
                     await Update_MainTheme();
                 } else
-                if (IsGameTheme( Router )) {
+                if (IsGameTheme( Router.State )) {
                     await Update_GameTheme();
                 }
             }

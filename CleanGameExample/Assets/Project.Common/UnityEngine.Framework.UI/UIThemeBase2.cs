@@ -23,14 +23,14 @@ namespace UnityEngine.Framework.UI {
         public abstract void LateUpdate();
 
         // Helpers
-        protected static bool IsMainTheme(UIRouterBase2 router) {
-            if (router.State is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
+        protected static bool IsMainTheme(UIRouterState state) {
+            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
                 return true;
             }
             return false;
         }
-        protected static bool IsGameTheme(UIRouterBase2 router) {
-            if (router.State is UIRouterState.GameSceneLoaded) {
+        protected static bool IsGameTheme(UIRouterState state) {
+            if (state is UIRouterState.GameSceneLoaded) {
                 return true;
             }
             return false;
@@ -40,7 +40,7 @@ namespace UnityEngine.Framework.UI {
             return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length );
         }
         protected static bool IsPaused(AudioSource source) {
-            return source.clip is not null && !Mathf.Approximately( source.time, source.clip.length ) && !source.isPlaying;
+            return source.clip is not null && !source.isPlaying && !Mathf.Approximately( source.time, source.clip.length );
         }
         protected static void Play(AudioSource source, AudioClip clip) {
             Assert.Operation.Message( $"AudioClip {source.clip} must be null" ).Valid( source.clip == null );

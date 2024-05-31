@@ -31,14 +31,14 @@ namespace Project.UI.Common {
         public DialogWidgetBase<TView> OnSubmit(string text, Action? callback) {
             View.OnSubmit( text, () => {
                 callback?.Invoke();
-                this.DetachSelf();
+                if (IsAttached) this.DetachSelf();
             } );
             return this;
         }
         public DialogWidgetBase<TView> OnCancel(string text, Action? callback) {
             View.OnCancel( text, () => {
                 callback?.Invoke();
-                this.DetachSelf();
+                if (IsAttached) this.DetachSelf();
             } );
             return this;
         }

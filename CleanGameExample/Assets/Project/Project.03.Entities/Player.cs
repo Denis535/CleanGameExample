@@ -16,7 +16,7 @@ namespace Project.Entities {
         private PlayerCharacter? character;
         private bool isInputEnabled;
 
-        // Character
+        // CharacterEnum
         public PlayerCharacterEnum CharacterEnum { get; }
         // Entities
         public Camera2? Camera {

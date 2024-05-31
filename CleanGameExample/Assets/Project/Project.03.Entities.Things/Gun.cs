@@ -13,14 +13,14 @@ namespace Project.Entities.Things {
         private FirePoint FirePoint { get; set; } = default!;
 
         // Awake
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
             Awake( Context.GetValue<GunFactory.Args>() );
         }
         private void Awake(GunFactory.Args args) {
             FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
-        public override void OnDestroy() {
+        protected override void OnDestroy() {
             base.OnDestroy();
         }
 

@@ -45,7 +45,7 @@ namespace Project.UI {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
                 if (Application.Game != null) {
-                    Application.StopGame();
+                    Application.DestroyGame();
                 }
                 {
                     SetMainSceneLoading();
@@ -56,7 +56,7 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(LevelEnum level, string name, PlayerCharacterEnum character) {
+        public async Task LoadGameSceneAsync(Level level, string name, PlayerCharacterEnum character) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
             using (@lock.Enter()) {
                 {
@@ -64,7 +64,7 @@ namespace Project.UI {
                     await LoadSceneAsync_GameScene( GetWorldAddress( level ) );
                     SetGameSceneLoaded();
                 }
-                Application.RunGame( level, name, character );
+                Application.CreateGame( level, name, character );
             }
         }
 
@@ -83,7 +83,7 @@ namespace Project.UI {
         private async void OnQuitAsync() {
             using (@lock.Enter()) {
                 if (Application.Game != null) {
-                    Application.StopGame();
+                    Application.DestroyGame();
                 }
                 {
                     SetQuitting();
@@ -123,11 +123,11 @@ namespace Project.UI {
             SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
         }
         // Helpers
-        private static string GetWorldAddress(LevelEnum level) {
+        private static string GetWorldAddress(Level level) {
             switch (level) {
-                case LevelEnum.Level1: return R.Project.Entities.Worlds.World_01_Value;
-                case LevelEnum.Level2: return R.Project.Entities.Worlds.World_02_Value;
-                case LevelEnum.Level3: return R.Project.Entities.Worlds.World_03_Value;
+                case Level.Level1: return R.Project.Entities.Worlds.World_01_Value;
+                case Level.Level2: return R.Project.Entities.Worlds.World_02_Value;
+                case Level.Level3: return R.Project.Entities.Worlds.World_03_Value;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

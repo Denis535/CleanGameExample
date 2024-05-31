@@ -52,10 +52,10 @@ namespace Project.UI {
         public override async void Update() {
             if (@lock.IsLocked) return;
             using (@lock.Enter()) {
-                if (IsMainTheme( Router.State )) {
+                if (IsMainTheme( Router )) {
                     await Update_MainTheme();
                 } else
-                if (IsGameTheme( Router.State )) {
+                if (IsGameTheme( Router )) {
                     await Update_GameTheme();
                 }
             }

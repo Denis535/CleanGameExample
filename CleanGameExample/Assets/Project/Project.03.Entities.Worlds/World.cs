@@ -33,12 +33,12 @@ namespace Project.Entities.Worlds {
 #endif
 
         // Awake
-        public void Awake() {
-            playerPoints = Object2.RequireObjectsByType<PlayerPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-            enemyPoints = Object2.RequireObjectsByType<EnemyPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-            thingPoints = Object2.RequireObjectsByType<ThingPoint>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+        protected virtual void Awake() {
+            playerPoints = gameObject.GetComponentsInChildren<PlayerPoint>();
+            enemyPoints = gameObject.GetComponentsInChildren<EnemyPoint>();
+            thingPoints = gameObject.GetComponentsInChildren<ThingPoint>();
         }
-        public void OnDestroy() {
+        protected virtual void OnDestroy() {
         }
 
     }

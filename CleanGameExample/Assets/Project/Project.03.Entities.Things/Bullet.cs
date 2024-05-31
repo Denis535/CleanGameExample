@@ -4,8 +4,9 @@ namespace Project.Entities.Things {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
 
-    public class Bullet : MonoBehaviour {
+    public class Bullet : EntityBase {
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
@@ -17,7 +18,7 @@ namespace Project.Entities.Things {
         public Gun Gun { get; private set; } = default!;
 
         // Awake
-        public void Awake() {
+        protected override void Awake() {
             Awake( Context.GetValue<BulletFactory.Args>() );
         }
         private void Awake(BulletFactory.Args args) {
@@ -28,7 +29,7 @@ namespace Project.Entities.Things {
             Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
             Destroy( gameObject, 10 );
         }
-        public void OnDestroy() {
+        protected override void OnDestroy() {
         }
 
         // OnCollisionEnter

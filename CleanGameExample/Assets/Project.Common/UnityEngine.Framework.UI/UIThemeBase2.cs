@@ -23,14 +23,14 @@ namespace UnityEngine.Framework.UI {
         public abstract void LateUpdate();
 
         // Helpers
-        protected static bool IsMainTheme(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
+        protected static bool IsMainTheme(UIRouterBase2 router) {
+            if (router.State is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
                 return true;
             }
             return false;
         }
-        protected static bool IsGameTheme(UIRouterState state) {
-            if (state is UIRouterState.GameSceneLoaded) {
+        protected static bool IsGameTheme(UIRouterBase2 router) {
+            if (router.State is UIRouterState.GameSceneLoaded) {
                 return true;
             }
             return false;

@@ -5,8 +5,9 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using Project.Entities.Characters;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
 
-    public class Camera2 : MonoBehaviour {
+    public class Camera2 : EntityBase {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         public static readonly float DefaultDistance = 1.5f;
@@ -24,9 +25,9 @@ namespace Project.Entities {
         public float Distance { get; private set; }
 
         // Awake
-        public void Awake() {
+        protected override void Awake() {
         }
-        public void OnDestroy() {
+        protected override void OnDestroy() {
         }
 
         // Rotate

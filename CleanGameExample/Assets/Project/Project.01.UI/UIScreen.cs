@@ -46,12 +46,12 @@ namespace Project.UI {
 
         // Update
         public override void Update() {
-            if (IsMainScreen( Router.State )) {
+            if (IsMainScreen( Router )) {
                 if (Widget.Children.FirstOrDefault() is not MainWidget) {
                     Widget.DetachChildren();
                     Widget.AttachChild( new MainWidget( Container ) );
                 }
-            } else if (IsGameScreen( Router.State )) {
+            } else if (IsGameScreen( Router )) {
                 if (Widget.Children.FirstOrDefault() is not GameWidget) {
                     Widget.DetachChildren();
                     Widget.AttachChild( new GameWidget( Container ) );

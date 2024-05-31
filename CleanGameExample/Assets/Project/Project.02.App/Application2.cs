@@ -13,7 +13,7 @@ namespace Project.App {
     using UnityEngine.Framework.App;
     using UnityEngine.ResourceManagement.AsyncOperations;
 
-    public class Application2 : ApplicationBase {
+    public class Application2 : ApplicationBase2 {
 
         // Container
         private IDependencyContainer Container { get; }
@@ -25,9 +25,9 @@ namespace Project.App {
         public Storage.Preferences Preferences { get; }
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
         // Entities
-        public Game? Game { get; private set; }
+        public new Game? Game { get => (Game?) base.Game; private set => base.Game = value; }
 
-        // Awake
+        // Constructor
         public Application2(IDependencyContainer container) {
             Container = container;
             Storage = new Storage();
@@ -39,8 +39,8 @@ namespace Project.App {
         public override void Dispose() {
         }
 
-        // RunGame
-        public void RunGame(LevelEnum level, string name, PlayerCharacterEnum character) {
+        // CreateGame
+        public void CreateGame(Level level, string name, PlayerCharacterEnum character) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             CameraFactory.Initialize();
             PlayerCharacterFactory.Initialize();
@@ -48,11 +48,9 @@ namespace Project.App {
             GunFactory.Initialize();
             BulletFactory.Initialize();
             Game = new Game( Container, level, name, character );
-            Game.RunGame();
         }
-        public void StopGame() {
+        public void DestroyGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
-            Game.StopGame();
             Game.Dispose();
             Game = null;
             CameraFactory.Deinitialize();

@@ -13,7 +13,7 @@ namespace Project.Entities {
     public class Game : GameBase2, IGame {
 
         // Level
-        public LevelEnum LevelEnum { get; }
+        public Level Level { get; }
         // Entities
         public Player Player { get; }
         public World World { get; }
@@ -23,17 +23,10 @@ namespace Project.Entities {
         public event Action<Thing>? OnThingSpawn;
 
         // Constructor
-        public Game(IDependencyContainer container, LevelEnum Level, string Name, PlayerCharacterEnum Character) {
-            LevelEnum = Level;
-            Player = new Player( Name, Character );
+        public Game(IDependencyContainer container, Level level, string name, PlayerCharacterEnum character) {
+            Level = level;
+            Player = new Player( name, character );
             World = container.RequireDependency<World>();
-        }
-        public override void Dispose() {
-            Player.Dispose();
-        }
-
-        // RunGame
-        public void RunGame() {
             {
                 Player.Camera = CameraFactory.Camera();
                 Player.Character = SpawnPlayerCharacter( World.PlayerPoints.First() );
@@ -47,8 +40,9 @@ namespace Project.Entities {
             }
             SetRunning();
         }
-        public void StopGame() {
+        public override void Dispose() {
             SetStopped();
+            Player.Dispose();
         }
 
         // Update
@@ -71,10 +65,10 @@ namespace Project.Entities {
 
         // SpawnEntity
         private PlayerCharacter SpawnPlayerCharacter(PlayerPoint point) {
-            var character_ = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
-            character_.OnDamageEvent += i => OnPlayerCharacterDamage( character_, i );
-            OnPlayerCharacterSpawn?.Invoke( character_ );
-            return character_;
+            var character = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
+            character.OnDamageEvent += i => OnPlayerCharacterDamage( character, i );
+            OnPlayerCharacterSpawn?.Invoke( character );
+            return character;
         }
         private void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacterFactory.Create( this, point.transform.position, point.transform.rotation );
@@ -93,14 +87,16 @@ namespace Project.Entities {
             }
         }
         private void OnEnemyCharacterDamage(EnemyCharacter character, DamageInfo info) {
-            if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
-                Player.OnWin();
+            if (!character.IsAlive) {
+                if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
+                    Player.OnWin();
+                }
             }
         }
 
     }
-    // LevelEnum
-    public enum LevelEnum {
+    // Level
+    public enum Level {
         Level1,
         Level2,
         Level3

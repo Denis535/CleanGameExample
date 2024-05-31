@@ -75,20 +75,20 @@ namespace Project.UI.MainScreen {
         private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, LevelEnum.Level1 ) );
+                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level1 ) );
             } );
             view.OnLevel2( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, LevelEnum.Level2 ) );
+                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level2 ) );
             } );
             view.OnLevel3( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, LevelEnum.Level3 ) );
+                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level3 ) );
             } );
             view.OnBack( evt => {
                 widget.View.Pop();
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings, LevelEnum level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings, Level level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AttachChild( new LoadingWidget() );

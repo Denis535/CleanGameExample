@@ -27,14 +27,14 @@ namespace UnityEngine.Framework.UI {
         public abstract void LateUpdate();
 
         // Helpers
-        protected static bool IsMainScreen(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
+        protected static bool IsMainScreen(UIRouterBase2 router) {
+            if (router.State is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
                 return true;
             }
             return false;
         }
-        protected static bool IsGameScreen(UIRouterState state) {
-            if (state is UIRouterState.GameSceneLoaded) {
+        protected static bool IsGameScreen(UIRouterBase2 router) {
+            if (router.State is UIRouterState.GameSceneLoaded) {
                 return true;
             }
             return false;

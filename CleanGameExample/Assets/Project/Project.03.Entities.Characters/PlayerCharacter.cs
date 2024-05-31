@@ -14,7 +14,7 @@ namespace Project.Entities.Characters {
         private IPlayer Player { get; set; } = default!;
 
         // Awake
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
             Awake( Context.GetValue<PlayerCharacterFactory.Args>() );
         }
@@ -22,7 +22,7 @@ namespace Project.Entities.Characters {
             Game = args.Game;
             Player = args.Player;
         }
-        public override void OnDestroy() {
+        protected override void OnDestroy() {
             base.OnDestroy();
         }
 
@@ -39,7 +39,7 @@ namespace Project.Entities.Characters {
                 LookAt( GetLookTarget( Player ) );
                 AimAt( GetAimTarget( Player ) );
                 if (Player.IsAimPressed()) {
-                    
+
                 }
                 if (Player.IsFirePressed()) {
                     Weapon?.Fire( this );

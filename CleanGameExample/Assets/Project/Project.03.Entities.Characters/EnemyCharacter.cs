@@ -18,14 +18,14 @@ namespace Project.Entities.Characters {
         private Environment_ Environment { get; set; }
 
         // Awake
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
             Awake( Context.GetValue<EnemyCharacterFactory.Args>() );
         }
         private void Awake(EnemyCharacterFactory.Args args) {
             Game = args.Game;
         }
-        public override void OnDestroy() {
+        protected override void OnDestroy() {
             base.OnDestroy();
         }
 

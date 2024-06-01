@@ -8,10 +8,7 @@ namespace Project.App {
     using Project.Entities.Things;
     using Unity.Services.Authentication;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
-    using UnityEngine.Audio;
     using UnityEngine.Framework.App;
-    using UnityEngine.ResourceManagement.AsyncOperations;
 
     public class Application2 : ApplicationBase2 {
 
@@ -24,7 +21,6 @@ namespace Project.App {
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
         // Entities
         public Game? Game { get; set; }
-        // OnGameEvent
         public event Action<Game>? OnGameCreate;
         public event Action<Game>? OnGameDestroy;
 
@@ -33,11 +29,15 @@ namespace Project.App {
             Storage = new Storage();
             ProfileSettings = new Storage.ProfileSettings();
             VideoSettings = new Storage.VideoSettings();
-            AudioSettings = new Storage.AudioSettings( Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult() );
+            AudioSettings = new Storage.AudioSettings();
             Preferences = new Storage.Preferences();
         }
         public override void Dispose() {
-            Addressables.Release( AudioSettings.AudioMixer );
+            Storage.Dispose();
+            ProfileSettings.Dispose();
+            VideoSettings.Dispose();
+            AudioSettings.Dispose();
+            Preferences.Dispose();
         }
 
         // CreateGame

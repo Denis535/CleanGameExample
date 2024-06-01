@@ -4,8 +4,10 @@ namespace Project.App {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.AddressableAssets;
     using UnityEngine.Audio;
     using UnityEngine.Framework.App;
+    using UnityEngine.ResourceManagement.AsyncOperations;
 
     public partial class Storage {
         public class AudioSettings : StorageBase {
@@ -16,7 +18,7 @@ namespace Project.App {
             private float gameVolume;
 
             // AudioMixer
-            internal AudioMixer AudioMixer { get; }
+            private AudioMixer AudioMixer { get; }
             // Volume
             public float MasterVolume {
                 get => masterVolume;
@@ -48,9 +50,13 @@ namespace Project.App {
             }
 
             // Constructor
-            internal AudioSettings(AudioMixer audioMixer) {
-                AudioMixer = audioMixer;
+            internal AudioSettings() {
+                AudioMixer = Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult();
                 Load();
+            }
+            public override void Dispose() {
+                Addressables.Release( AudioMixer );
+                base.Dispose();
             }
 
             // Save

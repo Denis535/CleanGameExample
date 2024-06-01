@@ -17,10 +17,6 @@ namespace Project.Entities {
         // Entities
         public Player Player { get; }
         public World World { get; }
-        // OnEntitySpawn
-        public event Action<PlayerCharacter>? OnPlayerCharacterSpawn;
-        public event Action<EnemyCharacter>? OnEnemyCharacterSpawn;
-        public event Action<Thing>? OnThingSpawn;
 
         // Constructor
         public Game(IDependencyContainer container, Level level, string name, PlayerCharacterEnum character) {
@@ -29,8 +25,8 @@ namespace Project.Entities {
             Player = new Player( name, character );
             World = container.RequireDependency<World>();
             {
-                Player.Camera = CameraFactory.Camera();
-                Player.Character = SpawnPlayerCharacter( World.PlayerPoints.First() );
+                SpawnCamera();
+                SpawnPlayerCharacter( World.PlayerPoints.First() );
                 Player.IsInputEnabled = true;
             }
             foreach (var point in World.EnemyPoints) {
@@ -64,35 +60,43 @@ namespace Project.Entities {
         }
 
         // SpawnEntity
-        private PlayerCharacter SpawnPlayerCharacter(PlayerPoint point) {
-            var character = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
-            character.OnDamageEvent += i => OnPlayerCharacterDamage( character, i );
-            OnPlayerCharacterSpawn?.Invoke( character );
-            return character;
+        private void SpawnCamera() {
+            Player.Camera = CameraFactory.Camera();
+        }
+        private void SpawnPlayerCharacter(PlayerPoint point) {
+            Player.Character = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
+            OnSpawnPlayerCharacter( Player.Character );
         }
         private void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacterFactory.Create( this, point.transform.position, point.transform.rotation );
-            character.OnDamageEvent += i => OnEnemyCharacterDamage( character, i );
-            OnEnemyCharacterSpawn?.Invoke( character );
+            OnSpawnEnemyCharacter( character );
         }
         private void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
-            OnThingSpawn?.Invoke( thing );
+            OnSpawnThing( thing );
+        }
+
+        // OnSpawnEntity
+        private void OnSpawnPlayerCharacter(PlayerCharacter character) {
+        }
+        private void OnSpawnEnemyCharacter(EnemyCharacter character) {
+        }
+        private void OnSpawnThing(Thing thing) {
         }
 
         // OnCharacterDamage
-        private void OnPlayerCharacterDamage(PlayerCharacter character, DamageInfo info) {
-            if (!character.IsAlive) {
-                Player.OnLose();
-            }
-        }
-        private void OnEnemyCharacterDamage(EnemyCharacter character, DamageInfo info) {
-            if (!character.IsAlive) {
-                if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
-                    Player.OnWin();
-                }
-            }
-        }
+        //private void OnPlayerCharacterDamage(PlayerCharacter character, DamageInfo info) {
+        //    if (!character.IsAlive) {
+        //        Player.OnLose();
+        //    }
+        //}
+        //private void OnEnemyCharacterDamage(EnemyCharacter character, DamageInfo info) {
+        //    if (!character.IsAlive) {
+        //        if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
+        //            Player.OnWin();
+        //        }
+        //    }
+        //}
 
     }
     // Level

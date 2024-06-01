@@ -87,10 +87,10 @@ namespace Project.Entities {
 
         // OnWin
         public void OnWin() {
-            SetWin();
+            State = PlayerState.Win;
         }
         public void OnLose() {
-            SetLose();
+            State = PlayerState.Lose;
         }
 
         // IPlayer
@@ -144,10 +144,5 @@ namespace Project.Entities {
             }
         }
 
-    }
-    public enum PlayerState {
-        None,
-        Win,
-        Lose
     }
 }

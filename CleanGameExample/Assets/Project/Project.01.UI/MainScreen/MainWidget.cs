@@ -40,10 +40,8 @@ namespace Project.UI.MainScreen {
         public override async void OnAttach(object? argument) {
             ShowSelf();
             // await MainScene
-            if (!Router.IsMainSceneLoaded) {
-                while (!Router.IsMainSceneLoaded) {
-                    await Task.Yield();
-                }
+            while (Router.State != UIRouterState.MainSceneLoaded) {
+                await Task.Yield();
             }
             // await UnityServices
             if (UnityServices.State != ServicesInitializationState.Initialized) {

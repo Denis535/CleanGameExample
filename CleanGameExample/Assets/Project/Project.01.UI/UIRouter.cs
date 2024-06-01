@@ -46,7 +46,7 @@ namespace Project.UI {
         // LoadMainSceneAsync
         public async Task LoadMainSceneAsync() {
             Release.LogFormat( "Load: MainScene" );
-            SetMainSceneLoading();
+            State = UIRouterState.MainSceneLoading;
             using (@lock.Enter()) {
                 if (Application.Game != null) {
                     Application.DestroyGame();
@@ -59,13 +59,13 @@ namespace Project.UI {
                     SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
                 }
             }
-            SetMainSceneLoaded();
+            State = UIRouterState.MainSceneLoaded;
         }
 
         // LoadGameSceneAsync
         public async Task LoadGameSceneAsync(Level level, string name, PlayerCharacterEnum character) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
-            SetGameSceneLoading();
+            State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
                 {
                     await MainScene.UnloadSafeAsync();
@@ -80,13 +80,13 @@ namespace Project.UI {
                     Application.CreateGame( level, name, character );
                 }
             }
-            SetGameSceneLoaded();
+            State = UIRouterState.GameSceneLoaded;
         }
 
         // Quit
         public async void Quit() {
             Release.Log( "Quit" );
-            SetQuitting();
+            State = UIRouterState.Quitting;
             using (@lock.Enter()) {
                 if (Application.Game != null) {
                     Application.DestroyGame();
@@ -97,7 +97,7 @@ namespace Project.UI {
                     await MainScene.UnloadSafeAsync();
                 }
             }
-            SetQuited();
+            State = UIRouterState.Quited;
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
 #else

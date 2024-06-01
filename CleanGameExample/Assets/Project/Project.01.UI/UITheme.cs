@@ -59,11 +59,11 @@ namespace Project.UI {
             if (Themes != null && IsCompleted( AudioSource )) {
                 PlayTheme( GetNextValue( Themes, Theme ) );
             }
-            if (Router.IsGameSceneLoading) {
+            if (Router.State is UIRouterState.GameSceneLoading) {
                 AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
                 AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
             }
-            if (Router.IsGameSceneLoaded) {
+            if (Router.State is UIRouterState.GameSceneLoaded) {
                 Pause( AudioSource, Game!.IsPaused );
             }
         }

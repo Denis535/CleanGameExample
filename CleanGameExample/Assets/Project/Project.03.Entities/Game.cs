@@ -24,6 +24,7 @@ namespace Project.Entities {
 
         // Constructor
         public Game(IDependencyContainer container, Level level, string name, PlayerCharacterEnum character) {
+            State = GameState.Running;
             Level = level;
             Player = new Player( name, character );
             World = container.RequireDependency<World>();
@@ -38,11 +39,10 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
-            SetRunning();
         }
         public override void Dispose() {
-            SetStopped();
             Player.Dispose();
+            State = GameState.Stopped;
         }
 
         // Update

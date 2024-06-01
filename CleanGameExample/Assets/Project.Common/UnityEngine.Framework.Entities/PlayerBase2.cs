@@ -7,16 +7,20 @@ namespace UnityEngine.Framework.Entities {
 
     public abstract class PlayerBase2 : PlayerBase {
 
+        public PlayerState state;
+
         // Name
         public string Name { get; }
         // State
-        public PlayerState State { get; private set; }
-        public bool IsWin => State is PlayerState.Win;
-        public bool IsLose => State is PlayerState.Lose;
-        // OnStateEvent
+        public PlayerState State {
+            get => state;
+            protected set {
+                var prev = state;
+                state = GetState( value, prev );
+                OnStateChangeEvent?.Invoke( state, prev );
+            }
+        }
         public event Action<PlayerState, PlayerState>? OnStateChangeEvent;
-        public event Action? OnWinEvent;
-        public event Action? OnLoseEvent;
 
         // Constructor
         public PlayerBase2(string name) {
@@ -30,20 +34,18 @@ namespace UnityEngine.Framework.Entities {
         public abstract void Update();
         public abstract void LateUpdate();
 
-        // SetState
-        protected void SetWin() {
-            Assert.Operation.Message( $"Transition from {State} to {PlayerState.Win} is invalid" ).Valid( State is PlayerState.None );
-            var prev = State;
-            State = PlayerState.Win;
-            OnStateChangeEvent?.Invoke( State, prev );
-            OnWinEvent?.Invoke();
-        }
-        protected void SetLose() {
-            Assert.Operation.Message( $"Transition from {State} to {PlayerState.Lose} is invalid" ).Valid( State is PlayerState.None );
-            var prev = State;
-            State = PlayerState.Lose;
-            OnStateChangeEvent?.Invoke( State, prev );
-            OnLoseEvent?.Invoke();
+        // Helpers
+        private static PlayerState GetState(PlayerState state, PlayerState prev) {
+            switch (state) {
+                case PlayerState.Win:
+                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is PlayerState.None );
+                    return state;
+                case PlayerState.Lose:
+                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is PlayerState.None );
+                    return state;
+                default:
+                    throw Exceptions.Internal.NotSupported( $"Transition from {prev} to {state} is not supported" );
+            }
         }
 
     }

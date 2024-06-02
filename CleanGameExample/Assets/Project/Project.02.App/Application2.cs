@@ -38,17 +38,18 @@ namespace Project.App {
             VideoSettings.Dispose();
             AudioSettings.Dispose();
             Preferences.Dispose();
+            base.Dispose();
         }
 
         // CreateGame
-        public void CreateGame(Level level, string name, PlayerCharacterEnum character) {
+        public void CreateGame(Level level, string name, PlayerCharacterKind kind) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             CameraFactory.Initialize();
             PlayerCharacterFactory.Initialize();
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            Game = new Game( Container, level, name, character );
+            Game = new Game( Container, level, name, kind );
             OnGameCreate?.Invoke( Game );
         }
         public void DestroyGame() {

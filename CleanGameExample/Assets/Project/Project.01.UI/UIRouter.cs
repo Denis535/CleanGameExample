@@ -63,8 +63,8 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(Level level, string name, PlayerCharacterEnum character) {
-            Release.LogFormat( "Load: GameScene: {0}, {1}", level, character );
+        public async Task LoadGameSceneAsync(Level level, string name, PlayerCharacterKind kind) {
+            Release.LogFormat( "Load: GameScene: {0}, {1}", level, kind );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
                 {
@@ -77,7 +77,7 @@ namespace Project.UI {
                     SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
                 }
                 {
-                    Application.CreateGame( level, name, character );
+                    Application.CreateGame( level, name, kind );
                 }
             }
             State = UIRouterState.GameSceneLoaded;

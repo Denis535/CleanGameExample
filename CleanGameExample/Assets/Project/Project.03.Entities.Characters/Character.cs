@@ -21,6 +21,8 @@ namespace Project.Entities.Characters {
         private Transform Body { get; set; } = default!;
         // WeaponSlot
         private Slot WeaponSlot { get; set; } = default!;
+        // Game
+        public IGame Game { get; set; } = default!;
         // IsAlive
         public bool IsAlive => CharacterBody.enabled;
         // Weapon

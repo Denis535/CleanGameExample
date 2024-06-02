@@ -8,10 +8,8 @@ namespace Project.Entities.Characters {
 
     public class PlayerCharacter : Character {
 
-        // Game
-        private IGame Game { get; set; } = default!;
         // Player
-        private IPlayer Player { get; set; } = default!;
+        public IPlayer Player { get; set; } = default!;
 
         // Awake
         protected override void Awake() {
@@ -19,8 +17,6 @@ namespace Project.Entities.Characters {
             Awake( Context.GetValue<PlayerCharacterFactory.Args>() );
         }
         private void Awake(PlayerCharacterFactory.Args args) {
-            Game = args.Game;
-            Player = args.Player;
         }
         protected override void OnDestroy() {
             base.OnDestroy();
@@ -84,7 +80,7 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public enum PlayerCharacterEnum {
+    public enum PlayerCharacterKind {
         Gray,
         Red,
         Green,

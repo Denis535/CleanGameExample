@@ -12,8 +12,6 @@ namespace Project.Entities.Characters {
             public PlayerCharacter? Player { get; init; }
         }
 
-        // Game
-        private IGame Game { get; set; } = default!;
         // Environment
         private Environment_ Environment { get; set; }
 
@@ -23,7 +21,6 @@ namespace Project.Entities.Characters {
             Awake( Context.GetValue<EnemyCharacterFactory.Args>() );
         }
         private void Awake(EnemyCharacterFactory.Args args) {
-            Game = args.Game;
         }
         protected override void OnDestroy() {
             base.OnDestroy();

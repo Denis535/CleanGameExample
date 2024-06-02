@@ -49,6 +49,7 @@ namespace Project.UI {
         }
         public override void Dispose() {
             PlayThemes( null );
+            base.Dispose();
         }
 
         // Update

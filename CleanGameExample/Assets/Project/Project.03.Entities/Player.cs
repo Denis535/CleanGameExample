@@ -12,34 +12,21 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2, IPlayer {
 
-        private Camera2? camera;
-        private PlayerCharacter? character;
-        private bool isInputEnabled;
-
-        // CharacterEnum
-        public PlayerCharacterEnum CharacterEnum { get; }
+        // Kind
+        public PlayerCharacterKind Kind { get; }
         // Entities
-        public Camera2? Camera {
-            get => camera;
-            set {
-                camera = value;
-                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
-            }
-        }
-        public PlayerCharacter? Character {
-            get => character;
-            set {
-                character = value;
-                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
-            }
-        }
+        private Game Game { get; }
+        public Camera2 Camera { get; }
+        public PlayerCharacter? Character { get; internal set; }
         // Input
         private InputActions Input { get; }
         public bool IsInputEnabled {
-            get => isInputEnabled;
+            get => Input.asset.enabled;
             set {
-                isInputEnabled = value;
-                Input.SetEnabled( IsInputEnabled && Camera != null && Character != null );
+                if (value)
+                    Input.Enable();
+                else
+                    Input.Dispose();
             }
         }
         // Hit
@@ -64,8 +51,11 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(string name, PlayerCharacterEnum character) : base( name ) {
-            CharacterEnum = character;
+        public Player(string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( name ) {
+            Kind = kind;
+            Game = game;
+            Camera = camera;
+            Character = null;
             Input = new InputActions();
         }
         public override void Dispose() {

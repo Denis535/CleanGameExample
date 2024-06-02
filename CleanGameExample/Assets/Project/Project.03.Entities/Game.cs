@@ -19,15 +19,13 @@ namespace Project.Entities {
         public World World { get; }
 
         // Constructor
-        public Game(IDependencyContainer container, Level level, string name, PlayerCharacterEnum character) {
-            State = GameState.Running;
+        public Game(IDependencyContainer container, Level level, string name, PlayerCharacterKind kind) {
             Level = level;
-            Player = new Player( name, character );
+            Player = new Player( name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             {
-                SpawnCamera();
-                SpawnPlayerCharacter( World.PlayerPoints.First() );
-                Player.IsInputEnabled = true;
+                var point = World.PlayerPoints.First();
+                SpawnPlayerCharacter( point, Player );
             }
             foreach (var point in World.EnemyPoints) {
                 SpawnEnemyCharacter( point );
@@ -35,10 +33,13 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
+            Player.IsInputEnabled = !IsPaused && Player.Character != null;
+            State = GameState.Running;
         }
         public override void Dispose() {
-            Player.Dispose();
             State = GameState.Stopped;
+            Player.Dispose();
+            base.Dispose();
         }
 
         // Update
@@ -51,52 +52,27 @@ namespace Project.Entities {
 
         // Pause
         public override void Pause() {
+            Player.IsInputEnabled = !IsPaused && Player.Character != null;
             base.Pause();
-            Player.IsInputEnabled = false;
         }
         public override void UnPause() {
+            Player.IsInputEnabled = !IsPaused && Player.Character != null;
             base.UnPause();
-            Player.IsInputEnabled = true;
         }
 
         // SpawnEntity
-        private void SpawnCamera() {
-            Player.Camera = CameraFactory.Camera();
-        }
-        private void SpawnPlayerCharacter(PlayerPoint point) {
-            Player.Character = PlayerCharacterFactory.Create( this, Player, Player.CharacterEnum, point.transform.position, point.transform.rotation );
-            OnSpawnPlayerCharacter( Player.Character );
+        private void SpawnPlayerCharacter(PlayerPoint point, Player player) {
+            player.Character = PlayerCharacterFactory.Create( player.Kind, point.transform.position, point.transform.rotation );
+            player.Character.Game = this;
+            player.Character.Player = player;
         }
         private void SpawnEnemyCharacter(EnemyPoint point) {
-            var character = EnemyCharacterFactory.Create( this, point.transform.position, point.transform.rotation );
-            OnSpawnEnemyCharacter( character );
+            var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
+            character.Game = this;
         }
         private void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
-            OnSpawnThing( thing );
         }
-
-        // OnSpawnEntity
-        private void OnSpawnPlayerCharacter(PlayerCharacter character) {
-        }
-        private void OnSpawnEnemyCharacter(EnemyCharacter character) {
-        }
-        private void OnSpawnThing(Thing thing) {
-        }
-
-        // OnCharacterDamage
-        //private void OnPlayerCharacterDamage(PlayerCharacter character, DamageInfo info) {
-        //    if (!character.IsAlive) {
-        //        Player.OnLose();
-        //    }
-        //}
-        //private void OnEnemyCharacterDamage(EnemyCharacter character, DamageInfo info) {
-        //    if (!character.IsAlive) {
-        //        if (GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsSortMode.None ).All( i => !i.IsAlive )) {
-        //            Player.OnWin();
-        //        }
-        //    }
-        //}
 
     }
     // Level

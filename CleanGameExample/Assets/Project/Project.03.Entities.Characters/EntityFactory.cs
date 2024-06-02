@@ -8,7 +8,7 @@ namespace Project.Entities.Characters {
 
     // PlayerCharacter
     public static class PlayerCharacterFactory {
-        public record Args(IGame Game, IPlayer Player);
+        public record Args();
 
         private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
             R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
@@ -24,16 +24,16 @@ namespace Project.Entities.Characters {
             Prefabs.Release();
         }
 
-        public static PlayerCharacter Create(IGame game, IPlayer player, PlayerCharacterEnum character, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args( game, player ) )) {
-                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) character ], position, rotation );
+        public static PlayerCharacter Create(PlayerCharacterKind kind, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args() )) {
+                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) kind ], position, rotation );
             }
         }
 
     }
     // EnemyCharacter
     public static class EnemyCharacterFactory {
-        public record Args(IGame Game);
+        public record Args();
 
         private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
             R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
@@ -49,8 +49,8 @@ namespace Project.Entities.Characters {
             Prefabs.Release();
         }
 
-        public static EnemyCharacter Create(IGame game, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args( game ) )) {
+        public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args() )) {
                 return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandomValue(), position, rotation );
             }
         }

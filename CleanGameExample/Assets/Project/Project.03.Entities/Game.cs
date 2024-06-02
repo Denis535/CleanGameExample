@@ -12,6 +12,16 @@ namespace Project.Entities {
 
     public class Game : GameBase2, IGame {
 
+        // State
+        public new GameState State { get => base.State; set => base.State = value; }
+        // IsPaused
+        public override bool IsPaused {
+            get => base.IsPaused;
+            set {
+                Player.IsInputEnabled = !value && Player.Character != null;
+                base.IsPaused = value;
+            }
+        }
         // Level
         public Level Level { get; }
         // Entities
@@ -25,10 +35,10 @@ namespace Project.Entities {
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                SpawnPlayerCharacter( point, Player );
+                SpawnPlayerCharacter( point, this, Player );
             }
             foreach (var point in World.EnemyPoints) {
-                SpawnEnemyCharacter( point );
+                SpawnEnemyCharacter( point, this );
             }
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
@@ -50,27 +60,17 @@ namespace Project.Entities {
             Player.LateUpdate();
         }
 
-        // Pause
-        public override void Pause() {
-            Player.IsInputEnabled = !IsPaused && Player.Character != null;
-            base.Pause();
-        }
-        public override void UnPause() {
-            Player.IsInputEnabled = !IsPaused && Player.Character != null;
-            base.UnPause();
-        }
-
-        // SpawnEntity
-        private void SpawnPlayerCharacter(PlayerPoint point, Player player) {
+        // Helpers
+        private static void SpawnPlayerCharacter(PlayerPoint point, Game game, Player player) {
             player.Character = PlayerCharacterFactory.Create( player.Kind, point.transform.position, point.transform.rotation );
-            player.Character.Game = this;
+            player.Character.Game = game;
             player.Character.Player = player;
         }
-        private void SpawnEnemyCharacter(EnemyPoint point) {
+        private static void SpawnEnemyCharacter(EnemyPoint point, Game game) {
             var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
-            character.Game = this;
+            character.Game = game;
         }
-        private void SpawnThing(ThingPoint point) {
+        private static void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
         }
 

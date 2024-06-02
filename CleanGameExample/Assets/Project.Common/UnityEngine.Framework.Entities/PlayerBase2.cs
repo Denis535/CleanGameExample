@@ -7,10 +7,8 @@ namespace UnityEngine.Framework.Entities {
 
     public abstract class PlayerBase2 : PlayerBase {
 
-        public PlayerState state;
+        private PlayerState state;
 
-        // Name
-        public string Name { get; }
         // State
         public PlayerState State {
             get => state;
@@ -23,8 +21,7 @@ namespace UnityEngine.Framework.Entities {
         public event Action<PlayerState, PlayerState>? OnStateChangeEvent;
 
         // Constructor
-        public PlayerBase2(string name) {
-            Name = name;
+        public PlayerBase2() {
         }
         public override void Dispose() {
             base.Dispose();

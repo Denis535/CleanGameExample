@@ -12,6 +12,10 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2, IPlayer {
 
+        // State
+        public new PlayerState State { get => base.State; set => base.State = value; }
+        // Name
+        public string Name { get; }
         // Kind
         public PlayerCharacterKind Kind { get; }
         // Entities
@@ -20,15 +24,7 @@ namespace Project.Entities {
         public PlayerCharacter? Character { get; internal set; }
         // Input
         private InputActions Input { get; }
-        public bool IsInputEnabled {
-            get => Input.asset.enabled;
-            set {
-                if (value)
-                    Input.Enable();
-                else
-                    Input.Dispose();
-            }
-        }
+        public bool IsInputEnabled { get => Input.asset.enabled; set => Input.SetEnabled( value ); }
         // Hit
         private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
         public EnemyCharacter? Enemy {
@@ -51,7 +47,8 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( name ) {
+        public Player(string name, PlayerCharacterKind kind, Game game, Camera2 camera) {
+            Name = name;
             Kind = kind;
             Game = game;
             Camera = camera;
@@ -73,14 +70,6 @@ namespace Project.Entities {
             }
         }
         public override void LateUpdate() {
-        }
-
-        // OnWin
-        public void OnWin() {
-            State = PlayerState.Win;
-        }
-        public void OnLose() {
-            State = PlayerState.Lose;
         }
 
         // IPlayer

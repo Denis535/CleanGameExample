@@ -8,6 +8,7 @@ namespace UnityEngine.Framework.Entities {
     public abstract class GameBase2 : GameBase {
 
         private GameState state;
+        private bool isPaused;
 
         // State
         public GameState State {
@@ -20,7 +21,22 @@ namespace UnityEngine.Framework.Entities {
         }
         public event Action<GameState, GameState>? OnStateChangeEvent;
         // IsPaused
-        public bool IsPaused { get; private set; }
+        public virtual bool IsPaused {
+            get => isPaused;
+            set {
+                if (value) {
+                    Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
+                    Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
+                    isPaused = true;
+                    OnPauseEvent?.Invoke();
+                } else {
+                    Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
+                    Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
+                    isPaused = false;
+                    OnUnPauseEvent?.Invoke();
+                }
+            }
+        }
         public event Action? OnPauseEvent;
         public event Action? OnUnPauseEvent;
 
@@ -34,20 +50,6 @@ namespace UnityEngine.Framework.Entities {
         // Update
         public abstract void Update();
         public abstract void LateUpdate();
-
-        // Pause
-        public virtual void Pause() {
-            Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
-            Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
-            IsPaused = true;
-            OnPauseEvent?.Invoke();
-        }
-        public virtual void UnPause() {
-            Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
-            Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
-            IsPaused = false;
-            OnUnPauseEvent?.Invoke();
-        }
 
         // Helpers
         private static GameState GetState(GameState state, GameState prev) {

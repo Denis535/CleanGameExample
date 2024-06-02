@@ -12,8 +12,6 @@ namespace Project.Entities {
 
     public class Game : GameBase2, IGame {
 
-        // State
-        public new GameState State { get => base.State; set => base.State = value; }
         // IsPaused
         public override bool IsPaused {
             get => base.IsPaused;
@@ -44,7 +42,8 @@ namespace Project.Entities {
                 SpawnThing( point );
             }
             Player.IsInputEnabled = !IsPaused && Player.Character != null;
-            State = GameState.Running;
+            State = GameState.PrePlaying;
+            State = GameState.Playing;
         }
         public override void Dispose() {
             State = GameState.Stopped;

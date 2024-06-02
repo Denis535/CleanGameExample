@@ -12,8 +12,6 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2, IPlayer {
 
-        // State
-        public new PlayerState State { get => base.State; set => base.State = value; }
         // Name
         public string Name { get; }
         // Kind

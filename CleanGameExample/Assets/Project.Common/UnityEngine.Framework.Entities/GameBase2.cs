@@ -25,20 +25,19 @@ namespace UnityEngine.Framework.Entities {
             get => isPaused;
             set {
                 if (value) {
-                    Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
+                    Assert.Operation.Message( $"State {State} is invalid" ).Valid( State is GameState.Playing or GameState.PostPlaying );
                     Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
                     isPaused = true;
-                    OnPauseEvent?.Invoke();
+                    OnPauseEvent?.Invoke( true );
                 } else {
-                    Assert.Operation.Message( $"Game must be running" ).Valid( State is GameState.Running );
+                    Assert.Operation.Message( $"State {State} is invalid" ).Valid( State is GameState.Playing or GameState.PostPlaying );
                     Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
                     isPaused = false;
-                    OnUnPauseEvent?.Invoke();
+                    OnPauseEvent?.Invoke( false );
                 }
             }
         }
-        public event Action? OnPauseEvent;
-        public event Action? OnUnPauseEvent;
+        public event Action<bool>? OnPauseEvent;
 
         // Constructor
         public GameBase2() {
@@ -54,11 +53,17 @@ namespace UnityEngine.Framework.Entities {
         // Helpers
         private static GameState GetState(GameState state, GameState prev) {
             switch (state) {
-                case GameState.Running:
+                case GameState.PrePlaying:
                     Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is GameState.None );
                     return state;
+                case GameState.Playing:
+                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is GameState.PrePlaying );
+                    return state;
+                case GameState.PostPlaying:
+                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is GameState.Playing );
+                    return state;
                 case GameState.Stopped:
-                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is GameState.Running );
+                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is GameState.PrePlaying or GameState.Playing or GameState.PostPlaying );
                     return state;
                 default:
                     throw Exceptions.Internal.NotSupported( $"Transition from {prev} to {state} is not supported" );
@@ -68,7 +73,9 @@ namespace UnityEngine.Framework.Entities {
     }
     public enum GameState {
         None,
-        Running,
+        PrePlaying,
+        Playing,
+        PostPlaying,
         Stopped
     }
 }

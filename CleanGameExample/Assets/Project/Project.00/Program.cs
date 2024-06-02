@@ -15,6 +15,7 @@ namespace Project {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
+    [DefaultExecutionOrder( 1000 )]
     public class Program : ProgramBase, IDependencyContainer {
 
         // UI

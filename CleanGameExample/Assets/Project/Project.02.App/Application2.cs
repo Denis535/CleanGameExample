@@ -10,19 +10,16 @@ namespace Project.App {
     using UnityEngine;
     using UnityEngine.Framework.App;
 
-    public class Application2 : ApplicationBase2 {
+    public class Application2 : ApplicationBase2<Game> {
 
-        // App
+        // Storage
         public Storage Storage { get; }
         public Storage.ProfileSettings ProfileSettings { get; }
         public Storage.VideoSettings VideoSettings { get; }
         public Storage.AudioSettings AudioSettings { get; }
         public Storage.Preferences Preferences { get; }
+        // AuthenticationService
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
-        // Entities
-        public Game? Game { get; set; }
-        public event Action<Game>? OnGameCreate;
-        public event Action<Game>? OnGameDestroy;
 
         // Constructor
         public Application2(IDependencyContainer container) : base( container ) {
@@ -49,14 +46,10 @@ namespace Project.App {
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            Game = new Game( Container, level, name, kind );
-            OnGameCreate?.Invoke( Game );
+            base.CreateGame( new Game( Container, level, name, kind ) );
         }
-        public void DestroyGame() {
-            Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
-            OnGameDestroy?.Invoke( Game );
-            Game.Dispose();
-            Game = null;
+        public new void DestroyGame() {
+            base.DestroyGame();
             CameraFactory.Deinitialize();
             PlayerCharacterFactory.Deinitialize();
             EnemyCharacterFactory.Deinitialize();

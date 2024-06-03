@@ -6,7 +6,6 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    // PlayerCharacter
     public static class PlayerCharacterFactory {
         public record Args();
 
@@ -31,7 +30,6 @@ namespace Project.Entities.Characters {
         }
 
     }
-    // EnemyCharacter
     public static class EnemyCharacterFactory {
         public record Args();
 

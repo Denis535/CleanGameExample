@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
         private Application2 Application { get; }
         // Entities
         private Game Game => Application.Game!;
-        private Player? Player => Application.Game!.Player;
+        private Player Player => Application.Game!.Player;
         // View
         public override GameWidgetView View { get; }
         // Actions
@@ -29,6 +29,10 @@ namespace Project.UI.GameScreen {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
             Actions = new InputActions();
+            Game.OnStateChangeEvent += (state, prev) => {
+                Debug.Log( state );
+                Debug.Log( Player.State );
+            };
         }
         public override void Dispose() {
             Actions.Dispose();

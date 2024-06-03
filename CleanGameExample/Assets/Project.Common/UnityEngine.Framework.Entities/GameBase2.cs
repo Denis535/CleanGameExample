@@ -54,7 +54,6 @@ namespace UnityEngine.Framework.Entities {
 
     }
     public enum GameState {
-        None,
         Playing,
         Completed
     }

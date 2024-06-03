@@ -26,7 +26,7 @@ namespace Project.Entities {
         private InputActions Input { get; }
         public bool IsInputEnabled { get => Input.asset.enabled; set => Input.SetEnabled( value ); }
         // Hit
-        private (Vector3 Point, float Distance, GameObject Object)? Hit { get; set; }
+        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f) {
@@ -64,10 +64,10 @@ namespace Project.Entities {
         public void FixedUpdate() {
         }
         public void Update() {
-            if (IsInputEnabled) {
+            if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Game.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply( Character! );
+                Camera.Apply( Character );
             }
             if (Camera != null) {
                 Hit = Raycast( Camera.transform, Character?.transform );

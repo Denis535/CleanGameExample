@@ -45,8 +45,6 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
-            State = GameState.Playing;
-            Player.State = PlayerState.Playing;
         }
         public override void Dispose() {
             Player.Dispose();

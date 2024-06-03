@@ -6,7 +6,6 @@ namespace Project.Entities.Things {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    // Gun
     public static class GunFactory {
         public record Args();
 
@@ -36,7 +35,6 @@ namespace Project.Entities.Things {
         }
 
     }
-    // Bullet
     public static class BulletFactory {
         public record Args(IDamager Damager, Gun Gun, float Force);
 

@@ -32,7 +32,6 @@ namespace UnityEngine.Framework.Entities {
 
     }
     public enum PlayerState {
-        None,
         Playing,
         Winner,
         Looser

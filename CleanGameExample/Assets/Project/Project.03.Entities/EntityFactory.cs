@@ -6,7 +6,6 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    // Camera
     public static class CameraFactory {
 
         private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Camera_Value );

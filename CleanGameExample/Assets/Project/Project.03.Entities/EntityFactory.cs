@@ -8,7 +8,7 @@ namespace Project.Entities {
 
     public static class CameraFactory {
 
-        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Camera_Value );
+        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
 
         public static void Initialize() {
             Prefab.Load().Wait();

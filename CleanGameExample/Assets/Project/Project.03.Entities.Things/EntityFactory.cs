@@ -10,10 +10,10 @@ namespace Project.Entities.Things {
         public record Args();
 
         private static readonly PrefabListHandle<Gun> Prefabs = new PrefabListHandle<Gun>( new[] {
-            R.Project.Entities.Things.Gun_Gray_Value,
-            R.Project.Entities.Things.Gun_Red_Value,
-            R.Project.Entities.Things.Gun_Green_Value,
-            R.Project.Entities.Things.Gun_Blue_Value,
+            R.Project.Entities.Things.Value_Gun_Gray,
+            R.Project.Entities.Things.Value_Gun_Red,
+            R.Project.Entities.Things.Value_Gun_Green,
+            R.Project.Entities.Things.Value_Gun_Blue,
         } );
 
         public static void Initialize() {
@@ -38,7 +38,7 @@ namespace Project.Entities.Things {
     public static class BulletFactory {
         public record Args(IDamager Damager, Gun Gun, float Force);
 
-        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Bullet_Value );
+        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
 
         public static void Initialize() {
             Prefab.Load().Wait();

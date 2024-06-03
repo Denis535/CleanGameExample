@@ -20,9 +20,9 @@ namespace Project.UI {
         // App
         private Application2 Application { get; }
         // Scene
-        private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Startup_Value );
-        private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.MainScene_Value );
-        private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.GameScene_Value );
+        private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
+        private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.Value_MainScene );
+        private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.Value_GameScene );
         private SceneHandleDynamic World { get; } = new SceneHandleDynamic();
 
         // Constructor
@@ -108,9 +108,9 @@ namespace Project.UI {
         // Helpers
         private static string GetWorldAddress(Level level) {
             switch (level) {
-                case Level.Level1: return R.Project.Entities.Worlds.World_01_Value;
-                case Level.Level2: return R.Project.Entities.Worlds.World_02_Value;
-                case Level.Level3: return R.Project.Entities.Worlds.World_03_Value;
+                case Level.Level1: return R.Project.Entities.Worlds.Value_World_01;
+                case Level.Level2: return R.Project.Entities.Worlds.Value_World_02;
+                case Level.Level3: return R.Project.Entities.Worlds.Value_World_03;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

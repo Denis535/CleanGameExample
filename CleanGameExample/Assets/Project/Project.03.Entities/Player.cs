@@ -16,6 +16,13 @@ namespace Project.Entities {
         public string Name { get; }
         // Kind
         public PlayerCharacterKind Kind { get; }
+        // State
+        public new PlayerState State {
+            get => base.State;
+            internal set {
+                base.State = value;
+            }
+        }
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
@@ -72,16 +79,6 @@ namespace Project.Entities {
             }
         }
         public void LateUpdate() {
-        }
-
-        // OnWin
-        public virtual void OnWin() {
-            IsInputEnabled = false;
-            State = PlayerState.Winner;
-        }
-        public virtual void OnLose() {
-            IsInputEnabled = false;
-            State = PlayerState.Looser;
         }
 
         // IPlayer

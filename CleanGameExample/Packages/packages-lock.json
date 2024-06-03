@@ -10,7 +10,7 @@
       "url": "https://package.openupm.com"
     },
     "com.denis535.addressables-source-generator": {
-      "version": "1.0.37",
+      "version": "1.0.38",
       "depth": 0,
       "source": "registry",
       "dependencies": {

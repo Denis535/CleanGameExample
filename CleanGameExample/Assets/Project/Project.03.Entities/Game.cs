@@ -36,6 +36,7 @@ namespace Project.Entities {
             {
                 var point = World.PlayerPoints.First();
                 SpawnPlayerCharacter( point, this, Player );
+                Player.IsInputEnabled = true;
             }
             foreach (var point in World.EnemyPoints) {
                 SpawnEnemyCharacter( point, this );
@@ -90,11 +91,13 @@ namespace Project.Entities {
 
         // OnWin
         protected virtual void OnWin() {
-            Player.OnWin();
+            Player.IsInputEnabled = false;
+            Player.State = PlayerState.Winner;
             State = GameState.Completed;
         }
         protected virtual void OnLose() {
-            Player.OnLose();
+            Player.IsInputEnabled = false;
+            Player.State = PlayerState.Looser;
             State = GameState.Completed;
         }
 
@@ -106,7 +109,6 @@ namespace Project.Entities {
             player.Character.OnDamageEvent += info => {
                 game.IsDirty = true;
             };
-            player.IsInputEnabled = true;
         }
         private static void SpawnEnemyCharacter(EnemyPoint point, Game game) {
             var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );

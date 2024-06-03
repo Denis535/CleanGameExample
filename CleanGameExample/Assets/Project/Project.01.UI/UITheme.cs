@@ -13,11 +13,11 @@ namespace Project.UI {
     public class UITheme : UIThemeBase2 {
 
         private static readonly AssetHandle<AudioClip>[] MainThemes = GetShuffled( new[] {
-             new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Theme_Value )
+             new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
         } );
         private static readonly AssetHandle<AudioClip>[] GameThemes = GetShuffled( new[] {
-            new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Theme_1_Value ),
-            new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Theme_2_Value ),
+            new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_1 ),
+            new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
         private readonly Lock @lock = new Lock();

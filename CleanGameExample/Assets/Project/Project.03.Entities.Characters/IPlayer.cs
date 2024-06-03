@@ -4,7 +4,6 @@ namespace Project.Entities.Characters {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     public interface IPlayer {
         string Name { get; }

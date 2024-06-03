@@ -51,7 +51,7 @@ namespace Project.App {
 
             // Constructor
             internal AudioSettings() {
-                AudioMixer = Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.AudioMixer_Value ).GetResult();
+                AudioMixer = Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.Value_AudioMixer ).GetResult();
                 Load();
             }
             public override void Dispose() {

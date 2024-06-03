@@ -10,10 +10,10 @@ namespace Project.Entities.Characters {
         public record Args();
 
         private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
-            R.Project.Entities.Characters.PlayerCharacter_Gray_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Red_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Green_Value,
-            R.Project.Entities.Characters.PlayerCharacter_Blue_Value
+            R.Project.Entities.Characters.Value_PlayerCharacter_Gray,
+            R.Project.Entities.Characters.Value_PlayerCharacter_Red,
+            R.Project.Entities.Characters.Value_PlayerCharacter_Green,
+            R.Project.Entities.Characters.Value_PlayerCharacter_Blue
         } );
 
         public static void Initialize() {
@@ -34,10 +34,10 @@ namespace Project.Entities.Characters {
         public record Args();
 
         private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
-            R.Project.Entities.Characters.EnemyCharacter_Gray_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Red_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Green_Value,
-            R.Project.Entities.Characters.EnemyCharacter_Blue_Value
+            R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Red,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Green,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Blue
         } );
 
         public static void Initialize() {

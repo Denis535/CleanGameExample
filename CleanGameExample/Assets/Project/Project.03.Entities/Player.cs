@@ -12,8 +12,6 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2, IPlayer {
 
-        // State
-        public new PlayerState State { get => base.State; internal set => base.State = value; }
         // Name
         public string Name { get; }
         // Kind
@@ -74,6 +72,16 @@ namespace Project.Entities {
             }
         }
         public void LateUpdate() {
+        }
+
+        // OnWin
+        public virtual void OnWin() {
+            IsInputEnabled = false;
+            State = PlayerState.Winner;
+        }
+        public virtual void OnLose() {
+            IsInputEnabled = false;
+            State = PlayerState.Looser;
         }
 
         // IPlayer

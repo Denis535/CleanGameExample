@@ -12,8 +12,6 @@ namespace Project.Entities {
 
     public class Game : GameBase2, IGame {
 
-        // State
-        public new GameState State { get => base.State; private set => base.State = value; }
         // IsPaused
         public override bool IsPaused {
             get => base.IsPaused;
@@ -58,20 +56,46 @@ namespace Project.Entities {
         public override void Update() {
             Player.Update();
             if (IsDirty) {
-                if (State is GameState.Playing) {
-                    if (IsLoser( Player )) {
-                        Player.State = PlayerState.Looser;
-                        State = GameState.Completed;
-                    } else if (IsWinner( Player )) {
-                        Player.State = PlayerState.Winner;
-                        State = GameState.Completed;
-                    }
+                if (IsLoser()) {
+                    OnLose();
+                }
+                if (IsWinner()) {
+                    OnWin();
                 }
                 IsDirty = false;
             }
         }
         public override void LateUpdate() {
             Player.LateUpdate();
+        }
+
+        // IsWinner
+        protected virtual bool IsWinner() {
+            if (State is GameState.Playing) {
+                var enemies = GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+                if (enemies.All( i => !i.IsAlive )) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        protected virtual bool IsLoser() {
+            if (State is GameState.Playing) {
+                if (!Player.Character!.IsAlive) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // OnWin
+        protected virtual void OnWin() {
+            Player.OnWin();
+            State = GameState.Completed;
+        }
+        protected virtual void OnLose() {
+            Player.OnLose();
+            State = GameState.Completed;
         }
 
         // Helpers
@@ -93,20 +117,6 @@ namespace Project.Entities {
         }
         private static void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
-        }
-        // Helpers
-        private static bool IsWinner(Player player) {
-            var enemies = GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
-            if (enemies.All( i => !i.IsAlive )) {
-                return true;
-            }
-            return false;
-        }
-        private static bool IsLoser(Player player) {
-            if (!player.Character!.IsAlive) {
-                return true;
-            }
-            return false;
         }
 
     }

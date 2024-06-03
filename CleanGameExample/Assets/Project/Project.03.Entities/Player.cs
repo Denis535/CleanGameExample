@@ -12,13 +12,12 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2, IPlayer {
 
+        // State
+        public new PlayerState State { get => base.State; internal set => base.State = value; }
         // Name
         public string Name { get; }
         // Kind
         public PlayerCharacterKind Kind { get; }
-        // IsWinner
-        public bool IsWinner { get; internal set; }
-        public bool IsLoser { get; internal set; }
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
@@ -48,7 +47,7 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(string name, PlayerCharacterKind kind, Game game, Camera2 camera) {
+        public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container ) {
             Name = name;
             Kind = kind;
             Game = game;
@@ -62,17 +61,19 @@ namespace Project.Entities {
         }
 
         // Update
-        public override void FixedUpdate() {
+        public void FixedUpdate() {
         }
-        public override void Update() {
-            if (Camera != null && Character != null) {
+        public void Update() {
+            if (IsInputEnabled) {
                 Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Game.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply( Character );
-                Hit = Raycast( Camera.transform, Character.transform );
+                Camera.Apply( Character! );
+            }
+            if (Camera != null) {
+                Hit = Raycast( Camera.transform, Character?.transform );
             }
         }
-        public override void LateUpdate() {
+        public void LateUpdate() {
         }
 
         // IPlayer
@@ -117,7 +118,7 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform ray, Transform ignore) {
+        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform ray, Transform? ignore) {
             var hit = Physics2.RaycastAll( ray.position, ray.forward, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 return (hit.point, hit.distance, hit.collider.gameObject);

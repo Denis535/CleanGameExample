@@ -7,17 +7,34 @@ namespace UnityEngine.Framework.Entities {
 
     public abstract class PlayerBase2 : PlayerBase {
 
+        private PlayerState state;
+
+        // Container
+        protected IDependencyContainer Container { get; }
+        // State
+        public PlayerState State {
+            get => state;
+            protected set {
+                var prev = state;
+                state = value;
+                OnStateChangeEvent?.Invoke( state, prev );
+            }
+        }
+        public event Action<PlayerState, PlayerState>? OnStateChangeEvent;
+
         // Constructor
-        public PlayerBase2() {
+        public PlayerBase2(IDependencyContainer container) {
+            Container = container;
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        // Update
-        public abstract void FixedUpdate();
-        public abstract void Update();
-        public abstract void LateUpdate();
-
+    }
+    public enum PlayerState {
+        None,
+        Playing,
+        Winner,
+        Looser
     }
 }

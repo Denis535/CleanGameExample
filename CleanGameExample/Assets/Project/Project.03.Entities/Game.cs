@@ -12,6 +12,8 @@ namespace Project.Entities {
 
     public class Game : GameBase2, IGame {
 
+        // State
+        public new GameState State { get => base.State; private set => base.State = value; }
         // IsPaused
         public override bool IsPaused {
             get => base.IsPaused;
@@ -20,21 +22,18 @@ namespace Project.Entities {
                 base.IsPaused = value;
             }
         }
-        // IsDirty
-        public bool IsDirty { get; private set; }
         // Level
         public Level Level { get; }
         // Entities
         public Player Player { get; }
         public World World { get; }
-        // OnWin
-        public event Action? OnWin;
-        public event Action? OnLose;
+        // IsDirty
+        private bool IsDirty { get; set; }
 
         // Constructor
         public Game(IDependencyContainer container, Level level, string name, PlayerCharacterKind kind) : base( container ) {
             Level = level;
-            Player = new Player( name, kind, this, CameraFactory.Camera() );
+            Player = new Player( container, name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
@@ -46,12 +45,10 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
-            Player.IsInputEnabled = !IsPaused && Player.Character != null;
-            State = GameState.PrePlaying;
             State = GameState.Playing;
+            Player.State = PlayerState.Playing;
         }
         public override void Dispose() {
-            State = GameState.Stopped;
             Player.Dispose();
             base.Dispose();
         }
@@ -65,13 +62,11 @@ namespace Project.Entities {
             if (IsDirty) {
                 if (State is GameState.Playing) {
                     if (IsLoser( Player )) {
-                        Player.IsLoser = true;
-                        OnWin?.Invoke();
-                        State = GameState.PostPlaying;
+                        Player.State = PlayerState.Looser;
+                        State = GameState.Completed;
                     } else if (IsWinner( Player )) {
-                        Player.IsWinner = true;
-                        OnLose?.Invoke();
-                        State = GameState.PostPlaying;
+                        Player.State = PlayerState.Winner;
+                        State = GameState.Completed;
                     }
                 }
                 IsDirty = false;
@@ -89,6 +84,7 @@ namespace Project.Entities {
             player.Character.OnDamageEvent += info => {
                 game.IsDirty = true;
             };
+            player.IsInputEnabled = true;
         }
         private static void SpawnEnemyCharacter(EnemyPoint point, Game game) {
             var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );

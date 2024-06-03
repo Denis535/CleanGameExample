@@ -7,19 +7,6 @@ namespace UnityEngine.Framework.Entities {
 
     public abstract class PlayerBase2 : PlayerBase {
 
-        private PlayerState state;
-
-        // State
-        public PlayerState State {
-            get => state;
-            protected set {
-                var prev = state;
-                state = GetState( value, prev );
-                OnStateChangeEvent?.Invoke( state, prev );
-            }
-        }
-        public event Action<PlayerState, PlayerState>? OnStateChangeEvent;
-
         // Constructor
         public PlayerBase2() {
         }
@@ -28,27 +15,9 @@ namespace UnityEngine.Framework.Entities {
         }
 
         // Update
+        public abstract void FixedUpdate();
         public abstract void Update();
         public abstract void LateUpdate();
 
-        // Helpers
-        private static PlayerState GetState(PlayerState state, PlayerState prev) {
-            switch (state) {
-                case PlayerState.Win:
-                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is PlayerState.None );
-                    return state;
-                case PlayerState.Lose:
-                    Assert.Operation.Message( $"Transition from {prev} to {state} is invalid" ).Valid( prev is PlayerState.None );
-                    return state;
-                default:
-                    throw Exceptions.Internal.NotSupported( $"Transition from {prev} to {state} is not supported" );
-            }
-        }
-
-    }
-    public enum PlayerState {
-        None,
-        Win,
-        Lose
     }
 }

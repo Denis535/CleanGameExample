@@ -10,6 +10,8 @@ namespace UnityEngine.Framework.Entities {
         private GameState state;
         private bool isPaused;
 
+        // Container
+        protected IDependencyContainer Container { get; }
         // State
         public GameState State {
             get => state;
@@ -40,13 +42,15 @@ namespace UnityEngine.Framework.Entities {
         public event Action<bool>? OnPauseEvent;
 
         // Constructor
-        public GameBase2() {
+        public GameBase2(IDependencyContainer container) {
+            Container = container;
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         // Update
+        public abstract void FixedUpdate();
         public abstract void Update();
         public abstract void LateUpdate();
 

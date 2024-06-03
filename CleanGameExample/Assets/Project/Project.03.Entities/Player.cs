@@ -16,6 +16,9 @@ namespace Project.Entities {
         public string Name { get; }
         // Kind
         public PlayerCharacterKind Kind { get; }
+        // IsWinner
+        public bool IsWinner { get; internal set; }
+        public bool IsLoser { get; internal set; }
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
@@ -59,6 +62,8 @@ namespace Project.Entities {
         }
 
         // Update
+        public override void FixedUpdate() {
+        }
         public override void Update() {
             if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Game.Look.ReadValue<Vector2>() );

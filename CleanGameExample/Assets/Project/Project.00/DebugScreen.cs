@@ -37,7 +37,6 @@ namespace Project {
                 if (Application.Game != null) {
                     GUILayout.Label( "Game State: " + Application.Game.State );
                     GUILayout.Label( "Game Paused: " + Application.Game.IsPaused );
-                    GUILayout.Label( "Player State: " + Application.Game.Player.State );
                 }
             }
         }

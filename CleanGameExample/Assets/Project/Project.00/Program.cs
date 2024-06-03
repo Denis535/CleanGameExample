@@ -85,6 +85,9 @@ namespace Project {
         public void Start() {
             Router.LoadMainSceneAsync().Throw();
         }
+        public void FixedUpdate() {
+            Game?.FixedUpdate();
+        }
         public void Update() {
             Theme.Update();
             Screen.Update();

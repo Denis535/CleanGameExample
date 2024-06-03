@@ -6,18 +6,26 @@ namespace UnityEngine.Framework.App {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class ApplicationBase2<TGame> : ApplicationBase where TGame : GameBase2 {
+    public abstract class ApplicationBase2 : ApplicationBase {
 
         // Container
         protected IDependencyContainer Container { get; }
+
+        // Constructor
+        public ApplicationBase2(IDependencyContainer container) {
+            Container = container;
+        }
+
+    }
+    public abstract class ApplicationBase2<TGame> : ApplicationBase2 where TGame : GameBase {
+
         // Entities
         public TGame? Game { get; protected set; }
         public event Action<TGame>? OnGameCreate;
         public event Action<TGame>? OnGameDestroy;
 
         // Constructor
-        public ApplicationBase2(IDependencyContainer container) {
-            Container = container;
+        public ApplicationBase2(IDependencyContainer container) : base( container ) {
         }
 
         // CreateGame

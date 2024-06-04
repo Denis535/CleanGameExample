@@ -4,15 +4,13 @@ namespace Project.UI {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Project.UI.Common;
+    using Project.UI.GameScreen;
+    using Project.UI.MainScreen;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
-    public class UIRootWidgetView : UnityEngine.Framework.UI.UIRootWidgetView {
-
-        // Views
-        public override IEnumerable<UIViewBase> Views => base.Views;
-        public override IEnumerable<UIViewBase> ModalViews => base.ModalViews;
+    public class UIRootWidgetView : UIRootWidgetViewBase {
 
         // Constructor
         public UIRootWidgetView() {
@@ -21,57 +19,59 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        // CreateVisualElement
-        protected override VisualElement CreateVisualElement(out VisualElement widget, out VisualElement views, out VisualElement modalViews) {
-            return base.CreateVisualElement( out widget, out views, out modalViews );
-        }
-
         // AddView
-        public override void AddView(UIViewBase view, Func<UIViewBase, bool> isAlwaysVisible) {
-            views.Add( view );
-            Recalculate( Views.Concat( ModalViews ).ToArray(), isAlwaysVisible );
+        public override void AddView(UIViewBase view) {
+            base.AddView( view );
+            Recalculate( Children.ToArray() );
         }
-        public override void RemoveView(UIViewBase view, Func<UIViewBase, bool> isAlwaysVisible) {
-            views.Remove( view );
-            Recalculate( Views.Concat( ModalViews ).ToArray(), isAlwaysVisible );
-        }
-
-        // AddModalView
-        public override void AddModalView(UIViewBase view, Func<UIViewBase, bool> isAlwaysVisible) {
-            modalViews.Add( view );
-            Recalculate( Views.Concat( ModalViews ).ToArray(), isAlwaysVisible );
-        }
-        public override void RemoveModalView(UIViewBase view, Func<UIViewBase, bool> isAlwaysVisible) {
-            modalViews.Remove( view );
-            Recalculate( Views.Concat( ModalViews ).ToArray(), isAlwaysVisible );
+        public override void RemoveView(UIViewBase view) {
+            base.RemoveView( view );
+            Recalculate( Children.ToArray() );
         }
 
         // Helpers
-        private static void Recalculate(UIViewBase[] views, Func<UIViewBase, bool> isAlwaysVisible) {
+        private static void Recalculate(UIViewBase[] views) {
             for (var i = 0; i < views.Length; i++) {
                 var view = views[ i ];
                 var next = views.ElementAtOrDefault( i + 1 );
-                Recalculate( view, next, isAlwaysVisible );
+                if (next == null) {
+                    Show( view );
+                    Focus( view );
+                } else {
+                    if (view.IsEnabledSelf() && view.IsDisplayedSelf()) view.SaveFocus();
+                    Hide( view, next );
+                }
             }
         }
-        private static void Recalculate(UIViewBase view, UIViewBase? next, Func<UIViewBase, bool> isAlwaysVisible) {
-            if (next != null) {
-                if (!isAlwaysVisible( view )) {
-                    if (!next.IsModal()) {
-                        if (view.IsDisplayedSelf()) view.SaveFocus();
-                        view.SetDisplayed( false );
-                    } else {
-                        if (view.IsEnabledSelf()) view.SaveFocus();
-                        view.SetEnabled( false );
-                    }
-                }
-            } else {
-                if (!isAlwaysVisible( view )) {
-                    view.SetDisplayed( true );
-                    view.SetEnabled( true );
-                    if (!view.LoadFocus()) view.Focus();
+        private static void Show(UIViewBase view) {
+            if (!IsAlwaysVisible( view )) {
+                view.SetEnabled( true );
+                view.SetDisplayed( true );
+            }
+        }
+        private static void Hide(UIViewBase view, UIViewBase next) {
+            if (!IsAlwaysVisible( view )) {
+                if (!IsModal( view ) && IsModal( next )) {
+                    view.SetEnabled( false );
+                } else {
+                    view.SetDisplayed( false );
                 }
             }
+        }
+        // Helpers
+        private static void Focus(UIViewBase view) {
+            if (view.LoadFocus()) return;
+            try {
+                view.Focus();
+            } catch (Exception ex) {
+                Debug.LogError( ex );
+            }
+        }
+        private static bool IsModal(UIViewBase view) {
+            return view is DialogWidgetViewBase;
+        }
+        private static bool IsAlwaysVisible(UIViewBase view) {
+            return view is MainWidgetView or GameWidgetView;
         }
 
     }

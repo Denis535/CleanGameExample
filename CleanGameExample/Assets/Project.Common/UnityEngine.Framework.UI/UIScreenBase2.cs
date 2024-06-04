@@ -29,6 +29,24 @@ namespace UnityEngine.Framework.UI {
         public abstract void Update();
         public abstract void LateUpdate();
 
+        // AttachWidget
+        public override void AttachWidget(UIWidgetBase widget, object? argument = null) {
+            base.AttachWidget( widget, argument );
+            Document.Add( widget.View! );
+        }
+        public override void DetachWidget(UIWidgetBase widget, object? argument = null) {
+            if (!Document) {
+                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
+                return;
+            }
+            if (Document.rootVisualElement == null) {
+                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
+                return;
+            }
+            Document.Remove( widget.View! );
+            base.DetachWidget( widget, argument );
+        }
+
         // Helpers
         protected static bool IsMainScreen(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
@@ -41,6 +59,19 @@ namespace UnityEngine.Framework.UI {
                 return true;
             }
             return false;
+        }
+
+    }
+    public abstract class UIScreenBase2<TWidget> : UIScreenBase2 where TWidget : UIWidgetBase {
+
+        // Widget
+        protected new TWidget Widget => (TWidget) base.Widget;
+
+        // Constructor
+        public UIScreenBase2(IDependencyContainer container, UIDocument document, AudioSource audioSource) : base( container, document, audioSource ) {
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
     }

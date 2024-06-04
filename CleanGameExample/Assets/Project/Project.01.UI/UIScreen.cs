@@ -5,20 +5,21 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Linq;
     using Project.App;
+    using Project.Entities;
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UIScreen : UIScreenBase2 {
+    public class UIScreen : UIScreenBase2<UIRootWidget> {
 
         // UI
         private UIRouter Router { get; }
         // App
         private Application2 Application { get; }
-        // Widget
-        private new UIRootWidget Widget => (UIRootWidget?) base.Widget!;
+        // Entities
+        private Game? Game => Application.Game;
 
         // Constructor
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
@@ -62,21 +63,6 @@ namespace Project.UI {
         }
         public override void LateUpdate() {
             Widget.LateUpdate();
-        }
-
-        // AttachWidget
-        public override void AttachWidget(UIWidgetBase widget, object? argument = null) {
-            base.AttachWidget( widget, argument );
-            Document.Add( widget.View! );
-        }
-        public override void DetachWidget(UIWidgetBase widget, object? argument = null) {
-            if (Document && Document.rootVisualElement != null) {
-                Document.Remove( widget.View! );
-            } else {
-                if (!Document) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
-                if (Document.rootVisualElement == null) Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
-            }
-            base.DetachWidget( widget, argument );
         }
 
     }

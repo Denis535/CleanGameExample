@@ -30,8 +30,8 @@ namespace Project.UI.GameScreen {
             View = CreateView( this );
             Actions = new InputActions();
             Game.OnStateChangeEvent += (state, prev) => {
-                Debug.Log( state );
-                Debug.Log( Player.State );
+                //Debug.Log( state );
+                //Debug.Log( Player.State );
             };
         }
         public override void Dispose() {

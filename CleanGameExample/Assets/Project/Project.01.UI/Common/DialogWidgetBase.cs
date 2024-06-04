@@ -6,7 +6,7 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public abstract class DialogWidgetBase<TView> : UIWidgetBase<TView>, IModalWidget where TView : DialogWidgetViewBase {
+    public abstract class DialogWidgetBase<TView> : UIWidgetBase<TView> where TView : DialogWidgetViewBase {
 
         // View
         public override TView View { get; }

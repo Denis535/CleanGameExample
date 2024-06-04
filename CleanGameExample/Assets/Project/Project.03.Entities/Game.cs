@@ -26,7 +26,7 @@ namespace Project.Entities {
         public Player Player { get; }
         public World World { get; }
         // IsDirty
-        private bool IsDirty { get; set; }
+        protected bool IsDirty { get; set; }
 
         // Constructor
         public Game(IDependencyContainer container, Level level, string name, PlayerCharacterKind kind) : base( container ) {
@@ -35,15 +35,15 @@ namespace Project.Entities {
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                SpawnPlayerCharacter( point, this, Player );
-                Player.IsInputEnabled = true;
+                SpawnPlayerCharacter( point );
             }
             foreach (var point in World.EnemyPoints) {
-                SpawnEnemyCharacter( point, this );
+                SpawnEnemyCharacter( point );
             }
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
+            Player.IsInputEnabled = true;
         }
         public override void Dispose() {
             Player.Dispose();
@@ -68,6 +68,26 @@ namespace Project.Entities {
         }
         public override void LateUpdate() {
             Player.LateUpdate();
+        }
+
+        // Spawn
+        protected virtual void SpawnPlayerCharacter(PlayerPoint point) {
+            Player.Character = PlayerCharacterFactory.Create( Player.Kind, point.transform.position, point.transform.rotation );
+            Player.Character.Game = this;
+            Player.Character.Player = Player;
+            Player.Character.OnDamageEvent += info => {
+                IsDirty = true;
+            };
+        }
+        protected virtual void SpawnEnemyCharacter(EnemyPoint point) {
+            var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
+            character.Game = this;
+            character.OnDamageEvent += info => {
+                IsDirty = true;
+            };
+        }
+        protected virtual void SpawnThing(ThingPoint point) {
+            var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
         }
 
         // IsWinner
@@ -101,31 +121,17 @@ namespace Project.Entities {
             State = GameState.Completed;
         }
 
-        // Helpers
-        private static void SpawnPlayerCharacter(PlayerPoint point, Game game, Player player) {
-            player.Character = PlayerCharacterFactory.Create( player.Kind, point.transform.position, point.transform.rotation );
-            player.Character.Game = game;
-            player.Character.Player = player;
-            player.Character.OnDamageEvent += info => {
-                game.IsDirty = true;
-            };
-        }
-        private static void SpawnEnemyCharacter(EnemyPoint point, Game game) {
-            var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
-            character.Game = game;
-            character.OnDamageEvent += info => {
-                game.IsDirty = true;
-            };
-        }
-        private static void SpawnThing(ThingPoint point) {
-            var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
-        }
-
     }
     // Level
     public enum Level {
         Level1,
         Level2,
         Level3
+    }
+    public static class LevelExtensions {
+        public static Level? GetNext(this Level level) {
+            if (level == Level.Level3) return null;
+            return level + 1;
+        }
     }
 }

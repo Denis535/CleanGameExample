@@ -8,7 +8,7 @@ namespace Project.UI.Common {
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public abstract class DialogWidgetViewBase : UIViewBase, IModalWidgetView {
+    public abstract class DialogWidgetViewBase : UIViewBase {
 
         private readonly Widget widget;
         private readonly Card card;

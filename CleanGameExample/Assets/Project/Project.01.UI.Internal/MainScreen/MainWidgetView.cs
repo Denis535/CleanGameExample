@@ -13,6 +13,9 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
+        // IsAlwaysVisible
+        public override bool IsAlwaysVisible => true;
+
         // Constructor
         public MainWidgetView() {
             VisualElement = VisualElementFactory_Main.MainWidget( out widget );

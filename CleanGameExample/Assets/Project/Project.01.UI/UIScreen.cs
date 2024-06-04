@@ -59,10 +59,16 @@ namespace Project.UI {
 
         // Update
         public override void Update() {
-            Widget.Update();
+            foreach (var child in Widget.Children) {
+                (child as MainWidget)?.Update();
+                (child as GameWidget)?.Update();
+            }
         }
         public override void LateUpdate() {
-            Widget.LateUpdate();
+            foreach (var child in Widget.Children) {
+                (child as MainWidget)?.LateUpdate();
+                (child as GameWidget)?.LateUpdate();
+            }
         }
 
     }

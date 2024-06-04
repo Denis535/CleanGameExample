@@ -12,6 +12,9 @@ namespace Project.UI.GameScreen {
         private readonly Widget widget;
         private readonly VisualElement target;
 
+        // IsAlwaysVisible
+        public override bool IsAlwaysVisible => true;
+
         // Constructor
         public GameWidgetView() {
             VisualElement = VisualElementFactory_Game.GameWidget( out widget, out target );

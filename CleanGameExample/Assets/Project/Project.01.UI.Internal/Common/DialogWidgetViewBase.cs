@@ -18,6 +18,10 @@ namespace Project.UI.Common {
         private readonly Label title;
         private readonly Label message;
 
+        // Priority
+        public override int Priority => 1000;
+        // IsModal
+        public override bool IsModal => true;
         // Title
         public string? Title {
             get => title.text;

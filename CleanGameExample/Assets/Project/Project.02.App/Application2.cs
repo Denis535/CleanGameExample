@@ -12,14 +12,16 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase2<Game> {
 
-        // Storage
+        // App
         public Storage Storage { get; }
         public Storage.ProfileSettings ProfileSettings { get; }
         public Storage.VideoSettings VideoSettings { get; }
         public Storage.AudioSettings AudioSettings { get; }
         public Storage.Preferences Preferences { get; }
-        // AuthenticationService
+        // App
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
+        // Entities
+        public override Game? Game { get; protected set; }
 
         // Constructor
         public Application2(IDependencyContainer container) : base( container ) {

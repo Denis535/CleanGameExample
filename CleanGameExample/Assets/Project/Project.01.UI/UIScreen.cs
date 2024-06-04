@@ -26,6 +26,16 @@ namespace Project.UI {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             AttachWidget( new UIRootWidget() );
+            VisualElementFactory.OnPlayClick += evt => { };
+            VisualElementFactory.OnPlaySelect += evt => { };
+            VisualElementFactory.OnPlaySubmit += evt => { };
+            VisualElementFactory.OnPlayCancel += evt => { };
+            VisualElementFactory.OnPlayChange += evt => { };
+            VisualElementFactory.OnPlayFocus += evt => { };
+            VisualElementFactory.OnPlayDialog += evt => { };
+            VisualElementFactory.OnPlayInfoDialog += evt => { };
+            VisualElementFactory.OnPlayWarningDialog += evt => { };
+            VisualElementFactory.OnPlayErrorDialog += evt => { };
             Router.OnStateChangeEvent += (state, prev) => {
                 if (IsMainScreen( state )) {
                     if (Widget.Children.FirstOrDefault() is not MainWidget) {
@@ -38,19 +48,9 @@ namespace Project.UI {
                         Widget.AttachChild( new GameWidget( container ) );
                     }
                 } else {
-                    Widget!.DetachChildren();
+                    Widget.DetachChildren();
                 }
             };
-            VisualElementFactory.OnPlayClick += evt => { };
-            VisualElementFactory.OnPlaySelect += evt => { };
-            VisualElementFactory.OnPlaySubmit += evt => { };
-            VisualElementFactory.OnPlayCancel += evt => { };
-            VisualElementFactory.OnPlayChange += evt => { };
-            VisualElementFactory.OnPlayFocus += evt => { };
-            VisualElementFactory.OnPlayDialog += evt => { };
-            VisualElementFactory.OnPlayInfoDialog += evt => { };
-            VisualElementFactory.OnPlayWarningDialog += evt => { };
-            VisualElementFactory.OnPlayErrorDialog += evt => { };
         }
         public override void Dispose() {
             Widget.DetachSelf();

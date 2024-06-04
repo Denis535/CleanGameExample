@@ -20,7 +20,7 @@ namespace UnityEngine.Framework.App {
     public abstract class ApplicationBase2<TGame> : ApplicationBase2 where TGame : GameBase {
 
         // Entities
-        public TGame? Game { get; protected set; }
+        public abstract TGame? Game { get; protected set; }
         public event Action<TGame>? OnGameCreate;
         public event Action<TGame>? OnGameDestroy;
 

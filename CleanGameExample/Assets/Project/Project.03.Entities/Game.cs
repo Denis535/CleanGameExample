@@ -111,12 +111,10 @@ namespace Project.Entities {
 
         // OnWin
         protected virtual void OnWin() {
-            Player.IsInputEnabled = false;
             Player.State = PlayerState.Winner;
             State = GameState.Completed;
         }
         protected virtual void OnLose() {
-            Player.IsInputEnabled = false;
             Player.State = PlayerState.Looser;
             State = GameState.Completed;
         }

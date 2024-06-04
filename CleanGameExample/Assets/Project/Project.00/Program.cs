@@ -16,32 +16,16 @@ namespace Project {
     using UnityEngine.UIElements;
 
     [DefaultExecutionOrder( 1000 )]
-    public class Program : ProgramBase, IDependencyContainer {
+    public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
 
         // UI
-        private UITheme Theme { get; set; } = default!;
-        private UIScreen Screen { get; set; } = default!;
-        private UIRouter Router { get; set; } = default!;
+        protected override UITheme Theme { get; set; } = default!;
+        protected override UIScreen Screen { get; set; } = default!;
+        protected override UIRouter Router { get; set; } = default!;
         // App
-        private Application2 Application { get; set; } = default!;
+        protected override Application2 Application { get; set; } = default!;
         // Entities
-        private Game? Game => Application.Game;
-
-#if UNITY_EDITOR
-        // OnEnterPlaymode
-        //[InitializeOnEnterPlayMode]
-        //public static void OnEnterPlaymode() {
-        //    var scene = SceneManager.GetActiveScene();
-        //    if (scene.name == "Launcher") {
-        //    } else
-        //    if (scene.name == "Startup") {
-        //    } else
-        //    if (scene.name == "MainScene") {
-        //    } else
-        //    if (scene.name == "GameScene") {
-        //    }
-        //}
-#endif
+        protected override Game? Game => Application.Game;
 
         // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
@@ -61,46 +45,50 @@ namespace Project {
 
         // Awake
         protected override void Awake() {
+            base.Awake();
             VisualElementFactory.StringSelector = GetDisplayString;
             Application = new Application2( this );
             Router = new UIRouter( this );
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
-            UnityEngine.Application.wantsToQuit += () => {
-                if (Router.State != UIRouterState.Quited) {
-                    Router.Quit();
-                    return false;
-                }
-                return true;
-            };
         }
         protected override void OnDestroy() {
             Theme.Dispose();
             Screen.Dispose();
             Router.Dispose();
             Application.Dispose();
+            base.OnDestroy();
         }
 
         // Start
-        public void Start() {
+        protected override void Start() {
             Router.LoadMainSceneAsync().Throw();
         }
-        public void FixedUpdate() {
+        protected override void FixedUpdate() {
             Game?.FixedUpdate();
         }
-        public void Update() {
+        protected override void Update() {
             Theme.Update();
             Screen.Update();
             Game?.Update();
         }
-        public void LateUpdate() {
+        protected override void LateUpdate() {
             Theme.LateUpdate();
             Screen.LateUpdate();
             Game?.LateUpdate();
         }
 
+        // OnQuit
+        protected override bool OnQuit() {
+            if (Router.State != UIRouterState.Quited) {
+                Router.Quit();
+                return false;
+            }
+            return true;
+        }
+
         // IDependencyContainer
-        Option<object?> IDependencyContainer.GetValue(Type type, object? argument) {
+        protected override Option<object?> GetValue(Type type, object? argument) {
             this.Validate();
             // UI
             if (type.IsAssignableTo( typeof( UIThemeBase ) )) {

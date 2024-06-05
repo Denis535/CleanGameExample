@@ -15,24 +15,6 @@
   padding-top: 0px;
   padding-bottom: 0px;
 }
-.root-widget .views,
-.root-widget .modal-views {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  border-left-width: 0px;
-  border-right-width: 0px;
-  border-top-width: 0px;
-  border-bottom-width: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
 #main-widget {
   background-image: url('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png');
   -unity-background-scale-mode: scale-and-crop;

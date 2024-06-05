@@ -15,6 +15,8 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
+        // Priority
+        public override int Priority => 500;
         // Props
         public string Title => title.text;
 

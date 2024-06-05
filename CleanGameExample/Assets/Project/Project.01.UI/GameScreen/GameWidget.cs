@@ -12,7 +12,7 @@ namespace Project.UI.GameScreen {
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
         // Container
-        private IDependencyContainer Container { get; set; }
+        private IDependencyContainer Container { get; }
         // App
         private Application2 Application { get; }
         // Entities

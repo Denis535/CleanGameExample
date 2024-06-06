@@ -16,6 +16,9 @@ namespace Project.UI.Common {
         private readonly Slider gameVolume;
 
         // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
         public (float Value, float Min, float Max) MasterVolume {
             get => masterVolume.GetValueMinMax();
             init => masterVolume.GetValueMinMax( value );

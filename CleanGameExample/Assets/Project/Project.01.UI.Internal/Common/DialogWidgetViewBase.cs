@@ -18,11 +18,10 @@ namespace Project.UI.Common {
         private readonly Label title;
         private readonly Label message;
 
-        // Priority
+        // Props
         public override int Priority => 1000;
-        // IsModal
+        public override bool IsAlwaysVisible => false;
         public override bool IsModal => true;
-        // Title
         public string? Title {
             get => title.text;
             set {
@@ -30,7 +29,6 @@ namespace Project.UI.Common {
                 header.SetDisplayed( value != null );
             }
         }
-        // Message
         public string? Message {
             get => message.text;
             set {

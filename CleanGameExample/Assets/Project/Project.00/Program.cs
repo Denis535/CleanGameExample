@@ -89,7 +89,7 @@ namespace Project {
 
         // IDependencyContainer
         protected override Option<object?> GetValue(Type type, object? argument) {
-            this.Validate();
+            this.ThrowIfInvalid();
             // UI
             if (type.IsAssignableTo( typeof( UIThemeBase ) )) {
                 return new Option<object?>( Theme ?? throw Exceptions.Internal.NullReference( $"Reference 'Theme' is null" ) );

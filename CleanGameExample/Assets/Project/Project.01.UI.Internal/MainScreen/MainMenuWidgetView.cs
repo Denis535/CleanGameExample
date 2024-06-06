@@ -15,6 +15,9 @@ namespace Project.UI.MainScreen {
         private readonly VisualElement content;
 
         // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
         public string Title => title.text;
 
         // Constructor
@@ -82,6 +85,11 @@ namespace Project.UI.MainScreen {
         private readonly Button settings;
         private readonly Button quit;
 
+        // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
+
         // Constructor
         public MainMenuWidgetView_MainMenuView() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget_MainMenuView( out view, out startGame, out settings, out quit );
@@ -106,6 +114,11 @@ namespace Project.UI.MainScreen {
         private readonly Button newGame;
         private readonly Button @continue;
         private readonly Button back;
+
+        // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
@@ -132,6 +145,11 @@ namespace Project.UI.MainScreen {
         private readonly Button level2;
         private readonly Button level3;
         private readonly Button back;
+
+        // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
@@ -162,6 +180,11 @@ namespace Project.UI.MainScreen {
         private readonly Button green;
         private readonly Button blue;
         private readonly Button back;
+
+        // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
 
         // Constructor
         public MainMenuWidgetView_SelectCharacterView() {

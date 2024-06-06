@@ -12,8 +12,10 @@ namespace Project.UI.GameScreen {
         private readonly Widget widget;
         private readonly VisualElement target;
 
-        // IsAlwaysVisible
+        // Props
+        public override int Priority => 0;
         public override bool IsAlwaysVisible => true;
+        public override bool IsModal => false;
 
         // Constructor
         public GameWidgetView() {

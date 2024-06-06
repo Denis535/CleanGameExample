@@ -13,8 +13,10 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
-        // IsAlwaysVisible
+        // Props
+        public override int Priority => 0;
         public override bool IsAlwaysVisible => true;
+        public override bool IsModal => false;
 
         // Constructor
         public MainWidgetView() {

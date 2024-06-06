@@ -14,6 +14,11 @@ namespace Project.UI.MainScreen {
         private readonly Widget widget;
         private readonly Label loading;
 
+        // Props
+        public override int Priority => 0;
+        public override bool IsAlwaysVisible => false;
+        public override bool IsModal => false;
+
         // Constructor
         public LoadingWidgetView() {
             VisualElement = VisualElementFactory_Main.LoadingWidget( out widget, out loading );

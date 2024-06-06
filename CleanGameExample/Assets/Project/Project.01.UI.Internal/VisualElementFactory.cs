@@ -221,28 +221,28 @@ namespace Project.UI {
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button ResumeSelect(string? text) {
+        public static Button Select_Resume(string? text) {
             var result = Create<Button>( null, "resume" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button BackSelect(string? text) {
+        public static Button Select_Back(string? text) {
             var result = Create<Button>( null, "back" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button ExitSelect(string? text) {
+        public static Button Select_Exit(string? text) {
             var result = Create<Button>( null, "exit" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button QuitSelect(string? text) {
+        public static Button Select_Quit(string? text) {
             var result = Create<Button>( null, "quit" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );

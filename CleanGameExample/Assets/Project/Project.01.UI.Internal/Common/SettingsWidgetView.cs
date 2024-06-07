@@ -31,10 +31,7 @@ namespace Project.UI.Common {
         // Constructor
         public SettingsWidgetView() {
             VisualElement = VisualElementFactory_Common.SettingsWidget( out widget, out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
-            widget.OnAttachToPanel( evt => {
-                okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
-            } );
-            widget.OnChangeAny( evt => {
+            widget.OnValidate( evt => {
                 okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }
@@ -42,25 +39,25 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // Add
-        public void Add(ProfileSettingsWidgetView view) {
+        // AddView
+        public void AddView(ProfileSettingsWidgetView view) {
             profileSettings.Add( view );
         }
-        public void Add(VideoSettingsWidgetView view) {
+        public void AddView(VideoSettingsWidgetView view) {
             videoSettings.Add( view );
         }
-        public void Add(AudioSettingsWidgetView view) {
+        public void AddView(AudioSettingsWidgetView view) {
             audioSettings.Add( view );
         }
 
-        // Remove
-        public void Remove(ProfileSettingsWidgetView view) {
+        // RemoveView
+        public void RemoveView(ProfileSettingsWidgetView view) {
             profileSettings.Remove( view );
         }
-        public void Remove(VideoSettingsWidgetView view) {
+        public void RemoveView(VideoSettingsWidgetView view) {
             videoSettings.Remove( view );
         }
-        public void Remove(AudioSettingsWidgetView view) {
+        public void RemoveView(AudioSettingsWidgetView view) {
             audioSettings.Remove( view );
         }
 

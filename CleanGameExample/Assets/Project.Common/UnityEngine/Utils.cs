@@ -75,8 +75,8 @@ namespace UnityEngine {
     }
     public static class UIViewExtensions {
 
-        // IsActive
-        public static bool IsActive(this UIViewBase view) {
+        // IsAttached
+        public static bool IsAttached(this UIViewBase view) {
             return view.__GetVisualElement__().panel != null;
         }
 

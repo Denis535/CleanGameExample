@@ -86,7 +86,7 @@ namespace Project.UI.MainScreen {
 
         // Update
         public void Update() {
-            View.SetEffect( this.GetDescendants().Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsActive() && i.IsDisplayedInHierarchy() ) );
+            View.SetEffect( this.GetDescendants().Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) );
         }
         public void LateUpdate() {
         }

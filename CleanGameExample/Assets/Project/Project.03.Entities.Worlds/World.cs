@@ -12,9 +12,9 @@ namespace Project.Entities.Worlds {
         private ThingPoint[] thingPoints = default!;
 
         // Points
-        public PlayerPoint[] PlayerPoints => this.IfValid().playerPoints;
-        public EnemyPoint[] EnemyPoints => this.IfValid().enemyPoints;
-        public ThingPoint[] ThingPoints => this.IfValid().thingPoints;
+        public PlayerPoint[] PlayerPoints => this.Pipe( i => i.ThrowIfInvalid() ).playerPoints;
+        public EnemyPoint[] EnemyPoints => this.Pipe( i => i.ThrowIfInvalid() ).enemyPoints;
+        public ThingPoint[] ThingPoints => this.Pipe( i => i.ThrowIfInvalid() ).thingPoints;
 
 #if UNITY_EDITOR
         public void OnValidate() {

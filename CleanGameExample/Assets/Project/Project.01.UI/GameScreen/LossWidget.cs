@@ -37,6 +37,16 @@ namespace Project.UI.GameScreen {
             HideSelf();
         }
 
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+
         // Helpers
         private static LossWidgetView CreateView(LossWidget widget) {
             var view = new LossWidgetView();

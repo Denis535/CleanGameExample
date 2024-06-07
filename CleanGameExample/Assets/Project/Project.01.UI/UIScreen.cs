@@ -12,7 +12,7 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UIScreen : UIScreenBase2<UIRootWidget> {
+    public class UIScreen : UIScreenBase2 {
 
         // UI
         private UIRouter Router { get; }
@@ -38,17 +38,17 @@ namespace Project.UI {
             VisualElementFactory.OnPlayErrorDialog += evt => { };
             Router.OnStateChangeEvent += (state, prev) => {
                 if (IsMainScreen( state )) {
-                    if (Widget.Children.FirstOrDefault() is not MainWidget) {
-                        Widget.RemoveChildren();
+                    if (!Widget.Children.OfType<MainWidget>().Any()) {
+                        Widget.RemoveChildren( i => i is GameWidget );
                         Widget.AddChild( new MainWidget( container ) );
                     }
                 } else if (IsGameScreen( state )) {
-                    if (Widget.Children.FirstOrDefault() is not GameWidget) {
-                        Widget.RemoveChildren();
+                    if (!Widget.Children.OfType<GameWidget>().Any()) {
+                        Widget.RemoveChildren( i => i is MainWidget );
                         Widget.AddChild( new GameWidget( container ) );
                     }
                 } else {
-                    Widget.RemoveChildren();
+                    Widget.RemoveChildren( i => i is MainWidget or GameWidget );
                 }
             };
         }

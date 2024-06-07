@@ -13,7 +13,7 @@ namespace Project.Entities {
     public class Game : GameBase2, IGame {
 
         // IsPaused
-        public override bool IsPaused {
+        public new bool IsPaused {
             get => base.IsPaused;
             set {
                 Player.IsInputEnabled = !value && Player.Character != null;

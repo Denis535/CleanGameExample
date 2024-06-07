@@ -16,16 +16,16 @@ namespace Project {
     using UnityEngine.UIElements;
 
     [DefaultExecutionOrder( 1000 )]
-    public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
+    public class Program : ProgramBase2 {
 
         // UI
-        protected override UITheme Theme { get; set; } = default!;
-        protected override UIScreen Screen { get; set; } = default!;
-        protected override UIRouter Router { get; set; } = default!;
+        private UITheme Theme { get; set; } = default!;
+        private UIScreen Screen { get; set; } = default!;
+        private UIRouter Router { get; set; } = default!;
         // App
-        protected override Application2 Application { get; set; } = default!;
+        private Application2 Application { get; set; } = default!;
         // Entities
-        protected override Game? Game => Application.Game;
+        private Game? Game => Application.Game;
 
         // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]

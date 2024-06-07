@@ -29,6 +29,16 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+
         // OnActivate
         public override void OnActivate(object? argument) {
             ShowSelf();

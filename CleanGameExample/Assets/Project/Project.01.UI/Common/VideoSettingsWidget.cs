@@ -41,6 +41,16 @@ namespace Project.UI.Common {
             }
         }
 
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
             var view = new VideoSettingsWidgetView() {

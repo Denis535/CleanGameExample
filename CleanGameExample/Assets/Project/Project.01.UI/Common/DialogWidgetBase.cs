@@ -27,6 +27,16 @@ namespace Project.UI.Common {
             HideSelf();
         }
 
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+
         // OnSubmit
         public DialogWidgetBase<TView> OnSubmit(string text, Action? callback) {
             View.OnSubmit( text, () => {

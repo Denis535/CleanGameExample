@@ -54,22 +54,18 @@ namespace Project.UI.GameScreen {
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantActivate( descendant, argument );
             Game.IsPaused = Children.Any( i => i is GameMenuWidget );
             Cursor.lockState = Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
             Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantActivate( descendant, argument );
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantDeactivate( descendant, argument );
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
             Cursor.lockState = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
             Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is GameMenuWidget );
             Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
-            base.OnAfterDescendantDeactivate( descendant, argument );
         }
 
         // Update

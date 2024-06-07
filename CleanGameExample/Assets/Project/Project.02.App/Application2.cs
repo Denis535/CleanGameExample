@@ -10,7 +10,7 @@ namespace Project.App {
     using UnityEngine;
     using UnityEngine.Framework.App;
 
-    public class Application2 : ApplicationBase2<Game> {
+    public class Application2 : ApplicationBase2 {
 
         // App
         public Storage Storage { get; }
@@ -21,7 +21,7 @@ namespace Project.App {
         // App
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
         // Entities
-        public override Game? Game { get; protected set; }
+        public Game? Game { get; private set; }
 
         // Constructor
         public Application2(IDependencyContainer container) : base( container ) {
@@ -48,10 +48,12 @@ namespace Project.App {
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            base.CreateGame( new Game( Container, level, name, kind ) );
+            Game = new Game( Container, level, name, kind );
         }
-        public new void DestroyGame() {
-            base.DestroyGame();
+        public void DestroyGame() {
+            Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
+            Game.Dispose();
+            Game = null;
             CameraFactory.Deinitialize();
             PlayerCharacterFactory.Deinitialize();
             EnemyCharacterFactory.Deinitialize();

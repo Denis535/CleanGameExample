@@ -76,16 +76,12 @@ namespace Project.UI.MainScreen {
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantActivate( descendant, argument );
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantActivate( descendant, argument );
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantDeactivate( descendant, argument );
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantDeactivate( descendant, argument );
         }
 
         // Update

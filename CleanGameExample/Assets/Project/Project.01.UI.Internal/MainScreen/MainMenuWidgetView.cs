@@ -95,6 +95,9 @@ namespace Project.UI.MainScreen {
         public MainMenuWidgetView_MainMenuView() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget_MainMenuView( out view, out startGame, out settings, out quit );
         }
+        public override void Dispose() {
+            base.Dispose();
+        }
 
         // OnEvent
         public void OnStartGame(EventCallback<ClickEvent> callback) {
@@ -124,6 +127,9 @@ namespace Project.UI.MainScreen {
         // Constructor
         public MainMenuWidgetView_StartGameView() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget_StartGameView( out view, out newGame, out @continue, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
         // OnEvent
@@ -155,6 +161,9 @@ namespace Project.UI.MainScreen {
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectLevelView( out view, out level1, out level2, out level3, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
         // OnEvent
@@ -190,6 +199,9 @@ namespace Project.UI.MainScreen {
         // Constructor
         public MainMenuWidgetView_SelectCharacterView() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectCharacterView( out view, out gray, out red, out green, out blue, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
         // OnEvent

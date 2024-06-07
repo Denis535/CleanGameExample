@@ -9,6 +9,7 @@ namespace Project.UI {
 
     public static class VisualElementFactory {
 
+        // StringSelector
         public static Func<object?, string?>? StringSelector { get; set; }
         // OnVisualElementCreated
         public static event Action<VisualElement>? OnVisualElementCreated;

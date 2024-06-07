@@ -16,8 +16,8 @@ namespace Project.UI.GameScreen {
         private Button back;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
+        public override int Priority => -1000;
+        public override bool IsAlwaysVisible => true;
         public override bool IsModal => false;
 
         // Constructor

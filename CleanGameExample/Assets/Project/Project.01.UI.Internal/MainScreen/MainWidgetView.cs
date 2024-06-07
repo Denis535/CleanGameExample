@@ -30,7 +30,7 @@ namespace Project.UI.MainScreen {
         public void SetEffect(UIViewBase view) {
             // MainMenuWidgetView
             if (view is MainMenuWidgetView mainMenuWidgetView) {
-                view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+                view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsActive() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_MainMenuView) {
                     SetEffect( widget, Color.white, default, 0, 1.0f );
                     return;
@@ -51,7 +51,7 @@ namespace Project.UI.MainScreen {
             }
             // SettingsWidgetView
             if (view is SettingsWidgetView settingsWidgetView) {
-                view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+                view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsActive() && i.IsDisplayedInHierarchy() );
                 if (view is ProfileSettingsWidgetView) {
                     SetEffect( widget, Color.white, default, 1, 1.1f );
                     return;

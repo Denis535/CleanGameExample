@@ -36,8 +36,8 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override async void OnAttach(object? argument) {
+        // OnActivate
+        public override async void OnActivate(object? argument) {
             ShowSelf();
             // await MainScene
             while (Router.State != UIRouterState.MainSceneLoaded) {
@@ -51,7 +51,7 @@ namespace Project.UI.MainScreen {
                     await UnityServices.InitializeAsync( options );
                 } catch (Exception ex) {
                     var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    AttachChild( dialog );
+                    AddChild( dialog );
                     return;
                 }
             }
@@ -63,34 +63,34 @@ namespace Project.UI.MainScreen {
                     await AuthenticationService.SignInAnonymouslyAsync( options );
                 } catch (Exception ex) {
                     var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    AttachChild( dialog );
+                    AddChild( dialog );
                     return;
                 }
             }
             // Children
-            AttachChild( new MainMenuWidget( Container ) );
+            AddChild( new MainMenuWidget( Container ) );
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
-        // OnDescendantAttach
-        public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantAttach( descendant, argument );
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+            base.OnBeforeDescendantActivate( descendant, argument );
         }
-        public override void OnAfterDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantAttach( descendant, argument );
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+            base.OnAfterDescendantActivate( descendant, argument );
         }
-        public override void OnBeforeDescendantDetach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantDetach( descendant, argument );
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+            base.OnBeforeDescendantDeactivate( descendant, argument );
         }
-        public override void OnAfterDescendantDetach(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantDetach( descendant, argument );
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+            base.OnAfterDescendantDeactivate( descendant, argument );
         }
 
         // Update
         public void Update() {
-            View.SetEffect( this.GetDescendants().Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() ) );
+            View.SetEffect( this.GetDescendants().Select( i => i.View ).OfType<UIViewBase>().FirstOrDefault( i => i.IsActive() && i.IsDisplayedInHierarchy() ) );
         }
         public void LateUpdate() {
         }

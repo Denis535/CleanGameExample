@@ -48,8 +48,8 @@ namespace UnityEngine {
 
         // SetMovementInput
         public void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Object.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
             Assert.Operation.Message( $"Method 'SetMovementInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (fixedUpdateWasInvoked) {
@@ -70,8 +70,8 @@ namespace UnityEngine {
 
         // SetLookInput
         public void SetLookInput(bool isLookPressed, Vector3 lookTarget) {
-            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Object.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
             Assert.Operation.Message( $"Method 'SetLookInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             IsLookPressed = isLookPressed;
@@ -80,8 +80,8 @@ namespace UnityEngine {
 
         // PhysicsFixedUpdate
         public virtual void PhysicsFixedUpdate() {
-            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Object.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
             Assert.Operation.Message( $"Method 'PhysicsFixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             fixedUpdateWasInvoked = true;
@@ -92,8 +92,8 @@ namespace UnityEngine {
 
         // PhysicsUpdate
         public virtual void PhysicsUpdate() {
-            Assert.Object.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Object.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
             Assert.Operation.Message( $"Method 'PhysicsUpdate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (IsLookPressed) {

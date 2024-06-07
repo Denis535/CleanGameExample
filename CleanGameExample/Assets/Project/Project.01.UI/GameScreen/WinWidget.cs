@@ -29,26 +29,12 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
-        }
-
-        // OnDescendantWidgetAttach
-        public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantAttach( descendant, argument );
-        }
-        public override void OnAfterDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantAttach( descendant, argument );
-        }
-        public override void OnBeforeDescendantDetach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantDetach( descendant, argument );
-        }
-        public override void OnAfterDescendantDetach(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantDetach( descendant, argument );
         }
 
         // Helpers

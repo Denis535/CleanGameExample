@@ -19,11 +19,11 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
@@ -31,14 +31,14 @@ namespace Project.UI.Common {
         public DialogWidgetBase<TView> OnSubmit(string text, Action? callback) {
             View.OnSubmit( text, () => {
                 callback?.Invoke();
-                if (IsAttached) this.DetachSelf();
+                if (State is UIWidgetState.Active) RemoveSelf();
             } );
             return this;
         }
         public DialogWidgetBase<TView> OnCancel(string text, Action? callback) {
             View.OnCancel( text, () => {
                 callback?.Invoke();
-                if (IsAttached) this.DetachSelf();
+                if (State is UIWidgetState.Active) RemoveSelf();
             } );
             return this;
         }

@@ -27,13 +27,15 @@ namespace UnityEngine.Framework.Entities {
             get => isPaused;
             set {
                 if (value) {
-                    Assert.Operation.Message( $"Game must be non-paused" ).Valid( !IsPaused );
-                    isPaused = true;
-                    OnPauseEvent?.Invoke( true );
+                    if (!IsPaused) {
+                        isPaused = true;
+                        OnPauseEvent?.Invoke( true );
+                    }
                 } else {
-                    Assert.Operation.Message( $"Game must be paused" ).Valid( IsPaused );
-                    isPaused = false;
-                    OnPauseEvent?.Invoke( false );
+                    if (IsPaused) {
+                        isPaused = false;
+                        OnPauseEvent?.Invoke( false );
+                    }
                 }
             }
         }

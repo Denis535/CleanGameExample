@@ -25,7 +25,7 @@ namespace Project.UI {
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            AttachWidget( new UIRootWidget() );
+            AddWidget( new UIRootWidget() );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -39,21 +39,21 @@ namespace Project.UI {
             Router.OnStateChangeEvent += (state, prev) => {
                 if (IsMainScreen( state )) {
                     if (Widget.Children.FirstOrDefault() is not MainWidget) {
-                        Widget.DetachChildren();
-                        Widget.AttachChild( new MainWidget( container ) );
+                        Widget.RemoveChildren();
+                        Widget.AddChild( new MainWidget( container ) );
                     }
                 } else if (IsGameScreen( state )) {
                     if (Widget.Children.FirstOrDefault() is not GameWidget) {
-                        Widget.DetachChildren();
-                        Widget.AttachChild( new GameWidget( container ) );
+                        Widget.RemoveChildren();
+                        Widget.AddChild( new GameWidget( container ) );
                     }
                 } else {
-                    Widget.DetachChildren();
+                    Widget.RemoveChildren();
                 }
             };
         }
         public override void Dispose() {
-            Widget.DetachSelf();
+            Widget.RemoveSelf();
             base.Dispose();
         }
 

@@ -24,13 +24,13 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
-            if (argument is DetachReason.Submit) {
+            if (argument is DeactivateReason.Submit) {
                 AudioSettings.MasterVolume = View.MasterVolume.Value;
                 AudioSettings.MusicVolume = View.MusicVolume.Value;
                 AudioSettings.SfxVolume = View.SfxVolume.Value;

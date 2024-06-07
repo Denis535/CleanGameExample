@@ -38,42 +38,38 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
             Actions.Enable();
             Cursor.lockState = CursorLockMode.Locked;
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             Cursor.lockState = CursorLockMode.None;
             Actions.Disable();
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
         }
 
-        // OnDescendantWidgetAttach
-        public override void OnBeforeDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantAttach( descendant, argument );
-            if (descendant is WinWidget or LossWidget or GameMenuWidget) {
-                Game.IsPaused = true;
-                Actions.Disable();
-                Cursor.lockState = CursorLockMode.None;
-            }
+        // OnDescendantActivate
+        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+            base.OnBeforeDescendantActivate( descendant, argument );
+            Game.IsPaused = Children.Any( i => i is GameMenuWidget );
+            Cursor.lockState = Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
+            Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
         }
-        public override void OnAfterDescendantAttach(UIWidgetBase descendant, object? argument) {
-            base.OnAfterDescendantAttach( descendant, argument );
+        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+            base.OnAfterDescendantActivate( descendant, argument );
         }
-        public override void OnBeforeDescendantDetach(UIWidgetBase descendant, object? argument) {
-            base.OnBeforeDescendantDetach( descendant, argument );
+        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+            base.OnBeforeDescendantDeactivate( descendant, argument );
         }
-        public override void OnAfterDescendantDetach(UIWidgetBase descendant, object? argument) {
-            if (IsAttached && !Children.Where( i => i.IsAttached ).Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
-                Cursor.lockState = CursorLockMode.Locked;
-                Actions.Enable();
-                Game.IsPaused = false;
-            }
-            base.OnAfterDescendantDetach( descendant, argument );
+        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+            Cursor.lockState = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
+            Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is GameMenuWidget );
+            Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
+            base.OnAfterDescendantDeactivate( descendant, argument );
         }
 
         // Update
@@ -86,7 +82,7 @@ namespace Project.UI.GameScreen {
                 View.SetEffect( TargetEffect.Normal );
             }
             if (Actions.UI.Cancel.WasPressedThisFrame()) {
-                AttachChild( new GameMenuWidget( Container ) );
+                if (!Children.OfType<GameMenuWidget>().Any()) AddChild( new GameMenuWidget( Container ) );
             }
         }
         public void LateUpdate() {
@@ -98,10 +94,10 @@ namespace Project.UI.GameScreen {
                 if (state is GameState.Completed) {
                     if (Game.Player.State == PlayerState.Winner) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AttachChild( new WinWidget( Container ) );
+                        AddChild( new WinWidget( Container ) );
                     } else if (Game.Player.State == PlayerState.Looser) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AttachChild( new LossWidget( Container ) );
+                        AddChild( new LossWidget( Container ) );
                     }
                 }
             } catch (OperationCanceledException) {

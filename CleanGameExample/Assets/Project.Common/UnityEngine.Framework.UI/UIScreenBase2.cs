@@ -29,22 +29,22 @@ namespace UnityEngine.Framework.UI {
         public abstract void Update();
         public abstract void LateUpdate();
 
-        // AttachWidget
-        public override void AttachWidget(UIWidgetBase widget, object? argument = null) {
-            base.AttachWidget( widget, argument );
+        // AddWidget
+        public override void AddWidget(UIWidgetBase widget, object? argument = null) {
+            base.AddWidget( widget, argument );
             Document.Add( widget.View! );
         }
-        public override void DetachWidget(UIWidgetBase widget, object? argument = null) {
+        public override void RemoveWidget(UIWidgetBase widget, object? argument = null) {
             if (!Document) {
-                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument is destroyed" );
+                Debug.LogWarning( $"You are trying to remove '{widget}' widget but UIDocument is destroyed" );
                 return;
             }
             if (Document.rootVisualElement == null) {
-                Debug.LogWarning( $"You are trying to detach '{widget}' widget but UIDocument's rootVisualElement is null" );
+                Debug.LogWarning( $"You are trying to remove '{widget}' widget but UIDocument's rootVisualElement is null" );
                 return;
             }
             Document.Remove( widget.View! );
-            base.DetachWidget( widget, argument );
+            base.RemoveWidget( widget, argument );
         }
 
         // Helpers

@@ -19,11 +19,11 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 

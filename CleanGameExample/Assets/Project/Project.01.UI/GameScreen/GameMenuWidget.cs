@@ -24,11 +24,11 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
@@ -36,14 +36,14 @@ namespace Project.UI.GameScreen {
         private static GameMenuWidgetView CreateView(GameMenuWidget widget, IDependencyContainer container, UIRouter router) {
             var view = new GameMenuWidgetView();
             view.OnResume( evt => {
-                widget.DetachSelf();
+                widget.RemoveSelf();
             } );
             view.OnSettings( evt => {
-                widget.AttachChild( new SettingsWidget( container ) );
+                widget.AddChild( new SettingsWidget( container ) );
             } );
             view.OnBack( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
-                widget.AttachChild( dialog );
+                widget.AddChild( dialog );
             } );
             return view;
         }

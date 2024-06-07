@@ -45,7 +45,7 @@ namespace Project.UI {
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( "Congratulations!\nYou win!!!" ).Classes( "text-align-center" ).AddToScope( out message );
+                            VisualElementFactory.Label( "Congratulations!\nYou win!!!" ).Classes( "text-align-middle-center" ).AddToScope( out message );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {
@@ -66,7 +66,7 @@ namespace Project.UI {
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( "We're sorry.\nYou lose." ).Classes( "text-align-center" ).AddToScope( out message );
+                            VisualElementFactory.Label( "We're sorry.\nYou lose." ).Classes( "text-align-middle-center" ).AddToScope( out message );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {

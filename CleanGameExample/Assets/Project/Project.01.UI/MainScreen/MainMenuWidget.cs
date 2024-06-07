@@ -31,11 +31,11 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
@@ -51,11 +51,11 @@ namespace Project.UI.MainScreen {
                 widget.View.Push( CreateView_StartGameView( container, widget, router, profileSettings ) );
             } );
             view.OnSettings( evt => {
-                widget.AttachChild( new SettingsWidget( container ) );
+                widget.AddChild( new SettingsWidget( container ) );
             } );
             view.OnQuit( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
-                widget.AttachChild( dialog );
+                widget.AddChild( dialog );
             } );
             return view;
         }
@@ -91,19 +91,19 @@ namespace Project.UI.MainScreen {
         private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings, Level level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
-                widget.AttachChild( new LoadingWidget() );
+                widget.AddChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Gray ).Throw();
             } );
             view.OnRed( evt => {
-                widget.AttachChild( new LoadingWidget() );
+                widget.AddChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Red ).Throw();
             } );
             view.OnGreen( evt => {
-                widget.AttachChild( new LoadingWidget() );
+                widget.AddChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Green ).Throw();
             } );
             view.OnBlue( evt => {
-                widget.AttachChild( new LoadingWidget() );
+                widget.AddChild( new LoadingWidget() );
                 router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Blue ).Throw();
             } );
             view.OnBack( evt => {

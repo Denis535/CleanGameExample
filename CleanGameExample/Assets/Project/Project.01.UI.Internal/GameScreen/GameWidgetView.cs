@@ -13,7 +13,7 @@ namespace Project.UI.GameScreen {
         private readonly VisualElement target;
 
         // Props
-        public override int Priority => 0;
+        public override int Priority => -1000;
         public override bool IsAlwaysVisible => true;
         public override bool IsModal => false;
 

@@ -15,19 +15,19 @@ namespace Project.UI.Common {
         // Constructor
         public SettingsWidget(IDependencyContainer container) {
             View = CreateView( this );
-            AttachChild( new ProfileSettingsWidget( container ) );
-            AttachChild( new VideoSettingsWidget( container ) );
-            AttachChild( new AudioSettingsWidget( container ) );
+            AddChild( new ProfileSettingsWidget( container ) );
+            AddChild( new VideoSettingsWidget( container ) );
+            AddChild( new AudioSettingsWidget( container ) );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        // OnAttach
-        public override void OnAttach(object? argument) {
+        // OnActivate
+        public override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDetach(object? argument) {
+        public override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
@@ -68,11 +68,11 @@ namespace Project.UI.Common {
             var view = new SettingsWidgetView();
             view.OnOkey( evt => {
                 if (evt.GetTarget().IsValidSelf()) {
-                    widget.DetachSelf( DetachReason.Submit );
+                    widget.RemoveSelf( DeactivateReason.Submit );
                 }
             } );
             view.OnBack( evt => {
-                widget.DetachSelf( DetachReason.Cancel );
+                widget.RemoveSelf( DeactivateReason.Cancel );
             } );
             return view;
         }

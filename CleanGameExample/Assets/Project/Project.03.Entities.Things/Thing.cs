@@ -12,8 +12,8 @@ namespace Project.Entities.Things {
         protected Rigidbody Rigidbody { get; private set; } = default!;
         // Collider
         protected Collider Collider { get; private set; } = default!;
-        // IsAttached
-        public bool IsAttached => transform.parent != null;
+        // IsActive
+        public bool IsActive => transform.parent != null;
 
         // Awake
         protected override void Awake() {

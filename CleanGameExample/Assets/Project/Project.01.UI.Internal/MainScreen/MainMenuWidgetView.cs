@@ -25,6 +25,7 @@ namespace Project.UI.MainScreen {
             VisualElement = VisualElementFactory_Main.MainMenuWidget( out widget, out title, out content );
         }
         public override void Dispose() {
+            this.GetChildren().DisposeAll();
             base.Dispose();
         }
 

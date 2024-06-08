@@ -11,55 +11,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class GameBase3 : GameBase2 {
-
-        // Level
-        public Level Level { get; }
-        // Input
-        protected InputActions_Game Input { get; }
-
-        // Constructor
-        public GameBase3(IDependencyContainer container, Level level) : base( container ) {
-            Level = level;
-            Input = new InputActions_Game();
-            Input.Enable();
-        }
-        public override void Dispose() {
-            Input.Dispose();
-            base.Dispose();
-        }
-
-        // Update
-        public override void FixedUpdate() {
-        }
-        public override void Update() {
-        }
-        public override void LateUpdate() {
-        }
-
-        // Spawn
-        protected abstract void SpawnPlayerCharacter(PlayerPoint point);
-        protected abstract void SpawnEnemyCharacter(EnemyPoint point);
-        protected abstract void SpawnThing(ThingPoint point);
-
-        // IsWinner
-        protected abstract bool IsWinner();
-        protected abstract bool IsLoser();
-
-        // OnWinner
-        protected abstract void OnWinner();
-        protected abstract void OnLooser();
-
-        // OnStateChange
-        protected override void OnStateChange(GameState state) {
-        }
-
-        // OnPauseChange
-        protected override void OnPauseChange(bool isPaused) {
-        }
-
-    }
-    public class Game : GameBase3, IGame {
+    public class Game : GameBase2<Mode, Level, InputActions_Game>, IGame {
 
         // Entities
         public Player Player { get; }
@@ -68,7 +20,7 @@ namespace Project.Entities {
         private bool IsDirty { get; set; }
 
         // Constructor
-        public Game(IDependencyContainer container, Level level, string name, PlayerCharacterKind kind) : base( container, level ) {
+        public Game(IDependencyContainer container, Mode mode, Level level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
             Player = new Player( container, name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             {
@@ -81,6 +33,7 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
+            Input.Enable();
             Player.IsInputEnabled = true;
         }
         public override void Dispose() {
@@ -90,12 +43,8 @@ namespace Project.Entities {
 
         // Update
         public override void FixedUpdate() {
-            Player.FixedUpdate();
         }
         public override void Update() {
-            if (Input.Game.Pause.WasPressedThisFrame()) {
-                IsPaused = true;
-            }
             Player.Update();
             if (IsDirty) {
                 if (IsLoser()) {
@@ -106,9 +55,11 @@ namespace Project.Entities {
                 }
                 IsDirty = false;
             }
+            if (Input.Game.Pause.WasPressedThisFrame()) {
+                IsPaused = !IsPaused;
+            }
         }
         public override void LateUpdate() {
-            Player.LateUpdate();
         }
 
         // OnStateChange
@@ -117,12 +68,12 @@ namespace Project.Entities {
 
         // OnPauseChange
         protected override void OnPauseChange(bool isPaused) {
-            Input.SetEnabled( !isPaused );
-            Player.IsInputEnabled = !isPaused && Player.Character != null;
+            Player.IsInputEnabled = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
         }
 
         // Spawn
-        protected override void SpawnPlayerCharacter(PlayerPoint point) {
+        private void SpawnPlayerCharacter(PlayerPoint point) {
             Player.Character = PlayerCharacterFactory.Create( Player.Kind, point.transform.position, point.transform.rotation );
             Player.Character.Game = this;
             Player.Character.Player = Player;
@@ -130,19 +81,19 @@ namespace Project.Entities {
                 IsDirty = true;
             };
         }
-        protected override void SpawnEnemyCharacter(EnemyPoint point) {
+        private void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
             character.Game = this;
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };
         }
-        protected override void SpawnThing(ThingPoint point) {
+        private void SpawnThing(ThingPoint point) {
             var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
         }
 
         // IsWinner
-        protected override bool IsWinner() {
+        private bool IsWinner() {
             if (State is GameState.Playing) {
                 var enemies = GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
                 if (enemies.All( i => !i.IsAlive )) {
@@ -151,7 +102,7 @@ namespace Project.Entities {
             }
             return false;
         }
-        protected override bool IsLoser() {
+        private bool IsLoser() {
             if (State is GameState.Playing) {
                 if (!Player.Character!.IsAlive) {
                     return true;
@@ -161,15 +112,19 @@ namespace Project.Entities {
         }
 
         // OnWinner
-        protected override void OnWinner() {
+        private void OnWinner() {
             Player.State = PlayerState.Winner;
             State = GameState.Completed;
         }
-        protected override void OnLooser() {
+        private void OnLooser() {
             Player.State = PlayerState.Looser;
             State = GameState.Completed;
         }
 
+    }
+    // Mode
+    public enum Mode {
+        None
     }
     // Level
     public enum Level {

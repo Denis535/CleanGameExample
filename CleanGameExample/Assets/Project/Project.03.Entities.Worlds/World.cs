@@ -17,19 +17,19 @@ namespace Project.Entities.Worlds {
         public ThingPoint[] ThingPoints => this.Pipe( i => i.ThrowIfInvalid() ).thingPoints;
 
 #if UNITY_EDITOR
-        public void OnValidate() {
-            if (!Application.isPlaying) {
-                foreach (var gameObject in gameObject.scene.GetRootGameObjects()) {
-                    if (gameObject != base.gameObject) {
-                        if (gameObject.isStatic) {
-                            gameObject.transform.parent = base.transform;
-                        } else {
-                            gameObject.transform.parent = null;
-                        }
-                    }
-                }
-            }
-        }
+        //public void OnValidate() {
+        //    if (!Application.isPlaying) {
+        //        foreach (var gameObject in gameObject.scene.GetRootGameObjects()) {
+        //            if (gameObject != base.gameObject) {
+        //                if (gameObject.isStatic) {
+        //                    gameObject.transform.parent = base.transform;
+        //                } else {
+        //                    gameObject.transform.parent = null;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 #endif
 
         // Awake

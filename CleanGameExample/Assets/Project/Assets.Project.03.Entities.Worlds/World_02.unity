@@ -279,7 +279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1158892881}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &253961144
 GameObject:
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 452731317}
   - component: {fileID: 452731318}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 720900185}
   - component: {fileID: 720900186}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,7 +588,7 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1158892881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &887617315
 BoxCollider:
@@ -690,12 +690,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904789772}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1158892881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &904789777
 MeshCollider:
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 997525846}
   - component: {fileID: 997525847}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 1002329745}
   - component: {fileID: 1002329746}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,7 +818,7 @@ GameObject:
   - component: {fileID: 1010650153}
   - component: {fileID: 1010650154}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1057,6 +1057,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 203844589}
+  - {fileID: 887617314}
+  - {fileID: 904789776}
   - {fileID: 1029360434}
   - {fileID: 1072986741}
   - {fileID: 1895832878}
@@ -1190,7 +1193,7 @@ GameObject:
   - component: {fileID: 1590072686}
   - component: {fileID: 1590072687}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1413,7 +1416,7 @@ GameObject:
   - component: {fileID: 1747749849}
   - component: {fileID: 1747749850}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1724,7 +1727,7 @@ GameObject:
   - component: {fileID: 1990853921}
   - component: {fileID: 1990853922}
   m_Layer: 0
-  m_Name: LootPoint
+  m_Name: ThingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,9 +1809,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1158892881}
-  - {fileID: 203844589}
-  - {fileID: 887617314}
-  - {fileID: 904789776}
   - {fileID: 253961148}
   - {fileID: 1815473218}
   - {fileID: 1646085345}

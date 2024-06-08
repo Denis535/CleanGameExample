@@ -10,37 +10,29 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class PlayerBase3 : PlayerBase2 {
+    public class Player : PlayerBase2<PlayerCharacterKind, InputActions_Player>, IPlayer {
 
-        // Name
-        public string Name { get; }
-        // Kind
-        public PlayerCharacterKind Kind { get; }
+        private bool isInputEnabled;
+        public PlayerCharacter? character;
+
         // Input
-        protected InputActions_Player Input { get; }
-        public bool IsInputEnabled { get => Input.asset.enabled; set => Input.SetEnabled( value ); }
-
-        // Constructor
-        public PlayerBase3(IDependencyContainer container, string name, PlayerCharacterKind kind) : base( container ) {
-            Name = name;
-            Kind = kind;
-            Input = new InputActions_Player();
+        public bool IsInputEnabled {
+            get => isInputEnabled;
+            internal set {
+                isInputEnabled = value;
+                Input.SetEnabled( isInputEnabled && character != null );
+            }
         }
-        public override void Dispose() {
-            Input.Dispose();
-            base.Dispose();
-        }
-
-        protected override void OnStateChange(PlayerState state) {
-        }
-
-    }
-    public class Player : PlayerBase3, IPlayer {
-
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
-        public PlayerCharacter? Character { get; internal set; }
+        public PlayerCharacter? Character {
+            get => character;
+            internal set {
+                character = value;
+                Input.SetEnabled( isInputEnabled && character != null );
+            }
+        }
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
@@ -73,9 +65,7 @@ namespace Project.Entities {
         }
 
         // Update
-        public void FixedUpdate() {
-        }
-        public void Update() {
+        public override void Update() {
             if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Player.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Player.Zoom.ReadValue<Vector2>().y );
@@ -85,7 +75,9 @@ namespace Project.Entities {
                 Hit = Raycast( Camera.transform, Character?.transform );
             }
         }
-        public void LateUpdate() {
+
+        // OnStateChange
+        protected override void OnStateChange(PlayerState state) {
         }
 
         // IPlayer

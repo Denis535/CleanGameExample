@@ -38,10 +38,10 @@ namespace Project.UI.GameScreen {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
             Game.OnPauseChangeEvent += OnGamePauseChange;
-            Cursor.lockState = GetCursorLockMode( this );
+            //Cursor.lockState = GetCursorLockMode( this );
         }
         public override void OnDeactivate(object? argument) {
-            Cursor.lockState = GetCursorLockMode( this );
+            //Cursor.lockState = GetCursorLockMode( this );
             Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
@@ -49,18 +49,17 @@ namespace Project.UI.GameScreen {
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            Cursor.lockState = GetCursorLockMode( this );
+            //Cursor.lockState = GetCursorLockMode( this );
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            if (descendant is GameMenuWidget) {
-                Game.IsPaused = false;
-                Debug.Log( descendant.State );
-            }
-            Cursor.lockState = GetCursorLockMode( this );
+            //if (descendant is GameMenuWidget) {
+            //    Game.IsPaused = false;
+            //}
+            //Cursor.lockState = GetCursorLockMode( this );
         }
 
         // Update
@@ -94,7 +93,9 @@ namespace Project.UI.GameScreen {
         // OnGamePauseChange
         private void OnGamePauseChange(bool isPause) {
             if (isPause) {
-                AddChild( new GameMenuWidget( Container ) );
+                //AddChild( new GameMenuWidget( Container ) );
+            } else {
+                //RemoveChildren( i => i is GameMenuWidget );
             }
         }
 

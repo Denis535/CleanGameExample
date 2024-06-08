@@ -36,7 +36,7 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            Router.OnStateChangeEvent += (state, prev) => {
+            Router.OnStateChangeEvent += state => {
                 if (IsMainScreen( state )) {
                     if (!Widget.Children.OfType<MainWidget>().Any()) {
                         Widget.RemoveChildren( i => i is GameWidget );

@@ -37,7 +37,7 @@ namespace Project.UI {
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            Router.OnStateChangeEvent += (state, prev) => {
+            Router.OnStateChangeEvent += state => {
                 if (IsMainTheme( state )) {
                     if (Themes != MainThemes) PlayThemes( MainThemes );
                 } else if (IsGameTheme( state )) {

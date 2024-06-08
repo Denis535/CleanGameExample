@@ -10,7 +10,6 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
     using UnityEngine.Framework.UI;
-    using UnityEngine.InputSystem;
 
     public class GameWidget : UIWidgetBase<GameWidgetView> {
 
@@ -23,18 +22,14 @@ namespace Project.UI.GameScreen {
         private Player Player => Application.Game!.Player;
         // View
         public override GameWidgetView View { get; }
-        // Actions
-        private InputActions_UI Actions { get; }
 
         // Constructor
         public GameWidget(IDependencyContainer container) {
             Container = container;
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
-            Actions = new InputActions_UI();
         }
         public override void Dispose() {
-            Actions.Dispose();
             base.Dispose();
         }
 
@@ -42,30 +37,30 @@ namespace Project.UI.GameScreen {
         public override void OnActivate(object? argument) {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
-            Actions.Enable();
-            Cursor.lockState = CursorLockMode.Locked;
+            Game.OnPauseChangeEvent += OnGamePauseChange;
+            Cursor.lockState = GetCursorLockMode( this );
         }
         public override void OnDeactivate(object? argument) {
-            Cursor.lockState = CursorLockMode.None;
-            Actions.Disable();
+            Cursor.lockState = GetCursorLockMode( this );
+            Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
         }
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            Game.IsPaused = Children.Any( i => i is GameMenuWidget );
-            Cursor.lockState = Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
-            Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
+            Cursor.lockState = GetCursorLockMode( this );
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            Cursor.lockState = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
-            Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is GameMenuWidget );
-            Actions.SetEnabled( Cursor.lockState == CursorLockMode.Locked );
+            if (descendant is GameMenuWidget) {
+                Game.IsPaused = false;
+                Debug.Log( descendant.State );
+            }
+            Cursor.lockState = GetCursorLockMode( this );
         }
 
         // Update
@@ -77,15 +72,12 @@ namespace Project.UI.GameScreen {
             } else {
                 View.SetEffect( TargetEffect.Normal );
             }
-            if (Actions.UI.Cancel.WasPressedThisFrame()) {
-                if (!Children.OfType<GameMenuWidget>().Any()) AddChild( new GameMenuWidget( Container ) );
-            }
         }
         public void LateUpdate() {
         }
 
         // OnGameStateChange
-        private async void OnGameStateChange(GameState state, GameState prev) {
+        private async void OnGameStateChange(GameState state) {
             try {
                 if (state is GameState.Completed) {
                     if (Game.Player.State == PlayerState.Winner) {
@@ -99,11 +91,25 @@ namespace Project.UI.GameScreen {
             } catch (OperationCanceledException) {
             }
         }
+        // OnGamePauseChange
+        private void OnGamePauseChange(bool isPause) {
+            if (isPause) {
+                AddChild( new GameMenuWidget( Container ) );
+            }
+        }
 
         // Helpers
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
             return view;
+        }
+        // Helpers
+        private static CursorLockMode GetCursorLockMode(GameWidget widget) {
+            if (widget.Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
+                return CursorLockMode.None;
+            } else {
+                return CursorLockMode.Locked;
+            }
         }
 
     }

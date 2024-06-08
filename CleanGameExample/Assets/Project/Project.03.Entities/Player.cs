@@ -10,26 +10,37 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase2, IPlayer {
+    public abstract class PlayerBase3 : PlayerBase2 {
 
         // Name
         public string Name { get; }
         // Kind
         public PlayerCharacterKind Kind { get; }
-        // State
-        public new PlayerState State {
-            get => base.State;
-            internal set {
-                base.State = value;
-            }
+        // Input
+        protected InputActions_Player Input { get; }
+        public bool IsInputEnabled { get => Input.asset.enabled; set => Input.SetEnabled( value ); }
+
+        // Constructor
+        public PlayerBase3(IDependencyContainer container, string name, PlayerCharacterKind kind) : base( container ) {
+            Name = name;
+            Kind = kind;
+            Input = new InputActions_Player();
         }
+        public override void Dispose() {
+            Input.Dispose();
+            base.Dispose();
+        }
+
+        protected override void OnStateChange(PlayerState state) {
+        }
+
+    }
+    public class Player : PlayerBase3, IPlayer {
+
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
         public PlayerCharacter? Character { get; internal set; }
-        // Input
-        private InputActions_Player Input { get; }
-        public bool IsInputEnabled { get => Input.asset.enabled; set => Input.SetEnabled( value ); }
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
@@ -52,16 +63,12 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container ) {
-            Name = name;
-            Kind = kind;
+        public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container, name, kind ) {
             Game = game;
             Camera = camera;
             Character = null;
-            Input = new InputActions_Player();
         }
         public override void Dispose() {
-            Input.Dispose();
             base.Dispose();
         }
 

@@ -33,38 +33,36 @@ namespace Project.UI.MainScreen {
         // AddView
         public void AddView(UIViewBase view) {
             content.Add( view );
-            Recalculate( content.Children().ToArray() );
+            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
             title.text = GetTitle( content.Children().Last().GetView() );
         }
 
         // RemoveView
         public void RemoveView(UIViewBase view) {
             content.Remove( view );
-            Recalculate( content.Children().ToArray() );
+            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
             title.text = GetTitle( content.Children().Last().GetView() );
         }
 
         // Helpers
-        private static void Recalculate(VisualElement[] children) {
-            for (var i = 0; i < children.Length; i++) {
-                var child = children[ i ];
-                var next = children.ElementAtOrDefault( i + 1 );
+        private static void Recalculate(UIViewBase[] views) {
+            for (var i = 0; i < views.Length; i++) {
+                var view = views[ i ];
+                var next = views.ElementAtOrDefault( i + 1 );
                 if (next == null) {
-                    Show( child );
+                    Show( view );
                 } else {
-                    Hide( child );
+                    Hide( view );
                 }
             }
         }
-        private static void Show(VisualElement element) {
-            var view = element.GetView();
+        private static void Show(UIViewBase view) {
             view.SetDisplayed( true );
             if (!view.HasFocusedElement()) {
                 if (!view.LoadFocus()) view.Focus();
             }
         }
-        public static void Hide(VisualElement element) {
-            var view = element.GetView();
+        public static void Hide(UIViewBase view) {
             if (view.HasFocusedElement()) {
                 view.SaveFocus();
             }

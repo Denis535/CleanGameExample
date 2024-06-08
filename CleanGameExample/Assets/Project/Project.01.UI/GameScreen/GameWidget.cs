@@ -24,14 +24,14 @@ namespace Project.UI.GameScreen {
         // View
         public override GameWidgetView View { get; }
         // Actions
-        private InputActions Actions { get; }
+        private InputActions_UI Actions { get; }
 
         // Constructor
         public GameWidget(IDependencyContainer container) {
             Container = container;
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
-            Actions = new InputActions();
+            Actions = new InputActions_UI();
         }
         public override void Dispose() {
             Actions.Dispose();

@@ -18,7 +18,7 @@ namespace Project.UI.Common {
         // Constructor
         public AudioSettingsWidget(IDependencyContainer container) {
             Application = container.RequireDependency<Application2>();
-            View = CreateView( this, AudioSettings );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -52,24 +52,24 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget, Storage.AudioSettings audioSettings) {
+        private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget) {
             var view = new AudioSettingsWidgetView() {
-                MasterVolume = (audioSettings.MasterVolume, 0, 1),
-                MusicVolume = (audioSettings.MusicVolume, 0, 1),
-                SfxVolume = (audioSettings.SfxVolume, 0, 1),
-                GameVolume = (audioSettings.GameVolume, 0, 1),
+                MasterVolume = (widget.AudioSettings.MasterVolume, 0, 1),
+                MusicVolume = (widget.AudioSettings.MusicVolume, 0, 1),
+                SfxVolume = (widget.AudioSettings.SfxVolume, 0, 1),
+                GameVolume = (widget.AudioSettings.GameVolume, 0, 1),
             };
             view.OnMasterVolume( evt => {
-                audioSettings.MasterVolume = evt.newValue;
+                widget.AudioSettings.MasterVolume = evt.newValue;
             } );
             view.OnMusicVolume( evt => {
-                audioSettings.MusicVolume = evt.newValue;
+                widget.AudioSettings.MusicVolume = evt.newValue;
             } );
             view.OnSfxVolume( evt => {
-                audioSettings.SfxVolume = evt.newValue;
+                widget.AudioSettings.SfxVolume = evt.newValue;
             } );
             view.OnGameVolume( evt => {
-                audioSettings.GameVolume = evt.newValue;
+                widget.AudioSettings.GameVolume = evt.newValue;
             } );
             return view;
         }

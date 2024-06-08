@@ -18,7 +18,7 @@ namespace Project.UI.Common {
         // Constructor
         public ProfileSettingsWidget(IDependencyContainer container) {
             Application = container.RequireDependency<Application2>();
-            View = CreateView( this, ProfileSettings );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -49,10 +49,10 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget, Storage.ProfileSettings profileSettings) {
+        private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget) {
             var view = new ProfileSettingsWidgetView() {
-                Name = profileSettings.Name,
-                NameValidator = profileSettings.IsNameValid
+                Name = widget.ProfileSettings.Name,
+                NameValidator = widget.ProfileSettings.IsNameValid
             };
             return view;
         }

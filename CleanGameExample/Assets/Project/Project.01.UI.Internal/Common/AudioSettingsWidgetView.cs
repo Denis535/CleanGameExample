@@ -19,6 +19,7 @@ namespace Project.UI.Common {
         public override int Priority => 0;
         public override bool IsAlwaysVisible => false;
         public override bool IsModal => false;
+        // Props
         public (float Value, float Min, float Max) MasterVolume {
             get => masterVolume.GetValueMinMax();
             init => masterVolume.GetValueMinMax( value );

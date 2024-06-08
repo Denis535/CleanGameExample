@@ -12,7 +12,7 @@ namespace Project.UI.MainScreen {
         public override LoadingWidgetView View { get; }
 
         // Constructor
-        public LoadingWidget() {
+        public LoadingWidget(IDependencyContainer container) {
             View = CreateView( this );
         }
         public override void Dispose() {

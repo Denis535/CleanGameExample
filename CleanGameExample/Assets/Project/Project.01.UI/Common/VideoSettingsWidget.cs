@@ -19,7 +19,7 @@ namespace Project.UI.Common {
         // Constructor
         public VideoSettingsWidget(IDependencyContainer container) {
             Application = container.RequireDependency<Application2>();
-            View = CreateView( this, VideoSettings );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -52,20 +52,20 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget, Storage.VideoSettings videoSettings) {
+        private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget) {
             var view = new VideoSettingsWidgetView() {
-                IsFullScreen = videoSettings.IsFullScreen,
-                ScreenResolution = (videoSettings.ScreenResolution, videoSettings.ScreenResolutions.Cast<object?>().ToList()),
-                IsVSync = videoSettings.IsVSync
+                IsFullScreen = widget.VideoSettings.IsFullScreen,
+                ScreenResolution = (widget.VideoSettings.ScreenResolution, widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList()),
+                IsVSync = widget.VideoSettings.IsVSync
             };
             view.OnIsFullScreen( evt => {
-                videoSettings.IsFullScreen = evt.newValue;
+                widget.VideoSettings.IsFullScreen = evt.newValue;
             } );
             view.OnScreenResolution( evt => {
-                videoSettings.ScreenResolution = (Resolution) evt.newValue!;
+                widget.VideoSettings.ScreenResolution = (Resolution) evt.newValue!;
             } );
             view.OnIsVSync( evt => {
-                videoSettings.IsVSync = evt.newValue;
+                widget.VideoSettings.IsVSync = evt.newValue;
             } );
             return view;
         }

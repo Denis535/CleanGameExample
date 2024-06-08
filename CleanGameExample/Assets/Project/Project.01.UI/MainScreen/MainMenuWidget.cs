@@ -13,6 +13,8 @@ namespace Project.UI.MainScreen {
 
     public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -23,9 +25,10 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainMenuWidget(IDependencyContainer container) {
+            Container = container;
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            View = CreateView( container, this, Router, ProfileSettings );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -50,74 +53,74 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MainMenuWidgetView CreateView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView CreateView(MainMenuWidget widget) {
             var view = new MainMenuWidgetView();
-            view.Push( CreateView_MainMenuView( container, widget, router, profileSettings ) );
+            view.AddView( CreateView_MainMenuView( widget ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget) {
             var view = new MainMenuWidgetView_MainMenuView();
             view.OnStartGame( evt => {
-                widget.View.Push( CreateView_StartGameView( container, widget, router, profileSettings ) );
+                widget.View.AddView( CreateView_StartGameView( widget ) );
             } );
             view.OnSettings( evt => {
-                widget.AddChild( new SettingsWidget( container ) );
+                widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
             view.OnQuit( evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.Quit() ).OnCancel( "No", null );
+                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget) {
             var view = new MainMenuWidgetView_StartGameView();
             view.OnNewGame( evt => {
-                widget.View.Push( CreateView_SelectLevelView( container, widget, router, profileSettings ) );
+                widget.View.AddView( CreateView_SelectLevelView( widget ) );
             } );
             view.OnContinue( evt => {
-                widget.View.Push( CreateView_SelectLevelView( container, widget, router, profileSettings ) );
+                widget.View.AddView( CreateView_SelectLevelView( widget ) );
             } );
             view.OnBack( evt => {
-                widget.View.Pop();
+                widget.View.RemoveView( view );
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings) {
+        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level1 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level1 ) );
             } );
             view.OnLevel2( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level2 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level2 ) );
             } );
             view.OnLevel3( evt => {
-                widget.View.Push( CreateView_SelectCharacterView( container, widget, router, profileSettings, Level.Level3 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level3 ) );
             } );
             view.OnBack( evt => {
-                widget.View.Pop();
+                widget.View.RemoveView( view );
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(IDependencyContainer container, MainMenuWidget widget, UIRouter router, Storage.ProfileSettings profileSettings, Level level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, Level level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
-                widget.AddChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Gray ).Throw();
+                widget.AddChild( new LoadingWidget( widget.Container ) );
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();
             } );
             view.OnRed( evt => {
-                widget.AddChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Red ).Throw();
+                widget.AddChild( new LoadingWidget( widget.Container ) );
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red ).Throw();
             } );
             view.OnGreen( evt => {
-                widget.AddChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Green ).Throw();
+                widget.AddChild( new LoadingWidget( widget.Container ) );
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green ).Throw();
             } );
             view.OnBlue( evt => {
-                widget.AddChild( new LoadingWidget() );
-                router.LoadGameSceneAsync( level, profileSettings.Name, PlayerCharacterKind.Blue ).Throw();
+                widget.AddChild( new LoadingWidget( widget.Container ) );
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue ).Throw();
             } );
             view.OnBack( evt => {
-                widget.View.Pop();
+                widget.View.RemoveView( view );
             } );
             return view;
         }

@@ -10,6 +10,8 @@ namespace Project.UI.GameScreen {
 
     public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // View
@@ -17,8 +19,9 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameMenuWidget(IDependencyContainer container) {
+            Container = container;
             Router = container.RequireDependency<UIRouter>();
-            View = CreateView( this, container, Router );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -43,16 +46,16 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameMenuWidgetView CreateView(GameMenuWidget widget, IDependencyContainer container, UIRouter router) {
+        private static GameMenuWidgetView CreateView(GameMenuWidget widget) {
             var view = new GameMenuWidgetView();
             view.OnResume( evt => {
                 widget.RemoveSelf();
             } );
             view.OnSettings( evt => {
-                widget.AddChild( new SettingsWidget( container ) );
+                widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
             view.OnBack( evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
+                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
             } );
             return view;

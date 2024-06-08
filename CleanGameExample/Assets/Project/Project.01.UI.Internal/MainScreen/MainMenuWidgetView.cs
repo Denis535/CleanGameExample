@@ -18,6 +18,7 @@ namespace Project.UI.MainScreen {
         public override int Priority => 0;
         public override bool IsAlwaysVisible => false;
         public override bool IsModal => false;
+        // Props
         public string Title => title.text;
 
         // Constructor
@@ -29,20 +30,46 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // Push
-        public void Push(UIViewBase view) {
-            title.text = GetTitle( view );
+        // AddView
+        public void AddView(UIViewBase view) {
             content.Add( view );
-            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
-        }
-
-        // Pop
-        public void Pop() {
-            content.Remove( content.Children().Last() );
-            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
+            Recalculate( content.Children().ToArray() );
             title.text = GetTitle( content.Children().Last().GetView() );
         }
 
+        // RemoveView
+        public void RemoveView(UIViewBase view) {
+            content.Remove( view );
+            Recalculate( content.Children().ToArray() );
+            title.text = GetTitle( content.Children().Last().GetView() );
+        }
+
+        // Helpers
+        private static void Recalculate(VisualElement[] children) {
+            for (var i = 0; i < children.Length; i++) {
+                var child = children[ i ];
+                var next = children.ElementAtOrDefault( i + 1 );
+                if (next == null) {
+                    Show( child );
+                } else {
+                    Hide( child );
+                }
+            }
+        }
+        private static void Show(VisualElement element) {
+            var view = element.GetView();
+            view.SetDisplayed( true );
+            if (!view.HasFocusedElement()) {
+                if (!view.LoadFocus()) view.Focus();
+            }
+        }
+        public static void Hide(VisualElement element) {
+            var view = element.GetView();
+            if (view.HasFocusedElement()) {
+                view.SaveFocus();
+            }
+            view.SetDisplayed( false );
+        }
         // Helpers
         private static string GetTitle(UIViewBase view) {
             if (view is MainMenuWidgetView_MainMenuView) {
@@ -58,23 +85,6 @@ namespace Project.UI.MainScreen {
                 return "Select Your Character";
             }
             throw Exceptions.Internal.NotSupported( $"View {view} is not supported" );
-        }
-        // Helpers
-        private static void Recalculate(UIViewBase[] views) {
-            for (var i = 0; i < views.Length; i++) {
-                var view = views[ i ];
-                var next = views.ElementAtOrDefault( i + 1 );
-                Recalculate( view, next );
-            }
-        }
-        private static void Recalculate(UIViewBase view, UIViewBase? next) {
-            if (next != null) {
-                if (view.IsDisplayedSelf()) view.SaveFocus();
-                view.SetDisplayed( false );
-            } else {
-                view.SetDisplayed( true );
-                if (!view.LoadFocus()) view.Focus();
-            }
         }
 
     }

@@ -16,6 +16,7 @@ namespace Project.UI.Common {
         public override int Priority => 0;
         public override bool IsAlwaysVisible => false;
         public override bool IsModal => false;
+        // Props
         public string Name {
             get => name.value;
             init => name.value = value;

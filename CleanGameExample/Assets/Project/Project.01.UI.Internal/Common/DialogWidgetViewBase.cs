@@ -22,6 +22,7 @@ namespace Project.UI.Common {
         public override int Priority => 1000;
         public override bool IsAlwaysVisible => false;
         public override bool IsModal => true;
+        // Props
         public string? Title {
             get => title.text;
             set {

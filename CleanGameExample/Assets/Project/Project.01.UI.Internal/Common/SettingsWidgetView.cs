@@ -23,6 +23,7 @@ namespace Project.UI.Common {
         public override int Priority => 0;
         public override bool IsAlwaysVisible => false;
         public override bool IsModal => false;
+        // Props
         public string Title => title.text;
         public ProfileSettingsWidgetView? ProfileSettingsWidgetView => profileSettings.Children().FirstOrDefault()?.GetView<ProfileSettingsWidgetView>();
         public VideoSettingsWidgetView? VideoSettingsWidgetView => videoSettings.Children().FirstOrDefault()?.GetView<VideoSettingsWidgetView>();

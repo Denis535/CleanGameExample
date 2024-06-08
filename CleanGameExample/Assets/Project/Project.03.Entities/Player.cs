@@ -10,12 +10,13 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase2<PlayerCharacterKind, InputActions_Player>, IPlayer {
+    public class Player : PlayerBase2<PlayerCharacterKind>, IPlayer {
 
         private bool isInputEnabled;
         public PlayerCharacter? character;
 
         // Input
+        private InputActions_Player Input { get; }
         public bool IsInputEnabled {
             get => isInputEnabled;
             internal set {
@@ -56,11 +57,13 @@ namespace Project.Entities {
 
         // Constructor
         public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container, name, kind ) {
+            Input = new InputActions_Player();
             Game = game;
             Camera = camera;
             Character = null;
         }
         public override void Dispose() {
+            Input.Dispose();
             base.Dispose();
         }
 

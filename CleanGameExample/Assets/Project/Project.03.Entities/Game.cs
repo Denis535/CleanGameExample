@@ -11,8 +11,10 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Game : GameBase2<Mode, Level, InputActions_Game>, IGame {
+    public class Game : GameBase2<Mode, Level>, IGame {
 
+        // Input
+        private InputActions_Game Input { get; }
         // Entities
         public Player Player { get; }
         public World World { get; }
@@ -21,6 +23,7 @@ namespace Project.Entities {
 
         // Constructor
         public Game(IDependencyContainer container, Mode mode, Level level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
+            Input = new InputActions_Game();
             Player = new Player( container, name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             {
@@ -38,6 +41,7 @@ namespace Project.Entities {
         }
         public override void Dispose() {
             Player.Dispose();
+            Input.Dispose();
             base.Dispose();
         }
 

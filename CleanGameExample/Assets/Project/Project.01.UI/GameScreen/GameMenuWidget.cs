@@ -4,6 +4,8 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Project.App;
+    using Project.Entities;
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
@@ -14,6 +16,10 @@ namespace Project.UI.GameScreen {
         private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
+        // App
+        private Application2 Application { get; }
+        // Entities
+        private Game Game => Application.Game!;
         // View
         public override GameMenuWidgetView View { get; }
 
@@ -21,6 +27,7 @@ namespace Project.UI.GameScreen {
         public GameMenuWidget(IDependencyContainer container) {
             Container = container;
             Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -49,7 +56,7 @@ namespace Project.UI.GameScreen {
         private static GameMenuWidgetView CreateView(GameMenuWidget widget) {
             var view = new GameMenuWidgetView();
             view.OnResume( evt => {
-                widget.RemoveSelf();
+                widget.Game.IsPaused = false;
             } );
             view.OnSettings( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );

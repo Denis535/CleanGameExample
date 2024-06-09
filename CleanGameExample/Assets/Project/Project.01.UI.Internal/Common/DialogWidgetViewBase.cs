@@ -19,9 +19,7 @@ namespace Project.UI.Common {
         private readonly Label message;
 
         // Props
-        public override int Priority => 1000;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => true;
+        public override int Layer => 1000;
         // Props
         public string? Title {
             get => title.text;

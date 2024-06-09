@@ -15,9 +15,7 @@ namespace Project.UI.MainScreen {
         private readonly Label loading;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => 0;
 
         // Constructor
         public LoadingWidgetView() {

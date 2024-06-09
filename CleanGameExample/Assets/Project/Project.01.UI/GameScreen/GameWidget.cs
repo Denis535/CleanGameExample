@@ -38,10 +38,8 @@ namespace Project.UI.GameScreen {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
             Game.OnPauseChangeEvent += OnGamePauseChange;
-            Cursor.lockState = CursorLockMode.Locked;
         }
         public override void OnDeactivate(object? argument) {
-            Cursor.lockState = CursorLockMode.None;
             Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
@@ -49,24 +47,21 @@ namespace Project.UI.GameScreen {
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            if (descendant is WinWidget or LossWidget or GameMenuWidget) {
-                Cursor.lockState = CursorLockMode.None;
-            }
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            if (Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
-                Cursor.lockState = CursorLockMode.None;
-            } else {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
         }
 
         // Update
         public void Update() {
+            if (Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
+                Cursor.lockState = CursorLockMode.None;
+            } else {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             if (Player?.Thing) {
                 View.SetEffect( TargetEffect.Thing );
             } else if (Player?.Enemy) {
@@ -98,7 +93,7 @@ namespace Project.UI.GameScreen {
             if (isPause) {
                 AddChild( new GameMenuWidget( Container ) );
             } else {
-                RemoveChildren( i => i is GameMenuWidget );
+                RemoveChild( i => i is GameMenuWidget );
             }
         }
 

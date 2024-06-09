@@ -15,9 +15,7 @@ namespace Project.UI.Common {
         private readonly Toggle isVSync;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => 0;
         // Props
         public bool IsFullScreen {
             get => isFullScreen.value;

@@ -16,9 +16,7 @@ namespace Project.UI.GameScreen {
         private readonly Button back;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => 0;
         // Props
         public string Title => title.text;
 

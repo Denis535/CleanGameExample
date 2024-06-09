@@ -15,9 +15,7 @@ namespace Project.UI.MainScreen {
         private readonly VisualElement content;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => 0;
         // Props
         public string Title => title.text;
 
@@ -46,27 +44,28 @@ namespace Project.UI.MainScreen {
 
         // Helpers
         private static void Recalculate(UIViewBase[] views) {
+            foreach (var view in views) {
+                if (view.HasFocusedElement()) {
+                    view.SaveFocus();
+                }
+            }
             for (var i = 0; i < views.Length; i++) {
                 var view = views[ i ];
                 var next = views.ElementAtOrDefault( i + 1 );
                 if (next == null) {
-                    Show( view );
+                    view.SetDisplayed( true );
                 } else {
-                    Hide( view );
+                    view.SetDisplayed( false );
                 }
             }
-        }
-        private static void Show(UIViewBase view) {
-            view.SetDisplayed( true );
-            if (!view.HasFocusedElement()) {
-                if (!view.LoadFocus()) view.Focus();
+            if (views.Any()) {
+                var view = views.Last();
+                if (!view.HasFocusedElement()) {
+                    if (!view.LoadFocus()) {
+                        view.Focus();
+                    }
+                }
             }
-        }
-        public static void Hide(UIViewBase view) {
-            if (view.HasFocusedElement()) {
-                view.SaveFocus();
-            }
-            view.SetDisplayed( false );
         }
         // Helpers
         private static string GetTitle(UIViewBase view) {
@@ -95,9 +94,7 @@ namespace Project.UI.MainScreen {
         private readonly Button quit;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
         public MainMenuWidgetView_MainMenuView() {
@@ -128,9 +125,7 @@ namespace Project.UI.MainScreen {
         private readonly Button back;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
         public MainMenuWidgetView_StartGameView() {
@@ -162,9 +157,7 @@ namespace Project.UI.MainScreen {
         private readonly Button back;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
         public MainMenuWidgetView_SelectLevelView() {
@@ -200,9 +193,7 @@ namespace Project.UI.MainScreen {
         private readonly Button back;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
         public MainMenuWidgetView_SelectCharacterView() {

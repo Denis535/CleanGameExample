@@ -13,13 +13,13 @@ namespace Project.Entities {
 
     public class Game : GameBase2<Mode, Level>, IGame {
 
+        // IsDirty
+        private bool IsDirty { get; set; }
         // Input
         private InputActions_Game Input { get; }
         // Entities
         public Player Player { get; }
         public World World { get; }
-        // IsDirty
-        private bool IsDirty { get; set; }
 
         // Constructor
         public Game(IDependencyContainer container, Mode mode, Level level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
@@ -39,6 +39,7 @@ namespace Project.Entities {
             }
         }
         public override void Dispose() {
+            Time.timeScale = 1f;
             Player.Dispose();
             Input.Dispose();
             base.Dispose();

@@ -16,9 +16,7 @@ namespace Project.UI.GameScreen {
         private Button back;
 
         // Props
-        public override int Priority => -1000;
-        public override bool IsAlwaysVisible => false;
-        public override bool IsModal => false;
+        public override int Layer => -1000;
 
         // Constructor
         public WinWidgetView() {

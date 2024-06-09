@@ -14,9 +14,7 @@ namespace Project.UI.MainScreen {
         private readonly Widget widget;
 
         // Props
-        public override int Priority => 0;
-        public override bool IsAlwaysVisible => true;
-        public override bool IsModal => false;
+        public override int Layer => -1000;
 
         // Constructor
         public MainWidgetView() {

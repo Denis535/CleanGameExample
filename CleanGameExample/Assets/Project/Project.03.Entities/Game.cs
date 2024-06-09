@@ -59,9 +59,6 @@ namespace Project.Entities {
                 }
                 IsDirty = false;
             }
-            if (Input.Game.Pause.WasPressedThisFrame()) {
-                IsPaused = !IsPaused;
-            }
         }
         public override void LateUpdate() {
         }

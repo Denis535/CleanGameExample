@@ -39,12 +39,12 @@ namespace Project.UI {
             Router.OnStateChangeEvent += state => {
                 if (IsMainScreen( state )) {
                     if (!Widget.Children.OfType<MainWidget>().Any()) {
-                        Widget.RemoveChildren( i => i is GameWidget );
+                        Widget.RemoveChild( i => i is GameWidget );
                         Widget.AddChild( new MainWidget( container ) );
                     }
                 } else if (IsGameScreen( state )) {
                     if (!Widget.Children.OfType<GameWidget>().Any()) {
-                        Widget.RemoveChildren( i => i is MainWidget );
+                        Widget.RemoveChild( i => i is MainWidget );
                         Widget.AddChild( new GameWidget( container ) );
                     }
                 } else {

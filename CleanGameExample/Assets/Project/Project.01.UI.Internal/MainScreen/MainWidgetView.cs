@@ -24,8 +24,8 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // SetEffect
-        public void SetEffect(UIViewBase view) {
+        // SetBackgroundEffect
+        public void SetBackgroundEffect(UIViewBase view) {
             // MainMenuWidgetView
             if (view is MainMenuWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );

@@ -5,6 +5,7 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
 
     public class GameWidgetView : UIViewBase {
@@ -14,17 +15,24 @@ namespace Project.UI.GameScreen {
 
         // Props
         public override int Layer => -1000;
+        // Input
+        public InputActions_UI Input { get; }
+        public bool IsSubmitPressed => Input.UI.Submit.WasPerformedThisFrame();
+        public bool IsCancelPressed => Input.UI.Cancel.WasPerformedThisFrame();
 
         // Constructor
         public GameWidgetView() {
             VisualElement = VisualElementFactory_Game.GameWidget( out widget, out target );
+            Input = new InputActions_UI();
+            Input.Enable();
         }
         public override void Dispose() {
+            Input.Dispose();
             base.Dispose();
         }
 
-        // SetEffect
-        public void SetEffect(TargetEffect value) {
+        // SetTargetEffect
+        public void SetTargetEffect(TargetEffect value) {
             switch (value) {
                 case TargetEffect.Normal:
                     target.style.color = Color.white;

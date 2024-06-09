@@ -57,18 +57,15 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
-            if (Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
-                Cursor.lockState = CursorLockMode.None;
-            } else {
-                Cursor.lockState = CursorLockMode.Locked;
+            if (View.IsCancelPressed) {
+                if (!Children.OfType<GameMenuWidget>().Any()) {
+                    AddChild( new GameMenuWidget( Container ) );
+                }
             }
-            if (Player?.Thing) {
-                View.SetEffect( TargetEffect.Thing );
-            } else if (Player?.Enemy) {
-                View.SetEffect( TargetEffect.Enemy );
-            } else {
-                View.SetEffect( TargetEffect.Normal );
-            }
+            Game.IsPaused = IsPaused( this );
+            Cursor.lockState = GetCursorLockMode( this );
+            View.SetTargetEffect( GetTargetEffect( Player ) );
+            View.Input.SetEnabled( !Game.IsPaused );
         }
         public void LateUpdate() {
         }
@@ -90,17 +87,25 @@ namespace Project.UI.GameScreen {
         }
         // OnGamePauseChange
         private void OnGamePauseChange(bool isPause) {
-            if (isPause) {
-                AddChild( new GameMenuWidget( Container ) );
-            } else {
-                RemoveChild( i => i is GameMenuWidget );
-            }
         }
 
         // Helpers
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
             return view;
+        }
+        // Helpers
+        private static bool IsPaused(GameWidget widget) {
+            return widget.Children.OfType<GameMenuWidget>().Any();
+        }
+        private static CursorLockMode GetCursorLockMode(GameWidget widget) {
+            if (widget.Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget )) return CursorLockMode.None;
+            return CursorLockMode.Locked;
+        }
+        private static TargetEffect GetTargetEffect(Player player) {
+            if (player.Thing) return TargetEffect.Thing;
+            if (player.Enemy) return TargetEffect.Enemy;
+            return TargetEffect.Normal;
         }
 
     }

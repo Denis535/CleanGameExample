@@ -56,7 +56,7 @@ namespace Project.UI.GameScreen {
         private static GameMenuWidgetView CreateView(GameMenuWidget widget) {
             var view = new GameMenuWidgetView();
             view.OnResume( evt => {
-                widget.Game.IsPaused = false;
+                widget.RemoveSelf();
             } );
             view.OnSettings( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );

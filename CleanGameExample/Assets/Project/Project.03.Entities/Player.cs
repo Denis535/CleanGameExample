@@ -12,28 +12,12 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2<PlayerCharacterKind>, IPlayer {
 
-        private bool isInputEnabled;
-        public PlayerCharacter? character;
-
         // Input
         private InputActions_Player Input { get; }
-        public bool IsInputEnabled {
-            get => isInputEnabled;
-            internal set {
-                isInputEnabled = value;
-                Input.SetEnabled( isInputEnabled && character != null );
-            }
-        }
         // Entities
         private Game Game { get; }
         public Camera2 Camera { get; }
-        public PlayerCharacter? Character {
-            get => character;
-            internal set {
-                character = value;
-                Input.SetEnabled( isInputEnabled && character != null );
-            }
-        }
+        public PlayerCharacter? Character { get; internal set; }
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
@@ -69,6 +53,9 @@ namespace Project.Entities {
 
         // Update
         public override void Update() {
+            {
+                Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
+            }
             if (Camera != null && Character != null) {
                 Camera.Rotate( Input.Player.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Player.Zoom.ReadValue<Vector2>().y );

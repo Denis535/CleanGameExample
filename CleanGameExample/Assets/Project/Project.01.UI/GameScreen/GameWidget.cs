@@ -49,14 +49,20 @@ namespace Project.UI.GameScreen {
 
         // OnDescendantActivate
         public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+            if (descendant is WinWidget or LossWidget or GameMenuWidget) {
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
         public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
-            Cursor.lockState = GetCursorLockMode( this );
         }
         public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            Cursor.lockState = GetCursorLockMode( this );
+            if (Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
+                Cursor.lockState = CursorLockMode.None;
+            } else {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
 
         // Update
@@ -100,14 +106,6 @@ namespace Project.UI.GameScreen {
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
             return view;
-        }
-        // Helpers
-        private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is WinWidget or LossWidget or GameMenuWidget )) {
-                return CursorLockMode.None;
-            } else {
-                return CursorLockMode.Locked;
-            }
         }
 
     }

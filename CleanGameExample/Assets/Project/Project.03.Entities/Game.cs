@@ -24,6 +24,7 @@ namespace Project.Entities {
         // Constructor
         public Game(IDependencyContainer container, Mode mode, Level level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
             Input = new InputActions_Game();
+            Input.Enable();
             Player = new Player( container, name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             {
@@ -36,8 +37,6 @@ namespace Project.Entities {
             foreach (var point in World.ThingPoints) {
                 SpawnThing( point );
             }
-            Input.Enable();
-            Player.IsInputEnabled = true;
         }
         public override void Dispose() {
             Player.Dispose();
@@ -72,8 +71,7 @@ namespace Project.Entities {
 
         // OnPauseChange
         protected override void OnPauseChange(bool isPaused) {
-            Player.IsInputEnabled = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
+            Time.timeScale = isPaused ? 0f : 1f;
         }
 
         // Spawn

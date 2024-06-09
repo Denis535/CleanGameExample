@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
 
         // Props
         public override int Priority => -1000;
-        public override bool IsAlwaysVisible => true;
+        public override bool IsAlwaysVisible => false;
         public override bool IsModal => false;
 
         // Constructor

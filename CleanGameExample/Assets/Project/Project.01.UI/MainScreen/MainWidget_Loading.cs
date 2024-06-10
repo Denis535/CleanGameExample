@@ -1,28 +1,18 @@
 ﻿#nullable enable
-namespace Project.UI.GameScreen {
+namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.App;
-    using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class LossWidget : UIWidgetBase<LossWidgetView> {
+    public class MainWidget_Loading : UIWidgetBase<MainWidgetView_Loading> {
 
-        // UI
-        private UIRouter Router { get; }
-        // App
-        private Application2 Application { get; }
-        // Entities
-        private Game Game => Application.Game!;
         // View
-        public override LossWidgetView View { get; }
+        public override MainWidgetView_Loading View { get; }
 
         // Constructor
-        public LossWidget(IDependencyContainer container) {
-            Router = container.RequireDependency<UIRouter>();
-            Application = container.RequireDependency<Application2>();
+        public MainWidget_Loading(IDependencyContainer container) {
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -48,8 +38,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static LossWidgetView CreateView(LossWidget widget) {
-            var view = new LossWidgetView();
+        private static MainWidgetView_Loading CreateView(MainWidget_Loading widget) {
+            var view = new MainWidgetView_Loading();
             return view;
         }
 

@@ -6,13 +6,13 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class TotalsWidgetView : UIViewBase {
+    public class GameWidgetView_Totals : UIViewBase {
 
         // Props
         public override int Layer => -1000;
 
         // Constructor
-        public TotalsWidgetView() {
+        public GameWidgetView_Totals() {
         }
         public override void Dispose() {
             base.Dispose();

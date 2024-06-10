@@ -8,7 +8,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class WinWidget : UIWidgetBase<WinWidgetView> {
+    public class GameWidget_Loss : UIWidgetBase<GameWidgetView_Loss> {
 
         // UI
         private UIRouter Router { get; }
@@ -17,10 +17,10 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override WinWidgetView View { get; }
+        public override GameWidgetView_Loss View { get; }
 
         // Constructor
-        public WinWidget(IDependencyContainer container) {
+        public GameWidget_Loss(IDependencyContainer container) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -48,8 +48,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static WinWidgetView CreateView(WinWidget widget) {
-            var view = new WinWidgetView();
+        private static GameWidgetView_Loss CreateView(GameWidget_Loss widget) {
+            var view = new GameWidgetView_Loss();
             return view;
         }
 

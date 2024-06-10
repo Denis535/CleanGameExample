@@ -68,7 +68,7 @@ namespace Project.UI.MainScreen {
                 }
             }
             // Children
-            AddChild( new MenuWidget( Container ) );
+            AddChild( new MainWidget_Menu( Container ) );
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();

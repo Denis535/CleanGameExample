@@ -7,7 +7,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class GameWidgetView_Menu : UIViewBase {
 
         private readonly Widget widget;
         private readonly Label title;
@@ -21,7 +21,7 @@ namespace Project.UI.GameScreen {
         public string Title => title.text;
 
         // Constructor
-        public MenuWidgetView() {
+        public GameWidgetView_Menu() {
             VisualElement = VisualElementFactory_Game.GameMenuWidget( out widget, out title, out resume, out settings, out back );
         }
         public override void Dispose() {

@@ -9,7 +9,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public class LoadingWidgetView : UIViewBase {
+    public class MainWidgetView_Loading : UIViewBase {
 
         private readonly Widget widget;
         private readonly Label loading;
@@ -18,7 +18,7 @@ namespace Project.UI.MainScreen {
         public override int Layer => 0;
 
         // Constructor
-        public LoadingWidgetView() {
+        public MainWidgetView_Loading() {
             VisualElement = VisualElementFactory_Main.LoadingWidget( out widget, out loading );
             widget.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
         }

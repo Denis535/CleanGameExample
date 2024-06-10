@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
@@ -8,7 +8,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class TotalsWidget : UIWidgetBase<TotalsWidgetView> {
+    public class GameWidget_Win : UIWidgetBase<GameWidgetView_Win> {
 
         // UI
         private UIRouter Router { get; }
@@ -17,13 +17,13 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override TotalsWidgetView View { get; }
+        public override GameWidgetView_Win View { get; }
 
         // Constructor
-        public TotalsWidget(IDependencyContainer container) {
+        public GameWidget_Win(IDependencyContainer container) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            //View = CreateView( this );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -48,10 +48,10 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        //private static UIViewBase CreateView(WinWidget widget) {
-        //    var view = new UIViewBase();
-        //    return view;
-        //}
+        private static GameWidgetView_Win CreateView(GameWidget_Win widget) {
+            var view = new GameWidgetView_Win();
+            return view;
+        }
 
     }
 }

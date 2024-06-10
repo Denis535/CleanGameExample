@@ -10,7 +10,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MenuWidget : UIWidgetBase<MenuWidgetView> {
+    public class GameWidget_Menu : UIWidgetBase<GameWidgetView_Menu> {
 
         // Container
         private IDependencyContainer Container { get; }
@@ -21,10 +21,10 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override MenuWidgetView View { get; }
+        public override GameWidgetView_Menu View { get; }
 
         // Constructor
-        public MenuWidget(IDependencyContainer container) {
+        public GameWidget_Menu(IDependencyContainer container) {
             Container = container;
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
@@ -53,8 +53,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static MenuWidgetView CreateView(MenuWidget widget) {
-            var view = new MenuWidgetView();
+        private static GameWidgetView_Menu CreateView(GameWidget_Menu widget) {
+            var view = new GameWidgetView_Menu();
             view.OnResume( evt => {
                 widget.RemoveSelf();
             } );

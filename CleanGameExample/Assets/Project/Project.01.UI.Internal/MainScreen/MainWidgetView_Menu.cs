@@ -8,7 +8,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class MainWidgetView_Menu : UIViewBase {
 
         private readonly Widget widget;
         private readonly Label title;
@@ -20,7 +20,7 @@ namespace Project.UI.MainScreen {
         public string Title => title.text;
 
         // Constructor
-        public MenuWidgetView() {
+        public MainWidgetView_Menu() {
             VisualElement = VisualElementFactory_Main.MainMenuWidget( out widget, out title, out content );
         }
         public override void Dispose() {

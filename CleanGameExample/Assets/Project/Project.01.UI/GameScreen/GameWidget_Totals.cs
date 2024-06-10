@@ -1,19 +1,29 @@
-﻿#nullable enable
-namespace Project.UI.MainScreen {
+#nullable enable
+namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.App;
+    using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class LoadingWidget : UIWidgetBase<LoadingWidgetView> {
+    public class GameWidget_Totals : UIWidgetBase<GameWidgetView_Totals> {
 
+        // UI
+        private UIRouter Router { get; }
+        // App
+        private Application2 Application { get; }
+        // Entities
+        private Game Game => Application.Game!;
         // View
-        public override LoadingWidgetView View { get; }
+        public override GameWidgetView_Totals View { get; }
 
         // Constructor
-        public LoadingWidget(IDependencyContainer container) {
-            View = CreateView( this );
+        public GameWidget_Totals(IDependencyContainer container) {
+            Router = container.RequireDependency<UIRouter>();
+            Application = container.RequireDependency<Application2>();
+            //View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -38,10 +48,10 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static LoadingWidgetView CreateView(LoadingWidget widget) {
-            var view = new LoadingWidgetView();
-            return view;
-        }
+        //private static UIViewBase CreateView(WinWidget widget) {
+        //    var view = new UIViewBase();
+        //    return view;
+        //}
 
     }
 }

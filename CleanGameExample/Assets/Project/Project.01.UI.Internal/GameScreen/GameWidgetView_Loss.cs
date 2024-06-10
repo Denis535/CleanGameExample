@@ -7,20 +7,20 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class WinWidgetView : UIViewBase {
+    public class GameWidgetView_Loss : UIViewBase {
 
         private Widget widget;
         private Label title;
         private Label message;
-        private Button nextLevel;
+        private Button tryAgain;
         private Button back;
 
         // Props
         public override int Layer => -1000;
 
         // Constructor
-        public WinWidgetView() {
-            VisualElement = VisualElementFactory_Game.WinWidget( out widget, out title, out message, out nextLevel, out back );
+        public GameWidgetView_Loss() {
+            VisualElement = VisualElementFactory_Game.LossWidget( out widget, out title, out message, out tryAgain, out back );
         }
         public override void Dispose() {
             base.Dispose();

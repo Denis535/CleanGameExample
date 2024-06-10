@@ -58,8 +58,8 @@ namespace Project.UI.GameScreen {
         // Update
         public void Update() {
             if (View.IsCancelPressed) {
-                if (!Children.OfType<MenuWidget>().Any()) {
-                    AddChild( new MenuWidget( Container ) );
+                if (!Children.OfType<GameWidget_Menu>().Any()) {
+                    AddChild( new GameWidget_Menu( Container ) );
                 }
             }
             Game.IsPaused = IsPaused( this );
@@ -76,10 +76,10 @@ namespace Project.UI.GameScreen {
                 if (state is GameState.Completed) {
                     if (Game.Player.State == PlayerState.Winner) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new WinWidget( Container ) );
+                        AddChild( new GameWidget_Win( Container ) );
                     } else if (Game.Player.State == PlayerState.Looser) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new LossWidget( Container ) );
+                        AddChild( new GameWidget_Loss( Container ) );
                     }
                 }
             } catch (OperationCanceledException) {
@@ -96,10 +96,10 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static bool IsPaused(GameWidget widget) {
-            return widget.Children.OfType<MenuWidget>().Any();
+            return widget.Children.OfType<GameWidget_Menu>().Any();
         }
         private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is WinWidget or LossWidget or MenuWidget )) return CursorLockMode.None;
+            if (widget.Children.Any( i => i is GameWidget_Win or GameWidget_Loss or GameWidget_Menu )) return CursorLockMode.None;
             return CursorLockMode.Locked;
         }
         private static TargetEffect GetTargetEffect(Player player) {

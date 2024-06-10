@@ -13,7 +13,7 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
-    public class UIRouter : UIRouterBase2 {
+    public class UIRouter : UIRouterBase2<UIRouterState> {
 
         private static readonly Lock @lock = new Lock();
 
@@ -115,5 +115,17 @@ namespace Project.UI {
             }
         }
 
+    }
+    public enum UIRouterState {
+        None,
+        // MainSceneLoading
+        MainSceneLoading,
+        MainSceneLoaded,
+        // GameSceneLoading
+        GameSceneLoading,
+        GameSceneLoaded,
+        // Quitting
+        Quitting,
+        Quited,
     }
 }

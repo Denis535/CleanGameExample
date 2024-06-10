@@ -53,7 +53,7 @@ namespace Project.UI {
         }
 
         // Update
-        public override void Update() {
+        public void Update() {
             if (Theme != null && !Theme.IsDone) {
                 return;
             }
@@ -68,7 +68,7 @@ namespace Project.UI {
                 Pause( AudioSource, Game!.IsPaused );
             }
         }
-        public override void LateUpdate() {
+        public void LateUpdate() {
         }
 
         // Play
@@ -86,6 +86,20 @@ namespace Project.UI {
                 Theme.Load();
                 Play( AudioSource, await Theme.GetValueAsync( DisposeCancellationToken ) );
             }
+        }
+
+        // Helpers
+        private static bool IsMainTheme(UIRouterState state) {
+            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
+                return true;
+            }
+            return false;
+        }
+        private static bool IsGameTheme(UIRouterState state) {
+            if (state is UIRouterState.GameSceneLoaded) {
+                return true;
+            }
+            return false;
         }
 
     }

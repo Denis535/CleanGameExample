@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase2<PlayerCharacterKind>, IPlayer {
+    public class Player : PlayerBase2<PlayerCharacterKind, PlayerState>, IPlayer {
 
         // Input
         private InputActions_Player Input { get; }
@@ -52,7 +52,7 @@ namespace Project.Entities {
         }
 
         // Update
-        public override void Update() {
+        public void Update() {
             {
                 Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
             }
@@ -121,5 +121,10 @@ namespace Project.Entities {
             }
         }
 
+    }
+    public enum PlayerState {
+        Playing,
+        Winner,
+        Loser
     }
 }

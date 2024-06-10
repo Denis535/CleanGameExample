@@ -77,7 +77,7 @@ namespace Project.UI.GameScreen {
                     if (Game.Player.State == PlayerState.Winner) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
                         AddChild( new WinTotalsGameWidget( Container ) );
-                    } else if (Game.Player.State == PlayerState.Looser) {
+                    } else if (Game.Player.State == PlayerState.Loser) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
                         AddChild( new LossTotalsGameWidget( Container ) );
                     }

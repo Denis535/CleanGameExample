@@ -58,17 +58,31 @@ namespace Project.UI {
         }
 
         // Update
-        public override void Update() {
+        public void Update() {
             foreach (var child in Widget.Children) {
                 (child as MainWidget)?.Update();
                 (child as GameWidget)?.Update();
             }
         }
-        public override void LateUpdate() {
+        public void LateUpdate() {
             foreach (var child in Widget.Children) {
                 (child as MainWidget)?.LateUpdate();
                 (child as GameWidget)?.LateUpdate();
             }
+        }
+
+        // Helpers
+        private static bool IsMainScreen(UIRouterState state) {
+            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
+                return true;
+            }
+            return false;
+        }
+        private static bool IsGameScreen(UIRouterState state) {
+            if (state is UIRouterState.GameSceneLoaded) {
+                return true;
+            }
+            return false;
         }
 
     }

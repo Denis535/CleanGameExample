@@ -11,7 +11,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Game : GameBase2<Mode, Level>, IGame {
+    public class Game : GameBase2<Mode, Level, GameState>, IGame {
 
         // Input
         private InputActions_Game Input { get; }
@@ -52,7 +52,7 @@ namespace Project.Entities {
             Player.Update();
             if (IsDirty) {
                 if (IsLoser()) {
-                    OnLooser();
+                    OnLoser();
                 }
                 if (IsWinner()) {
                     OnWinner();
@@ -116,8 +116,8 @@ namespace Project.Entities {
             Player.State = PlayerState.Winner;
             State = GameState.Completed;
         }
-        private void OnLooser() {
-            Player.State = PlayerState.Looser;
+        private void OnLoser() {
+            Player.State = PlayerState.Loser;
             State = GameState.Completed;
         }
 
@@ -137,5 +137,10 @@ namespace Project.Entities {
             if (level < Level.Level3) return level + 1;
             return null;
         }
+    }
+    // GameState
+    public enum GameState {
+        Playing,
+        Completed
     }
 }

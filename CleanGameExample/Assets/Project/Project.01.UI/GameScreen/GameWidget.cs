@@ -58,8 +58,8 @@ namespace Project.UI.GameScreen {
         // Update
         public void Update() {
             if (View.IsCancelPressed) {
-                if (!Children.OfType<GameMenuWidget>().Any()) {
-                    AddChild( new GameMenuWidget( Container ) );
+                if (!Children.OfType<MenuWidget>().Any()) {
+                    AddChild( new MenuWidget( Container ) );
                 }
             }
             Game.IsPaused = IsPaused( this );
@@ -96,10 +96,10 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static bool IsPaused(GameWidget widget) {
-            return widget.Children.OfType<GameMenuWidget>().Any();
+            return widget.Children.OfType<MenuWidget>().Any();
         }
         private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is WinWidget or LossWidget or GameMenuWidget )) return CursorLockMode.None;
+            if (widget.Children.Any( i => i is WinWidget or LossWidget or MenuWidget )) return CursorLockMode.None;
             return CursorLockMode.Locked;
         }
         private static TargetEffect GetTargetEffect(Player player) {

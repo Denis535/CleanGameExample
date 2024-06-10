@@ -27,7 +27,7 @@ namespace Project.UI.MainScreen {
         // SetBackgroundEffect
         public void SetBackgroundEffect(UIViewBase view) {
             // MainMenuWidgetView
-            if (view is MainMenuWidgetView mainMenuWidgetView) {
+            if (view is MenuWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_MainMenuView) {
                     SetEffect( widget, Color.white, default, 0, 1.0f );

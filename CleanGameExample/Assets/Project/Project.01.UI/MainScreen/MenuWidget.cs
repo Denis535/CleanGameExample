@@ -11,7 +11,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MainMenuWidget : UIWidgetBase<MainMenuWidgetView> {
+    public class MenuWidget : UIWidgetBase<MenuWidgetView> {
 
         // Container
         private IDependencyContainer Container { get; }
@@ -21,10 +21,10 @@ namespace Project.UI.MainScreen {
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
-        public override MainMenuWidgetView View { get; }
+        public override MenuWidgetView View { get; }
 
         // Constructor
-        public MainMenuWidget(IDependencyContainer container) {
+        public MenuWidget(IDependencyContainer container) {
             Container = container;
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
@@ -53,12 +53,12 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MainMenuWidgetView CreateView(MainMenuWidget widget) {
-            var view = new MainMenuWidgetView();
+        private static MenuWidgetView CreateView(MenuWidget widget) {
+            var view = new MenuWidgetView();
             view.AddView( CreateView_MainMenuView( widget ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MainMenuWidget widget) {
+        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MenuWidget widget) {
             var view = new MainMenuWidgetView_MainMenuView();
             view.OnStartGame( evt => {
                 widget.View.AddView( CreateView_StartGameView( widget ) );
@@ -72,7 +72,7 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MainMenuWidget widget) {
+        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MenuWidget widget) {
             var view = new MainMenuWidgetView_StartGameView();
             view.OnNewGame( evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
@@ -85,7 +85,7 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MainMenuWidget widget) {
+        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MenuWidget widget) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level1 ) );
@@ -101,7 +101,7 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MainMenuWidget widget, Level level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuWidget widget, Level level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );

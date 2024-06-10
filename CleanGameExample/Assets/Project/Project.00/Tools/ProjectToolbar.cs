@@ -114,13 +114,14 @@ namespace Project {
                 .ThenByDescending( i => i.name.Equals( "VisualElementFactory_Common.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "MainWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MainMenuWidget.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "MenuWidget.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "LoadingWidget.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "GameWidget.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "TotalsWidget.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "WinWidget.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "LossWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "GameMenuWidget.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "MenuWidget.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "DialogWidgetBase.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "SettingsWidget.cs" ) )
@@ -129,13 +130,14 @@ namespace Project {
                 .ThenByDescending( i => i.name.Equals( "AudioSettingsWidget.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "MainWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MainMenuWidgetView.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "MenuWidgetView.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "LoadingWidgetView.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "GameWidgetView.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "TotalsWidgetView.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "WinWidgetView.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "LossWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "GameMenuWidgetView.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "MenuWidgetView.cs" ) )
 
                 .ThenByDescending( i => i.name.Equals( "DialogWidgetViewBase.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "SettingsWidgetView.cs" ) )

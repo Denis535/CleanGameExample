@@ -1,19 +1,15 @@
-﻿#nullable enable
+#nullable enable
 namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
-    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class GameMenuWidget : UIWidgetBase<GameMenuWidgetView> {
+    public class TotalsWidget : UIWidgetBase<TotalsWidgetView> {
 
-        // Container
-        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -21,14 +17,13 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override GameMenuWidgetView View { get; }
+        public override TotalsWidgetView View { get; }
 
         // Constructor
-        public GameMenuWidget(IDependencyContainer container) {
-            Container = container;
+        public TotalsWidget(IDependencyContainer container) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            View = CreateView( this );
+            //View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -53,20 +48,10 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameMenuWidgetView CreateView(GameMenuWidget widget) {
-            var view = new GameMenuWidgetView();
-            view.OnResume( evt => {
-                widget.RemoveSelf();
-            } );
-            view.OnSettings( evt => {
-                widget.AddChild( new SettingsWidget( widget.Container ) );
-            } );
-            view.OnBack( evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
-                widget.AddChild( dialog );
-            } );
-            return view;
-        }
+        //private static UIViewBase CreateView(WinWidget widget) {
+        //    var view = new UIViewBase();
+        //    return view;
+        //}
 
     }
 }

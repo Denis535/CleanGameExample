@@ -13,10 +13,10 @@ namespace Project.Entities {
 
     public class Game : GameBase2<Mode, Level>, IGame {
 
-        // IsDirty
-        private bool IsDirty { get; set; }
         // Input
         private InputActions_Game Input { get; }
+        // IsDirty
+        private bool IsDirty { get; set; }
         // Entities
         public Player Player { get; }
         public World World { get; }

@@ -44,12 +44,12 @@ namespace Project.App {
                 Load();
             }
 
-            // Save
-            public void Save() {
-                Save( "VideoSettings.IsVSync", IsVSync );
-            }
+            // Load
             public void Load() {
-                IsVSync = Load( "VideoSettings.IsVSync", true );
+                IsVSync = PlayerPrefs2.GetBool( "VideoSettings.IsVSync", true );
+            }
+            public void Save() {
+                PlayerPrefs2.SetBool( "VideoSettings.IsVSync", IsVSync );
             }
 
         }

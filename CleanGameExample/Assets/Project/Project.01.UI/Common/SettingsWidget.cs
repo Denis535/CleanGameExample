@@ -24,25 +24,25 @@ namespace Project.UI.Common {
         }
 
         // OnActivate
-        public override void OnActivate(object? argument) {
+        protected override void OnActivate(object? argument) {
             ShowSelf();
         }
-        public override void OnDeactivate(object? argument) {
+        protected override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
         // OnDescendantActivate
-        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
         // ShowView
-        public override void ShowView(UIViewBase view) {
+        protected override void ShowView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
                 View.AddView( profileSettingsWidgetView );
                 return;
@@ -57,7 +57,7 @@ namespace Project.UI.Common {
             }
             base.ShowView( view );
         }
-        public override void HideView(UIViewBase view) {
+        protected override void HideView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
                 View.RemoveView( profileSettingsWidgetView );
                 return;

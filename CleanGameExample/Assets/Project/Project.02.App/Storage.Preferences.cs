@@ -14,10 +14,10 @@ namespace Project.App {
                 Load();
             }
 
-            // Save
-            public void Save() {
-            }
+            // Load
             public void Load() {
+            }
+            public void Save() {
             }
 
         }

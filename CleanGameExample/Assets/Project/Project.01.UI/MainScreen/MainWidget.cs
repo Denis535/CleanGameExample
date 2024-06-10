@@ -37,7 +37,7 @@ namespace Project.UI.MainScreen {
         }
 
         // OnActivate
-        public override async void OnActivate(object? argument) {
+        protected override async void OnActivate(object? argument) {
             ShowSelf();
             // await MainScene
             while (Router.State != UIRouterState.MainSceneLoaded) {
@@ -70,18 +70,18 @@ namespace Project.UI.MainScreen {
             // Children
             AddChild( new MainMenuWidget( Container ) );
         }
-        public override void OnDeactivate(object? argument) {
+        protected override void OnDeactivate(object? argument) {
             HideSelf();
         }
 
         // OnDescendantActivate
-        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
         // Update

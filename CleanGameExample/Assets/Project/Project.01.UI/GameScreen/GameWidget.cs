@@ -34,25 +34,25 @@ namespace Project.UI.GameScreen {
         }
 
         // OnActivate
-        public override void OnActivate(object? argument) {
+        protected override void OnActivate(object? argument) {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
             Game.OnPauseChangeEvent += OnGamePauseChange;
         }
-        public override void OnDeactivate(object? argument) {
+        protected override void OnDeactivate(object? argument) {
             Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
         }
 
         // OnDescendantActivate
-        public override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
-        public override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
         // Update

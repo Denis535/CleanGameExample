@@ -26,12 +26,12 @@ namespace Project.App {
                 Load();
             }
 
-            // Save
-            public void Save() {
-                Save( "ProfileSettings.Name", Name );
-            }
+            // Load
             public void Load() {
-                Name = Load( "ProfileSettings.Name", "Anonymous" );
+                Name = PlayerPrefs.GetString( "ProfileSettings.Name", "Anonymous" );
+            }
+            public void Save() {
+                PlayerPrefs.SetString( "ProfileSettings.Name", Name );
             }
 
             // Utils

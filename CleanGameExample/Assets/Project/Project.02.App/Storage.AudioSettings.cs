@@ -59,18 +59,18 @@ namespace Project.App {
                 base.Dispose();
             }
 
-            // Save
-            public void Save() {
-                Save( "AudioSettings.MasterVolume", MasterVolume );
-                Save( "AudioSettings.MusicVolume", MusicVolume );
-                Save( "AudioSettings.SfxVolume", SfxVolume );
-                Save( "AudioSettings.GameVolume", GameVolume );
-            }
+            // Load
             public void Load() {
-                MasterVolume = Load( "AudioSettings.MasterVolume", 0.5f );
-                MusicVolume = Load( "AudioSettings.MusicVolume", 0.5f );
-                SfxVolume = Load( "AudioSettings.SfxVolume", 0.5f );
-                GameVolume = Load( "AudioSettings.GameVolume", 0.5f );
+                MasterVolume = PlayerPrefs.GetFloat( "AudioSettings.MasterVolume", 0.5f );
+                MusicVolume = PlayerPrefs.GetFloat( "AudioSettings.MusicVolume", 0.5f );
+                SfxVolume = PlayerPrefs.GetFloat( "AudioSettings.SfxVolume", 0.5f );
+                GameVolume = PlayerPrefs.GetFloat( "AudioSettings.GameVolume", 0.5f );
+            }
+            public void Save() {
+                PlayerPrefs.SetFloat( "AudioSettings.MasterVolume", MasterVolume );
+                PlayerPrefs.SetFloat( "AudioSettings.MusicVolume", MusicVolume );
+                PlayerPrefs.SetFloat( "AudioSettings.SfxVolume", SfxVolume );
+                PlayerPrefs.SetFloat( "AudioSettings.GameVolume", GameVolume );
             }
 
             // Helpers

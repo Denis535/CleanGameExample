@@ -16,9 +16,14 @@ namespace Project.App {
 
         // Constructor
         internal Storage() {
-            //var args = Environment.GetCommandLineArgs();
-            //Debug.Log( "Arguments: " + args.Join( ", " ) );
-            Profile = GetCommandLineArgument( "--profile" );
+            //foreach (var (key, values) in Environment2.GetKeyValues()) {
+            //    if (key != null) {
+            //        Debug.Log( key + ": " + string.Join( ", ", values ) );
+            //    } else {
+            //        Debug.Log( string.Join( ", ", values ) );
+            //    }
+            //}
+            Profile = Environment2.GetValue( "--profile" );
         }
 
     }

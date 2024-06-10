@@ -58,8 +58,8 @@ namespace Project.UI.GameScreen {
         // Update
         public void Update() {
             if (View.IsCancelPressed) {
-                if (!Children.OfType<GameWidget_Menu>().Any()) {
-                    AddChild( new GameWidget_Menu( Container ) );
+                if (!Children.OfType<MenuGameWidget>().Any()) {
+                    AddChild( new MenuGameWidget( Container ) );
                 }
             }
             Game.IsPaused = IsPaused( this );
@@ -76,10 +76,10 @@ namespace Project.UI.GameScreen {
                 if (state is GameState.Completed) {
                     if (Game.Player.State == PlayerState.Winner) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new GameWidget_Win( Container ) );
+                        AddChild( new WinTotalsGameWidget( Container ) );
                     } else if (Game.Player.State == PlayerState.Looser) {
                         await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new GameWidget_Loss( Container ) );
+                        AddChild( new LossTotalsGameWidget( Container ) );
                     }
                 }
             } catch (OperationCanceledException) {
@@ -96,10 +96,10 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static bool IsPaused(GameWidget widget) {
-            return widget.Children.OfType<GameWidget_Menu>().Any();
+            return widget.Children.OfType<MenuGameWidget>().Any();
         }
         private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is GameWidget_Win or GameWidget_Loss or GameWidget_Menu )) return CursorLockMode.None;
+            if (widget.Children.Any( i => i is WinTotalsGameWidget or LossTotalsGameWidget or MenuGameWidget )) return CursorLockMode.None;
             return CursorLockMode.Locked;
         }
         private static TargetEffect GetTargetEffect(Player player) {

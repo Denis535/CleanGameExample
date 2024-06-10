@@ -3,17 +3,13 @@ namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
-    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class GameWidget_Menu : UIWidgetBase<GameWidgetView_Menu> {
+    public class LossTotalsGameWidget : UIWidgetBase<LossTotalsGameWidgetView> {
 
-        // Container
-        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -21,11 +17,10 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override GameWidgetView_Menu View { get; }
+        public override LossTotalsGameWidgetView View { get; }
 
         // Constructor
-        public GameWidget_Menu(IDependencyContainer container) {
-            Container = container;
+        public LossTotalsGameWidget(IDependencyContainer container) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -53,18 +48,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameWidgetView_Menu CreateView(GameWidget_Menu widget) {
-            var view = new GameWidgetView_Menu();
-            view.OnResume( evt => {
-                widget.RemoveSelf();
-            } );
-            view.OnSettings( evt => {
-                widget.AddChild( new SettingsWidget( widget.Container ) );
-            } );
-            view.OnBack( evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
-                widget.AddChild( dialog );
-            } );
+        private static LossTotalsGameWidgetView CreateView(LossTotalsGameWidget widget) {
+            var view = new LossTotalsGameWidgetView();
             return view;
         }
 

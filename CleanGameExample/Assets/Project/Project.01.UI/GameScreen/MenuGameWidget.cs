@@ -3,13 +3,17 @@ namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
+    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class GameWidget_Loss : UIWidgetBase<GameWidgetView_Loss> {
+    public class MenuGameWidget : UIWidgetBase<MenuGameWidgetView> {
 
+        // Container
+        private IDependencyContainer Container { get; }
         // UI
         private UIRouter Router { get; }
         // App
@@ -17,10 +21,11 @@ namespace Project.UI.GameScreen {
         // Entities
         private Game Game => Application.Game!;
         // View
-        public override GameWidgetView_Loss View { get; }
+        public override MenuGameWidgetView View { get; }
 
         // Constructor
-        public GameWidget_Loss(IDependencyContainer container) {
+        public MenuGameWidget(IDependencyContainer container) {
+            Container = container;
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -48,8 +53,18 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static GameWidgetView_Loss CreateView(GameWidget_Loss widget) {
-            var view = new GameWidgetView_Loss();
+        private static MenuGameWidgetView CreateView(MenuGameWidget widget) {
+            var view = new MenuGameWidgetView();
+            view.OnResume( evt => {
+                widget.RemoveSelf();
+            } );
+            view.OnSettings( evt => {
+                widget.AddChild( new SettingsWidget( widget.Container ) );
+            } );
+            view.OnBack( evt => {
+                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
+                widget.AddChild( dialog );
+            } );
             return view;
         }
 

@@ -27,7 +27,7 @@ namespace Project.UI.MainScreen {
         // SetBackgroundEffect
         public void SetBackgroundEffect(UIViewBase view) {
             // MainMenuWidgetView
-            if (view is MainWidgetView_Menu mainMenuWidgetView) {
+            if (view is MenuMainWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_MainMenuView) {
                     SetEffect( widget, Color.white, default, 0, 1.0f );
@@ -65,7 +65,7 @@ namespace Project.UI.MainScreen {
                 return;
             }
             // LoadingWidgetView
-            if (view is MainWidgetView_Loading loadingWidgetView) {
+            if (view is LoadingMainWidgetView loadingWidgetView) {
                 SetEffect( widget, Color.gray, default, 45, 2.5f );
                 return;
             }

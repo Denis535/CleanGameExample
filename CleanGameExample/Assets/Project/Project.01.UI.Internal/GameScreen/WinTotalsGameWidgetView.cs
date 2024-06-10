@@ -7,7 +7,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class GameWidgetView_Win : UIViewBase {
+    public class WinTotalsGameWidgetView : UIViewBase {
 
         private Widget widget;
         private Label title;
@@ -19,7 +19,7 @@ namespace Project.UI.GameScreen {
         public override int Layer => -1000;
 
         // Constructor
-        public GameWidgetView_Win() {
+        public WinTotalsGameWidgetView() {
             VisualElement = VisualElementFactory_Game.WinWidget( out widget, out title, out message, out nextLevel, out back );
         }
         public override void Dispose() {

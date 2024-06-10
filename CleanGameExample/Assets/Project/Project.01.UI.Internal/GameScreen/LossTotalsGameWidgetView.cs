@@ -7,7 +7,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class GameWidgetView_Loss : UIViewBase {
+    public class LossTotalsGameWidgetView : UIViewBase {
 
         private Widget widget;
         private Label title;
@@ -19,7 +19,7 @@ namespace Project.UI.GameScreen {
         public override int Layer => -1000;
 
         // Constructor
-        public GameWidgetView_Loss() {
+        public LossTotalsGameWidgetView() {
             VisualElement = VisualElementFactory_Game.LossWidget( out widget, out title, out message, out tryAgain, out back );
         }
         public override void Dispose() {

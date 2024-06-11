@@ -7,16 +7,16 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class AudioSettingsWidget : UIWidgetBase<AudioSettingsWidgetView> {
+    public class AudioSettingsWidget : UIWidgetBase2<AudioSettingsWidgetView> {
 
-        // App
+        // Container
         private Application2 Application { get; }
         private Storage.AudioSettings AudioSettings => Application.AudioSettings;
         // View
         public override AudioSettingsWidgetView View { get; }
 
         // Constructor
-        public AudioSettingsWidget(IDependencyContainer container) {
+        public AudioSettingsWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }

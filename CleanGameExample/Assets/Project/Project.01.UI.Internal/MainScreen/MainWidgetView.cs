@@ -13,7 +13,7 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
-        // Props
+        // Layer
         public override int Layer => -1000;
 
         // Constructor
@@ -30,19 +30,19 @@ namespace Project.UI.MainScreen {
             if (view is MenuMainWidgetView mainMenuWidgetView) {
                 view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_MainMenuView) {
-                    SetEffect( widget, Color.white, default, 0, 1.0f );
+                    SetBackgroundEffect( widget, Color.white, default, 0, 1.0f );
                     return;
                 }
                 if (view is MainMenuWidgetView_StartGameView) {
-                    SetEffect( widget, Color.white, default, 1, 1.1f );
+                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectLevelView) {
-                    SetEffect( widget, Color.white, default, 2, 1.2f );
+                    SetBackgroundEffect( widget, Color.white, default, 2, 1.2f );
                     return;
                 }
                 if (view is MainMenuWidgetView_SelectCharacterView) {
-                    SetEffect( widget, Color.white, default, 3, 1.3f );
+                    SetBackgroundEffect( widget, Color.white, default, 3, 1.3f );
                     return;
                 }
                 return;
@@ -51,32 +51,32 @@ namespace Project.UI.MainScreen {
             if (view is SettingsWidgetView settingsWidgetView) {
                 view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is ProfileSettingsWidgetView) {
-                    SetEffect( widget, Color.white, default, 1, 1.1f );
+                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is AudioSettingsWidgetView) {
-                    SetEffect( widget, Color.white, default, 1, 1.1f );
+                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is VideoSettingsWidgetView) {
-                    SetEffect( widget, Color.white, default, 1, 1.1f );
+                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
                 return;
             }
             // LoadingWidgetView
             if (view is LoadingMainWidgetView loadingWidgetView) {
-                SetEffect( widget, Color.gray, default, 45, 2.5f );
+                SetBackgroundEffect( widget, Color.gray, default, 45, 2.5f );
                 return;
             }
         }
 
         // Helpers
-        private static void SetEffect(VisualElement element, Color color, Vector2 translate, float rotate, float scale) {
-            element.style.unityBackgroundImageTintColor = color;
-            element.style.translate = new Translate( translate.x, translate.y );
-            element.style.rotate = new Rotate( Angle.Degrees( rotate ) );
-            element.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
+        private static void SetBackgroundEffect(VisualElement background, Color color, Vector2 translate, float rotate, float scale) {
+            background.style.unityBackgroundImageTintColor = color;
+            background.style.translate = new Translate( translate.x, translate.y );
+            background.style.rotate = new Rotate( Angle.Degrees( rotate ) );
+            background.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
         }
 
     }

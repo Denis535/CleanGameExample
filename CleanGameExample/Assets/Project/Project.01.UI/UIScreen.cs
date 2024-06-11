@@ -14,11 +14,9 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase2 {
 
-        // UI
+        // Container
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
-        // Entities
         private Game? Game => Application.Game;
 
         // Constructor

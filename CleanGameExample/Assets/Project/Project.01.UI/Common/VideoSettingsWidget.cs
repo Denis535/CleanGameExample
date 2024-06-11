@@ -8,16 +8,16 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class VideoSettingsWidget : UIWidgetBase<VideoSettingsWidgetView> {
+    public class VideoSettingsWidget : UIWidgetBase2<VideoSettingsWidgetView> {
 
-        // App
+        // Container
         private Application2 Application { get; }
         private Storage.VideoSettings VideoSettings => Application.VideoSettings;
         // View
         public override VideoSettingsWidgetView View { get; }
 
         // Constructor
-        public VideoSettingsWidget(IDependencyContainer container) {
+        public VideoSettingsWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }

@@ -11,22 +11,22 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Game : GameBase2<Mode, Level, GameState>, IGame {
+    public class Game : GameBase2<GameMode, GameLevel, GameState>, IGame {
 
+        // Container
+        public Player Player { get; }
+        public World World { get; }
         // Input
         private InputActions_Game Input { get; }
         // IsDirty
         private bool IsDirty { get; set; }
-        // Entities
-        public Player Player { get; }
-        public World World { get; }
 
         // Constructor
-        public Game(IDependencyContainer container, Mode mode, Level level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
-            Input = new InputActions_Game();
-            Input.Enable();
+        public Game(IDependencyContainer container, GameMode mode, GameLevel level, string name, PlayerCharacterKind kind) : base( container, "Game", mode, level ) {
             Player = new Player( container, name, kind, this, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
+            Input = new InputActions_Game();
+            Input.Enable();
             {
                 var point = World.PlayerPoints.First();
                 SpawnPlayerCharacter( point );
@@ -40,8 +40,8 @@ namespace Project.Entities {
         }
         public override void Dispose() {
             Time.timeScale = 1f;
-            Player.Dispose();
             Input.Dispose();
+            Player.Dispose();
             base.Dispose();
         }
 
@@ -122,19 +122,19 @@ namespace Project.Entities {
         }
 
     }
-    // Mode
-    public enum Mode {
+    // GameMode
+    public enum GameMode {
         None
     }
-    // Level
-    public enum Level {
+    // GameLevel
+    public enum GameLevel {
         Level1,
         Level2,
         Level3
     }
-    public static class LevelExtensions {
-        public static Level? GetNext(this Level level) {
-            if (level < Level.Level3) return level + 1;
+    public static class GameLevelExtensions {
+        public static GameLevel? GetNext(this GameLevel level) {
+            if (level < GameLevel.Level3) return level + 1;
             return null;
         }
     }

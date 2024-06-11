@@ -14,7 +14,7 @@ namespace Project.UI.MainScreen {
         private readonly Widget widget;
         private readonly Label loading;
 
-        // Props
+        // Layer
         public override int Layer => 0;
 
         // Constructor

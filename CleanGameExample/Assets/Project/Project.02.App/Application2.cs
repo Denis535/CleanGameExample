@@ -41,14 +41,14 @@ namespace Project.App {
         }
 
         // CreateGame
-        public void CreateGame(Level level, string name, PlayerCharacterKind kind) {
+        public void CreateGame(GameLevel level, string name, PlayerCharacterKind kind) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             CameraFactory.Initialize();
             PlayerCharacterFactory.Initialize();
             EnemyCharacterFactory.Initialize();
             GunFactory.Initialize();
             BulletFactory.Initialize();
-            Game = new Game( Container, Mode.None, level, name, kind );
+            Game = new Game( Container, GameMode.None, level, name, kind );
         }
         public void DestroyGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );

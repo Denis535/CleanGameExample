@@ -8,24 +8,19 @@ namespace Project.UI.GameScreen {
     using Project.App;
     using Project.Entities;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
     using UnityEngine.Framework.UI;
 
-    public class GameWidget : UIWidgetBase<GameWidgetView> {
+    public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
         // Container
-        private IDependencyContainer Container { get; }
-        // App
         private Application2 Application { get; }
-        // Entities
         private Game Game => Application.Game!;
         private Player Player => Application.Game!.Player;
         // View
         public override GameWidgetView View { get; }
 
         // Constructor
-        public GameWidget(IDependencyContainer container) {
-            Container = container;
+        public GameWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }
@@ -74,13 +69,8 @@ namespace Project.UI.GameScreen {
         private async void OnGameStateChange(GameState state) {
             try {
                 if (state is GameState.Completed) {
-                    if (Game.Player.State == PlayerState.Winner) {
-                        await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new WinTotalsGameWidget( Container ) );
-                    } else if (Game.Player.State == PlayerState.Loser) {
-                        await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                        AddChild( new LossTotalsGameWidget( Container ) );
-                    }
+                    await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
+                    AddChild( new TotalsGameWidget( Container ) );
                 }
             } catch (OperationCanceledException) {
             }
@@ -99,7 +89,7 @@ namespace Project.UI.GameScreen {
             return widget.Children.OfType<MenuGameWidget>().Any();
         }
         private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is WinTotalsGameWidget or LossTotalsGameWidget or MenuGameWidget )) return CursorLockMode.None;
+            if (widget.Children.Any( i => i is TotalsGameWidget or MenuGameWidget )) return CursorLockMode.None;
             return CursorLockMode.Locked;
         }
         private static TargetEffect GetTargetEffect(Player player) {

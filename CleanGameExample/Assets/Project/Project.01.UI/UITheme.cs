@@ -22,11 +22,9 @@ namespace Project.UI {
 
         private readonly Lock @lock = new Lock();
 
-        // UI
+        // Container
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
-        // Entities
         private Game? Game => Application.Game;
         // Themes
         private AssetHandle<AudioClip>[]? Themes { get; set; }

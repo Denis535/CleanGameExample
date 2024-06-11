@@ -10,22 +10,17 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MenuGameWidget : UIWidgetBase<MenuGameWidgetView> {
+    public class MenuGameWidget : UIWidgetBase2<MenuGameWidgetView> {
 
         // Container
-        private IDependencyContainer Container { get; }
-        // UI
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
-        // Entities
         private Game Game => Application.Game!;
         // View
         public override MenuGameWidgetView View { get; }
 
         // Constructor
-        public MenuGameWidget(IDependencyContainer container) {
-            Container = container;
+        public MenuGameWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );

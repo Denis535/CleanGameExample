@@ -11,21 +11,17 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MenuMainWidget : UIWidgetBase<MenuMainWidgetView> {
+    public class MenuMainWidget : UIWidgetBase2<MenuMainWidgetView> {
 
         // Container
-        private IDependencyContainer Container { get; }
-        // UI
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
         public override MenuMainWidgetView View { get; }
 
         // Constructor
-        public MenuMainWidget(IDependencyContainer container) {
-            Container = container;
+        public MenuMainWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -88,20 +84,20 @@ namespace Project.UI.MainScreen {
         private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MenuMainWidget widget) {
             var view = new MainMenuWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level1 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
             } );
             view.OnLevel2( evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level2 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level2 ) );
             } );
             view.OnLevel3( evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, Level.Level3 ) );
+                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level3 ) );
             } );
             view.OnBack( evt => {
                 widget.View.RemoveView( view );
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, Level level) {
+        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, GameLevel level) {
             var view = new MainMenuWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );

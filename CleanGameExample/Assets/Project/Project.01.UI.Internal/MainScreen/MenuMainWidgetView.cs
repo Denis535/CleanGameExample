@@ -14,7 +14,7 @@ namespace Project.UI.MainScreen {
         private readonly Label title;
         private readonly VisualElement content;
 
-        // Props
+        // Layer
         public override int Layer => 0;
         // Props
         public string Title => title.text;

@@ -17,7 +17,7 @@ namespace Project.UI {
 
         private static readonly Lock @lock = new Lock();
 
-        // App
+        // Container
         private Application2 Application { get; }
         // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
@@ -63,7 +63,7 @@ namespace Project.UI {
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(Level level, string name, PlayerCharacterKind kind) {
+        public async Task LoadGameSceneAsync(GameLevel level, string name, PlayerCharacterKind kind) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, kind );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
@@ -106,11 +106,11 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static string GetWorldAddress(Level level) {
+        private static string GetWorldAddress(GameLevel level) {
             switch (level) {
-                case Level.Level1: return R.Project.Entities.Worlds.Value_World_01;
-                case Level.Level2: return R.Project.Entities.Worlds.Value_World_02;
-                case Level.Level3: return R.Project.Entities.Worlds.Value_World_03;
+                case GameLevel.Level1: return R.Project.Entities.Worlds.Value_World_01;
+                case GameLevel.Level2: return R.Project.Entities.Worlds.Value_World_02;
+                case GameLevel.Level3: return R.Project.Entities.Worlds.Value_World_03;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

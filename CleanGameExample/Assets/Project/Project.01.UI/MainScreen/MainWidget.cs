@@ -12,13 +12,10 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MainWidget : UIWidgetBase<MainWidgetView> {
+    public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
         // Container
-        private IDependencyContainer Container { get; }
-        // UI
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
         private Storage Storage => Application.Storage;
         private IAuthenticationService AuthenticationService => Application.AuthenticationService;
@@ -26,8 +23,7 @@ namespace Project.UI.MainScreen {
         public override MainWidgetView View { get; }
 
         // Constructor
-        public MainWidget(IDependencyContainer container) {
-            Container = container;
+        public MainWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );

@@ -19,10 +19,9 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
-        // Props
+        // Layer
         public override int Layer => 0;
         // Props
-        public string Title => title.text;
         public ProfileSettingsWidgetView? ProfileSettingsWidgetView => profileSettings.Children().FirstOrDefault()?.GetView<ProfileSettingsWidgetView>();
         public VideoSettingsWidgetView? VideoSettingsWidgetView => videoSettings.Children().FirstOrDefault()?.GetView<VideoSettingsWidgetView>();
         public AudioSettingsWidgetView? AudioSettingsWidgetView => audioSettings.Children().FirstOrDefault()?.GetView<AudioSettingsWidgetView>();

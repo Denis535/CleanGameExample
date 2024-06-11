@@ -12,12 +12,12 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2<PlayerCharacterKind, PlayerState>, IPlayer {
 
-        // Input
-        private InputActions_Player Input { get; }
-        // Entities
+        // Container
         private Game Game { get; }
         public Camera2 Camera { get; }
         public PlayerCharacter? Character { get; internal set; }
+        // Input
+        private InputActions_Player Input { get; }
         // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
@@ -41,10 +41,10 @@ namespace Project.Entities {
 
         // Constructor
         public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container, name, kind ) {
-            Input = new InputActions_Player();
             Game = game;
             Camera = camera;
             Character = null;
+            Input = new InputActions_Player();
         }
         public override void Dispose() {
             Input.Dispose();

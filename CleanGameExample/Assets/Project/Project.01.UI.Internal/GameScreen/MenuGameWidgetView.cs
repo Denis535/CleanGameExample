@@ -15,10 +15,8 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
-        // Props
+        // Layer
         public override int Layer => 0;
-        // Props
-        public string Title => title.text;
 
         // Constructor
         public MenuGameWidgetView() {

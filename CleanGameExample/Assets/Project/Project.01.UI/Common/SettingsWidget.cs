@@ -7,13 +7,13 @@ namespace Project.UI.Common {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class SettingsWidget : UIWidgetBase<SettingsWidgetView> {
+    public class SettingsWidget : UIWidgetBase2<SettingsWidgetView> {
 
         // View
         public override SettingsWidgetView View { get; }
 
         // Constructor
-        public SettingsWidget(IDependencyContainer container) {
+        public SettingsWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
             AddChild( new ProfileSettingsWidget( container ) );
             AddChild( new VideoSettingsWidget( container ) );

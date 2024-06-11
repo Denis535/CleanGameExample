@@ -13,7 +13,7 @@ namespace Project.UI.GameScreen {
         private readonly Widget widget;
         private readonly VisualElement target;
 
-        // Props
+        // Layer
         public override int Layer => -1000;
         // Input
         public InputActions_UI Input { get; }

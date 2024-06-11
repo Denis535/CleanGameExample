@@ -8,22 +8,20 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class TotalsGameWidget : UIWidgetBase<TotalsGameWidgetView> {
+    public class TotalsGameWidget : UIWidgetBase2<TotalsGameWidgetView> {
 
-        // UI
+        // Container
         private UIRouter Router { get; }
-        // App
         private Application2 Application { get; }
-        // Entities
         private Game Game => Application.Game!;
         // View
         public override TotalsGameWidgetView View { get; }
 
         // Constructor
-        public TotalsGameWidget(IDependencyContainer container) {
+        public TotalsGameWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            //View = CreateView( this );
+            View = CreateView( this );
         }
         public override void Dispose() {
             base.Dispose();
@@ -48,10 +46,17 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        //private static UIViewBase CreateView(WinWidget widget) {
-        //    var view = new UIViewBase();
-        //    return view;
-        //}
+        private static TotalsGameWidgetView CreateView(TotalsGameWidget widget) {
+            if (widget.Game.Player.State is PlayerState.Winner) {
+                var view = new WinTotalsGameWidgetView();
+                return view;
+            }
+            if (widget.Game.Player.State is PlayerState.Loser) {
+                var view = new LossTotalsGameWidgetView();
+                return view;
+            }
+            throw Exceptions.Internal.NotSupported( $"PlayerState {widget.Game.Player.State} is not supported" );
+        }
 
     }
 }

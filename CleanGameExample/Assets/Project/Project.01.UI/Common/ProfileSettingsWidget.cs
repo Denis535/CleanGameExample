@@ -7,16 +7,16 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class ProfileSettingsWidget : UIWidgetBase<ProfileSettingsWidgetView> {
+    public class ProfileSettingsWidget : UIWidgetBase2<ProfileSettingsWidgetView> {
 
-        // App
+        // Container
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
         public override ProfileSettingsWidgetView View { get; }
 
         // Constructor
-        public ProfileSettingsWidget(IDependencyContainer container) {
+        public ProfileSettingsWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }

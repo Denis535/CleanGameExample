@@ -11,11 +11,10 @@ namespace Project {
     [DefaultExecutionOrder( 1001 )]
     public class DebugScreen : MonoBehaviour {
 
-        // UI
+        // Container
         private UITheme Theme { get; set; } = default!;
         private UIScreen Screen { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
-        // App
         private Application2 Application { get; set; } = default!;
 
         // Awake

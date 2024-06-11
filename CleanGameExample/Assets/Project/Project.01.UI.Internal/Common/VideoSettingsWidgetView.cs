@@ -32,7 +32,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public VideoSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.VideoSettingsWidgetView( out view, out isFullScreen, out screenResolution, out isVSync );
+            VisualElement = VisualElementFactory_Common.VideoSettings( out view, out isFullScreen, out screenResolution, out isVSync );
         }
         public override void Dispose() {
             base.Dispose();

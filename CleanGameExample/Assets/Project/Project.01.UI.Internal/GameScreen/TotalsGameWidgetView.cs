@@ -33,7 +33,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public WinTotalsGameWidgetView() {
-            VisualElement = VisualElementFactory_Game.WinTotalsWidget( out widget, out title, out message, out nextLevel, out back );
+            VisualElement = VisualElementFactory_Game.WinTotals( out widget, out title, out message, out nextLevel, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -53,7 +53,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public LossTotalsGameWidgetView() {
-            VisualElement = VisualElementFactory_Game.LossTotalsWidget( out widget, out title, out message, out tryAgain, out back );
+            VisualElement = VisualElementFactory_Game.LossTotals( out widget, out title, out message, out tryAgain, out back );
         }
         public override void Dispose() {
             base.Dispose();

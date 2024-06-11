@@ -18,7 +18,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MainWidgetView() {
-            VisualElement = VisualElementFactory_Main.MainWidget( out widget );
+            VisualElement = VisualElementFactory_Main.Main( out widget );
         }
         public override void Dispose() {
             base.Dispose();
@@ -29,19 +29,19 @@ namespace Project.UI.MainScreen {
             // Menu
             if (view is MenuMainWidgetView menu) {
                 view = menu.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
-                if (view is MainMenuWidgetView_MainMenuView) {
+                if (view is MenuMainWidgetView_MenuView) {
                     SetBackgroundEffect( widget, Color.white, default, 0, 1.0f );
                     return;
                 }
-                if (view is MainMenuWidgetView_StartGameView) {
+                if (view is MenuMainWidgetView_StartGameView) {
                     SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
                 }
-                if (view is MainMenuWidgetView_SelectLevelView) {
+                if (view is MenuMainWidgetView_SelectLevelView) {
                     SetBackgroundEffect( widget, Color.white, default, 2, 1.2f );
                     return;
                 }
-                if (view is MainMenuWidgetView_SelectCharacterView) {
+                if (view is MenuMainWidgetView_SelectCharacterView) {
                     SetBackgroundEffect( widget, Color.white, default, 3, 1.3f );
                     return;
                 }

@@ -19,7 +19,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MenuMainWidgetView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget( out widget, out title, out content );
+            VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out content );
         }
         public override void Dispose() {
             this.GetChildren().DisposeAll();
@@ -67,36 +67,36 @@ namespace Project.UI.MainScreen {
         }
         // Helpers
         private static string GetTitle(UIViewBase view) {
-            if (view is MainMenuWidgetView_MainMenuView) {
-                return "Main Menu";
+            if (view is MenuMainWidgetView_MenuView) {
+                return "Menu";
             }
-            if (view is MainMenuWidgetView_StartGameView) {
+            if (view is MenuMainWidgetView_StartGameView) {
                 return "Start Game";
             }
-            if (view is MainMenuWidgetView_SelectLevelView) {
+            if (view is MenuMainWidgetView_SelectLevelView) {
                 return "Select Level";
             }
-            if (view is MainMenuWidgetView_SelectCharacterView) {
+            if (view is MenuMainWidgetView_SelectCharacterView) {
                 return "Select Your Character";
             }
             throw Exceptions.Internal.NotSupported( $"View {view} is not supported" );
         }
 
     }
-    // MainMenuView
-    public class MainMenuWidgetView_MainMenuView : UIViewBase {
+    // MenuView
+    public class MenuMainWidgetView_MenuView : UIViewBase {
 
         private readonly VisualElement view;
         private readonly Button startGame;
         private readonly Button settings;
         private readonly Button quit;
 
-        // Props
+        // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
-        public MainMenuWidgetView_MainMenuView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_MainMenuView( out view, out startGame, out settings, out quit );
+        public MenuMainWidgetView_MenuView() {
+            VisualElement = VisualElementFactory_Main.Menu_Menu( out view, out startGame, out settings, out quit );
         }
         public override void Dispose() {
             base.Dispose();
@@ -115,19 +115,19 @@ namespace Project.UI.MainScreen {
 
     }
     // StartGameView
-    public class MainMenuWidgetView_StartGameView : UIViewBase {
+    public class MenuMainWidgetView_StartGameView : UIViewBase {
 
         private readonly VisualElement view;
         private readonly Button newGame;
         private readonly Button @continue;
         private readonly Button back;
 
-        // Props
+        // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
-        public MainMenuWidgetView_StartGameView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_StartGameView( out view, out newGame, out @continue, out back );
+        public MenuMainWidgetView_StartGameView() {
+            VisualElement = VisualElementFactory_Main.Menu_StartGame( out view, out newGame, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -146,7 +146,7 @@ namespace Project.UI.MainScreen {
 
     }
     // SelectLevelView
-    public class MainMenuWidgetView_SelectLevelView : UIViewBase {
+    public class MenuMainWidgetView_SelectLevelView : UIViewBase {
 
         private readonly VisualElement view;
         private readonly Button level1;
@@ -154,12 +154,12 @@ namespace Project.UI.MainScreen {
         private readonly Button level3;
         private readonly Button back;
 
-        // Props
+        // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
-        public MainMenuWidgetView_SelectLevelView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectLevelView( out view, out level1, out level2, out level3, out back );
+        public MenuMainWidgetView_SelectLevelView() {
+            VisualElement = VisualElementFactory_Main.Menu_SelectLevel( out view, out level1, out level2, out level3, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -181,7 +181,7 @@ namespace Project.UI.MainScreen {
 
     }
     // SelectCharacterView
-    public class MainMenuWidgetView_SelectCharacterView : UIViewBase {
+    public class MenuMainWidgetView_SelectCharacterView : UIViewBase {
 
         private readonly VisualElement view;
         private readonly Button gray;
@@ -190,12 +190,12 @@ namespace Project.UI.MainScreen {
         private readonly Button blue;
         private readonly Button back;
 
-        // Props
+        // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
 
         // Constructor
-        public MainMenuWidgetView_SelectCharacterView() {
-            VisualElement = VisualElementFactory_Main.MainMenuWidget_SelectCharacterView( out view, out gray, out red, out green, out blue, out back );
+        public MenuMainWidgetView_SelectCharacterView() {
+            VisualElement = VisualElementFactory_Main.Menu_SelectCharacter( out view, out gray, out red, out green, out blue, out back );
         }
         public override void Dispose() {
             base.Dispose();

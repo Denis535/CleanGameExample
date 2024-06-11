@@ -37,7 +37,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public AudioSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.AudioSettingsWidgetView( out view, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
+            VisualElement = VisualElementFactory_Common.AudioSettings( out view, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
         }
         public override void Dispose() {
             base.Dispose();

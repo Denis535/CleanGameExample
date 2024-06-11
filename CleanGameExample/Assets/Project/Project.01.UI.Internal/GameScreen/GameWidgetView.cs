@@ -22,7 +22,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameWidgetView() {
-            VisualElement = VisualElementFactory_Game.GameWidget( out widget, out target );
+            VisualElement = VisualElementFactory_Game.Game( out widget, out target );
             Input = new InputActions_UI();
             Input.Enable();
         }

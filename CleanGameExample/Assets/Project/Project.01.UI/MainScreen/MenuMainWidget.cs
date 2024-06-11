@@ -51,11 +51,11 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MenuMainWidgetView CreateView(MenuMainWidget widget) {
             var view = new MenuMainWidgetView();
-            view.AddView( CreateView_MainMenuView( widget ) );
+            view.AddView( CreateView_MenuView( widget ) );
             return view;
         }
-        private static MainMenuWidgetView_MainMenuView CreateView_MainMenuView(MenuMainWidget widget) {
-            var view = new MainMenuWidgetView_MainMenuView();
+        private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuMainWidget widget) {
+            var view = new MenuMainWidgetView_MenuView();
             view.OnStartGame( evt => {
                 widget.View.AddView( CreateView_StartGameView( widget ) );
             } );
@@ -68,8 +68,8 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_StartGameView CreateView_StartGameView(MenuMainWidget widget) {
-            var view = new MainMenuWidgetView_StartGameView();
+        private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuMainWidget widget) {
+            var view = new MenuMainWidgetView_StartGameView();
             view.OnNewGame( evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
             } );
@@ -81,8 +81,8 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectLevelView CreateView_SelectLevelView(MenuMainWidget widget) {
-            var view = new MainMenuWidgetView_SelectLevelView();
+        private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuMainWidget widget) {
+            var view = new MenuMainWidgetView_SelectLevelView();
             view.OnLevel1( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
             } );
@@ -97,8 +97,8 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MainMenuWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, GameLevel level) {
-            var view = new MainMenuWidgetView_SelectCharacterView();
+        private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, GameLevel level) {
+            var view = new MenuMainWidgetView_SelectCharacterView();
             view.OnGray( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();

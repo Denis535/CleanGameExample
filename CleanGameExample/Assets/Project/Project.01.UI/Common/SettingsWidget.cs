@@ -43,31 +43,31 @@ namespace Project.UI.Common {
 
         // ShowView
         protected override void ShowView(UIViewBase view) {
-            if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
-                View.AddView( profileSettingsWidgetView );
+            if (view is ProfileSettingsWidgetView profileSettings) {
+                View.ProfileSettings = profileSettings;
                 return;
             }
-            if (view is VideoSettingsWidgetView videoSettingsWidgetView) {
-                View.AddView( videoSettingsWidgetView );
+            if (view is VideoSettingsWidgetView videoSettings) {
+                View.VideoSettings = videoSettings;
                 return;
             }
-            if (view is AudioSettingsWidgetView audioSettingsWidgetView) {
-                View.AddView( audioSettingsWidgetView );
+            if (view is AudioSettingsWidgetView audioSettings) {
+                View.AudioSettings = audioSettings;
                 return;
             }
             base.ShowView( view );
         }
         protected override void HideView(UIViewBase view) {
-            if (view is ProfileSettingsWidgetView profileSettingsWidgetView) {
-                View.RemoveView( profileSettingsWidgetView );
+            if (view is ProfileSettingsWidgetView profileSettings) {
+                View.ProfileSettings = null;
                 return;
             }
-            if (view is VideoSettingsWidgetView videoSettingsWidgetView) {
-                View.RemoveView( videoSettingsWidgetView );
+            if (view is VideoSettingsWidgetView videoSettings) {
+                View.VideoSettings = null;
                 return;
             }
-            if (view is AudioSettingsWidgetView audioSettingsWidgetView) {
-                View.RemoveView( audioSettingsWidgetView );
+            if (view is AudioSettingsWidgetView audioSettings) {
+                View.AudioSettings = null;
                 return;
             }
             base.HideView( view );

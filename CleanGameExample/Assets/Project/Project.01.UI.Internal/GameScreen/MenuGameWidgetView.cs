@@ -20,7 +20,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public MenuGameWidgetView() {
-            VisualElement = VisualElementFactory_Game.GameMenuWidget( out widget, out title, out resume, out settings, out back );
+            VisualElement = VisualElementFactory_Game.Menu( out widget, out title, out resume, out settings, out back );
         }
         public override void Dispose() {
             base.Dispose();

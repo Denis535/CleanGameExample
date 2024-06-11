@@ -13,50 +13,55 @@ namespace Project.UI.Common {
         private readonly Widget widget;
         private readonly Label title;
         private readonly TabView tabView;
-        private readonly Tab profileSettings;
-        private readonly Tab videoSettings;
-        private readonly Tab audioSettings;
+        private readonly Tab profileSettingsTab;
+        private readonly Tab videoSettingsTab;
+        private readonly Tab audioSettingsTab;
         private readonly Button okey;
         private readonly Button back;
 
         // Layer
         public override int Layer => 0;
         // Props
-        public ProfileSettingsWidgetView? ProfileSettingsWidgetView => profileSettings.Children().FirstOrDefault()?.GetView<ProfileSettingsWidgetView>();
-        public VideoSettingsWidgetView? VideoSettingsWidgetView => videoSettings.Children().FirstOrDefault()?.GetView<VideoSettingsWidgetView>();
-        public AudioSettingsWidgetView? AudioSettingsWidgetView => audioSettings.Children().FirstOrDefault()?.GetView<AudioSettingsWidgetView>();
+        public ProfileSettingsWidgetView? ProfileSettings {
+            get => profileSettingsTab.Children().FirstOrDefault()?.GetView<ProfileSettingsWidgetView>();
+            set {
+                if (value != null) {
+                    profileSettingsTab.Add( value );
+                } else {
+                    profileSettingsTab.Clear();
+                }
+            }
+        }
+        public VideoSettingsWidgetView? VideoSettings {
+            get => videoSettingsTab.Children().FirstOrDefault()?.GetView<VideoSettingsWidgetView>();
+            set {
+                if (value != null) {
+                    videoSettingsTab.Add( value );
+                } else {
+                    videoSettingsTab.Clear();
+                }
+            }
+        }
+        public AudioSettingsWidgetView? AudioSettings {
+            get => audioSettingsTab.Children().FirstOrDefault()?.GetView<AudioSettingsWidgetView>();
+            set {
+                if (value != null) {
+                    audioSettingsTab.Add( value );
+                } else {
+                    audioSettingsTab.Clear();
+                }
+            }
+        }
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.SettingsWidget( out widget, out title, out tabView, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
+            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out tabView, out profileSettingsTab, out videoSettingsTab, out audioSettingsTab, out okey, out back );
             widget.OnValidate( evt => {
                 okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // AddView
-        public void AddView(ProfileSettingsWidgetView view) {
-            profileSettings.Add( view );
-        }
-        public void AddView(VideoSettingsWidgetView view) {
-            videoSettings.Add( view );
-        }
-        public void AddView(AudioSettingsWidgetView view) {
-            audioSettings.Add( view );
-        }
-
-        // RemoveView
-        public void RemoveView(ProfileSettingsWidgetView view) {
-            profileSettings.Remove( view );
-        }
-        public void RemoveView(VideoSettingsWidgetView view) {
-            videoSettings.Remove( view );
-        }
-        public void RemoveView(AudioSettingsWidgetView view) {
-            audioSettings.Remove( view );
         }
 
         // OnEvent

@@ -8,8 +8,8 @@ namespace Project.UI {
 
     public static class VisualElementFactory_Game {
 
-        // GameWidget
-        public static Widget GameWidget(out Widget widget, out VisualElement target) {
+        // Game
+        public static Widget Game(out Widget widget, out VisualElement target) {
             using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
                 VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
@@ -19,25 +19,25 @@ namespace Project.UI {
             }
         }
 
-        // GameMenuWidget
-        public static Widget GameMenuWidget(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
+        // Menu
+        public static Widget Menu(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
             using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
-                        VisualElementFactory.Label( "Game Menu" ).AddToScope( out title );
+                        VisualElementFactory.Label( "Menu" ).AddToScope( out title );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
-                        VisualElementFactory.Select_Resume( "Resume" ).AddToScope( out resume );
+                        VisualElementFactory.Resume( "Resume" ).AddToScope( out resume );
                         VisualElementFactory.Select( "Settings" ).AddToScope( out settings );
-                        VisualElementFactory.Select_Back( "Back To Main Menu" ).AddToScope( out back );
+                        VisualElementFactory.Back( "Back To Main Menu" ).AddToScope( out back );
                     }
                 }
                 return widget;
             }
         }
 
-        // WinTotalsWidget
-        public static Widget WinTotalsWidget(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
+        // WinTotals
+        public static Widget WinTotals(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
             using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -57,8 +57,8 @@ namespace Project.UI {
             }
         }
 
-        // LossTotalsWidget
-        public static Widget LossTotalsWidget(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
+        // LossTotals
+        public static Widget LossTotals(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
             using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {

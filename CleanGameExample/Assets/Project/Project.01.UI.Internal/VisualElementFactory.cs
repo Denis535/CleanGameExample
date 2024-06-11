@@ -11,8 +11,6 @@ namespace Project.UI {
 
         // StringSelector
         public static Func<object?, string?>? StringSelector { get; set; }
-        // OnVisualElementCreated
-        public static event Action<VisualElement>? OnVisualElementCreated;
         // OnWidgetAttach
         public static event Action<VisualElement>? OnWidgetAttach;
         public static event Action<VisualElement>? OnWidgetDetach;
@@ -69,29 +67,29 @@ namespace Project.UI {
         public static Widget DialogWidget() {
             var result = Create<Widget>( "dialog-widget", "dialog-widget" );
             result.OnAttachToPanel( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.OnAttachToPanel( evt => OnPlayDialog?.Invoke( evt ) );
             result.OnDetachFromPanel( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
+            result.OnAttachToPanel( evt => OnPlayDialog?.Invoke( evt ) );
             return result;
         }
         public static Widget InfoDialogWidget() {
             var result = Create<Widget>( "info-dialog-widget", "info-dialog-widget" );
             result.OnAttachToPanel( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.OnAttachToPanel( evt => OnPlayInfoDialog?.Invoke( evt ) );
             result.OnDetachFromPanel( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
+            result.OnAttachToPanel( evt => OnPlayInfoDialog?.Invoke( evt ) );
             return result;
         }
         public static Widget WarningDialogWidget() {
             var result = Create<Widget>( "warning-dialog-widget", "warning-dialog-widget" );
             result.OnAttachToPanel( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.OnAttachToPanel( evt => OnPlayWarningDialog?.Invoke( evt ) );
             result.OnDetachFromPanel( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
+            result.OnAttachToPanel( evt => OnPlayWarningDialog?.Invoke( evt ) );
             return result;
         }
         public static Widget ErrorDialogWidget() {
             var result = Create<Widget>( "error-dialog-widget", "error-dialog-widget" );
             result.OnAttachToPanel( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.OnAttachToPanel( evt => OnPlayErrorDialog?.Invoke( evt ) );
             result.OnDetachFromPanel( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
+            result.OnAttachToPanel( evt => OnPlayErrorDialog?.Invoke( evt ) );
             return result;
         }
 
@@ -222,28 +220,28 @@ namespace Project.UI {
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button Select_Resume(string? text) {
+        public static Button Resume(string? text) {
             var result = Create<Button>( null, "resume" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button Select_Back(string? text) {
+        public static Button Back(string? text) {
             var result = Create<Button>( null, "back" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button Select_Exit(string? text) {
+        public static Button Exit(string? text) {
             var result = Create<Button>( null, "exit" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
             result.OnClick( evt => OnPlaySelect?.Invoke( evt ) );
             return result;
         }
-        public static Button Select_Quit(string? text) {
+        public static Button Quit(string? text) {
             var result = Create<Button>( null, "quit" );
             result.text = text;
             result.OnFocus( evt => OnPlayFocus?.Invoke( evt ) );
@@ -336,7 +334,6 @@ namespace Project.UI {
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
-            OnVisualElementCreated?.Invoke( result );
             return result;
         }
 

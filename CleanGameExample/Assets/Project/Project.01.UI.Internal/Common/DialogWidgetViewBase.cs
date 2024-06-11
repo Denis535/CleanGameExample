@@ -39,7 +39,7 @@ namespace Project.UI.Common {
         // Constructor
         public DialogWidgetViewBase() {
             VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out this.title, out this.message );
-            widget.OnAttachToPanel( PlayAppearance );
+            widget.OnAttachToPanel( PlayAnimation );
             header.SetDisplayed( false );
             content.SetDisplayed( false );
             footer.SetDisplayed( false );
@@ -87,7 +87,7 @@ namespace Project.UI.Common {
             throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {view} is not supported" );
         }
         // Helpers
-        private static void PlayAppearance(AttachToPanelEvent evt) {
+        private static void PlayAnimation(AttachToPanelEvent evt) {
             var target = (VisualElement) evt.target;
             var animation = ValueAnimation<float>.Create( target, Mathf.LerpUnclamped );
             animation.valueUpdated = (view, t) => {

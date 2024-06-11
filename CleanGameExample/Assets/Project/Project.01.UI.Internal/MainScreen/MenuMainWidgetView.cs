@@ -16,8 +16,6 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => 0;
-        // Props
-        public string Title => title.text;
 
         // Constructor
         public MenuMainWidgetView() {

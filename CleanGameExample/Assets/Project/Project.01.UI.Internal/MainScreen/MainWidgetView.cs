@@ -26,9 +26,9 @@ namespace Project.UI.MainScreen {
 
         // SetBackgroundEffect
         public void SetBackgroundEffect(UIViewBase view) {
-            // MainMenuWidgetView
-            if (view is MenuMainWidgetView mainMenuWidgetView) {
-                view = mainMenuWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+            // Menu
+            if (view is MenuMainWidgetView menu) {
+                view = menu.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is MainMenuWidgetView_MainMenuView) {
                     SetBackgroundEffect( widget, Color.white, default, 0, 1.0f );
                     return;
@@ -47,9 +47,9 @@ namespace Project.UI.MainScreen {
                 }
                 return;
             }
-            // SettingsWidgetView
-            if (view is SettingsWidgetView settingsWidgetView) {
-                view = settingsWidgetView.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+            // Settings
+            if (view is SettingsWidgetView settings) {
+                view = settings.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
                 if (view is ProfileSettingsWidgetView) {
                     SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
                     return;
@@ -64,8 +64,8 @@ namespace Project.UI.MainScreen {
                 }
                 return;
             }
-            // LoadingWidgetView
-            if (view is LoadingMainWidgetView loadingWidgetView) {
+            // Loading
+            if (view is LoadingMainWidgetView loading) {
                 SetBackgroundEffect( widget, Color.gray, default, 45, 2.5f );
                 return;
             }

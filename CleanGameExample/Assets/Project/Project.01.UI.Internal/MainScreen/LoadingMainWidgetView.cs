@@ -20,14 +20,15 @@ namespace Project.UI.MainScreen {
         // Constructor
         public LoadingMainWidgetView() {
             VisualElement = VisualElementFactory_Main.LoadingWidget( out widget, out loading );
-            widget.OnAttachToPanel( i => PlayLoadingAnimation( loading ) );
+            loading.OnAttachToPanel( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         // Helpers
-        private static void PlayLoadingAnimation(Label label) {
+        private static void PlayAnimation(AttachToPanelEvent @event) {
+            var label = (Label) @event.target;
             var animation = ValueAnimation<float>.Create( label, Mathf.Lerp );
             animation.easingCurve = Easing.Linear;
             animation.valueUpdated = (label, t) => ((Label) label).text = GetLoadingText( t );

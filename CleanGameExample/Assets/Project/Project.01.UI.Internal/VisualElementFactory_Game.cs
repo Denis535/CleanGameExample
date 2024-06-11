@@ -36,8 +36,8 @@ namespace Project.UI {
             }
         }
 
-        // WinWidget
-        public static Widget WinWidget(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
+        // WinTotalsWidget
+        public static Widget WinTotalsWidget(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
             using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -57,8 +57,8 @@ namespace Project.UI {
             }
         }
 
-        // LossWidget
-        public static Widget LossWidget(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
+        // LossTotalsWidget
+        public static Widget LossTotalsWidget(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
             using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {

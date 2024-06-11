@@ -12,7 +12,7 @@ namespace Project.UI.Common {
         private readonly VisualElement view;
         private readonly TextField name;
 
-        // Props
+        // Layer
         public override int Layer => 0;
         // Props
         public string Name {

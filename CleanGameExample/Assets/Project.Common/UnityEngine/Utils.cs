@@ -107,6 +107,11 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
+        // AsObservable
+        public static Observable<T> AsObservable<T>(this VisualElement element) where T : notnull, EventBase<T>, new() {
+            return new Observable<T>( element );
+        }
+
         // OnValidate
         public static void OnValidate(this VisualElement element, EventCallback<EventBase> callback, TrickleDown useTrickleDown = TrickleDown.NoTrickleDown) {
             // todo: how to handle any event?
@@ -117,6 +122,25 @@ namespace UnityEngine {
             element.RegisterCallback<ChangeEvent<int>>( callback, useTrickleDown );
             element.RegisterCallback<ChangeEvent<float>>( callback, useTrickleDown );
             element.RegisterCallback<ChangeEvent<bool>>( callback, useTrickleDown );
+        }
+
+    }
+    public struct Observable<T> where T : notnull, EventBase<T>, new() {
+
+        private readonly VisualElement visualElement;
+
+        public Observable(VisualElement visualElement) {
+            this.visualElement = visualElement;
+        }
+
+        public void Register(EventCallback<T> callback) {
+            visualElement.RegisterCallback( callback );
+        }
+        public void RegisterOnce(EventCallback<T> callback) {
+            visualElement.RegisterCallbackOnce( callback );
+        }
+        public void Unregister(EventCallback<T> callback) {
+            visualElement.UnregisterCallback( callback );
         }
 
     }

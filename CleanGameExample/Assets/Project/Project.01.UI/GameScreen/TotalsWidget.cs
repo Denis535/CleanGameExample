@@ -1,26 +1,24 @@
-﻿#nullable enable
+#nullable enable
 namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
-    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MenuGameWidget : UIWidgetBase2<MenuGameWidgetView> {
+    public class TotalsWidget : UIWidgetBase2<TotalsWidgetView> {
 
         // Container
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Game Game => Application.Game!;
         // View
-        public override MenuGameWidgetView View { get; }
+        public override TotalsWidgetView View { get; }
 
         // Constructor
-        public MenuGameWidget(IDependencyContainer container) : base( container ) {
+        public TotalsWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -48,19 +46,16 @@ namespace Project.UI.GameScreen {
         }
 
         // Helpers
-        private static MenuGameWidgetView CreateView(MenuGameWidget widget) {
-            var view = new MenuGameWidgetView();
-            view.OnResume.Register( evt => {
-                widget.RemoveSelf();
-            } );
-            view.OnSettings.Register( evt => {
-                widget.AddChild( new SettingsWidget( widget.Container ) );
-            } );
-            view.OnBack.Register( evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
-                widget.AddChild( dialog );
-            } );
-            return view;
+        private static TotalsWidgetView CreateView(TotalsWidget widget) {
+            if (widget.Game.Player.State is PlayerState.Winner) {
+                var view = new WinTotalsGameWidgetView();
+                return view;
+            }
+            if (widget.Game.Player.State is PlayerState.Loser) {
+                var view = new LossTotalsGameWidgetView();
+                return view;
+            }
+            throw Exceptions.Internal.NotSupported( $"PlayerState {widget.Game.Player.State} is not supported" );
         }
 
     }

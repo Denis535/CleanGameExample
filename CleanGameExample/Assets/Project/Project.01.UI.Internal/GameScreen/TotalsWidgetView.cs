@@ -7,20 +7,20 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public abstract class TotalsGameWidgetView : UIViewBase {
+    public abstract class TotalsWidgetView : UIViewBase {
 
         // Layer
         public override int Layer => -1000;
 
         // Constructor
-        public TotalsGameWidgetView() {
+        public TotalsWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    public class WinTotalsGameWidgetView : TotalsGameWidgetView {
+    public class WinTotalsGameWidgetView : TotalsWidgetView {
 
         private Widget widget;
         private Label title;
@@ -40,7 +40,7 @@ namespace Project.UI.GameScreen {
         }
 
     }
-    public class LossTotalsGameWidgetView : TotalsGameWidgetView {
+    public class LossTotalsGameWidgetView : TotalsWidgetView {
 
         private Widget widget;
         private Label title;

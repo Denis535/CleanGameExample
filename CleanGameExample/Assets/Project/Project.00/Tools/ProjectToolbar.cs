@@ -107,18 +107,19 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI/UIRouter.cs" ) )
                 // UI/MainScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MainWidget.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MenuMainWidget.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/LoadingMainWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MenuWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/LoadingWidget.cs" ) )
                 // UI/GameScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/GameWidget.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/TotalsGameWidget.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/MenuGameWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/TotalsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/MenuWidget.cs" ) )
                 // UI/Common/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/DialogWidgetBase.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/SettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/ProfileSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/VideoSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/AudioSettingsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( "Widget.cs" ) )
                 // UI.Internal/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory_Main.cs" ) )
@@ -126,18 +127,19 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory_Common.cs" ) )
                 // UI.Internal/MainScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MainWidgetView.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MenuMainWidgetView.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/LoadingMainWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MenuWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/LoadingWidgetView.cs" ) )
                 // UI.Internal/GameScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/GameWidgetView.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/TotalsGameWidgetView.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/MenuGameWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/TotalsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/MenuWidgetView.cs" ) )
                 // UI.Internal/Common/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/DialogWidgetViewBase.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/SettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/ProfileSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/VideoSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/AudioSettingsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( "View.cs" ) )
                 // App/
                 .ThenByDescending( i => i.name.Equals( "Application2.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Storage.cs" ) )

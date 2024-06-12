@@ -11,17 +11,17 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class MenuMainWidget : UIWidgetBase2<MenuMainWidgetView> {
+    public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
         // Container
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
         // View
-        public override MenuMainWidgetView View { get; }
+        public override MenuWidgetView View { get; }
 
         // Constructor
-        public MenuMainWidget(IDependencyContainer container) : base( container ) {
+        public MenuWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -49,12 +49,12 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static MenuMainWidgetView CreateView(MenuMainWidget widget) {
-            var view = new MenuMainWidgetView();
+        private static MenuWidgetView CreateView(MenuWidget widget) {
+            var view = new MenuWidgetView();
             view.AddView( CreateView_MenuView( widget ) );
             return view;
         }
-        private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuMainWidget widget) {
+        private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuWidget widget) {
             var view = new MenuMainWidgetView_MenuView();
             view.OnStartGame.Register( evt => {
                 widget.View.AddView( CreateView_StartGameView( widget ) );
@@ -68,7 +68,7 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuMainWidget widget) {
+        private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuWidget widget) {
             var view = new MenuMainWidgetView_StartGameView();
             view.OnNewGame.Register( evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
@@ -81,7 +81,7 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuMainWidget widget) {
+        private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuWidget widget) {
             var view = new MenuMainWidgetView_SelectLevelView();
             view.OnLevel1.Register( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
@@ -97,22 +97,22 @@ namespace Project.UI.MainScreen {
             } );
             return view;
         }
-        private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, GameLevel level) {
+        private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuWidget widget, GameLevel level) {
             var view = new MenuMainWidgetView_SelectCharacterView();
             view.OnGray.Register( evt => {
-                widget.AddChild( new LoadingMainWidget( widget.Container ) );
+                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();
             } );
             view.OnRed.Register( evt => {
-                widget.AddChild( new LoadingMainWidget( widget.Container ) );
+                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red ).Throw();
             } );
             view.OnGreen.Register( evt => {
-                widget.AddChild( new LoadingMainWidget( widget.Container ) );
+                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green ).Throw();
             } );
             view.OnBlue.Register( evt => {
-                widget.AddChild( new LoadingMainWidget( widget.Container ) );
+                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue ).Throw();
             } );
             view.OnBack.Register( evt => {

@@ -6,13 +6,13 @@ namespace Project.UI.MainScreen {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public class LoadingMainWidget : UIWidgetBase2<LoadingMainWidgetView> {
+    public class LoadingWidget : UIWidgetBase2<LoadingWidgetView> {
 
         // View
-        public override LoadingMainWidgetView View { get; }
+        public override LoadingWidgetView View { get; }
 
         // Constructor
-        public LoadingMainWidget(IDependencyContainer container) : base( container ) {
+        public LoadingWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -38,8 +38,8 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static LoadingMainWidgetView CreateView(LoadingMainWidget widget) {
-            var view = new LoadingMainWidgetView();
+        private static LoadingWidgetView CreateView(LoadingWidget widget) {
+            var view = new LoadingWidgetView();
             return view;
         }
 

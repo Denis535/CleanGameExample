@@ -53,8 +53,8 @@ namespace Project.UI.GameScreen {
         // Update
         public void Update() {
             if (View.IsCancelPressed) {
-                if (!Children.OfType<MenuGameWidget>().Any()) {
-                    AddChild( new MenuGameWidget( Container ) );
+                if (!Children.OfType<MenuWidget>().Any()) {
+                    AddChild( new MenuWidget( Container ) );
                 }
             }
             Game.IsPaused = IsPaused( this );
@@ -70,7 +70,7 @@ namespace Project.UI.GameScreen {
             try {
                 if (state is GameState.Completed) {
                     await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
-                    AddChild( new TotalsGameWidget( Container ) );
+                    AddChild( new TotalsWidget( Container ) );
                 }
             } catch (OperationCanceledException) {
             }
@@ -86,10 +86,10 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static bool IsPaused(GameWidget widget) {
-            return widget.Children.OfType<MenuGameWidget>().Any();
+            return widget.Children.OfType<MenuWidget>().Any();
         }
         private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is TotalsGameWidget or MenuGameWidget )) return CursorLockMode.None;
+            if (widget.Children.Any( i => i is TotalsWidget or MenuWidget )) return CursorLockMode.None;
             return CursorLockMode.Locked;
         }
         private static TargetEffect GetTargetEffect(Player player) {

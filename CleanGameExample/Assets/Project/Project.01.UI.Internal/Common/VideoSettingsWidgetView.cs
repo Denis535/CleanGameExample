@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly VisualElement widget;
         private readonly Toggle isFullScreen;
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
@@ -40,7 +40,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public VideoSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.VideoSettings( out view, out isFullScreen, out screenResolution, out isVSync );
+            VisualElement = VisualElementFactory_Common.VideoSettings( out widget, out isFullScreen, out screenResolution, out isVSync );
         }
         public override void Dispose() {
             base.Dispose();

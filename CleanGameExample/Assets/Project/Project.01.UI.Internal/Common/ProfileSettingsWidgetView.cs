@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly VisualElement widget;
         private readonly TextField name;
 
         // Layer
@@ -23,7 +23,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public ProfileSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.ProfileSettings( out view, out name );
+            VisualElement = VisualElementFactory_Common.ProfileSettings( out widget, out name );
             name.OnValidate( evt => {
                 name.SetValid( NameValidator( name.value ) );
             } );

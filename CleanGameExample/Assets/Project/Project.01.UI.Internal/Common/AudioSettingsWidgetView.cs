@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly VisualElement widget;
         private readonly Slider masterVolume;
         private readonly Slider musicVolume;
         private readonly Slider sfxVolume;
@@ -42,7 +42,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public AudioSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.AudioSettings( out view, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
+            VisualElement = VisualElementFactory_Common.AudioSettings( out widget, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
         }
         public override void Dispose() {
             base.Dispose();

@@ -79,7 +79,7 @@ namespace Project.UI {
         }
 
         // Settings
-        public static Widget Settings(out Widget widget, out Label title, out TabView tabView, out Tab profileSettings, out Tab videoSettings, out Tab audioSettings, out Button okey, out Button back) {
+        public static Widget Settings(out Widget widget, out Label title, out TabView tabView, out Tab profileSettingsTab, out Tab videoSettingsTab, out Tab audioSettingsTab, out Button okey, out Button back) {
             using (VisualElementFactory.MediumWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -87,9 +87,9 @@ namespace Project.UI {
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).AsScope( out tabView )) {
-                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettings );
-                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettings );
-                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettings );
+                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettingsTab );
+                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettingsTab );
+                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettingsTab );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {
@@ -100,33 +100,33 @@ namespace Project.UI {
                 return widget;
             }
         }
-        public static VisualElement ProfileSettings(out VisualElement view, out TextField name) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
+        public static VisualElement ProfileSettings(out VisualElement widget, out TextField name) {
+            using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
                 }
-                return view;
+                return widget;
             }
         }
-        public static VisualElement VideoSettings(out VisualElement view, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
+        public static VisualElement VideoSettings(out VisualElement widget, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
+            using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
                     VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" ).AddToScope( out screenResolution );
                     VisualElementFactory.ToggleField( "V-Sync" ).Classes( "label-width-25pc" ).AddToScope( out isVSync );
                 }
-                return view;
+                return widget;
             }
         }
-        public static VisualElement AudioSettings(out VisualElement view, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
-            using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
+        public static VisualElement AudioSettings(out VisualElement widget, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
+            using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );
                     VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out musicVolume );
                     VisualElementFactory.SliderField( "Sfx Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out sfxVolume );
                     VisualElementFactory.SliderField( "Game Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out gameVolume );
                 }
-                return view;
+                return widget;
             }
         }
 

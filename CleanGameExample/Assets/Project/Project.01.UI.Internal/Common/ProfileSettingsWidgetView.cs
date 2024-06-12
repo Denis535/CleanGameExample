@@ -24,7 +24,7 @@ namespace Project.UI.Common {
         // Constructor
         public ProfileSettingsWidgetView() {
             VisualElement = VisualElementFactory_Common.ProfileSettings( out view, out name );
-            view.OnValidate( evt => {
+            name.OnValidate( evt => {
                 name.SetValid( NameValidator( name.value ) );
             } );
         }

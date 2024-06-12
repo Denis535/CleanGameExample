@@ -48,7 +48,7 @@ namespace Project.Entities.Characters {
         // Heleprs
         private static Environment_ GetEnvironment(Transform transform) {
             return new Environment_() {
-                Player = Physics2.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
+                Player = Utils.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
         // Heleprs

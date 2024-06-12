@@ -39,7 +39,7 @@ namespace Project.UI.Common {
         // Constructor
         public DialogWidgetViewBase() {
             VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out this.title, out this.message );
-            widget.OnAttachToPanel( PlayAnimation );
+            widget.RegisterCallback<AttachToPanelEvent>( PlayAnimation );
             header.SetDisplayed( false );
             content.SetDisplayed( false );
             footer.SetDisplayed( false );
@@ -51,7 +51,7 @@ namespace Project.UI.Common {
         // OnSubmit
         public void OnSubmit(string text, Action? callback) {
             var button = VisualElementFactory.Submit( text );
-            button.OnClick( evt => {
+            button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
                 }
@@ -61,7 +61,7 @@ namespace Project.UI.Common {
         }
         public void OnCancel(string text, Action? callback) {
             var button = VisualElementFactory.Cancel( text );
-            button.OnClick( evt => {
+            button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
                 }

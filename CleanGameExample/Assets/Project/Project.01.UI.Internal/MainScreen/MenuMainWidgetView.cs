@@ -32,8 +32,6 @@ namespace Project.UI.MainScreen {
             Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
             title.text = GetTitle( content.Children().Last().GetView() );
         }
-
-        // RemoveView
         public void RemoveView(UIViewBase view) {
             content.Remove( view );
             Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
@@ -93,6 +91,10 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
+        // Props
+        public Observable<ClickEvent> OnStartGame => startGame.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnSettings => settings.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnQuit => quit.AsObservable<ClickEvent>();
 
         // Constructor
         public MenuMainWidgetView_MenuView() {
@@ -100,17 +102,6 @@ namespace Project.UI.MainScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnStartGame(EventCallback<ClickEvent> callback) {
-            startGame.OnClick( callback );
-        }
-        public void OnSettings(EventCallback<ClickEvent> callback) {
-            settings.OnClick( callback );
-        }
-        public void OnQuit(EventCallback<ClickEvent> callback) {
-            quit.OnClick( callback );
         }
 
     }
@@ -124,6 +115,10 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
+        // Props
+        public Observable<ClickEvent> OnNewGame => newGame.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnContinue => @continue.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 
         // Constructor
         public MenuMainWidgetView_StartGameView() {
@@ -131,17 +126,6 @@ namespace Project.UI.MainScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnNewGame(EventCallback<ClickEvent> callback) {
-            newGame.OnClick( callback );
-        }
-        public void OnContinue(EventCallback<ClickEvent> callback) {
-            @continue.OnClick( callback );
-        }
-        public void OnBack(EventCallback<ClickEvent> callback) {
-            back.OnClick( callback );
         }
 
     }
@@ -156,6 +140,11 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
+        // Props
+        public Observable<ClickEvent> OnLevel1 => level1.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnLevel2 => level2.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnLevel3 => level3.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 
         // Constructor
         public MenuMainWidgetView_SelectLevelView() {
@@ -163,20 +152,6 @@ namespace Project.UI.MainScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnLevel1(EventCallback<ClickEvent> callback) {
-            level1.OnClick( callback );
-        }
-        public void OnLevel2(EventCallback<ClickEvent> callback) {
-            level2.OnClick( callback );
-        }
-        public void OnLevel3(EventCallback<ClickEvent> callback) {
-            level3.OnClick( callback );
-        }
-        public void OnBack(EventCallback<ClickEvent> callback) {
-            back.OnClick( callback );
         }
 
     }
@@ -192,6 +167,12 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
+        // Props
+        public Observable<ClickEvent> OnGray => gray.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnRed => red.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnGreen => green.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBlue => blue.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 
         // Constructor
         public MenuMainWidgetView_SelectCharacterView() {
@@ -199,23 +180,6 @@ namespace Project.UI.MainScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnGray(EventCallback<ClickEvent> callback) {
-            gray.OnClick( callback );
-        }
-        public void OnRed(EventCallback<ClickEvent> callback) {
-            red.OnClick( callback );
-        }
-        public void OnGreen(EventCallback<ClickEvent> callback) {
-            green.OnClick( callback );
-        }
-        public void OnBlue(EventCallback<ClickEvent> callback) {
-            blue.OnClick( callback );
-        }
-        public void OnBack(EventCallback<ClickEvent> callback) {
-            back.OnClick( callback );
         }
 
     }

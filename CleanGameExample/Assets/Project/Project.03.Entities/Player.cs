@@ -113,7 +113,7 @@ namespace Project.Entities {
 
         // Heleprs
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform ray, Transform? ignore) {
-            var hit = Physics2.RaycastAll( ray.position, ray.forward, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
+            var hit = Utils.RaycastAll( ray.position, ray.forward, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 return (hit.point, hit.distance, hit.collider.gameObject);
             } else {

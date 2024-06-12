@@ -21,14 +21,22 @@ namespace Project.UI.Common {
             get => isFullScreen.value;
             init => isFullScreen.value = value;
         }
-        public (object? Value, List<object?>) ScreenResolution {
-            get => screenResolution.GetValueChoices();
-            init => screenResolution.SetValueChoices( value );
+        public object? ScreenResolution {
+            get => screenResolution.value;
+            init => screenResolution.value = value;
+        }
+        public List<object?> ScreenResolutionChoices {
+            get => screenResolution.choices;
+            init => screenResolution.choices = value;
         }
         public bool IsVSync {
             get => isVSync.value;
             init => isVSync.value = value;
         }
+        // Props
+        public Observable<ChangeEvent<bool>> OnIsFullScreen => isFullScreen.AsObservable<ChangeEvent<bool>>();
+        public Observable<ChangeEvent<object?>> OnScreenResolution => screenResolution.AsObservable<ChangeEvent<object?>>();
+        public Observable<ChangeEvent<bool>> OnIsVSync => isVSync.AsObservable<ChangeEvent<bool>>();
 
         // Constructor
         public VideoSettingsWidgetView() {
@@ -36,17 +44,6 @@ namespace Project.UI.Common {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnIsFullScreen(EventCallback<ChangeEvent<bool>> callback) {
-            isFullScreen.OnChange( callback );
-        }
-        public void OnScreenResolution(EventCallback<ChangeEvent<object?>> callback) {
-            screenResolution.OnChange( callback );
-        }
-        public void OnIsVSync(EventCallback<ChangeEvent<bool>> callback) {
-            isVSync.OnChange( callback );
         }
 
     }

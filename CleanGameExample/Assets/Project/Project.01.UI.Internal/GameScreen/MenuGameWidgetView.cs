@@ -17,6 +17,10 @@ namespace Project.UI.GameScreen {
 
         // Layer
         public override int Layer => 0;
+        // Props
+        public Observable<ClickEvent> OnResume => resume.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnSettings => settings.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 
         // Constructor
         public MenuGameWidgetView() {
@@ -24,17 +28,6 @@ namespace Project.UI.GameScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnResume(EventCallback<ClickEvent> callback) {
-            resume.OnClick( callback );
-        }
-        public void OnSettings(EventCallback<ClickEvent> callback) {
-            settings.OnClick( callback );
-        }
-        public void OnBack(EventCallback<ClickEvent> callback) {
-            back.OnClick( callback );
         }
 
     }

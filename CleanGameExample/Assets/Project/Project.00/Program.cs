@@ -24,7 +24,7 @@ namespace Project {
         private UIRouter Router { get; set; } = default!;
         // App
         private Application2 Application { get; set; } = default!;
-        // Entities
+        // Game
         private Game? Game => Application.Game;
 
         // OnLoad

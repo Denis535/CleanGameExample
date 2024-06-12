@@ -18,22 +18,27 @@ namespace Project.UI.Common {
         // Layer
         public override int Layer => 0;
         // Props
-        public (float Value, float Min, float Max) MasterVolume {
-            get => masterVolume.GetValueMinMax();
-            init => masterVolume.GetValueMinMax( value );
+        public float MasterVolume {
+            get => masterVolume.value;
+            init => masterVolume.value = value;
         }
-        public (float Value, float Min, float Max) MusicVolume {
-            get => musicVolume.GetValueMinMax();
-            init => musicVolume.GetValueMinMax( value );
+        public float MusicVolume {
+            get => musicVolume.value;
+            init => musicVolume.value = value;
         }
-        public (float Value, float Min, float Max) SfxVolume {
-            get => sfxVolume.GetValueMinMax();
-            init => sfxVolume.GetValueMinMax( value );
+        public float SfxVolume {
+            get => sfxVolume.value;
+            init => sfxVolume.value = value;
         }
-        public (float Value, float Min, float Max) GameVolume {
-            get => gameVolume.GetValueMinMax();
-            init => gameVolume.GetValueMinMax( value );
+        public float GameVolume {
+            get => gameVolume.value;
+            init => gameVolume.value = value;
         }
+        // Props
+        public Observable<ChangeEvent<float>> OnMasterVolume => masterVolume.AsObservable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnMusicVolume => musicVolume.AsObservable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnSfxVolume => sfxVolume.AsObservable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnGameVolume => gameVolume.AsObservable<ChangeEvent<float>>();
 
         // Constructor
         public AudioSettingsWidgetView() {
@@ -41,20 +46,6 @@ namespace Project.UI.Common {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnMasterVolume(EventCallback<ChangeEvent<float>> callback) {
-            masterVolume.OnChange( callback );
-        }
-        public void OnMusicVolume(EventCallback<ChangeEvent<float>> callback) {
-            musicVolume.OnChange( callback );
-        }
-        public void OnSfxVolume(EventCallback<ChangeEvent<float>> callback) {
-            sfxVolume.OnChange( callback );
-        }
-        public void OnGameVolume(EventCallback<ChangeEvent<float>> callback) {
-            gameVolume.OnChange( callback );
         }
 
     }

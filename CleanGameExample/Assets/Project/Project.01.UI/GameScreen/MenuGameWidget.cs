@@ -50,13 +50,13 @@ namespace Project.UI.GameScreen {
         // Helpers
         private static MenuGameWidgetView CreateView(MenuGameWidget widget) {
             var view = new MenuGameWidgetView();
-            view.OnResume( evt => {
+            view.OnResume.Register( evt => {
                 widget.RemoveSelf();
             } );
-            view.OnSettings( evt => {
+            view.OnSettings.Register( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
-            view.OnBack( evt => {
+            view.OnBack.Register( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
             } );

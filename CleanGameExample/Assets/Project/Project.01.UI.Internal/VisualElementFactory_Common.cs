@@ -103,7 +103,7 @@ namespace Project.UI {
         public static VisualElement ProfileSettings(out VisualElement view, out TextField name) {
             using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.TextField( "Name", null, 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
+                    VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
                 }
                 return view;
             }
@@ -111,9 +111,9 @@ namespace Project.UI {
         public static VisualElement VideoSettings(out VisualElement view, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
             using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.ToggleField( "Full Screen", false ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
-                    VisualElementFactory.PopupField( "Screen Resolution", null ).Classes( "label-width-25pc" ).AddToScope( out screenResolution );
-                    VisualElementFactory.ToggleField( "V-Sync", false ).Classes( "label-width-25pc" ).AddToScope( out isVSync );
+                    VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
+                    VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" ).AddToScope( out screenResolution );
+                    VisualElementFactory.ToggleField( "V-Sync" ).Classes( "label-width-25pc" ).AddToScope( out isVSync );
                 }
                 return view;
             }
@@ -121,10 +121,10 @@ namespace Project.UI {
         public static VisualElement AudioSettings(out VisualElement view, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
             using (VisualElementFactory.View().Classes( "grow-1" ).AsScope( out view )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.SliderField( "Master Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );
-                    VisualElementFactory.SliderField( "Music Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out musicVolume );
-                    VisualElementFactory.SliderField( "Sfx Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out sfxVolume );
-                    VisualElementFactory.SliderField( "Game Volume", 0, 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out gameVolume );
+                    VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );
+                    VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out musicVolume );
+                    VisualElementFactory.SliderField( "Sfx Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out sfxVolume );
+                    VisualElementFactory.SliderField( "Game Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out gameVolume );
                 }
                 return view;
             }

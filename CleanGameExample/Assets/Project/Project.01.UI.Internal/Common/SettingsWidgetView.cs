@@ -52,6 +52,9 @@ namespace Project.UI.Common {
                 }
             }
         }
+        // Props
+        public Observable<ClickEvent> OnOkey => okey.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 
         // Constructor
         public SettingsWidgetView() {
@@ -62,14 +65,6 @@ namespace Project.UI.Common {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // OnEvent
-        public void OnOkey(EventCallback<ClickEvent> callback) {
-            okey.OnClick( callback );
-        }
-        public void OnBack(EventCallback<ClickEvent> callback) {
-            back.OnClick( callback );
         }
 
     }

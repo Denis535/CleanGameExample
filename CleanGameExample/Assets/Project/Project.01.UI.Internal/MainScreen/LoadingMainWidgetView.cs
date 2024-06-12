@@ -20,7 +20,7 @@ namespace Project.UI.MainScreen {
         // Constructor
         public LoadingMainWidgetView() {
             VisualElement = VisualElementFactory_Main.Loading( out widget, out loading );
-            loading.OnAttachToPanel( PlayAnimation );
+            loading.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();

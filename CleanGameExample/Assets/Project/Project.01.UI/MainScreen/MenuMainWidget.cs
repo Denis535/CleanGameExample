@@ -56,13 +56,13 @@ namespace Project.UI.MainScreen {
         }
         private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuMainWidget widget) {
             var view = new MenuMainWidgetView_MenuView();
-            view.OnStartGame( evt => {
+            view.OnStartGame.Register( evt => {
                 widget.View.AddView( CreateView_StartGameView( widget ) );
             } );
-            view.OnSettings( evt => {
+            view.OnSettings.Register( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
-            view.OnQuit( evt => {
+            view.OnQuit.Register( evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
             } );
@@ -70,52 +70,52 @@ namespace Project.UI.MainScreen {
         }
         private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuMainWidget widget) {
             var view = new MenuMainWidgetView_StartGameView();
-            view.OnNewGame( evt => {
+            view.OnNewGame.Register( evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
             } );
-            view.OnContinue( evt => {
+            view.OnContinue.Register( evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
             } );
-            view.OnBack( evt => {
+            view.OnBack.Register( evt => {
                 widget.View.RemoveView( view );
             } );
             return view;
         }
         private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuMainWidget widget) {
             var view = new MenuMainWidgetView_SelectLevelView();
-            view.OnLevel1( evt => {
+            view.OnLevel1.Register( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
             } );
-            view.OnLevel2( evt => {
+            view.OnLevel2.Register( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level2 ) );
             } );
-            view.OnLevel3( evt => {
+            view.OnLevel3.Register( evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level3 ) );
             } );
-            view.OnBack( evt => {
+            view.OnBack.Register( evt => {
                 widget.View.RemoveView( view );
             } );
             return view;
         }
         private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuMainWidget widget, GameLevel level) {
             var view = new MenuMainWidgetView_SelectCharacterView();
-            view.OnGray( evt => {
+            view.OnGray.Register( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();
             } );
-            view.OnRed( evt => {
+            view.OnRed.Register( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red ).Throw();
             } );
-            view.OnGreen( evt => {
+            view.OnGreen.Register( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green ).Throw();
             } );
-            view.OnBlue( evt => {
+            view.OnBlue.Register( evt => {
                 widget.AddChild( new LoadingMainWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue ).Throw();
             } );
-            view.OnBack( evt => {
+            view.OnBack.Register( evt => {
                 widget.View.RemoveView( view );
             } );
             return view;

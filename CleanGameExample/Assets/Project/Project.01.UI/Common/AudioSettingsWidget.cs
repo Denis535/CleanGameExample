@@ -31,10 +31,10 @@ namespace Project.UI.Common {
         protected override void OnDeactivate(object? argument) {
             HideSelf();
             if (argument is DeactivateReason.Submit) {
-                AudioSettings.MasterVolume = View.MasterVolume.Value;
-                AudioSettings.MusicVolume = View.MusicVolume.Value;
-                AudioSettings.SfxVolume = View.SfxVolume.Value;
-                AudioSettings.GameVolume = View.GameVolume.Value;
+                AudioSettings.MasterVolume = View.MasterVolume;
+                AudioSettings.MusicVolume = View.MusicVolume;
+                AudioSettings.SfxVolume = View.SfxVolume;
+                AudioSettings.GameVolume = View.GameVolume;
                 AudioSettings.Save();
             } else {
                 AudioSettings.Load();
@@ -54,21 +54,21 @@ namespace Project.UI.Common {
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget) {
             var view = new AudioSettingsWidgetView() {
-                MasterVolume = (widget.AudioSettings.MasterVolume, 0, 1),
-                MusicVolume = (widget.AudioSettings.MusicVolume, 0, 1),
-                SfxVolume = (widget.AudioSettings.SfxVolume, 0, 1),
-                GameVolume = (widget.AudioSettings.GameVolume, 0, 1),
+                MasterVolume = widget.AudioSettings.MasterVolume,
+                MusicVolume = widget.AudioSettings.MusicVolume,
+                SfxVolume = widget.AudioSettings.SfxVolume,
+                GameVolume = widget.AudioSettings.GameVolume,
             };
-            view.OnMasterVolume( evt => {
+            view.OnMasterVolume.Register( evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;
             } );
-            view.OnMusicVolume( evt => {
+            view.OnMusicVolume.Register( evt => {
                 widget.AudioSettings.MusicVolume = evt.newValue;
             } );
-            view.OnSfxVolume( evt => {
+            view.OnSfxVolume.Register( evt => {
                 widget.AudioSettings.SfxVolume = evt.newValue;
             } );
-            view.OnGameVolume( evt => {
+            view.OnGameVolume.Register( evt => {
                 widget.AudioSettings.GameVolume = evt.newValue;
             } );
             return view;

@@ -1,8 +1,6 @@
 ﻿#nullable enable
 namespace Project.UI.Common {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
     using Project.App;
     using UnityEngine;
@@ -33,7 +31,7 @@ namespace Project.UI.Common {
             HideSelf();
             if (argument is DeactivateReason.Submit) {
                 VideoSettings.IsFullScreen = View.IsFullScreen;
-                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.Value!;
+                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution!;
                 VideoSettings.IsVSync = View.IsVSync;
                 VideoSettings.Save();
             } else {
@@ -55,16 +53,17 @@ namespace Project.UI.Common {
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget) {
             var view = new VideoSettingsWidgetView() {
                 IsFullScreen = widget.VideoSettings.IsFullScreen,
-                ScreenResolution = (widget.VideoSettings.ScreenResolution, widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList()),
+                ScreenResolution = widget.VideoSettings.ScreenResolution,
+                ScreenResolutionChoices = widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList(),
                 IsVSync = widget.VideoSettings.IsVSync
             };
-            view.OnIsFullScreen( evt => {
+            view.OnIsFullScreen.Register( evt => {
                 widget.VideoSettings.IsFullScreen = evt.newValue;
             } );
-            view.OnScreenResolution( evt => {
+            view.OnScreenResolution.Register( evt => {
                 widget.VideoSettings.ScreenResolution = (Resolution) evt.newValue!;
             } );
-            view.OnIsVSync( evt => {
+            view.OnIsVSync.Register( evt => {
                 widget.VideoSettings.IsVSync = evt.newValue;
             } );
             return view;

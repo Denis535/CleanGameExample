@@ -15,6 +15,7 @@ namespace Project.UI.Common {
         // Constructor
         public SettingsWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
+            // Children
             AddChild( new ProfileSettingsWidget( container ) );
             AddChild( new VideoSettingsWidget( container ) );
             AddChild( new AudioSettingsWidget( container ) );
@@ -76,12 +77,12 @@ namespace Project.UI.Common {
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
-            view.OnOkey( evt => {
+            view.OnOkey.Register( evt => {
                 if (evt.GetTarget().IsValidSelf()) {
                     widget.RemoveSelf( DeactivateReason.Submit );
                 }
             } );
-            view.OnBack( evt => {
+            view.OnBack.Register( evt => {
                 widget.RemoveSelf( DeactivateReason.Cancel );
             } );
             return view;

@@ -83,7 +83,7 @@ namespace Project {
                     dir = Path.GetDirectoryName( i ).Replace( '\\', '/' ) + '/',
                     name = Path.GetFileName( i )
                 } )
-
+                // Assets/Project/
                 .OrderByDescending( i => i.dir.StartsWith( "Assets/Project/Project.00/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/" ) )
@@ -92,77 +92,73 @@ namespace Project {
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Characters/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Things/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Worlds/" ) )
-
+                // Assets/Project/
                 .ThenByDescending( i => i.dir.EndsWith( ".UI/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI/MainScreen/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI/GameScreen/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI/Common/" ) )
-
                 .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/MainScreen/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/GameScreen/" ) )
                 .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/Common/" ) )
-
-                .ThenByDescending( i => i.name.Equals( "UITheme.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "UIScreen.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "UIRouter.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "Widget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "View.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VisualElementFactory.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VisualElementFactory_Main.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VisualElementFactory_Game.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VisualElementFactory_Common.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "MainWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MenuMainWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "LoadingMainWidget.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "GameWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "TotalsGameWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "WinTotalsGameWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "LossTotalsGameWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MenuGameWidget.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "DialogWidgetBase.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "SettingsWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "ProfileSettingsWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VideoSettingsWidget.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "AudioSettingsWidget.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "MainWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MenuMainWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "LoadingMainWidgetView.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "GameWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "TotalsGameWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "WinTotalsGameWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "LossTotalsGameWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "MenuGameWidgetView.cs" ) )
-
-                .ThenByDescending( i => i.name.Equals( "DialogWidgetViewBase.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "SettingsWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "ProfileSettingsWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "VideoSettingsWidgetView.cs" ) )
-                .ThenByDescending( i => i.name.Equals( "AudioSettingsWidgetView.cs" ) )
-
+                // UI/
+                .ThenByDescending( i => i.path.EndsWith( ".UI/UITheme.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/UIScreen.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/UIRouter.cs" ) )
+                // UI/MainScreen/
+                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MainWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MenuMainWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/LoadingMainWidget.cs" ) )
+                // UI/GameScreen/
+                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/GameWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/TotalsGameWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/MenuGameWidget.cs" ) )
+                // UI/Common/
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/DialogWidgetBase.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/SettingsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/ProfileSettingsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/VideoSettingsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/AudioSettingsWidget.cs" ) )
+                // UI.Internal/
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory_Main.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory_Game.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory_Common.cs" ) )
+                // UI.Internal/MainScreen/
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MainWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MenuMainWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/LoadingMainWidgetView.cs" ) )
+                // UI.Internal/GameScreen/
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/GameWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/TotalsGameWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/MenuGameWidgetView.cs" ) )
+                // UI.Internal/Common/
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/DialogWidgetViewBase.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/SettingsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/ProfileSettingsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/VideoSettingsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/AudioSettingsWidgetView.cs" ) )
+                // App/
                 .ThenByDescending( i => i.name.Equals( "Application2.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Storage.cs" ) )
-
+                // Entities/
                 .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Game.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Player.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Camera.cs" ) )
-
+                // Entities.Characters/
+                .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Character.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "PlayerCharacter.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "EnemyCharacter.cs" ) )
-
+                // Entities.Things/
+                .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Thing.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Gun.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Bullet.cs" ) )
-
+                // Entities.Worlds/
                 .ThenByDescending( i => i.name.Equals( "World.cs" ) )
-
+                // Misc
                 .ThenBy( i => i.path )
                 .Select( i => i.path )
                 .ToArray();

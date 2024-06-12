@@ -12,15 +12,15 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase2 {
 
-        // App
+        // Storage
         public Storage Storage { get; }
         public Storage.ProfileSettings ProfileSettings { get; }
         public Storage.VideoSettings VideoSettings { get; }
         public Storage.AudioSettings AudioSettings { get; }
         public Storage.Preferences Preferences { get; }
-        // App
+        // Service
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
-        // Entities
+        // Game
         public Game? Game { get; private set; }
 
         // Constructor
@@ -59,8 +59,8 @@ namespace Project.App {
             EnemyCharacterFactory.Deinitialize();
             GunFactory.Deinitialize();
             BulletFactory.Deinitialize();
-            Array.Clear( Physics2.RaycastHitBuffer, 0, Physics2.RaycastHitBuffer.Length );
-            Array.Clear( Physics2.ColliderBuffer, 0, Physics2.ColliderBuffer.Length );
+            Array.Clear( Utils.RaycastHitBuffer, 0, Utils.RaycastHitBuffer.Length );
+            Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
         }
 
     }

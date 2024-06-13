@@ -34,9 +34,9 @@ namespace Project.UI.Common {
             init => isVSync.value = value;
         }
         // Events
-        public Observable<ChangeEvent<bool>> OnIsFullScreen => isFullScreen.AsObservable<ChangeEvent<bool>>();
-        public Observable<ChangeEvent<object?>> OnScreenResolution => screenResolution.AsObservable<ChangeEvent<object?>>();
-        public Observable<ChangeEvent<bool>> OnIsVSync => isVSync.AsObservable<ChangeEvent<bool>>();
+        public Observable<ChangeEvent<bool>> OnIsFullScreen => isFullScreen.Observable<ChangeEvent<bool>>();
+        public Observable<ChangeEvent<object?>> OnScreenResolution => screenResolution.Observable<ChangeEvent<object?>>();
+        public Observable<ChangeEvent<bool>> OnIsVSync => isVSync.Observable<ChangeEvent<bool>>();
 
         // Constructor
         public VideoSettingsWidgetView() {

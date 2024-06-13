@@ -18,9 +18,9 @@ namespace Project.UI.GameScreen {
         // Layer
         public override int Layer => 0;
         // Events
-        public Observable<ClickEvent> OnResume => resume.AsObservable<ClickEvent>();
-        public Observable<ClickEvent> OnSettings => settings.AsObservable<ClickEvent>();
-        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnResume => resume.Observable<ClickEvent>();
+        public Observable<ClickEvent> OnSettings => settings.Observable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.Observable<ClickEvent>();
 
         // Constructor
         public MenuWidgetView() {

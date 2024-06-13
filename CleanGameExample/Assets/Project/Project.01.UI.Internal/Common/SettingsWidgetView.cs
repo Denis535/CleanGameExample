@@ -53,8 +53,8 @@ namespace Project.UI.Common {
             }
         }
         // Events
-        public Observable<ClickEvent> OnOkey => okey.AsObservable<ClickEvent>();
-        public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
+        public Observable<ClickEvent> OnOkey => okey.Observable<ClickEvent>();
+        public Observable<ClickEvent> OnBack => back.Observable<ClickEvent>();
 
         // Constructor
         public SettingsWidgetView() {

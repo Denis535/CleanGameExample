@@ -35,10 +35,10 @@ namespace Project.UI.Common {
             init => gameVolume.value = value;
         }
         // Events
-        public Observable<ChangeEvent<float>> OnMasterVolume => masterVolume.AsObservable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnMusicVolume => musicVolume.AsObservable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnSfxVolume => sfxVolume.AsObservable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnGameVolume => gameVolume.AsObservable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnMasterVolume => masterVolume.Observable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnMusicVolume => musicVolume.Observable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnSfxVolume => sfxVolume.Observable<ChangeEvent<float>>();
+        public Observable<ChangeEvent<float>> OnGameVolume => gameVolume.Observable<ChangeEvent<float>>();
 
         // Constructor
         public AudioSettingsWidgetView() {

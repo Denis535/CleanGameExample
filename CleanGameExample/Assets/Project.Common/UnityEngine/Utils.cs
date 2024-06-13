@@ -107,35 +107,31 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
-        // AsAccessor
-        public static IsEnabledAccessor AsIsEnabledAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
-            return new IsEnabledAccessor( visualElement, onChange );
-        }
-        public static IsDisplayedAccessor AsIsDisplayedAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
-            return new IsDisplayedAccessor( visualElement, onChange );
-        }
-        public static TextAccessor AsTextAccessor(this Label visualElement, Action<Label>? onChange) {
-            return new TextAccessor( visualElement, onChange );
-        }
-        public static ValueAccessor<T> AsValueAccessor<T>(this BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
-            return new ValueAccessor<T>( visualElement, onChange );
-        }
-        public static ValueMinMaxAccessor<T> AsValueMinMaxAccessor<T>(this BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) where T : IComparable<T> {
-            return new ValueMinMaxAccessor<T>( visualElement, onChange );
-        }
-        public static ValueChoicesAccessor<T> AsValueChoicesAccessor<T>(this PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
-            return new ValueChoicesAccessor<T>( visualElement, onChange );
-        }
-
-        // AsSlot
-        public static Slot<T> AsSlot<T>(this VisualElement visualElement, Action<VisualElement>? onChange) where T : UIViewBase {
-            return new Slot<T>( visualElement, onChange );
-        }
-
-        // AsObservable
-        public static Observable<T> AsObservable<T>(this VisualElement element) where T : EventBase<T>, new() {
-            return new Observable<T>( element );
-        }
+        //// AsProperty
+        //public static IsEnabledProperty AsIsEnabled(this VisualElement visualElement, Action<VisualElement>? onChange) {
+        //    return new IsEnabledProperty( visualElement, onChange );
+        //}
+        //public static IsDisplayedProperty AsIsDisplayed(this VisualElement visualElement, Action<VisualElement>? onChange) {
+        //    return new IsDisplayedProperty( visualElement, onChange );
+        //}
+        //public static TextProperty AsText(this Label visualElement, Action<Label>? onChange) {
+        //    return new TextProperty( visualElement, onChange );
+        //}
+        //public static ValueProperty<T> AsValue<T>(this BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
+        //    return new ValueProperty<T>( visualElement, onChange );
+        //}
+        //public static ValueMinMaxProperty<T> AsValueMinMax<T>(this BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) where T : IComparable<T> {
+        //    return new ValueMinMaxProperty<T>( visualElement, onChange );
+        //}
+        //public static ValueChoicesProperty<T> AsValueChoices<T>(this PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
+        //    return new ValueChoicesProperty<T>( visualElement, onChange );
+        //}
+        //public static ChildrenProperty<T> AsChildren<T>(this VisualElement visualElement, Action<VisualElement>? onChange) where T : UIViewBase {
+        //    return new ChildrenProperty<T>( visualElement, onChange );
+        //}
+        //public static EventObservable<T> AsObservable<T>(this VisualElement element) where T : EventBase<T>, new() {
+        //    return new EventObservable<T>( element );
+        //}
 
         // OnValidate
         public static void OnValidate(this VisualElement element, EventCallback<EventBase> callback, TrickleDown useTrickleDown = TrickleDown.NoTrickleDown) {
@@ -150,192 +146,192 @@ namespace UnityEngine {
         }
 
     }
-    public readonly struct IsEnabledAccessor {
+    //public readonly struct IsEnabledProperty {
 
-        private readonly VisualElement visualElement;
-        private readonly Action<VisualElement>? onChange;
+    //    private readonly VisualElement visualElement;
+    //    private readonly Action<VisualElement>? onChange;
 
-        public readonly bool IsEnabled {
-            get => visualElement.enabledSelf;
-            set {
-                visualElement.SetEnabled( value );
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly bool IsEnabled {
+    //        get => visualElement.enabledSelf;
+    //        set {
+    //            visualElement.SetEnabled( value );
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public IsEnabledAccessor(VisualElement visualElement, Action<VisualElement>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public IsEnabledProperty(VisualElement visualElement, Action<VisualElement>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct IsDisplayedAccessor {
+    //}
+    //public readonly struct IsDisplayedProperty {
 
-        private readonly VisualElement visualElement;
-        private readonly Action<VisualElement>? onChange;
+    //    private readonly VisualElement visualElement;
+    //    private readonly Action<VisualElement>? onChange;
 
-        public readonly bool IsDisplayed {
-            get => visualElement.IsDisplayedSelf();
-            set {
-                visualElement.SetDisplayed( value );
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly bool IsDisplayed {
+    //        get => visualElement.IsDisplayedSelf();
+    //        set {
+    //            visualElement.SetDisplayed( value );
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public IsDisplayedAccessor(VisualElement visualElement, Action<VisualElement>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public IsDisplayedProperty(VisualElement visualElement, Action<VisualElement>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct TextAccessor {
+    //}
+    //public readonly struct TextProperty {
 
-        private readonly Label visualElement;
-        private readonly Action<Label>? onChange;
+    //    private readonly Label visualElement;
+    //    private readonly Action<Label>? onChange;
 
-        public readonly string Text {
-            get => visualElement.text;
-            set {
-                visualElement.text = value;
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly string Text {
+    //        get => visualElement.text;
+    //        set {
+    //            visualElement.text = value;
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public TextAccessor(Label visualElement, Action<Label>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public TextProperty(Label visualElement, Action<Label>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct ValueAccessor<T> {
+    //}
+    //public readonly struct ValueProperty<T> {
 
-        private readonly BaseField<T> visualElement;
-        private readonly Action<BaseField<T>>? onChange;
+    //    private readonly BaseField<T> visualElement;
+    //    private readonly Action<BaseField<T>>? onChange;
 
-        public readonly T Value {
-            get => visualElement.value;
-            set {
-                visualElement.value = value;
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly T Value {
+    //        get => visualElement.value;
+    //        set {
+    //            visualElement.value = value;
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public ValueAccessor(BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public ValueProperty(BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct ValueMinMaxAccessor<T> where T : IComparable<T> {
+    //}
+    //public readonly struct ValueMinMaxProperty<T> where T : IComparable<T> {
 
-        private readonly BaseSlider<T> visualElement;
-        private readonly Action<BaseSlider<T>>? onChange;
+    //    private readonly BaseSlider<T> visualElement;
+    //    private readonly Action<BaseSlider<T>>? onChange;
 
-        public readonly T Value {
-            get => visualElement.value;
-            set {
-                visualElement.value = value;
-                onChange?.Invoke( visualElement );
-            }
-        }
-        public readonly (T Min, T Max) MinMax {
-            get => (visualElement.lowValue, visualElement.highValue);
-            set {
-                (visualElement.lowValue, visualElement.highValue) = (value.Min, value.Max);
-                onChange?.Invoke( visualElement );
-            }
-        }
-        public readonly (T Value, T Min, T Max) ValueMinMax {
-            get => (visualElement.value, visualElement.lowValue, visualElement.highValue);
-            set {
-                (visualElement.value, visualElement.lowValue, visualElement.highValue) = (value.Value, value.Min, value.Max);
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly T Value {
+    //        get => visualElement.value;
+    //        set {
+    //            visualElement.value = value;
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
+    //    public readonly (T Min, T Max) MinMax {
+    //        get => (visualElement.lowValue, visualElement.highValue);
+    //        set {
+    //            (visualElement.lowValue, visualElement.highValue) = (value.Min, value.Max);
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
+    //    public readonly (T Value, T Min, T Max) ValueMinMax {
+    //        get => (visualElement.value, visualElement.lowValue, visualElement.highValue);
+    //        set {
+    //            (visualElement.value, visualElement.lowValue, visualElement.highValue) = (value.Value, value.Min, value.Max);
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public ValueMinMaxAccessor(BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public ValueMinMaxProperty(BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct ValueChoicesAccessor<T> {
+    //}
+    //public readonly struct ValueChoicesProperty<T> {
 
-        private readonly PopupField<T> visualElement;
-        private readonly Action<PopupField<T>>? onChange;
+    //    private readonly PopupField<T> visualElement;
+    //    private readonly Action<PopupField<T>>? onChange;
 
-        public readonly T Value {
-            get => visualElement.value;
-            set {
-                visualElement.value = value;
-                onChange?.Invoke( visualElement );
-            }
-        }
-        public readonly List<T> Choices {
-            get => visualElement.choices;
-            set {
-                visualElement.choices = value;
-                onChange?.Invoke( visualElement );
-            }
-        }
-        public readonly (T Value, List<T> Choices) ValueChoices {
-            get => (visualElement.value, visualElement.choices);
-            set {
-                (visualElement.value, visualElement.choices) = (value.Value, value.Choices);
-                onChange?.Invoke( visualElement );
-            }
-        }
+    //    public readonly T Value {
+    //        get => visualElement.value;
+    //        set {
+    //            visualElement.value = value;
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
+    //    public readonly List<T> Choices {
+    //        get => visualElement.choices;
+    //        set {
+    //            visualElement.choices = value;
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
+    //    public readonly (T Value, List<T> Choices) ValueChoices {
+    //        get => (visualElement.value, visualElement.choices);
+    //        set {
+    //            (visualElement.value, visualElement.choices) = (value.Value, value.Choices);
+    //            onChange?.Invoke( visualElement );
+    //        }
+    //    }
 
-        public ValueChoicesAccessor(PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public ValueChoicesProperty(PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-    }
-    public readonly struct Slot<T> where T : UIViewBase {
+    //}
+    //public readonly struct ChildrenProperty<T> where T : UIViewBase {
 
-        private readonly VisualElement visualElement;
-        private readonly Action<VisualElement>? onChange;
+    //    private readonly VisualElement visualElement;
+    //    private readonly Action<VisualElement>? onChange;
 
-        public IEnumerable<T> Children => visualElement.Children().Select( i => i.GetView<T>() );
+    //    public readonly IEnumerable<T> Children => visualElement.Children().Select( i => i.GetView<T>() );
 
-        public Slot(VisualElement visualElement, Action<VisualElement>? onChange) {
-            this.visualElement = visualElement;
-            this.onChange = onChange;
-        }
+    //    public ChildrenProperty(VisualElement visualElement, Action<VisualElement>? onChange) {
+    //        this.visualElement = visualElement;
+    //        this.onChange = onChange;
+    //    }
 
-        public void Add(T view) {
-            visualElement.Add( view );
-            onChange?.Invoke( visualElement );
-        }
-        public void Remove(T view) {
-            visualElement.Remove( view );
-            onChange?.Invoke( visualElement );
-        }
-        public void Contains(T view) {
-            visualElement.Contains( view );
-        }
+    //    public readonly void Add(T child) {
+    //        visualElement.Add( child );
+    //        onChange?.Invoke( visualElement );
+    //    }
+    //    public readonly void Remove(T child) {
+    //        visualElement.Remove( child );
+    //        onChange?.Invoke( visualElement );
+    //    }
+    //    public readonly void Contains(T child) {
+    //        visualElement.Contains( child );
+    //    }
 
-    }
-    public readonly struct Observable<T> where T : EventBase<T>, new() {
+    //}
+    //public readonly struct EventObservable<T> where T : EventBase<T>, new() {
 
-        private readonly VisualElement visualElement;
+    //    private readonly VisualElement visualElement;
 
-        public Observable(VisualElement visualElement) {
-            this.visualElement = visualElement;
-        }
+    //    public EventObservable(VisualElement visualElement) {
+    //        this.visualElement = visualElement;
+    //    }
 
-        public readonly void Register(EventCallback<T> callback) {
-            visualElement.RegisterCallback( callback );
-        }
-        public readonly void RegisterOnce(EventCallback<T> callback) {
-            visualElement.RegisterCallbackOnce( callback );
-        }
-        public readonly void Unregister(EventCallback<T> callback) {
-            visualElement.UnregisterCallback( callback );
-        }
+    //    public readonly void Register(EventCallback<T> callback) {
+    //        visualElement.RegisterCallback( callback );
+    //    }
+    //    public readonly void RegisterOnce(EventCallback<T> callback) {
+    //        visualElement.RegisterCallbackOnce( callback );
+    //    }
+    //    public readonly void Unregister(EventCallback<T> callback) {
+    //        visualElement.UnregisterCallback( callback );
+    //    }
 
-    }
+    //}
     public class Delay {
 
         public float Interval { get; }

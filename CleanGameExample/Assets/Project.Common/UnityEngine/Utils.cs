@@ -107,6 +107,23 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
+        // AsElement
+        public static LabelElement AsLabel(this Label visualElement, Action<Label>? onChange) {
+            return new LabelElement( visualElement, onChange );
+        }
+        public static FieldElement<T> AsField<T>(this BaseField<T> visualElement, Action<BaseField<T>>? onChange) where T : notnull {
+            return new FieldElement<T>( visualElement, onChange );
+        }
+        public static SliderFieldElement<T> AsField<T>(this BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) where T : notnull, IComparable<T> {
+            return new SliderFieldElement<T>( visualElement, onChange );
+        }
+        public static PopupFieldElement<T> AsField<T>(this PopupField<T> visualElement, Action<PopupField<T>>? onChange) where T : notnull {
+            return new PopupFieldElement<T>( visualElement, onChange );
+        }
+        public static SlotElement AsSlot(this VisualElement visualElement, Action<VisualElement>? onChange) {
+            return new SlotElement( visualElement, onChange );
+        }
+
         // AsObservable
         public static Observable<T> AsObservable<T>(this VisualElement element) where T : notnull, EventBase<T>, new() {
             return new Observable<T>( element );
@@ -125,7 +142,122 @@ namespace UnityEngine {
         }
 
     }
-    public struct Observable<T> where T : notnull, EventBase<T>, new() {
+    public readonly struct LabelElement {
+
+        private readonly Label visualElement;
+        private readonly Action<Label>? onChange;
+
+        public readonly string Text {
+            get => visualElement.text;
+            set {
+                visualElement.text = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+
+        public LabelElement(Label visualElement, Action<Label>? onChange) {
+            this.visualElement = visualElement;
+            this.onChange = onChange;
+        }
+
+    }
+    public readonly struct FieldElement<T> where T : notnull {
+
+        private readonly BaseField<T> visualElement;
+        private readonly Action<BaseField<T>>? onChange;
+
+        public readonly T Value {
+            get => visualElement.value;
+            set {
+                visualElement.value = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+
+        public FieldElement(BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
+            this.visualElement = visualElement;
+            this.onChange = onChange;
+        }
+
+    }
+    public readonly struct SliderFieldElement<T> where T : notnull, IComparable<T> {
+
+        private readonly BaseSlider<T> visualElement;
+        private readonly Action<BaseSlider<T>>? onChange;
+
+        public readonly T Value {
+            get => visualElement.value;
+            set {
+                visualElement.value = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+        public readonly (T Min, T Max) MinMax {
+            get => (visualElement.lowValue, visualElement.highValue);
+            set {
+                (visualElement.lowValue, visualElement.highValue) = (value.Min, value.Max);
+                onChange?.Invoke( visualElement );
+            }
+        }
+
+        public SliderFieldElement(BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) {
+            this.visualElement = visualElement;
+            this.onChange = onChange;
+        }
+
+    }
+    public readonly struct PopupFieldElement<T> where T : notnull {
+
+        private readonly PopupField<T> visualElement;
+        private readonly Action<PopupField<T>>? onChange;
+
+        public readonly T Value {
+            get => visualElement.value;
+            set {
+                visualElement.value = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+        public readonly List<T> Choices {
+            get => visualElement.choices;
+            set {
+                visualElement.choices = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+
+        public PopupFieldElement(PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
+            this.visualElement = visualElement;
+            this.onChange = onChange;
+        }
+
+    }
+    public readonly struct SlotElement {
+
+        private readonly VisualElement visualElement;
+        private readonly Action<VisualElement>? onChange;
+
+        public IEnumerable<UIViewBase> Children => visualElement.Children().Select( i => i.GetView() );
+
+        public SlotElement(VisualElement visualElement, Action<VisualElement>? onChange) {
+            this.visualElement = visualElement;
+            this.onChange = onChange;
+        }
+
+        public void Add(UIViewBase view) {
+            visualElement.Add( view );
+            onChange?.Invoke( visualElement );
+        }
+        public void Remove(UIViewBase view) {
+            visualElement.Remove( view );
+            onChange?.Invoke( visualElement );
+        }
+        public void Contains(UIViewBase view) {
+            visualElement.Contains( view );
+        }
+
+    }
+    public readonly struct Observable<T> where T : notnull, EventBase<T>, new() {
 
         private readonly VisualElement visualElement;
 
@@ -133,13 +265,13 @@ namespace UnityEngine {
             this.visualElement = visualElement;
         }
 
-        public void Register(EventCallback<T> callback) {
+        public readonly void Register(EventCallback<T> callback) {
             visualElement.RegisterCallback( callback );
         }
-        public void RegisterOnce(EventCallback<T> callback) {
+        public readonly void RegisterOnce(EventCallback<T> callback) {
             visualElement.RegisterCallbackOnce( callback );
         }
-        public void Unregister(EventCallback<T> callback) {
+        public readonly void Unregister(EventCallback<T> callback) {
             visualElement.UnregisterCallback( callback );
         }
 

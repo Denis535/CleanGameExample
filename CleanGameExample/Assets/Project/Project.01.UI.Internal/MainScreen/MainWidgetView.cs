@@ -3,8 +3,6 @@ namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;

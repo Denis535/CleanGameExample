@@ -79,17 +79,17 @@ namespace Project.UI {
         }
 
         // Settings
-        public static Widget Settings(out Widget widget, out Label title, out TabView tabView, out Tab profileSettingsTab, out Tab videoSettingsTab, out Tab audioSettingsTab, out Button okey, out Button back) {
+        public static Widget Settings(out Widget widget, out Label title, out TabView view, out Tab profileSettings, out Tab videoSettings, out Tab audioSettings, out Button okey, out Button back) {
             using (VisualElementFactory.MediumWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         VisualElementFactory.Label( "Settings" ).AddToScope( out title );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
-                        using (VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).AsScope( out tabView )) {
-                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettingsTab );
-                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettingsTab );
-                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettingsTab );
+                        using (VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).AsScope( out view )) {
+                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettings );
+                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettings );
+                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettings );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {

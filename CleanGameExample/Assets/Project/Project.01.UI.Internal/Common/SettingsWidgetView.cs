@@ -12,10 +12,10 @@ namespace Project.UI.Common {
 
         private readonly Widget widget;
         private readonly Label title;
-        private readonly TabView tabView;
-        private readonly Tab profileSettingsTab;
-        private readonly Tab videoSettingsTab;
-        private readonly Tab audioSettingsTab;
+        private readonly TabView view;
+        private readonly Tab profileSettings;
+        private readonly Tab videoSettings;
+        private readonly Tab audioSettings;
         private readonly Button okey;
         private readonly Button back;
 
@@ -23,32 +23,32 @@ namespace Project.UI.Common {
         public override int Layer => 0;
         // Values
         public ProfileSettingsWidgetView? ProfileSettings {
-            get => profileSettingsTab.Children2<ProfileSettingsWidgetView>().FirstOrDefault();
+            get => profileSettings.Children2<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    profileSettingsTab.Add( value );
+                    profileSettings.Add( value );
                 } else {
-                    profileSettingsTab.Clear();
+                    profileSettings.Clear();
                 }
             }
         }
         public VideoSettingsWidgetView? VideoSettings {
-            get => videoSettingsTab.Children2<VideoSettingsWidgetView>().FirstOrDefault();
+            get => videoSettings.Children2<VideoSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    videoSettingsTab.Add( value );
+                    videoSettings.Add( value );
                 } else {
-                    videoSettingsTab.Clear();
+                    videoSettings.Clear();
                 }
             }
         }
         public AudioSettingsWidgetView? AudioSettings {
-            get => videoSettingsTab.Children2<AudioSettingsWidgetView>().FirstOrDefault();
+            get => audioSettings.Children2<AudioSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    audioSettingsTab.Add( value );
+                    audioSettings.Add( value );
                 } else {
-                    audioSettingsTab.Clear();
+                    audioSettings.Clear();
                 }
             }
         }
@@ -58,9 +58,9 @@ namespace Project.UI.Common {
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out tabView, out profileSettingsTab, out videoSettingsTab, out audioSettingsTab, out okey, out back );
+            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out view, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
             widget.OnValidate( evt => {
-                okey.SetValid( tabView.GetDescendants().All( i => i.IsValidSelf() ) );
+                okey.SetValid( view.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }
         public override void Dispose() {

@@ -107,33 +107,33 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
-        // Accessor
-        public static IsEnabledAccessor IsEnabledAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
+        // AsAccessor
+        public static IsEnabledAccessor AsIsEnabledAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
             return new IsEnabledAccessor( visualElement, onChange );
         }
-        public static IsDisplayedAccessor IsDisplayedAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
+        public static IsDisplayedAccessor AsIsDisplayedAccessor(this VisualElement visualElement, Action<VisualElement>? onChange) {
             return new IsDisplayedAccessor( visualElement, onChange );
         }
-        public static TextAccessor TextAccessor(this Label visualElement, Action<Label>? onChange) {
+        public static TextAccessor AsTextAccessor(this Label visualElement, Action<Label>? onChange) {
             return new TextAccessor( visualElement, onChange );
         }
-        public static ValueAccessor<T> ValueAccessor<T>(this BaseField<T> visualElement, Action<BaseField<T>>? onChange) where T : notnull {
+        public static ValueAccessor<T> AsValueAccessor<T>(this BaseField<T> visualElement, Action<BaseField<T>>? onChange) {
             return new ValueAccessor<T>( visualElement, onChange );
         }
-        public static ValueMinMaxAccessor<T> ValueMinMaxAccessor<T>(this BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) where T : notnull, IComparable<T> {
+        public static ValueMinMaxAccessor<T> AsValueMinMaxAccessor<T>(this BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) where T : IComparable<T> {
             return new ValueMinMaxAccessor<T>( visualElement, onChange );
         }
-        public static ValueChoicesAccessor<T> ValueChoicesAccessor<T>(this PopupField<T> visualElement, Action<PopupField<T>>? onChange) where T : notnull {
+        public static ValueChoicesAccessor<T> AsValueChoicesAccessor<T>(this PopupField<T> visualElement, Action<PopupField<T>>? onChange) {
             return new ValueChoicesAccessor<T>( visualElement, onChange );
         }
 
-        // Slot
-        public static Slot<T> Slot<T>(this VisualElement visualElement, Action<VisualElement>? onChange) where T : UIViewBase {
+        // AsSlot
+        public static Slot<T> AsSlot<T>(this VisualElement visualElement, Action<VisualElement>? onChange) where T : UIViewBase {
             return new Slot<T>( visualElement, onChange );
         }
 
-        // Observable
-        public static Observable<T> Observable<T>(this VisualElement element) where T : notnull, EventBase<T>, new() {
+        // AsObservable
+        public static Observable<T> AsObservable<T>(this VisualElement element) where T : EventBase<T>, new() {
             return new Observable<T>( element );
         }
 
@@ -207,7 +207,7 @@ namespace UnityEngine {
         }
 
     }
-    public readonly struct ValueAccessor<T> where T : notnull {
+    public readonly struct ValueAccessor<T> {
 
         private readonly BaseField<T> visualElement;
         private readonly Action<BaseField<T>>? onChange;
@@ -226,7 +226,7 @@ namespace UnityEngine {
         }
 
     }
-    public readonly struct ValueMinMaxAccessor<T> where T : notnull, IComparable<T> {
+    public readonly struct ValueMinMaxAccessor<T> where T : IComparable<T> {
 
         private readonly BaseSlider<T> visualElement;
         private readonly Action<BaseSlider<T>>? onChange;
@@ -245,6 +245,13 @@ namespace UnityEngine {
                 onChange?.Invoke( visualElement );
             }
         }
+        public readonly (T Value, T Min, T Max) ValueMinMax {
+            get => (visualElement.value, visualElement.lowValue, visualElement.highValue);
+            set {
+                (visualElement.value, visualElement.lowValue, visualElement.highValue) = (value.Value, value.Min, value.Max);
+                onChange?.Invoke( visualElement );
+            }
+        }
 
         public ValueMinMaxAccessor(BaseSlider<T> visualElement, Action<BaseSlider<T>>? onChange) {
             this.visualElement = visualElement;
@@ -252,7 +259,7 @@ namespace UnityEngine {
         }
 
     }
-    public readonly struct ValueChoicesAccessor<T> where T : notnull {
+    public readonly struct ValueChoicesAccessor<T> {
 
         private readonly PopupField<T> visualElement;
         private readonly Action<PopupField<T>>? onChange;
@@ -268,6 +275,13 @@ namespace UnityEngine {
             get => visualElement.choices;
             set {
                 visualElement.choices = value;
+                onChange?.Invoke( visualElement );
+            }
+        }
+        public readonly (T Value, List<T> Choices) ValueChoices {
+            get => (visualElement.value, visualElement.choices);
+            set {
+                (visualElement.value, visualElement.choices) = (value.Value, value.Choices);
                 onChange?.Invoke( visualElement );
             }
         }
@@ -303,7 +317,7 @@ namespace UnityEngine {
         }
 
     }
-    public readonly struct Observable<T> where T : notnull, EventBase<T>, new() {
+    public readonly struct Observable<T> where T : EventBase<T>, new() {
 
         private readonly VisualElement visualElement;
 

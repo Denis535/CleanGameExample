@@ -21,7 +21,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Values
+        // Props
         public ProfileSettingsWidgetView? ProfileSettings {
             get => profileSettings.Children2<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
@@ -52,9 +52,14 @@ namespace Project.UI.Common {
                 }
             }
         }
-        // Events
-        public Observable<ClickEvent> OnOkey => okey.Observable<ClickEvent>();
-        public Observable<ClickEvent> OnBack => back.Observable<ClickEvent>();
+        public event EventCallback<ClickEvent> OnOkey {
+            add => okey.RegisterCallback( value );
+            remove => okey.RegisterCallback( value );
+        }
+        public event EventCallback<ClickEvent> OnBack {
+            add => back.RegisterCallback( value );
+            remove => back.RegisterCallback( value );
+        }
 
         // Constructor
         public SettingsWidgetView() {

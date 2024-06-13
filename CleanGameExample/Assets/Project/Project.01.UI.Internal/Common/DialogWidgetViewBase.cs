@@ -20,7 +20,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 1000;
-        // Values
+        // Props
         public string? Title {
             get => title.text;
             set {

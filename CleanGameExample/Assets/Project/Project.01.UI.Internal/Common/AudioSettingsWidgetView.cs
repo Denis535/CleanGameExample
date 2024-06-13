@@ -17,7 +17,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Values
+        // Props
         public float MasterVolume {
             get => masterVolume.value;
             init => masterVolume.value = value;
@@ -34,11 +34,22 @@ namespace Project.UI.Common {
             get => gameVolume.value;
             init => gameVolume.value = value;
         }
-        // Events
-        public Observable<ChangeEvent<float>> OnMasterVolume => masterVolume.Observable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnMusicVolume => musicVolume.Observable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnSfxVolume => sfxVolume.Observable<ChangeEvent<float>>();
-        public Observable<ChangeEvent<float>> OnGameVolume => gameVolume.Observable<ChangeEvent<float>>();
+        public event EventCallback<ChangeEvent<float>> OnMasterVolume {
+            add => masterVolume.RegisterCallback( value );
+            remove => masterVolume.UnregisterCallback( value );
+        }
+        public event EventCallback<ChangeEvent<float>> OnMusicVolume {
+            add => musicVolume.RegisterCallback( value );
+            remove => musicVolume.UnregisterCallback( value );
+        }
+        public event EventCallback<ChangeEvent<float>> OnSfxVolume {
+            add => sfxVolume.RegisterCallback( value );
+            remove => sfxVolume.UnregisterCallback( value );
+        }
+        public event EventCallback<ChangeEvent<float>> OnGameVolume {
+            add => gameVolume.RegisterCallback( value );
+            remove => gameVolume.UnregisterCallback( value );
+        }
 
         // Constructor
         public AudioSettingsWidgetView() {

@@ -56,68 +56,68 @@ namespace Project.UI.MainScreen {
         }
         private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuWidget widget) {
             var view = new MenuMainWidgetView_MenuView();
-            view.OnStartGame.Register( evt => {
+            view.OnStartGame += evt => {
                 widget.View.AddView( CreateView_StartGameView( widget ) );
-            } );
-            view.OnSettings.Register( evt => {
+            };
+            view.OnSettings += evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
-            } );
-            view.OnQuit.Register( evt => {
+            };
+            view.OnQuit += evt => {
                 var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
-            } );
+            };
             return view;
         }
         private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuWidget widget) {
             var view = new MenuMainWidgetView_StartGameView();
-            view.OnNewGame.Register( evt => {
+            view.OnNewGame += evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
-            } );
-            view.OnContinue.Register( evt => {
+            };
+            view.OnContinue += evt => {
                 widget.View.AddView( CreateView_SelectLevelView( widget ) );
-            } );
-            view.OnBack.Register( evt => {
+            };
+            view.OnBack += evt => {
                 widget.View.RemoveView( view );
-            } );
+            };
             return view;
         }
         private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuWidget widget) {
             var view = new MenuMainWidgetView_SelectLevelView();
-            view.OnLevel1.Register( evt => {
+            view.OnLevel1 += evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
-            } );
-            view.OnLevel2.Register( evt => {
+            };
+            view.OnLevel2 += evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level2 ) );
-            } );
-            view.OnLevel3.Register( evt => {
+            };
+            view.OnLevel3 += evt => {
                 widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level3 ) );
-            } );
-            view.OnBack.Register( evt => {
+            };
+            view.OnBack += evt => {
                 widget.View.RemoveView( view );
-            } );
+            };
             return view;
         }
         private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuWidget widget, GameLevel level) {
             var view = new MenuMainWidgetView_SelectCharacterView();
-            view.OnGray.Register( evt => {
+            view.OnGray += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();
-            } );
-            view.OnRed.Register( evt => {
+            };
+            view.OnRed += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red ).Throw();
-            } );
-            view.OnGreen.Register( evt => {
+            };
+            view.OnGreen += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green ).Throw();
-            } );
-            view.OnBlue.Register( evt => {
+            };
+            view.OnBlue += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue ).Throw();
-            } );
-            view.OnBack.Register( evt => {
+            };
+            view.OnBack += evt => {
                 widget.View.RemoveView( view );
-            } );
+            };
             return view;
         }
 

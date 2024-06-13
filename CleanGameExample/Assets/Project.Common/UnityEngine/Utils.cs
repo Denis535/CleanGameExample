@@ -321,14 +321,14 @@ namespace UnityEngine {
     //        this.visualElement = visualElement;
     //    }
 
-    //    public readonly void Register(EventCallback<T> callback) {
-    //        visualElement.RegisterCallback( callback );
+    //    public readonly void Register(EventCallback<T> callback, TrickleDown trickleDown = TrickleDown.NoTrickleDown) {
+    //        visualElement.RegisterCallback( callback, trickleDown );
     //    }
-    //    public readonly void RegisterOnce(EventCallback<T> callback) {
-    //        visualElement.RegisterCallbackOnce( callback );
+    //    public readonly void RegisterOnce(EventCallback<T> callback, TrickleDown trickleDown = TrickleDown.NoTrickleDown) {
+    //        visualElement.RegisterCallbackOnce( callback, trickleDown );
     //    }
-    //    public readonly void Unregister(EventCallback<T> callback) {
-    //        visualElement.UnregisterCallback( callback );
+    //    public readonly void Unregister(EventCallback<T> callback, TrickleDown trickleDown = TrickleDown.NoTrickleDown) {
+    //        visualElement.UnregisterCallback( callback, trickleDown );
     //    }
 
     //}

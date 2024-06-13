@@ -77,14 +77,14 @@ namespace Project.UI.Common {
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
-            view.OnOkey.Register( evt => {
+            view.OnOkey += evt => {
                 if (evt.GetTarget().IsValidSelf()) {
                     widget.RemoveSelf( DeactivateReason.Submit );
                 }
-            } );
-            view.OnBack.Register( evt => {
+            };
+            view.OnBack += evt => {
                 widget.RemoveSelf( DeactivateReason.Cancel );
-            } );
+            };
             return view;
         }
 

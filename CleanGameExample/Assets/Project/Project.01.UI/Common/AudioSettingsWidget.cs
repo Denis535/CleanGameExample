@@ -59,18 +59,18 @@ namespace Project.UI.Common {
                 SfxVolume = widget.AudioSettings.SfxVolume,
                 GameVolume = widget.AudioSettings.GameVolume,
             };
-            view.OnMasterVolume.Register( evt => {
+            view.OnMasterVolume += evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;
-            } );
-            view.OnMusicVolume.Register( evt => {
+            };
+            view.OnMusicVolume += evt => {
                 widget.AudioSettings.MusicVolume = evt.newValue;
-            } );
-            view.OnSfxVolume.Register( evt => {
+            };
+            view.OnSfxVolume += evt => {
                 widget.AudioSettings.SfxVolume = evt.newValue;
-            } );
-            view.OnGameVolume.Register( evt => {
+            };
+            view.OnGameVolume += evt => {
                 widget.AudioSettings.GameVolume = evt.newValue;
-            } );
+            };
             return view;
         }
 

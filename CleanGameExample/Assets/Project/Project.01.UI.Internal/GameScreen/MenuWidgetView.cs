@@ -17,10 +17,19 @@ namespace Project.UI.GameScreen {
 
         // Layer
         public override int Layer => 0;
-        // Events
-        public Observable<ClickEvent> OnResume => resume.Observable<ClickEvent>();
-        public Observable<ClickEvent> OnSettings => settings.Observable<ClickEvent>();
-        public Observable<ClickEvent> OnBack => back.Observable<ClickEvent>();
+        // Props
+        public event EventCallback<ClickEvent> OnResume {
+            add => resume.RegisterCallback( value );
+            remove => resume.UnregisterCallback( value );
+        }
+        public event EventCallback<ClickEvent> OnSettings {
+            add => settings.RegisterCallback( value );
+            remove => settings.UnregisterCallback( value );
+        }
+        public event EventCallback<ClickEvent> OnBack {
+            add => back.RegisterCallback( value );
+            remove => back.UnregisterCallback( value );
+        }
 
         // Constructor
         public MenuWidgetView() {

@@ -16,7 +16,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Values
+        // Props
         public bool IsFullScreen {
             get => isFullScreen.value;
             init => isFullScreen.value = value;
@@ -33,10 +33,18 @@ namespace Project.UI.Common {
             get => isVSync.value;
             init => isVSync.value = value;
         }
-        // Events
-        public Observable<ChangeEvent<bool>> OnIsFullScreen => isFullScreen.Observable<ChangeEvent<bool>>();
-        public Observable<ChangeEvent<object?>> OnScreenResolution => screenResolution.Observable<ChangeEvent<object?>>();
-        public Observable<ChangeEvent<bool>> OnIsVSync => isVSync.Observable<ChangeEvent<bool>>();
+        public event EventCallback<ChangeEvent<bool>> OnIsFullScreen {
+            add => isFullScreen.RegisterCallback( value );
+            remove => isFullScreen.UnregisterCallback( value );
+        }
+        public event EventCallback<ChangeEvent<object?>> OnScreenResolution {
+            add => screenResolution.RegisterCallback( value );
+            remove => screenResolution.UnregisterCallback( value );
+        }
+        public event EventCallback<ChangeEvent<bool>> OnIsVSync {
+            add => isVSync.RegisterCallback( value );
+            remove => isVSync.UnregisterCallback( value );
+        }
 
         // Constructor
         public VideoSettingsWidgetView() {

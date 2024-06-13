@@ -17,7 +17,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Values
         public float MasterVolume {
             get => masterVolume.value;
             init => masterVolume.value = value;
@@ -34,7 +34,7 @@ namespace Project.UI.Common {
             get => gameVolume.value;
             init => gameVolume.value = value;
         }
-        // Props
+        // Events
         public Observable<ChangeEvent<float>> OnMasterVolume => masterVolume.AsObservable<ChangeEvent<float>>();
         public Observable<ChangeEvent<float>> OnMusicVolume => musicVolume.AsObservable<ChangeEvent<float>>();
         public Observable<ChangeEvent<float>> OnSfxVolume => sfxVolume.AsObservable<ChangeEvent<float>>();

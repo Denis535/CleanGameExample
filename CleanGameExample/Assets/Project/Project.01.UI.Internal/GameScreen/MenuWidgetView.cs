@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Events
         public Observable<ClickEvent> OnResume => resume.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnSettings => settings.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();

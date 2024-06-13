@@ -24,59 +24,56 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // SetBackgroundEffect
-        public void SetBackgroundEffect(UIViewBase view) {
+        // SetWidgetEffect
+        public void SetWidgetEffect(UIViewBase view) {
             // Menu
             if (view is MenuWidgetView menu) {
-                view = menu.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+                view = menu.Views.FirstOrDefault( i => i.IsDisplayedInHierarchy() );
                 if (view is MenuMainWidgetView_MenuView) {
-                    SetBackgroundEffect( widget, Color.white, default, 0, 1.0f );
+                    SetWidgetEffect( Color.white, default, 0, 1.0f );
                     return;
                 }
                 if (view is MenuMainWidgetView_StartGameView) {
-                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
+                    SetWidgetEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
                 if (view is MenuMainWidgetView_SelectLevelView) {
-                    SetBackgroundEffect( widget, Color.white, default, 2, 1.2f );
+                    SetWidgetEffect( Color.white, default, 2, 1.2f );
                     return;
                 }
                 if (view is MenuMainWidgetView_SelectCharacterView) {
-                    SetBackgroundEffect( widget, Color.white, default, 3, 1.3f );
+                    SetWidgetEffect( Color.white, default, 3, 1.3f );
                     return;
                 }
                 return;
             }
             // Settings
             if (view is SettingsWidgetView settings) {
-                view = settings.GetChildren().FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
-                if (view is ProfileSettingsWidgetView) {
-                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
+                if (settings.ProfileSettings!.IsDisplayedInHierarchy()) {
+                    SetWidgetEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
-                if (view is AudioSettingsWidgetView) {
-                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
+                if (settings.AudioSettings!.IsDisplayedInHierarchy()) {
+                    SetWidgetEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
-                if (view is VideoSettingsWidgetView) {
-                    SetBackgroundEffect( widget, Color.white, default, 1, 1.1f );
+                if (settings.VideoSettings!.IsDisplayedInHierarchy()) {
+                    SetWidgetEffect( Color.white, default, 1, 1.1f );
                     return;
                 }
                 return;
             }
             // Loading
             if (view is LoadingWidgetView loading) {
-                SetBackgroundEffect( widget, Color.gray, default, 45, 2.5f );
+                SetWidgetEffect( Color.gray, default, 45, 2.5f );
                 return;
             }
         }
-
-        // Helpers
-        private static void SetBackgroundEffect(VisualElement background, Color color, Vector2 translate, float rotate, float scale) {
-            background.style.unityBackgroundImageTintColor = color;
-            background.style.translate = new Translate( translate.x, translate.y );
-            background.style.rotate = new Rotate( Angle.Degrees( rotate ) );
-            background.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
+        private void SetWidgetEffect(Color color, Vector2 translate, float rotate, float scale) {
+            widget.style.unityBackgroundImageTintColor = color;
+            widget.style.translate = new Translate( translate.x, translate.y );
+            widget.style.rotate = new Rotate( Angle.Degrees( rotate ) );
+            widget.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
         }
 
     }

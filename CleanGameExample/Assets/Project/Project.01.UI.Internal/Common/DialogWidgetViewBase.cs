@@ -20,7 +20,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 1000;
-        // Props
+        // Values
         public string? Title {
             get => title.text;
             set {
@@ -38,7 +38,7 @@ namespace Project.UI.Common {
 
         // Constructor
         public DialogWidgetViewBase() {
-            VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out this.title, out this.message );
+            VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out title, out message );
             widget.RegisterCallback<AttachToPanelEvent>( PlayAnimation );
             header.SetDisplayed( false );
             content.SetDisplayed( false );

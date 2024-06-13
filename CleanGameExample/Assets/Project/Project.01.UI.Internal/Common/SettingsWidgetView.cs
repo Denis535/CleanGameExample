@@ -21,9 +21,9 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Values
         public ProfileSettingsWidgetView? ProfileSettings {
-            get => profileSettingsTab.Children().FirstOrDefault()?.GetView<ProfileSettingsWidgetView>();
+            get => profileSettingsTab.Children2<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
                     profileSettingsTab.Add( value );
@@ -33,7 +33,7 @@ namespace Project.UI.Common {
             }
         }
         public VideoSettingsWidgetView? VideoSettings {
-            get => videoSettingsTab.Children().FirstOrDefault()?.GetView<VideoSettingsWidgetView>();
+            get => videoSettingsTab.Children2<VideoSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
                     videoSettingsTab.Add( value );
@@ -43,7 +43,7 @@ namespace Project.UI.Common {
             }
         }
         public AudioSettingsWidgetView? AudioSettings {
-            get => audioSettingsTab.Children().FirstOrDefault()?.GetView<AudioSettingsWidgetView>();
+            get => videoSettingsTab.Children2<AudioSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
                     audioSettingsTab.Add( value );
@@ -52,7 +52,7 @@ namespace Project.UI.Common {
                 }
             }
         }
-        // Props
+        // Events
         public Observable<ClickEvent> OnOkey => okey.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
 

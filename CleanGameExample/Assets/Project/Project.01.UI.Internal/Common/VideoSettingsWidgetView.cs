@@ -16,7 +16,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Values
         public bool IsFullScreen {
             get => isFullScreen.value;
             init => isFullScreen.value = value;
@@ -33,7 +33,7 @@ namespace Project.UI.Common {
             get => isVSync.value;
             init => isVSync.value = value;
         }
-        // Props
+        // Events
         public Observable<ChangeEvent<bool>> OnIsFullScreen => isFullScreen.AsObservable<ChangeEvent<bool>>();
         public Observable<ChangeEvent<object?>> OnScreenResolution => screenResolution.AsObservable<ChangeEvent<object?>>();
         public Observable<ChangeEvent<bool>> OnIsVSync => isVSync.AsObservable<ChangeEvent<bool>>();

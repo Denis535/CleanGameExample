@@ -28,7 +28,7 @@ namespace Project.UI.GameScreen {
         private Button nextLevel;
         private Button back;
 
-        // Props
+        // Layer
         public override int Layer => -1000;
 
         // Constructor
@@ -48,7 +48,7 @@ namespace Project.UI.GameScreen {
         private Button tryAgain;
         private Button back;
 
-        // Props
+        // Layer
         public override int Layer => -1000;
 
         // Constructor

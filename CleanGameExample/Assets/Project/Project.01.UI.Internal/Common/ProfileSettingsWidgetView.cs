@@ -14,7 +14,7 @@ namespace Project.UI.Common {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Values
         public string Name {
             get => name.value;
             init => name.value = value;

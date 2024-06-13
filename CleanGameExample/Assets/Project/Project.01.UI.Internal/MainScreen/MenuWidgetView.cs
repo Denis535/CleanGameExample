@@ -16,26 +16,28 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => 0;
+        // Views
+        public UIViewBase[] Views => content.Children2().ToArray();
 
         // Constructor
         public MenuWidgetView() {
             VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out content );
         }
         public override void Dispose() {
-            this.GetChildren().DisposeAll();
+            content.Children2().DisposeAll();
             base.Dispose();
         }
 
         // AddView
         public void AddView(UIViewBase view) {
             content.Add( view );
-            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
-            title.text = GetTitle( content.Children().Last().GetView() );
+            Recalculate( content.Children2().ToArray() );
+            title.text = GetTitle( content.Children2().Last() );
         }
         public void RemoveView(UIViewBase view) {
             content.Remove( view );
-            Recalculate( content.Children().Select( i => i.GetView() ).ToArray() );
-            title.text = GetTitle( content.Children().Last().GetView() );
+            Recalculate( content.Children2().ToArray() );
+            title.text = GetTitle( content.Children2().Last() );
         }
 
         // Helpers
@@ -91,7 +93,7 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
-        // Props
+        // Events
         public Observable<ClickEvent> OnStartGame => startGame.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnSettings => settings.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnQuit => quit.AsObservable<ClickEvent>();
@@ -115,7 +117,7 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
-        // Props
+        // Events
         public Observable<ClickEvent> OnNewGame => newGame.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnContinue => @continue.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnBack => back.AsObservable<ClickEvent>();
@@ -140,7 +142,7 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
-        // Props
+        // Events
         public Observable<ClickEvent> OnLevel1 => level1.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnLevel2 => level2.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnLevel3 => level3.AsObservable<ClickEvent>();
@@ -167,7 +169,7 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => throw Exceptions.Internal.NotImplemented( $"Property 'Layer' is not implemented" );
-        // Props
+        // Events
         public Observable<ClickEvent> OnGray => gray.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnRed => red.AsObservable<ClickEvent>();
         public Observable<ClickEvent> OnGreen => green.AsObservable<ClickEvent>();

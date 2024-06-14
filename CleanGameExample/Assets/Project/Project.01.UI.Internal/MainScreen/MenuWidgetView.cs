@@ -86,7 +86,7 @@ namespace Project.UI.MainScreen {
     // MenuView
     public class MenuMainWidgetView_MenuView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly ColumnScope scope;
         private readonly Button startGame;
         private readonly Button settings;
         private readonly Button quit;
@@ -109,7 +109,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MenuMainWidgetView_MenuView() {
-            VisualElement = VisualElementFactory_Main.Menu_Menu( out view, out startGame, out settings, out quit );
+            VisualElement = VisualElementFactory_Main.Menu_Menu( out scope, out startGame, out settings, out quit );
         }
         public override void Dispose() {
             base.Dispose();
@@ -119,7 +119,7 @@ namespace Project.UI.MainScreen {
     // StartGameView
     public class MenuMainWidgetView_StartGameView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly ColumnScope scope;
         private readonly Button newGame;
         private readonly Button @continue;
         private readonly Button back;
@@ -142,7 +142,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MenuMainWidgetView_StartGameView() {
-            VisualElement = VisualElementFactory_Main.Menu_StartGame( out view, out newGame, out @continue, out back );
+            VisualElement = VisualElementFactory_Main.Menu_StartGame( out scope, out newGame, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -152,7 +152,7 @@ namespace Project.UI.MainScreen {
     // SelectLevelView
     public class MenuMainWidgetView_SelectLevelView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly ColumnScope scope;
         private readonly Button level1;
         private readonly Button level2;
         private readonly Button level3;
@@ -180,7 +180,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MenuMainWidgetView_SelectLevelView() {
-            VisualElement = VisualElementFactory_Main.Menu_SelectLevel( out view, out level1, out level2, out level3, out back );
+            VisualElement = VisualElementFactory_Main.Menu_SelectLevel( out scope, out level1, out level2, out level3, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -190,7 +190,7 @@ namespace Project.UI.MainScreen {
     // SelectCharacterView
     public class MenuMainWidgetView_SelectCharacterView : UIViewBase {
 
-        private readonly VisualElement view;
+        private readonly ColumnScope scope;
         private readonly Button gray;
         private readonly Button red;
         private readonly Button green;
@@ -223,7 +223,7 @@ namespace Project.UI.MainScreen {
 
         // Constructor
         public MenuMainWidgetView_SelectCharacterView() {
-            VisualElement = VisualElementFactory_Main.Menu_SelectCharacter( out view, out gray, out red, out green, out blue, out back );
+            VisualElement = VisualElementFactory_Main.Menu_SelectCharacter( out scope, out gray, out red, out green, out blue, out back );
         }
         public override void Dispose() {
             base.Dispose();

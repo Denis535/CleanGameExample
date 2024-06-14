@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
 
         // Layer
         public override int Layer => 0;
-        // Props
+        // Events
         public event EventCallback<ClickEvent> OnResume {
             add => resume.RegisterCallback( value );
             remove => resume.UnregisterCallback( value );

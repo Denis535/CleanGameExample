@@ -13,6 +13,15 @@ namespace Project.UI.MainScreen {
 
         // Layer
         public override int Layer => -1000;
+        // Props
+        public (Color Color, Vector2 Translate, float Rotate, float Scale) Effect {
+            set {
+                widget.style.unityBackgroundImageTintColor = value.Color;
+                widget.style.translate = new Translate( value.Translate.x, value.Translate.y );
+                widget.style.rotate = new Rotate( Angle.Degrees( value.Rotate ) );
+                widget.style.scale = new Scale( new Vector3( value.Scale, value.Scale, 1 ) );
+            }
+        }
 
         // Constructor
         public MainWidgetView() {
@@ -20,14 +29,6 @@ namespace Project.UI.MainScreen {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // SetEffect
-        public void SetEffect(Color color, Vector2 translate, float rotate, float scale) {
-            widget.style.unityBackgroundImageTintColor = color;
-            widget.style.translate = new Translate( translate.x, translate.y );
-            widget.style.rotate = new Rotate( Angle.Degrees( rotate ) );
-            widget.style.scale = new Scale( new Vector3( scale, scale, 1 ) );
         }
 
     }

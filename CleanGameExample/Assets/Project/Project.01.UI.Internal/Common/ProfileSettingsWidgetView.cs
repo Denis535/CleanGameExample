@@ -19,13 +19,12 @@ namespace Project.UI.Common {
             get => name.value;
             init => name.value = value;
         }
-        public Func<string?, bool> NameValidator { get; init; } = default!;
 
         // Constructor
-        public ProfileSettingsWidgetView() {
+        public ProfileSettingsWidgetView(Func<string?, bool> nameValidator) {
             VisualElement = VisualElementFactory_Common.ProfileSettings( out widget, out name );
             name.OnValidate( evt => {
-                name.SetValid( NameValidator( name.value ) );
+                name.SetValid( nameValidator( name.value ) );
             } );
         }
         public override void Dispose() {

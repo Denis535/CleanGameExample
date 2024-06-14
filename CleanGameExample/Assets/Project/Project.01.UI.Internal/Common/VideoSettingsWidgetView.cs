@@ -33,6 +33,7 @@ namespace Project.UI.Common {
             get => isVSync.value;
             init => isVSync.value = value;
         }
+        // Events
         public event EventCallback<ChangeEvent<bool>> OnIsFullScreen {
             add => isFullScreen.RegisterCallback( value );
             remove => isFullScreen.UnregisterCallback( value );

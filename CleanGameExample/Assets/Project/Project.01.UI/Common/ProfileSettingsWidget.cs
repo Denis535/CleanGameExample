@@ -50,9 +50,8 @@ namespace Project.UI.Common {
 
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget) {
-            var view = new ProfileSettingsWidgetView() {
-                Name = widget.ProfileSettings.Name,
-                NameValidator = widget.ProfileSettings.IsNameValid
+            var view = new ProfileSettingsWidgetView( widget.ProfileSettings.IsNameValid ) {
+                Name = widget.ProfileSettings.Name
             };
             return view;
         }

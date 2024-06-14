@@ -133,6 +133,14 @@ namespace UnityEngine {
         //    return new EventObservable<T>( element );
         //}
 
+        // GetMinMax
+        public static (T Min, T Max) GetMinMax<T>(this BaseSlider<T> element) where T : IComparable<T> {
+            return (element.lowValue, element.highValue);
+        }
+        public static void SetMinMax<T>(this BaseSlider<T> element, (T Min, T Max) value) where T : IComparable<T> {
+            (element.lowValue, element.highValue) = value;
+        }
+
         // OnValidate
         public static void OnValidate(this VisualElement element, EventCallback<EventBase> callback, TrickleDown useTrickleDown = TrickleDown.NoTrickleDown) {
             // todo: how to handle any event?

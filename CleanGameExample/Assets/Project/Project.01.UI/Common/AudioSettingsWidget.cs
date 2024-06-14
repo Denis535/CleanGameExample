@@ -55,9 +55,13 @@ namespace Project.UI.Common {
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget) {
             var view = new AudioSettingsWidgetView() {
                 MasterVolume = widget.AudioSettings.MasterVolume,
+                MasterVolumeMinMax = (0, 1),
                 MusicVolume = widget.AudioSettings.MusicVolume,
+                MusicVolumeMinMax = (0, 1),
                 SfxVolume = widget.AudioSettings.SfxVolume,
+                SfxVolumeMinMax = (0, 1),
                 GameVolume = widget.AudioSettings.GameVolume,
+                GameVolumeMinMax = (0, 1),
             };
             view.OnMasterVolume += evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;

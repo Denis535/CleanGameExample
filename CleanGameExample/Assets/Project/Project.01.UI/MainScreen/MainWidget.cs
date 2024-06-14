@@ -82,10 +82,7 @@ namespace Project.UI.MainScreen {
 
         // Update
         public void Update() {
-            var effect = GetEffect( this );
-            if (effect != null) {
-                View.SetEffect( effect.Value.color, effect.Value.translate, effect.Value.rotate, effect.Value.scale );
-            }
+            View.Effect = GetEffect( this );
         }
         public void LateUpdate() {
         }
@@ -97,7 +94,7 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        public static (Color color, Vector2 translate, float rotate, float scale)? GetEffect(MainWidget widget) {
+        private static (Color Color, Vector2 Translate, float Rotate, float Scale) GetEffect(MainWidget widget) {
             var view = widget.GetDescendants().Where( i => i.IsViewable ).Select( i => i.View! ).FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
             // Menu
             if (view is MenuWidgetView menu) {
@@ -114,7 +111,7 @@ namespace Project.UI.MainScreen {
                 if (view is MenuMainWidgetView_SelectCharacterView) {
                     return (Color.white, default, 3, 1.3f);
                 }
-                return null;
+                return (Color.white, default, 3, 1.3f);
             }
             // Settings
             if (view is SettingsWidgetView settings) {
@@ -127,13 +124,13 @@ namespace Project.UI.MainScreen {
                 if (settings.VideoSettings!.IsDisplayedInHierarchy()) {
                     return (Color.white, default, 1, 1.1f);
                 }
-                return null;
+                return (Color.white, default, 1, 1.1f);
             }
             // Loading
             if (view is LoadingWidgetView loading) {
                 return (Color.gray, default, 45, 2.5f);
             }
-            return null;
+            return (Color.white, default, 0, 1.0f);
         }
 
     }

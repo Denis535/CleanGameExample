@@ -39,7 +39,7 @@ namespace Project.UI.Common {
         // Constructor
         public DialogWidgetViewBase() {
             VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallback<AttachToPanelEvent>( PlayAnimation );
+            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
             header.SetDisplayed( false );
             content.SetDisplayed( false );
             footer.SetDisplayed( false );

@@ -59,7 +59,7 @@ namespace Project.UI.GameScreen {
             }
             Game.IsPaused = IsPaused( this );
             Cursor.lockState = GetCursorLockMode( this );
-            View.SetTargetEffect( GetTargetEffect( Player ) );
+            View.TargetEffect = GetTargetEffect( Player );
             View.Input.SetEnabled( !Game.IsPaused );
         }
         public void LateUpdate() {

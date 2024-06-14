@@ -13,11 +13,11 @@ namespace Project.UI {
             using (VisualElementFactory.DialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.DialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
-                        VisualElementFactory.Label( null ).AddToScope( out title );
+                        title = VisualElementFactory.Label( null );
                     }
                     using (VisualElementFactory.Content().AsScope( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( null ).AddToScope( out message );
+                            message = VisualElementFactory.Label( null );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
@@ -30,11 +30,11 @@ namespace Project.UI {
             using (VisualElementFactory.InfoDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.InfoDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
-                        VisualElementFactory.Label( null ).AddToScope( out title );
+                        title = VisualElementFactory.Label( null );
                     }
                     using (VisualElementFactory.Content().AsScope( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( null ).AddToScope( out message );
+                            message = VisualElementFactory.Label( null );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
@@ -47,11 +47,11 @@ namespace Project.UI {
             using (VisualElementFactory.WarningDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.WarningDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
-                        VisualElementFactory.Label( null ).AddToScope( out title );
+                        title = VisualElementFactory.Label( null );
                     }
                     using (VisualElementFactory.Content().AsScope( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( null ).AddToScope( out message );
+                            message = VisualElementFactory.Label( null );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
@@ -64,11 +64,11 @@ namespace Project.UI {
             using (VisualElementFactory.ErrorDialogWidget().AsScope( out widget )) {
                 using (VisualElementFactory.ErrorDialogCard().AsScope( out card )) {
                     using (VisualElementFactory.Header().AsScope( out header )) {
-                        VisualElementFactory.Label( null ).AddToScope( out title );
+                        title = VisualElementFactory.Label( null );
                     }
                     using (VisualElementFactory.Content().AsScope( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            VisualElementFactory.Label( null ).AddToScope( out message );
+                            message = VisualElementFactory.Label( null );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope( out footer )) {
@@ -83,18 +83,18 @@ namespace Project.UI {
             using (VisualElementFactory.MediumWidget().AsScope( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
-                        VisualElementFactory.Label( "Settings" ).AddToScope( out title );
+                        title = VisualElementFactory.Label( "Settings" );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).AsScope( out view )) {
-                            VisualElementFactory.Tab( "Profile Settings" ).AddToScope( out profileSettings );
-                            VisualElementFactory.Tab( "Video Settings" ).AddToScope( out videoSettings );
-                            VisualElementFactory.Tab( "Audio Settings" ).AddToScope( out audioSettings );
+                            profileSettings = VisualElementFactory.Tab( "Profile Settings" );
+                            videoSettings = VisualElementFactory.Tab( "Video Settings" );
+                            audioSettings = VisualElementFactory.Tab( "Audio Settings" );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {
-                        VisualElementFactory.Submit( "Ok" ).AddToScope( out okey );
-                        VisualElementFactory.Cancel( "Back" ).AddToScope( out back );
+                        okey = VisualElementFactory.Submit( "Ok" );
+                        back = VisualElementFactory.Cancel( "Back" );
                     }
                 }
                 return widget;
@@ -103,7 +103,7 @@ namespace Project.UI {
         public static Widget ProfileSettings(out Widget widget, out TextField name) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
+                    name = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" );
                 }
                 return widget;
             }
@@ -111,9 +111,9 @@ namespace Project.UI {
         public static Widget VideoSettings(out Widget widget, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
-                    VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" ).AddToScope( out screenResolution );
-                    VisualElementFactory.ToggleField( "V-Sync" ).Classes( "label-width-25pc" ).AddToScope( out isVSync );
+                    isFullScreen = VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" );
+                    screenResolution = VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" );
+                    isVSync = VisualElementFactory.ToggleField( "V-Sync" ).Classes( "label-width-25pc" );
                 }
                 return widget;
             }
@@ -121,10 +121,10 @@ namespace Project.UI {
         public static Widget AudioSettings(out Widget widget, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
-                    VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );
-                    VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out musicVolume );
-                    VisualElementFactory.SliderField( "Sfx Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out sfxVolume );
-                    VisualElementFactory.SliderField( "Game Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out gameVolume );
+                    masterVolume = VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" );
+                    musicVolume = VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" );
+                    sfxVolume = VisualElementFactory.SliderField( "Sfx Volume", 0, 1 ).Classes( "label-width-25pc" );
+                    gameVolume = VisualElementFactory.SliderField( "Game Volume", 0, 1 ).Classes( "label-width-25pc" );
                 }
                 return widget;
             }

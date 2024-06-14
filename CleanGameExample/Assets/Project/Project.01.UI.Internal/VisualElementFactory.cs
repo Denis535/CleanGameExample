@@ -328,6 +328,7 @@ namespace Project.UI {
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
+            VisualElementScope.Peek?.VisualElement.Add( result );
             return result;
         }
 
@@ -388,22 +389,11 @@ namespace Project.UI {
 
         // AsScope
         public static VisualElementScope<T> AsScope<T>(this T visualElement) where T : VisualElement {
-            VisualElementScope.Peek?.VisualElement.Add( visualElement );
             return new VisualElementScope<T>( visualElement );
         }
         public static VisualElementScope<T> AsScope<T>(this T visualElement, out T @out) where T : VisualElement {
             @out = visualElement;
-            VisualElementScope.Peek?.VisualElement.Add( visualElement );
             return new VisualElementScope<T>( visualElement );
-        }
-
-        // AddToScope
-        public static void AddToScope<T>(this T visualElement) where T : VisualElement {
-            VisualElementScope.Peek!.VisualElement.Add( visualElement );
-        }
-        public static void AddToScope<T>(this T visualElement, out T @out) where T : VisualElement {
-            @out = visualElement;
-            VisualElementScope.Peek!.VisualElement.Add( visualElement );
         }
 
     }

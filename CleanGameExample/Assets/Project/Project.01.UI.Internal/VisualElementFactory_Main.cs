@@ -10,26 +10,26 @@ namespace Project.UI {
 
         // Main
         public static Widget Main(out Widget widget) {
-            using (VisualElementFactory.Widget().Name( "main-widget" ).AsScope( out widget )) {
+            using (VisualElementFactory.Widget().Name( "main-widget" ).Out( out widget ).AsScope()) {
                 return widget;
             }
         }
 
         // Menu
-        public static Widget Menu(out Widget widget, out Label title, out VisualElement content) {
-            using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
+        public static Widget Menu(out Widget widget, out Label title, out VisualElement views) {
+            using (VisualElementFactory.LeftWidget().Out( out widget ).AsScope()) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Menu" );
                     }
-                    using (VisualElementFactory.Content().AsScope( out content )) {
+                    using (VisualElementFactory.Content().Out( out views ).AsScope()) {
                     }
                 }
                 return widget;
             }
         }
         public static VisualElement Menu_Menu(out VisualElement view, out Button startGame, out Button settings, out Button quit) {
-            using (VisualElementFactory.View().AsScope( out view )) {
+            using (VisualElementFactory.View().Out( out view ).AsScope()) {
                 startGame = VisualElementFactory.Select( "Start Game" );
                 settings = VisualElementFactory.Select( "Settings" );
                 quit = VisualElementFactory.Quit( "Quit" );
@@ -37,7 +37,7 @@ namespace Project.UI {
             }
         }
         public static VisualElement Menu_StartGame(out VisualElement view, out Button newGame, out Button @continue, out Button back) {
-            using (VisualElementFactory.View().AsScope( out view )) {
+            using (VisualElementFactory.View().Out( out view ).AsScope()) {
                 newGame = VisualElementFactory.Select( "New Game" );
                 @continue = VisualElementFactory.Select( "Continue" );
                 back = VisualElementFactory.Back( "Back" );
@@ -45,7 +45,7 @@ namespace Project.UI {
             }
         }
         public static VisualElement Menu_SelectLevel(out VisualElement view, out Button level1, out Button level2, out Button level3, out Button back) {
-            using (VisualElementFactory.View().AsScope( out view )) {
+            using (VisualElementFactory.View().Out( out view ).AsScope()) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     level1 = VisualElementFactory.Select( "Level 1" );
                     level2 = VisualElementFactory.Select( "Level 2" );
@@ -56,7 +56,7 @@ namespace Project.UI {
             }
         }
         public static VisualElement Menu_SelectCharacter(out VisualElement view, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
-            using (VisualElementFactory.View().AsScope( out view )) {
+            using (VisualElementFactory.View().Out( out view ).AsScope()) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     gray = VisualElementFactory.Select( "Gray" );
                     red = VisualElementFactory.Select( "Red" );
@@ -70,7 +70,7 @@ namespace Project.UI {
 
         // Loading
         public static Widget Loading(out Widget widget, out Label loading) {
-            using (VisualElementFactory.Widget().AsScope( out widget )) {
+            using (VisualElementFactory.Widget().Out( out widget ).AsScope()) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-2pc", "grow-1", "justify-content-end", "align-items-center" ).AsScope()) {
                     loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold" );
                 }

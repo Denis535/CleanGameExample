@@ -12,32 +12,32 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
         private readonly Label title;
-        private readonly VisualElement content;
+        private readonly VisualElement views;
 
         // Layer
         public override int Layer => 0;
         // Props
-        public UIViewBase[] Views => content.Children2().ToArray();
+        public UIViewBase[] Views => views.Children2().ToArray();
 
         // Constructor
         public MenuWidgetView() {
-            VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out content );
+            VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out views );
         }
         public override void Dispose() {
-            content.Children2().DisposeAll();
+            views.Children2().DisposeAll();
             base.Dispose();
         }
 
         // AddView
         public void AddView(UIViewBase view) {
-            content.Add( view );
-            Recalculate( content.Children2().ToArray() );
-            title.text = GetTitle( content.Children2().Last() );
+            views.Add( view );
+            Recalculate( views.Children2().ToArray() );
+            title.text = GetTitle( views.Children2().Last() );
         }
         public void RemoveView(UIViewBase view) {
-            content.Remove( view );
-            Recalculate( content.Children2().ToArray() );
-            title.text = GetTitle( content.Children2().Last() );
+            views.Remove( view );
+            Recalculate( views.Children2().ToArray() );
+            title.text = GetTitle( views.Children2().Last() );
         }
 
         // Helpers

@@ -12,10 +12,9 @@ namespace Project.UI.Common {
 
         private readonly Widget widget;
         private readonly Label title;
-        private readonly TabView view;
-        private readonly Tab profileSettings;
-        private readonly Tab videoSettings;
-        private readonly Tab audioSettings;
+        private readonly VisualElement profileSettings;
+        private readonly VisualElement videoSettings;
+        private readonly VisualElement audioSettings;
         private readonly Button okey;
         private readonly Button back;
 
@@ -64,9 +63,12 @@ namespace Project.UI.Common {
 
         // Constructor
         public SettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out view, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
+            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
             widget.OnValidate( evt => {
-                okey.SetValid( view.GetDescendants().All( i => i.IsValidSelf() ) );
+                okey.SetValid(
+                    profileSettings.GetDescendants().All( i => i.IsValidSelf() ) &&
+                    videoSettings.GetDescendants().All( i => i.IsValidSelf() ) &&
+                    audioSettings.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }
         public override void Dispose() {

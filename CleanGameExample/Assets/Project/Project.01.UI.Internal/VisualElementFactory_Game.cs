@@ -10,7 +10,7 @@ namespace Project.UI {
 
         // Game
         public static Widget Game(out Widget widget, out VisualElement target) {
-            using (VisualElementFactory.Widget().Name( "game-widget" ).AsScope( out widget )) {
+            using (VisualElementFactory.Widget().Name( "game-widget" ).Out( out widget ).AsScope()) {
                 target = VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) );
@@ -20,7 +20,7 @@ namespace Project.UI {
 
         // Menu
         public static Widget Menu(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
-            using (VisualElementFactory.LeftWidget().AsScope( out widget )) {
+            using (VisualElementFactory.LeftWidget().Out( out widget ).AsScope()) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Menu" );
@@ -37,7 +37,7 @@ namespace Project.UI {
 
         // WinTotals
         public static Widget WinTotals(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
-            using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
+            using (VisualElementFactory.SmallWidget().Out( out widget ).AsScope()) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Congratulations" );
@@ -58,7 +58,7 @@ namespace Project.UI {
 
         // LossTotals
         public static Widget LossTotals(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
-            using (VisualElementFactory.SmallWidget().AsScope( out widget )) {
+            using (VisualElementFactory.SmallWidget().Out( out widget ).AsScope()) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "We're sorry" );

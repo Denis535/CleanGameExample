@@ -322,6 +322,11 @@ namespace Project.UI {
             return result;
         }
 
+        public static VisualElement VisualElement() {
+            var result = Create<VisualElement>( null, null );
+            return result;
+        }
+
         // Helpers
         private static T Create<T>(string? name, string? @class) where T : VisualElement, new() {
             var result = new T();
@@ -333,30 +338,6 @@ namespace Project.UI {
         }
 
     }
-    //class Scope<T> : IEnumerable<VisualElement> where T : VisualElement {
-
-    //    private readonly T visualElement;
-
-    //    public Scope(T visualElement) {
-    //        this.visualElement = visualElement;
-    //    }
-
-    //    public void Add(VisualElement child) {
-    //        visualElement.Add( child );
-    //    }
-
-    //    IEnumerator<VisualElement> IEnumerable<VisualElement>.GetEnumerator() {
-    //        return visualElement.Children().GetEnumerator();
-    //    }
-    //    IEnumerator IEnumerable.GetEnumerator() {
-    //        return visualElement.Children().GetEnumerator();
-    //    }
-
-    //    public static implicit operator T(Scope<T> scope) {
-    //        return scope.visualElement;
-    //    }
-
-    //}
     class VisualElementScope : IDisposable {
 
         private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
@@ -375,25 +356,17 @@ namespace Project.UI {
         }
 
     }
-    class VisualElementScope<T> : VisualElementScope where T : VisualElement {
-
-        // VisualElement
-        public new T VisualElement => (T) base.VisualElement;
-
-        // Constructor
-        public VisualElementScope(T visualElement) : base( visualElement ) {
-        }
-
-    }
     static class VisualElementScopeExtensions {
 
-        // AsScope
-        public static VisualElementScope<T> AsScope<T>(this T visualElement) where T : VisualElement {
-            return new VisualElementScope<T>( visualElement );
+        // Out
+        public static T Out<T>(this T element, out T @out) where T : VisualElement {
+            @out = element;
+            return element;
         }
-        public static VisualElementScope<T> AsScope<T>(this T visualElement, out T @out) where T : VisualElement {
-            @out = visualElement;
-            return new VisualElementScope<T>( visualElement );
+
+        // AsScope
+        public static VisualElementScope AsScope(this VisualElement element) {
+            return new VisualElementScope( element );
         }
 
     }

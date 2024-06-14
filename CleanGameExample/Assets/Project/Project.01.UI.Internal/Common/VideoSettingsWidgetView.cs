@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement widget;
+        private readonly Widget widget;
         private readonly Toggle isFullScreen;
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;

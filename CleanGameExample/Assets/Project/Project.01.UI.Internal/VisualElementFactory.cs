@@ -6,7 +6,7 @@ namespace Project.UI {
     using System.Linq;
     using UnityEngine;
     using UnityEngine.UIElements;
-    
+
     public static class VisualElementFactory {
 
         // StringSelector
@@ -329,6 +329,81 @@ namespace Project.UI {
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
             return result;
+        }
+
+    }
+    //class Scope<T> : IEnumerable<VisualElement> where T : VisualElement {
+
+    //    private readonly T visualElement;
+
+    //    public Scope(T visualElement) {
+    //        this.visualElement = visualElement;
+    //    }
+
+    //    public void Add(VisualElement child) {
+    //        visualElement.Add( child );
+    //    }
+
+    //    IEnumerator<VisualElement> IEnumerable<VisualElement>.GetEnumerator() {
+    //        return visualElement.Children().GetEnumerator();
+    //    }
+    //    IEnumerator IEnumerable.GetEnumerator() {
+    //        return visualElement.Children().GetEnumerator();
+    //    }
+
+    //    public static implicit operator T(Scope<T> scope) {
+    //        return scope.visualElement;
+    //    }
+
+    //}
+    class VisualElementScope : IDisposable {
+
+        private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
+        public static VisualElementScope? Peek => Stack.Any() ? Stack.Peek() : null;
+
+        // VisualElement
+        public VisualElement VisualElement { get; }
+
+        // Constructor
+        public VisualElementScope(VisualElement visualElement) {
+            VisualElement = visualElement;
+            Stack.Push( this );
+        }
+        public void Dispose() {
+            Stack.Pop();
+        }
+
+    }
+    class VisualElementScope<T> : VisualElementScope where T : VisualElement {
+
+        // VisualElement
+        public new T VisualElement => (T) base.VisualElement;
+
+        // Constructor
+        public VisualElementScope(T visualElement) : base( visualElement ) {
+        }
+
+    }
+    static class VisualElementScopeExtensions {
+
+        // AsScope
+        public static VisualElementScope<T> AsScope<T>(this T visualElement) where T : VisualElement {
+            VisualElementScope.Peek?.VisualElement.Add( visualElement );
+            return new VisualElementScope<T>( visualElement );
+        }
+        public static VisualElementScope<T> AsScope<T>(this T visualElement, out T @out) where T : VisualElement {
+            @out = visualElement;
+            VisualElementScope.Peek?.VisualElement.Add( visualElement );
+            return new VisualElementScope<T>( visualElement );
+        }
+
+        // AddToScope
+        public static void AddToScope<T>(this T visualElement) where T : VisualElement {
+            VisualElementScope.Peek!.VisualElement.Add( visualElement );
+        }
+        public static void AddToScope<T>(this T visualElement, out T @out) where T : VisualElement {
+            @out = visualElement;
+            VisualElementScope.Peek!.VisualElement.Add( visualElement );
         }
 
     }

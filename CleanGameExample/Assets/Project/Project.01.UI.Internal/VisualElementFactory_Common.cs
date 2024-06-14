@@ -100,7 +100,7 @@ namespace Project.UI {
                 return widget;
             }
         }
-        public static VisualElement ProfileSettings(out VisualElement widget, out TextField name) {
+        public static Widget ProfileSettings(out Widget widget, out TextField name) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" ).AddToScope( out name );
@@ -108,7 +108,7 @@ namespace Project.UI {
                 return widget;
             }
         }
-        public static VisualElement VideoSettings(out VisualElement widget, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
+        public static Widget VideoSettings(out Widget widget, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" ).AddToScope( out isFullScreen );
@@ -118,7 +118,7 @@ namespace Project.UI {
                 return widget;
             }
         }
-        public static VisualElement AudioSettings(out VisualElement widget, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
+        public static Widget AudioSettings(out Widget widget, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
             using (VisualElementFactory.Widget().Classes( "grow-1" ).AsScope( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ).AddToScope( out masterVolume );

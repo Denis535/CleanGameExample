@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement widget;
+        private readonly Widget widget;
         private readonly TextField name;
 
         // Layer

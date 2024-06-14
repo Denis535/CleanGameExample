@@ -9,7 +9,7 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase {
 
-        private readonly VisualElement widget;
+        private readonly Widget widget;
         private readonly Slider masterVolume;
         private readonly Slider musicVolume;
         private readonly Slider sfxVolume;

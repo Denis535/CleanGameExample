@@ -10,68 +10,68 @@ namespace Project.UI {
 
         // Dialog
         public static Widget Dialog(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.DialogWidget().Out( out widget ).AsScope()) {
-                using (VisualElementFactory.DialogCard().Out( out card ).AsScope()) {
-                    using (VisualElementFactory.Header().Out( out header ).AsScope()) {
+            using (VisualElementFactory.DialogWidget().AsScope().Out( out widget )) {
+                using (VisualElementFactory.DialogCard().AsScope().Out( out card )) {
+                    using (VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out header )) {
                         title = VisualElementFactory.Label( null );
                     }
-                    using (VisualElementFactory.Content().Out( out content ).AsScope()) {
+                    using (VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
                             message = VisualElementFactory.Label( null );
                         }
                     }
-                    using (VisualElementFactory.Footer().Out( out footer ).AsScope()) {
+                    using (VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out footer )) {
                     }
                 }
                 return widget;
             }
         }
         public static Widget InfoDialog(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.InfoDialogWidget().Out( out widget ).AsScope()) {
-                using (VisualElementFactory.InfoDialogCard().Out( out card ).AsScope()) {
-                    using (VisualElementFactory.Header().Out( out header ).AsScope()) {
+            using (VisualElementFactory.InfoDialogWidget().AsScope().Out( out widget )) {
+                using (VisualElementFactory.InfoDialogCard().AsScope().Out( out card )) {
+                    using (VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out header )) {
                         title = VisualElementFactory.Label( null );
                     }
-                    using (VisualElementFactory.Content().Out( out content ).AsScope()) {
+                    using (VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
                             message = VisualElementFactory.Label( null );
                         }
                     }
-                    using (VisualElementFactory.Footer().Out( out footer ).AsScope()) {
+                    using (VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out footer )) {
                     }
                 }
                 return widget;
             }
         }
         public static Widget WarningDialog(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.WarningDialogWidget().Out( out widget ).AsScope()) {
-                using (VisualElementFactory.WarningDialogCard().Out( out card ).AsScope()) {
-                    using (VisualElementFactory.Header().Out( out header ).AsScope()) {
+            using (VisualElementFactory.WarningDialogWidget().AsScope().Out( out widget )) {
+                using (VisualElementFactory.WarningDialogCard().AsScope().Out( out card )) {
+                    using (VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out header )) {
                         title = VisualElementFactory.Label( null );
                     }
-                    using (VisualElementFactory.Content().Out( out content ).AsScope()) {
+                    using (VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
                             message = VisualElementFactory.Label( null );
                         }
                     }
-                    using (VisualElementFactory.Footer().Out( out footer ).AsScope()) {
+                    using (VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out footer )) {
                     }
                 }
                 return widget;
             }
         }
         public static Widget ErrorDialog(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            using (VisualElementFactory.ErrorDialogWidget().Out( out widget ).AsScope()) {
-                using (VisualElementFactory.ErrorDialogCard().Out( out card ).AsScope()) {
-                    using (VisualElementFactory.Header().Out( out header ).AsScope()) {
+            using (VisualElementFactory.ErrorDialogWidget().AsScope().Out( out widget )) {
+                using (VisualElementFactory.ErrorDialogCard().AsScope().Out( out card )) {
+                    using (VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out header )) {
                         title = VisualElementFactory.Label( null );
                     }
-                    using (VisualElementFactory.Content().Out( out content ).AsScope()) {
+                    using (VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out content )) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
                             message = VisualElementFactory.Label( null );
                         }
                     }
-                    using (VisualElementFactory.Footer().Out( out footer ).AsScope()) {
+                    using (VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) ).AsScope().Out( out footer )) {
                     }
                 }
                 return widget;
@@ -80,7 +80,7 @@ namespace Project.UI {
 
         // Settings
         public static Widget Settings(out Widget widget, out Label title, out VisualElement profileSettings, out VisualElement videoSettings, out VisualElement audioSettings, out Button okey, out Button back) {
-            using (VisualElementFactory.MediumWidget().Out( out widget ).AsScope()) {
+            using (VisualElementFactory.MediumWidget( "settings-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Settings" );
@@ -101,7 +101,7 @@ namespace Project.UI {
             }
         }
         public static Widget ProfileSettings(out Widget widget, out TextField name) {
-            using (VisualElementFactory.Widget().Classes( "grow-1" ).Out( out widget ).AsScope()) {
+            using (VisualElementFactory.Widget( "profile-settings-widget" ).Classes( "grow-1" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     name = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" );
                 }
@@ -109,7 +109,7 @@ namespace Project.UI {
             }
         }
         public static Widget VideoSettings(out Widget widget, out Toggle isFullScreen, out PopupField<object?> screenResolution, out Toggle isVSync) {
-            using (VisualElementFactory.Widget().Classes( "grow-1" ).Out( out widget ).AsScope()) {
+            using (VisualElementFactory.Widget( "video-settings-widget" ).Classes( "grow-1" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     isFullScreen = VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" );
                     screenResolution = VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" );
@@ -119,7 +119,7 @@ namespace Project.UI {
             }
         }
         public static Widget AudioSettings(out Widget widget, out Slider masterVolume, out Slider musicVolume, out Slider sfxVolume, out Slider gameVolume) {
-            using (VisualElementFactory.Widget().Classes( "grow-1" ).Out( out widget ).AsScope()) {
+            using (VisualElementFactory.Widget( "audio-settings-widget" ).Classes( "grow-1" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).AsScope()) {
                     masterVolume = VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" );
                     musicVolume = VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" );

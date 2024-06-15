@@ -60,4 +60,54 @@ namespace Project.UI.GameScreen {
         }
 
     }
+    public class LevelCompletedWidgetView : TotalsWidgetView {
+
+        private Widget widget;
+        private Label title;
+        private Label message;
+        private Button @continue;
+        private Button back;
+
+        // Constructor
+        public LevelCompletedWidgetView() {
+            //VisualElement = VisualElementFactory_Game.LevelCompleted( out widget, out title, out message, out tryAgain, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+    }
+    public class GameCompletedWidgetView : TotalsWidgetView {
+
+        private Widget widget;
+        private Label title;
+        private Label message;
+        private Button okey;
+
+        // Constructor
+        public GameCompletedWidgetView() {
+            //VisualElement = VisualElementFactory_Game.GameCompleted( out widget, out title, out message, out tryAgain, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+    }
+    public class LevelFailedWidgetView : TotalsWidgetView {
+
+        private Widget widget;
+        private Label title;
+        private Label message;
+        private Button retry;
+        private Button back;
+
+        // Constructor
+        public LevelFailedWidgetView() {
+            //VisualElement = VisualElementFactory_Game.LevelFailed( out widget, out title, out message, out tryAgain, out back );
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+    }
 }

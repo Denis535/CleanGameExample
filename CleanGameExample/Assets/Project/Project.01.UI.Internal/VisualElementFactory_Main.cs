@@ -10,26 +10,27 @@ namespace Project.UI {
 
         // Main
         public static Widget Main(out Widget widget) {
-            using (VisualElementFactory.Widget().Name( "main-widget" ).Out( out widget ).AsScope()) {
+            using (VisualElementFactory.Widget( "main-widget" ).AsScope().Out( out widget )) {
                 return widget;
             }
         }
 
         // Menu
         public static Widget Menu(out Widget widget, out Label title, out VisualElement views) {
-            using (VisualElementFactory.LeftWidget().Out( out widget ).AsScope()) {
+            using (VisualElementFactory.LeftWidget( "menu-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Menu" );
                     }
-                    using (VisualElementFactory.Content().Out( out views ).AsScope()) {
+                    using (VisualElementFactory.Content().AsScope()) {
+                        views = VisualElementFactory.VisualElement();
                     }
                 }
                 return widget;
             }
         }
         public static ColumnScope Menu_Menu(out ColumnScope scope, out Button startGame, out Button settings, out Button quit) {
-            using (VisualElementFactory.ColumnScope().Out( out scope ).AsScope()) {
+            using (VisualElementFactory.ColumnScope().AsScope().Out( out scope )) {
                 startGame = VisualElementFactory.Select( "Start Game" );
                 settings = VisualElementFactory.Select( "Settings" );
                 quit = VisualElementFactory.Quit( "Quit" );
@@ -37,7 +38,7 @@ namespace Project.UI {
             }
         }
         public static ColumnScope Menu_StartGame(out ColumnScope scope, out Button newGame, out Button @continue, out Button back) {
-            using (VisualElementFactory.ColumnScope().Out( out scope ).AsScope()) {
+            using (VisualElementFactory.ColumnScope().AsScope().Out( out scope )) {
                 newGame = VisualElementFactory.Select( "New Game" );
                 @continue = VisualElementFactory.Select( "Continue" );
                 back = VisualElementFactory.Back( "Back" );
@@ -45,7 +46,7 @@ namespace Project.UI {
             }
         }
         public static ColumnScope Menu_SelectLevel(out ColumnScope scope, out Button level1, out Button level2, out Button level3, out Button back) {
-            using (VisualElementFactory.ColumnScope().Out( out scope ).AsScope()) {
+            using (VisualElementFactory.ColumnScope().AsScope().Out( out scope )) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     level1 = VisualElementFactory.Select( "Level 1" );
                     level2 = VisualElementFactory.Select( "Level 2" );
@@ -56,7 +57,7 @@ namespace Project.UI {
             }
         }
         public static ColumnScope Menu_SelectCharacter(out ColumnScope scope, out Button gray, out Button red, out Button green, out Button blue, out Button back) {
-            using (VisualElementFactory.ColumnScope().Out( out scope ).AsScope()) {
+            using (VisualElementFactory.ColumnScope().AsScope().Out( out scope )) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).AsScope()) {
                     gray = VisualElementFactory.Select( "Gray" );
                     red = VisualElementFactory.Select( "Red" );
@@ -70,7 +71,7 @@ namespace Project.UI {
 
         // Loading
         public static Widget Loading(out Widget widget, out Label loading) {
-            using (VisualElementFactory.Widget().Out( out widget ).AsScope()) {
+            using (VisualElementFactory.Widget( "loading-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.ColumnScope().Classes( "margin-2pc", "grow-1", "justify-content-end", "align-items-center" ).AsScope()) {
                     loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold" );
                 }

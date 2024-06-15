@@ -133,9 +133,12 @@ namespace Project.Entities {
         Level3
     }
     public static class GameLevelExtensions {
-        public static GameLevel? GetNext(this GameLevel level) {
-            if (level < GameLevel.Level3) return level + 1;
-            return null;
+        public static bool IsLast(this GameLevel level) {
+            return level == GameLevel.Level3;
+        }
+        public static GameLevel GetNext(this GameLevel level) {
+            Assert.Operation.Message( $"Level {level} must be non-last" ).Valid( level != GameLevel.Level3 );
+            return level + 1;
         }
     }
     // GameState

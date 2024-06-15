@@ -20,46 +20,6 @@ namespace Project.UI.GameScreen {
         }
 
     }
-    public class WinTotalsGameWidgetView : TotalsWidgetView {
-
-        private Widget widget;
-        private Label title;
-        private Label message;
-        private Button nextLevel;
-        private Button back;
-
-        // Layer
-        public override int Layer => -1000;
-
-        // Constructor
-        public WinTotalsGameWidgetView() {
-            VisualElement = VisualElementFactory_Game.WinTotals( out widget, out title, out message, out nextLevel, out back );
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-    }
-    public class LossTotalsGameWidgetView : TotalsWidgetView {
-
-        private Widget widget;
-        private Label title;
-        private Label message;
-        private Button tryAgain;
-        private Button back;
-
-        // Layer
-        public override int Layer => -1000;
-
-        // Constructor
-        public LossTotalsGameWidgetView() {
-            VisualElement = VisualElementFactory_Game.LossTotals( out widget, out title, out message, out tryAgain, out back );
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-    }
     public class LevelCompletedWidgetView : TotalsWidgetView {
 
         private Widget widget;
@@ -70,7 +30,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public LevelCompletedWidgetView() {
-            //VisualElement = VisualElementFactory_Game.LevelCompleted( out widget, out title, out message, out tryAgain, out back );
+            VisualElement = VisualElementFactory_Game.LevelCompleted( out widget, out title, out message, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -86,7 +46,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public GameCompletedWidgetView() {
-            //VisualElement = VisualElementFactory_Game.GameCompleted( out widget, out title, out message, out tryAgain, out back );
+            VisualElement = VisualElementFactory_Game.GameCompleted( out widget, out title, out message, out okey );
         }
         public override void Dispose() {
             base.Dispose();
@@ -103,7 +63,7 @@ namespace Project.UI.GameScreen {
 
         // Constructor
         public LevelFailedWidgetView() {
-            //VisualElement = VisualElementFactory_Game.LevelFailed( out widget, out title, out message, out tryAgain, out back );
+            VisualElement = VisualElementFactory_Game.LevelFailed( out widget, out title, out message, out retry, out back );
         }
         public override void Dispose() {
             base.Dispose();

@@ -28,53 +28,84 @@ namespace Project.UI {
                     using (VisualElementFactory.Content().AsScope()) {
                         resume = VisualElementFactory.Resume( "Resume" );
                         settings = VisualElementFactory.Select( "Settings" );
-                        back = VisualElementFactory.Back( "Back To Main Menu" );
+                        back = VisualElementFactory.Back( "Back To Menu" );
                     }
                 }
                 return widget;
             }
         }
 
-        // WinTotals
-        public static Widget WinTotals(out Widget widget, out Label title, out Label message, out Button nextLevel, out Button back) {
-            using (VisualElementFactory.SmallWidget( "totals-widget" ).AsScope().Out( out widget )) {
+        // LevelCompleted
+        public static VisualElement LevelCompleted(out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
+            using (VisualElementFactory.SmallWidget( "level-completed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
-                        title = VisualElementFactory.Label( "Congratulations" );
+                        title = VisualElementFactory.Label( "Level Completed" );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            message = VisualElementFactory.Label( "Congratulations!\nYou win!!!" ).Classes( "text-align-middle-center" );
+                            message = VisualElementFactory.Label(
+                                "Congratulations!\n" +
+                                "You have completed the level!\n" +
+                                "Do you want to continue or back to the menu?"
+                                ).Classes( "text-align-middle-center" );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {
-                        nextLevel = VisualElementFactory.Submit( "Next Level" );
-                        back = VisualElementFactory.Cancel( "Back to Main Menu" );
+                        @continue = VisualElementFactory.Submit( "Continue" );
+                        back = VisualElementFactory.Cancel( "Back To Menu" );
                     }
                 }
-                return widget;
             }
+            return widget;
         }
 
-        // LossTotals
-        public static Widget LossTotals(out Widget widget, out Label title, out Label message, out Button tryAgain, out Button back) {
-            using (VisualElementFactory.SmallWidget( "totals-widget" ).AsScope().Out( out widget )) {
+        // GameCompleted
+        public static VisualElement GameCompleted(out Widget widget, out Label title, out Label message, out Button okey) {
+            using (VisualElementFactory.SmallWidget( "game-completed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
-                        title = VisualElementFactory.Label( "We're sorry" );
+                        title = VisualElementFactory.Label( "Game Completed" );
                     }
                     using (VisualElementFactory.Content().AsScope()) {
                         using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
-                            message = VisualElementFactory.Label( "We're sorry.\nYou lose." ).Classes( "text-align-middle-center" );
+                            message = VisualElementFactory.Label(
+                                "Congratulations!\n" +
+                                "You have completed the game!"
+                                ).Classes( "text-align-middle-center" );
                         }
                     }
                     using (VisualElementFactory.Footer().AsScope()) {
-                        tryAgain = VisualElementFactory.Submit( "Try Again" );
-                        back = VisualElementFactory.Cancel( "Back to Main Menu" );
+                        okey = VisualElementFactory.Submit( "Ok" );
                     }
                 }
-                return widget;
             }
+            return widget;
+        }
+
+        // LevelFailed
+        public static VisualElement LevelFailed(out Widget widget, out Label title, out Label message, out Button retry, out Button back) {
+            using (VisualElementFactory.SmallWidget( "level-failed-widget" ).AsScope().Out( out widget )) {
+                using (VisualElementFactory.Card().AsScope()) {
+                    using (VisualElementFactory.Header().AsScope()) {
+                        title = VisualElementFactory.Label( "Level Failed" );
+                    }
+                    using (VisualElementFactory.Content().AsScope()) {
+                        using (VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).AsScope()) {
+                            message = VisualElementFactory.Label(
+                                "We're sorry.\n" +
+                                "You have failed the level.\n" +
+                                "Do you want to retry or back to the menu?"
+                                ).Classes( "text-align-middle-center" );
+                        }
+                    }
+                    using (VisualElementFactory.Footer().AsScope()) {
+                        retry = VisualElementFactory.Submit( "Retry" );
+                        back = VisualElementFactory.Cancel( "Back To Menu" );
+                    }
+                }
+            }
+            return widget;
         }
 
     }

@@ -48,11 +48,16 @@ namespace Project.UI.GameScreen {
         // Helpers
         private static TotalsWidgetView CreateView(TotalsWidget widget) {
             if (widget.Game.Player.State is PlayerState.Winner) {
-                var view = new WinTotalsGameWidgetView();
-                return view;
+                if (!widget.Game.Level.IsLast()) {
+                    var view = new LevelCompletedWidgetView();
+                    return view;
+                } else {
+                    var view = new GameCompletedWidgetView();
+                    return view;
+                }
             }
             if (widget.Game.Player.State is PlayerState.Loser) {
-                var view = new LossTotalsGameWidgetView();
+                var view = new LevelFailedWidgetView();
                 return view;
             }
             throw Exceptions.Internal.NotSupported( $"PlayerState {widget.Game.Player.State} is not supported" );

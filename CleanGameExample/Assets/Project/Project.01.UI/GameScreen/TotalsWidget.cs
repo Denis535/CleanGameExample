@@ -50,14 +50,29 @@ namespace Project.UI.GameScreen {
             if (widget.Game.Player.State is PlayerState.Winner) {
                 if (!widget.Game.Level.IsLast()) {
                     var view = new LevelCompletedWidgetView();
+                    view.OnContinue += async evt => {
+                        await widget.Router.LoadGameSceneAsync( widget.Game.Level.GetNext(), widget.Game.Player.Name, widget.Game.Player.Kind );
+                    };
+                    view.OnBack += async evt => {
+                        await widget.Router.LoadMainSceneAsync();
+                    };
                     return view;
                 } else {
                     var view = new GameCompletedWidgetView();
+                    view.OnOkey += async evt => {
+                        await widget.Router.LoadMainSceneAsync();
+                    };
                     return view;
                 }
             }
             if (widget.Game.Player.State is PlayerState.Loser) {
                 var view = new LevelFailedWidgetView();
+                view.OnRetry += async evt => {
+                    await widget.Router.LoadGameSceneAsync( widget.Game.Level, widget.Game.Player.Name, widget.Game.Player.Kind );
+                };
+                view.OnBack += async evt => {
+                    await widget.Router.LoadMainSceneAsync();
+                };
                 return view;
             }
             throw Exceptions.Internal.NotSupported( $"PlayerState {widget.Game.Player.State} is not supported" );

@@ -48,16 +48,11 @@ namespace Project.UI {
             Release.LogFormat( "Load: MainScene" );
             State = UIRouterState.MainSceneLoading;
             using (@lock.Enter()) {
-                if (Application.Game != null) {
-                    Application.DestroyGame();
-                }
-                {
-                    if (World.IsValid) await World.Handle.UnloadSafeAsync();
-                    await GameScene.UnloadSafeAsync();
-                    await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
-                    await MainScene.ActivateAsync();
-                    SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
-                }
+                await UnloadMainSceneAsync();
+                await UnloadGameSceneAsync();
+                await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
+                await MainScene.ActivateAsync();
+                SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
             }
             State = UIRouterState.MainSceneLoaded;
         }
@@ -67,18 +62,15 @@ namespace Project.UI {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, kind );
             State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
-                {
-                    await MainScene.UnloadSafeAsync();
-                    await Task.Delay( 3_000 );
-                    await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
-                    await GameScene.ActivateAsync();
-                    await World.SetUp( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();
-                    await World.Handle.ActivateAsync();
-                    SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
-                }
-                {
-                    Application.CreateGame( level, name, kind );
-                }
+                await UnloadMainSceneAsync();
+                await UnloadGameSceneAsync();
+                await Task.Delay( 3_000 );
+                await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
+                await GameScene.ActivateAsync();
+                await World.SetUp( GetWorldAddress( level ) ).Load( LoadSceneMode.Additive, false ).WaitAsync();
+                await World.Handle.ActivateAsync();
+                SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
+                Application.CreateGame( level, name, kind );
             }
             State = UIRouterState.GameSceneLoaded;
         }
@@ -88,14 +80,8 @@ namespace Project.UI {
             Release.Log( "Quit" );
             State = UIRouterState.Quitting;
             using (@lock.Enter()) {
-                if (Application.Game != null) {
-                    Application.DestroyGame();
-                }
-                {
-                    if (World.IsValid) await World.Handle.UnloadSafeAsync();
-                    await GameScene.UnloadSafeAsync();
-                    await MainScene.UnloadSafeAsync();
-                }
+                await UnloadMainSceneAsync();
+                await UnloadGameSceneAsync();
             }
             State = UIRouterState.Quited;
 #if UNITY_EDITOR
@@ -103,6 +89,18 @@ namespace Project.UI {
 #else
             UnityEngine.Application.Quit();
 #endif
+        }
+
+        // UnloadMainSceneAsync
+        private async Task UnloadMainSceneAsync() {
+            await MainScene.UnloadSafeAsync();
+        }
+
+        // UnloadGameSceneAsync
+        private async Task UnloadGameSceneAsync() {
+            if (Application.Game != null) Application.DestroyGame();
+            if (World.IsValid) await World.Handle.UnloadSafeAsync();
+            await GameScene.UnloadSafeAsync();
         }
 
         // Helpers

@@ -9,9 +9,6 @@ namespace Project.UI.GameScreen {
 
     public abstract class TotalsWidgetView : UIViewBase {
 
-        // Layer
-        public override int Layer => -1000;
-
         // Constructor
         public TotalsWidgetView() {
         }
@@ -27,6 +24,18 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button @continue;
         private Button back;
+
+        // Layer
+        public override int Layer => -1000;
+        // Events
+        public event EventCallback<ClickEvent> OnContinue {
+            add => @continue.RegisterCallback( value );
+            remove => @continue.UnregisterCallback( value );
+        }
+        public event EventCallback<ClickEvent> OnBack {
+            add => back.RegisterCallback( value );
+            remove => back.UnregisterCallback( value );
+        }
 
         // Constructor
         public LevelCompletedWidgetView() {
@@ -44,6 +53,14 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button okey;
 
+        // Layer
+        public override int Layer => -1000;
+        // Events
+        public event EventCallback<ClickEvent> OnOkey {
+            add => okey.RegisterCallback( value );
+            remove => okey.UnregisterCallback( value );
+        }
+
         // Constructor
         public GameCompletedWidgetView() {
             VisualElement = VisualElementFactory_Game.GameCompleted( out widget, out title, out message, out okey );
@@ -60,6 +77,18 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button retry;
         private Button back;
+
+        // Layer
+        public override int Layer => -1000;
+        // Events
+        public event EventCallback<ClickEvent> OnRetry {
+            add => retry.RegisterCallback( value );
+            remove => retry.UnregisterCallback( value );
+        }
+        public event EventCallback<ClickEvent> OnBack {
+            add => back.RegisterCallback( value );
+            remove => back.UnregisterCallback( value );
+        }
 
         // Constructor
         public LevelFailedWidgetView() {

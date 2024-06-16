@@ -10,7 +10,7 @@ namespace Project.UI {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
 
-    public class UITheme : UIThemeBase2 {
+    public class UITheme : UIThemeBase2<UIThemeState> {
 
         private static readonly AssetHandle<AudioClip>[] MainThemes = GetShuffled( new[] {
              new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
@@ -69,7 +69,11 @@ namespace Project.UI {
         public void LateUpdate() {
         }
 
-        // Play
+        // OnStateChange
+        protected override void OnStateChange(UIThemeState state) {
+        }
+
+        // Helpers
         private void PlayThemes(AssetHandle<AudioClip>[]? themes) {
             Themes = themes;
             PlayTheme( Themes?.First() );
@@ -85,7 +89,6 @@ namespace Project.UI {
                 Play( AudioSource, await Theme.GetValueAsync( DisposeCancellationToken ) );
             }
         }
-
         // Helpers
         private static bool IsMainTheme(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
@@ -100,5 +103,8 @@ namespace Project.UI {
             return false;
         }
 
+    }
+    public enum UIThemeState {
+        None
     }
 }

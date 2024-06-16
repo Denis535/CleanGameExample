@@ -34,37 +34,41 @@ namespace Project.UI.MainScreen {
 
         // OnActivate
         protected override async void OnActivate(object? argument) {
-            ShowSelf();
-            // await MainScene
-            while (Router.State != UIRouterState.MainSceneLoaded) {
-                await Task.Yield();
-            }
-            // await UnityServices
-            if (UnityServices.State != ServicesInitializationState.Initialized) {
-                try {
-                    var options = new InitializationOptions();
-                    if (Storage.Profile != null) options.SetProfile( Storage.Profile );
-                    await UnityServices.InitializeAsync( options );
-                } catch (Exception ex) {
-                    var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    AddChild( dialog );
-                    return;
+            try {
+                ShowSelf();
+                // await MainScene
+                while (Router.State != UIRouterState.MainSceneLoaded) {
+                    await Task.Yield();
+                    DisposeCancellationToken.ThrowIfCancellationRequested();
                 }
-            }
-            // await AuthenticationService
-            if (!AuthenticationService.IsSignedIn) {
-                try {
-                    var options = new SignInOptions();
-                    options.CreateAccount = true;
-                    await AuthenticationService.SignInAnonymouslyAsync( options );
-                } catch (Exception ex) {
-                    var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                    AddChild( dialog );
-                    return;
+                // await UnityServices
+                if (UnityServices.State != ServicesInitializationState.Initialized) {
+                    try {
+                        var options = new InitializationOptions();
+                        if (Storage.Profile != null) options.SetProfile( Storage.Profile );
+                        await UnityServices.InitializeAsync( options ).WaitAsync( DisposeCancellationToken );
+                    } catch (Exception ex) {
+                        var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
+                        AddChild( dialog );
+                        return;
+                    }
                 }
+                // await AuthenticationService
+                if (!AuthenticationService.IsSignedIn) {
+                    try {
+                        var options = new SignInOptions();
+                        options.CreateAccount = true;
+                        await AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( DisposeCancellationToken );
+                    } catch (Exception ex) {
+                        var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
+                        AddChild( dialog );
+                        return;
+                    }
+                }
+                // Children
+                AddChild( new MenuWidget( Container ) );
+            } catch (OperationCanceledException) {
             }
-            // Children
-            AddChild( new MenuWidget( Container ) );
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();

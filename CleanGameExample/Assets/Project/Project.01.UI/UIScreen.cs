@@ -12,7 +12,7 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UIScreen : UIScreenBase2 {
+    public class UIScreen : UIScreenBase2<UIScreenState> {
 
         // Container
         private UIRouter Router { get; }
@@ -69,6 +69,10 @@ namespace Project.UI {
             }
         }
 
+        // OnStateChange
+        protected override void OnStateChange(UIScreenState state) {
+        }
+
         // Helpers
         private static bool IsMainScreen(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
@@ -83,5 +87,8 @@ namespace Project.UI {
             return false;
         }
 
+    }
+    public enum UIScreenState {
+        None
     }
 }

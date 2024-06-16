@@ -91,18 +91,19 @@ namespace Project.UI {
 #endif
         }
 
-        // UnloadMainSceneAsync
+        // OnStateChange
+        protected override void OnStateChange(UIRouterState state) {
+        }
+
+        // Helpers
         private async Task UnloadMainSceneAsync() {
             await MainScene.UnloadSafeAsync();
         }
-
-        // UnloadGameSceneAsync
         private async Task UnloadGameSceneAsync() {
             if (Application.Game != null) Application.DestroyGame();
             if (World.IsValid) await World.Handle.UnloadSafeAsync();
             await GameScene.UnloadSafeAsync();
         }
-
         // Helpers
         private static string GetWorldAddress(GameLevel level) {
             switch (level) {

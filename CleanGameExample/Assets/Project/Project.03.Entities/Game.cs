@@ -113,11 +113,11 @@ namespace Project.Entities {
 
         // OnWinner
         private void OnWinner() {
-            Player.State = PlayerState.Winner;
+            SetState( Player, PlayerState.Winner );
             State = GameState.Completed;
         }
         private void OnLoser() {
-            Player.State = PlayerState.Loser;
+            SetState( Player, PlayerState.Loser );
             State = GameState.Completed;
         }
 

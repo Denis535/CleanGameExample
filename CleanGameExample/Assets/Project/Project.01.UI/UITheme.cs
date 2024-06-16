@@ -20,8 +20,6 @@ namespace Project.UI {
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
-        private readonly Lock @lock = new Lock();
-
         // Container
         private UIRouter Router { get; }
         private Application2 Application { get; }
@@ -46,13 +44,6 @@ namespace Project.UI {
 
         // Update
         public void Update() {
-            if (State is UIThemeState.MainTheme) {
-                if (Themes != MainThemes) PlayThemes( MainThemes );
-            } else if (State is UIThemeState.GameTheme) {
-                if (Themes != GameThemes) PlayThemes( GameThemes );
-            } else {
-                PlayThemes( null );
-            }
             if (Themes != null && Theme != null && Theme.IsDone) {
                 if (IsCompleted( AudioSource )) {
                     PlayTheme( GetNextValue( Themes, Theme ) );
@@ -71,6 +62,13 @@ namespace Project.UI {
 
         // OnStateChange
         protected override void OnStateChange(UIThemeState state) {
+            if (state is UIThemeState.MainTheme) {
+                PlayThemes( MainThemes );
+            } else if (state is UIThemeState.GameTheme) {
+                PlayThemes( GameThemes );
+            } else {
+                PlayThemes( null );
+            }
         }
 
         // Helpers

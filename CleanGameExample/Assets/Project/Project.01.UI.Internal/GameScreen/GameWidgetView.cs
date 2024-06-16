@@ -35,7 +35,11 @@ namespace Project.UI.GameScreen {
             }
         }
         // Input
-        public InputActions_UI Input { get; }
+        private InputActions_UI Input { get; }
+        public bool IsInputEnabled {
+            get => Input.asset.enabled;
+            set => Input.SetEnabled( value );
+        }
         public bool IsSubmitPressed => Input.UI.Submit.WasPerformedThisFrame();
         public bool IsCancelPressed => Input.UI.Cancel.WasPerformedThisFrame();
 
@@ -43,7 +47,6 @@ namespace Project.UI.GameScreen {
         public GameWidgetView() {
             VisualElement = VisualElementFactory_Game.Game( out widget, out target );
             Input = new InputActions_UI();
-            Input.Enable();
         }
         public override void Dispose() {
             Input.Dispose();

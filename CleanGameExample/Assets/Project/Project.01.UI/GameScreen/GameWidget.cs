@@ -33,8 +33,12 @@ namespace Project.UI.GameScreen {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
             Game.OnPauseChangeEvent += OnGamePauseChange;
+            View.IsInputEnabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         protected override void OnDeactivate(object? argument) {
+            Cursor.lockState = CursorLockMode.None;
+            View.IsInputEnabled = false;
             Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
@@ -42,25 +46,34 @@ namespace Project.UI.GameScreen {
 
         // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+            if (descendant is MenuWidget) {
+                Game.IsPaused = true;
+                View.IsInputEnabled = false;
+            }
+            if (descendant is TotalsWidget or MenuWidget) {
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+            if (!Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget )) {
+                Game.IsPaused = false;
+                View.IsInputEnabled = true;
+            }
+            if (!Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget )) {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
 
         // Update
         public void Update() {
-            if (View.IsCancelPressed) {
-                if (!Children.OfType<MenuWidget>().Any()) {
-                    AddChild( new MenuWidget( Container ) );
-                }
-            }
-            Game.IsPaused = IsPaused( this );
-            Cursor.lockState = GetCursorLockMode( this );
             View.TargetEffect = GetTargetEffect( Player );
-            View.Input.SetEnabled( !Game.IsPaused );
+            if (View.IsCancelPressed) {
+                AddChild( new MenuWidget( Container ) );
+            }
         }
         public void LateUpdate() {
         }
@@ -75,6 +88,7 @@ namespace Project.UI.GameScreen {
             } catch (OperationCanceledException) {
             }
         }
+
         // OnGamePauseChange
         private void OnGamePauseChange(bool isPause) {
         }
@@ -85,13 +99,6 @@ namespace Project.UI.GameScreen {
             return view;
         }
         // Helpers
-        private static bool IsPaused(GameWidget widget) {
-            return widget.Children.OfType<MenuWidget>().Any();
-        }
-        private static CursorLockMode GetCursorLockMode(GameWidget widget) {
-            if (widget.Children.Any( i => i is TotalsWidget or MenuWidget )) return CursorLockMode.None;
-            return CursorLockMode.Locked;
-        }
         private static TargetEffect GetTargetEffect(Player player) {
             if (player.Thing) return TargetEffect.Thing;
             if (player.Enemy) return TargetEffect.Enemy;

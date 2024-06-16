@@ -99,7 +99,7 @@ namespace Project.UI.MainScreen {
 
         // Helpers
         private static (Color Color, Vector2 Translate, float Rotate, float Scale) GetEffect(MainWidget widget) {
-            var view = widget.GetDescendants().Where( i => i.IsViewable ).Select( i => i.View! ).FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
+            var view = widget.Descendants.Where( i => i.IsViewable ).Select( i => i.View! ).FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
             // Menu
             if (view is MenuWidgetView menu) {
                 view = menu.Views.FirstOrDefault( i => i.IsDisplayedInHierarchy() );

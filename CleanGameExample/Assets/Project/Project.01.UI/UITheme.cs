@@ -35,14 +35,8 @@ namespace Project.UI {
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            Router.OnStateChangeEvent += state => {
-                if (IsMainTheme( state )) {
-                    if (Themes != MainThemes) PlayThemes( MainThemes );
-                } else if (IsGameTheme( state )) {
-                    if (Themes != GameThemes) PlayThemes( GameThemes );
-                } else {
-                    PlayThemes( null );
-                }
+            Router.OnStateChangeEvent += i => {
+                State = GetState( i ) ?? State;
             };
         }
         public override void Dispose() {
@@ -52,18 +46,24 @@ namespace Project.UI {
 
         // Update
         public void Update() {
-            if (Theme != null && !Theme.IsDone) {
-                return;
+            if (State is UIThemeState.MainTheme) {
+                if (Themes != MainThemes) PlayThemes( MainThemes );
+            } else if (State is UIThemeState.GameTheme) {
+                if (Themes != GameThemes) PlayThemes( GameThemes );
+            } else {
+                PlayThemes( null );
             }
-            if (Themes != null && IsCompleted( AudioSource )) {
-                PlayTheme( GetNextValue( Themes, Theme ) );
-            }
-            if (Router.State is UIRouterState.GameSceneLoading) {
-                AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
-                AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
-            }
-            if (Router.State is UIRouterState.GameSceneLoaded) {
-                Pause( AudioSource, Game!.IsPaused );
+            if (Themes != null && Theme != null && Theme.IsDone) {
+                if (IsCompleted( AudioSource )) {
+                    PlayTheme( GetNextValue( Themes, Theme ) );
+                }
+                if (Router.State is UIRouterState.GameSceneLoading) {
+                    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
+                    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
+                }
+                if (Router.State is UIRouterState.GameSceneLoaded) {
+                    Pause( AudioSource, Game!.IsPaused );
+                }
             }
         }
         public void LateUpdate() {
@@ -90,21 +90,20 @@ namespace Project.UI {
             }
         }
         // Helpers
-        private static bool IsMainTheme(UIRouterState state) {
+        private static UIThemeState? GetState(UIRouterState state) {
             if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return true;
+                return UIThemeState.MainTheme;
             }
-            return false;
-        }
-        private static bool IsGameTheme(UIRouterState state) {
             if (state is UIRouterState.GameSceneLoaded) {
-                return true;
+                return UIThemeState.GameTheme;
             }
-            return false;
+            return null;
         }
 
     }
     public enum UIThemeState {
-        None
+        None,
+        MainTheme,
+        GameTheme
     }
 }

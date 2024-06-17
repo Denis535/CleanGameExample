@@ -18,8 +18,6 @@ namespace Project.UI {
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
-        // Deps
-        private UIScreen Screen { get; }
         // Themes
         private AssetHandle<AudioClip>[]? Themes { get; set; }
         // Theme
@@ -27,7 +25,6 @@ namespace Project.UI {
 
         // Constructor
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
-            Screen = container.RequireDependency<UIScreen>();
         }
         public override void Dispose() {
             PlayThemes( null );
@@ -45,7 +42,29 @@ namespace Project.UI {
             PlayThemes( null );
         }
 
-        // PlayThemes
+        // SetPaused
+        public void SetPaused(bool isPaused) {
+            SetPaused( AudioSource, isPaused );
+        }
+
+        // Fade
+        public void Fade() {
+            AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * 1.0f * Time.deltaTime );
+            AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * 0.5f * Time.deltaTime );
+        }
+
+        // Update
+        public void Update() {
+            if (Themes != null && Theme != null && Theme.IsSucceeded) {
+                if (IsCompleted( AudioSource )) {
+                    PlayTheme( GetNextValue( Themes, Theme ) );
+                }
+            }
+        }
+        public void LateUpdate() {
+        }
+
+        // Helpers
         private void PlayThemes(AssetHandle<AudioClip>[]? themes) {
             Themes = themes;
             PlayTheme( Themes?.First() );
@@ -60,24 +79,6 @@ namespace Project.UI {
                 Theme.Load();
                 Play( AudioSource, await Theme.GetValueAsync( DisposeCancellationToken ) );
             }
-        }
-
-        // Update
-        public void Update() {
-            if (Themes != null && Theme != null && Theme.IsSucceeded) {
-                if (IsCompleted( AudioSource )) {
-                    PlayTheme( GetNextValue( Themes, Theme ) );
-                }
-                //if (Router.State is UIRouterState.GameSceneLoading) {
-                //    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
-                //    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
-                //}
-                //if (Game != null) {
-                //    SetPaused( AudioSource, Game.IsPaused );
-                //}
-            }
-        }
-        public void LateUpdate() {
         }
 
     }

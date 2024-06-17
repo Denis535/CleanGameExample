@@ -57,7 +57,7 @@ namespace Project.UI.GameScreen {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             };
             view.OnBack += evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync().Throw() ).OnCancel( "No", null );
+                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync() ).OnCancel( "No", null );
                 widget.AddChild( dialog );
             };
             return view;

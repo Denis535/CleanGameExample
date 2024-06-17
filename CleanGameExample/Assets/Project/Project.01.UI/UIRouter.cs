@@ -21,10 +21,10 @@ namespace Project.UI {
         private UITheme Theme => Container.RequireDependency<UITheme>();
         private UIScreen Screen => Container.RequireDependency<UIScreen>();
         private Application2 Application { get; }
-        // IsLoaded
+        // IsSceneLoaded
         public bool IsMainSceneLoaded => MainScene.IsSucceeded;
         public bool IsGameSceneLoaded => GameScene.IsSucceeded;
-        public bool IsWorldLoaded => World != null && World.IsSucceeded;
+        public bool IsWorldLoaded => World != null;
         // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.Value_MainScene );
@@ -40,41 +40,40 @@ namespace Project.UI {
         }
 
         // LoadStartupAsync
-        public static async Task LoadStartupAsync() {
+        public static async void LoadStartupAsync() {
             Release.LogFormat( "Load: Startup" );
             using (@lock.Enter()) {
-                await LoadStartupAsync_();
+                await LoadSceneAsync_Startup();
             }
         }
 
         // LoadMainSceneAsync
-        public async Task LoadMainSceneAsync() {
+        public async void LoadMainSceneAsync() {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
-                Theme.Stop();
-                Screen.Hide();
-                Application.DestroyGameSafe();
-                await UnloadAllAsync_();
-                await LoadMainSceneAsync_();
-                Theme.PlayMainThemes();
                 Screen.ShowMainScreen();
+                Theme.PlayMainThemes();
+                {
+                    Application.DestroyGame();
+                    await UnloadAsync();
+                }
+                await LoadSceneAsync_Main();
             }
         }
 
         // LoadGameSceneAsync
-        public async Task LoadGameSceneAsync(GameLevel level, string name, PlayerCharacterKind kind) {
-            Release.LogFormat( "Load: GameScene: {0}, {1}", level, kind );
+        public async void LoadGameSceneAsync(GameLevel level, string name, PlayerCharacterKind kind) {
+            Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
-                await Task.Delay( 3_000 );
-                Theme.Stop();
-                Screen.Hide();
-                Application.DestroyGameSafe();
-                await UnloadAllAsync_();
-                await LoadGameSceneAsync_();
-                await LoadWorldSceneAsync_( GetWorldAddress( level ) );
+                {
+                    Application.DestroyGame();
+                    await UnloadAsync();
+                }
+                await LoadSceneAsync_Game();
+                await LoadSceneAsync_World( GetWorldAddress( level ) );
                 Application.CreateGame( level, name, kind );
-                Theme.PlayGameThemes();
                 Screen.ShowGameScreen();
+                Theme.PlayGameThemes();
             }
         }
 
@@ -84,8 +83,8 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 Theme.Stop();
                 Screen.Hide();
-                Application.DestroyGameSafe();
-                await UnloadAllAsync_();
+                Application.DestroyGame();
+                await UnloadAsync();
             }
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
@@ -95,28 +94,30 @@ namespace Project.UI {
         }
 
         // Helpers
-        private static async Task LoadStartupAsync_() {
+        private static async Task LoadSceneAsync_Startup() {
             await Startup.Load( LoadSceneMode.Single, false ).WaitAsync();
             await Startup.ActivateAsync();
             SceneManager.SetActiveScene( await Startup.GetValueAsync() );
         }
-        private async Task LoadMainSceneAsync_() {
+        private async Task LoadSceneAsync_Main() {
             await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await MainScene.ActivateAsync();
             SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
         }
-        private async Task LoadGameSceneAsync_() {
+        private async Task LoadSceneAsync_Game() {
+            await Task.Delay( 3_000 );
             await GameScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await GameScene.ActivateAsync();
             SceneManager.SetActiveScene( await GameScene.GetValueAsync() );
         }
-        private async Task LoadWorldSceneAsync_(string key) {
+        private async Task LoadSceneAsync_World(string key) {
             World = new SceneHandle( key );
             await World.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await World.ActivateAsync();
             SceneManager.SetActiveScene( await World.GetValueAsync() );
         }
-        private async Task UnloadAllAsync_() {
+        // Helpers
+        private async Task UnloadAsync() {
             if (MainScene.IsValid) {
                 await MainScene.UnloadAsync();
             }

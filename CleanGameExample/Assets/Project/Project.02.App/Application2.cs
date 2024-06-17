@@ -51,20 +51,17 @@ namespace Project.App {
             Game = new Game( Container, GameMode.None, level, name, kind );
         }
         public void DestroyGame() {
-            Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
-            Game.Dispose();
-            Game = null;
-            CameraFactory.Deinitialize();
-            PlayerCharacterFactory.Deinitialize();
-            EnemyCharacterFactory.Deinitialize();
-            GunFactory.Deinitialize();
-            BulletFactory.Deinitialize();
-            Array.Clear( Utils.RaycastHitBuffer, 0, Utils.RaycastHitBuffer.Length );
-            Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
-        }
-        public void DestroyGameSafe() {
             if (Game != null) {
-                DestroyGame();
+                Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
+                Game.Dispose();
+                Game = null;
+                CameraFactory.Deinitialize();
+                PlayerCharacterFactory.Deinitialize();
+                EnemyCharacterFactory.Deinitialize();
+                GunFactory.Deinitialize();
+                BulletFactory.Deinitialize();
+                Array.Clear( Utils.RaycastHitBuffer, 0, Utils.RaycastHitBuffer.Length );
+                Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
             }
         }
 

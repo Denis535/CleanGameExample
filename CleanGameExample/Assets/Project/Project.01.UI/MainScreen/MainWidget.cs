@@ -4,69 +4,28 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-    using Project.App;
     using Project.UI.Common;
-    using Unity.Services.Authentication;
-    using Unity.Services.Core;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
-        // Deps
-        private UIRouter Router { get; }
-        private Application2 Application { get; }
-        private Storage Storage => Application.Storage;
-        private IAuthenticationService AuthenticationService => Application.AuthenticationService;
         // View
         public override MainWidgetView View { get; }
 
         // Constructor
         public MainWidget(IDependencyContainer container) : base( container ) {
-            Router = container.RequireDependency<UIRouter>();
-            Application = container.RequireDependency<Application2>();
             View = CreateView( this );
+            AddChild( new MenuWidget( Container ) );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         // OnActivate
-        protected override async void OnActivate(object? argument) {
+        protected override void OnActivate(object? argument) {
             try {
                 ShowSelf();
-                // await MainScene
-                while (!Router.IsMainSceneLoaded) {
-                    await Task.Yield();
-                    DisposeCancellationToken.ThrowIfCancellationRequested();
-                }
-                // await UnityServices
-                if (UnityServices.State != ServicesInitializationState.Initialized) {
-                    try {
-                        var options = new InitializationOptions();
-                        if (Storage.Profile != null) options.SetProfile( Storage.Profile );
-                        await UnityServices.InitializeAsync( options ).WaitAsync( DisposeCancellationToken );
-                    } catch (Exception ex) {
-                        var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                        AddChild( dialog );
-                        return;
-                    }
-                }
-                // await AuthenticationService
-                if (!AuthenticationService.IsSignedIn) {
-                    try {
-                        var options = new SignInOptions();
-                        options.CreateAccount = true;
-                        await AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( DisposeCancellationToken );
-                    } catch (Exception ex) {
-                        var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                        AddChild( dialog );
-                        return;
-                    }
-                }
-                // Children
-                AddChild( new MenuWidget( Container ) );
             } catch (OperationCanceledException) {
             }
         }

@@ -15,7 +15,6 @@ namespace Project.UI.Common {
         // Constructor
         public SettingsWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
-            // Children
             AddChild( new ProfileSettingsWidget( container ) );
             AddChild( new VideoSettingsWidget( container ) );
             AddChild( new AudioSettingsWidget( container ) );

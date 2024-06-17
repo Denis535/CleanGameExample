@@ -31,8 +31,17 @@ namespace Project.UI.MainScreen {
         }
 
         // OnActivate
-        protected override void OnActivate(object? argument) {
-            ShowSelf();
+        protected override async void OnActivate(object? argument) {
+            try {
+                ShowSelf();
+                View.SetDisplayed( false );
+                while (!Router.IsMainSceneLoaded) {
+                    await Task.Yield();
+                    DisposeCancellationToken.ThrowIfCancellationRequested();
+                }
+                View.SetDisplayed( true );
+            } catch (OperationCanceledException) {
+            }
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
@@ -101,19 +110,19 @@ namespace Project.UI.MainScreen {
             var view = new MenuMainWidgetView_SelectCharacterView();
             view.OnGray += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray ).Throw();
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray );
             };
             view.OnRed += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red ).Throw();
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red );
             };
             view.OnGreen += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green ).Throw();
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green );
             };
             view.OnBlue += evt => {
                 widget.AddChild( new LoadingWidget( widget.Container ) );
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue ).Throw();
+                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );

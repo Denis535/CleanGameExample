@@ -70,6 +70,10 @@ namespace Project.UI.GameScreen {
 
         // Update
         public void Update() {
+            if (Application.Game is null) {
+                Debug.LogError( "Game is null" );
+                return;
+            }
             View.TargetEffect = GetTargetEffect( Player );
             if (View.IsCancelPressed) {
                 AddChild( new MenuWidget( Container ) );

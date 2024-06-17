@@ -14,8 +14,8 @@ namespace Project.UI.GameScreen {
 
         // Deps
         private Application2 Application { get; }
-        private Game Game => Application.Game!;
-        private Player Player => Application.Game!.Player;
+        private Game Game => Application.Game ?? throw Exceptions.Internal.NullReference( $"Reference 'Game' is null" );
+        private Player Player => Game.Player;
         // View
         public override GameWidgetView View { get; }
 

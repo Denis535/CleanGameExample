@@ -62,6 +62,11 @@ namespace Project.App {
             Array.Clear( Utils.RaycastHitBuffer, 0, Utils.RaycastHitBuffer.Length );
             Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
         }
+        public void DestroyGameSafe() {
+            if (Game != null) {
+                DestroyGame();
+            }
+        }
 
     }
 }

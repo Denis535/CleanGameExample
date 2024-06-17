@@ -4,8 +4,6 @@ namespace Project.UI {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Project.App;
-    using Project.Entities;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
@@ -21,9 +19,7 @@ namespace Project.UI {
         } );
 
         // Deps
-        private UIRouter Router { get; }
-        private Application2 Application { get; }
-        private Game? Game => Application.Game;
+        private UIScreen Screen { get; }
         // Themes
         private AssetHandle<AudioClip>[]? Themes { get; set; }
         // Theme
@@ -31,8 +27,7 @@ namespace Project.UI {
 
         // Constructor
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
-            Router = container.RequireDependency<UIRouter>();
-            Application = container.RequireDependency<Application2>();
+            Screen = container.RequireDependency<UIScreen>();
         }
         public override void Dispose() {
             PlayThemes( null );
@@ -77,9 +72,9 @@ namespace Project.UI {
                 //    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
                 //    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
                 //}
-                if (Game != null) {
-                    SetPaused( AudioSource, Game.IsPaused );
-                }
+                //if (Game != null) {
+                //    SetPaused( AudioSource, Game.IsPaused );
+                //}
             }
         }
         public void LateUpdate() {

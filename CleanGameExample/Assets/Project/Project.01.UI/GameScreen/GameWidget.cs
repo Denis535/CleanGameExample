@@ -12,7 +12,7 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
-        // Container
+        // Deps
         private Application2 Application { get; }
         private Game Game => Application.Game!;
         private Player Player => Application.Game!.Player;

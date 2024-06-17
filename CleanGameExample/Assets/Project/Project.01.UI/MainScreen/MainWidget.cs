@@ -14,7 +14,7 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
-        // Container
+        // Deps
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage Storage => Application.Storage;
@@ -37,7 +37,7 @@ namespace Project.UI.MainScreen {
             try {
                 ShowSelf();
                 // await MainScene
-                while (Router.State != UIRouterState.MainSceneLoaded) {
+                while (!Router.IsMainSceneLoaded) {
                     await Task.Yield();
                     DisposeCancellationToken.ThrowIfCancellationRequested();
                 }

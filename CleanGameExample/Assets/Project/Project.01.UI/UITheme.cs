@@ -10,7 +10,7 @@ namespace Project.UI {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.UI;
 
-    public class UITheme : UIThemeBase2<UIThemeState> {
+    public class UITheme : UIThemeBase2 {
 
         private static readonly AssetHandle<AudioClip>[] MainThemes = GetShuffled( new[] {
              new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
@@ -20,7 +20,7 @@ namespace Project.UI {
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
-        // Container
+        // Deps
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Game? Game => Application.Game;
@@ -33,45 +33,24 @@ namespace Project.UI {
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
-            Router.OnStateChangeEvent += i => {
-                State = GetState( i ) ?? State;
-            };
         }
         public override void Dispose() {
             PlayThemes( null );
             base.Dispose();
         }
 
-        // Update
-        public void Update() {
-            if (Themes != null && Theme != null && Theme.IsDone) {
-                if (IsCompleted( AudioSource )) {
-                    PlayTheme( GetNextValue( Themes, Theme ) );
-                }
-                if (Router.State is UIRouterState.GameSceneLoading) {
-                    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
-                    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
-                }
-                if (Router.State is UIRouterState.GameSceneLoaded) {
-                    Pause( AudioSource, Game!.IsPaused );
-                }
-            }
+        // PlayThemes
+        public void PlayMainThemes() {
+            PlayThemes( MainThemes );
         }
-        public void LateUpdate() {
+        public void PlayGameThemes() {
+            PlayThemes( GameThemes );
+        }
+        public void Stop() {
+            PlayThemes( null );
         }
 
-        // OnStateChange
-        protected override void OnStateChange(UIThemeState state) {
-            if (state is UIThemeState.MainTheme) {
-                PlayThemes( MainThemes );
-            } else if (state is UIThemeState.GameTheme) {
-                PlayThemes( GameThemes );
-            } else {
-                PlayThemes( null );
-            }
-        }
-
-        // Helpers
+        // PlayThemes
         private void PlayThemes(AssetHandle<AudioClip>[]? themes) {
             Themes = themes;
             PlayTheme( Themes?.First() );
@@ -87,21 +66,24 @@ namespace Project.UI {
                 Play( AudioSource, await Theme.GetValueAsync( DisposeCancellationToken ) );
             }
         }
-        // Helpers
-        private static UIThemeState? GetState(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return UIThemeState.MainTheme;
+
+        // Update
+        public void Update() {
+            if (Themes != null && Theme != null && Theme.IsSucceeded) {
+                if (IsCompleted( AudioSource )) {
+                    PlayTheme( GetNextValue( Themes, Theme ) );
+                }
+                //if (Router.State is UIRouterState.GameSceneLoading) {
+                //    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * Time.deltaTime * 1.0f );
+                //    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * Time.deltaTime * 0.5f );
+                //}
+                if (Game != null) {
+                    SetPaused( AudioSource, Game.IsPaused );
+                }
             }
-            if (state is UIRouterState.GameSceneLoaded) {
-                return UIThemeState.GameTheme;
-            }
-            return null;
+        }
+        public void LateUpdate() {
         }
 
-    }
-    public enum UIThemeState {
-        None,
-        MainTheme,
-        GameTheme
     }
 }

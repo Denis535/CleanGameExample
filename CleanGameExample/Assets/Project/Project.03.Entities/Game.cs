@@ -13,7 +13,7 @@ namespace Project.Entities {
 
     public class Game : GameBase2<GameMode, GameLevel, GameState>, IGame {
 
-        // Container
+        // Deps
         public Player Player { get; }
         public World World { get; }
         // Input

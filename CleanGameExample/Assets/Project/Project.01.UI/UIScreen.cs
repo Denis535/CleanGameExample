@@ -11,9 +11,9 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UIScreen : UIScreenBase2<UIScreenState> {
+    public class UIScreen : UIScreenBase2 {
 
-        // Container
+        // Deps
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Game? Game => Application.Game;
@@ -33,13 +33,23 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            Router.OnStateChangeEvent += i => {
-                State = GetState( i ) ?? State;
-            };
         }
         public override void Dispose() {
             Widget.RemoveSelf();
             base.Dispose();
+        }
+
+        // ShowScreen
+        public void ShowMainScreen() {
+            Widget.RemoveChild( i => i is GameWidget );
+            Widget.AddChild( new MainWidget( Container ) );
+        }
+        public void ShowGameScreen() {
+            Widget.RemoveChild( i => i is MainWidget );
+            Widget.AddChild( new GameWidget( Container ) );
+        }
+        public void Hide() {
+            Widget.RemoveChildren( i => i is MainWidget or GameWidget );
         }
 
         // Update
@@ -56,34 +66,5 @@ namespace Project.UI {
             }
         }
 
-        // OnStateChange
-        protected override void OnStateChange(UIScreenState state) {
-            if (state is UIScreenState.MainScreen) {
-                Widget.RemoveChild( i => i is GameWidget );
-                Widget.AddChild( new MainWidget( Container ) );
-            } else if (state is UIScreenState.GameScreen) {
-                Widget.RemoveChild( i => i is MainWidget );
-                Widget.AddChild( new GameWidget( Container ) );
-            } else {
-                Widget.RemoveChildren( i => i is MainWidget or GameWidget );
-            }
-        }
-
-        // Helpers
-        private static UIScreenState? GetState(UIRouterState state) {
-            if (state is UIRouterState.MainSceneLoading or UIRouterState.MainSceneLoaded or UIRouterState.GameSceneLoading) {
-                return UIScreenState.MainScreen;
-            }
-            if (state is UIRouterState.GameSceneLoaded) {
-                return UIScreenState.GameScreen;
-            }
-            return null;
-        }
-
-    }
-    public enum UIScreenState {
-        None,
-        MainScreen,
-        GameScreen
     }
 }

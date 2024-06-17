@@ -13,7 +13,7 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Container
+        // Deps
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;

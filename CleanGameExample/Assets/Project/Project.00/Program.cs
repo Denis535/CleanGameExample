@@ -80,7 +80,7 @@ namespace Project {
 
         // OnQuit
         protected override bool OnQuit() {
-            if (Router.State != UIRouterState.Quited) {
+            if (Router.IsMainSceneLoaded || Router.IsGameSceneLoaded) {
                 Router.Quit();
                 return false;
             }

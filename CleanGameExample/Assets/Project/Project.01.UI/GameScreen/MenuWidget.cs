@@ -12,7 +12,7 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Container
+        // Deps
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Game Game => Application.Game!;

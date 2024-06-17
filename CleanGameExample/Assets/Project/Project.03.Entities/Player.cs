@@ -12,7 +12,7 @@ namespace Project.Entities {
 
     public class Player : PlayerBase2<PlayerCharacterKind, PlayerState>, IPlayer {
 
-        // Container
+        // Deps
         private Game Game { get; }
         public Camera2 Camera { get; }
         public PlayerCharacter? Character { get; internal set; }

@@ -11,7 +11,7 @@ namespace Project {
     [DefaultExecutionOrder( 1001 )]
     public class DebugScreen : MonoBehaviour {
 
-        // Container
+        // Deps
         private UITheme Theme { get; set; } = default!;
         private UIScreen Screen { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
@@ -32,7 +32,8 @@ namespace Project {
         public void OnGUI() {
             using (new GUILayout.VerticalScope( GUI.skin.box )) {
                 GUILayout.Label( "Fps: " + (1f / Time.smoothDeltaTime).ToString( "000." ) );
-                GUILayout.Label( "Router State: " + Router.State );
+                GUILayout.Label( "Main Scene Loaded: " + Router.IsMainSceneLoaded );
+                GUILayout.Label( "Game Scene Loaded: " + Router.IsGameSceneLoaded );
                 if (Application.Game != null) {
                     GUILayout.Label( "Game State: " + Application.Game.State );
                     GUILayout.Label( "Game Paused: " + Application.Game.IsPaused );

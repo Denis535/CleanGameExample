@@ -13,12 +13,18 @@ namespace Project.UI {
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
-    public class UIRouter : UIRouterBase2<UIRouterState> {
+    public class UIRouter : UIRouterBase2 {
 
         private static readonly Lock @lock = new Lock();
 
-        // Container
+        // Deps
+        private UITheme Theme => Container.RequireDependency<UITheme>();
+        private UIScreen Screen => Container.RequireDependency<UIScreen>();
         private Application2 Application { get; }
+        // IsLoaded
+        public bool IsMainSceneLoaded => MainScene.IsSucceeded;
+        public bool IsGameSceneLoaded => GameScene.IsSucceeded;
+        public bool IsWorldLoaded => World.IsValid && World.Handle.IsSucceeded;
         // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.Value_MainScene );
@@ -46,7 +52,8 @@ namespace Project.UI {
         // LoadMainSceneAsync
         public async Task LoadMainSceneAsync() {
             Release.LogFormat( "Load: MainScene" );
-            State = UIRouterState.MainSceneLoading;
+            Theme.PlayMainThemes();
+            Screen.ShowMainScreen();
             using (@lock.Enter()) {
                 await UnloadMainSceneAsync();
                 await UnloadGameSceneAsync();
@@ -54,13 +61,11 @@ namespace Project.UI {
                 await MainScene.ActivateAsync();
                 SceneManager.SetActiveScene( await MainScene.GetValueAsync() );
             }
-            State = UIRouterState.MainSceneLoaded;
         }
 
         // LoadGameSceneAsync
         public async Task LoadGameSceneAsync(GameLevel level, string name, PlayerCharacterKind kind) {
             Release.LogFormat( "Load: GameScene: {0}, {1}", level, kind );
-            State = UIRouterState.GameSceneLoading;
             using (@lock.Enter()) {
                 await UnloadMainSceneAsync();
                 await UnloadGameSceneAsync();
@@ -72,27 +77,24 @@ namespace Project.UI {
                 SceneManager.SetActiveScene( await World.Handle.GetValueAsync() );
                 Application.CreateGame( level, name, kind );
             }
-            State = UIRouterState.GameSceneLoaded;
+            Theme.PlayGameThemes();
+            Screen.ShowGameScreen();
         }
 
         // Quit
         public async void Quit() {
             Release.Log( "Quit" );
-            State = UIRouterState.Quitting;
+            Theme.Stop();
+            Screen.Hide();
             using (@lock.Enter()) {
                 await UnloadMainSceneAsync();
                 await UnloadGameSceneAsync();
             }
-            State = UIRouterState.Quited;
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
 #else
             UnityEngine.Application.Quit();
 #endif
-        }
-
-        // OnStateChange
-        protected override void OnStateChange(UIRouterState state) {
         }
 
         // Helpers
@@ -114,17 +116,5 @@ namespace Project.UI {
             }
         }
 
-    }
-    public enum UIRouterState {
-        None,
-        // MainSceneLoading
-        MainSceneLoading,
-        MainSceneLoaded,
-        // GameSceneLoading
-        GameSceneLoading,
-        GameSceneLoaded,
-        // Quitting
-        Quitting,
-        Quited,
     }
 }

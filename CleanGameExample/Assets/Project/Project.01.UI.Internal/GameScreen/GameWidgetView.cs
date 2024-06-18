@@ -13,8 +13,6 @@ namespace Project.UI.GameScreen {
         private readonly Widget widget;
         private readonly VisualElement target;
 
-        // Layer
-        public override int Layer => -1000;
         // Props
         public TargetEffect TargetEffect {
             set {

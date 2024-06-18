@@ -108,7 +108,6 @@ namespace Project {
                 // UI/MainScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MainWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/MenuWidget.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI/MainScreen/LoadingWidget.cs" ) )
                 // UI/GameScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/GameWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/GameScreen/TotalsWidget.cs" ) )
@@ -119,6 +118,7 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/ProfileSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/VideoSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/AudioSettingsWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/LoadingWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( "Widget.cs" ) )
                 // UI.Internal/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory.cs" ) )
@@ -128,7 +128,6 @@ namespace Project {
                 // UI.Internal/MainScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MainWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/MenuWidgetView.cs" ) )
-                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/MainScreen/LoadingWidgetView.cs" ) )
                 // UI.Internal/GameScreen/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/GameWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/GameScreen/TotalsWidgetView.cs" ) )
@@ -139,6 +138,7 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/ProfileSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/VideoSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/AudioSettingsWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/LoadingWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( "View.cs" ) )
                 // App/
                 .ThenByDescending( i => i.name.Equals( "Application2.cs" ) )

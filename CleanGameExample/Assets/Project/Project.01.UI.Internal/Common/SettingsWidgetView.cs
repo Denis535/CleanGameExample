@@ -18,8 +18,6 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
-        // Layer
-        public override int Layer => 0;
         // Props
         public ProfileSettingsWidgetView? ProfileSettings {
             get => profileSettings.Children2<ProfileSettingsWidgetView>().FirstOrDefault();

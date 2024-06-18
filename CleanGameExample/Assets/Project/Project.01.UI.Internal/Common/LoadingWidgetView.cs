@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace Project.UI.MainScreen {
+namespace Project.UI.Common {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -13,9 +13,6 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
         private readonly Label loading;
-
-        // Layer
-        public override int Layer => 0;
 
         // Constructor
         public LoadingWidgetView() {

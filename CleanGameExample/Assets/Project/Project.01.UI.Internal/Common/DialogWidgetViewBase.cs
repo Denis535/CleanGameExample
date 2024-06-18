@@ -18,8 +18,6 @@ namespace Project.UI.Common {
         private readonly Label title;
         private readonly Label message;
 
-        // Layer
-        public override int Layer => 1000;
         // Props
         public string? Title {
             get => title.text;

@@ -15,8 +15,6 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
-        // Layer
-        public override int Layer => 0;
         // Events
         public event EventCallback<ClickEvent> OnResume {
             add => resume.RegisterCallback( value );

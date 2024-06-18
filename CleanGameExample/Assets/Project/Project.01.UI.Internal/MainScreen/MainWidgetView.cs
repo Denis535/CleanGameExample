@@ -11,8 +11,6 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
-        // Layer
-        public override int Layer => -1000;
         // Props
         public (Color Color, Vector2 Translate, float Rotate, float Scale) Effect {
             set {

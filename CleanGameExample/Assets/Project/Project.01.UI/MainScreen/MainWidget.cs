@@ -24,10 +24,7 @@ namespace Project.UI.MainScreen {
 
         // OnActivate
         protected override void OnActivate(object? argument) {
-            try {
-                ShowSelf();
-            } catch (OperationCanceledException) {
-            }
+            ShowSelf();
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
@@ -55,23 +52,22 @@ namespace Project.UI.MainScreen {
             var view = new MainWidgetView();
             return view;
         }
-
         // Helpers
         private static (Color Color, Vector2 Translate, float Rotate, float Scale) GetEffect(MainWidget widget) {
             var view = widget.Descendants.Where( i => i.IsViewable ).Select( i => i.View! ).FirstOrDefault( i => i.IsAttached() && i.IsDisplayedInHierarchy() );
             // Menu
             if (view is MenuWidgetView menu) {
                 view = menu.Views.FirstOrDefault( i => i.IsDisplayedInHierarchy() );
-                if (view is MenuMainWidgetView_MenuView) {
+                if (view is MenuWidgetView_Menu) {
                     return (Color.white, default, 0, 1.0f);
                 }
-                if (view is MenuMainWidgetView_StartGameView) {
+                if (view is MenuWidgetView_StartGame) {
                     return (Color.white, default, 1, 1.1f);
                 }
-                if (view is MenuMainWidgetView_SelectLevelView) {
+                if (view is MenuWidgetView_SelectLevel) {
                     return (Color.white, default, 2, 1.2f);
                 }
-                if (view is MenuMainWidgetView_SelectCharacterView) {
+                if (view is MenuWidgetView_SelectCharacter) {
                     return (Color.white, default, 3, 1.3f);
                 }
                 return (Color.white, default, 3, 1.3f);
@@ -90,9 +86,9 @@ namespace Project.UI.MainScreen {
                 return (Color.white, default, 1, 1.1f);
             }
             // Loading
-            if (view is LoadingWidgetView loading) {
-                return (Color.gray, default, 45, 2.5f);
-            }
+            //if (view is LoadingWidgetView loading) {
+            //    return (Color.gray, default, 45, 2.5f);
+            //}
             return (Color.white, default, 0, 1.0f);
         }
 

@@ -53,29 +53,23 @@ namespace Project {
             Router = new UIRouter( this );
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
-            //if (UnityServices.State != ServicesInitializationState.Initialized) {
-            //    try {
-            //        var options = new InitializationOptions();
-            //        if (Application.Storage.Profile != null) options.SetProfile( Application.Storage.Profile );
-            //        await UnityServices.InitializeAsync( options ).WaitAsync( DisposeCancellationToken );
-            //    } catch (Exception ex) {
-            //        //var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-            //        //AddChild( dialog );
-            //        //return;
-            //    }
-            //}
-            //// await AuthenticationService
-            //if (!AuthenticationService.IsSignedIn) {
-            //    try {
-            //        var options = new SignInOptions();
-            //        options.CreateAccount = true;
-            //        await AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( DisposeCancellationToken );
-            //    } catch (Exception ex) {
-            //        //var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-            //        //AddChild( dialog );
-            //        //return;
-            //    }
-            //}
+            try {
+                {
+                    var options = new InitializationOptions();
+                    if (Application.Storage.Profile != null) options.SetProfile( Application.Storage.Profile );
+                    await UnityServices.InitializeAsync( options ).WaitAsync( destroyCancellationToken );
+                }
+                {
+                    var options = new SignInOptions();
+                    options.CreateAccount = true;
+                    await Application.AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( destroyCancellationToken );
+                }
+            } catch (OperationCanceledException) {
+            } catch (Exception ex) {
+                //var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
+                //AddChild( dialog );
+                Debug.LogError( ex );
+            }
         }
         protected override void OnDestroy() {
             Theme.Dispose();

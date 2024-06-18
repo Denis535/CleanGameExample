@@ -32,10 +32,10 @@ namespace Project.UI.MainScreen {
 
         // OnActivate
         protected override async void OnActivate(object? argument) {
+            ShowSelf();
             try {
-                ShowSelf();
                 View.SetDisplayed( false );
-                while (!Router.IsMainSceneLoaded) {
+                while (!Application.AuthenticationService.IsSignedIn) {
                     await Task.Yield();
                     DisposeCancellationToken.ThrowIfCancellationRequested();
                 }
@@ -60,13 +60,13 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MenuWidgetView CreateView(MenuWidget widget) {
             var view = new MenuWidgetView();
-            view.AddView( CreateView_MenuView( widget ) );
+            view.AddView( CreateView_Menu( widget ) );
             return view;
         }
-        private static MenuMainWidgetView_MenuView CreateView_MenuView(MenuWidget widget) {
-            var view = new MenuMainWidgetView_MenuView();
+        private static MenuWidgetView_Menu CreateView_Menu(MenuWidget widget) {
+            var view = new MenuWidgetView_Menu();
             view.OnStartGame += evt => {
-                widget.View.AddView( CreateView_StartGameView( widget ) );
+                widget.View.AddView( CreateView_StartGame( widget ) );
             };
             view.OnSettings += evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
@@ -77,51 +77,47 @@ namespace Project.UI.MainScreen {
             };
             return view;
         }
-        private static MenuMainWidgetView_StartGameView CreateView_StartGameView(MenuWidget widget) {
-            var view = new MenuMainWidgetView_StartGameView();
+        private static MenuWidgetView_StartGame CreateView_StartGame(MenuWidget widget) {
+            var view = new MenuWidgetView_StartGame();
             view.OnNewGame += evt => {
-                widget.View.AddView( CreateView_SelectLevelView( widget ) );
+                widget.View.AddView( CreateView_SelectLevel( widget ) );
             };
             view.OnContinue += evt => {
-                widget.View.AddView( CreateView_SelectLevelView( widget ) );
+                widget.View.AddView( CreateView_SelectLevel( widget ) );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );
             };
             return view;
         }
-        private static MenuMainWidgetView_SelectLevelView CreateView_SelectLevelView(MenuWidget widget) {
-            var view = new MenuMainWidgetView_SelectLevelView();
+        private static MenuWidgetView_SelectLevel CreateView_SelectLevel(MenuWidget widget) {
+            var view = new MenuWidgetView_SelectLevel();
             view.OnLevel1 += evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level1 ) );
+                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level1 ) );
             };
             view.OnLevel2 += evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level2 ) );
+                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level2 ) );
             };
             view.OnLevel3 += evt => {
-                widget.View.AddView( CreateView_SelectCharacterView( widget, GameLevel.Level3 ) );
+                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level3 ) );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );
             };
             return view;
         }
-        private static MenuMainWidgetView_SelectCharacterView CreateView_SelectCharacterView(MenuWidget widget, GameLevel level) {
-            var view = new MenuMainWidgetView_SelectCharacterView();
+        private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
+            var view = new MenuWidgetView_SelectCharacter();
             view.OnGray += evt => {
-                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray );
             };
             view.OnRed += evt => {
-                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red );
             };
             view.OnGreen += evt => {
-                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green );
             };
             view.OnBlue += evt => {
-                widget.AddChild( new LoadingWidget( widget.Container ) );
                 widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue );
             };
             view.OnBack += evt => {

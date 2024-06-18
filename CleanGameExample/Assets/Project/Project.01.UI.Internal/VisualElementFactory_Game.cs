@@ -35,8 +35,8 @@ namespace Project.UI {
             }
         }
 
-        // LevelCompleted
-        public static VisualElement LevelCompleted(out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
+        // Totals
+        public static VisualElement Totals_LevelCompleted(out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
             using (VisualElementFactory.SmallWidget( "level-completed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -59,9 +59,7 @@ namespace Project.UI {
             }
             return widget;
         }
-
-        // GameCompleted
-        public static VisualElement GameCompleted(out Widget widget, out Label title, out Label message, out Button okey) {
+        public static VisualElement Totals_GameCompleted(out Widget widget, out Label title, out Label message, out Button okey) {
             using (VisualElementFactory.SmallWidget( "game-completed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
@@ -82,9 +80,7 @@ namespace Project.UI {
             }
             return widget;
         }
-
-        // LevelFailed
-        public static VisualElement LevelFailed(out Widget widget, out Label title, out Label message, out Button retry, out Button back) {
+        public static VisualElement Totals_LevelFailed(out Widget widget, out Label title, out Label message, out Button retry, out Button back) {
             using (VisualElementFactory.SmallWidget( "level-failed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {

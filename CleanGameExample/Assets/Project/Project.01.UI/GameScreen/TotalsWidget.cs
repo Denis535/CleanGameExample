@@ -3,8 +3,8 @@ namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.App;
     using Project.Entities;
+    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
@@ -12,15 +12,14 @@ namespace Project.UI.GameScreen {
 
         // Deps
         private UIRouter Router { get; }
-        private Application2 Application { get; }
-        private Game Game => Application.Game!;
+        private Game Game { get; }
         // View
         public override TotalsWidgetView View { get; }
 
         // Constructor
         public TotalsWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
-            Application = container.RequireDependency<Application2>();
+            Game = container.RequireDependency<Game>();
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -49,16 +48,17 @@ namespace Project.UI.GameScreen {
         private static TotalsWidgetView CreateView(TotalsWidget widget) {
             if (widget.Game.Player.State is PlayerState.Winner) {
                 if (!widget.Game.Level.IsLast()) {
-                    var view = new LevelCompletedWidgetView();
+                    var view = new TotalsWidgetView_LevelCompleted();
                     view.OnContinue += evt => {
                         widget.Router.LoadGameSceneAsync( widget.Game.Level.GetNext(), widget.Game.Player.Name, widget.Game.Player.Kind );
                     };
                     view.OnBack += evt => {
-                        widget.Router.LoadMainSceneAsync();
+                        var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync() ).OnCancel( "No", null );
+                        widget.AddChild( dialog );
                     };
                     return view;
                 } else {
-                    var view = new GameCompletedWidgetView();
+                    var view = new TotalsWidgetView_GameCompleted();
                     view.OnOkey += evt => {
                         widget.Router.LoadMainSceneAsync();
                     };
@@ -66,12 +66,13 @@ namespace Project.UI.GameScreen {
                 }
             }
             if (widget.Game.Player.State is PlayerState.Loser) {
-                var view = new LevelFailedWidgetView();
+                var view = new TotalsWidgetView_LevelFailed();
                 view.OnRetry += evt => {
                     widget.Router.LoadGameSceneAsync( widget.Game.Level, widget.Game.Player.Name, widget.Game.Player.Kind );
                 };
                 view.OnBack += evt => {
-                    widget.Router.LoadMainSceneAsync();
+                    var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync() ).OnCancel( "No", null );
+                    widget.AddChild( dialog );
                 };
                 return view;
             }

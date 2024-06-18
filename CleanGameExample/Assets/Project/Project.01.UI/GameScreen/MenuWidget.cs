@@ -3,9 +3,6 @@ namespace Project.UI.GameScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Project.App;
-    using Project.Entities;
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
@@ -14,15 +11,12 @@ namespace Project.UI.GameScreen {
 
         // Deps
         private UIRouter Router { get; }
-        private Application2 Application { get; }
-        private Game Game => Application.Game!;
         // View
         public override MenuWidgetView View { get; }
 
         // Constructor
         public MenuWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
-            Application = container.RequireDependency<Application2>();
             View = CreateView( this );
         }
         public override void Dispose() {

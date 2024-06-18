@@ -13,7 +13,7 @@ namespace Project.UI {
 
         // Constructor
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
-            AddWidget( new UIRootWidget() );
+            AddWidget( new RootWidget() );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -30,13 +30,13 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        // ShowScreen
-        public void ShowMainScreen() {
-            Widget.RemoveChild( i => i is GameWidget );
+        // ShowWidget
+        public void ShowMainWidget() {
+            Widget.RemoveChildren( i => i is GameWidget );
             Widget.AddChild( new MainWidget( Container ) );
         }
-        public void ShowGameScreen() {
-            Widget.RemoveChild( i => i is MainWidget );
+        public void ShowGameWidget() {
+            Widget.RemoveChildren( i => i is MainWidget );
             Widget.AddChild( new GameWidget( Container ) );
         }
         public void Hide() {
@@ -55,6 +55,112 @@ namespace Project.UI {
                 (child as MainWidget)?.LateUpdate();
                 (child as GameWidget)?.LateUpdate();
             }
+        }
+
+    }
+    public class RootWidget : UIRootWidget<RootWidgetView> {
+
+        // View
+        public override RootWidgetView View { get; }
+
+        // Constructor
+        public RootWidget() {
+            View = CreateView();
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        // Helpers
+        protected static RootWidgetView CreateView() {
+            var view = new RootWidgetView();
+            view.OnSubmitEvent += OnSubmit;
+            view.OnCancelEvent += OnCancel;
+            return view;
+        }
+        //// Helpers
+        //protected static new void OnSubmit(NavigationSubmitEvent evt) {
+        //    var button = evt.target as Button;
+        //    if (button != null) {
+        //        Click( button );
+        //        evt.StopPropagation();
+        //    }
+        //}
+        //protected static new void OnCancel(NavigationCancelEvent evt) {
+        //    var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().Where( i => i.IsAttached() && i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault( IsWidget );
+        //    var button = widget?.Query<Button>().Where( i => i.IsAttached() && i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
+        //    if (button != null) {
+        //        Click( button );
+        //        evt.StopPropagation();
+        //    }
+        //}
+        //// Helpers
+        //protected static new bool IsWidget(VisualElement element) {
+        //    return element.GetClasses().Any( i => i.Contains( "widget" ) );
+        //}
+        //protected static new bool IsCancel(Button button) {
+        //    return button.ClassListContains( "resume" ) ||
+        //        button.ClassListContains( "cancel" ) ||
+        //        button.ClassListContains( "back" ) ||
+        //        button.ClassListContains( "no" ) ||
+        //        button.ClassListContains( "exit" ) ||
+        //        button.ClassListContains( "quit" );
+        //}
+        //protected static new void Click(Button button) {
+        //    using (var evt = ClickEvent.GetPooled()) {
+        //        evt.target = button;
+        //        button.SendEvent( evt );
+        //    }
+        //}
+
+    }
+    public class RootWidgetView : UIRootWidgetView {
+
+        // Constructor
+        public RootWidgetView() {
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        // Recalculate
+        protected override void Recalculate(VisualElement widget) {
+            base.Recalculate( widget );
+        }
+        protected override void Recalculate(UIViewBase[] views) {
+            base.Recalculate( views );
+        }
+        protected override void Recalculate(UIViewBase view, UIViewBase next) {
+            base.Recalculate( view, next );
+        }
+        protected override void Recalculate(UIViewBase view) {
+            base.Recalculate( view );
+        }
+
+        // GetPriority
+        protected override int GetPriority(UIViewBase view) {
+            return GetLayer( view );
+        }
+
+        // GetLayer
+        protected override int GetLayer(UIViewBase view) {
+            return view switch {
+                // MainScreen
+                MainScreen.MainWidgetView => 0,
+                MainScreen.MenuWidgetView => 500,
+                // GameScreen
+                GameScreen.GameWidgetView => 0,
+                GameScreen.TotalsWidgetView => 0,
+                GameScreen.MenuWidgetView => 500,
+                // Common
+                Common.SettingsWidgetView => 500,
+                Common.ProfileSettingsWidgetView => 500,
+                Common.VideoSettingsWidgetView => 500,
+                Common.AudioSettingsWidgetView => 500,
+                Common.LoadingWidgetView => 999,
+                Common.DialogWidgetViewBase => 1000,
+                _ => 0
+            };
         }
 
     }

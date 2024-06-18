@@ -12,8 +12,6 @@ namespace Project.UI.Common {
         private readonly Widget widget;
         private readonly TextField name;
 
-        // Layer
-        public override int Layer => 0;
         // Props
         public string Name {
             get => name.value;

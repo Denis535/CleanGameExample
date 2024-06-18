@@ -14,8 +14,6 @@ namespace Project.UI.Common {
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
 
-        // Layer
-        public override int Layer => 0;
         // Props
         public bool IsFullScreen {
             get => isFullScreen.value;

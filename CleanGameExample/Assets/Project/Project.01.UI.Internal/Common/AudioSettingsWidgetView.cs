@@ -15,8 +15,6 @@ namespace Project.UI.Common {
         private readonly Slider sfxVolume;
         private readonly Slider gameVolume;
 
-        // Layer
-        public override int Layer => 0;
         // Props
         public float MasterVolume {
             get => masterVolume.value;

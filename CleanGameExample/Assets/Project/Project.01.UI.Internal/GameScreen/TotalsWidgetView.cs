@@ -17,7 +17,7 @@ namespace Project.UI.GameScreen {
         }
 
     }
-    public class LevelCompletedWidgetView : TotalsWidgetView {
+    public class TotalsWidgetView_LevelCompleted : TotalsWidgetView {
 
         private Widget widget;
         private Label title;
@@ -25,8 +25,6 @@ namespace Project.UI.GameScreen {
         private Button @continue;
         private Button back;
 
-        // Layer
-        public override int Layer => -1000;
         // Events
         public event EventCallback<ClickEvent> OnContinue {
             add => @continue.RegisterCallback( value );
@@ -38,23 +36,21 @@ namespace Project.UI.GameScreen {
         }
 
         // Constructor
-        public LevelCompletedWidgetView() {
-            VisualElement = VisualElementFactory_Game.LevelCompleted( out widget, out title, out message, out @continue, out back );
+        public TotalsWidgetView_LevelCompleted() {
+            VisualElement = VisualElementFactory_Game.Totals_LevelCompleted( out widget, out title, out message, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    public class GameCompletedWidgetView : TotalsWidgetView {
+    public class TotalsWidgetView_GameCompleted : TotalsWidgetView {
 
         private Widget widget;
         private Label title;
         private Label message;
         private Button okey;
 
-        // Layer
-        public override int Layer => -1000;
         // Events
         public event EventCallback<ClickEvent> OnOkey {
             add => okey.RegisterCallback( value );
@@ -62,15 +58,15 @@ namespace Project.UI.GameScreen {
         }
 
         // Constructor
-        public GameCompletedWidgetView() {
-            VisualElement = VisualElementFactory_Game.GameCompleted( out widget, out title, out message, out okey );
+        public TotalsWidgetView_GameCompleted() {
+            VisualElement = VisualElementFactory_Game.Totals_GameCompleted( out widget, out title, out message, out okey );
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    public class LevelFailedWidgetView : TotalsWidgetView {
+    public class TotalsWidgetView_LevelFailed : TotalsWidgetView {
 
         private Widget widget;
         private Label title;
@@ -78,8 +74,6 @@ namespace Project.UI.GameScreen {
         private Button retry;
         private Button back;
 
-        // Layer
-        public override int Layer => -1000;
         // Events
         public event EventCallback<ClickEvent> OnRetry {
             add => retry.RegisterCallback( value );
@@ -91,8 +85,8 @@ namespace Project.UI.GameScreen {
         }
 
         // Constructor
-        public LevelFailedWidgetView() {
-            VisualElement = VisualElementFactory_Game.LevelFailed( out widget, out title, out message, out retry, out back );
+        public TotalsWidgetView_LevelFailed() {
+            VisualElement = VisualElementFactory_Game.Totals_LevelFailed( out widget, out title, out message, out retry, out back );
         }
         public override void Dispose() {
             base.Dispose();

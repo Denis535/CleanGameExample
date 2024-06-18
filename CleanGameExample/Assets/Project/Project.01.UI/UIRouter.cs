@@ -51,13 +51,15 @@ namespace Project.UI {
         public async void LoadMainSceneAsync() {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
-                Screen.ShowMainScreen();
-                Theme.PlayMainThemes();
                 {
+                    Theme.Stop();
+                    Screen.Hide();
                     Application.DestroyGame();
                     await UnloadAsync();
                 }
                 await LoadSceneAsync_Main();
+                Screen.ShowMainWidget();
+                Theme.PlayMainThemes();
             }
         }
 
@@ -66,13 +68,15 @@ namespace Project.UI {
             Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
                 {
+                    Theme.Stop();
+                    Screen.Hide();
                     Application.DestroyGame();
                     await UnloadAsync();
                 }
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldAddress( level ) );
                 Application.CreateGame( level, name, kind );
-                Screen.ShowGameScreen();
+                Screen.ShowGameWidget();
                 Theme.PlayGameThemes();
             }
         }

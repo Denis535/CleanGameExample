@@ -19,7 +19,7 @@
       "url": "https://package.openupm.com"
     },
     "com.denis535.clean-architecture-game-framework": {
-      "version": "1.1.46",
+      "version": "1.1.50",
       "depth": 0,
       "source": "registry",
       "dependencies": {

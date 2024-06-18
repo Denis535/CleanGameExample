@@ -5,7 +5,6 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Project.App;
     using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.UI;
@@ -13,15 +12,13 @@ namespace Project.UI.GameScreen {
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
         // Deps
-        private Application2 Application { get; }
-        private Game Game => Application.Game ?? throw Exceptions.Internal.NullReference( $"Reference 'Game' is null" );
-        private Player Player => Game.Player;
+        private Game Game { get; }
         // View
         public override GameWidgetView View { get; }
 
         // Constructor
         public GameWidget(IDependencyContainer container) : base( container ) {
-            Application = container.RequireDependency<Application2>();
+            Game = container.RequireDependency<Game>();
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -32,54 +29,32 @@ namespace Project.UI.GameScreen {
         protected override void OnActivate(object? argument) {
             ShowSelf();
             Game.OnStateChangeEvent += OnGameStateChange;
-            Game.OnPauseChangeEvent += OnGamePauseChange;
             View.IsInputEnabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
         protected override void OnDeactivate(object? argument) {
             Cursor.lockState = CursorLockMode.None;
             View.IsInputEnabled = false;
-            Game.OnPauseChangeEvent -= OnGamePauseChange;
             Game.OnStateChangeEvent -= OnGameStateChange;
             HideSelf();
         }
 
         // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-            if (descendant is MenuWidget) {
-                Game.IsPaused = true;
-                View.IsInputEnabled = false;
-            }
-            if (descendant is TotalsWidget or MenuWidget) {
-                Cursor.lockState = CursorLockMode.None;
-            }
+            Game.IsPaused = Children.Any( i => i is MenuWidget );
+            View.IsInputEnabled = !Children.Any( i => i is MenuWidget );
+            Cursor.lockState = Children.Any( i => i is MenuWidget or TotalsWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            if (!Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget )) {
-                Game.IsPaused = false;
-                View.IsInputEnabled = true;
+            if (State is UIWidgetState.Active) {
+                Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget );
+                View.IsInputEnabled = !Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget );
+                Cursor.lockState = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget ) ? CursorLockMode.None : CursorLockMode.Locked;
             }
-            if (!Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget )) {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-
-        // Update
-        public void Update() {
-            if (Application.Game is null) {
-                Debug.LogError( "Game is null" );
-                return;
-            }
-            View.TargetEffect = GetTargetEffect( Player );
-            if (View.IsCancelPressed) {
-                AddChild( new MenuWidget( Container ) );
-            }
-        }
-        public void LateUpdate() {
         }
 
         // OnGameStateChange
@@ -93,8 +68,14 @@ namespace Project.UI.GameScreen {
             }
         }
 
-        // OnGamePauseChange
-        private void OnGamePauseChange(bool isPause) {
+        // Update
+        public void Update() {
+            View.TargetEffect = GetTargetEffect( Game.Player );
+            if (View.IsCancelPressed) {
+                AddChild( new MenuWidget( Container ) );
+            }
+        }
+        public void LateUpdate() {
         }
 
         // Helpers

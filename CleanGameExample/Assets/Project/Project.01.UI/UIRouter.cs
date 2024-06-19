@@ -51,15 +51,10 @@ namespace Project.UI {
         public async void LoadMainScene() {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
-                {
-                    Theme.Stop();
-                    Screen.Hide();
-                    Application.DestroyGame();
-                    await UnloadAsync();
-                }
-                await LoadSceneAsync_Main();
+                // Load
                 Screen.ShowMainWidget();
                 Theme.PlayMainThemes();
+                await LoadSceneAsync_Main();
             }
         }
 
@@ -67,17 +62,50 @@ namespace Project.UI {
         public async void LoadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
             Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
-                {
-                    Theme.Stop();
-                    Screen.Hide();
-                    Application.DestroyGame();
-                    await UnloadAsync();
-                }
+                // Unload
+                await UnloadSceneAsync_Main();
+                // Load
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldAddress( level ) );
                 Application.CreateGame( level, name, kind );
                 Screen.ShowGameWidget();
                 Theme.PlayGameThemes();
+            }
+        }
+
+        // ReloadGameScene
+        public async void ReloadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
+            Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", level, name, kind );
+            using (@lock.Enter()) {
+                // Unload
+                Theme.Stop();
+                Screen.Hide();
+                Application.DestroyGame();
+                await UnloadSceneAsync_World();
+                await UnloadSceneAsync_Game();
+                // Load
+                await LoadSceneAsync_Game();
+                await LoadSceneAsync_World( GetWorldAddress( level ) );
+                Application.CreateGame( level, name, kind );
+                Screen.ShowGameWidget();
+                Theme.PlayGameThemes();
+            }
+        }
+
+        // UnloadGameScene
+        public async void UnloadGameScene() {
+            Release.LogFormat( "Unload: GameScene" );
+            using (@lock.Enter()) {
+                // Unload
+                Theme.Stop();
+                Screen.Hide();
+                Application.DestroyGame();
+                await UnloadSceneAsync_World();
+                await UnloadSceneAsync_Game();
+                // Load
+                Screen.ShowMainWidget();
+                Theme.PlayMainThemes();
+                await LoadSceneAsync_Main();
             }
         }
 
@@ -87,8 +115,10 @@ namespace Project.UI {
             using (@lock.Enter()) {
                 Theme.Stop();
                 Screen.Hide();
-                Application.DestroyGame();
-                await UnloadAsync();
+                if (Application.Game != null) Application.DestroyGame();
+                if (WorldScene != null) await UnloadSceneAsync_World();
+                if (GameScene.IsValid) await UnloadSceneAsync_Game();
+                if (MainScene.IsValid) await UnloadSceneAsync_Main();
             }
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
@@ -121,17 +151,15 @@ namespace Project.UI {
             SceneManager.SetActiveScene( await WorldScene.GetValueAsync() );
         }
         // Helpers
-        private async Task UnloadAsync() {
-            if (MainScene.IsValid) {
-                await MainScene.UnloadAsync();
-            }
-            if (WorldScene != null) {
-                await WorldScene.UnloadAsync();
-                WorldScene = null;
-            }
-            if (GameScene.IsValid) {
-                await GameScene.UnloadAsync();
-            }
+        private async Task UnloadSceneAsync_Main() {
+            await MainScene.UnloadAsync();
+        }
+        private async Task UnloadSceneAsync_Game() {
+            await GameScene.UnloadAsync();
+        }
+        private async Task UnloadSceneAsync_World() {
+            await WorldScene!.UnloadAsync();
+            WorldScene = null;
         }
         // Helpers
         private static string GetWorldAddress(GameLevel level) {

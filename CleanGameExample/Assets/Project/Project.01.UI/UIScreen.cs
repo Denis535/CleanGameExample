@@ -3,6 +3,8 @@ namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
+    using Project.UI.Common;
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
     using UnityEngine;
@@ -32,15 +34,19 @@ namespace Project.UI {
 
         // ShowWidget
         public void ShowMainWidget() {
-            Widget.RemoveChildren( i => i is GameWidget );
+            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
             Widget.AddChild( new MainWidget( Container ) );
         }
         public void ShowGameWidget() {
-            Widget.RemoveChildren( i => i is MainWidget );
+            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
             Widget.AddChild( new GameWidget( Container ) );
         }
+        public void ShowLoadingWidget() {
+            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
+            Widget.AddChild( new LoadingWidget( Container ) );
+        }
         public void Hide() {
-            Widget.RemoveChildren( i => i is MainWidget or GameWidget );
+            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
         }
 
         // Update
@@ -78,40 +84,39 @@ namespace Project.UI {
             view.OnCancelEvent += OnCancel;
             return view;
         }
-        //// Helpers
-        //protected static new void OnSubmit(NavigationSubmitEvent evt) {
-        //    var button = evt.target as Button;
-        //    if (button != null) {
-        //        Click( button );
-        //        evt.StopPropagation();
-        //    }
-        //}
-        //protected static new void OnCancel(NavigationCancelEvent evt) {
-        //    var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().Where( i => i.IsAttached() && i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault( IsWidget );
-        //    var button = widget?.Query<Button>().Where( i => i.IsAttached() && i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
-        //    if (button != null) {
-        //        Click( button );
-        //        evt.StopPropagation();
-        //    }
-        //}
-        //// Helpers
-        //protected static new bool IsWidget(VisualElement element) {
-        //    return element.GetClasses().Any( i => i.Contains( "widget" ) );
-        //}
-        //protected static new bool IsCancel(Button button) {
-        //    return button.ClassListContains( "resume" ) ||
-        //        button.ClassListContains( "cancel" ) ||
-        //        button.ClassListContains( "back" ) ||
-        //        button.ClassListContains( "no" ) ||
-        //        button.ClassListContains( "exit" ) ||
-        //        button.ClassListContains( "quit" );
-        //}
-        //protected static new void Click(Button button) {
-        //    using (var evt = ClickEvent.GetPooled()) {
-        //        evt.target = button;
-        //        button.SendEvent( evt );
-        //    }
-        //}
+        // Helpers
+        protected static new void OnSubmit(NavigationSubmitEvent evt) {
+            var button = evt.target as Button;
+            if (button != null) {
+                Click( button );
+                evt.StopPropagation();
+            }
+        }
+        protected static new void OnCancel(NavigationCancelEvent evt) {
+            var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().OfType<Widget>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault();
+            if (widget.GetView() is not TotalsWidgetView) {
+                var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
+                if (button != null) {
+                    Click( button );
+                    evt.StopPropagation();
+                }
+            }
+        }
+        // Helpers
+        protected static new bool IsCancel(Button button) {
+            return button.ClassListContains( "resume" ) ||
+                button.ClassListContains( "cancel" ) ||
+                button.ClassListContains( "back" ) ||
+                button.ClassListContains( "no" ) ||
+                button.ClassListContains( "exit" ) ||
+                button.ClassListContains( "quit" );
+        }
+        protected static new void Click(Button button) {
+            using (var evt = ClickEvent.GetPooled()) {
+                evt.target = button;
+                button.SendEvent( evt );
+            }
+        }
 
     }
     public class RootWidgetView : UIRootWidgetView {

@@ -3,7 +3,6 @@ namespace Project.UI.MainScreen {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
     using Project.Entities.Characters;
@@ -31,17 +30,17 @@ namespace Project.UI.MainScreen {
         }
 
         // OnActivate
-        protected override async void OnActivate(object? argument) {
+        protected override void OnActivate(object? argument) {
             ShowSelf();
-            try {
-                View.SetDisplayed( false );
-                while (!Application.AuthenticationService.IsSignedIn) {
-                    await Task.Yield();
-                    DisposeCancellationToken.ThrowIfCancellationRequested();
-                }
-                View.SetDisplayed( true );
-            } catch (OperationCanceledException) {
-            }
+            //try {
+            //    View.SetDisplayed( false );
+            //    while (!Application.AuthenticationService.IsSignedIn) {
+            //        await Task.Yield();
+            //        DisposeCancellationToken.ThrowIfCancellationRequested();
+            //    }
+            //    View.SetDisplayed( true );
+            //} catch (OperationCanceledException) {
+            //}
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
@@ -72,8 +71,7 @@ namespace Project.UI.MainScreen {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             };
             view.OnQuit += evt => {
-                var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null );
-                widget.AddChild( dialog );
+                widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null ) );
             };
             return view;
         }
@@ -109,16 +107,16 @@ namespace Project.UI.MainScreen {
         private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
             var view = new MenuWidgetView_SelectCharacter();
             view.OnGray += evt => {
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray );
+                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray );
             };
             view.OnRed += evt => {
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red );
+                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red );
             };
             view.OnGreen += evt => {
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green );
+                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green );
             };
             view.OnBlue += evt => {
-                widget.Router.LoadGameSceneAsync( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue );
+                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );

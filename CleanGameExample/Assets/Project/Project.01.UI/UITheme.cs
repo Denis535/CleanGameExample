@@ -47,11 +47,11 @@ namespace Project.UI {
             SetPaused( AudioSource, isPaused );
         }
 
-        // Fade
-        public void Fade() {
-            AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * 1.0f * Time.deltaTime );
-            AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * 0.5f * Time.deltaTime );
-        }
+        //// Fade
+        //public void Fade() {
+        //    AudioSource.volume = Mathf.MoveTowards( AudioSource.volume, 0, AudioSource.volume * 1.0f * Time.deltaTime );
+        //    AudioSource.pitch = Mathf.MoveTowards( AudioSource.pitch, 0, AudioSource.pitch * 0.5f * Time.deltaTime );
+        //}
 
         // Update
         public void Update() {

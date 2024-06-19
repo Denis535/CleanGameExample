@@ -3,12 +3,9 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
     using Project.UI;
-    using Unity.Services.Authentication;
-    using Unity.Services.Core;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Framework;
@@ -46,30 +43,13 @@ namespace Project {
 #endif
 
         // Awake
-        protected override async void Awake() {
+        protected override void Awake() {
             base.Awake();
             VisualElementFactory.StringSelector = GetDisplayString;
             Application = new Application2( this );
             Router = new UIRouter( this );
             Screen = new UIScreen( this );
             Theme = new UITheme( this );
-            try {
-                {
-                    var options = new InitializationOptions();
-                    if (Application.Storage.Profile != null) options.SetProfile( Application.Storage.Profile );
-                    await UnityServices.InitializeAsync( options ).WaitAsync( destroyCancellationToken );
-                }
-                {
-                    var options = new SignInOptions();
-                    options.CreateAccount = true;
-                    await Application.AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( destroyCancellationToken );
-                }
-            } catch (OperationCanceledException) {
-            } catch (Exception ex) {
-                //var dialog = new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() );
-                //AddChild( dialog );
-                Debug.LogError( ex );
-            }
         }
         protected override void OnDestroy() {
             Theme.Dispose();
@@ -81,7 +61,7 @@ namespace Project {
 
         // Start
         protected override void Start() {
-            Router.LoadMainSceneAsync();
+            Router.LoadMainScene();
         }
         protected override void FixedUpdate() {
             Game?.FixedUpdate();

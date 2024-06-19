@@ -50,17 +50,16 @@ namespace Project.UI.GameScreen {
                 if (!widget.Game.Level.IsLast()) {
                     var view = new TotalsWidgetView_LevelCompleted();
                     view.OnContinue += evt => {
-                        widget.Router.LoadGameSceneAsync( widget.Game.Level.GetNext(), widget.Game.Player.Name, widget.Game.Player.Kind );
+                        widget.Router.LoadGameScene( widget.Game.Level.GetNext(), widget.Game.Player.Name, widget.Game.Player.Kind );
                     };
                     view.OnBack += evt => {
-                        var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync() ).OnCancel( "No", null );
-                        widget.AddChild( dialog );
+                        widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainScene() ).OnCancel( "No", null ) );
                     };
                     return view;
                 } else {
                     var view = new TotalsWidgetView_GameCompleted();
                     view.OnOkey += evt => {
-                        widget.Router.LoadMainSceneAsync();
+                        widget.Router.LoadMainScene();
                     };
                     return view;
                 }
@@ -68,11 +67,10 @@ namespace Project.UI.GameScreen {
             if (widget.Game.Player.State is PlayerState.Loser) {
                 var view = new TotalsWidgetView_LevelFailed();
                 view.OnRetry += evt => {
-                    widget.Router.LoadGameSceneAsync( widget.Game.Level, widget.Game.Player.Name, widget.Game.Player.Kind );
+                    widget.Router.LoadGameScene( widget.Game.Level, widget.Game.Player.Name, widget.Game.Player.Kind );
                 };
                 view.OnBack += evt => {
-                    var dialog = new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainSceneAsync() ).OnCancel( "No", null );
-                    widget.AddChild( dialog );
+                    widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.LoadMainScene() ).OnCancel( "No", null ) );
                 };
                 return view;
             }

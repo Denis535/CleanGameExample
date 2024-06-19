@@ -3,10 +3,13 @@ namespace Project.App {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Project.Entities;
     using Project.Entities.Characters;
     using Project.Entities.Things;
     using Unity.Services.Authentication;
+    using Unity.Services.Core;
     using UnityEngine;
     using UnityEngine.Framework.App;
 
@@ -38,6 +41,21 @@ namespace Project.App {
             AudioSettings.Dispose();
             Preferences.Dispose();
             base.Dispose();
+        }
+
+        // InitializeAsync
+        public async Task InitializeAsync(CancellationToken cancellationToken) {
+            cancellationToken = CancellationTokenSource.CreateLinkedTokenSource( DisposeCancellationToken, cancellationToken ).Token;
+            {
+                var options = new InitializationOptions();
+                if (Storage.Profile != null) options.SetProfile( Storage.Profile );
+                await UnityServices.InitializeAsync( options ).WaitAsync( cancellationToken );
+            }
+            {
+                var options = new SignInOptions();
+                options.CreateAccount = true;
+                await AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( cancellationToken );
+            }
         }
 
         // CreateGame

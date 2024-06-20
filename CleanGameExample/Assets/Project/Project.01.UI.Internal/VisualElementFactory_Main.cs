@@ -10,7 +10,7 @@ namespace Project.UI {
 
         // Main
         public static Widget Main(out Widget widget) {
-            using (VisualElementFactory.Widget( "main-widget" ).AsScope().Out( out widget )) {
+            using (VisualElementFactory.Widget( "main-widget" ).Classes( "main-widget-background" ).AsScope().Out( out widget )) {
                 return widget;
             }
         }

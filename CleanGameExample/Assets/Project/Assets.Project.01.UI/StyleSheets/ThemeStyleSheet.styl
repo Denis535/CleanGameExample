@@ -1,25 +1,19 @@
 @import "Packages/com.denis535.uitoolkit-theme-style-sheet/Runtime/UIToolkit.ThemeStyleSheet/Assets.UnityEngine.UIElements/StyleSheets/Internal/_Utils"
 
-// main-widget
-#main-widget
+// .main-widget-background
+.main-widget-background
     add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
 
-// game-widget
-#game-widget
-    add-view()
+// .loading-widget-background
+.loading-widget-background
+    add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
+    transition-property -unity-background-image-tint-color, translate, rotate, scale
+    transition-duration 10s
+    transition-timing-function ease
 
-// loading-widget
-#loading-widget
-    .background
-        add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
-        transition-property -unity-background-image-tint-color, translate, rotate, scale
-        transition-duration 10s
-        transition-timing-function ease
-
-// loading2-widget
-#loading2-widget
-    .background
-        add-view-background(black, null)
-        transition-property -unity-background-image-tint-color, translate, rotate, scale
-        transition-duration 10s
-        transition-timing-function ease
+// .unloading-widget-background
+.unloading-widget-background
+    add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
+    transition-property -unity-background-image-tint-color, translate, rotate, scale
+    transition-duration 1s
+    transition-timing-function ease

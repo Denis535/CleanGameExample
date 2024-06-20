@@ -23,9 +23,9 @@ namespace Project.Entities.Characters {
             Prefabs.Release();
         }
 
-        public static PlayerCharacter Create(PlayerCharacterKind kind, Vector3 position, Quaternion rotation) {
+        public static PlayerCharacter Create(PlayerCharacterType type, Vector3 position, Quaternion rotation) {
             using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) kind ], position, rotation );
+                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
             }
         }
 
@@ -53,5 +53,11 @@ namespace Project.Entities.Characters {
             }
         }
 
+    }
+    public enum PlayerCharacterType {
+        Gray,
+        Red,
+        Green,
+        Blue
     }
 }

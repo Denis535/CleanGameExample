@@ -133,15 +133,17 @@ namespace Project.UI {
         // Loading
         public static Widget Loading(out Widget widget, out VisualElement background, out Label loading) {
             using (VisualElementFactory.Widget( "loading-widget" ).AsScope().Out( out widget )) {
-                background = VisualElementFactory.VisualElement().Classes( "background", "position-absolute", "width-100pc", "height-100pc" );
+                background = VisualElementFactory.VisualElement().Classes( "loading-widget-background", "width-100pc", "height-100pc" );
                 loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" );
                 return widget;
             }
         }
-        public static Widget Loading2(out Widget widget, out VisualElement background, out Label loading) {
-            using (VisualElementFactory.Widget( "loading2-widget" ).AsScope().Out( out widget )) {
-                background = VisualElementFactory.VisualElement().Classes( "background", "position-absolute", "width-100pc", "height-100pc" );
-                loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" );
+
+        // Unloading
+        public static Widget Unloading(out Widget widget, out VisualElement background, out Label loading) {
+            using (VisualElementFactory.Widget( "unloading-widget" ).AsScope().Out( out widget )) {
+                background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" );
+                loading = VisualElementFactory.Label( "..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" );
                 return widget;
             }
         }

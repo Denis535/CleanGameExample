@@ -119,6 +119,7 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/VideoSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/AudioSettingsWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/Common/LoadingWidget.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI/Common/UnloadingWidget.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( "Widget.cs" ) )
                 // UI.Internal/
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/VisualElementFactory.cs" ) )
@@ -139,6 +140,7 @@ namespace Project {
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/VideoSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/AudioSettingsWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/LoadingWidgetView.cs" ) )
+                .ThenByDescending( i => i.path.EndsWith( ".UI.Internal/Common/UnloadingWidgetView.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( "View.cs" ) )
                 // App/
                 .ThenByDescending( i => i.name.Equals( "Application2.cs" ) )

@@ -10,12 +10,43 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public class Player : PlayerBase2<PlayerCharacterKind, PlayerState>, IPlayer {
+    public abstract class PlayerBase3 : PlayerBase2<PlayerKind, PlayerState>, IPlayer {
 
         // Deps
-        private Game Game { get; }
-        public Camera2 Camera { get; }
-        public PlayerCharacter? Character { get; internal set; }
+        public abstract Camera2 Camera { get; }
+        public abstract PlayerCharacter? Character { get; internal set; }
+
+        // Constructor
+        public PlayerBase3(IDependencyContainer container) : base( container ) {
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        // Update
+        public abstract void Update();
+
+        // Input
+        public abstract Vector3 GetLookTarget();
+        public abstract bool IsMovePressed(out Vector3 moveVector);
+        public abstract bool IsJumpPressed();
+        public abstract bool IsCrouchPressed();
+        public abstract bool IsAcceleratePressed();
+        public abstract bool IsFirePressed();
+        public abstract bool IsAimPressed();
+        public abstract bool IsInteractPressed(out MonoBehaviour? interactable);
+
+    }
+    public class Player : PlayerBase3 {
+
+        // Name
+        public override string Name { get; }
+        public override PlayerKind Kind { get; }
+        // State
+        public override PlayerState State { get => base.State; set => base.State = value; }
+        // Deps
+        public override Camera2 Camera { get; }
+        public override PlayerCharacter? Character { get; internal set; }
         // Input
         private InputActions_Player Input { get; }
         // Hit
@@ -40,10 +71,10 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(IDependencyContainer container, string name, PlayerCharacterKind kind, Game game, Camera2 camera) : base( container, name, kind ) {
-            Game = game;
+        public Player(IDependencyContainer container, string name, PlayerKind kind, Camera2 camera) : base( container ) {
+            Name = name;
+            Kind = kind;
             Camera = camera;
-            Character = null;
             Input = new InputActions_Player();
         }
         public override void Dispose() {
@@ -52,7 +83,7 @@ namespace Project.Entities {
         }
 
         // Update
-        public void Update() {
+        public override void Update() {
             {
                 Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
             }
@@ -66,15 +97,11 @@ namespace Project.Entities {
             }
         }
 
-        // OnStateChange
-        protected override void OnStateChange(PlayerState state) {
-        }
-
-        // IPlayer
-        Vector3 IPlayer.GetLookTarget() {
+        // Input
+        public override Vector3 GetLookTarget() {
             return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         }
-        bool IPlayer.IsMovePressed(out Vector3 moveVector) {
+        public override bool IsMovePressed(out Vector3 moveVector) {
             Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Player.Move.IsPressed()) {
                 var vector = (Vector3) Input.Player.Move.ReadValue<Vector2>();
@@ -85,27 +112,27 @@ namespace Project.Entities {
                 return false;
             }
         }
-        bool IPlayer.IsJumpPressed() {
+        public override bool IsJumpPressed() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Player.Jump.IsPressed();
         }
-        bool IPlayer.IsCrouchPressed() {
+        public override bool IsCrouchPressed() {
             Assert.Operation.Message( $"Method 'IsCrouchPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Player.Crouch.IsPressed();
         }
-        bool IPlayer.IsAcceleratePressed() {
+        public override bool IsAcceleratePressed() {
             Assert.Operation.Message( $"Method 'IsAcceleratePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Player.Accelerate.IsPressed();
         }
-        bool IPlayer.IsFirePressed() {
+        public override bool IsFirePressed() {
             Assert.Operation.Message( $"Method 'IsFirePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Player.Fire.IsPressed();
         }
-        bool IPlayer.IsAimPressed() {
+        public override bool IsAimPressed() {
             Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             return Input.Player.Aim.IsPressed();
         }
-        bool IPlayer.IsInteractPressed(out MonoBehaviour? interactable) {
+        public override bool IsInteractPressed(out MonoBehaviour? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             interactable = (MonoBehaviour?) Enemy ?? Thing;
             return Input.Player.Interact.WasPressedThisFrame();
@@ -122,6 +149,14 @@ namespace Project.Entities {
         }
 
     }
+    // PlayerKind
+    public enum PlayerKind {
+        Gray,
+        Red,
+        Green,
+        Blue
+    }
+    // PlayerState
     public enum PlayerState {
         Playing,
         Winner,

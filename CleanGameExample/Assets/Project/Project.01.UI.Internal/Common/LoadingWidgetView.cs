@@ -23,7 +23,7 @@ namespace Project.UI.Common {
                 background.style.unityBackgroundImageTintColor = Color.black;
                 background.style.translate = new Translate( 0, 0 );
                 background.style.rotate = new Rotate( Angle.Degrees( 45 ) );
-                background.style.scale = new Scale( new Vector3( 5.0f, 5.0f, 1 ) );
+                background.style.scale = new Scale( new Vector3( 5, 5, 1 ) );
             } );
             loading.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
@@ -46,7 +46,7 @@ namespace Project.UI.Common {
             var builder = new StringBuilder();
             var text = "Loading...";
             for (var i = 0; i < text.Length; i++) {
-                var i01 = (float) i / (text.Length - 1);
+                var i01 = Mathf.InverseLerp( 0, text.Length - 1, i );
                 var a = Mathf.LerpUnclamped( 0f, 0.75f, i01 - t * 1.5f );
                 a = Mathf.PingPong( a, 1 );
                 a = Mathf.Pow( a, 3 );

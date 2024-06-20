@@ -6,7 +6,6 @@ namespace Project.UI {
     using System.Threading.Tasks;
     using Project.App;
     using Project.Entities;
-    using Project.Entities.Characters;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
@@ -63,8 +62,8 @@ namespace Project.UI {
         }
 
         // LoadGameScene
-        public async void LoadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
-            Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", level, name, kind );
+        public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+            Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 Screen.ShowLoadingWidget();
                 {
@@ -72,8 +71,8 @@ namespace Project.UI {
                     await UnloadSceneAsync_Main();
                     // Load
                     await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldAddress( level ) );
-                    Application.CreateGame( level, name, kind );
+                    await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
+                    Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 //Theme.PlayGameThemes();
                 Screen.ShowGameWidget();
@@ -81,11 +80,11 @@ namespace Project.UI {
         }
 
         // ReloadGameScene
-        public async void ReloadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
-            Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", level, name, kind );
+        public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+            Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.ShowLoading2Widget();
+                Screen.ShowLoadingWidget();
                 {
                     // Unload
                     Application.DestroyGame();
@@ -93,8 +92,8 @@ namespace Project.UI {
                     await UnloadSceneAsync_Game();
                     // Load
                     await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldAddress( level ) );
-                    Application.CreateGame( level, name, kind );
+                    await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
+                    Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 //Theme.PlayGameThemes();
                 Screen.ShowGameWidget();
@@ -106,7 +105,7 @@ namespace Project.UI {
             Release.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.ShowLoading2Widget();
+                Screen.ShowUnloadingWidget();
                 {
                     // Unload
                     Application.DestroyGame();
@@ -125,7 +124,7 @@ namespace Project.UI {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.Hide();
+                Screen.ShowUnloadingWidget();
                 if (Application.Game != null) Application.DestroyGame();
                 if (WorldScene != null) await UnloadSceneAsync_World();
                 if (GameScene.IsValid) await UnloadSceneAsync_Game();
@@ -174,7 +173,7 @@ namespace Project.UI {
             WorldScene = null;
         }
         // Helpers
-        private static string GetWorldAddress(GameLevel level) {
+        private static string GetWorldSceneAddress(GameLevel level) {
             switch (level) {
                 case GameLevel.Level1: return R.Project.Entities.Worlds.Value_World_01;
                 case GameLevel.Level2: return R.Project.Entities.Worlds.Value_World_02;

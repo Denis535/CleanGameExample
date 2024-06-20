@@ -6,13 +6,13 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
     
-    public class Loading2Widget : UIWidgetBase2<Loading2WidgetView> {
+    public class UnloadingWidget : UIWidgetBase2<UnloadingWidgetView> {
 
         // View
-        public override Loading2WidgetView View { get; }
+        public override UnloadingWidgetView View { get; }
 
         // Constructor
-        public Loading2Widget(IDependencyContainer container) : base( container ) {
+        public UnloadingWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
         }
         public override void Dispose() {
@@ -38,8 +38,8 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static Loading2WidgetView CreateView(Loading2Widget widget) {
-            var view = new Loading2WidgetView();
+        private static UnloadingWidgetView CreateView(UnloadingWidget widget) {
+            var view = new UnloadingWidgetView();
             return view;
         }
 

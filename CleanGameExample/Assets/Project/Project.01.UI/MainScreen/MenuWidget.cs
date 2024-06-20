@@ -107,16 +107,16 @@ namespace Project.UI.MainScreen {
         private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
             var view = new MenuWidgetView_SelectCharacter();
             view.OnGray += evt => {
-                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Gray );
+                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerKind.Gray );
             };
             view.OnRed += evt => {
-                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Red );
+                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerKind.Red );
             };
             view.OnGreen += evt => {
-                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Green );
+                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerKind.Green );
             };
             view.OnBlue += evt => {
-                widget.Router.LoadGameScene( level, widget.ProfileSettings.Name, PlayerCharacterKind.Blue );
+                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerKind.Blue );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );

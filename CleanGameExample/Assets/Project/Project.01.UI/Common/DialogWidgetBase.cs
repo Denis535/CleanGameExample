@@ -6,14 +6,10 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
-    public abstract class DialogWidgetBase<TView> : UIWidgetBase<TView> where TView : DialogWidgetViewBase {
-
-        // View
-        public override TView View { get; }
+    public abstract class DialogWidgetBase : UIWidgetBase<DialogWidgetViewBase> {
 
         // Constructor
-        public DialogWidgetBase(TView view) {
-            View = view;
+        public DialogWidgetBase() {
         }
         public override void Dispose() {
             base.Dispose();
@@ -38,14 +34,14 @@ namespace Project.UI.Common {
         }
 
         // OnSubmit
-        public DialogWidgetBase<TView> OnSubmit(string text, Action? callback) {
+        public DialogWidgetBase OnSubmit(string text, Action? callback) {
             View.OnSubmit( text, () => {
                 callback?.Invoke();
                 if (State is UIWidgetState.Active) RemoveSelf();
             } );
             return this;
         }
-        public DialogWidgetBase<TView> OnCancel(string text, Action? callback) {
+        public DialogWidgetBase OnCancel(string text, Action? callback) {
             View.OnCancel( text, () => {
                 callback?.Invoke();
                 if (State is UIWidgetState.Active) RemoveSelf();
@@ -55,10 +51,14 @@ namespace Project.UI.Common {
 
     }
     // Dialog
-    public class DialogWidget : DialogWidgetBase<DialogWidgetView> {
+    public class DialogWidget : DialogWidgetBase {
+
+        // View
+        public override DialogWidgetViewBase View { get; }
 
         // Constructor
-        public DialogWidget(string? title, string? message) : base( new DialogWidgetView() ) {
+        public DialogWidget(string? title, string? message) {
+            View = new DialogWidgetView();
             View.Title = title;
             View.Message = message;
         }
@@ -76,10 +76,14 @@ namespace Project.UI.Common {
 
     }
     // InfoDialog
-    public class InfoDialogWidget : DialogWidgetBase<InfoDialogWidgetView> {
+    public class InfoDialogWidget : DialogWidgetBase {
+
+        // View
+        public override DialogWidgetViewBase View { get; }
 
         // Constructor
-        public InfoDialogWidget(string? title, string? message) : base( new InfoDialogWidgetView() ) {
+        public InfoDialogWidget(string? title, string? message) {
+            View = new InfoDialogWidgetView();
             View.Title = title;
             View.Message = message;
         }
@@ -97,10 +101,14 @@ namespace Project.UI.Common {
 
     }
     // WarningDialog
-    public class WarningDialogWidget : DialogWidgetBase<WarningDialogWidgetView> {
+    public class WarningDialogWidget : DialogWidgetBase {
+
+        // View
+        public override DialogWidgetViewBase View { get; }
 
         // Constructor
-        public WarningDialogWidget(string? title, string? message) : base( new WarningDialogWidgetView() ) {
+        public WarningDialogWidget(string? title, string? message) {
+            View = new WarningDialogWidgetView();
             View.Title = title;
             View.Message = message;
         }
@@ -118,10 +126,14 @@ namespace Project.UI.Common {
 
     }
     // ErrorDialog
-    public class ErrorDialogWidget : DialogWidgetBase<ErrorDialogWidgetView> {
+    public class ErrorDialogWidget : DialogWidgetBase {
+
+        // View
+        public override DialogWidgetViewBase View { get; }
 
         // Constructor
-        public ErrorDialogWidget(string? title, string? message) : base( new ErrorDialogWidgetView() ) {
+        public ErrorDialogWidget(string? title, string? message) {
+            View = new ErrorDialogWidgetView();
             View.Title = title;
             View.Message = message;
         }

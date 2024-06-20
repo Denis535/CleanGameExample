@@ -85,7 +85,7 @@ namespace Project.UI {
             Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.ShowLoadingWidget();
+                Screen.ShowLoading2Widget();
                 {
                     // Unload
                     Application.DestroyGame();
@@ -106,7 +106,7 @@ namespace Project.UI {
             Release.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.ShowLoadingWidget();
+                Screen.ShowLoading2Widget();
                 {
                     // Unload
                     Application.DestroyGame();

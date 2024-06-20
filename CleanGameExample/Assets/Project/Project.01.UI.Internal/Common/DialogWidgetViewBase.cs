@@ -10,13 +10,13 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase {
 
-        private readonly Widget widget;
-        private readonly Card card;
-        private readonly Header header;
-        private readonly Content content;
-        private readonly Footer footer;
-        private readonly Label title;
-        private readonly Label message;
+        protected Widget widget = default!;
+        protected Card card = default!;
+        protected Header header = default!;
+        protected Content content = default!;
+        protected Footer footer = default!;
+        protected Label title = default!;
+        protected Label message = default!;
 
         // Props
         public string? Title {
@@ -36,11 +36,6 @@ namespace Project.UI.Common {
 
         // Constructor
         public DialogWidgetViewBase() {
-            VisualElement = CreateVisualElement( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
-            header.SetDisplayed( false );
-            content.SetDisplayed( false );
-            footer.SetDisplayed( false );
         }
         public override void Dispose() {
             base.Dispose();
@@ -69,23 +64,7 @@ namespace Project.UI.Common {
         }
 
         // Helpers
-        private static VisualElement CreateVisualElement(DialogWidgetViewBase view, out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
-            if (view is DialogWidgetView) {
-                return VisualElementFactory_Common.Dialog( out widget, out card, out header, out content, out footer, out title, out message );
-            }
-            if (view is InfoDialogWidgetView) {
-                return VisualElementFactory_Common.InfoDialog( out widget, out card, out header, out content, out footer, out title, out message );
-            }
-            if (view is WarningDialogWidgetView) {
-                return VisualElementFactory_Common.WarningDialog( out widget, out card, out header, out content, out footer, out title, out message );
-            }
-            if (view is ErrorDialogWidgetView) {
-                return VisualElementFactory_Common.ErrorDialog( out widget, out card, out header, out content, out footer, out title, out message );
-            }
-            throw Exceptions.Internal.NotSupported( $"DialogWidgetViewBase {view} is not supported" );
-        }
-        // Helpers
-        private static void PlayAnimation(AttachToPanelEvent evt) {
+        protected static void PlayAnimation(AttachToPanelEvent evt) {
             var target = (VisualElement) evt.target;
             var animation = ValueAnimation<float>.Create( target, Mathf.LerpUnclamped );
             animation.valueUpdated = (view, t) => {
@@ -107,9 +86,16 @@ namespace Project.UI.Common {
 
         // Constructor
         public DialogWidgetView() {
+            VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
+            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // Helpers
+        private static VisualElement CreateVisualElement(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            return VisualElementFactory_Common.Dialog( out widget, out card, out header, out content, out footer, out title, out message );
         }
 
     }
@@ -118,9 +104,16 @@ namespace Project.UI.Common {
 
         // Constructor
         public InfoDialogWidgetView() {
+            VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
+            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // Helpers
+        private static VisualElement CreateVisualElement(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            return VisualElementFactory_Common.InfoDialog( out widget, out card, out header, out content, out footer, out title, out message );
         }
 
     }
@@ -129,9 +122,16 @@ namespace Project.UI.Common {
 
         // Constructor
         public WarningDialogWidgetView() {
+            VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
+            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // Helpers
+        private static VisualElement CreateVisualElement(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            return VisualElementFactory_Common.WarningDialog( out widget, out card, out header, out content, out footer, out title, out message );
         }
 
     }
@@ -140,9 +140,16 @@ namespace Project.UI.Common {
 
         // Constructor
         public ErrorDialogWidgetView() {
+            VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
+            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        // Helpers
+        private static VisualElement CreateVisualElement(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
+            return VisualElementFactory_Common.ErrorDialog( out widget, out card, out header, out content, out footer, out title, out message );
         }
 
     }

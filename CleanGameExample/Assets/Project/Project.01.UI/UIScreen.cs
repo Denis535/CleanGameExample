@@ -34,19 +34,23 @@ namespace Project.UI {
 
         // ShowWidget
         public void ShowMainWidget() {
-            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
+            Widget.RemoveChildren( i => i is not DialogWidgetBase );
             Widget.AddChild( new MainWidget( Container ) );
         }
         public void ShowGameWidget() {
-            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
+            Widget.RemoveChildren( i => i is not DialogWidgetBase );
             Widget.AddChild( new GameWidget( Container ) );
         }
         public void ShowLoadingWidget() {
-            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
+            Widget.RemoveChildren( i => i is not DialogWidgetBase );
             Widget.AddChild( new LoadingWidget( Container ) );
         }
+        public void ShowLoading2Widget() {
+            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+            Widget.AddChild( new Loading2Widget( Container ) );
+        }
         public void Hide() {
-            Widget.RemoveChildren( i => i is MainWidget or GameWidget or LoadingWidget );
+            Widget.RemoveChildren( i => i is not DialogWidgetBase );
         }
 
         // Update

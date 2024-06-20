@@ -12,11 +12,19 @@ namespace Project.UI.Common {
     public class LoadingWidgetView : UIViewBase {
 
         private readonly Widget widget;
+        private readonly VisualElement background;
         private readonly Label loading;
 
         // Constructor
         public LoadingWidgetView() {
-            VisualElement = VisualElementFactory_Main.Loading( out widget, out loading );
+            VisualElement = VisualElementFactory_Main.Loading( out widget, out background, out loading );
+            background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
+                await Awaitable.NextFrameAsync( DisposeCancellationToken );
+                background.style.unityBackgroundImageTintColor = Color.black;
+                background.style.translate = new Translate( 0, 0 );
+                background.style.rotate = new Rotate( Angle.Degrees( 45 ) );
+                background.style.scale = new Scale( new Vector3( 5.0f, 5.0f, 1 ) );
+            } );
             loading.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {

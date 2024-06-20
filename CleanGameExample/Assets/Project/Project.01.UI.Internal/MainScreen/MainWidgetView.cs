@@ -11,16 +11,6 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
-        // Props
-        public (Color Color, Vector2 Translate, float Rotate, float Scale) Effect {
-            set {
-                widget.style.unityBackgroundImageTintColor = value.Color;
-                widget.style.translate = new Translate( value.Translate.x, value.Translate.y );
-                widget.style.rotate = new Rotate( Angle.Degrees( value.Rotate ) );
-                widget.style.scale = new Scale( new Vector3( value.Scale, value.Scale, 1 ) );
-            }
-        }
-
         // Constructor
         public MainWidgetView() {
             VisualElement = VisualElementFactory_Main.Main( out widget );

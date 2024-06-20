@@ -36,7 +36,9 @@ namespace Project.UI {
             Application = container.RequireDependency<Application2>();
         }
         public override void Dispose() {
-            base.Dispose();
+            using (@lock.Enter()) {
+                base.Dispose();
+            }
         }
 
         // LoadStartup
@@ -51,10 +53,12 @@ namespace Project.UI {
         public async void LoadMainScene() {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
-                // Load
+                //Theme.PlayMainThemes();
                 Screen.ShowMainWidget();
-                Theme.PlayMainThemes();
-                await LoadSceneAsync_Main();
+                {
+                    // Load
+                    await LoadSceneAsync_Main();
+                }
             }
         }
 
@@ -62,14 +66,17 @@ namespace Project.UI {
         public async void LoadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
             Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
-                // Unload
-                await UnloadSceneAsync_Main();
-                // Load
-                await LoadSceneAsync_Game();
-                await LoadSceneAsync_World( GetWorldAddress( level ) );
-                Application.CreateGame( level, name, kind );
+                Screen.ShowLoadingWidget();
+                {
+                    // Unload
+                    await UnloadSceneAsync_Main();
+                    // Load
+                    await LoadSceneAsync_Game();
+                    await LoadSceneAsync_World( GetWorldAddress( level ) );
+                    Application.CreateGame( level, name, kind );
+                }
+                //Theme.PlayGameThemes();
                 Screen.ShowGameWidget();
-                Theme.PlayGameThemes();
             }
         }
 
@@ -77,18 +84,20 @@ namespace Project.UI {
         public async void ReloadGameScene(GameLevel level, string name, PlayerCharacterKind kind) {
             Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", level, name, kind );
             using (@lock.Enter()) {
-                // Unload
-                Theme.Stop();
-                Screen.Hide();
-                Application.DestroyGame();
-                await UnloadSceneAsync_World();
-                await UnloadSceneAsync_Game();
-                // Load
-                await LoadSceneAsync_Game();
-                await LoadSceneAsync_World( GetWorldAddress( level ) );
-                Application.CreateGame( level, name, kind );
+                //Theme.Stop();
+                Screen.ShowLoadingWidget();
+                {
+                    // Unload
+                    Application.DestroyGame();
+                    await UnloadSceneAsync_World();
+                    await UnloadSceneAsync_Game();
+                    // Load
+                    await LoadSceneAsync_Game();
+                    await LoadSceneAsync_World( GetWorldAddress( level ) );
+                    Application.CreateGame( level, name, kind );
+                }
+                //Theme.PlayGameThemes();
                 Screen.ShowGameWidget();
-                Theme.PlayGameThemes();
             }
         }
 
@@ -96,16 +105,18 @@ namespace Project.UI {
         public async void UnloadGameScene() {
             Release.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
-                // Unload
-                Theme.Stop();
-                Screen.Hide();
-                Application.DestroyGame();
-                await UnloadSceneAsync_World();
-                await UnloadSceneAsync_Game();
-                // Load
+                //Theme.Stop();
+                Screen.ShowLoadingWidget();
+                {
+                    // Unload
+                    Application.DestroyGame();
+                    await UnloadSceneAsync_World();
+                    await UnloadSceneAsync_Game();
+                    // Load
+                    await LoadSceneAsync_Main();
+                }
+                //Theme.PlayMainThemes();
                 Screen.ShowMainWidget();
-                Theme.PlayMainThemes();
-                await LoadSceneAsync_Main();
             }
         }
 
@@ -113,7 +124,7 @@ namespace Project.UI {
         public async void Quit() {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
-                Theme.Stop();
+                //Theme.Stop();
                 Screen.Hide();
                 if (Application.Game != null) Application.DestroyGame();
                 if (WorldScene != null) await UnloadSceneAsync_World();
@@ -134,6 +145,7 @@ namespace Project.UI {
             SceneManager.SetActiveScene( await Startup.GetValueAsync() );
         }
         private async Task LoadSceneAsync_Main() {
+            await Task.Delay( 1_000 );
             await MainScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await MainScene.ActivateAsync();
             SceneManager.SetActiveScene( await MainScene.GetValueAsync() );

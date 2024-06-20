@@ -4,7 +4,6 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.UI;
@@ -61,7 +60,7 @@ namespace Project.UI.GameScreen {
         private async void OnGameStateChange(GameState state) {
             try {
                 if (state is GameState.Completed) {
-                    await Task.Delay( 2000 ).WaitAsync( DisposeCancellationToken );
+                    await Awaitable.WaitForSecondsAsync( 2, DisposeCancellationToken );
                     AddChild( new TotalsWidget( Container ) );
                 }
             } catch (OperationCanceledException) {

@@ -10,8 +10,23 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class PlayerBase3 : PlayerBase2<PlayerKind, PlayerState>, IPlayer {
+    public abstract class PlayerBase3 : PlayerBase2, IPlayer {
 
+        private PlayerState state;
+
+        // Name
+        public abstract string Name { get; }
+        public abstract PlayerKind Kind { get; }
+        // State
+        public virtual PlayerState State {
+            get => state;
+            internal set {
+                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
+                state = value;
+                OnStateChangeEvent?.Invoke( state );
+            }
+        }
+        public event Action<PlayerState>? OnStateChangeEvent;
         // Deps
         public abstract Camera2 Camera { get; }
         public abstract PlayerCharacter? Character { get; internal set; }
@@ -43,7 +58,7 @@ namespace Project.Entities {
         public override string Name { get; }
         public override PlayerKind Kind { get; }
         // State
-        public override PlayerState State { get => base.State; set => base.State = value; }
+        public override PlayerState State { get => base.State; internal set => base.State = value; }
         // Deps
         public override Camera2 Camera { get; }
         public override PlayerCharacter? Character { get; internal set; }

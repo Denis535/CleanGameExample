@@ -11,16 +11,36 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class GameBase3 : GameBase2<GameMode, GameLevel, GameState>, IGame {
+    public abstract class GameBase3 : GameBase2, IGame {
 
+        private GameState state;
+
+        // Name
+        public abstract string Name { get; }
+        public abstract GameMode Mode { get; }
+        public abstract GameLevel Level { get; }
+        // State
+        public virtual GameState State {
+            get => state;
+            protected set {
+                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
+                state = value;
+                OnStateChangeEvent?.Invoke( state );
+            }
+        }
+        public event Action<GameState>? OnStateChangeEvent;
         // Deps
         public abstract Player Player { get; }
         public abstract World World { get; }
 
         // Constructor
         public GameBase3(IDependencyContainer container) : base( container ) {
+            OnPauseEvent += value => {
+                Time.timeScale = value ? 0f : 1f;
+            };
         }
         public override void Dispose() {
+            Time.timeScale = 1f;
             base.Dispose();
         }
 
@@ -45,7 +65,7 @@ namespace Project.Entities {
         public override GameMode Mode { get; }
         public override GameLevel Level { get; }
         // State
-        public override GameState State { get => base.State; set => base.State = value; }
+        public override GameState State { get => base.State; protected set => base.State = value; }
         // Deps
         public override Player Player { get; }
         public override World World { get; }
@@ -59,9 +79,6 @@ namespace Project.Entities {
             Name = gameName;
             Mode = gameMode;
             Level = gameLevel;
-            OnPauseChangeEvent += value => {
-                Time.timeScale = value ? 0f : 1f;
-            };
             Player = new Player( container, playerName, playerKind, CameraFactory.Camera() );
             World = container.RequireDependency<World>();
             Input = new InputActions_Game();
@@ -80,7 +97,6 @@ namespace Project.Entities {
         public override void Dispose() {
             Input.Dispose();
             Player.Dispose();
-            Time.timeScale = 1f;
             base.Dispose();
         }
 

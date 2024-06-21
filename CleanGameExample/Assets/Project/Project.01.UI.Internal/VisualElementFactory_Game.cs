@@ -10,7 +10,7 @@ namespace Project.UI {
 
         // Game
         public static Widget Game(out Widget widget, out VisualElement target) {
-            using (VisualElementFactory.Widget( "game-widget" ).AsScope().Out( out widget )) {
+            using (VisualElementFactory.Widget( "game-widget" ).Pipe( i => i.focusable = true ).AsScope().Out( out widget )) {
                 target = VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) );

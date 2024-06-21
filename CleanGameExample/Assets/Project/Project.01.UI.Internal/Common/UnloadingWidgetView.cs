@@ -12,11 +12,10 @@ namespace Project.UI.Common {
 
         private readonly Widget widget;
         private readonly VisualElement background;
-        private readonly Label loading;
 
         // Constructor
         public UnloadingWidgetView() {
-            VisualElement = VisualElementFactory_Common.Unloading( out widget, out background, out loading );
+            VisualElement = VisualElementFactory_Common.Unloading( out widget, out background );
             background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
                 background.style.unityBackgroundImageTintColor = Color.gray;
                 background.style.translate = new Translate( 0, 0 );

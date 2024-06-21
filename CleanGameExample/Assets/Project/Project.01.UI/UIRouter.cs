@@ -124,11 +124,19 @@ namespace Project.UI {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
                 //Theme.Stop();
-                Screen.ShowUnloadingWidget();
-                if (Application.Game != null) Application.DestroyGame();
-                if (WorldScene != null) await UnloadSceneAsync_World();
-                if (GameScene.IsValid) await UnloadSceneAsync_Game();
-                if (MainScene.IsValid) await UnloadSceneAsync_Main();
+                Screen.Hide();
+                if (Application.Game != null) {
+                    Application.DestroyGame();
+                }
+                if (WorldScene != null) {
+                    await UnloadSceneAsync_World();
+                }
+                if (GameScene.IsValid) {
+                    await UnloadSceneAsync_Game();
+                }
+                if (MainScene.IsValid) {
+                    await UnloadSceneAsync_Main();
+                }
             }
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();

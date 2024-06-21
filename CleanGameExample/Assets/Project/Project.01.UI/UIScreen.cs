@@ -98,12 +98,10 @@ namespace Project.UI {
         }
         protected static new void OnCancel(NavigationCancelEvent evt) {
             var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().OfType<Widget>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault();
-            if (widget.GetView() is not TotalsWidgetView) {
-                var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
-                if (button != null) {
-                    Click( button );
-                    evt.StopPropagation();
-                }
+            var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
+            if (button != null) {
+                Click( button );
+                evt.StopPropagation();
             }
         }
         // Helpers

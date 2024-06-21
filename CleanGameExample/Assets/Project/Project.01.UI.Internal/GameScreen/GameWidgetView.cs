@@ -32,19 +32,29 @@ namespace Project.UI.GameScreen {
                 }
             }
         }
+        // Events
+        public event EventCallback<NavigationCancelEvent> OnCancel {
+            add => widget.RegisterCallback( value );
+            remove => widget.UnregisterCallback( value );
+        }
         // Input
         private InputActions_UI Input { get; }
-        public bool IsInputEnabled {
-            get => Input.asset.enabled;
-            set => Input.SetEnabled( value );
-        }
-        public bool IsSubmitPressed => Input.UI.Submit.WasPerformedThisFrame();
-        public bool IsCancelPressed => Input.UI.Cancel.WasPerformedThisFrame();
 
         // Constructor
         public GameWidgetView() {
             VisualElement = VisualElementFactory_Game.Game( out widget, out target );
+            widget.RegisterCallback<AttachToPanelEvent>( evt => {
+                Input!.Enable();
+            } );
+            widget.UnregisterCallback<DetachFromPanelEvent>( evt => {
+                Input!.Disable();
+            } );
             Input = new InputActions_UI();
+            Input.UI.Cancel.performed += ctx => {
+                if (widget.focusController.focusedElement == null) {
+                    widget.Focus();
+                }
+            };
         }
         public override void Dispose() {
             Input.Dispose();

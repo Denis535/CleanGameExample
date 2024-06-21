@@ -140,10 +140,9 @@ namespace Project.UI {
         }
 
         // Unloading
-        public static Widget Unloading(out Widget widget, out VisualElement background, out Label loading) {
+        public static Widget Unloading(out Widget widget, out VisualElement background) {
             using (VisualElementFactory.Widget( "unloading-widget" ).AsScope().Out( out widget )) {
                 background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" );
-                loading = VisualElementFactory.Label( "..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" );
                 return widget;
             }
         }

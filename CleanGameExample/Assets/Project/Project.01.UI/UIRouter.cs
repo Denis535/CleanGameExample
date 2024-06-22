@@ -124,8 +124,8 @@ namespace Project.UI {
         public async void Quit() {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
-                Theme.Stop();
-                Screen.Hide();
+                Theme.StopTheme();
+                Screen.HideWidget();
                 if (Application.Game != null) {
                     Application.DestroyGame();
                 }

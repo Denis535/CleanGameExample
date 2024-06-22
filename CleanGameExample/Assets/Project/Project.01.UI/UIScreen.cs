@@ -49,7 +49,7 @@ namespace Project.UI {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
             Widget.AddChild( new UnloadingWidget( Container ) );
         }
-        public void Hide() {
+        public void HideWidget() {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
         }
 

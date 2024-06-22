@@ -8,7 +8,7 @@ namespace Project.UI.Common {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class SettingsWidgetView : UIViewBase {
+    public class SettingsWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
         private readonly Label title;

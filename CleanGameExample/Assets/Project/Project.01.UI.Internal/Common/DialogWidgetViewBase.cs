@@ -8,7 +8,7 @@ namespace Project.UI.Common {
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public abstract class DialogWidgetViewBase : UIViewBase {
+    public abstract class DialogWidgetViewBase : UIViewBase2 {
 
         protected Widget widget = default!;
         protected Card card = default!;

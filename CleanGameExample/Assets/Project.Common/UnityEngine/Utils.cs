@@ -78,29 +78,29 @@ namespace UnityEngine {
     public static class UIViewExtensions {
 
         // IsAttached
-        public static bool IsAttached(this UIViewBase view) {
+        public static bool IsAttached(this UIViewBase2 view) {
             return view.__GetVisualElement__().panel != null;
         }
 
         // IsEnabledSelf
-        public static bool IsEnabledSelf(this UIViewBase view) {
+        public static bool IsEnabledSelf(this UIViewBase2 view) {
             return view.__GetVisualElement__().enabledSelf;
         }
-        public static bool IsEnabledInHierarchy(this UIViewBase view) {
+        public static bool IsEnabledInHierarchy(this UIViewBase2 view) {
             return view.__GetVisualElement__().enabledInHierarchy;
         }
-        public static void SetEnabled(this UIViewBase view, bool value) {
+        public static void SetEnabled(this UIViewBase2 view, bool value) {
             view.__GetVisualElement__().SetEnabled( value );
         }
 
         // IsDisplayedSelf
-        public static bool IsDisplayedSelf(this UIViewBase view) {
+        public static bool IsDisplayedSelf(this UIViewBase2 view) {
             return view.__GetVisualElement__().IsDisplayedSelf();
         }
-        public static bool IsDisplayedInHierarchy(this UIViewBase view) {
+        public static bool IsDisplayedInHierarchy(this UIViewBase2 view) {
             return view.__GetVisualElement__().IsDisplayedInHierarchy();
         }
-        public static void SetDisplayed(this UIViewBase view, bool value) {
+        public static void SetDisplayed(this UIViewBase2 view, bool value) {
             view.__GetVisualElement__().SetDisplayed( value );
         }
 

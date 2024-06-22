@@ -7,7 +7,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MainWidgetView : UIViewBase {
+    public class MainWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
 

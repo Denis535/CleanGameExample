@@ -7,7 +7,7 @@ namespace Project.UI.Common {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class VideoSettingsWidgetView : UIViewBase {
+    public class VideoSettingsWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
         private readonly Toggle isFullScreen;

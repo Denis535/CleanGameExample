@@ -7,7 +7,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class MenuWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
         private readonly Label title;

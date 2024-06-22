@@ -8,7 +8,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
 
-    public class GameWidgetView : UIViewBase {
+    public class GameWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
         private readonly VisualElement target;

@@ -52,7 +52,7 @@ namespace Project.UI {
         public async void LoadMainScene() {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
-                //Theme.PlayMainThemes();
+                Theme.PlayMainTheme();
                 Screen.ShowMainWidget();
                 {
                     // Load
@@ -65,6 +65,7 @@ namespace Project.UI {
         public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
             Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
+                Theme.PlayLoadingTheme();
                 Screen.ShowLoadingWidget();
                 {
                     // Unload
@@ -74,7 +75,7 @@ namespace Project.UI {
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
                     Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
-                //Theme.PlayGameThemes();
+                Theme.PlayGameTheme();
                 Screen.ShowGameWidget();
             }
         }
@@ -83,7 +84,7 @@ namespace Project.UI {
         public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
             Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
-                //Theme.Stop();
+                Theme.PlayLoadingTheme();
                 Screen.ShowLoadingWidget();
                 {
                     // Unload
@@ -95,7 +96,7 @@ namespace Project.UI {
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
                     Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
-                //Theme.PlayGameThemes();
+                Theme.PlayGameTheme();
                 Screen.ShowGameWidget();
             }
         }
@@ -104,7 +105,7 @@ namespace Project.UI {
         public async void UnloadGameScene() {
             Release.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
-                //Theme.Stop();
+                Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingWidget();
                 {
                     // Unload
@@ -114,7 +115,7 @@ namespace Project.UI {
                     // Load
                     await LoadSceneAsync_Main();
                 }
-                //Theme.PlayMainThemes();
+                Theme.PlayMainTheme();
                 Screen.ShowMainWidget();
             }
         }
@@ -123,7 +124,7 @@ namespace Project.UI {
         public async void Quit() {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
-                //Theme.Stop();
+                Theme.Stop();
                 Screen.Hide();
                 if (Application.Game != null) {
                     Application.DestroyGame();

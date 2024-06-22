@@ -8,7 +8,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class MenuWidgetView : UIViewBase2 {
 
         private readonly Widget widget;
         private readonly Label title;
@@ -27,19 +27,19 @@ namespace Project.UI.MainScreen {
         }
 
         // AddView
-        public void AddView(UIViewBase view) {
+        public void AddView(UIViewBase2 view) {
             views.Add( view );
             Recalculate( views.Children2().ToArray() );
             title.text = GetTitle( views.Children2().Last() );
         }
-        public void RemoveView(UIViewBase view) {
+        public void RemoveView(UIViewBase2 view) {
             views.Remove( view );
             Recalculate( views.Children2().ToArray() );
             title.text = GetTitle( views.Children2().Last() );
         }
 
         // Helpers
-        private static void Recalculate(UIViewBase[] views) {
+        private static void Recalculate(UIViewBase2[] views) {
             foreach (var view in views) {
                 if (view.HasFocusedElement()) {
                     view.SaveFocus();
@@ -81,7 +81,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_Menu : UIViewBase {
+    public class MenuWidgetView_Menu : UIViewBase2 {
 
         private readonly ColumnScope scope;
         private readonly Button startGame;
@@ -111,7 +111,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_StartGame : UIViewBase {
+    public class MenuWidgetView_StartGame : UIViewBase2 {
 
         private readonly ColumnScope scope;
         private readonly Button newGame;
@@ -141,7 +141,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectLevel : UIViewBase {
+    public class MenuWidgetView_SelectLevel : UIViewBase2 {
 
         private readonly ColumnScope scope;
         private readonly Button level1;
@@ -176,7 +176,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectCharacter : UIViewBase {
+    public class MenuWidgetView_SelectCharacter : UIViewBase2 {
 
         private readonly ColumnScope scope;
         private readonly Button gray;

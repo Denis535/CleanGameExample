@@ -15,7 +15,7 @@ namespace Project.UI {
 
         // Constructor
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
-            AddWidget( new RootWidget() );
+            AddWidget( new RootWidget( container ) );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -74,7 +74,7 @@ namespace Project.UI {
         public override RootWidgetView View { get; }
 
         // Constructor
-        public RootWidget() {
+        public RootWidget(IDependencyContainer container) : base( container ) {
             View = CreateView();
         }
         public override void Dispose() {
@@ -134,13 +134,13 @@ namespace Project.UI {
         protected override void Recalculate(VisualElement widget) {
             base.Recalculate( widget );
         }
-        protected override void Recalculate(UIViewBase[] views) {
+        protected override void Recalculate(UIViewBase2[] views) {
             base.Recalculate( views );
         }
-        protected override void Recalculate(UIViewBase view, UIViewBase next) {
+        protected override void Recalculate(UIViewBase2 view, UIViewBase2 next) {
             base.Recalculate( view, next );
         }
-        protected override void Recalculate(UIViewBase view) {
+        protected override void Recalculate(UIViewBase2 view) {
             base.Recalculate( view );
         }
 

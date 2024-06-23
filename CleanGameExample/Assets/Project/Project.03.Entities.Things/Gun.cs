@@ -4,6 +4,7 @@ namespace Project.Entities.Things {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.AddressableAssets;
 
     public class Gun : Thing, IWeapon {
 
@@ -30,6 +31,35 @@ namespace Project.Entities.Things {
                 delay.Start();
                 var bullet = BulletFactory.Create( damager, this, 5, FirePoint.transform.position, FirePoint.transform.rotation );
                 Physics.IgnoreCollision( Collider, bullet.Collider );
+            }
+        }
+
+    }
+    public static class GunFactory {
+        public record Args();
+
+        private static readonly PrefabListHandle<Gun> Prefabs = new PrefabListHandle<Gun>( new[] {
+            R.Project.Entities.Things.Value_Gun_Gray,
+            R.Project.Entities.Things.Value_Gun_Red,
+            R.Project.Entities.Things.Value_Gun_Green,
+            R.Project.Entities.Things.Value_Gun_Blue,
+        } );
+
+        public static void Initialize() {
+            Prefabs.Load().Wait();
+        }
+        public static void Deinitialize() {
+            Prefabs.Release();
+        }
+
+        public static Gun Create() {
+            using (Context.Begin( new Args() )) {
+                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom() );
+            }
+        }
+        public static Gun Create(Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args() )) {
+                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), position, rotation );
             }
         }
 

@@ -39,14 +39,14 @@ namespace UnityEngine {
             return ColliderBuffer.Take( count );
         }
 
-        // GetRandomValue
-        public static T GetRandomValue<T>(this T[] values) {
+        // GetRandom
+        public static T GetRandom<T>(this T[] values) {
             return values[ Random.Range( 0, values.Length ) ];
         }
-        public static T GetRandomValue<T>(this IList<T> values) {
+        public static T GetRandom<T>(this IList<T> values) {
             return values[ Random.Range( 0, values.Count ) ];
         }
-        public static T GetRandomValue<T>(this IReadOnlyList<T> values) {
+        public static T GetRandom<T>(this IReadOnlyList<T> values) {
             return values[ Random.Range( 0, values.Count ) ];
         }
 

@@ -14,9 +14,7 @@ namespace Project.UI {
         private Strategy? Strategy_ { get; set; }
         // IsPaused
         public new bool IsPaused {
-            set {
-                base.IsPaused = value;
-            }
+            set => base.IsPaused = value;
         }
 
         // Constructor

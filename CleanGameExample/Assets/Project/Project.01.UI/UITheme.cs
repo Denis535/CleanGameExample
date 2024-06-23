@@ -22,6 +22,7 @@ namespace Project.UI {
         }
         public override void Dispose() {
             Strategy_?.Dispose();
+            Strategy_ = null;
             base.Dispose();
         }
 
@@ -82,20 +83,23 @@ namespace Project.UI {
                 try {
                     await PlayClipAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
                 } finally {
-                    Context.Stop();
-                    clip.ReleaseSafe();
+                    clip.Release();
                 }
             }
             private async Task PlayClipAsync(AudioClip clip) {
-                Context.Play( clip );
-                Context.AudioSource.volume = 1;
-                Context.AudioSource.pitch = 1;
-                while (!Context.IsCompleted) {
-                    await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                    if (IsFading) {
-                        Context.AudioSource.volume = Mathf.MoveTowards( Context.AudioSource.volume, 0, Context.AudioSource.volume * 1.0f * Time.deltaTime );
-                        Context.AudioSource.pitch = Mathf.MoveTowards( Context.AudioSource.pitch, 0, Context.AudioSource.pitch * 0.5f * Time.deltaTime );
+                try {
+                    Context.Play( clip );
+                    Context.Volume = 1;
+                    Context.Pitch = 1;
+                    while (!Context.IsCompleted) {
+                        if (IsFading) {
+                            Context.Volume = Mathf.MoveTowards( Context.Volume, 0, Context.Volume * 1.0f * Time.deltaTime );
+                            Context.Pitch = Mathf.MoveTowards( Context.Pitch, 0, Context.Pitch * 0.5f * Time.deltaTime );
+                        }
+                        await Awaitable.NextFrameAsync( DisposeCancellationToken );
                     }
+                } finally {
+                    Context.Stop();
                 }
             }
 

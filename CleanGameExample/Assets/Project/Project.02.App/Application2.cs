@@ -46,12 +46,12 @@ namespace Project.App {
         // InitializeAsync
         public async Task InitializeAsync(CancellationToken cancellationToken) {
             cancellationToken = CancellationTokenSource.CreateLinkedTokenSource( DisposeCancellationToken, cancellationToken ).Token;
-            {
+            if (UnityServices.State == ServicesInitializationState.Uninitialized) {
                 var options = new InitializationOptions();
                 if (Storage.Profile != null) options.SetProfile( Storage.Profile );
                 await UnityServices.InitializeAsync( options ).WaitAsync( cancellationToken );
             }
-            {
+            if (!AuthenticationService.IsSignedIn) {
                 var options = new SignInOptions();
                 options.CreateAccount = true;
                 await AuthenticationService.SignInAnonymouslyAsync( options ).WaitAsync( cancellationToken );

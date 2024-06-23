@@ -5,6 +5,7 @@ namespace Project.UI.MainScreen {
     using System.Collections.Generic;
     using System.Linq;
     using Project.App;
+    using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
 
@@ -27,12 +28,15 @@ namespace Project.UI.MainScreen {
 
         // OnActivate
         protected override async void OnActivate(object? argument) {
+            ShowSelf();
+            Children.OfType<MenuWidget>().First().View.SetDisplayed( false );
             try {
-                ShowSelf();
-                Children.OfType<MenuWidget>().First().View.SetDisplayed( false );
                 await Application.InitializeAsync( DisposeCancellationToken );
-                Children.OfType<MenuWidget>().First().View.SetDisplayed( true );
             } catch (OperationCanceledException) {
+            } catch (Exception ex) {
+                Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );
+            } finally {
+                Children.OfType<MenuWidget>().First().View.SetDisplayed( true );
             }
         }
         protected override void OnDeactivate(object? argument) {

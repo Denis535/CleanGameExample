@@ -5,7 +5,6 @@ namespace Project.UI.MainScreen {
     using System.Collections.Generic;
     using Project.App;
     using Project.Entities;
-    using Project.Entities.Characters;
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
@@ -32,15 +31,6 @@ namespace Project.UI.MainScreen {
         // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
-            //try {
-            //    View.SetDisplayed( false );
-            //    while (!Application.AuthenticationService.IsSignedIn) {
-            //        await Task.Yield();
-            //        DisposeCancellationToken.ThrowIfCancellationRequested();
-            //    }
-            //    View.SetDisplayed( true );
-            //} catch (OperationCanceledException) {
-            //}
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();

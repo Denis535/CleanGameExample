@@ -3,7 +3,6 @@ namespace Project.UI {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Project.UI.Common;
     using Project.UI.GameScreen;
     using Project.UI.MainScreen;
@@ -32,24 +31,24 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        // ShowWidget
-        public void ShowMainWidget() {
-            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+        // ShowScreen
+        public void ShowMainScreen() {
+            HideScreen();
             Widget.AddChild( new MainWidget( Container ) );
         }
-        public void ShowGameWidget() {
-            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+        public void ShowGameScreen() {
+            HideScreen();
             Widget.AddChild( new GameWidget( Container ) );
         }
-        public void ShowLoadingWidget() {
-            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+        public void ShowLoadingScreen() {
+            HideScreen();
             Widget.AddChild( new LoadingWidget( Container ) );
         }
-        public void ShowUnloadingWidget() {
-            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+        public void ShowUnloadingScreen() {
+            HideScreen();
             Widget.AddChild( new UnloadingWidget( Container ) );
         }
-        public void HideWidget() {
+        public void HideScreen() {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
         }
 
@@ -75,50 +74,50 @@ namespace Project.UI {
 
         // Constructor
         public RootWidget(IDependencyContainer container) : base( container ) {
-            View = CreateView();
+            View = CreateView<RootWidgetView>();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         // Helpers
-        protected static RootWidgetView CreateView() {
-            var view = new RootWidgetView();
-            view.OnSubmitEvent += OnSubmit;
-            view.OnCancelEvent += OnCancel;
-            return view;
-        }
-        // Helpers
-        protected static new void OnSubmit(NavigationSubmitEvent evt) {
-            var button = evt.target as Button;
-            if (button != null) {
-                Click( button );
-                evt.StopPropagation();
-            }
-        }
-        protected static new void OnCancel(NavigationCancelEvent evt) {
-            var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().OfType<Widget>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault();
-            var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
-            if (button != null) {
-                Click( button );
-                evt.StopPropagation();
-            }
-        }
-        // Helpers
-        protected static new bool IsCancel(Button button) {
-            return button.ClassListContains( "resume" ) ||
-                button.ClassListContains( "cancel" ) ||
-                button.ClassListContains( "back" ) ||
-                button.ClassListContains( "no" ) ||
-                button.ClassListContains( "exit" ) ||
-                button.ClassListContains( "quit" );
-        }
-        protected static new void Click(Button button) {
-            using (var evt = ClickEvent.GetPooled()) {
-                evt.target = button;
-                button.SendEvent( evt );
-            }
-        }
+        //protected static RootWidgetView CreateView() {
+        //    var view = new RootWidgetView();
+        //    view.OnSubmitEvent += OnSubmit;
+        //    view.OnCancelEvent += OnCancel;
+        //    return view;
+        //}
+        //// Helpers
+        //protected static new void OnSubmit(NavigationSubmitEvent evt) {
+        //    var button = evt.target as Button;
+        //    if (button != null) {
+        //        Click( button );
+        //        evt.StopPropagation();
+        //    }
+        //}
+        //protected static new void OnCancel(NavigationCancelEvent evt) {
+        //    var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().OfType<Widget>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault();
+        //    var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
+        //    if (button != null) {
+        //        Click( button );
+        //        evt.StopPropagation();
+        //    }
+        //}
+        //// Helpers
+        //protected static new bool IsCancel(Button button) {
+        //    return button.ClassListContains( "resume" ) ||
+        //        button.ClassListContains( "cancel" ) ||
+        //        button.ClassListContains( "back" ) ||
+        //        button.ClassListContains( "no" ) ||
+        //        button.ClassListContains( "exit" ) ||
+        //        button.ClassListContains( "quit" );
+        //}
+        //protected static new void Click(Button button) {
+        //    using (var evt = ClickEvent.GetPooled()) {
+        //        evt.target = button;
+        //        button.SendEvent( evt );
+        //    }
+        //}
 
     }
     public class RootWidgetView : UIRootWidgetView {

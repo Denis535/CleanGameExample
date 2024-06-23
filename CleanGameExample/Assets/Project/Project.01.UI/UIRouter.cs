@@ -53,7 +53,7 @@ namespace Project.UI {
             Release.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
                 Theme.PlayMainTheme();
-                Screen.ShowMainWidget();
+                Screen.ShowMainScreen();
                 {
                     // Load
                     await LoadSceneAsync_Main();
@@ -66,7 +66,7 @@ namespace Project.UI {
             Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
-                Screen.ShowLoadingWidget();
+                Screen.ShowLoadingScreen();
                 {
                     // Unload
                     await UnloadSceneAsync_Main();
@@ -76,7 +76,8 @@ namespace Project.UI {
                     Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
-                Screen.ShowGameWidget();
+                Screen.ShowGameScreen();
+                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
             }
         }
 
@@ -85,7 +86,7 @@ namespace Project.UI {
             Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
-                Screen.ShowLoadingWidget();
+                Screen.ShowLoadingScreen();
                 {
                     // Unload
                     Application.DestroyGame();
@@ -97,7 +98,8 @@ namespace Project.UI {
                     Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
-                Screen.ShowGameWidget();
+                Screen.ShowGameScreen();
+                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
             }
         }
 
@@ -106,7 +108,7 @@ namespace Project.UI {
             Release.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
                 Theme.PlayUnloadingTheme();
-                Screen.ShowUnloadingWidget();
+                Screen.ShowUnloadingScreen();
                 {
                     // Unload
                     Application.DestroyGame();
@@ -116,7 +118,7 @@ namespace Project.UI {
                     await LoadSceneAsync_Main();
                 }
                 Theme.PlayMainTheme();
-                Screen.ShowMainWidget();
+                Screen.ShowMainScreen();
             }
         }
 
@@ -125,7 +127,7 @@ namespace Project.UI {
             Release.Log( "Quit" );
             using (@lock.Enter()) {
                 Theme.StopTheme();
-                Screen.HideWidget();
+                Screen.HideScreen();
                 if (Application.Game != null) {
                     Application.DestroyGame();
                 }

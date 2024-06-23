@@ -12,12 +12,18 @@ namespace Project.UI {
 
         // Strategy
         private Strategy? Strategy_ { get; set; }
+        // IsPaused
+        public new bool IsPaused {
+            set {
+                base.IsPaused = value;
+            }
+        }
 
         // Constructor
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
         }
         public override void Dispose() {
-            StopTheme();
+            Strategy_?.Dispose();
             base.Dispose();
         }
 
@@ -56,8 +62,9 @@ namespace Project.UI {
         // Strategy
         private abstract class Strategy : Disposable {
 
-            protected abstract UITheme Self { get; }
+            protected abstract UITheme Context { get; }
             protected abstract AssetHandle<AudioClip>[] Clips { get; }
+            public bool IsFading { get; set; }
 
             public Strategy() {
             }
@@ -65,95 +72,64 @@ namespace Project.UI {
                 base.Dispose();
             }
 
-            public abstract void Play();
-
-        }
-        private class MainStrategy : Strategy {
-
-            protected override UITheme Self { get; }
-            protected override AssetHandle<AudioClip>[] Clips { get; } = Shuffle( new[] {
-                new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
-            } );
-
-            public bool IsFading { get; set; }
-
-            public MainStrategy(UITheme self) {
-                Self = self;
-            }
-            public override void Dispose() {
-                base.Dispose();
-            }
-
-            public override async void Play() {
+            public async void Play() {
                 try {
                     for (var i = 0; true; i++) {
-                        var clip = Clips[ i % Clips.Length ];
-                        await PlayClipAsync( clip );
+                        await PlayClipAsync( Clips[ i % Clips.Length ] );
                     }
                 } catch (OperationCanceledException) {
                 }
             }
             private async Task PlayClipAsync(AssetHandle<AudioClip> clip) {
                 try {
-                    await PlayClipAsync_( clip );
-                    while (!Self.IsCompleted) {
-                        await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                        if (IsFading) {
-                            Self.AudioSource.volume = Mathf.MoveTowards( Self.AudioSource.volume, 0, Self.AudioSource.volume * 1.0f * Time.deltaTime );
-                            Self.AudioSource.pitch = Mathf.MoveTowards( Self.AudioSource.pitch, 0, Self.AudioSource.pitch * 0.5f * Time.deltaTime );
-                        }
-                    }
+                    await PlayClipAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
                 } finally {
-                    Self.Stop();
+                    Context.Stop();
                     clip.ReleaseSafe();
                 }
             }
-            private async Task PlayClipAsync_(AssetHandle<AudioClip> clip) {
-                Self.Play( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
-                Self.AudioSource.volume = 1;
-                Self.AudioSource.pitch = 1;
+            private async Task PlayClipAsync(AudioClip clip) {
+                Context.Play( clip );
+                Context.AudioSource.volume = 1;
+                Context.AudioSource.pitch = 1;
+                while (!Context.IsCompleted) {
+                    await Awaitable.NextFrameAsync( DisposeCancellationToken );
+                    if (IsFading) {
+                        Context.AudioSource.volume = Mathf.MoveTowards( Context.AudioSource.volume, 0, Context.AudioSource.volume * 1.0f * Time.deltaTime );
+                        Context.AudioSource.pitch = Mathf.MoveTowards( Context.AudioSource.pitch, 0, Context.AudioSource.pitch * 0.5f * Time.deltaTime );
+                    }
+                }
+            }
+
+        }
+        private class MainStrategy : Strategy {
+
+            protected override UITheme Context { get; }
+            protected override AssetHandle<AudioClip>[] Clips { get; } = Shuffle( new[] {
+                new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
+            } );
+
+            public MainStrategy(UITheme ñontext) {
+                Context = ñontext;
+            }
+            public override void Dispose() {
+                base.Dispose();
             }
 
         }
         private class GameStrategy : Strategy {
 
-            protected override UITheme Self { get; }
+            protected override UITheme Context { get; }
             protected override AssetHandle<AudioClip>[] Clips { get; } = Shuffle( new[] {
                 new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_1 ),
                 new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
             } );
 
-            public GameStrategy(UITheme self) {
-                Self = self;
+            public GameStrategy(UITheme context) {
+                Context = context;
             }
             public override void Dispose() {
                 base.Dispose();
-            }
-
-            public override async void Play() {
-                try {
-                    for (var i = 0; true; i++) {
-                        var clip = Clips[ i % Clips.Length ];
-                        await PlayClipAsync( clip );
-                    }
-                } catch (OperationCanceledException) {
-                }
-            }
-            private async Task PlayClipAsync(AssetHandle<AudioClip> clip) {
-                try {
-                    await PlayClipAsync_( clip );
-                    while (!Self.IsCompleted) {
-                        await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                    }
-                } finally {
-                    Self.Stop();
-                    clip.ReleaseSafe();
-                }
-            }
-            private async Task PlayClipAsync_(AssetHandle<AudioClip> clip) {
-                Self.Play( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
-                Self.AudioSource.volume = 1;
-                Self.AudioSource.pitch = 1;
             }
 
         }

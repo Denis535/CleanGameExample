@@ -1,5 +1,5 @@
 # Overview
-This is example of a project (shooter) with advanced (professional) architecture (inspired by Clean Architecture, Domain Driven Design and Uber Ribs).
+This is example of a shooter game project with advanced (professional) architecture (inspired by Clean Architecture, Domain Driven Design and Uber Ribs).
 
 # Reference
 The project consists of several modules (each module consists of sources and assets):
@@ -99,7 +99,7 @@ The project consists of several modules (each module consists of sources and ass
     - Sometimes you need to reimport the "UIToolkit Theme Style Sheet" package.
 
 # Media
-
+- https://youtu.be/WmLJHRg0EI4
 
 # Links
 - https://github.com/denis535/CleanGameExample

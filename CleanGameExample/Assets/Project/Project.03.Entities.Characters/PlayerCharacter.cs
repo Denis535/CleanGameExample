@@ -7,8 +7,7 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class PlayerCharacterFactory {
-        public record Args();
+    public partial class PlayerCharacter {
 
         private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
             R.Project.Entities.Characters.Value_PlayerCharacter_Gray,
@@ -25,13 +24,11 @@ namespace Project.Entities.Characters {
         }
 
         public static PlayerCharacter Create(PlayerCharacterType type, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
-            }
+            return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
         }
 
     }
-    public class PlayerCharacter : Character {
+    public partial class PlayerCharacter : Character {
 
         // Player
         public IPlayer Player { get; set; } = default!;
@@ -39,9 +36,6 @@ namespace Project.Entities.Characters {
         // Awake
         protected override void Awake() {
             base.Awake();
-            Awake( Context.GetValue<PlayerCharacterFactory.Args>() );
-        }
-        private void Awake(PlayerCharacterFactory.Args args) {
         }
         protected override void OnDestroy() {
             base.OnDestroy();

@@ -6,8 +6,7 @@ namespace Project.Entities.Things {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class GunFactory {
-        public record Args();
+    public partial class Gun {
 
         private static readonly PrefabListHandle<Gun> Prefabs = new PrefabListHandle<Gun>( new[] {
             R.Project.Entities.Things.Value_Gun_Gray,
@@ -23,19 +22,17 @@ namespace Project.Entities.Things {
             Prefabs.Release();
         }
 
-        public static Gun Create() {
-            using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom() );
-            }
+        public static Gun Create(Transform? parent) {
+            var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), parent );
+            return result;
         }
-        public static Gun Create(Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), position, rotation );
-            }
+        public static Gun Create(Vector3 position, Quaternion rotation, Transform? parent) {
+            var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), position, rotation, parent );
+            return result;
         }
 
     }
-    public class Gun : Thing, IWeapon {
+    public partial class Gun : Thing, IWeapon {
 
         private readonly Delay delay = new Delay( 0.25f );
 
@@ -45,9 +42,6 @@ namespace Project.Entities.Things {
         // Awake
         protected override void Awake() {
             base.Awake();
-            Awake( Context.GetValue<GunFactory.Args>() );
-        }
-        private void Awake(GunFactory.Args args) {
             FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         protected override void OnDestroy() {
@@ -58,8 +52,8 @@ namespace Project.Entities.Things {
         public void Fire(IDamager damager) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = BulletFactory.Create( damager, this, 5, FirePoint.transform.position, FirePoint.transform.rotation );
-                Physics.IgnoreCollision( Collider, bullet.Collider );
+                var bullet = Bullet.Create( 5, this, damager, FirePoint.transform.position, FirePoint.transform.rotation, null );
+                Physics.IgnoreCollision( Collider, bullet.GetComponent<Collider>() );
             }
         }
 

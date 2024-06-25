@@ -8,8 +8,7 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    public static class EnemyCharacterFactory {
-        public record Args();
+    public partial class EnemyCharacter {
 
         private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
             R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
@@ -26,13 +25,11 @@ namespace Project.Entities.Characters {
         }
 
         public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
-            }
+            return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
         }
 
     }
-    public class EnemyCharacter : Character {
+    public partial class EnemyCharacter : Character {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
@@ -43,9 +40,6 @@ namespace Project.Entities.Characters {
         // Awake
         protected override void Awake() {
             base.Awake();
-            Awake( Context.GetValue<EnemyCharacterFactory.Args>() );
-        }
-        private void Awake(EnemyCharacterFactory.Args args) {
         }
         protected override void OnDestroy() {
             base.OnDestroy();
@@ -53,7 +47,7 @@ namespace Project.Entities.Characters {
 
         // Start
         public override void Start() {
-            SetWeapon( GunFactory.Create() );
+            SetWeapon( Gun.Create( null ) );
         }
         public override void FixedUpdate() {
             base.FixedUpdate();

@@ -7,8 +7,7 @@ namespace Project.Entities.Things {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
-    public static class BulletFactory {
-        public record Args(IDamager Damager, Gun Gun, float Force);
+    public partial class Bullet {
 
         private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
 
@@ -19,40 +18,33 @@ namespace Project.Entities.Things {
             Prefab.Release();
         }
 
-        public static Bullet Create(IDamager damager, Gun gun, float force, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args( damager, gun, force ) )) {
-                return GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation );
-            }
+        public static Bullet Create(float force, Gun gun, IDamager damager, Vector3 position, Quaternion rotation, Transform? parent) {
+            var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
+            result.Awake( force, gun, damager );
+            return result;
         }
 
     }
-    public class Bullet : EntityBase {
+    public partial class Bullet : EntityBase {
 
-        // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
-        // Collider
         internal Collider Collider { get; set; } = default!;
-        // Damager
-        public IDamager Damager { get; private set; } = default!;
-        // Gun
-        public Gun Gun { get; private set; } = default!;
+        public Gun Gun { get; set; } = default!;
+        public IDamager Damager { get; set; } = default!;
 
-        // Awake
         protected override void Awake() {
-            Awake( Context.GetValue<BulletFactory.Args>() );
-        }
-        private void Awake(BulletFactory.Args args) {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
-            Damager = args.Damager;
-            Gun = args.Gun;
-            Rigidbody.AddForce( transform.forward * args.Force, ForceMode.Impulse );
-            Destroy( gameObject, 10 );
+        }
+        protected void Awake(float force, Gun gun, IDamager damager) {
+            Rigidbody.AddForce( transform.forward * force, ForceMode.Impulse );
+            Gun = gun;
+            Damager = damager;
+            GameObject.Destroy( gameObject, 10 );
         }
         protected override void OnDestroy() {
         }
 
-        // OnCollisionEnter
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();

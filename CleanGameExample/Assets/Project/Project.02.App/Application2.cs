@@ -61,22 +61,22 @@ namespace Project.App {
         // CreateGame
         public void CreateGame(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
-            CameraFactory.Load();
-            PlayerCharacterFactory.Load();
-            EnemyCharacterFactory.Load();
-            GunFactory.Load();
-            BulletFactory.Load();
+            Camera2.Load();
+            PlayerCharacter.Load();
+            EnemyCharacter.Load();
+            Gun.Load();
+            Bullet.Load();
             Game = new Game( Container, gameName, gameMode, gameLevel, playerName, playerKind );
         }
         public void DestroyGame() {
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             Game.Dispose();
             Game = null;
-            CameraFactory.Unload();
-            PlayerCharacterFactory.Unload();
-            EnemyCharacterFactory.Unload();
-            GunFactory.Unload();
-            BulletFactory.Unload();
+            Camera2.Unload();
+            PlayerCharacter.Unload();
+            EnemyCharacter.Unload();
+            Gun.Unload();
+            Bullet.Unload();
             Array.Clear( Utils.RaycastHitBuffer, 0, Utils.RaycastHitBuffer.Length );
             Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
         }

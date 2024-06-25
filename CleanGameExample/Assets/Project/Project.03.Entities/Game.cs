@@ -32,6 +32,8 @@ namespace Project.Entities {
         // Framework
         public abstract Player Player { get; }
         public abstract World World { get; }
+        // IsDirty
+        protected bool IsDirty { get; set; }
 
         // Constructor
         public GameBase3(IDependencyContainer container) : base( container ) {
@@ -71,15 +73,13 @@ namespace Project.Entities {
         public override World World { get; }
         // Input
         private InputActions_Game Input { get; }
-        // IsDirty
-        private bool IsDirty { get; set; }
 
         // Constructor
         public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container ) {
             Name = gameName;
             Mode = gameMode;
             Level = gameLevel;
-            Player = new Player( container, playerName, playerKind, CameraFactory.Camera() );
+            Player = new Player( container, playerName, playerKind, Camera2.Create() );
             World = container.RequireDependency<World>();
             Input = new InputActions_Game();
             Input.Enable();
@@ -120,7 +120,7 @@ namespace Project.Entities {
 
         // Spawn
         protected override void SpawnPlayerCharacter(PlayerPoint point) {
-            Player.Character = PlayerCharacterFactory.Create( (PlayerCharacterType) Player.Kind, point.transform.position, point.transform.rotation );
+            Player.Character = PlayerCharacter.Create( (PlayerCharacterType) Player.Kind, point.transform.position, point.transform.rotation );
             Player.Character.Game = this;
             Player.Character.Player = Player;
             Player.Character.OnDamageEvent += info => {
@@ -128,14 +128,14 @@ namespace Project.Entities {
             };
         }
         protected override void SpawnEnemyCharacter(EnemyPoint point) {
-            var character = EnemyCharacterFactory.Create( point.transform.position, point.transform.rotation );
+            var character = EnemyCharacter.Create( point.transform.position, point.transform.rotation );
             character.Game = this;
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };
         }
         protected override void SpawnThing(ThingPoint point) {
-            var thing = GunFactory.Create( point.transform.position, point.transform.rotation );
+            var thing = Gun.Create( point.transform.position, point.transform.rotation, null );
         }
 
         // IsWinner

@@ -8,7 +8,7 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
-    public static class CameraFactory {
+    public partial class Camera2 {
 
         private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
 
@@ -19,12 +19,12 @@ namespace Project.Entities {
             Prefab.Release();
         }
 
-        public static Camera2 Camera() {
+        public static Camera2 Create() {
             return GameObject.Instantiate( Prefab.GetValue() );
         }
 
     }
-    public class Camera2 : EntityBase {
+    public partial class Camera2 : EntityBase {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         public static readonly float DefaultDistance = 1.5f;

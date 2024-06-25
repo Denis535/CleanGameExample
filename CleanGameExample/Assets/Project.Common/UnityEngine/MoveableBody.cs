@@ -10,7 +10,7 @@ namespace UnityEngine {
     // Note: While not moving character-controller can collide only with other character-controllers.
     // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
     [RequireComponent( typeof( CharacterController ) )]
-    public class CharacterBody : MonoBehaviour {
+    public class MoveableBody : MonoBehaviour {
 
         private bool fixedUpdateWasInvoked;
 

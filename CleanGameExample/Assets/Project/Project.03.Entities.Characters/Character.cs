@@ -8,13 +8,13 @@ namespace Project.Entities.Characters {
     using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
-    [RequireComponent( typeof( CharacterBody ) )]
+    [RequireComponent( typeof( MoveableBody ) )]
     public abstract class Character : EntityBase, IDamager, IDamageable {
 
         // Rigidbody
         private Rigidbody Rigidbody { get; set; } = default!;
-        // CharacterBody
-        private CharacterBody CharacterBody { get; set; } = default!;
+        // MoveableBody
+        private MoveableBody MoveableBody { get; set; } = default!;
         // Head
         private Transform Head { get; set; } = default!;
         // Body
@@ -24,7 +24,7 @@ namespace Project.Entities.Characters {
         // Game
         public IGame Game { get; set; } = default!;
         // IsAlive
-        public bool IsAlive => CharacterBody.enabled;
+        public bool IsAlive => MoveableBody.enabled;
         // Weapon
         public IWeapon? Weapon => GetWeapon( WeaponSlot );
         // OnDamageEvent
@@ -33,7 +33,7 @@ namespace Project.Entities.Characters {
         // Awake
         protected override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            CharacterBody = gameObject.RequireComponent<CharacterBody>();
+            MoveableBody = gameObject.RequireComponent<MoveableBody>();
             Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
@@ -45,8 +45,8 @@ namespace Project.Entities.Characters {
         public virtual void Start() {
         }
         public virtual void FixedUpdate() {
-            if (CharacterBody.enabled) {
-                CharacterBody.PhysicsFixedUpdate();
+            if (MoveableBody.enabled) {
+                MoveableBody.PhysicsFixedUpdate();
             }
         }
         public virtual void Update() {
@@ -55,18 +55,18 @@ namespace Project.Entities.Characters {
         // SetMovementInput
         protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            CharacterBody.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            MoveableBody.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // RotateAt
         protected void RotateAt(Vector3? target) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             if (target != null) {
-                CharacterBody.SetLookInput( true, target.Value );
-                CharacterBody.PhysicsUpdate();
+                MoveableBody.SetLookInput( true, target.Value );
+                MoveableBody.PhysicsUpdate();
             } else {
-                CharacterBody.SetLookInput( false, CharacterBody.LookTarget );
-                CharacterBody.PhysicsUpdate();
+                MoveableBody.SetLookInput( false, MoveableBody.LookTarget );
+                MoveableBody.PhysicsUpdate();
             }
         }
 
@@ -179,11 +179,11 @@ namespace Project.Entities.Characters {
             if (value) {
                 character.gameObject.SetLayerRecursively( Layers.Entity );
                 character.Rigidbody.isKinematic = false;
-                character.CharacterBody.enabled = false;
+                character.MoveableBody.enabled = false;
             } else {
                 character.gameObject.SetLayerRecursively( Layers.CharacterEntity, Layers.CharacterEntityInternal );
                 character.Rigidbody.isKinematic = true;
-                character.CharacterBody.enabled = true;
+                character.MoveableBody.enabled = true;
             }
         }
         private static void SetPhysical(Thing thing, Transform? parent) {

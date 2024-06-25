@@ -11,7 +11,7 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
-        // Deps
+        // Framework
         private Application2 Application { get; }
         // View
         public override MainWidgetView View { get; }

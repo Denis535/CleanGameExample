@@ -20,30 +20,30 @@ namespace Project.UI.Common {
 
         // Props
         public ProfileSettingsWidgetView? ProfileSettings {
-            get => profileSettings.Children2<ProfileSettingsWidgetView>().FirstOrDefault();
+            get => profileSettings.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    profileSettings.Add( value );
+                    profileSettings.AddView( value );
                 } else {
                     profileSettings.Clear();
                 }
             }
         }
         public VideoSettingsWidgetView? VideoSettings {
-            get => videoSettings.Children2<VideoSettingsWidgetView>().FirstOrDefault();
+            get => videoSettings.GetViews<VideoSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    videoSettings.Add( value );
+                    videoSettings.AddView( value );
                 } else {
                     videoSettings.Clear();
                 }
             }
         }
         public AudioSettingsWidgetView? AudioSettings {
-            get => audioSettings.Children2<AudioSettingsWidgetView>().FirstOrDefault();
+            get => audioSettings.GetViews<AudioSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    audioSettings.Add( value );
+                    audioSettings.AddView( value );
                 } else {
                     audioSettings.Clear();
                 }

@@ -15,27 +15,27 @@ namespace Project.UI.MainScreen {
         private readonly VisualElement views;
 
         // Props
-        public UIViewBase[] Views => views.Children2().ToArray();
+        public UIViewBase[] Views => views.GetViews().ToArray();
 
         // Constructor
         public MenuWidgetView() {
             VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out views );
         }
         public override void Dispose() {
-            views.Children2().DisposeAll();
+            Views.DisposeAll();
             base.Dispose();
         }
 
         // AddView
         public void AddView(UIViewBase2 view) {
-            views.Add( view );
-            Recalculate( views.Children2().ToArray() );
-            title.text = GetTitle( views.Children2().Last() );
+            views.AddView( view );
+            Recalculate( views.GetViews().ToArray() );
+            title.text = GetTitle( views.GetViews().Last() );
         }
         public void RemoveView(UIViewBase2 view) {
-            views.Remove( view );
-            Recalculate( views.Children2().ToArray() );
-            title.text = GetTitle( views.Children2().Last() );
+            views.RemoveView( view );
+            Recalculate( views.GetViews().ToArray() );
+            title.text = GetTitle( views.GetViews().Last() );
         }
 
         // Helpers

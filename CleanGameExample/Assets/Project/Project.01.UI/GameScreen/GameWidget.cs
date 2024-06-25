@@ -10,7 +10,7 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
-        // Deps
+        // Framework
         private Game Game { get; }
         // View
         public override GameWidgetView View { get; }

@@ -16,7 +16,7 @@ namespace Project.UI {
 
         private static readonly Lock @lock = new Lock();
 
-        // Deps
+        // Framework
         private UITheme Theme => Container.RequireDependency<UITheme>();
         private UIScreen Screen => Container.RequireDependency<UIScreen>();
         private Application2 Application { get; }

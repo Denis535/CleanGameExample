@@ -10,7 +10,7 @@ namespace Project.UI.GameScreen {
 
     public class TotalsWidget : UIWidgetBase2<TotalsWidgetView> {
 
-        // Deps
+        // Framework
         private UIRouter Router { get; }
         private Game Game { get; }
         // View

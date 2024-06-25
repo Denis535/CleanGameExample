@@ -29,7 +29,7 @@ namespace Project.Entities {
             }
         }
         public event Action<GameState>? OnStateChangeEvent;
-        // Deps
+        // Framework
         public abstract Player Player { get; }
         public abstract World World { get; }
 
@@ -66,7 +66,7 @@ namespace Project.Entities {
         public override GameLevel Level { get; }
         // State
         public override GameState State { get => base.State; protected set => base.State = value; }
-        // Deps
+        // Framework
         public override Player Player { get; }
         public override World World { get; }
         // Input

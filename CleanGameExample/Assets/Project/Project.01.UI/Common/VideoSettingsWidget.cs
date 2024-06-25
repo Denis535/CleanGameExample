@@ -8,7 +8,7 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidget : UIWidgetBase2<VideoSettingsWidgetView> {
 
-        // Deps
+        // Framework
         private Application2 Application { get; }
         private Storage.VideoSettings VideoSettings => Application.VideoSettings;
         // View

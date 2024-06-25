@@ -11,7 +11,7 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Deps
+        // Framework
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;

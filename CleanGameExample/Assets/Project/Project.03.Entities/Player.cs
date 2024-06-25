@@ -27,7 +27,7 @@ namespace Project.Entities {
             }
         }
         public event Action<PlayerState>? OnStateChangeEvent;
-        // Deps
+        // Framework
         public abstract Camera2 Camera { get; }
         public abstract PlayerCharacter? Character { get; internal set; }
 
@@ -59,7 +59,7 @@ namespace Project.Entities {
         public override PlayerKind Kind { get; }
         // State
         public override PlayerState State { get => base.State; internal set => base.State = value; }
-        // Deps
+        // Framework
         public override Camera2 Camera { get; }
         public override PlayerCharacter? Character { get; internal set; }
         // Input

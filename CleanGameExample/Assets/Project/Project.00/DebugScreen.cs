@@ -13,8 +13,8 @@ namespace Project {
     public class DebugScreen : MonoBehaviour {
 
         // System
-        private IDependencyContainer Contairner => gameObject.RequireComponent<IDependencyContainer>();
-        // Deps
+        private IDependencyContainer Contairner { get; set; } = default!;
+        // Framework
         private UITheme Theme { get; set; } = default!;
         private UIScreen Screen { get; set; } = default!;
         private UIRouter Router { get; set; } = default!;
@@ -23,6 +23,7 @@ namespace Project {
 
         // Awake
         public void Awake() {
+            Contairner = gameObject.RequireComponent<IDependencyContainer>();
             Theme = Contairner.RequireDependency<UITheme>();
             Screen = Contairner.RequireDependency<UIScreen>();
             Router = Contairner.RequireDependency<UIRouter>();

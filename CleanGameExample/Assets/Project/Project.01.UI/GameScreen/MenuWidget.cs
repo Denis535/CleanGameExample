@@ -9,7 +9,7 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Deps
+        // Framework
         private UIRouter Router { get; }
         // View
         public override MenuWidgetView View { get; }

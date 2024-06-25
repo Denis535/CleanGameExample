@@ -8,6 +8,30 @@ namespace Project.Entities.Characters {
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
+    public static class EnemyCharacterFactory {
+        public record Args();
+
+        private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
+            R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Red,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Green,
+            R.Project.Entities.Characters.Value_EnemyCharacter_Blue
+        } );
+
+        public static void Load() {
+            Prefabs.Load().Wait();
+        }
+        public static void Unload() {
+            Prefabs.Release();
+        }
+
+        public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args() )) {
+                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
+            }
+        }
+
+    }
     public class EnemyCharacter : Character {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
@@ -79,30 +103,6 @@ namespace Project.Entities.Characters {
                 return null;
             }
             return null;
-        }
-
-    }
-    public static class EnemyCharacterFactory {
-        public record Args();
-
-        private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
-            R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Red,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Green,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Blue
-        } );
-
-        public static void Initialize() {
-            Prefabs.Load().Wait();
-        }
-        public static void Deinitialize() {
-            Prefabs.Release();
-        }
-
-        public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args() )) {
-                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
-            }
         }
 
     }

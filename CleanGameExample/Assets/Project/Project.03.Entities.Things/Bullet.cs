@@ -7,6 +7,25 @@ namespace Project.Entities.Things {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
+    public static class BulletFactory {
+        public record Args(IDamager Damager, Gun Gun, float Force);
+
+        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
+
+        public static void Load() {
+            Prefab.Load().Wait();
+        }
+        public static void Unload() {
+            Prefab.Release();
+        }
+
+        public static Bullet Create(IDamager damager, Gun gun, float force, Vector3 position, Quaternion rotation) {
+            using (Context.Begin( new Args( damager, gun, force ) )) {
+                return GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation );
+            }
+        }
+
+    }
     public class Bullet : EntityBase {
 
         // Rigidbody
@@ -41,25 +60,6 @@ namespace Project.Entities.Things {
                     damageable.OnDamage( new BulletDamageInfo( Damager, 5, Rigidbody.position, Rigidbody.velocity.normalized, this ) );
                 }
                 enabled = false;
-            }
-        }
-
-    }
-    public static class BulletFactory {
-        public record Args(IDamager Damager, Gun Gun, float Force);
-
-        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
-
-        public static void Initialize() {
-            Prefab.Load().Wait();
-        }
-        public static void Deinitialize() {
-            Prefab.Release();
-        }
-
-        public static Bullet Create(IDamager damager, Gun gun, float force, Vector3 position, Quaternion rotation) {
-            using (Context.Begin( new Args( damager, gun, force ) )) {
-                return GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation );
             }
         }
 

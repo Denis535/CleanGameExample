@@ -8,6 +8,22 @@ namespace Project.Entities {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
+    public static class CameraFactory {
+
+        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
+
+        public static void Load() {
+            Prefab.Load().Wait();
+        }
+        public static void Unload() {
+            Prefab.Release();
+        }
+
+        public static Camera2 Camera() {
+            return GameObject.Instantiate( Prefab.GetValue() );
+        }
+
+    }
     public class Camera2 : EntityBase {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
@@ -71,22 +87,6 @@ namespace Project.Entities {
         private static void Apply(Camera camera, Transform transform) {
             camera.transform.localPosition = transform.localPosition;
             camera.transform.localRotation = transform.localRotation;
-        }
-
-    }
-    public static class CameraFactory {
-
-        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
-
-        public static void Initialize() {
-            Prefab.Load().Wait();
-        }
-        public static void Deinitialize() {
-            Prefab.Release();
-        }
-
-        public static Camera2 Camera() {
-            return GameObject.Instantiate( Prefab.GetValue() );
         }
 
     }

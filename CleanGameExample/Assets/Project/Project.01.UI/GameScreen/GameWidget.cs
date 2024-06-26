@@ -82,8 +82,8 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static TargetEffect GetTargetEffect(Player player) {
-            if (player.Thing) return TargetEffect.Thing;
-            if (player.Enemy) return TargetEffect.Enemy;
+            if (player.Thing != null) return TargetEffect.Thing;
+            if (player.Enemy != null) return TargetEffect.Enemy;
             return TargetEffect.Normal;
         }
 

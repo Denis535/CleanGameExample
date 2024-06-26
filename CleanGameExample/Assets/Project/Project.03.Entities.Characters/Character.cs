@@ -144,10 +144,10 @@ namespace Project.Entities.Characters {
         private static void SetWeapon(Slot slot, IWeapon? weapon) {
             var prevWeapon = GetWeapon( slot );
             if (prevWeapon != null) {
-                SetPhysical( (Thing) prevWeapon, null );
+                SetPhysical( (IThing) prevWeapon, null );
             }
             if (weapon != null) {
-                SetPhysical( (Thing) weapon, slot.transform );
+                SetPhysical( (IThing) weapon, slot.transform );
             }
         }
         // Helpers
@@ -186,17 +186,17 @@ namespace Project.Entities.Characters {
                 character.MoveableBody.enabled = true;
             }
         }
-        private static void SetPhysical(Thing thing, Transform? parent) {
+        private static void SetPhysical(IThing thing, Transform? parent) {
             if (parent != null) {
                 thing.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
                 thing.transform.localPosition = Vector3.zero;
                 thing.transform.localRotation = Quaternion.identity;
                 thing.transform.SetParent( parent, false );
-                thing.GetComponent<Rigidbody>().isKinematic = true;
+                thing.gameObject.RequireComponent<Rigidbody>().isKinematic = true;
             } else {
                 thing.gameObject.SetLayerRecursively( Layers.Entity );
                 thing.transform.SetParent( null, true );
-                thing.GetComponent<Rigidbody>().isKinematic = false;
+                thing.gameObject.RequireComponent<Rigidbody>().isKinematic = false;
             }
         }
 

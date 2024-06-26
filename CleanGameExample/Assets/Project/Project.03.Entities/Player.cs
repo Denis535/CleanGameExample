@@ -75,11 +75,11 @@ namespace Project.Entities {
                 return null;
             }
         }
-        public Thing? Thing {
+        public IThing? Thing {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<Thing>();
+                    return @object.GetComponent<IThing>();
                 }
                 return null;
             }
@@ -149,7 +149,7 @@ namespace Project.Entities {
         }
         public override bool IsInteractPressed(out MonoBehaviour? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            interactable = (MonoBehaviour?) Enemy ?? Thing;
+            interactable = (MonoBehaviour?) Enemy ?? (MonoBehaviour?) Thing;
             return Input.Player.Interact.WasPressedThisFrame();
         }
 

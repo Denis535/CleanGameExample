@@ -3,8 +3,10 @@ namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class Gun {
 
@@ -32,29 +34,62 @@ namespace Project.Entities.Things {
         }
 
     }
-    public partial class Gun : Thing, IWeapon {
+    public partial class Gun : EntityBase<GunBody, GunView>, IThing, IWeapon {
 
-        private readonly Delay delay = new Delay( 0.25f );
-
-        // FirePoint
-        private FirePoint FirePoint { get; set; } = default!;
+        // IsAttached
+        public bool IsAttached => transform.parent != null;
 
         // Awake
         protected override void Awake() {
-            base.Awake();
-            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
+            Body = new GunBody( gameObject );
+            View = new GunView( gameObject );
         }
         protected override void OnDestroy() {
-            base.OnDestroy();
+            View.Dispose();
+            Body.Dispose();
         }
 
         // Fire
         public void Fire(IDamager damager) {
+            if (View.Fire( out var position, out var rotation )) {
+                var bullet = Bullet.Create( position.Value, rotation.Value, null, this, damager, 5 );
+                Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
+            }
+        }
+
+    }
+    public class GunBody : EntityBodyBase {
+
+        public GunBody(GameObject gameObject) : base( gameObject ) {
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+    }
+    public class GunView : EntityViewBase {
+
+        private readonly Delay delay = new Delay( 0.25f );
+
+        private FirePoint FirePoint { get; }
+
+        public GunView(GameObject gameObject) : base( gameObject ) {
+            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        public bool Fire([NotNullWhen( true )] out Vector3? position, [NotNullWhen( true )] out Quaternion? rotation) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = Bullet.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, this, damager, 5 );
-                Physics.IgnoreCollision( Collider, bullet.GetComponentInChildren<Collider>() );
+                position = FirePoint.transform.position;
+                rotation = FirePoint.transform.rotation;
+                return true;
             }
+            position = null;
+            rotation = null;
+            return false;
         }
 
     }

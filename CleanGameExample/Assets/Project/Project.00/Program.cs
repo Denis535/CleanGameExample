@@ -15,14 +15,14 @@ namespace Project {
     using UnityEngine.UIElements;
 
     [DefaultExecutionOrder( 1000 )]
-    public class Program : ProgramBase2 {
+    public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
 
         // Framework
-        private UITheme Theme { get; set; } = default!;
-        private UIScreen Screen { get; set; } = default!;
-        private UIRouter Router { get; set; } = default!;
-        private Application2 Application { get; set; } = default!;
-        private Game? Game => Application.Game;
+        protected override UITheme Theme { get; set; } = default!;
+        protected override UIScreen Screen { get; set; } = default!;
+        protected override UIRouter Router { get; set; } = default!;
+        protected override Application2 Application { get; set; } = default!;
+        protected override Game? Game => Application.Game;
 
         // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
@@ -83,16 +83,6 @@ namespace Project {
             }
             return true;
         }
-
-#if UNITY_EDITOR
-        protected override void OnInspectorGUI() {
-            OnInspectorGUI( Theme );
-            OnInspectorGUI( Screen );
-            OnInspectorGUI( Router );
-            OnInspectorGUI( Application );
-            OnInspectorGUI( Game );
-        }
-#endif
 
         // IDependencyContainer
         protected override Option<object?> GetValue(Type type, object? argument) {

@@ -12,6 +12,7 @@ namespace Project.UI.Common {
         public DialogWidgetBase() {
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 
@@ -53,9 +54,6 @@ namespace Project.UI.Common {
     // Dialog
     public class DialogWidget : DialogWidgetBase {
 
-        // View
-        public override DialogWidgetViewBase View { get; }
-
         // Constructor
         public DialogWidget(string? title, string? message) {
             View = new DialogWidgetView();
@@ -77,9 +75,6 @@ namespace Project.UI.Common {
     }
     // InfoDialog
     public class InfoDialogWidget : DialogWidgetBase {
-
-        // View
-        public override DialogWidgetViewBase View { get; }
 
         // Constructor
         public InfoDialogWidget(string? title, string? message) {
@@ -103,9 +98,6 @@ namespace Project.UI.Common {
     // WarningDialog
     public class WarningDialogWidget : DialogWidgetBase {
 
-        // View
-        public override DialogWidgetViewBase View { get; }
-
         // Constructor
         public WarningDialogWidget(string? title, string? message) {
             View = new WarningDialogWidgetView();
@@ -127,9 +119,6 @@ namespace Project.UI.Common {
     }
     // ErrorDialog
     public class ErrorDialogWidget : DialogWidgetBase {
-
-        // View
-        public override DialogWidgetViewBase View { get; }
 
         // Constructor
         public ErrorDialogWidget(string? title, string? message) {

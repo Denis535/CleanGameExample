@@ -52,8 +52,8 @@ namespace Project.Entities.Things {
         public void Fire(IDamager damager) {
             if (delay.IsCompleted) {
                 delay.Start();
-                var bullet = Bullet.Create( 5, this, damager, FirePoint.transform.position, FirePoint.transform.rotation, null );
-                Physics.IgnoreCollision( Collider, bullet.GetComponent<Collider>() );
+                var bullet = Bullet.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, this, damager, 5 );
+                Physics.IgnoreCollision( Collider, bullet.GetComponentInChildren<Collider>() );
             }
         }
 

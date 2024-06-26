@@ -8,14 +8,12 @@ namespace Project.UI.Common {
 
     public class LoadingWidget : UIWidgetBase2<LoadingWidgetView> {
 
-        // View
-        public override LoadingWidgetView View { get; }
-
         // Constructor
         public LoadingWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

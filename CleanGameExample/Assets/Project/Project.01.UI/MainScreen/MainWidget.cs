@@ -13,8 +13,6 @@ namespace Project.UI.MainScreen {
 
         // Framework
         private Application2 Application { get; }
-        // View
-        public override MainWidgetView View { get; }
 
         // Constructor
         public MainWidget(IDependencyContainer container) : base( container ) {
@@ -23,6 +21,7 @@ namespace Project.UI.MainScreen {
             AddChild( new MenuWidget( Container ) );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

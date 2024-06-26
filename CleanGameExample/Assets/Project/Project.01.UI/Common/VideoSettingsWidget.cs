@@ -11,8 +11,6 @@ namespace Project.UI.Common {
         // Framework
         private Application2 Application { get; }
         private Storage.VideoSettings VideoSettings => Application.VideoSettings;
-        // View
-        public override VideoSettingsWidgetView View { get; }
 
         // Constructor
         public VideoSettingsWidget(IDependencyContainer container) : base( container ) {
@@ -20,6 +18,7 @@ namespace Project.UI.Common {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

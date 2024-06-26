@@ -2,7 +2,7 @@
   "dependencies": {
     "com.denis535.addressables-extensions": "1.0.11",
     "com.denis535.addressables-source-generator": "1.0.38",
-    "com.denis535.clean-architecture-game-framework": "1.1.64",
+    "com.denis535.clean-architecture-game-framework": "1.1.70",
     "com.denis535.colorful-project-window": "1.0.34",
     "com.denis535.uitoolkit-theme-style-sheet": "https://github.com/Denis535/UIToolkitThemeStyleSheet.git?path=Packages/com.denis535.uitoolkit-theme-style-sheet",
     "com.unity.2d.sprite": "1.0.0",

@@ -12,8 +12,6 @@ namespace Project.UI.Common {
         // Framework
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
-        // View
-        public override ProfileSettingsWidgetView View { get; }
 
         // Constructor
         public ProfileSettingsWidget(IDependencyContainer container) : base( container ) {
@@ -21,6 +19,7 @@ namespace Project.UI.Common {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

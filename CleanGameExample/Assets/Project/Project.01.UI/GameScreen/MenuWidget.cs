@@ -11,8 +11,6 @@ namespace Project.UI.GameScreen {
 
         // Framework
         private UIRouter Router { get; }
-        // View
-        public override MenuWidgetView View { get; }
 
         // Constructor
         public MenuWidget(IDependencyContainer container) : base( container ) {
@@ -20,6 +18,7 @@ namespace Project.UI.GameScreen {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

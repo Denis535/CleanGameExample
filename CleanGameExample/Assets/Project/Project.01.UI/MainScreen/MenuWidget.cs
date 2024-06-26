@@ -15,8 +15,6 @@ namespace Project.UI.MainScreen {
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
-        // View
-        public override MenuWidgetView View { get; }
 
         // Constructor
         public MenuWidget(IDependencyContainer container) : base( container ) {
@@ -25,6 +23,7 @@ namespace Project.UI.MainScreen {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

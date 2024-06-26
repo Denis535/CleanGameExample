@@ -12,8 +12,6 @@ namespace Project.UI.GameScreen {
 
         // Framework
         private Game Game { get; }
-        // View
-        public override GameWidgetView View { get; }
         // IsCursorLocked
         public bool IsCursorVisible {
             get => Cursor.lockState == CursorLockMode.None;
@@ -26,6 +24,7 @@ namespace Project.UI.GameScreen {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

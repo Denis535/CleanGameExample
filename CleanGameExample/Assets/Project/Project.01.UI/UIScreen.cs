@@ -69,14 +69,12 @@ namespace Project.UI {
     }
     public class RootWidget : UIRootWidget<RootWidgetView> {
 
-        // View
-        public override RootWidgetView View { get; }
-
         // Constructor
         public RootWidget(IDependencyContainer container) : base( container ) {
             View = CreateView<RootWidgetView>();
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

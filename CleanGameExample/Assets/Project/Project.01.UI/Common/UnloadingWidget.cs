@@ -5,17 +5,15 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
-    
-    public class UnloadingWidget : UIWidgetBase2<UnloadingWidgetView> {
 
-        // View
-        public override UnloadingWidgetView View { get; }
+    public class UnloadingWidget : UIWidgetBase2<UnloadingWidgetView> {
 
         // Constructor
         public UnloadingWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

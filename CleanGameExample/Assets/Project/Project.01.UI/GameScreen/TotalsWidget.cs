@@ -13,8 +13,6 @@ namespace Project.UI.GameScreen {
         // Framework
         private UIRouter Router { get; }
         private Game Game { get; }
-        // View
-        public override TotalsWidgetView View { get; }
 
         // Constructor
         public TotalsWidget(IDependencyContainer container) : base( container ) {
@@ -23,6 +21,7 @@ namespace Project.UI.GameScreen {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

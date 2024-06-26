@@ -12,8 +12,6 @@ namespace Project.UI.Common {
         // Framework
         private Application2 Application { get; }
         private Storage.AudioSettings AudioSettings => Application.AudioSettings;
-        // View
-        public override AudioSettingsWidgetView View { get; }
 
         // Constructor
         public AudioSettingsWidget(IDependencyContainer container) : base( container ) {
@@ -21,6 +19,7 @@ namespace Project.UI.Common {
             View = CreateView( this );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

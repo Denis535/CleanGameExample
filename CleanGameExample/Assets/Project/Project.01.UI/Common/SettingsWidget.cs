@@ -9,9 +9,6 @@ namespace Project.UI.Common {
 
     public class SettingsWidget : UIWidgetBase2<SettingsWidgetView> {
 
-        // View
-        public override SettingsWidgetView View { get; }
-
         // Constructor
         public SettingsWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
@@ -20,6 +17,7 @@ namespace Project.UI.Common {
             AddChild( new AudioSettingsWidget( container ) );
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

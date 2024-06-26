@@ -12,7 +12,6 @@ namespace Project.UI.Common {
         public DialogWidgetBase() {
         }
         public override void Dispose() {
-            View.Dispose();
             base.Dispose();
         }
 
@@ -61,6 +60,7 @@ namespace Project.UI.Common {
             View.Message = message;
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 
@@ -83,6 +83,7 @@ namespace Project.UI.Common {
             View.Message = message;
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 
@@ -105,6 +106,7 @@ namespace Project.UI.Common {
             View.Message = message;
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 
@@ -127,6 +129,7 @@ namespace Project.UI.Common {
             View.Message = message;
         }
         public override void Dispose() {
+            View.Dispose();
             base.Dispose();
         }
 

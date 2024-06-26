@@ -9,20 +9,22 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public partial class Camera2 {
+        public static class Factory {
 
-        private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
+            private static readonly PrefabHandle<Camera2> Prefab = new PrefabHandle<Camera2>( R.Project.Entities.Value_Camera );
 
-        public static void Load() {
-            Prefab.Load().Wait();
+            public static void Load() {
+                Prefab.Load().Wait();
+            }
+            public static void Unload() {
+                Prefab.Release();
+            }
+
+            public static Camera2 Create() {
+                return GameObject.Instantiate( Prefab.GetValue() );
+            }
+
         }
-        public static void Unload() {
-            Prefab.Release();
-        }
-
-        public static Camera2 Create() {
-            return GameObject.Instantiate( Prefab.GetValue() );
-        }
-
     }
     public partial class Camera2 : EntityBase {
 

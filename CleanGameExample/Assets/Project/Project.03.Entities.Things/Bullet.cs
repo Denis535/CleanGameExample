@@ -8,22 +8,24 @@ namespace Project.Entities.Things {
     using UnityEngine.Framework.Entities;
 
     public partial class Bullet {
+        public static class Factory {
 
-        private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
+            private static readonly PrefabHandle<Bullet> Prefab = new PrefabHandle<Bullet>( R.Project.Entities.Things.Value_Bullet );
 
-        public static void Load() {
-            Prefab.Load().Wait();
+            public static void Load() {
+                Prefab.Load().Wait();
+            }
+            public static void Unload() {
+                Prefab.Release();
+            }
+
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, Gun gun, IDamager damager, float force) {
+                var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
+                result.Awake( gun, damager, force );
+                return result;
+            }
+
         }
-        public static void Unload() {
-            Prefab.Release();
-        }
-
-        public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, Gun gun, IDamager damager, float force) {
-            var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-            result.Awake( gun, damager, force );
-            return result;
-        }
-
     }
     public partial class Bullet : EntityBase<BulletBody, BulletView> {
 
@@ -58,22 +60,23 @@ namespace Project.Entities.Things {
     }
     public class BulletBody : EntityBodyBase {
 
-        private Rigidbody Rigidbody { get; }
-        private Collider Collider { get; }
-        public Vector3 Position => Rigidbody.position;
-        public Quaternion Rotation => Rigidbody.rotation;
-        public Vector3 Velocity => Rigidbody.velocity;
+        private readonly Rigidbody rigidbody;
+        private readonly Collider collider;
+
+        public Vector3 Position => rigidbody.position;
+        public Quaternion Rotation => rigidbody.rotation;
+        public Vector3 Velocity => rigidbody.velocity;
 
         public BulletBody(GameObject gameObject) : base( gameObject ) {
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            Collider = gameObject.RequireComponentInChildren<Collider>();
+            rigidbody = gameObject.RequireComponent<Rigidbody>();
+            collider = gameObject.RequireComponentInChildren<Collider>();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         public void AddImpulse(float force) {
-            Rigidbody.AddForce( Transform.forward * force, ForceMode.Impulse );
+            rigidbody.AddForce( Transform.forward * force, ForceMode.Impulse );
         }
 
     }

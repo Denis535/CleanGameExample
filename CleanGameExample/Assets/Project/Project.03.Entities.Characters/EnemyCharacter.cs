@@ -9,25 +9,27 @@ namespace Project.Entities.Characters {
     using UnityEngine.AddressableAssets;
 
     public partial class EnemyCharacter {
+        public static class Factory {
 
-        private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
-            R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Red,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Green,
-            R.Project.Entities.Characters.Value_EnemyCharacter_Blue
-        } );
+            private static readonly PrefabListHandle<EnemyCharacter> Prefabs = new PrefabListHandle<EnemyCharacter>( new[] {
+                R.Project.Entities.Characters.Value_EnemyCharacter_Gray,
+                R.Project.Entities.Characters.Value_EnemyCharacter_Red,
+                R.Project.Entities.Characters.Value_EnemyCharacter_Green,
+                R.Project.Entities.Characters.Value_EnemyCharacter_Blue
+            } );
 
-        public static void Load() {
-            Prefabs.Load().Wait();
+            public static void Load() {
+                Prefabs.Load().Wait();
+            }
+            public static void Unload() {
+                Prefabs.Release();
+            }
+
+            public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
+                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
+            }
+
         }
-        public static void Unload() {
-            Prefabs.Release();
-        }
-
-        public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
-            return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
-        }
-
     }
     public partial class EnemyCharacter : Character {
         private struct Environment_ {
@@ -47,7 +49,7 @@ namespace Project.Entities.Characters {
 
         // Start
         public override void Start() {
-            SetWeapon( Gun.Create( null ) );
+            SetWeapon( Gun.Factory.Create( null ) );
         }
         public override void FixedUpdate() {
             base.FixedUpdate();

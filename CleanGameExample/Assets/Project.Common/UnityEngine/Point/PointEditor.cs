@@ -19,27 +19,19 @@ namespace UnityEngine {
         }
 
         // OnSceneGUI
-        public void OnSceneGUI() {
-            if (Event.current.control) {
-                var ray = HandleUtility.GUIPointToWorldRay( Event.current.mousePosition );
-                if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                    var point = GetPoint( hit.point, hit.distance );
-                    DrawPoint( point, hit.distance );
-                    SceneView.RepaintAll();
-                }
-            }
-            if (Event.current.control && Event.current.type is EventType.MouseDown or EventType.MouseDrag && Event.current.button == 0) {
+        protected void OnSceneGUI() {
+            if (Event.current.type is EventType.MouseDown or EventType.MouseDrag && Event.current.button == 0 && Event.current.control) {
                 var ray = HandleUtility.GUIPointToWorldRay( Event.current.mousePosition );
                 if (Physics.Raycast( ray, out var hit, 256, ~0, QueryTriggerInteraction.Ignore )) {
                     Undo.RegisterCompleteObjectUndo( Target.transform, null );
-                    var point = GetPoint( hit.point, hit.distance );
+                    var point = Snap( hit.point, hit.distance );
                     Target.transform.position = point;
                 }
                 Target.SendMessage( "OnValidate", null, SendMessageOptions.DontRequireReceiver );
                 EditorUtility.SetDirty( Target );
                 Event.current.Use();
             }
-            if (Event.current.control && Event.current.type is EventType.ScrollWheel) {
+            if (Event.current.type is EventType.ScrollWheel && Event.current.control) {
                 {
                     Undo.RegisterCompleteObjectUndo( Target.transform, null );
                     var delta = Event.current.delta.y > 0 ? 45 : -45;
@@ -49,10 +41,20 @@ namespace UnityEngine {
                 EditorUtility.SetDirty( Target );
                 Event.current.Use();
             }
+            if ((Event.current.isMouse || Event.current.isKey) && Event.current.control) {
+                SceneView.RepaintAll();
+            }
+            if (Event.current.type is EventType.Repaint && Event.current.control) {
+                var ray = HandleUtility.GUIPointToWorldRay( Event.current.mousePosition );
+                if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
+                    var point = Snap( hit.point, hit.distance );
+                    DrawPoint( point, hit.distance );
+                }
+            }
         }
 
         // Helpers
-        private static Vector3 GetPoint(Vector3 point, float distance) {
+        private static Vector3 Snap(Vector3 point, float distance) {
             if (distance > 10) {
                 return Snapping.Snap( point, Vector3.one * 1f );
             }

@@ -10,7 +10,7 @@ namespace UnityEngine {
 
 #if UNITY_EDITOR
         // OnValidate
-        public new void OnValidate() {
+        protected new void OnValidate() {
             gameObject.name = GetType().Name;
             gameObject.isStatic = true;
             transform.localPosition = Snapping.Snap( transform.localPosition, Vector3.one * 0.5f );
@@ -22,7 +22,7 @@ namespace UnityEngine {
 
 #if UNITY_EDITOR
         // OnDrawGizmos
-        public new void OnDrawGizmos() {
+        protected new void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Math.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.yellow;
             Gizmos.matrix = transform.localToWorldMatrix;

@@ -29,7 +29,7 @@ namespace UnityEngine {
         public Quaternion? LookRotation { get; private set; }
 
         // Awake
-        private void Awake() {
+        protected void Awake() {
             Collider = gameObject.RequireComponent<CharacterController>();
             Collider.excludeLayers = ExcludeLayers_Default;
         }
@@ -37,10 +37,10 @@ namespace UnityEngine {
         }
 
         // OnEnable
-        private void OnEnable() {
+        protected void OnEnable() {
             Collider.enabled = true;
         }
-        private void OnDisable() {
+        protected void OnDisable() {
             Collider.enabled = false;
         }
 
@@ -74,7 +74,7 @@ namespace UnityEngine {
                     }
                 }
                 Collider.excludeLayers = ExcludeLayers_WhenMoving;
-                Collider.Move( velocity * Time.fixedDeltaTime );
+                var flags = Collider.Move( velocity * Time.fixedDeltaTime );
                 Collider.excludeLayers = ExcludeLayers_Default;
             }
         }
@@ -134,7 +134,7 @@ namespace UnityEngine {
         }
 
         // OnControllerColliderHit
-        private void OnControllerColliderHit(ControllerColliderHit hit) {
+        protected void OnControllerColliderHit(ControllerColliderHit hit) {
             hit.rigidbody?.WakeUp();
         }
 

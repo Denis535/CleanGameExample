@@ -60,23 +60,22 @@ namespace Project.Entities.Things {
     }
     public class BulletBody : EntityBodyBase {
 
-        private readonly Rigidbody rigidbody;
-        private readonly Collider collider;
-
-        public Vector3 Position => rigidbody.position;
-        public Quaternion Rotation => rigidbody.rotation;
-        public Vector3 Velocity => rigidbody.velocity;
+        private Rigidbody Rigidbody { get; }
+        private Collider Collider { get; }
+        public Vector3 Position => Rigidbody.position;
+        public Quaternion Rotation => Rigidbody.rotation;
+        public Vector3 Velocity => Rigidbody.velocity;
 
         public BulletBody(GameObject gameObject) : base( gameObject ) {
-            rigidbody = gameObject.RequireComponent<Rigidbody>();
-            collider = gameObject.RequireComponentInChildren<Collider>();
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Collider = gameObject.RequireComponentInChildren<Collider>();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         public void AddImpulse(float force) {
-            rigidbody.AddForce( Transform.forward * force, ForceMode.Impulse );
+            Rigidbody.AddForce( Transform.forward * force, ForceMode.Impulse );
         }
 
     }

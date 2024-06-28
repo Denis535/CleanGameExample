@@ -11,7 +11,7 @@ namespace Project.Entities.Characters {
         Vector3 GetMoveVector();
         Vector3? GetBodyTarget();
         Vector3? GetHeadTarget();
-        Vector3? GetAimTarget();
+        Vector3? GetWeaponTarget();
         bool IsJumpPressed();
         bool IsCrouchPressed();
         bool IsAcceleratePressed();

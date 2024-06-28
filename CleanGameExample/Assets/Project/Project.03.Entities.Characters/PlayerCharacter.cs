@@ -52,10 +52,10 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             base.Update();
             if (IsAlive) {
-                Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
-                BodyAt( Player.GetBodyTarget() );
-                HeadAt( Player.GetHeadTarget() );
-                AimAt( Player.GetAimTarget() );
+                MoveableBody.Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
+                MoveableBody.LookAt( Player.GetBodyTarget() );
+                View.HeadAt( Player.GetHeadTarget() );
+                View.WeaponAt( Player.GetWeaponTarget() );
                 if (Player.IsAimPressed()) {
 
                 }
@@ -64,9 +64,9 @@ namespace Project.Entities.Characters {
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     if (interactable is IWeapon weapon) {
-                        SetWeapon( weapon );
+                        Weapon = weapon;
                     } else {
-                        SetWeapon( null );
+                        Weapon = null;
                     }
                 }
             }

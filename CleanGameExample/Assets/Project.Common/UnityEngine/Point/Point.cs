@@ -10,14 +10,14 @@ namespace UnityEngine {
 
 #if UNITY_EDITOR
         // OnValidate
-        public void OnValidate() {
+        protected void OnValidate() {
             gameObject.name = GetType().Name;
         }
 #endif
 
 #if UNITY_EDITOR
         // OnDrawGizmos
-        public void OnDrawGizmos() {
+        protected void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Math.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.white;
             Gizmos.matrix = transform.localToWorldMatrix;

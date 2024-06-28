@@ -68,21 +68,21 @@ namespace Project.Entities.Things {
     }
     public class GunView : EntityViewBase {
 
-        private readonly Delay fireDelay = new Delay( 0.25f );
-        private readonly FirePoint firePoint;
+        private Delay FireDelay { get; } = new Delay( 0.25f );
+        private FirePoint FirePoint { get; }
 
         public GunView(GameObject gameObject) : base( gameObject ) {
-            firePoint = gameObject.RequireComponentInChildren<FirePoint>();
+            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
         public bool Fire([NotNullWhen( true )] out Vector3? position, [NotNullWhen( true )] out Quaternion? rotation) {
-            if (fireDelay.IsCompleted) {
-                fireDelay.Start();
-                position = firePoint.transform.position;
-                rotation = firePoint.transform.rotation;
+            if (FireDelay.IsCompleted) {
+                FireDelay.Start();
+                position = FirePoint.transform.position;
+                rotation = FirePoint.transform.rotation;
                 return true;
             }
             position = null;

@@ -49,7 +49,7 @@ namespace Project.Entities.Characters {
 
         // Start
         protected override void Start() {
-            SetWeapon( Gun.Factory.Create( null ) );
+            //Weapon = Gun.Factory.Create( null );
         }
         protected override void FixedUpdate() {
             base.FixedUpdate();
@@ -58,10 +58,10 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             base.Update();
             if (IsAlive) {
-                Move( Vector3.zero, false, false, false );
-                BodyAt( GetBodyTarget( Environment ) );
-                HeadAt( GetHeadTarget( Environment ) );
-                AimAt( GetAimTarget( Environment ) );
+                MoveableBody.Move( Vector3.zero, false, false, false );
+                MoveableBody.LookAt( GetBodyTarget( Environment ) );
+                View.HeadAt( GetHeadTarget( Environment ) );
+                View.WeaponAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
                     Weapon?.Fire( this );
                 }
@@ -93,7 +93,7 @@ namespace Project.Entities.Characters {
             }
             return null;
         }
-        private static Vector3? GetAimTarget(Environment_ environment) {
+        private static Vector3? GetWeaponTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
                     return environment.Player.transform.position + Vector3.up * 1.75f;

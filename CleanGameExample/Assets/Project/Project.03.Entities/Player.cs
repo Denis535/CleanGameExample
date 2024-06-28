@@ -45,7 +45,7 @@ namespace Project.Entities {
         public abstract Vector3 GetMoveVector();
         public abstract Vector3? GetBodyTarget();
         public abstract Vector3? GetHeadTarget();
-        public abstract Vector3? GetAimTarget();
+        public abstract Vector3? GetWeaponTarget();
         public abstract bool IsJumpPressed();
         public abstract bool IsCrouchPressed();
         public abstract bool IsAcceleratePressed();
@@ -151,7 +151,7 @@ namespace Project.Entities {
             }
             return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         }
-        public override Vector3? GetAimTarget() {
+        public override Vector3? GetWeaponTarget() {
             Assert.Operation.Message( $"Method 'GetAimTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );

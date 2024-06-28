@@ -58,7 +58,7 @@ namespace Project.Entities.Characters {
 
         // BodyAt
         protected void BodyAt(Vector3? target) {
-            MoveableBody.SetLookTarget( target );
+            MoveableBody.LookAt( target );
         }
 
         // HeadAt

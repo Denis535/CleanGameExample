@@ -108,9 +108,9 @@ namespace UnityEngine {
             }
         }
 
-        // SetLookRotation
-        public void SetLookRotation(Quaternion? rotation) {
-            Assert.Operation.Message( $"Method 'SetLookRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        // LookAt
+        public void LookAt(Quaternion? rotation) {
+            Assert.Operation.Message( $"Method 'LookAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
@@ -120,31 +120,16 @@ namespace UnityEngine {
             }
         }
 
-        // SetLookDirection
-        public void SetLookDirection(Vector3? direction) {
-            Assert.Operation.Message( $"Method 'SetLookDirection' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
-            if (direction != null) {
-                var rotation = Quaternion.LookRotation( direction.Value, Vector3.up );
-                SetLookRotation( rotation );
-            } else {
-                SetLookRotation( null );
-            }
-        }
-
-        // SetLookTarget
-        public void SetLookTarget(Vector3? target) {
-            Assert.Operation.Message( $"Method 'SetLookTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        // LookAt
+        public void LookAt(Vector3? target) {
+            Assert.Operation.Message( $"Method 'LookAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
             if (target != null) {
-                var rotation = GetRotation( transform.position, target.Value );
-                SetLookRotation( rotation );
+                LookAt( GetRotation( transform.position, target.Value ) );
             } else {
-                SetLookRotation( null );
+                LookAt( (Quaternion?) null );
             }
         }
 

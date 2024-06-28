@@ -48,18 +48,19 @@ namespace Project.Entities.Characters {
         }
 
         // Start
-        public override void Start() {
+        protected override void Start() {
             SetWeapon( Gun.Factory.Create( null ) );
         }
-        public override void FixedUpdate() {
-            if (IsAlive) {
-                MoveableBody.FixedUpdate2();
-            }
+        protected override void FixedUpdate() {
+            base.FixedUpdate();
             Environment = GetEnvironment( transform );
         }
-        public override void Update() {
+        protected override void Update() {
             if (IsAlive) {
-                MoveableBody.Update2( false, Vector3.zero, GetLookTarget( Environment ), false, false, false );
+                SetInput( Vector3.zero, GetBodyTarget( Environment ), false, false, false );
+            }
+            base.Update();
+            if (IsAlive) {
                 HeadAt( GetHeadTarget( Environment ) );
                 AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
@@ -75,7 +76,7 @@ namespace Project.Entities.Characters {
             };
         }
         // Heleprs
-        private static Vector3? GetLookTarget(Environment_ environment) {
+        private static Vector3? GetBodyTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
                     return environment.Player.transform.position + Vector3.up * 1.75f;

@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Project.Entities.Characters;
     using Project.Entities.Things;
@@ -43,8 +42,8 @@ namespace Project.Entities {
         public abstract void Update();
 
         // Input
-        public abstract bool IsMovePressed(out Vector3 moveVector);
-        public abstract Vector3? GetLookTarget();
+        public abstract Vector3 GetMoveVector();
+        public abstract Vector3? GetBodyTarget();
         public abstract Vector3? GetHeadTarget();
         public abstract Vector3? GetAimTarget();
         public abstract bool IsJumpPressed();
@@ -116,40 +115,48 @@ namespace Project.Entities {
         }
 
         // Input
-        public override bool IsMovePressed(out Vector3 moveVector) {
-            Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        public override Vector3 GetMoveVector() {
+            Assert.Operation.Message( $"Method 'GetMoveVector' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Player.Move.IsPressed()) {
-                var vector = (Vector3) Input.Player.Move.ReadValue<Vector2>();
-                moveVector = UnityEngine.Camera.main.transform.TransformDirection( vector.x, 0, vector.y ).Chain( i => new Vector3( i.x, 0, i.z ).normalized * vector.magnitude );
-                return true;
+                var vector = Input.Player.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+                vector = UnityEngine.Camera.main.transform.TransformDirection( vector );
+                vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
+                return vector;
             } else {
-                moveVector = default;
-                return false;
+                return Vector3.zero;
             }
         }
-        public override Vector3? GetLookTarget() {
-            if (IsAimPressed() || IsFirePressed()) {
+        public override Vector3? GetBodyTarget() {
+            Assert.Operation.Message( $"Method 'GetBodyTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (IsMovePressed( out var moveVector )) {
-                return Character!.transform.position + moveVector;
+            if (Input.Player.Move.IsPressed()) {
+                var vector = Input.Player.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+                if (vector != Vector3.zero) {
+                    vector = UnityEngine.Camera.main.transform.TransformDirection( vector );
+                    vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
+                    return Character!.transform.position + vector;
+                }
             }
             return null;
         }
         public override Vector3? GetHeadTarget() {
-            if (IsAimPressed() || IsFirePressed()) {
+            Assert.Operation.Message( $"Method 'GetHeadTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (IsMovePressed( out _ )) {
+            if (Input.Player.Move.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
             return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         }
         public override Vector3? GetAimTarget() {
-            if (IsAimPressed() || IsFirePressed()) {
+            Assert.Operation.Message( $"Method 'GetAimTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (IsMovePressed( out _ )) {
+            if (Input.Player.Move.IsPressed()) {
                 return null;
             }
             return null;

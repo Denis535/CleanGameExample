@@ -12,13 +12,13 @@ namespace Project.Entities.Characters {
     public abstract class Character : EntityBase, IDamager, IDamageable {
 
         // Rigidbody
-        protected Rigidbody Rigidbody { get; set; } = default!;
+        private Rigidbody Rigidbody { get; set; } = default!;
         // MoveableBody
-        protected MoveableBody MoveableBody { get; set; } = default!;
-        // Head
-        private Transform Head { get; set; } = default!;
+        private MoveableBody MoveableBody { get; set; } = default!;
         // Body
         private Transform Body { get; set; } = default!;
+        // Head
+        private Transform Head { get; set; } = default!;
         // WeaponSlot
         private Slot WeaponSlot { get; set; } = default!;
         // Game
@@ -34,25 +34,32 @@ namespace Project.Entities.Characters {
         protected override void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             MoveableBody = gameObject.RequireComponent<MoveableBody>();
-            Head = transform.Require( "Head" );
             Body = transform.Require( "Body" );
+            Head = transform.Require( "Head" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
         }
         protected override void OnDestroy() {
         }
 
         // Start
-        public virtual void Start() {
+        protected virtual void Start() {
         }
-        public virtual void FixedUpdate() {
+        protected virtual void FixedUpdate() {
+            MoveableBody.FixedUpdate2();
         }
-        public virtual void Update() {
+        protected virtual void Update() {
+            MoveableBody.Update2();
+        }
+
+        // SetInput
+        protected void SetInput(Vector3 moveVector, Vector3? bodyTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            MoveableBody.SetInput( moveVector, bodyTarget, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // HeadAt
         protected bool HeadAt(Vector3? target) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            return LookAt( Head, target );
+            return HeadAt( Head, target );
         }
 
         // AimAt
@@ -81,7 +88,7 @@ namespace Project.Entities.Characters {
         }
 
         // Helpers
-        private static bool LookAt(Transform transform, Vector3? target) {
+        private static bool HeadAt(Transform transform, Vector3? target) {
             var rotation = transform.localRotation;
             if (target != null) {
                 transform.localRotation = Quaternion.identity;

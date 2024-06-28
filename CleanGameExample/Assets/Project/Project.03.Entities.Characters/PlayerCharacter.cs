@@ -44,16 +44,17 @@ namespace Project.Entities.Characters {
         }
 
         // Start
-        public override void Start() {
+        protected override void Start() {
         }
-        public override void FixedUpdate() {
+        protected override void FixedUpdate() {
+            base.FixedUpdate();
+        }
+        protected override void Update() {
             if (IsAlive) {
-                MoveableBody.FixedUpdate2();
+                SetInput( Player.GetMoveVector(), Player.GetBodyTarget(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
             }
-        }
-        public override void Update() {
+            base.Update();
             if (IsAlive) {
-                MoveableBody.Update2( Player.IsMovePressed( out var moveVector ), moveVector, Player.GetLookTarget(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
                 HeadAt( Player.GetHeadTarget() );
                 AimAt( Player.GetAimTarget() );
                 if (Player.IsAimPressed()) {

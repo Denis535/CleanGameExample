@@ -21,9 +21,8 @@ namespace UnityEngine {
         // Collider
         private CharacterController Collider { get; set; } = default!;
         // Input
-        public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
-        public Vector3? LookTarget { get; private set; }
+        public Vector3? BodyTarget { get; private set; }
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
         public bool IsAcceleratePressed { get; private set; }
@@ -48,41 +47,44 @@ namespace UnityEngine {
         public void FixedUpdate2() {
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
             Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             fixedUpdateWasInvoked = true;
-            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                Move( Collider, GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed ) );
+            if (enabled) {
+                Move( Collider, MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
             }
         }
 
-        // Update
-        public void Update2(bool isMovePressed, Vector3 moveVector, Vector3? lookTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+        // SetInput
+        public void SetInput(Vector3 moveVector, Vector3? bodyTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'SetInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (fixedUpdateWasInvoked) {
                 fixedUpdateWasInvoked = false;
-                IsMovePressed = isMovePressed;
                 MoveVector = moveVector;
-                LookTarget = lookTarget;
+                BodyTarget = bodyTarget;
                 IsJumpPressed = isJumpPressed;
                 IsCrouchPressed = isCrouchPressed;
                 IsAcceleratePressed = isAcceleratePressed;
             } else {
-                IsMovePressed |= isMovePressed;
                 MoveVector = Vector3.Max( MoveVector, moveVector );
-                LookTarget = lookTarget;
+                BodyTarget = bodyTarget;
                 IsJumpPressed |= isJumpPressed;
                 IsCrouchPressed |= isCrouchPressed;
                 IsAcceleratePressed |= isAcceleratePressed;
             }
-            Update2();
         }
-        private void Update2() {
-            if (LookTarget != null) {
-                SetRotation( Collider, GetRotation( transform.localPosition, LookTarget.Value ) );
+
+        // Update
+        public void Update2() {
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            if (enabled) {
+                if (BodyTarget != null) {
+                    SetRotation( Collider, BodyTarget.Value );
+                }
             }
         }
 
@@ -92,9 +94,9 @@ namespace UnityEngine {
         }
 
         // Helpers
-        private static Vector3 GetVelocity(Vector3 move, bool jump, bool crouch, bool accelerate) {
+        private static CollisionFlags Move(CharacterController collider, Vector3 move, bool jump, bool crouch, bool accelerate) {
             var velocity = Vector3.zero;
-            if (move != default) {
+            if (move != Vector3.zero) {
                 if (accelerate) {
                     velocity += move * 13;
                 } else {
@@ -115,14 +117,6 @@ namespace UnityEngine {
                     velocity -= Vector3.up * 5;
                 }
             }
-            return velocity;
-        }
-        private static Quaternion GetRotation(Vector3 position, Vector3 target) {
-            var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
-            return Quaternion.LookRotation( direction, Vector3.up );
-        }
-        // Helpers
-        private static CollisionFlags Move(CharacterController collider, Vector3 velocity) {
             try {
                 collider.excludeLayers = ExcludeLayers_WhenMoving;
                 return collider.Move( velocity * Time.fixedDeltaTime );
@@ -130,7 +124,10 @@ namespace UnityEngine {
                 collider.excludeLayers = ExcludeLayers_Default;
             }
         }
-        private static void SetRotation(CharacterController collider, Quaternion rotation) {
+        private static void SetRotation(CharacterController collider, Vector3 target) {
+            var position = collider.transform.position;
+            var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
+            var rotation = Quaternion.LookRotation( direction, Vector3.up );
             collider.transform.localRotation = Quaternion.RotateTowards( collider.transform.localRotation, rotation, 3 * 360 * Time.deltaTime );
         }
 

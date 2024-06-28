@@ -21,12 +21,12 @@ namespace UnityEngine {
         // Collider
         private CharacterController Collider { get; set; } = default!;
         // Input
-        public Vector3 Vector { get; private set; }
+        public Vector3 MoveVector { get; private set; }
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
         public bool IsAcceleratePressed { get; private set; }
         // Input
-        public Vector3? Target { get; private set; }
+        public Quaternion? LookRotation { get; private set; }
 
         // Awake
         private void Awake() {
@@ -51,7 +51,31 @@ namespace UnityEngine {
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             fixedUpdateWasInvoked = true;
             if (enabled) {
-                Move( Collider, Vector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                var velocity = Vector3.zero;
+                if (MoveVector != Vector3.zero) {
+                    if (IsAcceleratePressed) {
+                        velocity += MoveVector * 13;
+                    } else {
+                        velocity += MoveVector * 5;
+                    }
+                }
+                if (IsJumpPressed) {
+                    if (IsAcceleratePressed) {
+                        velocity += Vector3.up * 13;
+                    } else {
+                        velocity += Vector3.up * 5;
+                    }
+                } else
+                if (IsCrouchPressed) {
+                    if (IsAcceleratePressed) {
+                        velocity -= Vector3.up * 13;
+                    } else {
+                        velocity -= Vector3.up * 5;
+                    }
+                }
+                Collider.excludeLayers = ExcludeLayers_WhenMoving;
+                Collider.Move( velocity * Time.fixedDeltaTime );
+                Collider.excludeLayers = ExcludeLayers_Default;
             }
         }
 
@@ -65,34 +89,62 @@ namespace UnityEngine {
         }
 
         // Move
-        public void Move(Vector3 vector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+        public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Method 'Move' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
             if (fixedUpdateWasInvoked) {
                 fixedUpdateWasInvoked = false;
-                Vector = vector;
+                MoveVector = moveVector;
                 IsJumpPressed = isJumpPressed;
                 IsCrouchPressed = isCrouchPressed;
                 IsAcceleratePressed = isAcceleratePressed;
             } else {
-                Vector = Vector3.Max( Vector, vector );
+                MoveVector = Vector3.Max( MoveVector, moveVector );
                 IsJumpPressed |= isJumpPressed;
                 IsCrouchPressed |= isCrouchPressed;
                 IsAcceleratePressed |= isAcceleratePressed;
             }
         }
 
-        // RotateAt
-        public void RotateAt(Vector3? target) {
-            Assert.Operation.Message( $"Method 'RotateAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        // SetLookRotation
+        public void SetLookRotation(Quaternion? rotation) {
+            Assert.Operation.Message( $"Method 'SetLookRotation' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
-            Target = target;
-            if (Target != null) {
-                SetRotation( Collider, Target.Value );
+            LookRotation = rotation;
+            if (LookRotation != null) {
+                transform.localRotation = Quaternion.RotateTowards( transform.localRotation, LookRotation.Value, 3 * 360 * Time.deltaTime );
+            }
+        }
+
+        // SetLookDirection
+        public void SetLookDirection(Vector3? direction) {
+            Assert.Operation.Message( $"Method 'SetLookDirection' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
+            if (direction != null) {
+                var rotation = Quaternion.LookRotation( direction.Value, Vector3.up );
+                SetLookRotation( rotation );
+            } else {
+                SetLookRotation( null );
+            }
+        }
+
+        // SetLookTarget
+        public void SetLookTarget(Vector3? target) {
+            Assert.Operation.Message( $"Method 'SetLookTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
+            if (target != null) {
+                var rotation = GetRotation( transform.position, target.Value );
+                SetLookRotation( rotation );
+            } else {
+                SetLookRotation( null );
             }
         }
 
@@ -102,41 +154,15 @@ namespace UnityEngine {
         }
 
         // Helpers
-        private static CollisionFlags Move(CharacterController collider, Vector3 move, bool jump, bool crouch, bool accelerate) {
-            var velocity = Vector3.zero;
-            if (move != Vector3.zero) {
-                if (accelerate) {
-                    velocity += move * 13;
-                } else {
-                    velocity += move * 5;
-                }
-            }
-            if (jump) {
-                if (accelerate) {
-                    velocity += Vector3.up * 13;
-                } else {
-                    velocity += Vector3.up * 5;
-                }
-            } else
-            if (crouch) {
-                if (accelerate) {
-                    velocity -= Vector3.up * 13;
-                } else {
-                    velocity -= Vector3.up * 5;
-                }
-            }
-            try {
-                collider.excludeLayers = ExcludeLayers_WhenMoving;
-                return collider.Move( velocity * Time.fixedDeltaTime );
-            } finally {
-                collider.excludeLayers = ExcludeLayers_Default;
-            }
+        private static Vector3 GetDirection(Vector3 position, Vector3 target) {
+            var direction = target - position;
+            direction = new Vector3( direction.x, 0, direction.z );
+            direction = direction.normalized;
+            return direction;
         }
-        private static void SetRotation(CharacterController collider, Vector3 target) {
-            var position = collider.transform.position;
-            var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
-            var rotation = Quaternion.LookRotation( direction, Vector3.up );
-            collider.transform.localRotation = Quaternion.RotateTowards( collider.transform.localRotation, rotation, 3 * 360 * Time.deltaTime );
+        private static Quaternion GetRotation(Vector3 position, Vector3 target) {
+            var direction = GetDirection( position, target );
+            return Quaternion.LookRotation( direction, Vector3.up );
         }
 
     }

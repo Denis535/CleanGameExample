@@ -52,13 +52,13 @@ namespace Project.Entities.Characters {
         }
 
         // Move
-        protected void Move(Vector3 vector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            MoveableBody.Move( vector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        protected void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
 
         // BodyAt
         protected void BodyAt(Vector3? target) {
-            MoveableBody.RotateAt( target );
+            MoveableBody.SetLookTarget( target );
         }
 
         // HeadAt

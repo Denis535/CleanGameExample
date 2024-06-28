@@ -50,11 +50,10 @@ namespace Project.Entities.Characters {
             base.FixedUpdate();
         }
         protected override void Update() {
-            if (IsAlive) {
-                SetInput( Player.GetMoveVector(), Player.GetBodyTarget(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
-            }
             base.Update();
             if (IsAlive) {
+                Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
+                BodyAt( Player.GetBodyTarget() );
                 HeadAt( Player.GetHeadTarget() );
                 AimAt( Player.GetAimTarget() );
                 if (Player.IsAimPressed()) {

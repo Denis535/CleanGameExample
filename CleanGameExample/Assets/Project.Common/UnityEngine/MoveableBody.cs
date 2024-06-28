@@ -21,11 +21,12 @@ namespace UnityEngine {
         // Collider
         private CharacterController Collider { get; set; } = default!;
         // Input
-        public Vector3 MoveVector { get; private set; }
-        public Vector3? BodyTarget { get; private set; }
+        public Vector3 Vector { get; private set; }
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
         public bool IsAcceleratePressed { get; private set; }
+        // Input
+        public Vector3? Target { get; private set; }
 
         // Awake
         private void Awake() {
@@ -45,46 +46,53 @@ namespace UnityEngine {
 
         // FixedUpdate
         public void FixedUpdate2() {
+            Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
             fixedUpdateWasInvoked = true;
             if (enabled) {
-                Move( Collider, MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
+                Move( Collider, Vector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed );
             }
         }
 
-        // SetInput
-        public void SetInput(Vector3 moveVector, Vector3? bodyTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+        // Update
+        public void Update2() {
+            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            if (enabled) {
+            }
+        }
+
+        // Move
+        public void Move(Vector3 vector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            Assert.Operation.Message( $"Method 'Move' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
             Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'SetInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (fixedUpdateWasInvoked) {
                 fixedUpdateWasInvoked = false;
-                MoveVector = moveVector;
-                BodyTarget = bodyTarget;
+                Vector = vector;
                 IsJumpPressed = isJumpPressed;
                 IsCrouchPressed = isCrouchPressed;
                 IsAcceleratePressed = isAcceleratePressed;
             } else {
-                MoveVector = Vector3.Max( MoveVector, moveVector );
-                BodyTarget = bodyTarget;
+                Vector = Vector3.Max( Vector, vector );
                 IsJumpPressed |= isJumpPressed;
                 IsCrouchPressed |= isCrouchPressed;
                 IsAcceleratePressed |= isAcceleratePressed;
             }
         }
 
-        // Update
-        public void Update2() {
+        // RotateAt
+        public void RotateAt(Vector3? target) {
+            Assert.Operation.Message( $"Method 'RotateAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
             Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (enabled) {
-                if (BodyTarget != null) {
-                    SetRotation( Collider, BodyTarget.Value );
-                }
+            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
+            Target = target;
+            if (Target != null) {
+                SetRotation( Collider, Target.Value );
             }
         }
 

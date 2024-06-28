@@ -56,11 +56,10 @@ namespace Project.Entities.Characters {
             Environment = GetEnvironment( transform );
         }
         protected override void Update() {
-            if (IsAlive) {
-                SetInput( Vector3.zero, GetBodyTarget( Environment ), false, false, false );
-            }
             base.Update();
             if (IsAlive) {
+                Move( Vector3.zero, false, false, false );
+                BodyAt( GetBodyTarget( Environment ) );
                 HeadAt( GetHeadTarget( Environment ) );
                 AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {

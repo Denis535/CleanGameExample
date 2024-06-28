@@ -11,10 +11,10 @@ namespace Project.Entities.Characters {
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract class Character : EntityBase, IDamager, IDamageable {
 
-        // Rigidbody
-        private Rigidbody Rigidbody { get; set; } = default!;
         // MoveableBody
         private MoveableBody MoveableBody { get; set; } = default!;
+        // Rigidbody
+        private Rigidbody Rigidbody { get; set; } = default!;
         // Body
         private Transform Body { get; set; } = default!;
         // Head
@@ -32,8 +32,8 @@ namespace Project.Entities.Characters {
 
         // Awake
         protected override void Awake() {
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
             MoveableBody = gameObject.RequireComponent<MoveableBody>();
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Body = transform.Require( "Body" );
             Head = transform.Require( "Head" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
@@ -51,9 +51,14 @@ namespace Project.Entities.Characters {
             MoveableBody.Update2();
         }
 
-        // SetInput
-        protected void SetInput(Vector3 moveVector, Vector3? bodyTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            MoveableBody.SetInput( moveVector, bodyTarget, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        // Move
+        protected void Move(Vector3 vector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            MoveableBody.Move( vector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        }
+
+        // BodyAt
+        protected void BodyAt(Vector3? target) {
+            MoveableBody.RotateAt( target );
         }
 
         // HeadAt

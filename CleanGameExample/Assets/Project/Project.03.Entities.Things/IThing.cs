@@ -11,8 +11,6 @@ namespace Project.Entities.Things {
         GameObject gameObject { get; }
         // Transform
         Transform transform { get; }
-        // IsAttached
-        bool IsAttached { get; }
 
     }
 }

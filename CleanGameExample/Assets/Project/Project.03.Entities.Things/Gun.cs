@@ -38,9 +38,6 @@ namespace Project.Entities.Things {
     }
     public partial class Gun : EntityBase<GunBody, GunView>, IThing, IWeapon {
 
-        // IsAttached
-        public bool IsAttached => transform.parent != null;
-
         // Awake
         protected override void Awake() {
             Body = new GunBody( gameObject );

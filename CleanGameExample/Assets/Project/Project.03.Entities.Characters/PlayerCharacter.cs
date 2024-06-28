@@ -47,14 +47,15 @@ namespace Project.Entities.Characters {
         public override void Start() {
         }
         public override void FixedUpdate() {
-            base.FixedUpdate();
+            if (IsAlive) {
+                MoveableBody.FixedUpdate2();
+            }
         }
         public override void Update() {
             if (IsAlive) {
-                SetMovementInput( Player.IsMovePressed( out var moveVector_ ), moveVector_, Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
-                RotateAt( GetTarget( Player, this ) );
-                LookAt( GetLookTarget( Player ) );
-                AimAt( GetAimTarget( Player ) );
+                MoveableBody.Update2( Player.IsMovePressed( out var moveVector ), moveVector, Player.GetLookTarget(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
+                HeadAt( Player.GetHeadTarget() );
+                AimAt( Player.GetAimTarget() );
                 if (Player.IsAimPressed()) {
 
                 }
@@ -69,35 +70,6 @@ namespace Project.Entities.Characters {
                     }
                 }
             }
-        }
-
-        // Helpers
-        private static Vector3? GetTarget(IPlayer player, PlayerCharacter character) {
-            if (player.IsAimPressed() || player.IsFirePressed()) {
-                return player.GetLookTarget();
-            }
-            if (player.IsMovePressed( out var moveVector )) {
-                return character.transform.position + moveVector;
-            }
-            return null;
-        }
-        private static Vector3? GetLookTarget(IPlayer player) {
-            if (player.IsAimPressed() || player.IsFirePressed()) {
-                return player.GetLookTarget();
-            }
-            if (player.IsMovePressed( out _ )) {
-                return player.GetLookTarget();
-            }
-            return player.GetLookTarget();
-        }
-        private static Vector3? GetAimTarget(IPlayer player) {
-            if (player.IsAimPressed() || player.IsFirePressed()) {
-                return player.GetLookTarget();
-            }
-            if (player.IsMovePressed( out _ )) {
-                return null;
-            }
-            return null;
         }
 
     }

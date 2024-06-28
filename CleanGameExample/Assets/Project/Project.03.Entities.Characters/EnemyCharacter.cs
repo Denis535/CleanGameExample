@@ -52,13 +52,15 @@ namespace Project.Entities.Characters {
             SetWeapon( Gun.Factory.Create( null ) );
         }
         public override void FixedUpdate() {
-            base.FixedUpdate();
+            if (IsAlive) {
+                MoveableBody.FixedUpdate2();
+            }
             Environment = GetEnvironment( transform );
         }
         public override void Update() {
             if (IsAlive) {
-                RotateAt( GetTarget( Environment ) );
-                LookAt( GetLookTarget( Environment ) );
+                MoveableBody.Update2( false, Vector3.zero, GetLookTarget( Environment ), false, false, false );
+                HeadAt( GetHeadTarget( Environment ) );
                 AimAt( GetAimTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
                     Weapon?.Fire( this );
@@ -73,7 +75,7 @@ namespace Project.Entities.Characters {
             };
         }
         // Heleprs
-        private static Vector3? GetTarget(Environment_ environment) {
+        private static Vector3? GetLookTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
                     return environment.Player.transform.position + Vector3.up * 1.75f;
@@ -82,7 +84,7 @@ namespace Project.Entities.Characters {
             }
             return null;
         }
-        private static Vector3? GetLookTarget(Environment_ environment) {
+        private static Vector3? GetHeadTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
                     return environment.Player.transform.position + Vector3.up * 1.75f;

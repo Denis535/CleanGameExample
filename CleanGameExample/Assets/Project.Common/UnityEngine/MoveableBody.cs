@@ -19,105 +19,75 @@ namespace UnityEngine {
         private static LayerMask ExcludeLayers_WhenMoving => Masks.CharacterEntityInternal; // Exclude only CharacterEntityInternal layer
 
         // Collider
-        protected CharacterController Collider { get; private set; } = default!;
+        private CharacterController Collider { get; set; } = default!;
         // Input
         public bool IsMovePressed { get; private set; }
         public Vector3 MoveVector { get; private set; }
+        public Vector3? LookTarget { get; private set; }
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
         public bool IsAcceleratePressed { get; private set; }
-        // Input
-        public bool IsLookPressed { get; private set; }
-        public Vector3 LookTarget { get; private set; }
 
         // Awake
-        protected virtual void Awake() {
+        private void Awake() {
             Collider = gameObject.RequireComponent<CharacterController>();
             Collider.excludeLayers = ExcludeLayers_Default;
         }
-        protected virtual void OnDestroy() {
+        private void OnDestroy() {
         }
 
         // OnEnable
-        protected void OnEnable() {
+        private void OnEnable() {
             Collider.enabled = true;
         }
-        protected void OnDisable() {
+        private void OnDisable() {
             Collider.enabled = false;
         }
 
-        // SetMovementInput
-        public void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'SetMovementInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        // FixedUpdate
+        public void FixedUpdate2() {
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
+            fixedUpdateWasInvoked = true;
+            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
+                Move( Collider, GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed ) );
+            }
+        }
+
+        // Update
+        public void Update2(bool isMovePressed, Vector3 moveVector, Vector3? lookTarget, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
+            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
+            Assert.Operation.Message( $"MoveableBody {this} must be enabled" ).Valid( enabled );
+            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (fixedUpdateWasInvoked) {
                 fixedUpdateWasInvoked = false;
                 IsMovePressed = isMovePressed;
                 MoveVector = moveVector;
+                LookTarget = lookTarget;
                 IsJumpPressed = isJumpPressed;
                 IsCrouchPressed = isCrouchPressed;
                 IsAcceleratePressed = isAcceleratePressed;
             } else {
                 IsMovePressed |= isMovePressed;
                 MoveVector = Vector3.Max( MoveVector, moveVector );
+                LookTarget = lookTarget;
                 IsJumpPressed |= isJumpPressed;
                 IsCrouchPressed |= isCrouchPressed;
                 IsAcceleratePressed |= isAcceleratePressed;
             }
+            Update2();
         }
-
-        // SetLookInput
-        public void SetLookInput(bool isLookPressed, Vector3 lookTarget) {
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'SetLookInput' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            IsLookPressed = isLookPressed;
-            LookTarget = lookTarget;
-        }
-
-        // PhysicsFixedUpdate
-        public virtual void PhysicsFixedUpdate() {
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'PhysicsFixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            fixedUpdateWasInvoked = true;
-            if (IsMovePressed || IsJumpPressed || IsCrouchPressed || IsAcceleratePressed) {
-                Move( GetVelocity( MoveVector, IsJumpPressed, IsCrouchPressed, IsAcceleratePressed ) );
+        private void Update2() {
+            if (LookTarget != null) {
+                SetRotation( Collider, GetRotation( transform.localPosition, LookTarget.Value ) );
             }
-        }
-
-        // PhysicsUpdate
-        public virtual void PhysicsUpdate() {
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must not be disposed" ).NotDisposed( this );
-            Assert.Operation.Message( $"PhysicsCharacter {this} must be enabled" ).Valid( enabled );
-            Assert.Operation.Message( $"Method 'PhysicsUpdate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (IsLookPressed) {
-                Rotate( GetRotation( transform.localPosition, LookTarget ) );
-            }
-        }
-
-        // Move
-        protected virtual CollisionFlags Move(Vector3 velocity) {
-            try {
-                Collider.excludeLayers = ExcludeLayers_WhenMoving;
-                return Collider.Move( velocity * Time.fixedDeltaTime );
-            } finally {
-                Collider.excludeLayers = ExcludeLayers_Default;
-            }
-        }
-
-        // Rotate
-        protected virtual void Rotate(Quaternion rotation) {
-            transform.localRotation = Quaternion.RotateTowards( transform.localRotation, rotation, 3 * 360 * Time.deltaTime );
         }
 
         // OnControllerColliderHit
-        protected virtual void OnControllerColliderHit(ControllerColliderHit hit) {
+        private void OnControllerColliderHit(ControllerColliderHit hit) {
             hit.rigidbody?.WakeUp();
         }
 
@@ -150,6 +120,18 @@ namespace UnityEngine {
         private static Quaternion GetRotation(Vector3 position, Vector3 target) {
             var direction = new Vector3( target.x - position.x, 0, target.z - position.z );
             return Quaternion.LookRotation( direction, Vector3.up );
+        }
+        // Helpers
+        private static CollisionFlags Move(CharacterController collider, Vector3 velocity) {
+            try {
+                collider.excludeLayers = ExcludeLayers_WhenMoving;
+                return collider.Move( velocity * Time.fixedDeltaTime );
+            } finally {
+                collider.excludeLayers = ExcludeLayers_Default;
+            }
+        }
+        private static void SetRotation(CharacterController collider, Quaternion rotation) {
+            collider.transform.localRotation = Quaternion.RotateTowards( collider.transform.localRotation, rotation, 3 * 360 * Time.deltaTime );
         }
 
     }

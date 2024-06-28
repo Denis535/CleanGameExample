@@ -3,6 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Project.Entities.Characters;
     using Project.Entities.Things;
@@ -42,8 +43,10 @@ namespace Project.Entities {
         public abstract void Update();
 
         // Input
-        public abstract Vector3 GetLookTarget();
         public abstract bool IsMovePressed(out Vector3 moveVector);
+        public abstract Vector3? GetLookTarget();
+        public abstract Vector3? GetHeadTarget();
+        public abstract Vector3? GetAimTarget();
         public abstract bool IsJumpPressed();
         public abstract bool IsCrouchPressed();
         public abstract bool IsAcceleratePressed();
@@ -113,9 +116,6 @@ namespace Project.Entities {
         }
 
         // Input
-        public override Vector3 GetLookTarget() {
-            return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
-        }
         public override bool IsMovePressed(out Vector3 moveVector) {
             Assert.Operation.Message( $"Method 'IsMovePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Player.Move.IsPressed()) {
@@ -126,6 +126,33 @@ namespace Project.Entities {
                 moveVector = default;
                 return false;
             }
+        }
+        public override Vector3? GetLookTarget() {
+            if (IsAimPressed() || IsFirePressed()) {
+                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+            }
+            if (IsMovePressed( out var moveVector )) {
+                return Character!.transform.position + moveVector;
+            }
+            return null;
+        }
+        public override Vector3? GetHeadTarget() {
+            if (IsAimPressed() || IsFirePressed()) {
+                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+            }
+            if (IsMovePressed( out _ )) {
+                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+            }
+            return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+        }
+        public override Vector3? GetAimTarget() {
+            if (IsAimPressed() || IsFirePressed()) {
+                return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
+            }
+            if (IsMovePressed( out _ )) {
+                return null;
+            }
+            return null;
         }
         public override bool IsJumpPressed() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );

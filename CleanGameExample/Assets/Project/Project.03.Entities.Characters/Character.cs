@@ -12,9 +12,9 @@ namespace Project.Entities.Characters {
     public abstract class Character : EntityBase, IDamager, IDamageable {
 
         // Rigidbody
-        private Rigidbody Rigidbody { get; set; } = default!;
+        protected Rigidbody Rigidbody { get; set; } = default!;
         // MoveableBody
-        private MoveableBody MoveableBody { get; set; } = default!;
+        protected MoveableBody MoveableBody { get; set; } = default!;
         // Head
         private Transform Head { get; set; } = default!;
         // Body
@@ -45,33 +45,12 @@ namespace Project.Entities.Characters {
         public virtual void Start() {
         }
         public virtual void FixedUpdate() {
-            if (MoveableBody.enabled) {
-                MoveableBody.PhysicsFixedUpdate();
-            }
         }
         public virtual void Update() {
         }
 
-        // SetMovementInput
-        protected void SetMovementInput(bool isMovePressed, Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            MoveableBody.SetMovementInput( isMovePressed, moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-        }
-
-        // RotateAt
-        protected void RotateAt(Vector3? target) {
-            Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
-            if (target != null) {
-                MoveableBody.SetLookInput( true, target.Value );
-                MoveableBody.PhysicsUpdate();
-            } else {
-                MoveableBody.SetLookInput( false, MoveableBody.LookTarget );
-                MoveableBody.PhysicsUpdate();
-            }
-        }
-
-        // LookAt
-        protected bool LookAt(Vector3? target) {
+        // HeadAt
+        protected bool HeadAt(Vector3? target) {
             Assert.Operation.Message( $"Character {this} must be alive" ).Valid( IsAlive );
             return LookAt( Head, target );
         }

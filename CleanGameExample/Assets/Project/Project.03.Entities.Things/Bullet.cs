@@ -27,7 +27,7 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Bullet : EntityBase<BulletBody, BulletView> {
+    public partial class Bullet : UEntityBase<BulletBody, BulletView> {
 
         public Gun Gun { get; set; } = default!;
         public IDamager Damager { get; set; } = default!;

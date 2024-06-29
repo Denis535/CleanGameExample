@@ -26,7 +26,7 @@ namespace Project.Entities {
 
         }
     }
-    public partial class Camera2 : EntityBase {
+    public partial class Camera2 : UEntityBase {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         public static readonly float DefaultDistance = 1.5f;

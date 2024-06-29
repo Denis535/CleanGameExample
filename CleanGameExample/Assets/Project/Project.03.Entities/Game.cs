@@ -101,9 +101,9 @@ namespace Project.Entities {
         }
 
         // Update
-        public override void FixedUpdate() {
+        public void FixedUpdate() {
         }
-        public override void Update() {
+        public void Update() {
             Player.Update();
             if (IsDirty) {
                 if (IsLoser()) {
@@ -115,7 +115,7 @@ namespace Project.Entities {
                 IsDirty = false;
             }
         }
-        public override void LateUpdate() {
+        public void LateUpdate() {
         }
 
         // Spawn

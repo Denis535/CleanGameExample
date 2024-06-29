@@ -9,7 +9,7 @@ namespace Project.Entities.Characters {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract class Character : EntityBase<CharacterBody, CharacterView>, IDamager, IDamageable {
+    public abstract class Character : UEntityBase<CharacterBody, CharacterView>, IDamager, IDamageable {
 
         // Game
         public IGame Game { get; set; } = default!;

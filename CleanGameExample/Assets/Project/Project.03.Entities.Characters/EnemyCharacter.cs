@@ -49,17 +49,15 @@ namespace Project.Entities.Characters {
 
         // Start
         protected override void Start() {
-            //Weapon = Gun.Factory.Create( null );
+            Weapon = Gun.Factory.Create( null );
         }
         protected override void FixedUpdate() {
-            base.FixedUpdate();
             Environment = GetEnvironment( transform );
         }
         protected override void Update() {
-            base.Update();
             if (IsAlive) {
-                MoveableBody.Move( Vector3.zero, false, false, false );
-                MoveableBody.LookAt( GetBodyTarget( Environment ) );
+                Body.Move( Vector3.zero, false, false, false );
+                Body.LookAt( GetBodyTarget( Environment ) );
                 View.HeadAt( GetHeadTarget( Environment ) );
                 View.WeaponAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {

@@ -36,7 +36,7 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Gun : EntityBase<GunBody, GunView>, IThing, IWeapon {
+    public partial class Gun : EntityBase<GunBody, GunView>, IWeapon {
 
         // Awake
         protected override void Awake() {

@@ -47,13 +47,11 @@ namespace Project.Entities.Characters {
         protected override void Start() {
         }
         protected override void FixedUpdate() {
-            base.FixedUpdate();
         }
         protected override void Update() {
-            base.Update();
             if (IsAlive) {
-                MoveableBody.Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
-                MoveableBody.LookAt( Player.GetBodyTarget() );
+                Body.Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
+                Body.LookAt( Player.GetBodyTarget() );
                 View.HeadAt( Player.GetHeadTarget() );
                 View.WeaponAt( Player.GetWeaponTarget() );
                 if (Player.IsAimPressed()) {

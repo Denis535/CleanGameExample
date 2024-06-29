@@ -11,27 +11,14 @@ namespace Project.Entities.Characters {
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract class Character : EntityBase<CharacterBody, CharacterView>, IDamager, IDamageable {
 
-        // MoveableBody
-        protected MoveableBody MoveableBody { get; set; } = default!;
-        // Rigidbody
-        private Rigidbody Rigidbody { get; set; } = default!;
         // Game
         public IGame Game { get; set; } = default!;
         // IsAlive
-        public bool IsAlive => MoveableBody.enabled;
+        public bool IsAlive { get; private set; } = true;
         // Weapon
         public IWeapon? Weapon {
-            get => View.Weapon?.GetComponent<IWeapon>();
-            protected set {
-                var prevWeapon = Weapon;
-                if (prevWeapon != null) {
-                    //SetPhysical( (IThing) prevWeapon, null );
-                }
-                if (value != null) {
-                    //SetPhysical( (IThing) value, slot.transform );
-                }
-                View.Weapon = ((MonoBehaviour?) value)?.gameObject;
-            }
+            get => View.Weapon?.RequireComponent<IWeapon>();
+            protected set => View.Weapon = ((MonoBehaviour?) value)?.gameObject;
         }
         // OnDamageEvent
         public event Action<DamageInfo>? OnDamageEvent;
@@ -40,8 +27,6 @@ namespace Project.Entities.Characters {
         protected override void Awake() {
             Body = new CharacterBody( gameObject );
             View = new CharacterView( gameObject );
-            MoveableBody = gameObject.RequireComponent<MoveableBody>();
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         protected override void OnDestroy() {
             View.Dispose();
@@ -52,10 +37,8 @@ namespace Project.Entities.Characters {
         protected virtual void Start() {
         }
         protected virtual void FixedUpdate() {
-            MoveableBody.FixedUpdate2();
         }
         protected virtual void Update() {
-            MoveableBody.Update2();
         }
 
         // OnDamage
@@ -64,46 +47,51 @@ namespace Project.Entities.Characters {
         }
         protected virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
+                IsAlive = false;
+                Body.IsRagdoll = true;
+                Body.AddImpulse( info.Direction * 5, info.Point );
                 Weapon = null;
-                //SetPhysical( this, true );
-                //Rigidbody.AddForceAtPosition( info.Direction * 5, info.Point, ForceMode.Impulse );
                 OnDamageEvent?.Invoke( info );
             }
         }
 
-        // Helpers
-        //private static void SetPhysical(Character character, bool value) {
-        //    if (value) {
-        //        character.gameObject.SetLayerRecursively( Layers.Entity );
-        //        character.MoveableBody.enabled = false;
-        //        character.Rigidbody.isKinematic = false;
-        //    } else {
-        //        character.gameObject.SetLayerRecursively( Layers.CharacterEntity, Layers.CharacterEntityInternal );
-        //        character.MoveableBody.enabled = true;
-        //        character.Rigidbody.isKinematic = true;
-        //    }
-        //}
-        //private static void SetPhysical(IThing thing, Transform? parent) {
-        //    if (parent != null) {
-        //        thing.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
-        //        thing.transform.localPosition = Vector3.zero;
-        //        thing.transform.localRotation = Quaternion.identity;
-        //        thing.transform.SetParent( parent, false );
-        //        thing.gameObject.RequireComponent<Rigidbody>().isKinematic = true;
-        //    } else {
-        //        thing.gameObject.SetLayerRecursively( Layers.Entity );
-        //        thing.transform.SetParent( null, true );
-        //        thing.gameObject.RequireComponent<Rigidbody>().isKinematic = false;
-        //    }
-        //}
-
     }
     public class CharacterBody : EntityBodyBase {
 
+        private MoveableBody MoveableBody { get; }
+        private Rigidbody Rigidbody { get; }
+        public bool IsRagdoll {
+            get => !MoveableBody.enabled;
+            set {
+                if (value) {
+                    GameObject.SetLayerRecursively( Layers.Entity );
+                    MoveableBody.enabled = false;
+                    Rigidbody.isKinematic = false;
+                } else {
+                    GameObject.SetLayerRecursively( Layers.CharacterEntity, Layers.CharacterEntityInternal );
+                    MoveableBody.enabled = true;
+                    Rigidbody.isKinematic = true;
+                }
+            }
+        }
+
         public CharacterBody(GameObject gameObject) : base( gameObject ) {
+            MoveableBody = gameObject.RequireComponent<MoveableBody>();
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        }
+        public void LookAt(Vector3? target) {
+            MoveableBody.LookAt( target );
+        }
+
+        public void AddImpulse(Vector3 force, Vector3 position) {
+            Rigidbody.AddForceAtPosition( force, position, ForceMode.Impulse );
         }
 
     }
@@ -115,9 +103,18 @@ namespace Project.Entities.Characters {
         public GameObject? Weapon {
             get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject : null;
             set {
-                WeaponSlot.transform.DetachChildren();
+                var prevWeapon = Weapon;
+                if (prevWeapon != null) {
+                    prevWeapon.SetLayerRecursively( Layers.Entity );
+                    prevWeapon.RequireComponent<Rigidbody>().isKinematic = false;
+                    prevWeapon.transform.SetParent( null, true );
+                }
                 if (value != null) {
-                    value.transform.parent = WeaponSlot.transform;
+                    value.SetLayerRecursively( Layers.CharacterEntityInternal );
+                    value.RequireComponent<Rigidbody>().isKinematic = true;
+                    value.transform.SetParent( WeaponSlot.transform, true );
+                    value.transform.localPosition = Vector3.zero;
+                    value.transform.localRotation = Quaternion.identity;
                 }
             }
         }

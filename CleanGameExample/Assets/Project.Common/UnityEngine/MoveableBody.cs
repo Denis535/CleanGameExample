@@ -44,48 +44,36 @@ namespace UnityEngine {
             Collider.enabled = false;
         }
 
-        // FixedUpdate
-        public void FixedUpdate2() {
-            Assert.Operation.Message( $"Method 'FixedUpdate' must be invoked only within fixed update" ).Valid( Time.inFixedTimeStep );
-            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            fixedUpdateWasInvoked = true;
-            if (enabled) {
-                var velocity = Vector3.zero;
-                if (MoveVector != Vector3.zero) {
-                    if (IsAcceleratePressed) {
-                        velocity += MoveVector * 13;
-                    } else {
-                        velocity += MoveVector * 5;
-                    }
-                }
-                if (IsJumpPressed) {
-                    if (IsAcceleratePressed) {
-                        velocity += Vector3.up * 13;
-                    } else {
-                        velocity += Vector3.up * 5;
-                    }
-                } else
-                if (IsCrouchPressed) {
-                    if (IsAcceleratePressed) {
-                        velocity -= Vector3.up * 13;
-                    } else {
-                        velocity -= Vector3.up * 5;
-                    }
-                }
-                Collider.excludeLayers = ExcludeLayers_WhenMoving;
-                var flags = Collider.Move( velocity * Time.fixedDeltaTime );
-                Collider.excludeLayers = ExcludeLayers_Default;
-            }
-        }
-
         // Update
-        public void Update2() {
-            Assert.Operation.Message( $"Method 'Update' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
-            Assert.Operation.Message( $"MoveableBody {this} must not be disposed" ).NotDisposed( this );
-            if (enabled) {
+        protected void FixedUpdate() {
+            fixedUpdateWasInvoked = true;
+            var velocity = Vector3.zero;
+            if (MoveVector != Vector3.zero) {
+                if (IsAcceleratePressed) {
+                    velocity += MoveVector * 13;
+                } else {
+                    velocity += MoveVector * 5;
+                }
             }
+            if (IsJumpPressed) {
+                if (IsAcceleratePressed) {
+                    velocity += Vector3.up * 13;
+                } else {
+                    velocity += Vector3.up * 5;
+                }
+            } else
+            if (IsCrouchPressed) {
+                if (IsAcceleratePressed) {
+                    velocity -= Vector3.up * 13;
+                } else {
+                    velocity -= Vector3.up * 5;
+                }
+            }
+            Collider.excludeLayers = ExcludeLayers_WhenMoving;
+            var flags = Collider.Move( velocity * Time.fixedDeltaTime );
+            Collider.excludeLayers = ExcludeLayers_Default;
+        }
+        protected void Update() {
         }
 
         // Move

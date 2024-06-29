@@ -39,7 +39,7 @@ namespace Project.Entities.Things {
         protected void Awake(Gun gun, IDamager damager, float force) {
             Gun = gun;
             Damager = damager;
-            Body.AddImpulse( force );
+            Body.AddImpulse( transform.forward * force );
             GameObject.Destroy( gameObject, 10 );
         }
         protected override void OnDestroy() {
@@ -74,8 +74,8 @@ namespace Project.Entities.Things {
             base.Dispose();
         }
 
-        public void AddImpulse(float force) {
-            Rigidbody.AddForce( Transform.forward * force, ForceMode.Impulse );
+        public void AddImpulse(Vector3 force) {
+            Rigidbody.AddForce( force, ForceMode.Impulse );
         }
 
     }

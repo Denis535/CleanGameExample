@@ -6,11 +6,10 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IThing {
+    }
+    public interface IWeapon : IThing {
 
-        // GameObject
-        GameObject gameObject { get; }
-        // Transform
-        Transform transform { get; }
+        void Fire(IDamager damager);
 
     }
 }

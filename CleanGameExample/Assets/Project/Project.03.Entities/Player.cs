@@ -15,10 +15,10 @@ namespace Project.Entities {
         private PlayerState state;
 
         // Name
-        public abstract string Name { get; }
-        public abstract PlayerKind Kind { get; }
+        public string Name { get; }
+        public PlayerKind Kind { get; }
         // State
-        public virtual PlayerState State {
+        public PlayerState State {
             get => state;
             internal set {
                 Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
@@ -27,19 +27,15 @@ namespace Project.Entities {
             }
         }
         public event Action<PlayerState>? OnStateChangeEvent;
-        // Framework
-        public abstract Camera2 Camera { get; }
-        public abstract PlayerCharacter? Character { get; internal set; }
 
         // Constructor
-        public PlayerBase3(IDependencyContainer container) : base( container ) {
+        public PlayerBase3(IDependencyContainer container, string name, PlayerKind kind) : base( container ) {
+            Name = name;
+            Kind = kind;
         }
         public override void Dispose() {
             base.Dispose();
         }
-
-        // Update
-        public abstract void Update();
 
         // Input
         public abstract Vector3 GetMoveVector();
@@ -56,14 +52,9 @@ namespace Project.Entities {
     }
     public class Player : PlayerBase3 {
 
-        // Name
-        public override string Name { get; }
-        public override PlayerKind Kind { get; }
-        // State
-        public override PlayerState State { get => base.State; internal set => base.State = value; }
         // Framework
-        public override Camera2 Camera { get; }
-        public override PlayerCharacter? Character { get; internal set; }
+        public Camera2 Camera { get; internal init; } = default!;
+        public PlayerCharacter? Character { get; internal set; }
         // Input
         private InputActions_Player Input { get; }
         // Hit
@@ -88,10 +79,7 @@ namespace Project.Entities {
         }
 
         // Constructor
-        public Player(IDependencyContainer container, string name, PlayerKind kind, Camera2 camera) : base( container ) {
-            Name = name;
-            Kind = kind;
-            Camera = camera;
+        public Player(IDependencyContainer container, string name, PlayerKind kind) : base( container, name, kind ) {
             Input = new InputActions_Player();
         }
         public override void Dispose() {
@@ -100,7 +88,7 @@ namespace Project.Entities {
         }
 
         // Update
-        public override void Update() {
+        public void Update() {
             {
                 Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
             }

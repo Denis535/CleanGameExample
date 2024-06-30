@@ -36,14 +36,17 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Gun : UEntityBase<GunBody, GunView>, IWeapon {
+    public partial class Gun : MonoBehaviour, IWeapon {
+
+        private GunBody Body { get; set; } = default!;
+        private GunView View { get; set; } = default!;
 
         // Awake
-        protected override void Awake() {
+        protected void Awake() {
             Body = new GunBody( gameObject );
             View = new GunView( gameObject );
         }
-        protected override void OnDestroy() {
+        protected void OnDestroy() {
             View.Dispose();
             Body.Dispose();
         }
@@ -57,21 +60,21 @@ namespace Project.Entities.Things {
         }
 
     }
-    public class GunBody : EntityBodyBase {
+    public class GunBody : BodyBase {
 
-        public GunBody(GameObject gameObject) : base( gameObject ) {
+        public GunBody(GameObject gameObject) {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    public class GunView : EntityViewBase {
+    public class GunView : ViewBase {
 
         private Delay FireDelay { get; } = new Delay( 0.25f );
         private FirePoint FirePoint { get; }
 
-        public GunView(GameObject gameObject) : base( gameObject ) {
+        public GunView(GameObject gameObject) {
             FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         public override void Dispose() {

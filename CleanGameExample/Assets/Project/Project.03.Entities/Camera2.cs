@@ -26,7 +26,7 @@ namespace Project.Entities {
 
         }
     }
-    public partial class Camera2 : UEntityBase {
+    public partial class Camera2 : MonoBehaviour {
 
         public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         public static readonly float DefaultDistance = 1.5f;
@@ -44,9 +44,9 @@ namespace Project.Entities {
         public float Distance { get; private set; }
 
         // Awake
-        protected override void Awake() {
+        protected void Awake() {
         }
-        protected override void OnDestroy() {
+        protected void OnDestroy() {
         }
 
         // Rotate
@@ -69,23 +69,26 @@ namespace Project.Entities {
                 Distance = DefaultDistance;
                 prevTarget = target;
             }
-            if (target.IsAlive) {
-                var distance01 = Mathf.InverseLerp( MinDistance, MaxDistance, Distance );
-                transform.localPosition = target.transform.position;
-                transform.localEulerAngles = Angles;
-                transform.Translate( 0, 0, -Distance, Space.Self );
-                transform.Translate( Vector3.LerpUnclamped( Vector3.right * 0.2f, Vector3.right * 0.6f, distance01 ), Space.Self );
-                transform.Translate( Vector3.LerpUnclamped( target.transform.up * 1.8f, target.transform.up * 2.2f, distance01 ), Space.World );
-            } else {
-                transform.localPosition = target.transform.position;
-                transform.localEulerAngles = Angles;
-                transform.Translate( 0, 0, -Distance, Space.Self );
-                transform.Translate( target.transform.up * 1.5f, Space.World );
-            }
+            Apply( transform, target, Angles, Distance );
             Apply( Camera.main, transform );
         }
 
         // Helpers
+        private static void Apply(Transform transform, Character target, Vector2 angles, float distance) {
+            if (target.IsAlive) {
+                var distance01 = Mathf.InverseLerp( MinDistance, MaxDistance, distance );
+                transform.localPosition = target.transform.position;
+                transform.localEulerAngles = angles;
+                transform.Translate( 0, 0, -distance, Space.Self );
+                transform.Translate( Vector3.LerpUnclamped( Vector3.right * 0.2f, Vector3.right * 0.6f, distance01 ), Space.Self );
+                transform.Translate( Vector3.LerpUnclamped( target.transform.up * 1.8f, target.transform.up * 2.2f, distance01 ), Space.World );
+            } else {
+                transform.localPosition = target.transform.position;
+                transform.localEulerAngles = angles;
+                transform.Translate( 0, 0, -distance, Space.Self );
+                transform.Translate( target.transform.up * 1.5f, Space.World );
+            }
+        }
         private static void Apply(Camera camera, Transform transform) {
             camera.transform.localPosition = transform.localPosition;
             camera.transform.localRotation = transform.localRotation;

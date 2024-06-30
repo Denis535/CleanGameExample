@@ -9,8 +9,10 @@ namespace Project.Entities.Characters {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract class Character : UEntityBase<CharacterBody, CharacterView>, IDamager, IDamageable {
+    public abstract class Character : MonoBehaviour, IDamager, IDamageable {
 
+        protected CharacterBody Body { get; set; } = default!;
+        protected CharacterView View { get; set; } = default!;
         // Game
         public IGame Game { get; set; } = default!;
         // IsAlive
@@ -24,11 +26,11 @@ namespace Project.Entities.Characters {
         public event Action<DamageInfo>? OnDamageEvent;
 
         // Awake
-        protected override void Awake() {
+        protected virtual void Awake() {
             Body = new CharacterBody( gameObject );
             View = new CharacterView( gameObject );
         }
-        protected override void OnDestroy() {
+        protected virtual void OnDestroy() {
             View.Dispose();
             Body.Dispose();
         }
@@ -56,8 +58,9 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public class CharacterBody : EntityBodyBase {
+    public class CharacterBody : BodyBase {
 
+        private GameObject GameObject { get; }
         private MoveableBody MoveableBody { get; }
         private Rigidbody Rigidbody { get; }
         public bool IsRagdoll {
@@ -75,7 +78,8 @@ namespace Project.Entities.Characters {
             }
         }
 
-        public CharacterBody(GameObject gameObject) : base( gameObject ) {
+        public CharacterBody(GameObject gameObject) {
+            GameObject = gameObject;
             MoveableBody = gameObject.RequireComponent<MoveableBody>();
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
@@ -95,7 +99,7 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public class CharacterView : EntityViewBase {
+    public class CharacterView : ViewBase {
 
         private Transform Body { get; }
         private Transform Head { get; }
@@ -119,7 +123,7 @@ namespace Project.Entities.Characters {
             }
         }
 
-        public CharacterView(GameObject gameObject) : base( gameObject ) {
+        public CharacterView(GameObject gameObject) {
             Body = gameObject.transform.Require( "Body" );
             Head = gameObject.transform.Require( "Head" );
             WeaponSlot = gameObject.RequireComponentInChildren<Slot>();

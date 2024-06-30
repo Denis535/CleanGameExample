@@ -14,13 +14,14 @@ namespace Project.Entities {
     public abstract class GameBase3 : GameBase2, IGame {
 
         private GameState state;
+        private bool isPaused;
 
         // Name
-        public abstract string Name { get; }
-        public abstract GameMode Mode { get; }
-        public abstract GameLevel Level { get; }
+        public string Name { get; }
+        public GameMode Mode { get; }
+        public GameLevel Level { get; }
         // State
-        public virtual GameState State {
+        public GameState State {
             get => state;
             protected set {
                 Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
@@ -29,57 +30,52 @@ namespace Project.Entities {
             }
         }
         public event Action<GameState>? OnStateChangeEvent;
-        // Framework
-        public abstract Player Player { get; }
-        public abstract World World { get; }
-        // IsDirty
-        protected bool IsDirty { get; set; }
+        // IsPaused
+        public bool IsPaused {
+            get => isPaused;
+            set {
+                if (value != isPaused) {
+                    isPaused = value;
+                    Time.timeScale = isPaused ? 0f : 1f;
+                    OnPauseEvent?.Invoke( isPaused );
+                }
+            }
+        }
+        public event Action<bool>? OnPauseEvent;
 
         // Constructor
-        public GameBase3(IDependencyContainer container) : base( container ) {
-            OnPauseEvent += value => {
-                Time.timeScale = value ? 0f : 1f;
-            };
+        public GameBase3(IDependencyContainer container, string name, GameMode mode, GameLevel level) : base( container ) {
+            Name = name;
+            Mode = mode;
+            Level = level;
         }
         public override void Dispose() {
             Time.timeScale = 1f;
             base.Dispose();
         }
 
-        // Spawn
-        protected abstract void SpawnPlayerCharacter(PlayerPoint point);
-        protected abstract void SpawnEnemyCharacter(EnemyPoint point);
-        protected abstract void SpawnThing(ThingPoint point);
-
-        // IsWinner
-        protected abstract bool IsWinner();
-        protected abstract bool IsLoser();
-
-        // OnWinner
-        protected abstract void OnWinner();
-        protected abstract void OnLoser();
+        // RegisterEntity
+        protected override void RegisterEntity(EntityBase entity) {
+        }
+        protected override void UnregisterEntity(EntityBase entity) {
+        }
 
     }
     public class Game : GameBase3 {
 
-        // Name
-        public override string Name { get; }
-        public override GameMode Mode { get; }
-        public override GameLevel Level { get; }
-        // State
-        public override GameState State { get => base.State; protected set => base.State = value; }
         // Framework
-        public override Player Player { get; }
-        public override World World { get; }
+        public Player Player { get; }
+        public World World { get; }
         // Input
         private InputActions_Game Input { get; }
+        // IsDirty
+        protected bool IsDirty { get; set; }
 
         // Constructor
-        public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container ) {
-            Name = gameName;
-            Mode = gameMode;
-            Level = gameLevel;
-            Player = new Player( container, playerName, playerKind, Camera2.Factory.Create() );
+        public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container, gameName, gameMode, gameLevel ) {
+            Player = new Player( container, playerName, playerKind ) {
+                Camera = Camera2.Factory.Create()
+            };
             World = container.RequireDependency<World>();
             Input = new InputActions_Game();
             Input.Enable();
@@ -119,7 +115,7 @@ namespace Project.Entities {
         }
 
         // Spawn
-        protected override void SpawnPlayerCharacter(PlayerPoint point) {
+        protected void SpawnPlayerCharacter(PlayerPoint point) {
             Player.Character = PlayerCharacter.Factory.Create( (PlayerCharacterType) Player.Kind, point.transform.position, point.transform.rotation );
             Player.Character.Game = this;
             Player.Character.Player = Player;
@@ -127,19 +123,19 @@ namespace Project.Entities {
                 IsDirty = true;
             };
         }
-        protected override void SpawnEnemyCharacter(EnemyPoint point) {
+        protected void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacter.Factory.Create( point.transform.position, point.transform.rotation );
             character.Game = this;
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };
         }
-        protected override void SpawnThing(ThingPoint point) {
+        protected void SpawnThing(ThingPoint point) {
             var thing = Gun.Factory.Create( point.transform.position, point.transform.rotation, null );
         }
 
         // IsWinner
-        protected override bool IsWinner() {
+        protected bool IsWinner() {
             if (State is GameState.Playing) {
                 var enemies = GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
                 if (enemies.All( i => !i.IsAlive )) {
@@ -148,7 +144,7 @@ namespace Project.Entities {
             }
             return false;
         }
-        protected override bool IsLoser() {
+        protected bool IsLoser() {
             if (State is GameState.Playing) {
                 if (!Player.Character!.IsAlive) {
                     return true;
@@ -158,11 +154,11 @@ namespace Project.Entities {
         }
 
         // OnWinner
-        protected override void OnWinner() {
+        protected void OnWinner() {
             Player.State = PlayerState.Winner;
             State = GameState.Completed;
         }
-        protected override void OnLoser() {
+        protected void OnLoser() {
             Player.State = PlayerState.Loser;
             State = GameState.Completed;
         }

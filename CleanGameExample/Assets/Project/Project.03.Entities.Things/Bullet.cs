@@ -27,12 +27,14 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Bullet : UEntityBase<BulletBody, BulletView> {
+    public partial class Bullet : MonoBehaviour {
 
+        private BulletBody Body { get; set; } = default!;
+        private BulletView View { get; set; } = default!;
         public Gun Gun { get; set; } = default!;
         public IDamager Damager { get; set; } = default!;
 
-        protected override void Awake() {
+        protected void Awake() {
             Body = new BulletBody( gameObject );
             View = new BulletView( gameObject );
         }
@@ -42,7 +44,7 @@ namespace Project.Entities.Things {
             Body.AddImpulse( transform.forward * force );
             GameObject.Destroy( gameObject, 10 );
         }
-        protected override void OnDestroy() {
+        protected void OnDestroy() {
             View.Dispose();
             Body.Dispose();
         }
@@ -58,7 +60,7 @@ namespace Project.Entities.Things {
         }
 
     }
-    public class BulletBody : EntityBodyBase {
+    public class BulletBody : BodyBase {
 
         private Rigidbody Rigidbody { get; }
         private Collider Collider { get; }
@@ -66,7 +68,7 @@ namespace Project.Entities.Things {
         public Quaternion Rotation => Rigidbody.rotation;
         public Vector3 Velocity => Rigidbody.velocity;
 
-        public BulletBody(GameObject gameObject) : base( gameObject ) {
+        public BulletBody(GameObject gameObject) {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
             Collider = gameObject.RequireComponentInChildren<Collider>();
         }
@@ -79,9 +81,9 @@ namespace Project.Entities.Things {
         }
 
     }
-    public class BulletView : EntityViewBase {
+    public class BulletView : ViewBase {
 
-        public BulletView(GameObject gameObject) : base( gameObject ) {
+        public BulletView(GameObject gameObject) {
         }
         public override void Dispose() {
             base.Dispose();

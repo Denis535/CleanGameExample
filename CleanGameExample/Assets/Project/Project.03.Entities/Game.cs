@@ -54,12 +54,6 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // RegisterEntity
-        protected override void RegisterEntity(EntityBase entity) {
-        }
-        protected override void UnregisterEntity(EntityBase entity) {
-        }
-
     }
     public class Game : GameBase3 {
 

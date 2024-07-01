@@ -13,19 +13,14 @@ namespace Project.Entities.Characters {
 
         protected CharacterBody Body { get; set; } = default!;
         protected CharacterView View { get; set; } = default!;
-        // Game
         public IGame Game { get; set; } = default!;
-        // IsAlive
         public bool IsAlive { get; private set; } = true;
-        // Weapon
         public IWeapon? Weapon {
             get => View.Weapon?.RequireComponent<IWeapon>();
             protected set => View.Weapon = ((MonoBehaviour?) value)?.gameObject;
         }
-        // OnDamageEvent
         public event Action<DamageInfo>? OnDamageEvent;
 
-        // Awake
         protected virtual void Awake() {
             Body = new CharacterBody( gameObject );
             View = new CharacterView( gameObject );
@@ -35,7 +30,6 @@ namespace Project.Entities.Characters {
             Body.Dispose();
         }
 
-        // Start
         protected virtual void Start() {
         }
         protected virtual void FixedUpdate() {
@@ -43,7 +37,6 @@ namespace Project.Entities.Characters {
         protected virtual void Update() {
         }
 
-        // OnDamage
         void IDamageable.OnDamage(DamageInfo info) {
             OnDamage( info );
         }

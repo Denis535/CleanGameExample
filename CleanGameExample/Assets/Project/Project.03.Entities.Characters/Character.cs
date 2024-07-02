@@ -133,7 +133,6 @@ namespace Project.Entities.Characters {
             return WeaponAt( WeaponSlot.transform, target );
         }
 
-        // Helpers
         private static bool HeadAt(Transform transform, Vector3? target) {
             var rotation = transform.localRotation;
             if (target != null) {
@@ -170,7 +169,6 @@ namespace Project.Entities.Characters {
                 return false;
             }
         }
-        // Helpers
         private static Quaternion? GetHeadRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;

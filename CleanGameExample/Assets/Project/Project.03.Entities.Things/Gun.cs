@@ -41,7 +41,6 @@ namespace Project.Entities.Things {
         private GunBody Body { get; set; } = default!;
         private GunView View { get; set; } = default!;
 
-        // Awake
         protected void Awake() {
             Body = new GunBody( gameObject );
             View = new GunView( gameObject );
@@ -51,7 +50,6 @@ namespace Project.Entities.Things {
             Body.Dispose();
         }
 
-        // Fire
         public void Fire(ICharacter character) {
             if (View.Fire( out var position, out var rotation )) {
                 var bullet = Bullet.Factory.Create( position.Value, rotation.Value, null, this, character, 5 );

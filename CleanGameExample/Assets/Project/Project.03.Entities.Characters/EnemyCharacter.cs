@@ -62,13 +62,11 @@ namespace Project.Entities.Characters {
             }
         }
 
-        // Heleprs
         private static Environment_ GetEnvironment(Transform transform) {
             return new Environment_() {
                 Player = Utils.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
-        // Heleprs
         private static Vector3? GetBodyTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {

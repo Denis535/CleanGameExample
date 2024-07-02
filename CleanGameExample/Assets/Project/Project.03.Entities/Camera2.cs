@@ -36,8 +36,10 @@ namespace Project.Entities {
         public static readonly float AnglesInputSensitivity = 0.15f;
         public static readonly float DistanceInputSensitivity = 0.20f;
 
-        private Character? prevTarget;
+        private int? prevTargetID;
 
+        // Target
+        public Character? Target { get; private set; }
         // Angles
         public Vector2 Angles { get; private set; }
         // Distance
@@ -49,6 +51,13 @@ namespace Project.Entities {
         protected void Awake() {
         }
         protected void OnDestroy() {
+        }
+
+        // SetTarget
+        public void SetTarget(Character? target) {
+            Assert.Operation.Message( $"Method 'SetTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            prevTargetID = Target?.GetInstanceID();
+            Target = target;
         }
 
         // Rotate
@@ -66,15 +75,16 @@ namespace Project.Entities {
         }
 
         // Apply
-        public void Apply(Character target) {
+        public void Apply() {
             Assert.Operation.Message( $"Method 'Apply' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (target != prevTarget) {
-                Angles = new Vector2( DefaultAngles.x, target.transform.eulerAngles.y );
-                Distance = DefaultDistance;
-                prevTarget = target;
+            if (Target != null) {
+                if (Target.GetInstanceID() != prevTargetID) {
+                    Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
+                    Distance = DefaultDistance;
+                }
+                Apply( transform, Target, Angles, Distance );
+                Apply( Camera.main, transform );
             }
-            Apply( transform, target, Angles, Distance );
-            Apply( Camera.main, transform );
         }
 
         // Helpers

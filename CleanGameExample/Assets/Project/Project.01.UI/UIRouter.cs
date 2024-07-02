@@ -73,7 +73,7 @@ namespace Project.UI {
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.InitializeGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -89,13 +89,13 @@ namespace Project.UI {
                 Screen.ShowLoadingScreen();
                 {
                     // Unload
-                    Application.DestroyGame();
+                    Application.DeinitializeGame();
                     await UnloadSceneAsync_World();
                     await UnloadSceneAsync_Game();
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.CreateGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.InitializeGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -111,7 +111,7 @@ namespace Project.UI {
                 Screen.ShowUnloadingScreen();
                 {
                     // Unload
-                    Application.DestroyGame();
+                    Application.DeinitializeGame();
                     await UnloadSceneAsync_World();
                     await UnloadSceneAsync_Game();
                     // Load
@@ -129,7 +129,7 @@ namespace Project.UI {
                 Theme.StopTheme();
                 Screen.HideScreen();
                 if (Application.Game != null) {
-                    Application.DestroyGame();
+                    Application.DeinitializeGame();
                 }
                 if (WorldScene != null) {
                     await UnloadSceneAsync_World();

@@ -99,9 +99,10 @@ namespace Project.Entities {
                 Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
             }
             if (Camera != null && Character != null) {
+                Camera.SetTarget( Character );
                 Camera.Rotate( Input.Player.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Player.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply( Character );
+                Camera.Apply();
             }
             if (Camera != null) {
                 Hit = Raycast( Camera.Ray, Character?.transform );

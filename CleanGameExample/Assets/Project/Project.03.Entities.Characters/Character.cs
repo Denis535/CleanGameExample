@@ -5,19 +5,17 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using Project.Entities.Things;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract class Character : MonoBehaviour, ICharacter, IDamageable {
 
         public bool IsAlive { get; private set; } = true;
+        public event Action<DamageInfo>? OnDamageEvent;
         public IWeapon? Weapon {
             get => View.Weapon?.RequireComponent<IWeapon>();
             protected set => View.Weapon = ((MonoBehaviour?) value)?.gameObject;
         }
-        public event Action<DamageInfo>? OnDamageEvent;
-        public IGame Game { get; set; } = default!;
         protected CharacterBody Body { get; set; } = default!;
         protected CharacterView View { get; set; } = default!;
 
@@ -42,16 +40,18 @@ namespace Project.Entities.Characters {
         }
         protected virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
-                IsAlive = false;
-                Body.IsRagdoll = true;
-                Body.AddImpulse( info.Direction * 5, info.Point );
-                Weapon = null;
-                OnDamageEvent?.Invoke( info );
+                if (info is BulletDamageInfo bulletDamageInfo) {
+                    IsAlive = false;
+                    Weapon = null;
+                    Body.IsRagdoll = true;
+                    Body.AddImpulse( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
+                    OnDamageEvent?.Invoke( bulletDamageInfo );
+                }
             }
         }
 
     }
-    public class CharacterBody : BodyBase {
+    public class CharacterBody : Disposable {
 
         private GameObject GameObject { get; }
         private MoveableBody MoveableBody { get; }
@@ -92,7 +92,7 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public class CharacterView : ViewBase {
+    public class CharacterView : Disposable {
 
         private Transform Body { get; }
         private Transform Head { get; }

@@ -356,9 +356,5 @@ namespace UnityEngine {
             StartTime = Time.time;
         }
 
-        public override string ToString() {
-            return "Delay: " + Interval;
-        }
-
     }
 }

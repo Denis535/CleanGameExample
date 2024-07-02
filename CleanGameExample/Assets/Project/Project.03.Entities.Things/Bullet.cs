@@ -5,7 +5,6 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public partial class Bullet {
         public static class Factory {
@@ -19,9 +18,9 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, Gun gun, ICharacter character, float force) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, Gun gun, ICharacter character) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-                result.Awake( gun, character, force );
+                result.Awake( force, gun, character );
                 return result;
             }
 
@@ -29,64 +28,32 @@ namespace Project.Entities.Things {
     }
     public partial class Bullet : MonoBehaviour {
 
-        private BulletBody Body { get; set; } = default!;
-        private BulletView View { get; set; } = default!;
-        public Gun Gun { get; set; } = default!;
-        public ICharacter Character { get; set; } = default!;
+        public float Force { get; private set; } = default!;
+        public Gun Gun { get; private set; } = default!;
+        public ICharacter Character { get; private set; } = default!;
+        private Rigidbody Rigidbody { get; set; } = default!;
 
         protected void Awake() {
-            Body = new BulletBody( gameObject );
-            View = new BulletView( gameObject );
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
-        protected void Awake(Gun gun, ICharacter character, float force) {
+        protected void Awake(float force, Gun gun, ICharacter character) {
+            Force = force;
             Gun = gun;
             Character = character;
-            Body.AddImpulse( transform.forward * force );
+            Rigidbody.AddForce( transform.forward * Force, ForceMode.Impulse );
             GameObject.Destroy( gameObject, 10 );
         }
         protected void OnDestroy() {
-            View.Dispose();
-            Body.Dispose();
         }
 
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Character) {
-                    damageable.OnDamage( new BulletDamageInfo( Character, 5, Body.Position, Body.Velocity.normalized, this ) );
+                    damageable.OnDamage( new BulletDamageInfo( Force, Character, Rigidbody.position, Rigidbody.velocity.normalized, this ) );
                 }
                 enabled = false;
             }
-        }
-
-    }
-    public class BulletBody : BodyBase {
-
-        private Rigidbody Rigidbody { get; }
-        private Collider Collider { get; }
-        public Vector3 Position => Rigidbody.position;
-        public Quaternion Rotation => Rigidbody.rotation;
-        public Vector3 Velocity => Rigidbody.velocity;
-
-        public BulletBody(GameObject gameObject) {
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            Collider = gameObject.RequireComponentInChildren<Collider>();
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-        public void AddImpulse(Vector3 force) {
-            Rigidbody.AddForce( force, ForceMode.Impulse );
-        }
-
-    }
-    public class BulletView : ViewBase {
-
-        public BulletView(GameObject gameObject) {
-        }
-        public override void Dispose() {
-            base.Dispose();
         }
 
     }

@@ -35,6 +35,8 @@ namespace Project.Entities.Characters {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
+
+        public IGame Game { get; set; } = default!;
         private Environment_ Environment { get; set; }
 
         protected override void Awake() {

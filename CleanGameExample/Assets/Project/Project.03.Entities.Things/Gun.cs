@@ -3,10 +3,8 @@ namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public partial class Gun {
         public static class Factory {
@@ -38,57 +36,21 @@ namespace Project.Entities.Things {
     }
     public partial class Gun : MonoBehaviour, IWeapon {
 
-        private GunBody Body { get; set; } = default!;
-        private GunView View { get; set; } = default!;
+        private Delay FireDelay { get; } = new Delay( 0.25f );
+        private FirePoint FirePoint { get; set; } = default!;
 
         protected void Awake() {
-            Body = new GunBody( gameObject );
-            View = new GunView( gameObject );
+            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
         protected void OnDestroy() {
-            View.Dispose();
-            Body.Dispose();
         }
 
         public void Fire(ICharacter character) {
-            if (View.Fire( out var position, out var rotation )) {
-                var bullet = Bullet.Factory.Create( position.Value, rotation.Value, null, this, character, 5 );
-                Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
-            }
-        }
-
-    }
-    public class GunBody : BodyBase {
-
-        public GunBody(GameObject gameObject) {
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-    }
-    public class GunView : ViewBase {
-
-        private Delay FireDelay { get; } = new Delay( 0.25f );
-        private FirePoint FirePoint { get; }
-
-        public GunView(GameObject gameObject) {
-            FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
-        }
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-        public bool Fire([NotNullWhen( true )] out Vector3? position, [NotNullWhen( true )] out Quaternion? rotation) {
             if (FireDelay.IsCompleted) {
                 FireDelay.Start();
-                position = FirePoint.transform.position;
-                rotation = FirePoint.transform.rotation;
-                return true;
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, character );
+                Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
-            position = null;
-            rotation = null;
-            return false;
         }
 
     }

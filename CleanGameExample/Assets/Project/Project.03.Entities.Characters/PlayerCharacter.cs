@@ -31,7 +31,8 @@ namespace Project.Entities.Characters {
         }
     }
     public partial class PlayerCharacter : Character {
-        
+
+        public IGame Game { get; set; } = default!;
         public IPlayer Player { get; set; } = default!;
 
         protected override void Awake() {

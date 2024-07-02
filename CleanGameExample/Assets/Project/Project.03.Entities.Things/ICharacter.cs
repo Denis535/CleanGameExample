@@ -10,6 +10,6 @@ namespace Project.Entities.Things {
     public interface IDamageable {
         void OnDamage(DamageInfo info);
     }
-    public abstract record DamageInfo(ICharacter Character, float Damage, Vector3 Point, Vector3 Direction);
-    public record BulletDamageInfo(ICharacter Character, float Damage, Vector3 Point, Vector3 Direction, Bullet Bullet) : DamageInfo( Character, Damage, Point, Direction );
+    public abstract record DamageInfo(float Damage, ICharacter Character);
+    public record BulletDamageInfo(float Damage, ICharacter Character, Vector3 Point, Vector3 Direction, Bullet Bullet) : DamageInfo( Damage, Character );
 }

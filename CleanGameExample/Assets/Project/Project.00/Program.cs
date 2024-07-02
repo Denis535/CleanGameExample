@@ -62,17 +62,14 @@ namespace Project {
             Router.LoadMainScene();
         }
         protected override void FixedUpdate() {
-            Game?.FixedUpdate();
+            Application?.OnFixedUpdate();
         }
         protected override void Update() {
-            Theme.Update();
-            Screen.Update();
-            Game?.Update();
+            Application?.OnUpdate();
+            Screen.OnUpdate();
+            Theme.OnUpdate();
         }
         protected override void LateUpdate() {
-            Theme.LateUpdate();
-            Screen.LateUpdate();
-            Game?.LateUpdate();
         }
 
         // OnQuit

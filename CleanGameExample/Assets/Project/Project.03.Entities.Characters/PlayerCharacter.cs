@@ -31,11 +31,9 @@ namespace Project.Entities.Characters {
         }
     }
     public partial class PlayerCharacter : Character {
-
-        // Player
+        
         public IPlayer Player { get; set; } = default!;
 
-        // Awake
         protected override void Awake() {
             base.Awake();
         }
@@ -43,7 +41,6 @@ namespace Project.Entities.Characters {
             base.OnDestroy();
         }
 
-        // Start
         protected override void Start() {
         }
         protected override void FixedUpdate() {

@@ -26,9 +26,9 @@ namespace UnityEngine {
         }
 
         // RaycastAll
-        public static IEnumerable<RaycastHit> RaycastAll(Vector3 position, Vector3 direction, float maxDistance) {
-            var mask = ~0 & ~Masks.CharacterEntity & ~Masks.Trivial; // excludeCharacterEntity and Trivial
-            var count = Physics.RaycastNonAlloc( position, direction, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
+        public static IEnumerable<RaycastHit> RaycastAll(Ray ray, float maxDistance) {
+            var mask = ~0 & ~Masks.CharacterEntity & ~Masks.Trivial; // exclude CharacterEntity and Trivial
+            var count = Physics.RaycastNonAlloc( ray, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
             return RaycastHitBuffer.Take( count );
         }
 

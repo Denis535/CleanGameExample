@@ -52,9 +52,9 @@ namespace Project.Entities.Things {
         }
 
         // Fire
-        public void Fire(IDamager damager) {
+        public void Fire(ICharacter character) {
             if (View.Fire( out var position, out var rotation )) {
-                var bullet = Bullet.Factory.Create( position.Value, rotation.Value, null, this, damager, 5 );
+                var bullet = Bullet.Factory.Create( position.Value, rotation.Value, null, this, character, 5 );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
         }

@@ -35,11 +35,8 @@ namespace Project.Entities.Characters {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
-
-        // Environment
         private Environment_ Environment { get; set; }
 
-        // Awake
         protected override void Awake() {
             base.Awake();
         }
@@ -47,7 +44,6 @@ namespace Project.Entities.Characters {
             base.OnDestroy();
         }
 
-        // Start
         protected override void Start() {
             Weapon = Gun.Factory.Create( null );
         }

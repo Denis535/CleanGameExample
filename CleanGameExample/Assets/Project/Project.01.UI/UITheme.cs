@@ -52,10 +52,8 @@ namespace Project.UI {
             Strategy_ = null;
         }
 
-        // Update
-        public void Update() {
-        }
-        public void LateUpdate() {
+        // OnUpdate
+        public void OnUpdate() {
         }
 
         // Strategy

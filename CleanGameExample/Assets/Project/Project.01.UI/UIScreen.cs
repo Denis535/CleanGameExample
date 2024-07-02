@@ -52,17 +52,11 @@ namespace Project.UI {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
         }
 
-        // Update
-        public void Update() {
+        // OnUpdate
+        public void OnUpdate() {
             foreach (var child in Widget.Children) {
-                (child as MainWidget)?.Update();
-                (child as GameWidget)?.Update();
-            }
-        }
-        public void LateUpdate() {
-            foreach (var child in Widget.Children) {
-                (child as MainWidget)?.LateUpdate();
-                (child as GameWidget)?.LateUpdate();
+                (child as MainWidget)?.OnUpdate();
+                (child as GameWidget)?.OnUpdate();
             }
         }
 

@@ -81,5 +81,13 @@ namespace Project.App {
             Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
         }
 
+        // OnUpdate
+        public void OnFixedUpdate() {
+            Game?.OnFixedUpdate();
+        }
+        public void OnUpdate() {
+            Game?.OnUpdate();
+        }
+
     }
 }

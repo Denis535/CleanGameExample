@@ -8,8 +8,6 @@ namespace Project.Entities.Things {
     public interface IThing {
     }
     public interface IWeapon : IThing {
-
-        void Fire(IDamager damager);
-
+        void Fire(ICharacter character);
     }
 }

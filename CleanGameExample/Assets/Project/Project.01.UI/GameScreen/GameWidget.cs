@@ -63,11 +63,9 @@ namespace Project.UI.GameScreen {
             }
         }
 
-        // Update
-        public void Update() {
+        // OnUpdate
+        public void OnUpdate() {
             View.TargetEffect = GetTargetEffect( Game.Player );
-        }
-        public void LateUpdate() {
         }
 
         // Helpers

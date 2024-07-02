@@ -19,9 +19,9 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, Gun gun, IDamager damager, float force) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, Gun gun, ICharacter character, float force) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-                result.Awake( gun, damager, force );
+                result.Awake( gun, character, force );
                 return result;
             }
 
@@ -32,15 +32,15 @@ namespace Project.Entities.Things {
         private BulletBody Body { get; set; } = default!;
         private BulletView View { get; set; } = default!;
         public Gun Gun { get; set; } = default!;
-        public IDamager Damager { get; set; } = default!;
+        public ICharacter Character { get; set; } = default!;
 
         protected void Awake() {
             Body = new BulletBody( gameObject );
             View = new BulletView( gameObject );
         }
-        protected void Awake(Gun gun, IDamager damager, float force) {
+        protected void Awake(Gun gun, ICharacter character, float force) {
             Gun = gun;
-            Damager = damager;
+            Character = character;
             Body.AddImpulse( transform.forward * force );
             GameObject.Destroy( gameObject, 10 );
         }
@@ -52,8 +52,8 @@ namespace Project.Entities.Things {
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
-                if (damageable != null && damageable != Damager) {
-                    damageable.OnDamage( new BulletDamageInfo( Damager, 5, Body.Position, Body.Velocity.normalized, this ) );
+                if (damageable != null && damageable != Character) {
+                    damageable.OnDamage( new BulletDamageInfo( Character, 5, Body.Position, Body.Velocity.normalized, this ) );
                 }
                 enabled = false;
             }

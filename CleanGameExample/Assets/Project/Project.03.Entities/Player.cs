@@ -37,6 +37,10 @@ namespace Project.Entities {
             base.Dispose();
         }
 
+        // OnUpdate
+        public abstract void OnFixedUpdate();
+        public abstract void OnUpdate();
+
         // Input
         public abstract Vector3 GetMoveVector();
         public abstract Vector3? GetBodyTarget();
@@ -87,8 +91,10 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // Update
-        public void Update() {
+        // OnUpdate
+        public override void OnFixedUpdate() {
+        }
+        public override void OnUpdate() {
             {
                 Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
             }
@@ -98,7 +104,7 @@ namespace Project.Entities {
                 Camera.Apply( Character );
             }
             if (Camera != null) {
-                Hit = Raycast( Camera.transform, Character?.transform );
+                Hit = Raycast( Camera.Ray, Character?.transform );
             }
         }
 
@@ -176,8 +182,8 @@ namespace Project.Entities {
         }
 
         // Heleprs
-        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Transform ray, Transform? ignore) {
-            var hit = Utils.RaycastAll( ray.position, ray.forward, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
+        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
+            var hit = Utils.RaycastAll( ray, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 return (hit.point, hit.distance, hit.collider.gameObject);
             } else {

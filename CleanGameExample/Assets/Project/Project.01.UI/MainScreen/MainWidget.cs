@@ -52,10 +52,8 @@ namespace Project.UI.MainScreen {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
-        // Update
-        public void Update() {
-        }
-        public void LateUpdate() {
+        // OnUpdate
+        public void OnUpdate() {
         }
 
         // Helpers

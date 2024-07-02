@@ -9,17 +9,17 @@ namespace Project.Entities.Characters {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract class Character : MonoBehaviour, IDamager, IDamageable {
+    public abstract class Character : MonoBehaviour, ICharacter, IDamageable {
 
-        protected CharacterBody Body { get; set; } = default!;
-        protected CharacterView View { get; set; } = default!;
-        public IGame Game { get; set; } = default!;
         public bool IsAlive { get; private set; } = true;
         public IWeapon? Weapon {
             get => View.Weapon?.RequireComponent<IWeapon>();
             protected set => View.Weapon = ((MonoBehaviour?) value)?.gameObject;
         }
         public event Action<DamageInfo>? OnDamageEvent;
+        public IGame Game { get; set; } = default!;
+        protected CharacterBody Body { get; set; } = default!;
+        protected CharacterView View { get; set; } = default!;
 
         protected virtual void Awake() {
             Body = new CharacterBody( gameObject );

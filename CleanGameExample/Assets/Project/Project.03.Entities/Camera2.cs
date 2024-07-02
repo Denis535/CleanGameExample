@@ -6,7 +6,6 @@ namespace Project.Entities {
     using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public partial class Camera2 {
         public static class Factory {
@@ -41,7 +40,10 @@ namespace Project.Entities {
 
         // Angles
         public Vector2 Angles { get; private set; }
+        // Distance
         public float Distance { get; private set; }
+        // Ray
+        public Ray Ray => new Ray( transform.position, transform.forward );
 
         // Awake
         protected void Awake() {
@@ -55,6 +57,8 @@ namespace Project.Entities {
             Angles += new Vector2( -delta.y, delta.x ) * AnglesInputSensitivity;
             Angles = new Vector2( Math.Clamp( Angles.x, MinAngleX, MaxAngleX ), Angles.y );
         }
+
+        // Zoom
         public void Zoom(float delta) {
             Assert.Operation.Message( $"Method 'Zoom' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Distance += delta * DistanceInputSensitivity;

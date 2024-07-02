@@ -54,6 +54,10 @@ namespace Project.Entities {
             base.Dispose();
         }
 
+        // OnUpdate
+        public abstract void OnFixedUpdate();
+        public abstract void OnUpdate();
+
     }
     public class Game : GameBase3 {
 
@@ -91,10 +95,11 @@ namespace Project.Entities {
         }
 
         // Update
-        public void FixedUpdate() {
+        public override void OnFixedUpdate() {
+            Player.OnFixedUpdate();
         }
-        public void Update() {
-            Player.Update();
+        public override void OnUpdate() {
+            Player.OnUpdate();
             if (IsDirty) {
                 if (IsLoser()) {
                     OnLoser();
@@ -104,8 +109,6 @@ namespace Project.Entities {
                 }
                 IsDirty = false;
             }
-        }
-        public void LateUpdate() {
         }
 
         // Spawn

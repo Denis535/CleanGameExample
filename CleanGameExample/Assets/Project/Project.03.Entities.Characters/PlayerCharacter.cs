@@ -59,7 +59,7 @@ namespace Project.Entities.Characters {
                     WeaponSlot.Weapon?.Fire( this );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
-                    if (interactable is IWeapon weapon) {
+                    if (interactable is Weapon weapon) {
                         WeaponSlot.Weapon = weapon;
                     } else {
                         WeaponSlot.Weapon = null;

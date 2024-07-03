@@ -14,10 +14,8 @@ namespace Project.Entities {
 
         private PlayerState state;
 
-        // Name
         public string Name { get; }
         public PlayerKind Kind { get; }
-        // State
         public PlayerState State {
             get => state;
             internal set {
@@ -28,7 +26,6 @@ namespace Project.Entities {
         }
         public event Action<PlayerState>? OnStateChangeEvent;
 
-        // Constructor
         public PlayerBase3(IDependencyContainer container, string name, PlayerKind kind) : base( container ) {
             Name = name;
             Kind = kind;
@@ -37,11 +34,9 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // OnUpdate
         public abstract void OnFixedUpdate();
         public abstract void OnUpdate();
 
-        // Input
         public abstract Vector3 GetMoveVector();
         public abstract Vector3? GetBodyTarget();
         public abstract Vector3? GetHeadTarget();
@@ -56,12 +51,9 @@ namespace Project.Entities {
     }
     public class Player : PlayerBase3 {
 
-        // Framework
         public Camera2 Camera { get; internal init; } = default!;
         public PlayerCharacter? Character { get; internal set; }
-        // Input
         private InputActions_Player Input { get; }
-        // Hit
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
             get {
@@ -72,17 +64,16 @@ namespace Project.Entities {
                 return null;
             }
         }
-        public IThing? Thing {
+        public Thing? Thing {
             get {
                 if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
                     var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<IThing>();
+                    return @object.GetComponent<Thing>();
                 }
                 return null;
             }
         }
 
-        // Constructor
         public Player(IDependencyContainer container, string name, PlayerKind kind) : base( container, name, kind ) {
             Input = new InputActions_Player();
         }
@@ -91,7 +82,6 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // OnUpdate
         public override void OnFixedUpdate() {
         }
         public override void OnUpdate() {
@@ -109,7 +99,6 @@ namespace Project.Entities {
             }
         }
 
-        // Input
         public override Vector3 GetMoveVector() {
             Assert.Operation.Message( $"Method 'GetMoveVector' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Player.Move.IsPressed()) {
@@ -182,7 +171,6 @@ namespace Project.Entities {
             return Input.Player.Interact.WasPressedThisFrame();
         }
 
-        // Heleprs
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
             var hit = Utils.RaycastAll( ray, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
@@ -193,14 +181,12 @@ namespace Project.Entities {
         }
 
     }
-    // PlayerKind
     public enum PlayerKind {
         Gray,
         Red,
         Green,
         Blue
     }
-    // PlayerState
     public enum PlayerState {
         Playing,
         Winner,

@@ -38,43 +38,34 @@ namespace Project.Entities {
 
         private int? prevTargetID;
 
-        // Target
         public Character? Target { get; private set; }
-        // Angles
         public Vector2 Angles { get; private set; }
-        // Distance
         public float Distance { get; private set; }
-        // Ray
         public Ray Ray => new Ray( transform.position, transform.forward );
 
-        // Awake
         protected void Awake() {
         }
         protected void OnDestroy() {
         }
 
-        // SetTarget
         public void SetTarget(Character? target) {
             Assert.Operation.Message( $"Method 'SetTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             prevTargetID = Target?.GetInstanceID();
             Target = target;
         }
 
-        // Rotate
         public void Rotate(Vector2 delta) {
             Assert.Operation.Message( $"Method 'Rotate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Angles += new Vector2( -delta.y, delta.x ) * AnglesInputSensitivity;
             Angles = new Vector2( Math.Clamp( Angles.x, MinAngleX, MaxAngleX ), Angles.y );
         }
 
-        // Zoom
         public void Zoom(float delta) {
             Assert.Operation.Message( $"Method 'Zoom' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Distance += delta * DistanceInputSensitivity;
             Distance = Math.Clamp( Distance, MinDistance, MaxDistance );
         }
 
-        // Apply
         public void Apply() {
             Assert.Operation.Message( $"Method 'Apply' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Target != null) {
@@ -87,7 +78,6 @@ namespace Project.Entities {
             }
         }
 
-        // Helpers
         private static void Apply(Transform transform, Character target, Vector2 angles, float distance) {
             if (target.IsAlive) {
                 var distance01 = Mathf.InverseLerp( MinDistance, MaxDistance, distance );

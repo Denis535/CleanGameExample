@@ -11,7 +11,6 @@ namespace Project.Entities.Worlds {
         private EnemyPoint[] enemyPoints = default!;
         private ThingPoint[] thingPoints = default!;
 
-        // Points
         public PlayerPoint[] PlayerPoints => this.Pipe( i => i.ThrowIfInvalid() ).playerPoints;
         public EnemyPoint[] EnemyPoints => this.Pipe( i => i.ThrowIfInvalid() ).enemyPoints;
         public ThingPoint[] ThingPoints => this.Pipe( i => i.ThrowIfInvalid() ).thingPoints;
@@ -32,7 +31,6 @@ namespace Project.Entities.Worlds {
         //}
 #endif
 
-        // Awake
         protected virtual void Awake() {
             playerPoints = gameObject.GetComponentsInChildren<PlayerPoint>();
             enemyPoints = gameObject.GetComponentsInChildren<EnemyPoint>();

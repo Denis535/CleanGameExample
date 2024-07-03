@@ -11,10 +11,8 @@ namespace Project.Entities {
     [CustomEditor( typeof( Camera2 ) )]
     public class Camera2Editor : Editor {
 
-        // Target
         private Camera2 Target => (Camera2) target;
 
-        // OnInspectorGUI
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
             EditorGUILayout.ObjectField( "Target", Target.Target, typeof( Character ), true );

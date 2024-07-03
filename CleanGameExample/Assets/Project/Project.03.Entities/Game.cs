@@ -16,11 +16,9 @@ namespace Project.Entities {
         private GameState state;
         private bool isPaused;
 
-        // Name
         public string Name { get; }
         public GameMode Mode { get; }
         public GameLevel Level { get; }
-        // State
         public GameState State {
             get => state;
             protected set {
@@ -30,7 +28,6 @@ namespace Project.Entities {
             }
         }
         public event Action<GameState>? OnStateChangeEvent;
-        // IsPaused
         public bool IsPaused {
             get => isPaused;
             set {
@@ -43,7 +40,6 @@ namespace Project.Entities {
         }
         public event Action<bool>? OnPauseEvent;
 
-        // Constructor
         public GameBase3(IDependencyContainer container, string name, GameMode mode, GameLevel level) : base( container ) {
             Name = name;
             Mode = mode;
@@ -54,22 +50,17 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // OnUpdate
         public abstract void OnFixedUpdate();
         public abstract void OnUpdate();
 
     }
     public class Game : GameBase3 {
 
-        // Framework
         public Player Player { get; }
         public World World { get; }
-        // Input
         private InputActions_Game Input { get; }
-        // IsDirty
         protected bool IsDirty { get; set; }
 
-        // Constructor
         public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container, gameName, gameMode, gameLevel ) {
             Player = new Player( container, playerName, playerKind ) {
                 Camera = Camera2.Factory.Create()
@@ -94,7 +85,6 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        // Update
         public override void OnFixedUpdate() {
             Player.OnFixedUpdate();
         }
@@ -111,7 +101,6 @@ namespace Project.Entities {
             }
         }
 
-        // Spawn
         protected void SpawnPlayerCharacter(PlayerPoint point) {
             Player.Character = PlayerCharacter.Factory.Create( (PlayerCharacterType) Player.Kind, point.transform.position, point.transform.rotation );
             Player.Character.Game = this;
@@ -131,7 +120,6 @@ namespace Project.Entities {
             var thing = Gun.Factory.Create( point.transform.position, point.transform.rotation, null );
         }
 
-        // IsWinner
         protected bool IsWinner() {
             if (State is GameState.Playing) {
                 var enemies = GameObject.FindObjectsByType<EnemyCharacter>( FindObjectsInactive.Exclude, FindObjectsSortMode.None );
@@ -150,7 +138,6 @@ namespace Project.Entities {
             return false;
         }
 
-        // OnWinner
         protected void OnWinner() {
             Player.State = PlayerState.Winner;
             State = GameState.Completed;
@@ -161,11 +148,9 @@ namespace Project.Entities {
         }
 
     }
-    // GameMode
     public enum GameMode {
         None
     }
-    // GameLevel
     public enum GameLevel {
         Level1,
         Level2,
@@ -180,7 +165,6 @@ namespace Project.Entities {
             return level + 1;
         }
     }
-    // GameState
     public enum GameState {
         Playing,
         Completed

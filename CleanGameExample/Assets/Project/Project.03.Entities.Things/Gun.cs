@@ -34,18 +34,20 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Gun : MonoBehaviour, IWeapon {
+    public partial class Gun : Weapon {
 
         private Delay FireDelay { get; } = new Delay( 0.25f );
         private FirePoint FirePoint { get; set; } = default!;
 
-        protected void Awake() {
+        protected override void Awake() {
+            base.Awake();
             FirePoint = gameObject.RequireComponentInChildren<FirePoint>();
         }
-        protected void OnDestroy() {
+        protected override void OnDestroy() {
+            base.OnDestroy();
         }
 
-        public void Fire(ICharacter character) {
+        public override void Fire(ICharacter character) {
             if (FireDelay.IsCompleted) {
                 FireDelay.Start();
                 var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, character );

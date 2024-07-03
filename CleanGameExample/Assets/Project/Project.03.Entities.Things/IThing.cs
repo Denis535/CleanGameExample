@@ -6,6 +6,8 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     public interface IThing {
+        GameObject gameObject { get; }
+        Transform transform { get; }
     }
     public interface IWeapon : IThing {
         void Fire(ICharacter character);

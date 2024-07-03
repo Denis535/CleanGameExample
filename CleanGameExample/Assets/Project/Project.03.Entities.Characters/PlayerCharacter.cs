@@ -50,19 +50,19 @@ namespace Project.Entities.Characters {
             if (IsAlive) {
                 Body.Move( Player.GetMoveVector(), Player.IsJumpPressed(), Player.IsCrouchPressed(), Player.IsAcceleratePressed() );
                 Body.LookAt( Player.GetBodyTarget() );
-                View.HeadAt( Player.GetHeadTarget() );
-                View.WeaponAt( Player.GetWeaponTarget() );
+                Head.LookAt( Player.GetHeadTarget() );
+                WeaponSlot.LookAt( Player.GetWeaponTarget() );
                 if (Player.IsAimPressed()) {
 
                 }
                 if (Player.IsFirePressed()) {
-                    Weapon?.Fire( this );
+                    WeaponSlot.Weapon?.Fire( this );
                 }
                 if (Player.IsInteractPressed( out var interactable )) {
                     if (interactable is IWeapon weapon) {
-                        Weapon = weapon;
+                        WeaponSlot.Weapon = weapon;
                     } else {
-                        Weapon = null;
+                        WeaponSlot.Weapon = null;
                     }
                 }
             }

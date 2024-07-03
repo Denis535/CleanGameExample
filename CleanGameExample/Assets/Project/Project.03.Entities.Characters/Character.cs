@@ -12,19 +12,18 @@ namespace Project.Entities.Characters {
 
         public bool IsAlive { get; private set; } = true;
         public event Action<DamageInfo>? OnDamageEvent;
-        public IWeapon? Weapon {
-            get => View.Weapon?.RequireComponent<IWeapon>();
-            protected set => View.Weapon = ((MonoBehaviour?) value)?.gameObject;
-        }
         protected CharacterBody Body { get; set; } = default!;
-        protected CharacterView View { get; set; } = default!;
+        protected CharacterHead Head { get; set; } = default!;
+        protected CharacterWeaponSlot WeaponSlot { get; set; } = default!;
 
         protected virtual void Awake() {
             Body = new CharacterBody( gameObject );
-            View = new CharacterView( gameObject );
+            Head = new CharacterHead( gameObject );
+            WeaponSlot = new CharacterWeaponSlot( gameObject );
         }
         protected virtual void OnDestroy() {
-            View.Dispose();
+            WeaponSlot.Dispose();
+            Head.Dispose();
             Body.Dispose();
         }
 
@@ -36,13 +35,10 @@ namespace Project.Entities.Characters {
         }
 
         void IDamageable.OnDamage(DamageInfo info) {
-            OnDamage( info );
-        }
-        protected virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
                 if (info is BulletDamageInfo bulletDamageInfo) {
                     IsAlive = false;
-                    Weapon = null;
+                    WeaponSlot.Weapon = null;
                     Body.IsRagdoll = true;
                     Body.AddImpulse( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
                     OnDamageEvent?.Invoke( bulletDamageInfo );
@@ -92,84 +88,37 @@ namespace Project.Entities.Characters {
         }
 
     }
-    public class CharacterView : Disposable {
+    public class CharacterHead : Disposable {
 
-        private Transform Body { get; }
         private Transform Head { get; }
-        private Slot WeaponSlot { get; }
-        public GameObject? Weapon {
-            get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject : null;
-            set {
-                var prevWeapon = Weapon;
-                if (prevWeapon != null) {
-                    prevWeapon.SetLayerRecursively( Layers.Entity );
-                    prevWeapon.RequireComponent<Rigidbody>().isKinematic = false;
-                    prevWeapon.transform.SetParent( null, true );
-                }
-                if (value != null) {
-                    value.SetLayerRecursively( Layers.CharacterEntityInternal );
-                    value.RequireComponent<Rigidbody>().isKinematic = true;
-                    value.transform.SetParent( WeaponSlot.transform, true );
-                    value.transform.localPosition = Vector3.zero;
-                    value.transform.localRotation = Quaternion.identity;
-                }
-            }
-        }
 
-        public CharacterView(GameObject gameObject) {
-            Body = gameObject.transform.Require( "Body" );
+        public CharacterHead(GameObject gameObject) {
             Head = gameObject.transform.Require( "Head" );
-            WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        public bool HeadAt(Vector3? target) {
-            return HeadAt( Head, target );
-        }
-
-        public bool WeaponAt(Vector3? target) {
-            return WeaponAt( WeaponSlot.transform, target );
-        }
-
-        private static bool HeadAt(Transform transform, Vector3? target) {
-            var rotation = transform.localRotation;
+        public bool LookAt(Vector3? target) {
+            var rotation = Head.localRotation;
             if (target != null) {
-                transform.localRotation = Quaternion.identity;
-                var direction = transform.InverseTransformPoint( target.Value );
-                var rotation2 = GetHeadRotation( direction );
+                Head.localRotation = Quaternion.identity;
+                var direction = Head.InverseTransformPoint( target.Value );
+                var rotation2 = GetRotation( direction );
                 if (rotation2 != null) {
-                    transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    Head.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
                     return true;
                 } else {
-                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
                     return false;
                 }
             } else {
-                transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                Head.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
                 return false;
             }
         }
-        private static bool WeaponAt(Transform transform, Vector3? target) {
-            var rotation = transform.localRotation;
-            if (target != null) {
-                transform.localRotation = Quaternion.identity;
-                var direction = transform.InverseTransformPoint( target.Value );
-                var rotation2 = GetWeaponRotation( direction );
-                if (rotation2 != null) {
-                    transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
-                    return true;
-                } else {
-                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                    return false;
-                }
-            } else {
-                transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                return false;
-            }
-        }
-        private static Quaternion? GetHeadRotation(Vector3 direction) {
+
+        private static Quaternion? GetRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;
             if (angles.x > 180) angles.x -= 360;
@@ -181,7 +130,57 @@ namespace Project.Entities.Characters {
             }
             return null;
         }
-        private static Quaternion? GetWeaponRotation(Vector3 direction) {
+
+    }
+    public class CharacterWeaponSlot : Disposable {
+
+        private Slot WeaponSlot { get; }
+        public IWeapon? Weapon {
+            get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject.RequireComponent<IWeapon>() : null;
+            set {
+                var prevWeapon = Weapon;
+                if (prevWeapon != null) {
+                    prevWeapon.gameObject.SetLayerRecursively( Layers.Entity );
+                    prevWeapon.gameObject.RequireComponent<Rigidbody>().isKinematic = false;
+                    prevWeapon.transform.SetParent( null, true );
+                }
+                if (value != null) {
+                    value.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
+                    value.gameObject.RequireComponent<Rigidbody>().isKinematic = true;
+                    value.transform.SetParent( WeaponSlot.transform, true );
+                    value.transform.localPosition = Vector3.zero;
+                    value.transform.localRotation = Quaternion.identity;
+                }
+            }
+        }
+
+        public CharacterWeaponSlot(GameObject gameObject) {
+            WeaponSlot = gameObject.RequireComponentInChildren<Slot>();
+        }
+        public override void Dispose() {
+            base.Dispose();
+        }
+
+        public bool LookAt(Vector3? target) {
+            var rotation = WeaponSlot.transform.localRotation;
+            if (target != null) {
+                WeaponSlot.transform.localRotation = Quaternion.identity;
+                var direction = WeaponSlot.transform.InverseTransformPoint( target.Value );
+                var rotation2 = GetRotation( direction );
+                if (rotation2 != null) {
+                    WeaponSlot.transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
+                    return true;
+                } else {
+                    WeaponSlot.transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
+                }
+            } else {
+                WeaponSlot.transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                return false;
+            }
+        }
+
+        private static Quaternion? GetRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;
             if (angles.x > 180) angles.x -= 360;

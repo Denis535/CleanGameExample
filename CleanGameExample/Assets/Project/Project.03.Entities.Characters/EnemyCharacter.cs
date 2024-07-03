@@ -47,7 +47,7 @@ namespace Project.Entities.Characters {
         }
 
         protected override void Start() {
-            Weapon = Gun.Factory.Create( null );
+            WeaponSlot.Weapon = Gun.Factory.Create( null );
         }
         protected override void FixedUpdate() {
             Environment = GetEnvironment( transform );
@@ -56,10 +56,10 @@ namespace Project.Entities.Characters {
             if (IsAlive) {
                 Body.Move( Vector3.zero, false, false, false );
                 Body.LookAt( GetBodyTarget( Environment ) );
-                View.HeadAt( GetHeadTarget( Environment ) );
-                View.WeaponAt( GetWeaponTarget( Environment ) );
+                Head.LookAt( GetHeadTarget( Environment ) );
+                WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    Weapon?.Fire( this );
+                    WeaponSlot.Weapon?.Fire( this );
                 }
             }
         }

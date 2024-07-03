@@ -9,15 +9,13 @@ namespace UnityEngine {
     public abstract class Point : MonoBehaviour {
 
 #if UNITY_EDITOR
-        // OnValidate
-        protected void OnValidate() {
+        protected virtual void OnValidate() {
             gameObject.name = GetType().Name;
         }
 #endif
 
 #if UNITY_EDITOR
-        // OnDrawGizmos
-        protected void OnDrawGizmos() {
+        protected virtual void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Math.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.white;
             Gizmos.matrix = transform.localToWorldMatrix;

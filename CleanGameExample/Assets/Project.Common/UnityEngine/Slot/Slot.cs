@@ -8,9 +8,8 @@ namespace UnityEngine {
     public class Slot : MonoBehaviour {
 
 #if UNITY_EDITOR
-        // OnValidate
-        protected void OnValidate() {
-            Debug.Assert( gameObject.name.EndsWith( "Slot" ), $"GameObject {gameObject} must have name ending with 'Slot'", gameObject );
+        protected virtual void OnValidate() {
+            gameObject.name = GetType().Name;
         }
 #endif
 

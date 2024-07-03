@@ -9,9 +9,8 @@ namespace UnityEngine {
     public class ThingPoint : Point {
 
 #if UNITY_EDITOR
-        // OnValidate
-        protected new void OnValidate() {
-            gameObject.name = GetType().Name;
+        protected override void OnValidate() {
+            base.OnValidate();
             gameObject.isStatic = true;
             transform.localPosition = Snapping.Snap( transform.localPosition, Vector3.one * 0.5f );
             transform.localEulerAngles = Snapping.Snap( transform.localEulerAngles, Vector3.one * 45f );
@@ -21,8 +20,7 @@ namespace UnityEngine {
 #endif
 
 #if UNITY_EDITOR
-        // OnDrawGizmos
-        protected new void OnDrawGizmos() {
+        protected override void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Math.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.yellow;
             Gizmos.matrix = transform.localToWorldMatrix;

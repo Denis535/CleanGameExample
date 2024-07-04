@@ -35,6 +35,15 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.denis535.project-library": {
+      "version": "file:com.denis535.project-library",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.audio": "1.0.0"
+      }
+    },
     "com.denis535.uitoolkit-theme-style-sheet": {
       "version": "file:com.denis535.uitoolkit-theme-style-sheet",
       "depth": 0,

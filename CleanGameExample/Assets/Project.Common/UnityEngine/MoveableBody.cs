@@ -5,18 +5,15 @@ namespace UnityEngine {
     using System.Collections.Generic;
     using UnityEngine;
 
-    // Note: Character consists of character-controller and its internals (head, body, hands, legs, weapon, etc).
-    // Note: Character-controller should collide only with other character-controllers and don't affect other colliders or rays.
-    // Note: While not moving character-controller can collide only with other character-controllers.
-    // Note: While moving character-controller can collide with everything except internals (head, body, hands, legs, weapon, etc).
+    // Note: Character consists of approximate capsule-collider and exact colliders (body, head, hands, legs, weapon, etc).
     [RequireComponent( typeof( CharacterController ) )]
     public class MoveableBody : MonoBehaviour {
 
         private bool fixedUpdateWasInvoked;
 
         // ExcludeLayers
-        private static LayerMask ExcludeLayers_Default => ~Masks.CharacterEntity; // Exclude everything except CharacterEntity layer
-        private static LayerMask ExcludeLayers_WhenMoving => Masks.CharacterEntityInternal; // Exclude only CharacterEntityInternal layer
+        private static LayerMask ExcludeLayers_Default => ~(0);
+        private static LayerMask ExcludeLayers_WhenMoving => Masks.Entity_Approximate | Masks.Trivial;
 
         // Collider
         private CharacterController Collider { get; set; } = default!;
@@ -33,7 +30,7 @@ namespace UnityEngine {
             Collider = gameObject.RequireComponent<CharacterController>();
             Collider.excludeLayers = ExcludeLayers_Default;
         }
-        private void OnDestroy() {
+        protected void OnDestroy() {
         }
 
         // OnEnable

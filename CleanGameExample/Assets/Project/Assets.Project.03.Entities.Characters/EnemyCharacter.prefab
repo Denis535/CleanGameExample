@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5944508433194620391}
   - component: {fileID: 4843507700252637871}
   - component: {fileID: 7573420942641356291}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 7952209508483316484}
   - component: {fileID: 559588605250708289}
   - component: {fileID: 1574750368107746105}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 663998768907866707}
   - component: {fileID: 8486391439302082187}
   - component: {fileID: 2483434308485660175}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,8 +290,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1446049927350958001}
   - component: {fileID: 8757575737455727999}
-  m_Layer: 12
-  m_Name: WeaponSlot
+  m_Layer: 10
+  m_Name: Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 1851250560492189391}
   - component: {fileID: 7839155877423681900}
   - component: {fileID: 7139086908771455064}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 803112549573631686}
   - component: {fileID: 2491617161859636217}
   - component: {fileID: 3042772662642387634}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 4192829196332456485}
   - component: {fileID: 7420443286479873687}
   - component: {fileID: -5523722555421692247}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: EnemyCharacter
   m_TagString: Entity
   m_Icon: {fileID: 0}

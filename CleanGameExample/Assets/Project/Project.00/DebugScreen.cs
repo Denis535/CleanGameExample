@@ -36,11 +36,11 @@ namespace Project {
         public void OnGUI() {
             using (new GUILayout.VerticalScope( GUI.skin.box )) {
                 GUILayout.Label( "Fps: " + (1f / Time.smoothDeltaTime).ToString( "000." ) );
-                GUILayout.Label( "Main Scene Loaded: " + Router.IsMainSceneLoaded );
-                GUILayout.Label( "Game Scene Loaded: " + Router.IsGameSceneLoaded );
+                GUILayout.Label( "Main Scene: " + Router.IsMainSceneLoaded );
+                GUILayout.Label( "Game Scene: " + Router.IsGameSceneLoaded );
                 if (Game != null) {
                     GUILayout.Label( "Game State: " + Game.State );
-                    GUILayout.Label( "Game Paused: " + Game.IsPaused );
+                    GUILayout.Label( "Game Pause: " + Game.IsPaused );
                     GUILayout.Label( "Player State: " + Game.Player.State );
                 }
             }

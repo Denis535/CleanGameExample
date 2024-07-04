@@ -42,7 +42,7 @@ namespace Project.UI {
 
         // LoadStartup
         public static async void LoadStartup() {
-            Release.LogFormat( "Load: Startup" );
+            Debug2.LogFormat( "Load: Startup" );
             using (@lock.Enter()) {
                 await LoadSceneAsync_Startup();
             }
@@ -50,7 +50,7 @@ namespace Project.UI {
 
         // LoadMainScene
         public async void LoadMainScene() {
-            Release.LogFormat( "Load: MainScene" );
+            Debug2.LogFormat( "Load: MainScene" );
             using (@lock.Enter()) {
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
@@ -63,7 +63,7 @@ namespace Project.UI {
 
         // LoadGameScene
         public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-            Release.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+            Debug2.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
@@ -83,7 +83,7 @@ namespace Project.UI {
 
         // ReloadGameScene
         public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-            Release.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+            Debug2.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
@@ -105,7 +105,7 @@ namespace Project.UI {
 
         // UnloadGameScene
         public async void UnloadGameScene() {
-            Release.LogFormat( "Unload: GameScene" );
+            Debug2.LogFormat( "Unload: GameScene" );
             using (@lock.Enter()) {
                 Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingScreen();
@@ -124,7 +124,7 @@ namespace Project.UI {
 
         // Quit
         public async void Quit() {
-            Release.Log( "Quit" );
+            Debug2.Log( "Quit" );
             using (@lock.Enter()) {
                 Theme.StopTheme();
                 Screen.HideScreen();

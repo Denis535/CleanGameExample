@@ -5,7 +5,7 @@ namespace UnityEngine {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public static class Release {
+    public static class Debug2 {
 
         // Log
         public static void Log(object message) {

@@ -36,7 +36,7 @@ namespace Project.Entities.Things {
     }
     public partial class Gun : Weapon {
 
-        private Delay FireDelay { get; } = new Delay( 0.25f );
+        private FireDelay FireDelay { get; } = new FireDelay( 0.25f );
         private FirePoint FirePoint { get; set; } = default!;
 
         protected override void Awake() {
@@ -53,6 +53,23 @@ namespace Project.Entities.Things {
                 var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, character );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
+        }
+
+    }
+    internal class FireDelay {
+
+        public float Interval { get; }
+        public float? StartTime { get; private set; }
+        public float? EndTime => StartTime.HasValue ? StartTime.Value + Interval : null;
+        public float? Left => StartTime.HasValue ? Math.Max( StartTime.Value + Interval - Time.time, 0 ) : null;
+        public bool IsCompleted => StartTime.HasValue ? (StartTime.Value + Interval - Time.time) <= 0 : true;
+
+        public FireDelay(float interval) {
+            Interval = interval;
+        }
+
+        public void Start() {
+            StartTime = Time.time;
         }
 
     }

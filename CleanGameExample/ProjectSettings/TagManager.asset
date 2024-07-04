@@ -17,12 +17,12 @@ TagManager:
   - 
   - 
   - Entity
-  - Character-Entity
-  - Character-Entity-Internal
   - 
   - 
   - 
   - 
+  - Entity-Approximate
+  - Entity-Exact
   - 
   - 
   - 

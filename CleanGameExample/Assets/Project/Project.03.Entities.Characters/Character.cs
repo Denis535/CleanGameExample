@@ -17,6 +17,7 @@ namespace Project.Entities.Characters {
         protected CharacterWeaponSlot WeaponSlot { get; private set; } = default!;
 
         protected virtual void Awake() {
+            gameObject.SetLayerRecursively( Layers.Entity_Approximate, Layers.Entity_Exact );
             Body = new CharacterBody( gameObject );
             Head = new CharacterHead( gameObject );
             WeaponSlot = new CharacterWeaponSlot( gameObject );
@@ -57,11 +58,9 @@ namespace Project.Entities.Characters {
             get => !MoveableBody.enabled;
             set {
                 if (value) {
-                    GameObject.SetLayerRecursively( Layers.Entity );
                     MoveableBody.enabled = false;
                     Rigidbody.isKinematic = false;
                 } else {
-                    GameObject.SetLayerRecursively( Layers.CharacterEntity, Layers.CharacterEntityInternal );
                     MoveableBody.enabled = true;
                     Rigidbody.isKinematic = true;
                 }
@@ -146,7 +145,6 @@ namespace Project.Entities.Characters {
                     prevWeapon.IsRigidbody = true;
                 }
                 if (value != null) {
-                    value.gameObject.SetLayerRecursively( Layers.CharacterEntityInternal );
                     value.transform.SetParent( Slot.transform, true );
                     value.transform.localPosition = Vector3.zero;
                     value.transform.localRotation = Quaternion.identity;

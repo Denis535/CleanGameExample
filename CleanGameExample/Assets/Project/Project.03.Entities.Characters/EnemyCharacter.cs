@@ -54,25 +54,26 @@ namespace Project.Entities.Characters {
         }
         protected override void Update() {
             if (IsAlive) {
-                Body.Move( Vector3.zero, false, false, false );
-                Body.LookAt( GetBodyTarget( Environment ) );
-                Head.LookAt( GetHeadTarget( Environment ) );
-                WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
+                //Body.Move( Vector3.zero, false, false, false );
+                //Body.LookAt( GetBodyTarget( Environment ) );
+                //Head.LookAt( GetHeadTarget( Environment ) );
+                //WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    WeaponSlot.Weapon?.Fire( this );
+                    //WeaponSlot.Weapon?.Fire( this );
                 }
             }
         }
 
         private static Environment_ GetEnvironment(Transform transform) {
+            var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
             return new Environment_() {
-                Player = Utils.OverlapSphere( transform.position, 8 ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
+                Player = Utils.OverlapSphere( transform.position, 8, mask, QueryTriggerInteraction.Ignore ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
         private static Vector3? GetBodyTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
-                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                    return environment.Player.transform.position + Vector3.up * 1.5f;
                 }
                 return null;
             }
@@ -81,7 +82,7 @@ namespace Project.Entities.Characters {
         private static Vector3? GetHeadTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
-                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                    return environment.Player.transform.position + Vector3.up * 1.5f;
                 }
                 return environment.Player.transform.position;
             }
@@ -90,7 +91,7 @@ namespace Project.Entities.Characters {
         private static Vector3? GetWeaponTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {
-                    return environment.Player.transform.position + Vector3.up * 1.75f;
+                    return environment.Player.transform.position + Vector3.up * 1.5f;
                 }
                 return null;
             }

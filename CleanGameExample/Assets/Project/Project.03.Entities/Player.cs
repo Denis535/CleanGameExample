@@ -172,7 +172,8 @@ namespace Project.Entities {
         }
 
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
-            var hit = Utils.RaycastAll( ray, 128 ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
+            var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
+            var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
                 return (hit.point, hit.distance, hit.collider.gameObject);
             } else {

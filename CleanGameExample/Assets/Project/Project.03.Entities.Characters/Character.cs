@@ -134,7 +134,7 @@ namespace Project.Entities.Characters {
     }
     public class CharacterWeaponSlot : Disposable {
 
-        private Slot Slot { get; }
+        private WeaponSlot Slot { get; }
         public Weapon? Weapon {
             get => Slot.transform.childCount > 0 ? Slot.transform.GetChild( 0 ).gameObject.RequireComponent<Weapon>() : null;
             set {
@@ -145,6 +145,7 @@ namespace Project.Entities.Characters {
                     prevWeapon.IsRigidbody = true;
                 }
                 if (value != null) {
+                    value.gameObject.SetLayerRecursively( Layers.Entity_Exact );
                     value.transform.SetParent( Slot.transform, true );
                     value.transform.localPosition = Vector3.zero;
                     value.transform.localRotation = Quaternion.identity;
@@ -154,7 +155,7 @@ namespace Project.Entities.Characters {
         }
 
         public CharacterWeaponSlot(GameObject gameObject) {
-            Slot = gameObject.RequireComponentInChildren<Slot>();
+            Slot = gameObject.RequireComponentInChildren<WeaponSlot>();
         }
         public override void Dispose() {
             base.Dispose();

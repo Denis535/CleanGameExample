@@ -43,10 +43,13 @@ namespace Project.App {
             base.Dispose();
         }
 
-        // InitializeAsync
-        public async Task InitializeAsync(CancellationToken cancellationToken) {
+        // RunAsync
+        public async Task RunAsync(CancellationToken cancellationToken) {
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Run" );
+#endif
             cancellationToken = CancellationTokenSource.CreateLinkedTokenSource( DisposeCancellationToken, cancellationToken ).Token;
-            if (UnityServices.State == ServicesInitializationState.Uninitialized) {
+            if (UnityServices.State != ServicesInitializationState.Initialized) {
                 var options = new InitializationOptions();
                 if (Storage.Profile != null) options.SetProfile( Storage.Profile );
                 await UnityServices.InitializeAsync( options ).WaitAsync( cancellationToken );
@@ -58,8 +61,11 @@ namespace Project.App {
             }
         }
 
-        // InitializeGame
-        public void InitializeGame(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+        // RunGame
+        public void RunGame(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Run: Game" );
+#endif
             Assert.Operation.Message( $"Game must be null" ).Valid( Game is null );
             Camera2.Factory.Load();
             PlayerCharacter.Factory.Load();
@@ -68,7 +74,10 @@ namespace Project.App {
             Bullet.Factory.Load();
             Game = new Game( Container, gameName, gameMode, gameLevel, playerName, playerKind );
         }
-        public void DeinitializeGame() {
+        public void StopGame() {
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Stop: Game" );
+#endif
             Assert.Operation.Message( $"Game must be non-null" ).Valid( Game is not null );
             Game.Dispose();
             Game = null;

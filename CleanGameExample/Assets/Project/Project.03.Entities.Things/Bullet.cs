@@ -34,13 +34,13 @@ namespace Project.Entities.Things {
         private Rigidbody Rigidbody { get; set; } = default!;
 
         protected void Awake() {
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
         protected void Awake(float force, Gun gun, ICharacter character) {
             Force = force;
             Gun = gun;
             Character = character;
-            Rigidbody.AddForce( transform.forward * Force, ForceMode.Impulse );
+            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Rigidbody.AddForce( transform.forward * force, ForceMode.Impulse );
             GameObject.Destroy( gameObject, 10 );
         }
         protected void OnDestroy() {

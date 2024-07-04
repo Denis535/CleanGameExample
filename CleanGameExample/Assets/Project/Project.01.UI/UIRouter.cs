@@ -42,7 +42,9 @@ namespace Project.UI {
 
         // LoadStartup
         public static async void LoadStartup() {
-            Debug2.LogFormat( "Load: Startup" );
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Load: Startup" );
+#endif
             using (@lock.Enter()) {
                 await LoadSceneAsync_Startup();
             }
@@ -50,7 +52,9 @@ namespace Project.UI {
 
         // LoadMainScene
         public async void LoadMainScene() {
-            Debug2.LogFormat( "Load: MainScene" );
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Load: MainScene" );
+#endif
             using (@lock.Enter()) {
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
@@ -63,7 +67,9 @@ namespace Project.UI {
 
         // LoadGameScene
         public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-            Debug2.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#endif
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
@@ -73,7 +79,7 @@ namespace Project.UI {
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.InitializeGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -83,19 +89,21 @@ namespace Project.UI {
 
         // ReloadGameScene
         public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-            Debug2.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#endif
             using (@lock.Enter()) {
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
                 {
                     // Unload
-                    Application.DeinitializeGame();
+                    Application.StopGame();
                     await UnloadSceneAsync_World();
                     await UnloadSceneAsync_Game();
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.InitializeGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerKind );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -105,13 +113,15 @@ namespace Project.UI {
 
         // UnloadGameScene
         public async void UnloadGameScene() {
-            Debug2.LogFormat( "Unload: GameScene" );
+#if !UNITY_EDITOR
+            Debug.LogFormat( "Unload: GameScene" );
+#endif
             using (@lock.Enter()) {
                 Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingScreen();
                 {
                     // Unload
-                    Application.DeinitializeGame();
+                    Application.StopGame();
                     await UnloadSceneAsync_World();
                     await UnloadSceneAsync_Game();
                     // Load
@@ -124,12 +134,14 @@ namespace Project.UI {
 
         // Quit
         public async void Quit() {
-            Debug2.Log( "Quit" );
+#if !UNITY_EDITOR
+            Debug.Log( "Quit" );
+#endif
             using (@lock.Enter()) {
                 Theme.StopTheme();
                 Screen.HideScreen();
                 if (Application.Game != null) {
-                    Application.DeinitializeGame();
+                    Application.StopGame();
                 }
                 if (WorldScene != null) {
                     await UnloadSceneAsync_World();

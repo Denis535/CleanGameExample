@@ -54,12 +54,12 @@ namespace Project.Entities.Characters {
         }
         protected override void Update() {
             if (IsAlive) {
-                //Body.Move( Vector3.zero, false, false, false );
-                //Body.LookAt( GetBodyTarget( Environment ) );
-                //Head.LookAt( GetHeadTarget( Environment ) );
-                //WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
+                Body.Move( Vector3.zero, false, false, false );
+                Body.LookAt( GetBodyTarget( Environment ) );
+                Head.LookAt( GetHeadTarget( Environment ) );
+                WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    //WeaponSlot.Weapon?.Fire( this );
+                    WeaponSlot.Weapon?.Fire( this );
                 }
             }
         }

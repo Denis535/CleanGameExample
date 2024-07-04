@@ -44,15 +44,12 @@ namespace Project {
             return Enumerable.Empty<string>()
                 .Append( "Assets/Project" )
                 .Append( "Assets/Project.Common" )
-                .Concat(
-                    AssetDatabase.GetAllAssetPaths()
+                .Concat( AssetDatabase.GetAllAssetPaths()
                     .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
+                    .Where( i => i.StartsWith( "Packages/" ) )
                     .Select( Path.GetDirectoryName )
                     .Select( i => i.Replace( '\\', '/' ) )
-                    .Where( i => i.StartsWith( "Packages/" ) )
-                    .Distinct()
-                )
-                .ToArray();
+                    .Distinct() ).ToArray();
         }
 
     }

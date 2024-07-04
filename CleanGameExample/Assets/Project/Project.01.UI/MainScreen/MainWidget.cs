@@ -30,7 +30,7 @@ namespace Project.UI.MainScreen {
             ShowSelf();
             Children.OfType<MenuWidget>().First().View.SetDisplayed( false );
             try {
-                await Application.InitializeAsync( DisposeCancellationToken );
+                await Application.RunAsync( DisposeCancellationToken );
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );

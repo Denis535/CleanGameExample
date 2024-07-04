@@ -5,7 +5,7 @@ namespace UnityEngine {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Slot : MonoBehaviour {
+    public abstract class Slot : MonoBehaviour {
 
 #if UNITY_EDITOR
         protected virtual void OnValidate() {

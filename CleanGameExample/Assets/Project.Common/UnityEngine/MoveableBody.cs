@@ -12,8 +12,8 @@ namespace UnityEngine {
         private bool fixedUpdateWasInvoked;
 
         // ExcludeLayers
-        private static LayerMask ExcludeLayers_Default => ~(0);
-        private static LayerMask ExcludeLayers_WhenMoving => Masks.Entity_Approximate | Masks.Trivial;
+        private static LayerMask ExcludeLayers_Default => ~(Masks.Entity_Approximate);
+        private static LayerMask ExcludeLayers_WhenMoving => (Masks.Entity_Exact | Masks.Trivial);
 
         // Collider
         private CharacterController Collider { get; set; } = default!;

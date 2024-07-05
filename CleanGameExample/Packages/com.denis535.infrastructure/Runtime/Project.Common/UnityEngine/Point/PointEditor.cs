@@ -10,15 +10,12 @@ namespace UnityEngine {
     [CustomEditor( typeof( Point ), true )]
     public class PointEditor : Editor {
 
-        // Target
         private Point Target => (Point) target;
 
-        // OnInspectorGUI
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
         }
 
-        // OnSceneGUI
         protected void OnSceneGUI() {
             if (Event.current.type is EventType.MouseDown or EventType.MouseDrag && Event.current.button == 0 && Event.current.control) {
                 var ray = HandleUtility.GUIPointToWorldRay( Event.current.mousePosition );
@@ -53,7 +50,6 @@ namespace UnityEngine {
             }
         }
 
-        // Helpers
         private static Vector3 Snap(Vector3 point, float distance) {
             if (distance > 10) {
                 return Snapping.Snap( point, Vector3.one * 1f );

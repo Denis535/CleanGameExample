@@ -16,7 +16,17 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 16c22cbe1e242d944bf2eed677985dd4
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ed5c3c914282d2147aae798cffc6aaec
+    m_Address: UnityEngine
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6988aad0e7a67924693643f8db93ddf4
+    m_Address: UnityEngine.Audio
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8c8417ae2abb549498500522f9dbf026, type: 2}
   m_SchemaSet:

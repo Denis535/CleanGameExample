@@ -11,21 +11,16 @@ namespace UnityEngine {
 
         private bool fixedUpdateWasInvoked;
 
-        // ExcludeLayers
         private static LayerMask ExcludeLayers_Default => ~(Masks.Entity_Approximate);
         private static LayerMask ExcludeLayers_WhenMoving => (Masks.Entity_Exact | Masks.Trivial);
 
-        // Collider
         private CharacterController Collider { get; set; } = default!;
-        // Input
         public Vector3 MoveVector { get; private set; }
         public bool IsJumpPressed { get; private set; }
         public bool IsCrouchPressed { get; private set; }
         public bool IsAcceleratePressed { get; private set; }
-        // Input
         public Quaternion? LookRotation { get; private set; }
 
-        // Awake
         protected void Awake() {
             Collider = gameObject.RequireComponent<CharacterController>();
             Collider.excludeLayers = ExcludeLayers_Default;
@@ -33,7 +28,6 @@ namespace UnityEngine {
         protected void OnDestroy() {
         }
 
-        // OnEnable
         protected void OnEnable() {
             Collider.enabled = true;
         }
@@ -41,7 +35,6 @@ namespace UnityEngine {
             Collider.enabled = false;
         }
 
-        // Update
         protected void FixedUpdate() {
             fixedUpdateWasInvoked = true;
             var velocity = Vector3.zero;
@@ -73,7 +66,6 @@ namespace UnityEngine {
         protected void Update() {
         }
 
-        // Move
         public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             Assert.Operation.Message( $"Method 'Move' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
@@ -93,7 +85,6 @@ namespace UnityEngine {
             }
         }
 
-        // LookAt
         public void LookAt(Quaternion? rotation) {
             Assert.Operation.Message( $"Method 'LookAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
@@ -105,7 +96,6 @@ namespace UnityEngine {
             }
         }
 
-        // LookAt
         public void LookAt(Vector3? target) {
             Assert.Operation.Message( $"Method 'LookAt' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Assert.Operation.Message( $"MoveableBody {this} must be awakened" ).Ready( didAwake );
@@ -118,12 +108,10 @@ namespace UnityEngine {
             }
         }
 
-        // OnControllerColliderHit
         protected void OnControllerColliderHit(ControllerColliderHit hit) {
             hit.rigidbody?.WakeUp();
         }
 
-        // Helpers
         private static Vector3 GetDirection(Vector3 position, Vector3 target) {
             var direction = target - position;
             direction = new Vector3( direction.x, 0, direction.z );

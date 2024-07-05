@@ -9,7 +9,6 @@ namespace UnityEngine {
     public class PlayerPoint : Point {
 
 #if UNITY_EDITOR
-        // OnValidate
         protected override void OnValidate() {
             base.OnValidate();
             gameObject.isStatic = true;
@@ -21,7 +20,6 @@ namespace UnityEngine {
 #endif
 
 #if UNITY_EDITOR
-        // OnDrawGizmos
         protected override void OnDrawGizmos() {
             var size = HandleUtility.GetHandleSize( transform.position ).Chain( i => Mathf.Clamp( i, 1f, 20f ) );
             Gizmos.color = Color.green;

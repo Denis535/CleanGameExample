@@ -47,6 +47,7 @@ namespace Project {
                 .Append( "Packages/com.denis535.addressables-extensions" )
                 .Append( "Packages/com.denis535.addressables-source-generator" )
                 .Append( "Packages/com.denis535.colorful-project-window" )
+                .Append( "Packages/com.denis535.project-infrastructure" )
                 .Append( "Packages/com.denis535.infrastructure" )
                 .ToArray();
         }

@@ -14,19 +14,16 @@ namespace UnityEngine {
         public static readonly RaycastHit[] RaycastHitBuffer = new RaycastHit[ 256 ];
         public static readonly Collider[] ColliderBuffer = new Collider[ 256 ];
 
-        // RaycastAll
         public static IEnumerable<RaycastHit> RaycastAll(Ray ray, float maxDistance, int mask, QueryTriggerInteraction queryTriggerInteraction) {
             var count = Physics.RaycastNonAlloc( ray, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
             return RaycastHitBuffer.Take( count );
         }
 
-        // OverlapSphere
         public static IEnumerable<Collider> OverlapSphere(Vector3 position, float radius, int mask, QueryTriggerInteraction queryTriggerInteraction) {
             var count = Physics.OverlapSphereNonAlloc( position, radius, ColliderBuffer, mask, QueryTriggerInteraction.Ignore );
             return ColliderBuffer.Take( count );
         }
 
-        // SetEnabled
         public static void SetEnabled(this InputActions_UI input, bool value) {
             if (value) input.Enable(); else input.Disable();
         }
@@ -37,7 +34,6 @@ namespace UnityEngine {
             if (value) input.Enable(); else input.Disable();
         }
 
-        // GetRandom
         public static T GetRandom<T>(this T[] values) {
             return values[ Random.Range( 0, values.Length ) ];
         }
@@ -51,12 +47,10 @@ namespace UnityEngine {
     }
     public static class UIViewExtensions {
 
-        // IsAttached
         public static bool IsAttached(this UIViewBase2 view) {
             return view.__GetVisualElement__().panel != null;
         }
 
-        // IsEnabledSelf
         public static bool IsEnabledSelf(this UIViewBase2 view) {
             return view.__GetVisualElement__().enabledSelf;
         }
@@ -67,7 +61,6 @@ namespace UnityEngine {
             view.__GetVisualElement__().SetEnabled( value );
         }
 
-        // IsDisplayedSelf
         public static bool IsDisplayedSelf(this UIViewBase2 view) {
             return view.__GetVisualElement__().IsDisplayedSelf();
         }
@@ -81,7 +74,6 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
-        // GetMinMax
         public static (T Min, T Max) GetMinMax<T>(this BaseSlider<T> element) where T : IComparable<T> {
             return (element.lowValue, element.highValue);
         }
@@ -89,7 +81,6 @@ namespace UnityEngine {
             (element.lowValue, element.highValue) = value;
         }
 
-        // OnValidate
         public static void OnValidate(this VisualElement element, EventCallback<EventBase> callback, TrickleDown useTrickleDown = TrickleDown.NoTrickleDown) {
             // todo: how to handle any event?
             //element.RegisterCallback<EventBase>( callback, useTrickleDown );

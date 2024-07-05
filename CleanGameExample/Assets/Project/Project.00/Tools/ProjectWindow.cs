@@ -20,7 +20,7 @@ namespace Project {
         }
 
         // Constructor
-        public ProjectWindow() : base( GetModulePaths() ) {
+        public ProjectWindow() : base( GetPackagePaths(), GetModulePaths() ) {
         }
 
         // OnGUI
@@ -28,22 +28,31 @@ namespace Project {
             base.OnGUI( rect, path );
         }
 
-        // DrawModule
-        protected override void DrawModule(Rect rect, string path, string module) {
-            base.DrawModule( rect, path, module );
+        // DrawPackage
+        protected override void DrawPackage(Rect rect, string path, string package, string content) {
+            base.DrawPackage( rect, path, package, content );
         }
-        protected override void DrawContent(Rect rect, string path, string module, string content) {
-            if (Path.GetExtension( path ) is ".asmdef" or ".asmref") {
-                return;
+
+        // DrawAssembly
+        protected override void DrawAssembly(Rect rect, string path, string assembly, string content) {
+            if (Path.GetExtension( path ) is not (".asmdef" or ".asmref")) {
+                base.DrawAssembly( rect, path, assembly, content );
             }
-            base.DrawContent( rect, path, module, content );
         }
 
         // Helpers
+        private static string[] GetPackagePaths() {
+            return Enumerable.Empty<string>()
+                .Append( "Packages/com.denis535.clean-architecture-game-framework" )
+                .Append( "Packages/com.denis535.addressables-extensions" )
+                .Append( "Packages/com.denis535.addressables-source-generator" )
+                .Append( "Packages/com.denis535.colorful-project-window" )
+                .Append( "Packages/com.denis535.infrastructure" )
+                .ToArray();
+        }
         private static string[] GetModulePaths() {
             return Enumerable.Empty<string>()
                 .Append( "Assets/Project" )
-                .Append( "Assets/Project.Common" )
                 .Concat( AssetDatabase.GetAllAssetPaths()
                     .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
                     .Where( i => i.StartsWith( "Packages/" ) )

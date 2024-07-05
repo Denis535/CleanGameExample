@@ -1,6 +1,6 @@
 {
-  "name": "com.denis535.project-library",
-  "displayName": "Project Library",
+  "name": "com.denis535.infrastructure",
+  "displayName": "Infrastructure",
   "version": "1.0.0",
   "author": {
     "name": "Denis535",
@@ -8,6 +8,7 @@
   },
   "unity": "2023.2",
   "dependencies": {
+    "com.unity.inputsystem": "1.7.0",
     "com.unity.modules.uielements": "1.0.0",
     "com.unity.modules.audio": "1.0.0"
   },

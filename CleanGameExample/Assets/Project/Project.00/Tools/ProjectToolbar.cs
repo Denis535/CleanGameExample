@@ -83,24 +83,20 @@ namespace Project {
                     dir = Path.GetDirectoryName( i ).Replace( '\\', '/' ) + '/',
                     name = Path.GetFileName( i )
                 } )
-                // Assets/Project/
                 .OrderByDescending( i => i.dir.StartsWith( "Assets/Project/Project.00/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI/MainScreen/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI/GameScreen/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI/Common/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/MainScreen/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/GameScreen/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/Common/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.02.App/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Characters/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Things/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Worlds/" ) )
-                // Assets/Project/
-                .ThenByDescending( i => i.dir.EndsWith( ".UI/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI/MainScreen/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI/GameScreen/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI/Common/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/MainScreen/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/GameScreen/" ) )
-                .ThenByDescending( i => i.dir.EndsWith( ".UI.Internal/Common/" ) )
                 // UI/
                 .ThenByDescending( i => i.path.EndsWith( ".UI/UITheme.cs" ) )
                 .ThenByDescending( i => i.path.EndsWith( ".UI/UIScreen.cs" ) )
@@ -145,18 +141,19 @@ namespace Project {
                 // App/
                 .ThenByDescending( i => i.name.Equals( "Application2.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Storage.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "Storage.ProfileSettings.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "Storage.VideoSettings.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "Storage.AudioSettings.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "Storage.Preferences.cs" ) )
                 // Entities/
-                .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Game.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Player.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Camera.cs" ) )
                 // Entities.Characters/
-                .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Character.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "PlayerCharacter.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "EnemyCharacter.cs" ) )
                 // Entities.Things/
-                .ThenByDescending( i => i.name.Equals( "EntityFactory.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Thing.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Gun.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Bullet.cs" ) )

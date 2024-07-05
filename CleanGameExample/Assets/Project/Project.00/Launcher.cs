@@ -3,7 +3,6 @@ namespace Project {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Project.UI;
     using UnityEngine;
 

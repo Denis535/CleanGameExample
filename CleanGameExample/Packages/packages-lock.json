@@ -35,8 +35,8 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
-    "com.denis535.infrastructure": {
-      "version": "file:com.denis535.infrastructure",
+    "com.denis535.project-infrastructure": {
+      "version": "file:com.denis535.project-infrastructure",
       "depth": 0,
       "source": "embedded",
       "dependencies": {

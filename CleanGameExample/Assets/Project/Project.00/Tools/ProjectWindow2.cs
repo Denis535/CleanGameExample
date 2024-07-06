@@ -12,13 +12,13 @@ namespace Project {
     using UnityEngine;
 
     [InitializeOnLoad]
-    public class ProjectWindow : UnityEditor.ColorfulProjectWindow.ProjectWindow {
+    public class ProjectWindow2 : ProjectWindow {
 
-        static ProjectWindow() {
-            new ProjectWindow();
+        static ProjectWindow2() {
+            new ProjectWindow2();
         }
 
-        public ProjectWindow() : base( GetPackagePaths(), GetModulePaths() ) {
+        public ProjectWindow2() : base( GetPackagePaths(), GetModulePaths() ) {
         }
 
         protected override void OnGUI(Rect rect, string path) {
@@ -42,7 +42,6 @@ namespace Project {
                 .Append( "Packages/com.denis535.addressables-source-generator" )
                 .Append( "Packages/com.denis535.colorful-project-window" )
                 .Append( "Packages/com.denis535.project-infrastructure" )
-                .Append( "Packages/com.denis535.infrastructure" )
                 .ToArray();
         }
         private static string[] GetModulePaths() {

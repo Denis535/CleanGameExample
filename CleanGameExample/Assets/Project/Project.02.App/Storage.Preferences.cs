@@ -9,12 +9,13 @@ namespace Project.App {
     public partial class Storage {
         public class Preferences : StorageBase {
 
-            // Constructor
             internal Preferences() {
                 Load();
             }
+            public override void Dispose() {
+                base.Dispose();
+            }
 
-            // Load
             public void Load() {
             }
             public void Save() {

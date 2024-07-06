@@ -11,10 +11,8 @@ namespace Project.App {
     // https://docs.unity3d.com/Manual/PlayerCommandLineArguments.html
     public partial class Storage : StorageBase {
 
-        // Profile
         public string? Profile { get; }
 
-        // Constructor
         internal Storage() {
             //foreach (var (key, values) in CLI.GetKeyValues( Environment.GetCommandLineArgs() )) {
             //    if (key != null) {
@@ -24,6 +22,9 @@ namespace Project.App {
             //    }
             //}
             Profile = CLI.GetValue( Environment.GetCommandLineArgs(), "--profile" );
+        }
+        public override void Dispose() {
+            base.Dispose();
         }
 
     }

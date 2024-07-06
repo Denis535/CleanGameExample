@@ -12,7 +12,6 @@ namespace Project.App {
 
             private string name = default!;
 
-            // Name
             public string Name {
                 get => name;
                 set {
@@ -21,12 +20,13 @@ namespace Project.App {
                 }
             }
 
-            // Constructor
             internal ProfileSettings() {
                 Load();
             }
+            public override void Dispose() {
+                base.Dispose();
+            }
 
-            // Load
             public void Load() {
                 Name = PlayerPrefs.GetString( "ProfileSettings.Name", "Anonymous" );
             }
@@ -34,7 +34,6 @@ namespace Project.App {
                 PlayerPrefs.SetString( "ProfileSettings.Name", Name );
             }
 
-            // Utils
             public bool IsNameValid(string? value) {
                 return value != null &&
                     value.Length >= 3 &&

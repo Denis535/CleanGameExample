@@ -17,9 +17,7 @@ namespace Project.App {
             private float sfxVolume;
             private float gameVolume;
 
-            // AudioMixer
             private AudioMixer AudioMixer { get; }
-            // Volume
             public float MasterVolume {
                 get => masterVolume;
                 set {
@@ -49,7 +47,6 @@ namespace Project.App {
                 }
             }
 
-            // Constructor
             internal AudioSettings() {
                 AudioMixer = Addressables.LoadAssetAsync<AudioMixer>( R.UnityEngine.Audio.Value_AudioMixer ).GetResult();
                 Load();
@@ -59,7 +56,6 @@ namespace Project.App {
                 base.Dispose();
             }
 
-            // Load
             public void Load() {
                 MasterVolume = PlayerPrefs.GetFloat( "AudioSettings.MasterVolume", 0.5f );
                 MusicVolume = PlayerPrefs.GetFloat( "AudioSettings.MusicVolume", 0.5f );

@@ -15,18 +15,14 @@ namespace Project.App {
 
     public class Application2 : ApplicationBase2 {
 
-        // Storage
         public Storage Storage { get; }
         public Storage.ProfileSettings ProfileSettings { get; }
         public Storage.VideoSettings VideoSettings { get; }
         public Storage.AudioSettings AudioSettings { get; }
         public Storage.Preferences Preferences { get; }
-        // Service
         public IAuthenticationService AuthenticationService => Unity.Services.Authentication.AuthenticationService.Instance;
-        // Game
         public Game? Game { get; private set; }
 
-        // Constructor
         public Application2(IDependencyContainer container) : base( container ) {
             Storage = new Storage();
             ProfileSettings = new Storage.ProfileSettings();
@@ -43,7 +39,6 @@ namespace Project.App {
             base.Dispose();
         }
 
-        // RunAsync
         public async Task RunAsync(CancellationToken cancellationToken) {
 #if !UNITY_EDITOR
             Debug.LogFormat( "Run" );
@@ -61,7 +56,6 @@ namespace Project.App {
             }
         }
 
-        // RunGame
         public void RunGame(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
 #if !UNITY_EDITOR
             Debug.LogFormat( "Run: Game" );
@@ -90,7 +84,6 @@ namespace Project.App {
             Array.Clear( Utils.ColliderBuffer, 0, Utils.ColliderBuffer.Length );
         }
 
-        // OnUpdate
         public void OnFixedUpdate() {
             Game?.OnFixedUpdate();
         }

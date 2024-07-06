@@ -12,14 +12,12 @@ namespace Project.App {
 
             private bool isVSync;
 
-            // IsFullScreen
             public bool IsFullScreen {
                 get => Screen.fullScreen;
                 set {
                     Screen.fullScreen = value;
                 }
             }
-            // ScreenResolution
             public Resolution ScreenResolution {
                 get => Screen.currentResolution;
                 set {
@@ -30,7 +28,6 @@ namespace Project.App {
                 //get => Screen.resolutions.SkipWhile( i => i.width < 1000 ).Reverse().ToArray();
                 get => Screen.resolutions.Reverse().ToArray();
             }
-            // IsVSync
             public bool IsVSync {
                 get => isVSync;
                 set {
@@ -39,12 +36,13 @@ namespace Project.App {
                 }
             }
 
-            // Constructor
             internal VideoSettings() {
                 Load();
             }
+            public override void Dispose() {
+                base.Dispose();
+            }
 
-            // Load
             public void Load() {
                 IsVSync = PlayerPrefs2.GetBool( "VideoSettings.IsVSync", true );
             }

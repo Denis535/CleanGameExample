@@ -9,7 +9,6 @@ namespace Project.Entities {
     using Project.Entities.Worlds;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
-    using UnityEngine.InputSystem;
 
     public abstract class GameBase3 : GameBase2, IGame {
 
@@ -58,7 +57,6 @@ namespace Project.Entities {
 
         public Player Player { get; }
         public World World { get; }
-        private InputActions_Game Input { get; }
         protected bool IsDirty { get; set; }
 
         public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container, gameName, gameMode, gameLevel ) {
@@ -66,8 +64,6 @@ namespace Project.Entities {
                 Camera = Camera2.Factory.Create()
             };
             World = container.RequireDependency<World>();
-            Input = new InputActions_Game();
-            Input.Enable();
             {
                 var point = World.PlayerPoints.First();
                 SpawnPlayerCharacter( point );
@@ -80,7 +76,6 @@ namespace Project.Entities {
             }
         }
         public override void Dispose() {
-            Input.Dispose();
             Player.Dispose();
             base.Dispose();
         }

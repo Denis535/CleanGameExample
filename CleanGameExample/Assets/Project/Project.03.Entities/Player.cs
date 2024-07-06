@@ -90,8 +90,8 @@ namespace Project.Entities {
             }
             if (Camera != null && Character != null) {
                 Camera.SetTarget( Character );
-                Camera.Rotate( Input.Player.Look.ReadValue<Vector2>() );
-                Camera.Zoom( Input.Player.Zoom.ReadValue<Vector2>().y );
+                Camera.Rotate( Input.Camera.Look.ReadValue<Vector2>() );
+                Camera.Zoom( Input.Camera.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
             }
             if (Camera != null) {
@@ -101,8 +101,8 @@ namespace Project.Entities {
 
         public override Vector3 GetMoveVector() {
             Assert.Operation.Message( $"Method 'GetMoveVector' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (Input.Player.Move.IsPressed()) {
-                var vector = Input.Player.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+            if (Input.Character.Move.IsPressed()) {
+                var vector = Input.Character.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
                 vector = UnityEngine.Camera.main.transform.TransformDirection( vector );
                 vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
                 return vector;
@@ -112,11 +112,11 @@ namespace Project.Entities {
         }
         public override Vector3? GetBodyTarget() {
             Assert.Operation.Message( $"Method 'GetBodyTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (Input.Player.Move.IsPressed()) {
-                var vector = Input.Player.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+            if (Input.Character.Move.IsPressed()) {
+                var vector = Input.Character.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
                 if (vector != Vector3.zero) {
                     vector = UnityEngine.Camera.main.transform.TransformDirection( vector );
                     vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
@@ -127,48 +127,48 @@ namespace Project.Entities {
         }
         public override Vector3? GetHeadTarget() {
             Assert.Operation.Message( $"Method 'GetHeadTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (Input.Player.Move.IsPressed()) {
+            if (Input.Character.Move.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
             return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         }
         public override Vector3? GetWeaponTarget() {
             Assert.Operation.Message( $"Method 'GetAimTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            if (Input.Player.Aim.IsPressed() || Input.Player.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
-            if (Input.Player.Move.IsPressed()) {
+            if (Input.Character.Move.IsPressed()) {
                 return null;
             }
             return null;
         }
         public override bool IsJumpPressed() {
             Assert.Operation.Message( $"Method 'IsJumpPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return Input.Player.Jump.IsPressed();
+            return Input.Character.Jump.IsPressed();
         }
         public override bool IsCrouchPressed() {
             Assert.Operation.Message( $"Method 'IsCrouchPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return Input.Player.Crouch.IsPressed();
+            return Input.Character.Crouch.IsPressed();
         }
         public override bool IsAcceleratePressed() {
             Assert.Operation.Message( $"Method 'IsAcceleratePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return Input.Player.Accelerate.IsPressed();
+            return Input.Character.Accelerate.IsPressed();
         }
         public override bool IsFirePressed() {
             Assert.Operation.Message( $"Method 'IsFirePressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return Input.Player.Fire.IsPressed();
+            return Input.Character.Fire.IsPressed();
         }
         public override bool IsAimPressed() {
             Assert.Operation.Message( $"Method 'IsAimPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            return Input.Player.Aim.IsPressed();
+            return Input.Character.Aim.IsPressed();
         }
         public override bool IsInteractPressed(out MonoBehaviour? interactable) {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             interactable = (MonoBehaviour?) Enemy ?? (MonoBehaviour?) Thing;
-            return Input.Player.Interact.WasPressedThisFrame();
+            return Input.Character.Interact.WasPressedThisFrame();
         }
 
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {

@@ -27,10 +27,13 @@ namespace UnityEngine {
         public static void SetEnabled(this InputActions_UI input, bool value) {
             if (value) input.Enable(); else input.Disable();
         }
-        public static void SetEnabled(this InputActions_Game input, bool value) {
+        public static void SetEnabled(this InputActions_Player input, bool value) {
             if (value) input.Enable(); else input.Disable();
         }
-        public static void SetEnabled(this InputActions_Player input, bool value) {
+        public static void SetEnabled(this InputActions_Player.CameraActions input, bool value) {
+            if (value) input.Enable(); else input.Disable();
+        }
+        public static void SetEnabled(this InputActions_Player.CharacterActions input, bool value) {
             if (value) input.Enable(); else input.Disable();
         }
 

@@ -26,7 +26,66 @@ namespace UnityEngine.InputSystem
     ""name"": ""InputActions_Player"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Camera"",
+            ""id"": ""62d43fdd-9db7-44f8-a834-7cdd5d9e96e3"",
+            ""actions"": [
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""65d41539-1aa5-44ee-a894-44a810546e76"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cf1275fd-88fb-40ca-945a-e5c53dc52759"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""069b1bd7-e235-4622-960c-bdb94f752dd6"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab03d33b-a271-41ed-aba4-ac60376454d3"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""439d2805-54a2-4c6d-8b42-b1944c6b7a49"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Character"",
             ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
             ""actions"": [
                 {
@@ -37,24 +96,6 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""e5b0eea5-03e5-4ed2-89b0-916823234287"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Zoom"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""dac447d4-14c3-4fc4-b490-e7e3c957386f"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Jump"",
@@ -257,39 +298,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""39f53890-9205-47a7-92b1-ff717cfc0fde"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95111174-d355-416b-af25-e4161c2f4c99"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1c0d89db-72dc-42d7-910e-eed2fe034968"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f9f0db46-10c0-4bc0-bcb5-c682e9fb47ac"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -409,17 +417,19 @@ namespace UnityEngine.InputSystem
         }
     ]
 }");
-            // Player
-            m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
-            m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-            m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
-            m_Player_Accelerate = m_Player.FindAction("Accelerate", throwIfNotFound: true);
-            m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-            m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
-            m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+            // Camera
+            m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+            m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
+            m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
+            // Character
+            m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
+            m_Character_Move = m_Character.FindAction("Move", throwIfNotFound: true);
+            m_Character_Jump = m_Character.FindAction("Jump", throwIfNotFound: true);
+            m_Character_Crouch = m_Character.FindAction("Crouch", throwIfNotFound: true);
+            m_Character_Accelerate = m_Character.FindAction("Accelerate", throwIfNotFound: true);
+            m_Character_Fire = m_Character.FindAction("Fire", throwIfNotFound: true);
+            m_Character_Aim = m_Character.FindAction("Aim", throwIfNotFound: true);
+            m_Character_Interact = m_Character.FindAction("Interact", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -478,49 +488,93 @@ namespace UnityEngine.InputSystem
             return asset.FindBinding(bindingMask, out action);
         }
 
-        // Player
-        private readonly InputActionMap m_Player;
-        private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-        private readonly InputAction m_Player_Move;
-        private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Zoom;
-        private readonly InputAction m_Player_Jump;
-        private readonly InputAction m_Player_Crouch;
-        private readonly InputAction m_Player_Accelerate;
-        private readonly InputAction m_Player_Fire;
-        private readonly InputAction m_Player_Aim;
-        private readonly InputAction m_Player_Interact;
-        public struct PlayerActions
+        // Camera
+        private readonly InputActionMap m_Camera;
+        private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+        private readonly InputAction m_Camera_Look;
+        private readonly InputAction m_Camera_Zoom;
+        public struct CameraActions
         {
             private @InputActions_Player m_Wrapper;
-            public PlayerActions(@InputActions_Player wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_Player_Move;
-            public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
-            public InputAction @Jump => m_Wrapper.m_Player_Jump;
-            public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
-            public InputAction @Accelerate => m_Wrapper.m_Player_Accelerate;
-            public InputAction @Fire => m_Wrapper.m_Player_Fire;
-            public InputAction @Aim => m_Wrapper.m_Player_Aim;
-            public InputAction @Interact => m_Wrapper.m_Player_Interact;
-            public InputActionMap Get() { return m_Wrapper.m_Player; }
+            public CameraActions(@InputActions_Player wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Look => m_Wrapper.m_Camera_Look;
+            public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
+            public InputActionMap Get() { return m_Wrapper.m_Camera; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-            public void AddCallbacks(IPlayerActions instance)
+            public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+            public void AddCallbacks(ICameraActions instance)
             {
-                if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+            }
+
+            private void UnregisterCallbacks(ICameraActions instance)
+            {
+                @Look.started -= instance.OnLook;
+                @Look.performed -= instance.OnLook;
+                @Look.canceled -= instance.OnLook;
+                @Zoom.started -= instance.OnZoom;
+                @Zoom.performed -= instance.OnZoom;
+                @Zoom.canceled -= instance.OnZoom;
+            }
+
+            public void RemoveCallbacks(ICameraActions instance)
+            {
+                if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(ICameraActions instance)
+            {
+                foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public CameraActions @Camera => new CameraActions(this);
+
+        // Character
+        private readonly InputActionMap m_Character;
+        private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
+        private readonly InputAction m_Character_Move;
+        private readonly InputAction m_Character_Jump;
+        private readonly InputAction m_Character_Crouch;
+        private readonly InputAction m_Character_Accelerate;
+        private readonly InputAction m_Character_Fire;
+        private readonly InputAction m_Character_Aim;
+        private readonly InputAction m_Character_Interact;
+        public struct CharacterActions
+        {
+            private @InputActions_Player m_Wrapper;
+            public CharacterActions(@InputActions_Player wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_Character_Move;
+            public InputAction @Jump => m_Wrapper.m_Character_Jump;
+            public InputAction @Crouch => m_Wrapper.m_Character_Crouch;
+            public InputAction @Accelerate => m_Wrapper.m_Character_Accelerate;
+            public InputAction @Fire => m_Wrapper.m_Character_Fire;
+            public InputAction @Aim => m_Wrapper.m_Character_Aim;
+            public InputAction @Interact => m_Wrapper.m_Character_Interact;
+            public InputActionMap Get() { return m_Wrapper.m_Character; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(CharacterActions set) { return set.Get(); }
+            public void AddCallbacks(ICharacterActions instance)
+            {
+                if (instance == null || m_Wrapper.m_CharacterActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_CharacterActionsCallbackInterfaces.Add(instance);
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -541,17 +595,11 @@ namespace UnityEngine.InputSystem
                 @Interact.canceled += instance.OnInteract;
             }
 
-            private void UnregisterCallbacks(IPlayerActions instance)
+            private void UnregisterCallbacks(ICharacterActions instance)
             {
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @Look.started -= instance.OnLook;
-                @Look.performed -= instance.OnLook;
-                @Look.canceled -= instance.OnLook;
-                @Zoom.started -= instance.OnZoom;
-                @Zoom.performed -= instance.OnZoom;
-                @Zoom.canceled -= instance.OnZoom;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -572,21 +620,21 @@ namespace UnityEngine.InputSystem
                 @Interact.canceled -= instance.OnInteract;
             }
 
-            public void RemoveCallbacks(IPlayerActions instance)
+            public void RemoveCallbacks(ICharacterActions instance)
             {
-                if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_CharacterActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
-            public void SetCallbacks(IPlayerActions instance)
+            public void SetCallbacks(ICharacterActions instance)
             {
-                foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_CharacterActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_CharacterActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
-        public PlayerActions @Player => new PlayerActions(this);
+        public CharacterActions @Character => new CharacterActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -632,11 +680,14 @@ namespace UnityEngine.InputSystem
                 return asset.controlSchemes[m_XRSchemeIndex];
             }
         }
-        public interface IPlayerActions
+        public interface ICameraActions
         {
-            void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
+        }
+        public interface ICharacterActions
+        {
+            void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
             void OnAccelerate(InputAction.CallbackContext context);

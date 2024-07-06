@@ -10,36 +10,33 @@ namespace Project.UI {
 
     public class UITheme : UIThemeBase2 {
 
-        // Strategy
-        private Strategy? Strategy_ { get; set; }
-        // IsPaused
+        private ThemeStateBase? State { get; set; }
         public new bool IsPaused {
             set => base.IsPaused = value;
         }
+        public bool IsFading { get; set; }
 
-        // Constructor
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
         }
         public override void Dispose() {
-            Strategy_?.Dispose();
-            Strategy_ = null;
+            State?.Dispose();
+            State = null;
             base.Dispose();
         }
 
-        // PlayTheme
         public void PlayMainTheme() {
             StopTheme();
-            Strategy_ = new MainStrategy( this );
-            Strategy_.Play();
+            State = new MainThemeState( this );
+            State.Play();
         }
         public void PlayGameTheme() {
             StopTheme();
-            Strategy_ = new GameStrategy( this );
-            Strategy_.Play();
+            State = new GameThemeState( this );
+            State.Play();
         }
         public void PlayLoadingTheme() {
-            if (Strategy_ is MainStrategy mainStrategy) {
-                mainStrategy.IsFading = true;
+            if (State is MainThemeState mainStrategy) {
+                IsFading = true;
             } else {
                 StopTheme();
             }
@@ -48,22 +45,23 @@ namespace Project.UI {
             StopTheme();
         }
         public void StopTheme() {
-            Strategy_?.Dispose();
-            Strategy_ = null;
+            State?.Dispose();
+            State = null;
         }
 
-        // OnUpdate
+        public void OnFixedUpdate() {
+        }
         public void OnUpdate() {
         }
 
-        // Strategy
-        private abstract class Strategy : Disposable {
+        private abstract class ThemeStateBase : Disposable {
 
-            protected abstract UITheme Context { get; }
-            protected abstract AssetHandle<AudioClip>[] Clips { get; }
-            public bool IsFading { get; set; }
+            protected UITheme Context { get; }
+            protected AssetHandle<AudioClip>[] Clips { get; }
 
-            public Strategy() {
+            public ThemeStateBase(UITheme context, AssetHandle<AudioClip>[] clips) {
+                Context = context;
+                Clips = clips;
             }
             public override void Dispose() {
                 base.Dispose();
@@ -90,7 +88,7 @@ namespace Project.UI {
                     Context.Volume = 1;
                     Context.Pitch = 1;
                     while (!Context.IsCompleted) {
-                        if (IsFading) {
+                        if (Context.IsFading) {
                             Context.Volume = Mathf.MoveTowards( Context.Volume, 0, Context.Volume * 1.0f * Time.deltaTime );
                             Context.Pitch = Mathf.MoveTowards( Context.Pitch, 0, Context.Pitch * 0.5f * Time.deltaTime );
                         }
@@ -102,31 +100,27 @@ namespace Project.UI {
             }
 
         }
-        private class MainStrategy : Strategy {
+        private class MainThemeState : ThemeStateBase {
 
-            protected override UITheme Context { get; }
-            protected override AssetHandle<AudioClip>[] Clips { get; } = Shuffle( new[] {
+            private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
                 new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
             } );
 
-            public MainStrategy(UITheme ñontext) {
-                Context = ñontext;
+            public MainThemeState(UITheme context) : base( context, Clips ) {
             }
             public override void Dispose() {
                 base.Dispose();
             }
 
         }
-        private class GameStrategy : Strategy {
+        private class GameThemeState : ThemeStateBase {
 
-            protected override UITheme Context { get; }
-            protected override AssetHandle<AudioClip>[] Clips { get; } = Shuffle( new[] {
+            private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
                 new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_1 ),
                 new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
             } );
 
-            public GameStrategy(UITheme context) {
-                Context = context;
+            public GameThemeState(UITheme context) : base( context, Clips ) {
             }
             public override void Dispose() {
                 base.Dispose();

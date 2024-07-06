@@ -38,6 +38,7 @@ namespace Project.Entities.Characters {
         void IDamageable.OnDamage(DamageInfo info) {
             if (IsAlive) {
                 if (info is BulletDamageInfo bulletDamageInfo) {
+                    gameObject.SetLayerRecursively( Layers.Entity, Layers.Entity );
                     IsAlive = false;
                     WeaponSlot.Weapon = null;
                     Body.IsRagdoll = true;
@@ -119,6 +120,7 @@ namespace Project.Entities.Characters {
             }
         }
 
+        // Helpers
         private static Quaternion? GetRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;
@@ -181,6 +183,7 @@ namespace Project.Entities.Characters {
             }
         }
 
+        // Helpers
         private static Quaternion? GetRotation(Vector3 direction) {
             var rotation = Quaternion.LookRotation( direction );
             var angles = rotation.eulerAngles;

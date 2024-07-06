@@ -12,9 +12,7 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase2 {
 
-        // Constructor
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
-            AddWidget( new RootWidget( container ) );
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
             VisualElementFactory.OnPlaySubmit += evt => { };
@@ -25,13 +23,13 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
+            AddWidget( new RootWidget( container ) );
         }
         public override void Dispose() {
             Widget.RemoveSelf();
             base.Dispose();
         }
 
-        // ShowScreen
         public void ShowMainScreen() {
             HideScreen();
             Widget.AddChild( new MainWidget( Container ) );
@@ -52,7 +50,8 @@ namespace Project.UI {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
         }
 
-        // OnUpdate
+        public void OnFixedUpdate() {
+        }
         public void OnUpdate() {
             foreach (var child in Widget.Children) {
                 (child as MainWidget)?.OnUpdate();

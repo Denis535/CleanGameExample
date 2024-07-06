@@ -58,6 +58,8 @@ namespace Project {
         }
         protected override void FixedUpdate() {
             Application?.OnFixedUpdate();
+            Screen.OnFixedUpdate();
+            Theme.OnFixedUpdate();
         }
         protected override void Update() {
             Application?.OnUpdate();

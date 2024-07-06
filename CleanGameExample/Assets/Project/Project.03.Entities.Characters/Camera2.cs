@@ -1,9 +1,8 @@
 #nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
@@ -54,7 +53,7 @@ namespace Project.Entities {
             Target = target;
         }
 
-        public void Rotate(Vector2 delta) {
+        public void Look(Vector2 delta) {
             Assert.Operation.Message( $"Method 'Rotate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             Angles += new Vector2( -delta.y, delta.x ) * AnglesInputSensitivity;
             Angles = new Vector2( Math.Clamp( Angles.x, MinAngleX, MaxAngleX ), Angles.y );

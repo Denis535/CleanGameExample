@@ -16,21 +16,17 @@ namespace Project.UI {
 
         private static readonly Lock @lock = new Lock();
 
-        // Framework
         private UITheme Theme => Container.RequireDependency<UITheme>();
         private UIScreen Screen => Container.RequireDependency<UIScreen>();
         private Application2 Application { get; }
-        // Scene
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.Value_MainScene );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.Value_GameScene );
         private SceneHandle? WorldScene { get; set; }
-        // IsSceneLoaded
         public bool IsMainSceneLoaded => MainScene.IsSucceeded;
         public bool IsGameSceneLoaded => GameScene.IsSucceeded;
         public bool IsWorldSceneLoaded => WorldScene != null;
 
-        // Constructor
         public UIRouter(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
         }
@@ -40,22 +36,20 @@ namespace Project.UI {
             }
         }
 
-        // LoadStartup
         public static async void LoadStartup() {
-#if !UNITY_EDITOR
-            Debug.LogFormat( "Load: Startup" );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.LogFormat( "Load: Startup" );
+#endif
                 await LoadSceneAsync_Startup();
             }
         }
 
-        // LoadMainScene
         public async void LoadMainScene() {
-#if !UNITY_EDITOR
-            Debug.LogFormat( "Load: MainScene" );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.LogFormat( "Load: MainScene" );
+#endif
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
                 {
@@ -65,12 +59,11 @@ namespace Project.UI {
             }
         }
 
-        // LoadGameScene
         public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-#if !UNITY_EDITOR
-            Debug.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
                 {
@@ -87,12 +80,11 @@ namespace Project.UI {
             }
         }
 
-        // ReloadGameScene
         public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
-#if !UNITY_EDITOR
-            Debug.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+#endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
                 {
@@ -111,12 +103,11 @@ namespace Project.UI {
             }
         }
 
-        // UnloadGameScene
         public async void UnloadGameScene() {
-#if !UNITY_EDITOR
-            Debug.LogFormat( "Unload: GameScene" );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.LogFormat( "Unload: GameScene" );
+#endif
                 Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingScreen();
                 {
@@ -132,12 +123,11 @@ namespace Project.UI {
             }
         }
 
-        // Quit
         public async void Quit() {
-#if !UNITY_EDITOR
-            Debug.Log( "Quit" );
-#endif
             using (@lock.Enter()) {
+#if !UNITY_EDITOR
+                Debug.Log( "Quit" );
+#endif
                 Theme.StopTheme();
                 Screen.HideScreen();
                 if (Application.Game != null) {

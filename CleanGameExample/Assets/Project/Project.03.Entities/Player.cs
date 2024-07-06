@@ -90,7 +90,7 @@ namespace Project.Entities {
             }
             if (Camera != null && Character != null) {
                 Camera.SetTarget( Character );
-                Camera.Rotate( Input.Camera.Look.ReadValue<Vector2>() );
+                Camera.Look( Input.Camera.Look.ReadValue<Vector2>() );
                 Camera.Zoom( Input.Camera.Zoom.ReadValue<Vector2>().y );
                 Camera.Apply();
             }

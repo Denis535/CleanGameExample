@@ -1,11 +1,11 @@
-﻿#nullable enable
-namespace Project.Entities.Characters {
+#nullable enable
+namespace UnityEngine.Framework.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
-    public interface IPlayer {
+    public interface ICharacterInput {
         Vector3 GetMoveVector();
         Vector3? GetBodyTarget();
         Vector3? GetHeadTarget();

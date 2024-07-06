@@ -5,6 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class Gun {
         public static class Factory {
@@ -47,29 +48,12 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public override void Fire(ICharacter character) {
-            if (FireDelay.IsCompleted) {
-                FireDelay.Start();
-                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, character );
+        public override void Fire(IDamager damager) {
+            if (FireDelay.CanFire) {
+                FireDelay.Fire();
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, damager, this );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
-        }
-
-    }
-    internal class FireDelay {
-
-        public float Interval { get; }
-        public float? StartTime { get; private set; }
-        public float? EndTime => StartTime.HasValue ? StartTime.Value + Interval : null;
-        public float? Left => StartTime.HasValue ? Math.Max( StartTime.Value + Interval - Time.time, 0 ) : null;
-        public bool IsCompleted => StartTime.HasValue ? (StartTime.Value + Interval - Time.time) <= 0 : true;
-
-        public FireDelay(float interval) {
-            Interval = interval;
-        }
-
-        public void Start() {
-            StartTime = Time.time;
         }
 
     }

@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class GameBase3 : GameBase2, IGame {
+    public abstract class GameBase3 : GameBase2 {
 
         private GameState state;
         private bool isPaused;
@@ -38,6 +38,7 @@ namespace Project.Entities {
             }
         }
         public event Action<bool>? OnPauseEvent;
+        protected bool IsDirty { get; set; }
 
         public GameBase3(IDependencyContainer container, string name, GameMode mode, GameLevel level) : base( container ) {
             Name = name;
@@ -57,16 +58,14 @@ namespace Project.Entities {
 
         public Player Player { get; }
         public World World { get; }
-        protected bool IsDirty { get; set; }
 
         public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container, gameName, gameMode, gameLevel ) {
-            Player = new Player( container, playerName, playerKind ) {
-                Camera = Camera2.Factory.Create()
-            };
+            Player = new Player( container, playerName, playerKind );
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                SpawnPlayerCharacter( point );
+                Player.Character = SpawnPlayerCharacter( point, (PlayerCharacterType) Player.Kind );
+                Player.Camera = Camera2.Factory.Create();
             }
             foreach (var point in World.EnemyPoints) {
                 SpawnEnemyCharacter( point );
@@ -96,17 +95,15 @@ namespace Project.Entities {
             }
         }
 
-        protected void SpawnPlayerCharacter(PlayerPoint point) {
-            Player.Character = PlayerCharacter.Factory.Create( (PlayerCharacterType) Player.Kind, point.transform.position, point.transform.rotation );
-            Player.Character.Game = this;
-            Player.Character.Player = Player;
-            Player.Character.OnDamageEvent += info => {
+        protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, PlayerCharacterType type) {
+            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, type );
+            character.OnDamageEvent += info => {
                 IsDirty = true;
             };
+            return character;
         }
         protected void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacter.Factory.Create( point.transform.position, point.transform.rotation );
-            character.Game = this;
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };

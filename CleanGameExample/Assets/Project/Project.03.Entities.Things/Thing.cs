@@ -22,9 +22,4 @@ namespace Project.Entities.Things {
         }
 
     }
-    public abstract class Weapon : Thing {
-
-        public abstract void Fire(ICharacter character);
-
-    }
 }

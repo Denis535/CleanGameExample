@@ -5,10 +5,11 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using Project.Entities.Things;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract class Character : MonoBehaviour, ICharacter, IDamageable {
+    public abstract class Character : MonoBehaviour, IDamager, IDamageable {
 
         public bool IsAlive { get; private set; } = true;
         public event Action<DamageInfo>? OnDamageEvent;
@@ -37,14 +38,14 @@ namespace Project.Entities.Characters {
 
         void IDamageable.OnDamage(DamageInfo info) {
             if (IsAlive) {
+                gameObject.SetLayerRecursively( Layers.Entity );
+                IsAlive = false;
+                Body.IsRagdoll = true;
+                WeaponSlot.Weapon = null;
                 if (info is BulletDamageInfo bulletDamageInfo) {
-                    gameObject.SetLayerRecursively( Layers.Entity, Layers.Entity );
-                    IsAlive = false;
-                    WeaponSlot.Weapon = null;
-                    Body.IsRagdoll = true;
                     Body.AddImpulse( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
-                    OnDamageEvent?.Invoke( bulletDamageInfo );
                 }
+                OnDamageEvent?.Invoke( info );
             }
         }
 
@@ -80,6 +81,7 @@ namespace Project.Entities.Characters {
         public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
             MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
         }
+
         public void LookAt(Vector3? target) {
             MoveableBody.LookAt( target );
         }

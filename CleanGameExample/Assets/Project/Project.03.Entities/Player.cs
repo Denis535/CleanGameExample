@@ -10,7 +10,7 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class PlayerBase3 : PlayerBase2, IPlayer {
+    public abstract class PlayerBase3 : PlayerBase2, ICharacterInput, ICameraInput {
 
         private PlayerState state;
 
@@ -25,12 +25,15 @@ namespace Project.Entities {
             }
         }
         public event Action<PlayerState>? OnStateChangeEvent;
+        protected InputActions_Player Input { get; }
 
         public PlayerBase3(IDependencyContainer container, string name, PlayerKind kind) : base( container ) {
             Name = name;
             Kind = kind;
+            Input = new InputActions_Player();
         }
         public override void Dispose() {
+            Input.Dispose();
             base.Dispose();
         }
 
@@ -48,12 +51,42 @@ namespace Project.Entities {
         public abstract bool IsAimPressed();
         public abstract bool IsInteractPressed(out MonoBehaviour? interactable);
 
+        public abstract Vector2 GetLookDelta();
+        public abstract float GetZoomDelta();
+
     }
     public class Player : PlayerBase3 {
 
-        public Camera2 Camera { get; internal init; } = default!;
-        public PlayerCharacter? Character { get; internal set; }
-        private InputActions_Player Input { get; }
+        private PlayerCharacter? character;
+        private Camera2? camera;
+
+        public PlayerCharacter? Character {
+            get => character;
+            internal set {
+                if (character != null) {
+                    character.Input = null;
+                    Input.Disable();
+                }
+                character = value;
+                if (character != null) {
+                    character.Input = this;
+                }
+            }
+        }
+        public Camera2? Camera {
+            get => camera;
+            internal set {
+                if (camera != null) {
+                    camera.Input = null;
+                    Input.Disable();
+                }
+                camera = value;
+                if (camera != null) {
+                    camera.Input = this;
+                }
+            }
+        }
+
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
             get {
@@ -75,10 +108,8 @@ namespace Project.Entities {
         }
 
         public Player(IDependencyContainer container, string name, PlayerKind kind) : base( container, name, kind ) {
-            Input = new InputActions_Player();
         }
         public override void Dispose() {
-            Input.Dispose();
             base.Dispose();
         }
 
@@ -86,15 +117,13 @@ namespace Project.Entities {
         }
         public override void OnUpdate() {
             {
-                Input.SetEnabled( Character != null && Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked );
+                Input.SetEnabled( Time.timeScale != 0f && Cursor.lockState == CursorLockMode.Locked && Character != null && Camera != null );
             }
-            if (Camera != null && Character != null) {
-                Camera.SetTarget( Character );
-                Camera.Look( Input.Camera.Look.ReadValue<Vector2>() );
-                Camera.Zoom( Input.Camera.Zoom.ReadValue<Vector2>().y );
-                Camera.Apply();
+            if (Character != null) {
+
             }
             if (Camera != null) {
+                Camera.Target = Character;
                 Hit = Raycast( Camera.Ray, Character?.transform );
             }
         }
@@ -136,7 +165,7 @@ namespace Project.Entities {
             return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         }
         public override Vector3? GetWeaponTarget() {
-            Assert.Operation.Message( $"Method 'GetAimTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            Assert.Operation.Message( $"Method 'GetWeaponTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Hit?.Point ?? UnityEngine.Camera.main.transform.TransformPoint( Vector3.forward * 128f );
             }
@@ -169,6 +198,15 @@ namespace Project.Entities {
             Assert.Operation.Message( $"Method 'IsInteractPressed' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
             interactable = (MonoBehaviour?) Enemy ?? (MonoBehaviour?) Thing;
             return Input.Character.Interact.WasPressedThisFrame();
+        }
+
+        public override Vector2 GetLookDelta() {
+            Assert.Operation.Message( $"Method 'GetLookDelta' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Camera.Look.ReadValue<Vector2>();
+        }
+        public override float GetZoomDelta() {
+            Assert.Operation.Message( $"Method 'GetZoomDelta' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+            return Input.Camera.Zoom.ReadValue<Vector2>().y;
         }
 
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {

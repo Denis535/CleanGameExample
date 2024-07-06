@@ -5,6 +5,7 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class Camera2 {
         public static class Factory {
@@ -26,18 +27,26 @@ namespace Project.Entities.Characters {
     }
     public partial class Camera2 : MonoBehaviour {
 
-        public static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
-        public static readonly float DefaultDistance = 1.5f;
-        public static readonly float MinAngleX = -88;
-        public static readonly float MaxAngleX = +88;
-        public static readonly float MinDistance = 1;
-        public static readonly float MaxDistance = 3;
-        public static readonly float AnglesInputSensitivity = 0.15f;
-        public static readonly float DistanceInputSensitivity = 0.20f;
+        private static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
+        private static readonly float DefaultDistance = 1.5f;
+        private static readonly float MinAngleX = -88;
+        private static readonly float MaxAngleX = +88;
+        private static readonly float MinDistance = 1;
+        private static readonly float MaxDistance = 3;
+        private static readonly float AnglesInputSensitivity = 0.15f;
+        private static readonly float DistanceInputSensitivity = 0.20f;
 
         private int? prevTargetID;
+        private Character? target;
 
-        public Character? Target { get; private set; }
+        public ICameraInput? Input { get; set; }
+        public Character? Target {
+            get => target;
+            set {
+                prevTargetID = target?.GetInstanceID();
+                target = value;
+            }
+        }
         public Vector2 Angles { get; private set; }
         public float Distance { get; private set; }
         public Ray Ray => new Ray( transform.position, transform.forward );
@@ -47,36 +56,34 @@ namespace Project.Entities.Characters {
         protected void OnDestroy() {
         }
 
-        public void SetTarget(Character? target) {
-            Assert.Operation.Message( $"Method 'SetTarget' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            prevTargetID = Target?.GetInstanceID();
-            Target = target;
+        protected void Update() {
         }
-
-        public void Look(Vector2 delta) {
-            Assert.Operation.Message( $"Method 'Rotate' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            Angles += new Vector2( -delta.y, delta.x ) * AnglesInputSensitivity;
-            Angles = new Vector2( Math.Clamp( Angles.x, MinAngleX, MaxAngleX ), Angles.y );
-        }
-
-        public void Zoom(float delta) {
-            Assert.Operation.Message( $"Method 'Zoom' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
-            Distance += delta * DistanceInputSensitivity;
-            Distance = Math.Clamp( Distance, MinDistance, MaxDistance );
-        }
-
-        public void Apply() {
-            Assert.Operation.Message( $"Method 'Apply' must be invoked only within update" ).Valid( !Time.inFixedTimeStep );
+        protected void LateUpdate() {
             if (Target != null) {
                 if (Target.GetInstanceID() != prevTargetID) {
                     Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
                     Distance = DefaultDistance;
+                }
+                if (Input != null) {
+                    {
+                        var delta = Input.GetLookDelta() * AnglesInputSensitivity;
+                        var angles = Angles + new Vector2( -delta.y, delta.x );
+                        angles.x = Math.Clamp( angles.x, MinAngleX, MaxAngleX );
+                        Angles = angles;
+                    }
+                    {
+                        var delta = Input.GetZoomDelta() * DistanceInputSensitivity;
+                        var distance = Distance + delta;
+                        distance = Math.Clamp( distance, MinDistance, MaxDistance );
+                        Distance = distance;
+                    }
                 }
                 Apply( transform, Target, Angles, Distance );
                 Apply( Camera.main, transform );
             }
         }
 
+        // Helpers
         private static void Apply(Transform transform, Character target, Vector2 angles, float distance) {
             if (target.IsAlive) {
                 var distance01 = Mathf.InverseLerp( MinDistance, MaxDistance, distance );

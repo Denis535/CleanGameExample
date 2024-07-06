@@ -12,7 +12,7 @@ namespace Project {
     using UnityEngine;
 
     [InitializeOnLoad]
-    public class ProjectWindow : ColorfulProjectWindow {
+    public class ProjectWindow : UnityEditor.ColorfulProjectWindow.ProjectWindow {
 
         static ProjectWindow() {
             new ProjectWindow();

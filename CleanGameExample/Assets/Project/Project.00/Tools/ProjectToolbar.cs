@@ -14,7 +14,6 @@ namespace Project {
 
     public static class ProjectToolbar {
 
-        // LoadScene
         [MenuItem( "Project/Launcher", priority = 0 )]
         public static void LoadLauncher() {
             var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "Launcher.unity" );
@@ -36,7 +35,6 @@ namespace Project {
             EditorSceneManager.OpenScene( path );
         }
 
-        // LoadScene
         [MenuItem( "Project/World 01", priority = 100 )]
         public static void LoadLevel1() {
             var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_01.unity" );
@@ -53,7 +51,6 @@ namespace Project {
             EditorSceneManager.OpenScene( path );
         }
 
-        // Build
         [MenuItem( "Project/Pre Build", priority = 200 )]
         public static void PreBuild() {
             ProjectBuilder.PreBuild();
@@ -73,7 +70,6 @@ namespace Project {
             EditorUtility.RevealInFinder( path );
         }
 
-        // OpenAll
         [MenuItem( "Project/Open All", priority = 300 )]
         public static void OpenAll() {
             var paths = AssetDatabase.GetAllAssetPaths()
@@ -171,7 +167,6 @@ namespace Project {
             }
         }
 
-        // Point
         [MenuItem( "Project/Player Point", priority = 500 )]
         public static void PlayerPoint() {
             var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );

@@ -1,0 +1,498 @@
+.unity-base-field .unity-base-field__label {
+  -unity-text-align: middle-left;
+}
+.unity-base-field .unity-base-field__input {
+  -unity-text-align: middle-left;
+}
+.unity-base-field {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:hover {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:active {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:hover {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:active {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:hover {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:active {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:hover {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:active {
+  background-color: rgba(0,0,0,0);
+  border-left-color: rgba(0,0,0,0);
+  border-right-color: rgba(0,0,0,0);
+  border-top-color: rgba(0,0,0,0);
+  border-bottom-color: rgba(0,0,0,0);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field .unity-base-field__label {
+  color: #e6e6e6;
+  background-color: #4d4d4c;
+  border-left-color: #544d45;
+  border-right-color: #544d45;
+  border-top-color: #544d45;
+  border-bottom-color: #544d45;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:hover .unity-base-field__label {
+  color: #fff;
+  background-color: #50504e;
+  border-left-color: #8c8073;
+  border-right-color: #8c8073;
+  border-top-color: #8c8073;
+  border-bottom-color: #8c8073;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:active .unity-base-field__label {
+  color: #e6e6e6;
+  background-color: #4b4b49;
+  border-left-color: #38332e;
+  border-right-color: #38332e;
+  border-top-color: #38332e;
+  border-bottom-color: #38332e;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus .unity-base-field__label {
+  color: #197fe6;
+  background-color: #4d4d4c;
+  border-left-color: #1466b8;
+  border-right-color: #1466b8;
+  border-top-color: #1466b8;
+  border-bottom-color: #1466b8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:hover .unity-base-field__label {
+  color: #39f;
+  background-color: #50504e;
+  border-left-color: #197fe6;
+  border-right-color: #197fe6;
+  border-top-color: #197fe6;
+  border-bottom-color: #197fe6;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:active .unity-base-field__label {
+  color: #197fe6;
+  background-color: #4b4b49;
+  border-left-color: #0a335c;
+  border-right-color: #0a335c;
+  border-top-color: #0a335c;
+  border-bottom-color: #0a335c;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid .unity-base-field__label {
+  color: #e61919;
+  background-color: #4d4d4c;
+  border-left-color: #b81414;
+  border-right-color: #b81414;
+  border-top-color: #b81414;
+  border-bottom-color: #b81414;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:hover .unity-base-field__label {
+  color: #f33;
+  background-color: #50504e;
+  border-left-color: #e61919;
+  border-right-color: #e61919;
+  border-top-color: #e61919;
+  border-bottom-color: #e61919;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:active .unity-base-field__label {
+  color: #e61919;
+  background-color: #4b4b49;
+  border-left-color: #5c0a0a;
+  border-right-color: #5c0a0a;
+  border-top-color: #5c0a0a;
+  border-bottom-color: #5c0a0a;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus .unity-base-field__label {
+  color: #e61919;
+  background-color: #4d4d4c;
+  border-left-color: #1466b8;
+  border-right-color: #1466b8;
+  border-top-color: #1466b8;
+  border-bottom-color: #1466b8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:hover .unity-base-field__label {
+  color: #f33;
+  background-color: #50504e;
+  border-left-color: #197fe6;
+  border-right-color: #197fe6;
+  border-top-color: #197fe6;
+  border-bottom-color: #197fe6;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:active .unity-base-field__label {
+  color: #e61919;
+  background-color: #4b4b49;
+  border-left-color: #0a335c;
+  border-right-color: #0a335c;
+  border-top-color: #0a335c;
+  border-bottom-color: #0a335c;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #544d45;
+  border-right-color: #544d45;
+  border-top-color: #544d45;
+  border-bottom-color: #544d45;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:hover .unity-base-field__input {
+  color: #fff;
+  background-color: #272726;
+  border-left-color: #8c8073;
+  border-right-color: #8c8073;
+  border-top-color: #8c8073;
+  border-bottom-color: #8c8073;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:active .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #38332e;
+  border-right-color: #38332e;
+  border-top-color: #38332e;
+  border-bottom-color: #38332e;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #1466b8;
+  border-right-color: #1466b8;
+  border-top-color: #1466b8;
+  border-bottom-color: #1466b8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:hover .unity-base-field__input {
+  color: #fff;
+  background-color: #272726;
+  border-left-color: #197fe6;
+  border-right-color: #197fe6;
+  border-top-color: #197fe6;
+  border-bottom-color: #197fe6;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field:focus:active .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #0a335c;
+  border-right-color: #0a335c;
+  border-top-color: #0a335c;
+  border-bottom-color: #0a335c;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #b81414;
+  border-right-color: #b81414;
+  border-top-color: #b81414;
+  border-bottom-color: #b81414;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:hover .unity-base-field__input {
+  color: #fff;
+  background-color: #272726;
+  border-left-color: #e61919;
+  border-right-color: #e61919;
+  border-top-color: #e61919;
+  border-bottom-color: #e61919;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:active .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #5c0a0a;
+  border-right-color: #5c0a0a;
+  border-top-color: #5c0a0a;
+  border-bottom-color: #5c0a0a;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #1466b8;
+  border-right-color: #1466b8;
+  border-top-color: #1466b8;
+  border-bottom-color: #1466b8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:hover .unity-base-field__input {
+  color: #fff;
+  background-color: #272726;
+  border-left-color: #197fe6;
+  border-right-color: #197fe6;
+  border-top-color: #197fe6;
+  border-bottom-color: #197fe6;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field.invalid:focus:active .unity-base-field__input {
+  color: #e6e6e6;
+  background-color: #272726;
+  border-left-color: #0a335c;
+  border-right-color: #0a335c;
+  border-top-color: #0a335c;
+  border-bottom-color: #0a335c;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.unity-base-field {
+  width: auto;
+  height: auto;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.unity-base-field .unity-base-field__label {
+  width: auto;
+  height: auto;
+  margin-left: 0px;
+  margin-right: 4px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.unity-base-field .unity-base-field__input {
+  width: auto;
+  height: auto;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.unity-base-field {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.unity-base-field .unity-base-field__label {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+}
+.unity-base-field .unity-base-field__input {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+}

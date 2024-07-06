@@ -17,20 +17,17 @@ namespace Project {
     [DefaultExecutionOrder( 1000 )]
     public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
 
-        // Framework
         protected override UITheme Theme { get; set; } = default!;
         protected override UIScreen Screen { get; set; } = default!;
         protected override UIRouter Router { get; set; } = default!;
         protected override Application2 Application { get; set; } = default!;
         protected override Game? Game => Application.Game;
 
-        // OnLoad
         [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSplashScreen )]
         private static void OnLoad() {
         }
 
 #if UNITY_EDITOR
-        // OnLoad
         [InitializeOnLoadMethod]
         private static void OnLoad_Editor() {
             if (!EditorApplication.isPlaying) {
@@ -40,7 +37,6 @@ namespace Project {
         }
 #endif
 
-        // Awake
         protected override void Awake() {
             base.Awake();
             VisualElementFactory.StringSelector = GetDisplayString;
@@ -57,7 +53,6 @@ namespace Project {
             base.OnDestroy();
         }
 
-        // Start
         protected override void Start() {
             Router.LoadMainScene();
         }
@@ -72,7 +67,6 @@ namespace Project {
         protected override void LateUpdate() {
         }
 
-        // OnQuit
         protected override bool OnQuit() {
             if (Router.IsMainSceneLoaded || Router.IsGameSceneLoaded) {
                 Router.Quit();
@@ -81,7 +75,6 @@ namespace Project {
             return true;
         }
 
-        // IDependencyContainer
         protected override Option<object?> GetValue(Type type, object? argument) {
             this.ThrowIfInvalid();
             // UI

@@ -19,8 +19,8 @@ namespace Project.Entities.Characters {
         protected virtual void Awake() {
             gameObject.SetLayerRecursively( Layers.Entity_Approximate, Layers.Entity_Exact );
             Body = new CharacterBody( gameObject );
-            Head = new CharacterHead( gameObject );
-            WeaponSlot = new CharacterWeaponSlot( gameObject );
+            Head = new CharacterHead( gameObject.transform.Require( "Head" ).gameObject );
+            WeaponSlot = new CharacterWeaponSlot( gameObject.RequireComponentInChildren<WeaponSlot>() );
         }
         protected virtual void OnDestroy() {
             WeaponSlot.Dispose();
@@ -90,10 +90,11 @@ namespace Project.Entities.Characters {
     }
     public class CharacterHead : Disposable {
 
-        private Transform Transform { get; }
+        private GameObject GameObject { get; }
+        private Transform Transform => GameObject.transform;
 
         public CharacterHead(GameObject gameObject) {
-            Transform = gameObject.transform.Require( "Head" );
+            GameObject = gameObject;
         }
         public override void Dispose() {
             base.Dispose();
@@ -154,8 +155,8 @@ namespace Project.Entities.Characters {
             }
         }
 
-        public CharacterWeaponSlot(GameObject gameObject) {
-            Slot = gameObject.RequireComponentInChildren<WeaponSlot>();
+        public CharacterWeaponSlot(WeaponSlot slot) {
+            Slot = slot;
         }
         public override void Dispose() {
             base.Dispose();

@@ -50,6 +50,7 @@ namespace UnityEngine {
             }
         }
 
+        // Helpers
         private static Vector3 Snap(Vector3 point, float distance) {
             if (distance > 10) {
                 return Snapping.Snap( point, Vector3.one * 1f );

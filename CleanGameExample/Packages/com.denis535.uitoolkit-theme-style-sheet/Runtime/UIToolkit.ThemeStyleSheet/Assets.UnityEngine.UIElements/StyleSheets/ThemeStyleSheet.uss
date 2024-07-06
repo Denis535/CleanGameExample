@@ -1,0 +1,43 @@
+@import url("StyleSheets1/00_Label.uss");
+@import url("StyleSheets1/01_Button.uss");
+@import url("StyleSheets1/02_Field.uss");
+@import url("StyleSheets1/02_Field__Text-Field.uss");
+@import url("StyleSheets1/02_Field__Popup-Field.uss");
+@import url("StyleSheets1/02_Field__Slider-Field.uss");
+@import url("StyleSheets1/02_Field__Toggle-Field.uss");
+@import url("StyleSheets2/00_Widget.uss");
+@import url("StyleSheets2/01_Card.uss");
+@import url("StyleSheets2/02_Tab-View.uss");
+@import url("StyleSheets2/03_Scroll-View.uss");
+@import url("StyleSheets2/03_Scroll-View__Horizontal-Scroller.uss");
+@import url("StyleSheets2/03_Scroll-View__Vertical-Scroller.uss");
+@import url("StyleSheets2/04_Scope.uss");
+@import url("StyleSheets2/05_Group.uss");
+@import url("StyleSheets2/06_Box.uss");
+@import url("StyleSheets2/07_Dropdown.uss");
+@import url("StyleSheets2/07_Dropdown__Scroll-View.uss");
+PanelRootElement {
+  -unity-font: url('../Fonts/Inter-4.0/Inter.ttc');
+  -unity-font-definition: url('../Fonts/Inter-4.0/Inter.ttc');
+  font-size: 14px;
+  -unity-font-style: normal;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+PanelRootElement TemplateContainer {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.unity-hidden {
+  display: none;
+}

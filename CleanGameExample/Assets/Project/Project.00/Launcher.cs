@@ -8,13 +8,11 @@ namespace Project {
 
     public class Launcher : MonoBehaviour {
 
-        // Awake
         public void Awake() {
         }
         public void OnDestroy() {
         }
 
-        // Start
         public void Start() {
             UIRouter.LoadStartup();
         }

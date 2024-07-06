@@ -112,6 +112,7 @@ namespace UnityEngine {
             hit.rigidbody?.WakeUp();
         }
 
+        // Helpers
         private static Vector3 GetDirection(Vector3 position, Vector3 target) {
             var direction = target - position;
             direction = new Vector3( direction.x, 0, direction.z );

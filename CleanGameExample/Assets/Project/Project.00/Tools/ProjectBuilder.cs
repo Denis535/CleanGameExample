@@ -11,13 +11,11 @@ namespace Project {
 
     public static class ProjectBuilder {
 
-        // Build/Pre
         public static void PreBuild() {
             var generator = AssetDatabase.LoadAssetAtPath<AddressableSourceGenerator>( AssetDatabase.FindAssets( "t:AddressableSourceGenerator" ).Single().Chain( AssetDatabase.GUIDToAssetPath ) );
             generator.Generate();
         }
 
-        // Build/Development
         public static void BuildDevelopment(string path) {
             PreBuild();
             BuildPipeline.BuildPlayer(
@@ -29,8 +27,6 @@ namespace Project {
                 BuildOptions.ShowBuiltPlayer
                 );
         }
-
-        // Build/Production
         public static void BuildProduction(string path) {
             PreBuild();
             BuildPipeline.BuildPlayer(

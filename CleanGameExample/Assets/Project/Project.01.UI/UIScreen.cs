@@ -12,6 +12,8 @@ namespace Project.UI {
 
     public class UIScreen : UIScreenBase2 {
 
+        private new RootWidget Widget => (RootWidget?) base.Widget!;
+
         public UIScreen(IDependencyContainer container) : base( container, container.RequireDependency<UIDocument>(), container.RequireDependency<AudioSource>( "SfxAudioSource" ) ) {
             VisualElementFactory.OnPlayClick += evt => { };
             VisualElementFactory.OnPlaySelect += evt => { };
@@ -70,45 +72,6 @@ namespace Project.UI {
             View.Dispose();
             base.Dispose();
         }
-
-        // Helpers
-        //protected static RootWidgetView CreateView() {
-        //    var view = new RootWidgetView();
-        //    view.OnSubmitEvent += OnSubmit;
-        //    view.OnCancelEvent += OnCancel;
-        //    return view;
-        //}
-        //// Helpers
-        //protected static new void OnSubmit(NavigationSubmitEvent evt) {
-        //    var button = evt.target as Button;
-        //    if (button != null) {
-        //        Click( button );
-        //        evt.StopPropagation();
-        //    }
-        //}
-        //protected static new void OnCancel(NavigationCancelEvent evt) {
-        //    var widget = ((VisualElement) evt.target).GetAncestorsAndSelf().OfType<Widget>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).FirstOrDefault();
-        //    var button = widget?.Query<Button>().Where( i => i.enabledInHierarchy && i.IsDisplayedInHierarchy() ).Where( IsCancel ).First();
-        //    if (button != null) {
-        //        Click( button );
-        //        evt.StopPropagation();
-        //    }
-        //}
-        //// Helpers
-        //protected static new bool IsCancel(Button button) {
-        //    return button.ClassListContains( "resume" ) ||
-        //        button.ClassListContains( "cancel" ) ||
-        //        button.ClassListContains( "back" ) ||
-        //        button.ClassListContains( "no" ) ||
-        //        button.ClassListContains( "exit" ) ||
-        //        button.ClassListContains( "quit" );
-        //}
-        //protected static new void Click(Button button) {
-        //    using (var evt = ClickEvent.GetPooled()) {
-        //        evt.target = button;
-        //        button.SendEvent( evt );
-        //    }
-        //}
 
     }
     public class RootWidgetView : UIRootWidgetView {

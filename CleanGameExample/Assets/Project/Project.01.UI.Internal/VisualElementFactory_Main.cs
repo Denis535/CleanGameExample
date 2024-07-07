@@ -8,14 +8,12 @@ namespace Project.UI {
 
     public static class VisualElementFactory_Main {
 
-        // Main
         public static Widget Main(out Widget widget) {
             using (VisualElementFactory.Widget( "main-widget" ).Classes( "main-widget-background" ).AsScope().Out( out widget )) {
                 return widget;
             }
         }
 
-        // Menu
         public static Widget Menu(out Widget widget, out Label title, out VisualElement views) {
             using (VisualElementFactory.LeftWidget( "menu-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {

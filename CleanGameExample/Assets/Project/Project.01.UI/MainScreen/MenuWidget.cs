@@ -11,12 +11,10 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Framework
         private UIRouter Router { get; }
         private Application2 Application { get; }
         private Storage.ProfileSettings ProfileSettings => Application.ProfileSettings;
 
-        // Constructor
         public MenuWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
@@ -27,7 +25,6 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -35,7 +32,6 @@ namespace Project.UI.MainScreen {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

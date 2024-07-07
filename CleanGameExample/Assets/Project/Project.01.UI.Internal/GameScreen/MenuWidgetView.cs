@@ -15,7 +15,6 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
-        // Events
         public event EventCallback<ClickEvent> OnResume {
             add => resume.RegisterCallback( value );
             remove => resume.UnregisterCallback( value );
@@ -29,7 +28,6 @@ namespace Project.UI.GameScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public MenuWidgetView() {
             VisualElement = VisualElementFactory_Game.Menu( out widget, out title, out resume, out settings, out back );
         }

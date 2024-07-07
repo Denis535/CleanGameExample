@@ -15,7 +15,6 @@ namespace Project.UI.Common {
         private readonly Slider sfxVolume;
         private readonly Slider gameVolume;
 
-        // Props
         public float MasterVolume {
             get => masterVolume.value;
             init => masterVolume.value = value;
@@ -48,7 +47,6 @@ namespace Project.UI.Common {
             get => gameVolume.GetMinMax();
             init => gameVolume.SetMinMax( value );
         }
-        // Events
         public event EventCallback<ChangeEvent<float>> OnMasterVolume {
             add => masterVolume.RegisterCallback( value );
             remove => masterVolume.UnregisterCallback( value );
@@ -66,7 +64,6 @@ namespace Project.UI.Common {
             remove => gameVolume.UnregisterCallback( value );
         }
 
-        // Constructor
         public AudioSettingsWidgetView() {
             VisualElement = VisualElementFactory_Common.AudioSettings( out widget, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
         }

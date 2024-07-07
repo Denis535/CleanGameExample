@@ -12,13 +12,11 @@ namespace Project.UI.Common {
         private readonly Widget widget;
         private readonly TextField name;
 
-        // Props
         public string Name {
             get => name.value;
             init => name.value = value;
         }
 
-        // Constructor
         public ProfileSettingsWidgetView(Func<string?, bool> nameValidator) {
             VisualElement = VisualElementFactory_Common.ProfileSettings( out widget, out name );
             name.OnValidate( evt => {

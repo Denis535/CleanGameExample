@@ -11,10 +11,8 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
-        // Framework
         private Application2 Application { get; }
 
-        // Constructor
         public MainWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -25,7 +23,6 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // OnActivate
         protected override async void OnActivate(object? argument) {
             ShowSelf();
             Children.OfType<MenuWidget>().First().View.SetDisplayed( false );
@@ -42,7 +39,6 @@ namespace Project.UI.MainScreen {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -52,7 +48,6 @@ namespace Project.UI.MainScreen {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
-        // OnUpdate
         public void OnUpdate() {
         }
 

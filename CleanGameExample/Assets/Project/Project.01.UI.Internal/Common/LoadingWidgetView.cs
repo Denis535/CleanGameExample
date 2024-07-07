@@ -15,7 +15,6 @@ namespace Project.UI.Common {
         private readonly VisualElement background;
         private readonly Label loading;
 
-        // Constructor
         public LoadingWidgetView() {
             VisualElement = VisualElementFactory_Common.Loading( out widget, out background, out loading );
             background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {

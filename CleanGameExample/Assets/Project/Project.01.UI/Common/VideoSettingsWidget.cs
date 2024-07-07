@@ -8,11 +8,9 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidget : UIWidgetBase2<VideoSettingsWidgetView> {
 
-        // Framework
         private Application2 Application { get; }
         private Storage.VideoSettings VideoSettings => Application.VideoSettings;
 
-        // Constructor
         public VideoSettingsWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -22,7 +20,6 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -38,7 +35,6 @@ namespace Project.UI.Common {
             }
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

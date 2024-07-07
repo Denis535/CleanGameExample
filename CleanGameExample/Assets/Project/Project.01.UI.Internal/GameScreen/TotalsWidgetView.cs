@@ -9,7 +9,6 @@ namespace Project.UI.GameScreen {
 
     public abstract class TotalsWidgetView : UIViewBase2 {
 
-        // Constructor
         public TotalsWidgetView() {
         }
         public override void Dispose() {
@@ -25,7 +24,6 @@ namespace Project.UI.GameScreen {
         private Button @continue;
         private Button back;
 
-        // Events
         public event EventCallback<ClickEvent> OnContinue {
             add => @continue.RegisterCallback( value );
             remove => @continue.UnregisterCallback( value );
@@ -35,7 +33,6 @@ namespace Project.UI.GameScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public TotalsWidgetView_LevelCompleted() {
             VisualElement = VisualElementFactory_Game.Totals_LevelCompleted( out widget, out title, out message, out @continue, out back );
         }
@@ -51,13 +48,11 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button okey;
 
-        // Events
         public event EventCallback<ClickEvent> OnOkey {
             add => okey.RegisterCallback( value );
             remove => okey.UnregisterCallback( value );
         }
 
-        // Constructor
         public TotalsWidgetView_GameCompleted() {
             VisualElement = VisualElementFactory_Game.Totals_GameCompleted( out widget, out title, out message, out okey );
         }
@@ -74,7 +69,6 @@ namespace Project.UI.GameScreen {
         private Button retry;
         private Button back;
 
-        // Events
         public event EventCallback<ClickEvent> OnRetry {
             add => retry.RegisterCallback( value );
             remove => retry.UnregisterCallback( value );
@@ -84,7 +78,6 @@ namespace Project.UI.GameScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public TotalsWidgetView_LevelFailed() {
             VisualElement = VisualElementFactory_Game.Totals_LevelFailed( out widget, out title, out message, out retry, out back );
         }

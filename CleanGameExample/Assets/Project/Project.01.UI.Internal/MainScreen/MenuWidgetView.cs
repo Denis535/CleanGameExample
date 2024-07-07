@@ -14,10 +14,8 @@ namespace Project.UI.MainScreen {
         private readonly Label title;
         private readonly VisualElement views;
 
-        // Props
         public UIViewBase[] Views => views.GetViews().ToArray();
 
-        // Constructor
         public MenuWidgetView() {
             VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out views );
         }
@@ -26,7 +24,6 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        // AddView
         public void AddView(UIViewBase2 view) {
             views.AddView( view );
             Recalculate( views.GetViews().ToArray() );
@@ -88,7 +85,6 @@ namespace Project.UI.MainScreen {
         private readonly Button settings;
         private readonly Button quit;
 
-        // Props
         public event EventCallback<ClickEvent> OnStartGame {
             add => startGame.RegisterCallback( value );
             remove => startGame.UnregisterCallback( value );
@@ -102,7 +98,6 @@ namespace Project.UI.MainScreen {
             remove => quit.UnregisterCallback( value );
         }
 
-        // Constructor
         public MenuWidgetView_Menu() {
             VisualElement = VisualElementFactory_Main.Menu_Menu( out scope, out startGame, out settings, out quit );
         }
@@ -118,7 +113,6 @@ namespace Project.UI.MainScreen {
         private readonly Button @continue;
         private readonly Button back;
 
-        // Props
         public event EventCallback<ClickEvent> OnNewGame {
             add => newGame.RegisterCallback( value );
             remove => newGame.UnregisterCallback( value );
@@ -132,7 +126,6 @@ namespace Project.UI.MainScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public MenuWidgetView_StartGame() {
             VisualElement = VisualElementFactory_Main.Menu_StartGame( out scope, out newGame, out @continue, out back );
         }
@@ -149,7 +142,6 @@ namespace Project.UI.MainScreen {
         private readonly Button level3;
         private readonly Button back;
 
-        // Props
         public event EventCallback<ClickEvent> OnLevel1 {
             add => level1.RegisterCallback( value );
             remove => level1.UnregisterCallback( value );
@@ -167,7 +159,6 @@ namespace Project.UI.MainScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public MenuWidgetView_SelectLevel() {
             VisualElement = VisualElementFactory_Main.Menu_SelectLevel( out scope, out level1, out level2, out level3, out back );
         }
@@ -185,7 +176,6 @@ namespace Project.UI.MainScreen {
         private readonly Button blue;
         private readonly Button back;
 
-        // Props
         public event EventCallback<ClickEvent> OnGray {
             add => gray.RegisterCallback( value );
             remove => gray.UnregisterCallback( value );
@@ -207,7 +197,6 @@ namespace Project.UI.MainScreen {
             remove => back.UnregisterCallback( value );
         }
 
-        // Constructor
         public MenuWidgetView_SelectCharacter() {
             VisualElement = VisualElementFactory_Main.Menu_SelectCharacter( out scope, out gray, out red, out green, out blue, out back );
         }

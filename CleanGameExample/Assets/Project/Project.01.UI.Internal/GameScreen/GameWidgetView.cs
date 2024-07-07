@@ -13,7 +13,7 @@ namespace Project.UI.GameScreen {
         private readonly Widget widget;
         private readonly VisualElement target;
 
-        // Props
+        private InputActions_UI Input { get; }
         public TargetEffect TargetEffect {
             set {
                 switch (value) {
@@ -32,13 +32,10 @@ namespace Project.UI.GameScreen {
                 }
             }
         }
-        // Events
         public event EventCallback<NavigationCancelEvent> OnCancel {
             add => widget.RegisterCallback( value );
             remove => widget.UnregisterCallback( value );
         }
-        // Input
-        private InputActions_UI Input { get; }
 
         // Constructor
         public GameWidgetView() {

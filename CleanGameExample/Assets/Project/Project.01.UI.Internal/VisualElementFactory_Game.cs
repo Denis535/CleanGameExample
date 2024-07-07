@@ -8,7 +8,6 @@ namespace Project.UI {
 
     public static class VisualElementFactory_Game {
 
-        // Game
         public static Widget Game(out Widget widget, out VisualElement target) {
             using (VisualElementFactory.Widget( "game-widget" ).Pipe( i => i.focusable = true ).AsScope().Out( out widget )) {
                 target = VisualElementFactory.Label( "+" )
@@ -18,7 +17,6 @@ namespace Project.UI {
             }
         }
 
-        // Menu
         public static Widget Menu(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
             using (VisualElementFactory.LeftWidget( "menu-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
@@ -35,7 +33,6 @@ namespace Project.UI {
             }
         }
 
-        // Totals
         public static VisualElement Totals_LevelCompleted(out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
             using (VisualElementFactory.SmallWidget( "level-completed-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {

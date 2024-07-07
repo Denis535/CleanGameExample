@@ -9,39 +9,35 @@ namespace Project.UI {
 
     public static partial class VisualElementFactory {
 
-        // StringSelector
         public static Func<object?, string?>? StringSelector { get; set; }
-        // OnWidgetAttach
+
         public static event Action<VisualElement>? OnWidgetAttach;
         public static event Action<VisualElement>? OnWidgetDetach;
-        // OnPlaySfx
+
         public static event EventCallback<EventBase>? OnPlayClick;
         public static event EventCallback<ClickEvent>? OnPlaySelect;
         public static event EventCallback<ClickEvent>? OnPlaySubmit;
         public static event EventCallback<ClickEvent>? OnPlayCancel;
         public static event EventCallback<IChangeEvent>? OnPlayChange;
-        // OnPlaySfx
+
         public static event EventCallback<FocusEvent>? OnPlayFocus;
-        // OnPlaySfx
+        
         public static event EventCallback<AttachToPanelEvent>? OnPlayDialog;
         public static event EventCallback<AttachToPanelEvent>? OnPlayInfoDialog;
         public static event EventCallback<AttachToPanelEvent>? OnPlayWarningDialog;
         public static event EventCallback<AttachToPanelEvent>? OnPlayErrorDialog;
 
-        // VisualElement
         public static VisualElement VisualElement() {
             var result = Create<VisualElement>( null, null );
             return result;
         }
 
-        // Label
         public static Label Label(string? text) {
             var result = Create<Label>( null, null );
             result.text = text;
             return result;
         }
 
-        // Button
         public static Button Button(string? text) {
             var result = Create<Button>( null, null );
             result.text = text;
@@ -57,7 +53,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Button
         public static Button Select(string? text) {
             var result = Create<Button>( null, "select" );
             result.text = text;
@@ -94,7 +89,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Button
         public static Button Submit(string? text) {
             var result = Create<Button>( null, "submit" );
             result.text = text;
@@ -110,7 +104,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Field
         public static TextField TextField(string? label, int maxLength, bool isMultiline = false, bool isReadOnly = false) {
             var result = Create<TextField>( null, null );
             result.label = label;
@@ -180,7 +173,6 @@ namespace Project.UI {
     }
     public static partial class VisualElementFactory {
 
-        // Widget
         public static Widget Widget(string name) {
             var result = Create<Widget>( name, "widget" );
             result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
@@ -212,7 +204,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Widget
         public static Widget DialogWidget() {
             var result = Create<Widget>( "dialog-widget", "dialog-widget" );
             result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
@@ -242,7 +233,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Card
         public static Card Card() {
             var result = Create<Card>( "card", "card" );
             return result;
@@ -260,7 +250,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Card
         public static Card DialogCard() {
             var result = Create<Card>( "dialog-card", "dialog-card" );
             return result;
@@ -278,7 +267,6 @@ namespace Project.UI {
             return result;
         }
 
-        // TabView
         public static TabView TabView() {
             var result = Create<TabView>( "tab-view", null );
             return result;
@@ -290,7 +278,6 @@ namespace Project.UI {
             return result;
         }
 
-        // ScrollView
         public static ScrollView ScrollView() {
             var result = Create<ScrollView>( "scroll-view", null );
             result.horizontalScroller.highButton.BringToFront();
@@ -304,7 +291,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Scope
         public static ColumnScope ColumnScope() {
             var result = Create<ColumnScope>( "scope", null );
             return result;
@@ -314,7 +300,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Group
         public static ColumnGroup ColumnGroup() {
             var result = Create<ColumnGroup>( "group", null );
             return result;
@@ -324,7 +309,6 @@ namespace Project.UI {
             return result;
         }
 
-        // Box
         public static Box Box() {
             var result = Create<Box>( "box", null );
             return result;

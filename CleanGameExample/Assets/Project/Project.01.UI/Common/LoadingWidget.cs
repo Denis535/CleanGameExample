@@ -8,7 +8,6 @@ namespace Project.UI.Common {
 
     public class LoadingWidget : UIWidgetBase2<LoadingWidgetView> {
 
-        // Constructor
         public LoadingWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
         }
@@ -17,7 +16,6 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -25,7 +23,6 @@ namespace Project.UI.Common {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

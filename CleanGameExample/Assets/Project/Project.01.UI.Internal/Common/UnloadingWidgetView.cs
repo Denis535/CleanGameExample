@@ -13,7 +13,6 @@ namespace Project.UI.Common {
         private readonly Widget widget;
         private readonly VisualElement background;
 
-        // Constructor
         public UnloadingWidgetView() {
             VisualElement = VisualElementFactory_Common.Unloading( out widget, out background );
             background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {

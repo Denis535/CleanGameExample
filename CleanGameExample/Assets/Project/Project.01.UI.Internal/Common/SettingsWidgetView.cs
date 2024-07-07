@@ -18,7 +18,6 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
-        // Props
         public ProfileSettingsWidgetView? ProfileSettings {
             get => profileSettings.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
@@ -49,7 +48,6 @@ namespace Project.UI.Common {
                 }
             }
         }
-        // Events
         public event EventCallback<ClickEvent> OnOkey {
             add => okey.RegisterCallback( value );
             remove => okey.RegisterCallback( value );
@@ -59,7 +57,6 @@ namespace Project.UI.Common {
             remove => back.RegisterCallback( value );
         }
 
-        // Constructor
         public SettingsWidgetView() {
             VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
             widget.OnValidate( evt => {

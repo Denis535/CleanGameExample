@@ -11,11 +11,9 @@ namespace Project.UI.GameScreen {
 
     public class TotalsWidget : UIWidgetBase2<TotalsWidgetView> {
 
-        // Framework
         private UIRouter Router { get; }
         private Game Game { get; }
 
-        // Constructor
         public TotalsWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             Game = container.RequireDependency<Game>();
@@ -26,7 +24,6 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -34,7 +31,6 @@ namespace Project.UI.GameScreen {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

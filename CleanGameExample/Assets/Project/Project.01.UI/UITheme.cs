@@ -87,6 +87,7 @@ namespace Project.UI {
                     Context.Play( clip );
                     Context.Volume = 1;
                     Context.Pitch = 1;
+                    Context.IsFading = false;
                     while (!Context.IsCompleted) {
                         if (Context.IsFading) {
                             Context.Volume = Mathf.MoveTowards( Context.Volume, 0, Context.Volume * 1.0f * Time.deltaTime );

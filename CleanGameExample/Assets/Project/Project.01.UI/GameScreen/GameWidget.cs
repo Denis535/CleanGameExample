@@ -11,15 +11,12 @@ namespace Project.UI.GameScreen {
 
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
-        // Framework
         private Game Game { get; }
-        // IsCursorLocked
-        public bool IsCursorVisible {
+        private bool IsCursorVisible {
             get => Cursor.lockState == CursorLockMode.None;
             set => Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
-        // Constructor
         public GameWidget(IDependencyContainer container) : base( container ) {
             Game = container.RequireDependency<Game>();
             View = CreateView( this );
@@ -29,7 +26,6 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             Game.OnStateChangeEvent += async state => {
                 try {
@@ -48,7 +44,6 @@ namespace Project.UI.GameScreen {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
             Game.IsPaused = Children.Any( i => i is MenuWidget );
             IsCursorVisible = Children.Any( i => i is MenuWidget or TotalsWidget );
@@ -64,7 +59,6 @@ namespace Project.UI.GameScreen {
             }
         }
 
-        // OnUpdate
         public void OnUpdate() {
             View.TargetEffect = GetTargetEffect( Game.Player );
         }

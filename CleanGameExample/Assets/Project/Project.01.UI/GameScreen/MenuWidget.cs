@@ -9,10 +9,8 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
-        // Framework
         private UIRouter Router { get; }
 
-        // Constructor
         public MenuWidget(IDependencyContainer container) : base( container ) {
             Router = container.RequireDependency<UIRouter>();
             View = CreateView( this );
@@ -22,7 +20,6 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -30,7 +27,6 @@ namespace Project.UI.GameScreen {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

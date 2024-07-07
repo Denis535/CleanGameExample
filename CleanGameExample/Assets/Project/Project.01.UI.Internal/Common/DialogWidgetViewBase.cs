@@ -18,7 +18,6 @@ namespace Project.UI.Common {
         protected Label title = default!;
         protected Label message = default!;
 
-        // Props
         public string? Title {
             get => title.text;
             set {
@@ -34,14 +33,12 @@ namespace Project.UI.Common {
             }
         }
 
-        // Constructor
         public DialogWidgetViewBase() {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        // OnSubmit
         public void OnSubmit(string text, Action? callback) {
             var button = VisualElementFactory.Submit( text );
             button.RegisterCallback<ClickEvent>( evt => {
@@ -81,10 +78,8 @@ namespace Project.UI.Common {
         }
 
     }
-    // Dialog
     public class DialogWidgetView : DialogWidgetViewBase {
 
-        // Constructor
         public DialogWidgetView() {
             VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
             widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -99,10 +94,8 @@ namespace Project.UI.Common {
         }
 
     }
-    // InfoDialog
     public class InfoDialogWidgetView : DialogWidgetViewBase {
 
-        // Constructor
         public InfoDialogWidgetView() {
             VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
             widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -117,10 +110,8 @@ namespace Project.UI.Common {
         }
 
     }
-    // WarningDialog
     public class WarningDialogWidgetView : DialogWidgetViewBase {
 
-        // Constructor
         public WarningDialogWidgetView() {
             VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
             widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -135,10 +126,8 @@ namespace Project.UI.Common {
         }
 
     }
-    // ErrorDialog
     public class ErrorDialogWidgetView : DialogWidgetViewBase {
 
-        // Constructor
         public ErrorDialogWidgetView() {
             VisualElement = CreateVisualElement( out widget, out card, out header, out content, out footer, out title, out message );
             widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );

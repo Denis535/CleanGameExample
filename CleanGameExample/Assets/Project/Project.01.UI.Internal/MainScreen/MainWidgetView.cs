@@ -11,7 +11,6 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
-        // Constructor
         public MainWidgetView() {
             VisualElement = VisualElementFactory_Main.Main( out widget );
         }

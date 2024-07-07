@@ -8,7 +8,6 @@ namespace Project.UI {
 
     public static class VisualElementFactory_Common {
 
-        // Dialog
         public static Widget Dialog(out Widget widget, out Card card, out Header header, out Content content, out Footer footer, out Label title, out Label message) {
             using (VisualElementFactory.DialogWidget().AsScope().Out( out widget )) {
                 using (VisualElementFactory.DialogCard().AsScope().Out( out card )) {
@@ -78,7 +77,6 @@ namespace Project.UI {
             }
         }
 
-        // Settings
         public static Widget Settings(out Widget widget, out Label title, out VisualElement profileSettings, out VisualElement videoSettings, out VisualElement audioSettings, out Button okey, out Button back) {
             using (VisualElementFactory.MediumWidget( "settings-widget" ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
@@ -130,7 +128,6 @@ namespace Project.UI {
             }
         }
 
-        // Loading
         public static Widget Loading(out Widget widget, out VisualElement background, out Label loading) {
             using (VisualElementFactory.Widget( "loading-widget" ).AsScope().Out( out widget )) {
                 background = VisualElementFactory.VisualElement().Classes( "loading-widget-background", "width-100pc", "height-100pc" );
@@ -139,7 +136,6 @@ namespace Project.UI {
             }
         }
 
-        // Unloading
         public static Widget Unloading(out Widget widget, out VisualElement background) {
             using (VisualElementFactory.Widget( "unloading-widget" ).AsScope().Out( out widget )) {
                 background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" );

@@ -9,7 +9,6 @@ namespace Project.UI.Common {
 
     public class SettingsWidget : UIWidgetBase2<SettingsWidgetView> {
 
-        // Constructor
         public SettingsWidget(IDependencyContainer container) : base( container ) {
             View = CreateView( this );
             AddChild( new ProfileSettingsWidget( container ) );
@@ -21,7 +20,6 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -29,7 +27,6 @@ namespace Project.UI.Common {
             HideSelf();
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -39,7 +36,6 @@ namespace Project.UI.Common {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
-        // ShowView
         protected override void ShowView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettings) {
                 View.ProfileSettings = profileSettings;

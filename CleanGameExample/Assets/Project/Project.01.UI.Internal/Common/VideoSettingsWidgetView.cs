@@ -14,7 +14,6 @@ namespace Project.UI.Common {
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
 
-        // Props
         public bool IsFullScreen {
             get => isFullScreen.value;
             init => isFullScreen.value = value;
@@ -31,7 +30,6 @@ namespace Project.UI.Common {
             get => isVSync.value;
             init => isVSync.value = value;
         }
-        // Events
         public event EventCallback<ChangeEvent<bool>> OnIsFullScreen {
             add => isFullScreen.RegisterCallback( value );
             remove => isFullScreen.UnregisterCallback( value );
@@ -45,7 +43,6 @@ namespace Project.UI.Common {
             remove => isVSync.UnregisterCallback( value );
         }
 
-        // Constructor
         public VideoSettingsWidgetView() {
             VisualElement = VisualElementFactory_Common.VideoSettings( out widget, out isFullScreen, out screenResolution, out isVSync );
         }

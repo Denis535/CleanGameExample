@@ -9,11 +9,9 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidget : UIWidgetBase2<AudioSettingsWidgetView> {
 
-        // Framework
         private Application2 Application { get; }
         private Storage.AudioSettings AudioSettings => Application.AudioSettings;
 
-        // Constructor
         public AudioSettingsWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
@@ -23,7 +21,6 @@ namespace Project.UI.Common {
             base.Dispose();
         }
 
-        // OnActivate
         protected override void OnActivate(object? argument) {
             ShowSelf();
         }
@@ -40,7 +37,6 @@ namespace Project.UI.Common {
             }
         }
 
-        // OnDescendantActivate
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {

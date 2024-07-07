@@ -49,6 +49,7 @@ namespace UnityEngine.Framework.Entities {
         public abstract void OnUpdate();
 
     }
+
     public enum GameMode {
         None
     }

@@ -36,17 +36,17 @@ namespace Project.Entities.Characters {
         private static readonly float AnglesInputSensitivity = 0.15f;
         private static readonly float DistanceInputSensitivity = 0.20f;
 
-        private int? prevTargetID;
         private Character? target;
 
         public ICameraInput? Input { get; set; }
         public Character? Target {
             get => target;
             set {
-                prevTargetID = target?.GetInstanceID();
+                if (value != target) IsTargetChanged = true;
                 target = value;
             }
         }
+        public bool IsTargetChanged { get; private set; }
         public Vector2 Angles { get; private set; }
         public float Distance { get; private set; }
         public Ray Ray => new Ray( transform.position, transform.forward );
@@ -60,9 +60,10 @@ namespace Project.Entities.Characters {
         }
         protected void LateUpdate() {
             if (Target != null) {
-                if (Target.GetInstanceID() != prevTargetID) {
+                if (IsTargetChanged) {
                     Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );
                     Distance = DefaultDistance;
+                    IsTargetChanged = false;
                 }
                 if (Input != null) {
                     {

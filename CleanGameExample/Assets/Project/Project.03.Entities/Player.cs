@@ -19,26 +19,34 @@ namespace Project.Entities {
         public PlayerCharacter? Character {
             get => character;
             internal set {
+                Input.Disable();
                 if (character != null) {
                     character.Input = null;
-                    Input.Disable();
+                }
+                if (camera != null) {
+                    camera.Target = null;
                 }
                 character = value;
                 if (character != null) {
                     character.Input = this;
+                }
+                if (camera != null) {
+                    camera.Target = character;
                 }
             }
         }
         public Camera2? Camera {
             get => camera;
             internal set {
+                Input.Disable();
                 if (camera != null) {
                     camera.Input = null;
-                    Input.Disable();
+                    camera.Target = null;
                 }
                 camera = value;
                 if (camera != null) {
                     camera.Input = this;
+                    camera.Target = Character;
                 }
             }
         }
@@ -63,7 +71,7 @@ namespace Project.Entities {
             }
         }
 
-        public Player(IDependencyContainer container, string name, PlayerKind kind) : base( container, name, kind ) {
+        public Player(IDependencyContainer container, string name, PlayerCharacterType characterType) : base( container, name, characterType ) {
             Input = new InputActions_Player();
         }
         public override void Dispose() {
@@ -81,7 +89,6 @@ namespace Project.Entities {
 
             }
             if (Camera != null) {
-                Camera.Target = Character;
                 Hit = Raycast( Camera.Ray, Character?.transform );
             }
         }

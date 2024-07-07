@@ -59,7 +59,7 @@ namespace Project.UI {
             }
         }
 
-        public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+        public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType playerCharacterType) {
             using (@lock.Enter()) {
 #if !UNITY_EDITOR
                 Debug.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
@@ -72,7 +72,7 @@ namespace Project.UI {
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerCharacterType );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -80,7 +80,7 @@ namespace Project.UI {
             }
         }
 
-        public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) {
+        public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType playerCharacterType) {
             using (@lock.Enter()) {
 #if !UNITY_EDITOR
                 Debug.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
@@ -95,7 +95,7 @@ namespace Project.UI {
                     // Load
                     await LoadSceneAsync_Game();
                     await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerKind );
+                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerCharacterType );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();

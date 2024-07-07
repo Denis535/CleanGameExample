@@ -10,7 +10,7 @@ namespace UnityEngine.Framework.Entities {
         private PlayerState state;
 
         public string Name { get; }
-        public PlayerKind Kind { get; }
+        public PlayerCharacterType CharacterType { get; }
         public PlayerState State {
             get => state;
             set {
@@ -21,9 +21,9 @@ namespace UnityEngine.Framework.Entities {
         }
         public event Action<PlayerState>? OnStateChangeEvent;
 
-        public PlayerBase3(IDependencyContainer container, string name, PlayerKind kind) : base( container ) {
+        public PlayerBase3(IDependencyContainer container, string name, PlayerCharacterType characterType) : base( container ) {
             Name = name;
-            Kind = kind;
+            CharacterType = characterType;
         }
         public override void Dispose() {
             base.Dispose();
@@ -47,7 +47,8 @@ namespace UnityEngine.Framework.Entities {
         public abstract float GetZoomDelta();
 
     }
-    public enum PlayerKind {
+
+    public enum PlayerCharacterType {
         Gray,
         Red,
         Green,

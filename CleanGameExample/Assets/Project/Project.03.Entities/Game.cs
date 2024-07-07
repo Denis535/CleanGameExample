@@ -15,12 +15,12 @@ namespace Project.Entities {
         public Player Player { get; }
         public World World { get; }
 
-        public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerKind playerKind) : base( container, gameName, gameMode, gameLevel ) {
-            Player = new Player( container, playerName, playerKind );
+        public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType characterType) : base( container, gameName, gameMode, gameLevel ) {
+            Player = new Player( container, playerName, characterType );
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                Player.Character = SpawnPlayerCharacter( point, (PlayerCharacterType) Player.Kind );
+                Player.Character = SpawnPlayerCharacter( point, Player.CharacterType );
                 Player.Camera = Camera2.Factory.Create();
             }
             foreach (var point in World.EnemyPoints) {

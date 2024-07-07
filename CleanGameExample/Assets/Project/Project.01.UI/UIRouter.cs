@@ -5,10 +5,10 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Project.App;
-    using Project.Entities;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 

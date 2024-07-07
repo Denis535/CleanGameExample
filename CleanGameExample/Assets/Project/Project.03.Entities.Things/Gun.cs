@@ -51,7 +51,7 @@ namespace Project.Entities.Things {
         public override void Fire(IDamager damager) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
-                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, damager, this );
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, damager );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
         }

@@ -7,6 +7,7 @@ namespace Project.UI.MainScreen {
     using Project.Entities;
     using Project.UI.Common;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
     using UnityEngine.Framework.UI;
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {

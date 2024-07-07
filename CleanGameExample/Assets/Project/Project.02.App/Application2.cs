@@ -12,6 +12,7 @@ namespace Project.App {
     using Unity.Services.Core;
     using UnityEngine;
     using UnityEngine.Framework.App;
+    using UnityEngine.Framework.Entities;
 
     public class Application2 : ApplicationBase2 {
 

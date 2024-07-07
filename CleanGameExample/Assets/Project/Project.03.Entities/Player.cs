@@ -10,56 +10,12 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
-    public abstract class PlayerBase3 : PlayerBase2, ICharacterInput, ICameraInput {
-
-        private PlayerState state;
-
-        public string Name { get; }
-        public PlayerKind Kind { get; }
-        public PlayerState State {
-            get => state;
-            internal set {
-                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
-                state = value;
-                OnStateChangeEvent?.Invoke( state );
-            }
-        }
-        public event Action<PlayerState>? OnStateChangeEvent;
-        protected InputActions_Player Input { get; }
-
-        public PlayerBase3(IDependencyContainer container, string name, PlayerKind kind) : base( container ) {
-            Name = name;
-            Kind = kind;
-            Input = new InputActions_Player();
-        }
-        public override void Dispose() {
-            Input.Dispose();
-            base.Dispose();
-        }
-
-        public abstract void OnFixedUpdate();
-        public abstract void OnUpdate();
-
-        public abstract Vector3 GetMoveVector();
-        public abstract Vector3? GetBodyTarget();
-        public abstract Vector3? GetHeadTarget();
-        public abstract Vector3? GetWeaponTarget();
-        public abstract bool IsJumpPressed();
-        public abstract bool IsCrouchPressed();
-        public abstract bool IsAcceleratePressed();
-        public abstract bool IsFirePressed();
-        public abstract bool IsAimPressed();
-        public abstract bool IsInteractPressed(out MonoBehaviour? interactable);
-
-        public abstract Vector2 GetLookDelta();
-        public abstract float GetZoomDelta();
-
-    }
     public class Player : PlayerBase3 {
 
         private PlayerCharacter? character;
         private Camera2? camera;
 
+        private InputActions_Player Input { get; }
         public PlayerCharacter? Character {
             get => character;
             internal set {
@@ -108,8 +64,10 @@ namespace Project.Entities {
         }
 
         public Player(IDependencyContainer container, string name, PlayerKind kind) : base( container, name, kind ) {
+            Input = new InputActions_Player();
         }
         public override void Dispose() {
+            Input.Dispose();
             base.Dispose();
         }
 
@@ -219,16 +177,5 @@ namespace Project.Entities {
             }
         }
 
-    }
-    public enum PlayerKind {
-        Gray,
-        Red,
-        Green,
-        Blue
-    }
-    public enum PlayerState {
-        Playing,
-        Winner,
-        Loser
     }
 }

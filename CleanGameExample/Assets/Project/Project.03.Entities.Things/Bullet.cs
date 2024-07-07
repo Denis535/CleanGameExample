@@ -19,9 +19,9 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IDamager damager, IWeapon weapon) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IWeapon weapon, IDamager damager) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-                result.Awake( force, damager, weapon );
+                result.Awake( force, weapon, damager );
                 return result;
             }
 
@@ -31,16 +31,16 @@ namespace Project.Entities.Things {
 
         private Rigidbody Rigidbody { get; set; } = default!;
         public float Force { get; private set; } = default!;
-        public IDamager Damager { get; private set; } = default!;
         public IWeapon Weapon { get; private set; } = default!;
+        public IDamager Damager { get; private set; } = default!;
 
         protected void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
-        protected void Awake(float force, IDamager damager, IWeapon weapon) {
+        protected void Awake(float force, IWeapon weapon, IDamager damager) {
             Force = force;
-            Damager = damager;
             Weapon = weapon;
+            Damager = damager;
             Rigidbody.AddForce( transform.forward * force, ForceMode.Impulse );
             GameObject.Destroy( gameObject, 10 );
         }
@@ -51,7 +51,7 @@ namespace Project.Entities.Things {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
-                    damageable.OnDamage( new BulletDamageInfo( Force, Damager, Weapon, Rigidbody.position, Rigidbody.velocity.normalized ) );
+                    damageable.OnDamage( new BulletDamageInfo( Force, Weapon, Damager, Rigidbody.position, Rigidbody.velocity.normalized ) );
                 }
                 enabled = false;
             }

@@ -10,9 +10,7 @@ namespace UnityEngine.Framework.Entities {
         private GameState state;
         private bool isPaused;
 
-        public string Name { get; }
-        public GameMode Mode { get; }
-        public GameLevel Level { get; }
+        public GameInfo Info { get; }
         public GameState State {
             get => state;
             protected set {
@@ -35,10 +33,8 @@ namespace UnityEngine.Framework.Entities {
         public event Action<bool>? OnPauseEvent;
         protected bool IsDirty { get; set; }
 
-        public GameBase3(IDependencyContainer container, string name, GameMode mode, GameLevel level) : base( container ) {
-            Name = name;
-            Mode = mode;
-            Level = level;
+        public GameBase3(IDependencyContainer container, GameInfo info) : base( container ) {
+            Info = info;
         }
         public override void Dispose() {
             Time.timeScale = 1f;
@@ -50,6 +46,7 @@ namespace UnityEngine.Framework.Entities {
 
     }
 
+    public record GameInfo(string Name, GameMode Mode, GameLevel Level);
     public enum GameMode {
         None
     }
@@ -67,6 +64,7 @@ namespace UnityEngine.Framework.Entities {
             return level + 1;
         }
     }
+
     public enum GameState {
         Playing,
         Completed

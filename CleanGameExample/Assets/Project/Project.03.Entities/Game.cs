@@ -15,12 +15,12 @@ namespace Project.Entities {
         public Player Player { get; }
         public World World { get; }
 
-        public Game(IDependencyContainer container, string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType characterType) : base( container, gameName, gameMode, gameLevel ) {
-            Player = new Player( container, playerName, characterType );
+        public Game(IDependencyContainer container, GameInfo gameInfo, PlayerInfo playerInfo) : base( container, gameInfo ) {
+            Player = new Player( container, playerInfo );
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                Player.Character = SpawnPlayerCharacter( point, Player.CharacterType );
+                Player.Character = SpawnPlayerCharacter( point, Player.Info );
                 Player.Camera = Camera2.Factory.Create();
             }
             foreach (var point in World.EnemyPoints) {
@@ -51,8 +51,8 @@ namespace Project.Entities {
             }
         }
 
-        protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, PlayerCharacterType type) {
-            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, type );
+        protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, PlayerInfo info) {
+            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, info.CharacterType );
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };

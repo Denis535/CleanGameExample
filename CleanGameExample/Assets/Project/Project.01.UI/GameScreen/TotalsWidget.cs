@@ -47,10 +47,13 @@ namespace Project.UI.GameScreen {
         // Helpers
         private static TotalsWidgetView CreateView(TotalsWidget widget) {
             if (widget.Game.Player.State is PlayerState.Winner) {
-                if (!widget.Game.Level.IsLast()) {
+                if (!widget.Game.Info.Level.IsLast()) {
                     var view = new TotalsWidgetView_LevelCompleted();
                     view.OnContinue += evt => {
-                        widget.Router.ReloadGameScene( widget.Game.Name, widget.Game.Mode, widget.Game.Level.GetNext(), widget.Game.Player.Name, widget.Game.Player.CharacterType );
+                        var gameInfo = widget.Game.Info;
+                        gameInfo = gameInfo with { Level = gameInfo.Level.GetNext() };
+                        var playerInfo = widget.Game.Player.Info;
+                        widget.Router.ReloadGameScene( gameInfo, playerInfo );
                     };
                     view.OnBack += evt => {
                         widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
@@ -67,7 +70,9 @@ namespace Project.UI.GameScreen {
             if (widget.Game.Player.State is PlayerState.Loser) {
                 var view = new TotalsWidgetView_LevelFailed();
                 view.OnRetry += evt => {
-                    widget.Router.ReloadGameScene( widget.Game.Name, widget.Game.Mode, widget.Game.Level, widget.Game.Player.Name, widget.Game.Player.CharacterType );
+                    var gameInfo = widget.Game.Info;
+                    var playerInfo = widget.Game.Player.Info;
+                    widget.Router.ReloadGameScene( gameInfo, playerInfo );
                 };
                 view.OnBack += evt => {
                     widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );

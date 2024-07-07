@@ -9,8 +9,7 @@ namespace UnityEngine.Framework.Entities {
 
         private PlayerState state;
 
-        public string Name { get; }
-        public PlayerCharacterType CharacterType { get; }
+        public PlayerInfo Info { get; }
         public PlayerState State {
             get => state;
             set {
@@ -21,9 +20,8 @@ namespace UnityEngine.Framework.Entities {
         }
         public event Action<PlayerState>? OnStateChangeEvent;
 
-        public PlayerBase3(IDependencyContainer container, string name, PlayerCharacterType characterType) : base( container ) {
-            Name = name;
-            CharacterType = characterType;
+        public PlayerBase3(IDependencyContainer container, PlayerInfo info) : base( container ) {
+            Info = info;
         }
         public override void Dispose() {
             base.Dispose();
@@ -48,12 +46,14 @@ namespace UnityEngine.Framework.Entities {
 
     }
 
+    public record PlayerInfo(string Name, PlayerCharacterType CharacterType);
     public enum PlayerCharacterType {
         Gray,
         Red,
         Green,
         Blue
     }
+
     public enum PlayerState {
         Playing,
         Winner,

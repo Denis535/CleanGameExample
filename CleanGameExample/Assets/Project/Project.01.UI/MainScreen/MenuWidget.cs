@@ -4,7 +4,6 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using Project.App;
-    using Project.Entities;
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
@@ -97,16 +96,16 @@ namespace Project.UI.MainScreen {
         private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
             var view = new MenuWidgetView_SelectCharacter();
             view.OnGray += evt => {
-                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerCharacterType.Gray );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Gray ) );
             };
             view.OnRed += evt => {
-                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerCharacterType.Red );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Red ) );
             };
             view.OnGreen += evt => {
-                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerCharacterType.Green );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Green ) );
             };
             view.OnBlue += evt => {
-                widget.Router.LoadGameScene( "Game", GameMode.None, level, widget.ProfileSettings.Name, PlayerCharacterType.Blue );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Blue ) );
             };
             view.OnBack += evt => {
                 widget.View.RemoveView( view );

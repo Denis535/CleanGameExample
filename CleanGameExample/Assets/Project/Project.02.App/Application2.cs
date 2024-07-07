@@ -57,7 +57,7 @@ namespace Project.App {
             }
         }
 
-        public void RunGame(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType playerCharacterType) {
+        public void RunGame(GameInfo gameInfo, UnityEngine.Framework.Entities.PlayerInfo playerInfo) {
 #if !UNITY_EDITOR
             Debug.LogFormat( "Run: Game" );
 #endif
@@ -67,7 +67,7 @@ namespace Project.App {
             EnemyCharacter.Factory.Load();
             Gun.Factory.Load();
             Bullet.Factory.Load();
-            Game = new Game( Container, gameName, gameMode, gameLevel, playerName, playerCharacterType );
+            Game = new Game( Container, gameInfo, playerInfo );
         }
         public void StopGame() {
 #if !UNITY_EDITOR

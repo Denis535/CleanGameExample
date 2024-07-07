@@ -59,10 +59,10 @@ namespace Project.UI {
             }
         }
 
-        public async void LoadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType playerCharacterType) {
+        public async void LoadGameScene(GameInfo gameInfo, PlayerInfo playerInfo) {
             using (@lock.Enter()) {
 #if !UNITY_EDITOR
-                Debug.LogFormat( "Load: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+                Debug.LogFormat( "Load: GameScene: {0}, {1}", gameInfo, playerInfo );
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
@@ -71,8 +71,8 @@ namespace Project.UI {
                     await UnloadSceneAsync_Main();
                     // Load
                     await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerCharacterType );
+                    await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
+                    Application.RunGame( gameInfo, playerInfo );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
@@ -80,10 +80,10 @@ namespace Project.UI {
             }
         }
 
-        public async void ReloadGameScene(string gameName, GameMode gameMode, GameLevel gameLevel, string playerName, PlayerCharacterType playerCharacterType) {
+        public async void ReloadGameScene(GameInfo gameInfo, PlayerInfo playerInfo) {
             using (@lock.Enter()) {
 #if !UNITY_EDITOR
-                Debug.LogFormat( "Reload: GameScene: {0}, {1}, {2}", gameName, gameMode, gameLevel );
+                Debug.LogFormat( "Reload: GameScene: {0}, {1}", gameInfo, playerInfo );
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
@@ -94,8 +94,8 @@ namespace Project.UI {
                     await UnloadSceneAsync_Game();
                     // Load
                     await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldSceneAddress( gameLevel ) );
-                    Application.RunGame( gameName, gameMode, gameLevel, playerName, playerCharacterType );
+                    await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
+                    Application.RunGame( gameInfo, playerInfo );
                 }
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();

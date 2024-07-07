@@ -71,7 +71,7 @@ namespace Project.Entities {
             }
         }
 
-        public Player(IDependencyContainer container, string name, PlayerCharacterType characterType) : base( container, name, characterType ) {
+        public Player(IDependencyContainer container, PlayerInfo info) : base( container, info ) {
             Input = new InputActions_Player();
         }
         public override void Dispose() {

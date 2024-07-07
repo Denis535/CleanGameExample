@@ -6,6 +6,7 @@ namespace Project.Entities.Things {
     using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class Bullet {
         public static class Factory {
@@ -19,9 +20,9 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IWeapon weapon, IDamager damager) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IWeapon weapon, IDamager damager, PlayerBase player) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-                result.Awake( force, weapon, damager );
+                result.Awake( force, weapon, damager, player );
                 return result;
             }
 
@@ -33,14 +34,17 @@ namespace Project.Entities.Things {
         public float Force { get; private set; } = default!;
         public IWeapon Weapon { get; private set; } = default!;
         public IDamager Damager { get; private set; } = default!;
+        public PlayerBase Player { get; private set; } = default!;
+
 
         protected void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
         }
-        protected void Awake(float force, IWeapon weapon, IDamager damager) {
+        protected void Awake(float force, IWeapon weapon, IDamager damager, PlayerBase player) {
             Force = force;
             Weapon = weapon;
             Damager = damager;
+            Player = player;
             Rigidbody.AddForce( transform.forward * force, ForceMode.Impulse );
             GameObject.Destroy( gameObject, 10 );
         }
@@ -51,7 +55,7 @@ namespace Project.Entities.Things {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
                 if (damageable != null && damageable != Damager) {
-                    damageable.OnDamage( new BulletDamageInfo( Force, Weapon, Damager, Rigidbody.position, Rigidbody.velocity.normalized ) );
+                    damageable.OnDamage( new BulletDamageInfo( Rigidbody.position, Rigidbody.velocity.normalized, Force, Weapon, Damager, Player ) );
                 }
                 enabled = false;
             }

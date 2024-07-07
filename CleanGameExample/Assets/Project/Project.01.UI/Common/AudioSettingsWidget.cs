@@ -58,16 +58,16 @@ namespace Project.UI.Common {
                 GameVolume = widget.AudioSettings.GameVolume,
                 GameVolumeMinMax = (0, 1),
             };
-            view.OnMasterVolume += evt => {
+            view.OnMasterVolumeEvent += evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;
             };
-            view.OnMusicVolume += evt => {
+            view.OnMusicVolumeEvent += evt => {
                 widget.AudioSettings.MusicVolume = evt.newValue;
             };
-            view.OnSfxVolume += evt => {
+            view.OnSfxVolumeEvent += evt => {
                 widget.AudioSettings.SfxVolume = evt.newValue;
             };
-            view.OnGameVolume += evt => {
+            view.OnGameVolumeEvent += evt => {
                 widget.AudioSettings.GameVolume = evt.newValue;
             };
             return view;

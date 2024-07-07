@@ -44,19 +44,19 @@ namespace Project.UI.GameScreen {
             if (widget.Game.Player.State is PlayerState.Winner) {
                 if (!widget.Game.Info.Level.IsLast()) {
                     var view = new TotalsWidgetView_LevelCompleted();
-                    view.OnContinue += evt => {
+                    view.OnContinueEvent += evt => {
                         var gameInfo = widget.Game.Info;
                         gameInfo = gameInfo with { Level = gameInfo.Level.GetNext() };
                         var playerInfo = widget.Game.Player.Info;
                         widget.Router.ReloadGameScene( gameInfo, playerInfo );
                     };
-                    view.OnBack += evt => {
+                    view.OnBackEvent += evt => {
                         widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
                     };
                     return view;
                 } else {
                     var view = new TotalsWidgetView_GameCompleted();
-                    view.OnOkey += evt => {
+                    view.OnOkeyEvent += evt => {
                         widget.Router.UnloadGameScene();
                     };
                     return view;
@@ -64,12 +64,12 @@ namespace Project.UI.GameScreen {
             }
             if (widget.Game.Player.State is PlayerState.Loser) {
                 var view = new TotalsWidgetView_LevelFailed();
-                view.OnRetry += evt => {
+                view.OnRetryEvent += evt => {
                     var gameInfo = widget.Game.Info;
                     var playerInfo = widget.Game.Player.Info;
                     widget.Router.ReloadGameScene( gameInfo, playerInfo );
                 };
-                view.OnBack += evt => {
+                view.OnBackEvent += evt => {
                     widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
                 };
                 return view;

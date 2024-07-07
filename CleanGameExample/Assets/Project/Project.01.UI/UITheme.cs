@@ -24,6 +24,11 @@ namespace Project.UI {
             base.Dispose();
         }
 
+        public void OnFixedUpdate() {
+        }
+        public void OnUpdate() {
+        }
+
         public void PlayMainTheme() {
             StopTheme();
             State = new MainThemeState( this );
@@ -47,11 +52,6 @@ namespace Project.UI {
         public void StopTheme() {
             State?.Dispose();
             State = null;
-        }
-
-        public void OnFixedUpdate() {
-        }
-        public void OnUpdate() {
         }
 
         private abstract class ThemeStateBase : Disposable {

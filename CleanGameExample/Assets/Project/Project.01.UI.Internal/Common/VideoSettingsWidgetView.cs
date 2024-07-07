@@ -30,15 +30,15 @@ namespace Project.UI.Common {
             get => isVSync.value;
             init => isVSync.value = value;
         }
-        public event EventCallback<ChangeEvent<bool>> OnIsFullScreen {
+        public event EventCallback<ChangeEvent<bool>> OnIsFullScreenEvent {
             add => isFullScreen.RegisterCallback( value );
             remove => isFullScreen.UnregisterCallback( value );
         }
-        public event EventCallback<ChangeEvent<object?>> OnScreenResolution {
+        public event EventCallback<ChangeEvent<object?>> OnScreenResolutionEvent {
             add => screenResolution.RegisterCallback( value );
             remove => screenResolution.UnregisterCallback( value );
         }
-        public event EventCallback<ChangeEvent<bool>> OnIsVSync {
+        public event EventCallback<ChangeEvent<bool>> OnIsVSyncEvent {
             add => isVSync.RegisterCallback( value );
             remove => isVSync.UnregisterCallback( value );
         }

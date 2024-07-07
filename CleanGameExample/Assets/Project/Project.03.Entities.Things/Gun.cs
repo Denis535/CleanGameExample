@@ -6,6 +6,7 @@ namespace Project.Entities.Things {
     using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class Gun {
         public static class Factory {
@@ -48,10 +49,10 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public override void Fire(IDamager damager) {
+        public override void Fire(IDamager damager, PlayerBase? player) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
-                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, damager );
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, damager, player );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
         }

@@ -56,7 +56,7 @@ namespace Project.Entities.Characters {
 
                     }
                     if (Input.IsFirePressed()) {
-                        WeaponSlot.Weapon?.Fire( this );
+                        WeaponSlot.Weapon?.Fire( this, null );
                     }
                     if (Input.IsInteractPressed( out var interactable )) {
                         if (interactable is Weapon weapon) {

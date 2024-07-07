@@ -18,7 +18,7 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
-        public ProfileSettingsWidgetView? ProfileSettings {
+        public ProfileSettingsWidgetView? ProfileSettingsEvent {
             get => profileSettings.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
@@ -28,7 +28,7 @@ namespace Project.UI.Common {
                 }
             }
         }
-        public VideoSettingsWidgetView? VideoSettings {
+        public VideoSettingsWidgetView? VideoSettingsEvent {
             get => videoSettings.GetViews<VideoSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
@@ -38,7 +38,7 @@ namespace Project.UI.Common {
                 }
             }
         }
-        public AudioSettingsWidgetView? AudioSettings {
+        public AudioSettingsWidgetView? AudioSettingsEvent {
             get => audioSettings.GetViews<AudioSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
@@ -48,11 +48,11 @@ namespace Project.UI.Common {
                 }
             }
         }
-        public event EventCallback<ClickEvent> OnOkey {
+        public event EventCallback<ClickEvent> OnOkeyEvent {
             add => okey.RegisterCallback( value );
             remove => okey.RegisterCallback( value );
         }
-        public event EventCallback<ClickEvent> OnBack {
+        public event EventCallback<ClickEvent> OnBackEvent {
             add => back.RegisterCallback( value );
             remove => back.RegisterCallback( value );
         }

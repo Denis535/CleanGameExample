@@ -65,7 +65,7 @@ namespace Project.UI.GameScreen {
         // Helpers
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
-            view.OnCancel += evt => {
+            view.OnCancelEvent += evt => {
                 if (!widget.Children.Any( i => i is MenuWidget )) {
                     widget.AddChild( new MenuWidget( widget.Container ) );
                 }

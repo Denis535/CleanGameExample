@@ -5,6 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using Project.Entities.Characters;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
 
     public abstract class Weapon : Thing, IWeapon {
 
@@ -15,7 +16,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public abstract void Fire(IDamager damager);
+        public abstract void Fire(IDamager damager, PlayerBase? player);
 
     }
 }

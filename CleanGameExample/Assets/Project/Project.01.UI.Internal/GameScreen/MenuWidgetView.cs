@@ -15,15 +15,15 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
-        public event EventCallback<ClickEvent> OnResume {
+        public event EventCallback<ClickEvent> OnResumeEvent {
             add => resume.RegisterCallback( value );
             remove => resume.UnregisterCallback( value );
         }
-        public event EventCallback<ClickEvent> OnSettings {
+        public event EventCallback<ClickEvent> OnSettingsEvent {
             add => settings.RegisterCallback( value );
             remove => settings.UnregisterCallback( value );
         }
-        public event EventCallback<ClickEvent> OnBack {
+        public event EventCallback<ClickEvent> OnBackEvent {
             add => back.RegisterCallback( value );
             remove => back.UnregisterCallback( value );
         }

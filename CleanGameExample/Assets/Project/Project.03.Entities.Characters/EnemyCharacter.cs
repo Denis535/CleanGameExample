@@ -58,7 +58,7 @@ namespace Project.Entities.Characters {
                 Head.LookAt( GetHeadTarget( Environment ) );
                 WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    WeaponSlot.Weapon?.Fire( this );
+                    WeaponSlot.Weapon?.Fire( this, null );
                 }
             }
         }

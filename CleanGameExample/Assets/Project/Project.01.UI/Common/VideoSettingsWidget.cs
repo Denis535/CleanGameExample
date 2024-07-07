@@ -52,13 +52,13 @@ namespace Project.UI.Common {
                 ScreenResolutionChoices = widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList(),
                 IsVSync = widget.VideoSettings.IsVSync
             };
-            view.OnIsFullScreen += evt => {
+            view.OnIsFullScreenEvent += evt => {
                 widget.VideoSettings.IsFullScreen = evt.newValue;
             };
-            view.OnScreenResolution += evt => {
+            view.OnScreenResolutionEvent += evt => {
                 widget.VideoSettings.ScreenResolution = (Resolution) evt.newValue!;
             };
-            view.OnIsVSync += evt => {
+            view.OnIsVSyncEvent += evt => {
                 widget.VideoSettings.IsVSync = evt.newValue;
             };
             return view;

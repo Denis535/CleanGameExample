@@ -47,19 +47,19 @@ namespace Project.UI.Common {
             get => gameVolume.GetMinMax();
             init => gameVolume.SetMinMax( value );
         }
-        public event EventCallback<ChangeEvent<float>> OnMasterVolume {
+        public event EventCallback<ChangeEvent<float>> OnMasterVolumeEvent {
             add => masterVolume.RegisterCallback( value );
             remove => masterVolume.UnregisterCallback( value );
         }
-        public event EventCallback<ChangeEvent<float>> OnMusicVolume {
+        public event EventCallback<ChangeEvent<float>> OnMusicVolumeEvent {
             add => musicVolume.RegisterCallback( value );
             remove => musicVolume.UnregisterCallback( value );
         }
-        public event EventCallback<ChangeEvent<float>> OnSfxVolume {
+        public event EventCallback<ChangeEvent<float>> OnSfxVolumeEvent {
             add => sfxVolume.RegisterCallback( value );
             remove => sfxVolume.UnregisterCallback( value );
         }
-        public event EventCallback<ChangeEvent<float>> OnGameVolume {
+        public event EventCallback<ChangeEvent<float>> OnGameVolumeEvent {
             add => gameVolume.RegisterCallback( value );
             remove => gameVolume.UnregisterCallback( value );
         }

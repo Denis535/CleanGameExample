@@ -32,7 +32,7 @@ namespace Project.UI.GameScreen {
                 }
             }
         }
-        public event EventCallback<NavigationCancelEvent> OnCancel {
+        public event EventCallback<NavigationCancelEvent> OnCancelEvent {
             add => widget.RegisterCallback( value );
             remove => widget.UnregisterCallback( value );
         }

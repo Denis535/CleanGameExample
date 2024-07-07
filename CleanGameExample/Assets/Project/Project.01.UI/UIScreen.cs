@@ -30,6 +30,15 @@ namespace Project.UI {
             base.Dispose();
         }
 
+        public void OnFixedUpdate() {
+        }
+        public void OnUpdate() {
+            foreach (var child in Widget.Children) {
+                (child as MainWidget)?.OnUpdate();
+                (child as GameWidget)?.OnUpdate();
+            }
+        }
+
         public void ShowMainScreen() {
             HideScreen();
             Widget.AddChild( new MainWidget( Container ) );
@@ -48,15 +57,6 @@ namespace Project.UI {
         }
         public void HideScreen() {
             Widget.RemoveChildren( i => i is not DialogWidgetBase );
-        }
-
-        public void OnFixedUpdate() {
-        }
-        public void OnUpdate() {
-            foreach (var child in Widget.Children) {
-                (child as MainWidget)?.OnUpdate();
-                (child as GameWidget)?.OnUpdate();
-            }
         }
 
     }

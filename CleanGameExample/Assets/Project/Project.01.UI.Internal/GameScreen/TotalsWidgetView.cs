@@ -24,11 +24,11 @@ namespace Project.UI.GameScreen {
         private Button @continue;
         private Button back;
 
-        public event EventCallback<ClickEvent> OnContinue {
+        public event EventCallback<ClickEvent> OnContinueEvent {
             add => @continue.RegisterCallback( value );
             remove => @continue.UnregisterCallback( value );
         }
-        public event EventCallback<ClickEvent> OnBack {
+        public event EventCallback<ClickEvent> OnBackEvent {
             add => back.RegisterCallback( value );
             remove => back.UnregisterCallback( value );
         }
@@ -48,7 +48,7 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button okey;
 
-        public event EventCallback<ClickEvent> OnOkey {
+        public event EventCallback<ClickEvent> OnOkeyEvent {
             add => okey.RegisterCallback( value );
             remove => okey.UnregisterCallback( value );
         }
@@ -69,11 +69,11 @@ namespace Project.UI.GameScreen {
         private Button retry;
         private Button back;
 
-        public event EventCallback<ClickEvent> OnRetry {
+        public event EventCallback<ClickEvent> OnRetryEvent {
             add => retry.RegisterCallback( value );
             remove => retry.UnregisterCallback( value );
         }
-        public event EventCallback<ClickEvent> OnBack {
+        public event EventCallback<ClickEvent> OnBackEvent {
             add => back.RegisterCallback( value );
             remove => back.UnregisterCallback( value );
         }

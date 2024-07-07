@@ -1,9 +1,11 @@
 #nullable enable
-namespace UnityEngine.Framework.Entities {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework.Entities;
+    using Project.Entities.Characters;
 
     public abstract class PlayerBase3 : PlayerBase2, ICharacterInput, ICameraInput {
 

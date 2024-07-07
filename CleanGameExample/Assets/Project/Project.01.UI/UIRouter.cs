@@ -5,10 +5,10 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Project.App;
+    using Project.Entities;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
     using UnityEngine.Framework.UI;
     using UnityEngine.SceneManagement;
 
@@ -52,10 +52,7 @@ namespace Project.UI {
 #endif
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
-                {
-                    // Load
-                    await LoadSceneAsync_Main();
-                }
+                await LoadSceneAsync_Main();
             }
         }
 
@@ -66,17 +63,13 @@ namespace Project.UI {
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
-                {
-                    // Unload
-                    await UnloadSceneAsync_Main();
-                    // Load
-                    await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
-                    Application.RunGame( gameInfo, playerInfo );
-                }
+                await UnloadSceneAsync_Main();
+                await LoadSceneAsync_Game();
+                await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
+                Application.RunGame( gameInfo, playerInfo );
+                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
-                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
             }
         }
 
@@ -87,19 +80,15 @@ namespace Project.UI {
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
-                {
-                    // Unload
-                    Application.StopGame();
-                    await UnloadSceneAsync_World();
-                    await UnloadSceneAsync_Game();
-                    // Load
-                    await LoadSceneAsync_Game();
-                    await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
-                    Application.RunGame( gameInfo, playerInfo );
-                }
+                Application.StopGame();
+                await UnloadSceneAsync_World();
+                await UnloadSceneAsync_Game();
+                await LoadSceneAsync_Game();
+                await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
+                Application.RunGame( gameInfo, playerInfo );
+                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
-                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
             }
         }
 
@@ -110,14 +99,10 @@ namespace Project.UI {
 #endif
                 Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingScreen();
-                {
-                    // Unload
-                    Application.StopGame();
-                    await UnloadSceneAsync_World();
-                    await UnloadSceneAsync_Game();
-                    // Load
-                    await LoadSceneAsync_Main();
-                }
+                Application.StopGame();
+                await UnloadSceneAsync_World();
+                await UnloadSceneAsync_Game();
+                await LoadSceneAsync_Main();
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
             }

@@ -5,7 +5,6 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public partial class Camera2 {
         public static class Factory {

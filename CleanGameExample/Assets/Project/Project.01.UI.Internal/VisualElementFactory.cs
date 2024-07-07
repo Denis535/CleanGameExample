@@ -21,7 +21,7 @@ namespace Project.UI {
         public static event EventCallback<IChangeEvent>? OnPlayChange;
 
         public static event EventCallback<FocusEvent>? OnPlayFocus;
-        
+
         public static event EventCallback<AttachToPanelEvent>? OnPlayDialog;
         public static event EventCallback<AttachToPanelEvent>? OnPlayInfoDialog;
         public static event EventCallback<AttachToPanelEvent>? OnPlayWarningDialog;
@@ -315,7 +315,7 @@ namespace Project.UI {
         }
 
     }
-    abstract class VisualElementScope : IDisposable {
+    internal abstract class VisualElementScope : IDisposable {
 
         private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
         public static VisualElementScope? Peek => Stack.Any() ? Stack.Peek() : null;
@@ -331,7 +331,7 @@ namespace Project.UI {
         }
 
     }
-    class VisualElementScope<T> : VisualElementScope where T : VisualElement {
+    internal class VisualElementScope<T> : VisualElementScope where T : VisualElement {
 
         public new T VisualElement => (T) base.VisualElement;
 
@@ -344,7 +344,7 @@ namespace Project.UI {
         }
 
     }
-    static class VisualElementScopeExtensions {
+    internal static class VisualElementScopeExtensions {
 
         public static VisualElementScope<T> AsScope<T>(this T element) where T : VisualElement {
             return new VisualElementScope<T>( element );

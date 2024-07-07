@@ -5,7 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public abstract class Thing : MonoBehaviour {
+    public abstract class Thing : MonoBehaviour, IThing {
 
         protected Rigidbody Rigidbody { get; private set; } = default!;
         public bool IsRigidbody {

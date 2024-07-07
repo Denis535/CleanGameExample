@@ -3,8 +3,8 @@ namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Characters;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     public abstract class Weapon : Thing, IWeapon {
 

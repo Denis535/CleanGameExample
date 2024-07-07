@@ -6,7 +6,6 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Framework.Entities;
 
     public partial class PlayerCharacter {
         public static class Factory {

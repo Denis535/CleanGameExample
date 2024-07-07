@@ -5,7 +5,6 @@ namespace Project.Entities.Characters {
     using System.Collections.Generic;
     using Project.Entities.Things;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]

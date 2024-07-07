@@ -7,7 +7,6 @@ namespace Project.Entities {
     using Project.Entities.Characters;
     using Project.Entities.Things;
     using UnityEngine;
-    using UnityEngine.Framework.Entities;
     using UnityEngine.InputSystem;
 
     public class Player : PlayerBase3 {

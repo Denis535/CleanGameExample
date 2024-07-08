@@ -67,7 +67,7 @@ namespace Project.UI {
     internal abstract class ThemeState : UIThemeStateBase2 {
 
         public AssetHandle<AudioClip>[] Clips { get; }
-        public bool IsFading { get; set; }
+        public bool IsFading { get; internal set; }
 
         public ThemeState(UITheme context, AssetHandle<AudioClip>[] clips) : base( context ) {
             Clips = clips;

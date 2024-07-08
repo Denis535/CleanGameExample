@@ -22,10 +22,10 @@ namespace Project.UI {
         private static SceneHandle Startup { get; } = new SceneHandle( R.Project.Scenes.Value_Startup );
         private SceneHandle MainScene { get; } = new SceneHandle( R.Project.Scenes.Value_MainScene );
         private SceneHandle GameScene { get; } = new SceneHandle( R.Project.Scenes.Value_GameScene );
-        private SceneHandle? WorldScene { get; set; }
+        private SceneHandleDynamic WorldScene { get; } = new SceneHandleDynamic();
         public bool IsMainSceneLoaded => MainScene.IsSucceeded;
         public bool IsGameSceneLoaded => GameScene.IsSucceeded;
-        public bool IsWorldSceneLoaded => WorldScene != null;
+        public bool IsWorldSceneLoaded => WorldScene.IsValid && WorldScene.IsSucceeded;
 
         public UIRouter(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
@@ -63,7 +63,9 @@ namespace Project.UI {
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
-                await UnloadSceneAsync_Main();
+                {
+                    await UnloadSceneAsync_Main();
+                }
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
                 Application.RunGame( gameInfo, playerInfo );
@@ -80,9 +82,11 @@ namespace Project.UI {
 #endif
                 Theme.PlayLoadingTheme();
                 Screen.ShowLoadingScreen();
-                Application.StopGame();
-                await UnloadSceneAsync_World();
-                await UnloadSceneAsync_Game();
+                {
+                    Application.StopGame();
+                    await UnloadSceneAsync_World();
+                    await UnloadSceneAsync_Game();
+                }
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
                 Application.RunGame( gameInfo, playerInfo );
@@ -99,9 +103,11 @@ namespace Project.UI {
 #endif
                 Theme.PlayUnloadingTheme();
                 Screen.ShowUnloadingScreen();
-                Application.StopGame();
-                await UnloadSceneAsync_World();
-                await UnloadSceneAsync_Game();
+                {
+                    Application.StopGame();
+                    await UnloadSceneAsync_World();
+                    await UnloadSceneAsync_Game();
+                }
                 await LoadSceneAsync_Main();
                 Theme.PlayMainTheme();
                 Screen.ShowMainScreen();
@@ -115,17 +121,11 @@ namespace Project.UI {
 #endif
                 Theme.StopTheme();
                 Screen.HideScreen();
-                if (Application.Game != null) {
-                    Application.StopGame();
-                }
-                if (WorldScene != null) {
-                    await UnloadSceneAsync_World();
-                }
-                if (GameScene.IsValid) {
-                    await UnloadSceneAsync_Game();
-                }
-                if (MainScene.IsValid) {
-                    await UnloadSceneAsync_Main();
+                {
+                    if (Application.Game != null) Application.StopGame();
+                    if (WorldScene.IsValid) await UnloadSceneAsync_World();
+                    if (GameScene.IsValid) await UnloadSceneAsync_Game();
+                    if (MainScene.IsValid) await UnloadSceneAsync_Main();
                 }
             }
 #if UNITY_EDITOR
@@ -154,7 +154,7 @@ namespace Project.UI {
             SceneManager.SetActiveScene( await GameScene.GetValueAsync() );
         }
         private async Task LoadSceneAsync_World(string key) {
-            WorldScene = new SceneHandle( key );
+            WorldScene.SetUp( key );
             await WorldScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await WorldScene.ActivateAsync();
             SceneManager.SetActiveScene( await WorldScene.GetValueAsync() );
@@ -167,8 +167,7 @@ namespace Project.UI {
             await GameScene.UnloadAsync();
         }
         private async Task UnloadSceneAsync_World() {
-            await WorldScene!.UnloadAsync();
-            WorldScene = null;
+            await WorldScene.UnloadAsync();
         }
         // Helpers
         private static string GetWorldSceneAddress(GameLevel level) {

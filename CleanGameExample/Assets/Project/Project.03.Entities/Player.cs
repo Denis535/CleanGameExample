@@ -108,7 +108,6 @@ namespace Project.Entities {
         private Player Player { get; }
         private InputActions_Player.CharacterActions Input => Player.Input.Character;
         private Character Character => Player.Character!;
-
         private Vector3 Target => Player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
         private EnemyCharacter? Enemy => Player.Enemy;
         private Thing? Thing => Player.Thing;

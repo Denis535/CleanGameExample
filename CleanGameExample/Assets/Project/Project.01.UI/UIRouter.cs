@@ -25,7 +25,7 @@ namespace Project.UI {
         private SceneHandleDynamic WorldScene { get; } = new SceneHandleDynamic();
         public bool IsMainSceneLoaded => MainScene.IsSucceeded;
         public bool IsGameSceneLoaded => GameScene.IsSucceeded;
-        public bool IsWorldSceneLoaded => WorldScene.IsValid && WorldScene.IsSucceeded;
+        public bool IsWorldSceneLoaded => WorldScene.HasHandle && WorldScene.IsSucceeded;
 
         public UIRouter(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
@@ -123,7 +123,7 @@ namespace Project.UI {
                 Screen.HideScreen();
                 {
                     if (Application.Game != null) Application.StopGame();
-                    if (WorldScene.IsValid) await UnloadSceneAsync_World();
+                    if (WorldScene.HasHandle && WorldScene.IsValid) await UnloadSceneAsync_World();
                     if (GameScene.IsValid) await UnloadSceneAsync_Game();
                     if (MainScene.IsValid) await UnloadSceneAsync_Main();
                 }
@@ -154,7 +154,7 @@ namespace Project.UI {
             SceneManager.SetActiveScene( await GameScene.GetValueAsync() );
         }
         private async Task LoadSceneAsync_World(string key) {
-            WorldScene.SetUp( key );
+            WorldScene.SetHandle( key );
             await WorldScene.Load( LoadSceneMode.Additive, false ).WaitAsync();
             await WorldScene.ActivateAsync();
             SceneManager.SetActiveScene( await WorldScene.GetValueAsync() );

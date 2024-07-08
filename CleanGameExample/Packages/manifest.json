@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.denis535.addressables-extensions": "1.0.15",
+    "com.denis535.addressables-extensions": "1.0.17",
     "com.denis535.addressables-source-generator": "1.0.39",
     "com.denis535.clean-architecture-game-framework": "1.2.7",
     "com.denis535.colorful-project-window": "1.0.36",

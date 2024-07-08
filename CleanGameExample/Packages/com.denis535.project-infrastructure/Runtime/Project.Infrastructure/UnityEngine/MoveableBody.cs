@@ -22,6 +22,7 @@ namespace UnityEngine {
         public Quaternion? LookRotation { get; private set; }
 
         protected void Awake() {
+            gameObject.SetLayerRecursively( Layers.Entity_Approximate, Layers.Entity_Exact );
             Collider = gameObject.RequireComponent<CharacterController>();
             Collider.excludeLayers = ExcludeLayers_Default;
         }

@@ -3,7 +3,6 @@ namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
@@ -49,10 +48,10 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public override void Fire(IDamager damager, PlayerBase? player) {
+        public override void Fire(ICharacter character, PlayerBase? player) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
-                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, damager, player );
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, character, player );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
         }

@@ -5,9 +5,8 @@ namespace Project.Entities {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
-    using Project.Entities.Characters;
 
-    public abstract class PlayerBase3 : PlayerBase2, ICharacterInput, ICameraInput {
+    public abstract class PlayerBase3 : PlayerBase2 {
 
         private PlayerState state;
 
@@ -28,23 +27,6 @@ namespace Project.Entities {
         public override void Dispose() {
             base.Dispose();
         }
-
-        public abstract void OnFixedUpdate();
-        public abstract void OnUpdate();
-
-        public abstract Vector3 GetMoveVector();
-        public abstract Vector3? GetBodyTarget();
-        public abstract Vector3? GetHeadTarget();
-        public abstract Vector3? GetWeaponTarget();
-        public abstract bool IsJumpPressed();
-        public abstract bool IsCrouchPressed();
-        public abstract bool IsAcceleratePressed();
-        public abstract bool IsFirePressed();
-        public abstract bool IsAimPressed();
-        public abstract bool IsInteractPressed(out MonoBehaviour? interactable);
-
-        public abstract Vector2 GetLookDelta();
-        public abstract float GetZoomDelta();
 
     }
 

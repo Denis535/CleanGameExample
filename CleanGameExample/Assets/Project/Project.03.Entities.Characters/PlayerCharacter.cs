@@ -30,9 +30,7 @@ namespace Project.Entities.Characters {
 
         }
     }
-    public partial class PlayerCharacter : Character {
-
-        public ICharacterInput? Input { get; set; }
+    public partial class PlayerCharacter : PlayableCharacter {
 
         protected override void Awake() {
             base.Awake();
@@ -48,8 +46,8 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             if (IsAlive) {
                 if (Input != null) {
-                    Body.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
-                    Body.LookAt( Input.GetBodyTarget() );
+                    MoveableBody.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
+                    MoveableBody.LookAt( Input.GetBodyTarget() );
                     Head.LookAt( Input.GetHeadTarget() );
                     WeaponSlot.LookAt( Input.GetWeaponTarget() );
                     if (Input.IsAimPressed()) {

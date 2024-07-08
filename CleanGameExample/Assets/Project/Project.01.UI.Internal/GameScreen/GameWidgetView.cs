@@ -37,21 +37,20 @@ namespace Project.UI.GameScreen {
             remove => widget.UnregisterCallback( value );
         }
 
-        // Constructor
         public GameWidgetView() {
-            VisualElement = VisualElementFactory_Game.Game( out widget, out target );
-            widget.RegisterCallback<AttachToPanelEvent>( evt => {
-                Input!.Enable();
-            } );
-            widget.UnregisterCallback<DetachFromPanelEvent>( evt => {
-                Input!.Disable();
-            } );
             Input = new InputActions_UI();
             Input.UI.Cancel.performed += ctx => {
-                if (widget.focusController.focusedElement == null) {
+                if (widget!.focusController.focusedElement == null) {
                     widget.Focus();
                 }
             };
+            VisualElement = VisualElementFactory_Game.Game( out widget, out target );
+            widget.RegisterCallback<AttachToPanelEvent>( evt => {
+                Input.Enable();
+            } );
+            widget.UnregisterCallback<DetachFromPanelEvent>( evt => {
+                Input.Disable();
+            } );
         }
         public override void Dispose() {
             Input.Dispose();

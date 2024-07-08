@@ -105,4 +105,8 @@ namespace Project.Entities.Characters {
         }
 
     }
+    public interface ICameraInput {
+        Vector2 GetLookDelta();
+        float GetZoomDelta();
+    }
 }

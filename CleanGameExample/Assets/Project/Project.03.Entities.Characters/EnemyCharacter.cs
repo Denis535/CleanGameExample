@@ -31,7 +31,7 @@ namespace Project.Entities.Characters {
 
         }
     }
-    public partial class EnemyCharacter : Character {
+    public partial class EnemyCharacter : NonPlayableCharacter {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }
@@ -53,8 +53,8 @@ namespace Project.Entities.Characters {
         }
         protected override void Update() {
             if (IsAlive) {
-                Body.Move( Vector3.zero, false, false, false );
-                Body.LookAt( GetBodyTarget( Environment ) );
+                MoveableBody.Move( Vector3.zero, false, false, false );
+                MoveableBody.LookAt( GetBodyTarget( Environment ) );
                 Head.LookAt( GetHeadTarget( Environment ) );
                 WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {

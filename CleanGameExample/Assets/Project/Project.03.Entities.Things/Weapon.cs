@@ -3,7 +3,6 @@ namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
@@ -16,7 +15,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public abstract void Fire(IDamager damager, PlayerBase? player);
+        public abstract void Fire(ICharacter character, PlayerBase? player);
 
     }
 }

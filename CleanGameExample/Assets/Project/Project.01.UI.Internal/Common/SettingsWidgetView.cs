@@ -18,6 +18,7 @@ namespace Project.UI.Common {
         private readonly Button okey;
         private readonly Button back;
 
+        protected override VisualElement VisualElement => widget;
         public ProfileSettingsWidgetView? ProfileSettingsEvent {
             get => profileSettings.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
@@ -58,7 +59,7 @@ namespace Project.UI.Common {
         }
 
         public SettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.Settings( out widget, out title, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
+            VisualElementFactory_Common.Settings( this, out widget, out title, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
             widget.OnValidate( evt => {
                 okey.SetValid(
                     profileSettings.GetDescendants().All( i => i.IsValidSelf() ) &&

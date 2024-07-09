@@ -15,6 +15,7 @@ namespace Project.UI.Common {
         private readonly Slider sfxVolume;
         private readonly Slider gameVolume;
 
+        protected override VisualElement VisualElement => widget;
         public float MasterVolume {
             get => masterVolume.value;
             init => masterVolume.value = value;
@@ -65,7 +66,7 @@ namespace Project.UI.Common {
         }
 
         public AudioSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.AudioSettings( out widget, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
+            VisualElementFactory_Common.AudioSettings( this, out widget, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
         }
         public override void Dispose() {
             base.Dispose();

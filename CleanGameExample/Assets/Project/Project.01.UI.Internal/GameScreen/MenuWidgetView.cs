@@ -15,6 +15,7 @@ namespace Project.UI.GameScreen {
         private readonly Button settings;
         private readonly Button back;
 
+        protected override VisualElement VisualElement => widget;
         public event EventCallback<ClickEvent> OnResumeEvent {
             add => resume.RegisterCallback( value );
             remove => resume.UnregisterCallback( value );
@@ -29,7 +30,7 @@ namespace Project.UI.GameScreen {
         }
 
         public MenuWidgetView() {
-            VisualElement = VisualElementFactory_Game.Menu( out widget, out title, out resume, out settings, out back );
+            VisualElementFactory_Game.Menu( this, out widget, out title, out resume, out settings, out back );
         }
         public override void Dispose() {
             base.Dispose();

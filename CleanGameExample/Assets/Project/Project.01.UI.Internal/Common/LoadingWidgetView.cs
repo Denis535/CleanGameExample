@@ -15,8 +15,10 @@ namespace Project.UI.Common {
         private readonly VisualElement background;
         private readonly Label loading;
 
+        protected override VisualElement VisualElement => widget;
+
         public LoadingWidgetView() {
-            VisualElement = VisualElementFactory_Common.Loading( out widget, out background, out loading );
+            VisualElementFactory_Common.Loading( this, out widget, out background, out loading );
             background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
                 await Awaitable.NextFrameAsync( DisposeCancellationToken );
                 background.style.unityBackgroundImageTintColor = Color.black;

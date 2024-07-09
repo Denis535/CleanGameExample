@@ -4,21 +4,21 @@ namespace Project.UI {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
     public static class VisualElementFactory_Game {
 
-        public static Widget Game(out Widget widget, out VisualElement target) {
-            using (VisualElementFactory.Widget( "game-widget" ).Pipe( i => i.focusable = true ).AsScope().Out( out widget )) {
+        public static void Game(UIViewBase view, out Widget widget, out VisualElement target) {
+            using (VisualElementFactory.Widget( "game-widget" ).UserData( view ).Pipe( i => i.focusable = true ).AsScope().Out( out widget )) {
                 target = VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) );
-                return widget;
             }
         }
 
-        public static Widget Menu(out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
-            using (VisualElementFactory.LeftWidget( "menu-widget" ).AsScope().Out( out widget )) {
+        public static void Menu(UIViewBase view, out Widget widget, out Label title, out Button resume, out Button settings, out Button back) {
+            using (VisualElementFactory.LeftWidget( "menu-widget" ).UserData( view ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Menu" );
@@ -29,12 +29,11 @@ namespace Project.UI {
                         back = VisualElementFactory.Back( "Back To Menu" );
                     }
                 }
-                return widget;
             }
         }
 
-        public static VisualElement Totals_LevelCompleted(out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
-            using (VisualElementFactory.SmallWidget( "level-completed-widget" ).AsScope().Out( out widget )) {
+        public static void Totals_LevelCompleted(UIViewBase view, out Widget widget, out Label title, out Label message, out Button @continue, out Button back) {
+            using (VisualElementFactory.SmallWidget( "level-completed-widget" ).UserData( view ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Level Completed" );
@@ -54,10 +53,9 @@ namespace Project.UI {
                     }
                 }
             }
-            return widget;
         }
-        public static VisualElement Totals_GameCompleted(out Widget widget, out Label title, out Label message, out Button okey) {
-            using (VisualElementFactory.SmallWidget( "game-completed-widget" ).AsScope().Out( out widget )) {
+        public static void Totals_GameCompleted(UIViewBase view, out Widget widget, out Label title, out Label message, out Button okey) {
+            using (VisualElementFactory.SmallWidget( "game-completed-widget" ).UserData( view ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Game Completed" );
@@ -75,10 +73,9 @@ namespace Project.UI {
                     }
                 }
             }
-            return widget;
         }
-        public static VisualElement Totals_LevelFailed(out Widget widget, out Label title, out Label message, out Button retry, out Button back) {
-            using (VisualElementFactory.SmallWidget( "level-failed-widget" ).AsScope().Out( out widget )) {
+        public static void Totals_LevelFailed(UIViewBase view, out Widget widget, out Label title, out Label message, out Button retry, out Button back) {
+            using (VisualElementFactory.SmallWidget( "level-failed-widget" ).UserData( view ).AsScope().Out( out widget )) {
                 using (VisualElementFactory.Card().AsScope()) {
                     using (VisualElementFactory.Header().AsScope()) {
                         title = VisualElementFactory.Label( "Level Failed" );
@@ -98,7 +95,6 @@ namespace Project.UI {
                     }
                 }
             }
-            return widget;
         }
 
     }

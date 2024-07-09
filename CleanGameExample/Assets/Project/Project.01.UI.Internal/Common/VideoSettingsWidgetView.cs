@@ -14,6 +14,7 @@ namespace Project.UI.Common {
         private readonly PopupField<object?> screenResolution;
         private readonly Toggle isVSync;
 
+        protected override VisualElement VisualElement => widget;
         public bool IsFullScreen {
             get => isFullScreen.value;
             init => isFullScreen.value = value;
@@ -44,7 +45,7 @@ namespace Project.UI.Common {
         }
 
         public VideoSettingsWidgetView() {
-            VisualElement = VisualElementFactory_Common.VideoSettings( out widget, out isFullScreen, out screenResolution, out isVSync );
+            VisualElementFactory_Common.VideoSettings( this, out widget, out isFullScreen, out screenResolution, out isVSync );
         }
         public override void Dispose() {
             base.Dispose();

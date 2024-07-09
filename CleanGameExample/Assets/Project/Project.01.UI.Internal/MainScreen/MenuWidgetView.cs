@@ -14,10 +14,11 @@ namespace Project.UI.MainScreen {
         private readonly Label title;
         private readonly VisualElement views;
 
+        protected override VisualElement VisualElement => widget;
         public UIViewBase[] Views => views.GetViews().ToArray();
 
         public MenuWidgetView() {
-            VisualElement = VisualElementFactory_Main.Menu( out widget, out title, out views );
+            VisualElementFactory_Main.Menu( this, out widget, out title, out views );
         }
         public override void Dispose() {
             Views.DisposeAll();
@@ -85,6 +86,7 @@ namespace Project.UI.MainScreen {
         private readonly Button settings;
         private readonly Button quit;
 
+        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnStartGame {
             add => startGame.RegisterCallback( value );
             remove => startGame.UnregisterCallback( value );
@@ -99,7 +101,7 @@ namespace Project.UI.MainScreen {
         }
 
         public MenuWidgetView_Menu() {
-            VisualElement = VisualElementFactory_Main.Menu_Menu( out scope, out startGame, out settings, out quit );
+            VisualElementFactory_Main.Menu_Menu( this, out scope, out startGame, out settings, out quit );
         }
         public override void Dispose() {
             base.Dispose();
@@ -113,6 +115,7 @@ namespace Project.UI.MainScreen {
         private readonly Button @continue;
         private readonly Button back;
 
+        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnNewGame {
             add => newGame.RegisterCallback( value );
             remove => newGame.UnregisterCallback( value );
@@ -127,7 +130,7 @@ namespace Project.UI.MainScreen {
         }
 
         public MenuWidgetView_StartGame() {
-            VisualElement = VisualElementFactory_Main.Menu_StartGame( out scope, out newGame, out @continue, out back );
+            VisualElementFactory_Main.Menu_StartGame( this, out scope, out newGame, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -142,6 +145,7 @@ namespace Project.UI.MainScreen {
         private readonly Button level3;
         private readonly Button back;
 
+        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnLevel1 {
             add => level1.RegisterCallback( value );
             remove => level1.UnregisterCallback( value );
@@ -160,7 +164,7 @@ namespace Project.UI.MainScreen {
         }
 
         public MenuWidgetView_SelectLevel() {
-            VisualElement = VisualElementFactory_Main.Menu_SelectLevel( out scope, out level1, out level2, out level3, out back );
+            VisualElementFactory_Main.Menu_SelectLevel( this, out scope, out level1, out level2, out level3, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -176,6 +180,7 @@ namespace Project.UI.MainScreen {
         private readonly Button blue;
         private readonly Button back;
 
+        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnGray {
             add => gray.RegisterCallback( value );
             remove => gray.UnregisterCallback( value );
@@ -198,7 +203,7 @@ namespace Project.UI.MainScreen {
         }
 
         public MenuWidgetView_SelectCharacter() {
-            VisualElement = VisualElementFactory_Main.Menu_SelectCharacter( out scope, out gray, out red, out green, out blue, out back );
+            VisualElementFactory_Main.Menu_SelectCharacter( this, out scope, out gray, out red, out green, out blue, out back );
         }
         public override void Dispose() {
             base.Dispose();

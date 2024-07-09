@@ -14,6 +14,7 @@ namespace Project.UI.GameScreen {
         private readonly VisualElement target;
 
         private InputActions_UI Input { get; }
+        protected override VisualElement VisualElement => widget;
         public TargetEffect TargetEffect {
             set {
                 switch (value) {
@@ -44,7 +45,7 @@ namespace Project.UI.GameScreen {
                     widget.Focus();
                 }
             };
-            VisualElement = VisualElementFactory_Game.Game( out widget, out target );
+            VisualElementFactory_Game.Game( this, out widget, out target );
             widget.RegisterCallback<AttachToPanelEvent>( evt => {
                 Input.Enable();
             } );

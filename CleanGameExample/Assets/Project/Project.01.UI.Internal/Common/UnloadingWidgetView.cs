@@ -13,8 +13,10 @@ namespace Project.UI.Common {
         private readonly Widget widget;
         private readonly VisualElement background;
 
+        protected override VisualElement VisualElement => widget;
+
         public UnloadingWidgetView() {
-            VisualElement = VisualElementFactory_Common.Unloading( out widget, out background );
+            VisualElementFactory_Common.Unloading( this, out widget, out background );
             background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
                 background.style.unityBackgroundImageTintColor = Color.gray;
                 background.style.translate = new Translate( 0, 0 );

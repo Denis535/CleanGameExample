@@ -24,6 +24,7 @@ namespace Project.UI.GameScreen {
         private Button @continue;
         private Button back;
 
+        protected override VisualElement VisualElement => widget;
         public event EventCallback<ClickEvent> OnContinueEvent {
             add => @continue.RegisterCallback( value );
             remove => @continue.UnregisterCallback( value );
@@ -34,7 +35,7 @@ namespace Project.UI.GameScreen {
         }
 
         public TotalsWidgetView_LevelCompleted() {
-            VisualElement = VisualElementFactory_Game.Totals_LevelCompleted( out widget, out title, out message, out @continue, out back );
+            VisualElementFactory_Game.Totals_LevelCompleted( this, out widget, out title, out message, out @continue, out back );
         }
         public override void Dispose() {
             base.Dispose();
@@ -48,13 +49,14 @@ namespace Project.UI.GameScreen {
         private Label message;
         private Button okey;
 
+        protected override VisualElement VisualElement => widget;
         public event EventCallback<ClickEvent> OnOkeyEvent {
             add => okey.RegisterCallback( value );
             remove => okey.UnregisterCallback( value );
         }
 
         public TotalsWidgetView_GameCompleted() {
-            VisualElement = VisualElementFactory_Game.Totals_GameCompleted( out widget, out title, out message, out okey );
+            VisualElementFactory_Game.Totals_GameCompleted( this, out widget, out title, out message, out okey );
         }
         public override void Dispose() {
             base.Dispose();
@@ -69,6 +71,7 @@ namespace Project.UI.GameScreen {
         private Button retry;
         private Button back;
 
+        protected override VisualElement VisualElement => widget;
         public event EventCallback<ClickEvent> OnRetryEvent {
             add => retry.RegisterCallback( value );
             remove => retry.UnregisterCallback( value );
@@ -79,7 +82,7 @@ namespace Project.UI.GameScreen {
         }
 
         public TotalsWidgetView_LevelFailed() {
-            VisualElement = VisualElementFactory_Game.Totals_LevelFailed( out widget, out title, out message, out retry, out back );
+            VisualElementFactory_Game.Totals_LevelFailed( this, out widget, out title, out message, out retry, out back );
         }
         public override void Dispose() {
             base.Dispose();

@@ -11,8 +11,10 @@ namespace Project.UI.MainScreen {
 
         private readonly Widget widget;
 
+        protected override VisualElement VisualElement => widget;
+
         public MainWidgetView() {
-            VisualElement = VisualElementFactory_Main.Main( out widget );
+            VisualElementFactory_Main.Main( this, out widget );
         }
         public override void Dispose() {
             base.Dispose();

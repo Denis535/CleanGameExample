@@ -62,11 +62,13 @@ namespace Project.UI {
         }
 
     }
-    public class RootWidget : UIRootWidget<RootWidgetView> {
+    public class RootWidget : UIRootWidgetBase {
 
         // Constructor
         public RootWidget(IDependencyContainer container) : base( container ) {
-            View = CreateView<RootWidgetView>();
+            View = new RootWidgetView();
+            View.OnSubmitEvent += OnSubmit;
+            View.OnCancelEvent += OnCancel;
         }
         public override void Dispose() {
             View.Dispose();
@@ -81,20 +83,6 @@ namespace Project.UI {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        // Recalculate
-        protected override void Recalculate(VisualElement widget) {
-            base.Recalculate( widget );
-        }
-        protected override void Recalculate(UIViewBase2[] views) {
-            base.Recalculate( views );
-        }
-        protected override void Recalculate(UIViewBase2 view, UIViewBase2 next) {
-            base.Recalculate( view, next );
-        }
-        protected override void Recalculate(UIViewBase2 view) {
-            base.Recalculate( view );
         }
 
         // GetPriority

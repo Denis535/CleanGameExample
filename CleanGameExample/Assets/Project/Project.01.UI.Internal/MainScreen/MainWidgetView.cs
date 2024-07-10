@@ -9,12 +9,11 @@ namespace Project.UI.MainScreen {
 
     public class MainWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-
-        protected override VisualElement VisualElement => widget;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
 
         public MainWidgetView() {
-            VisualElementFactory_Main.Main( this, out widget );
+            Widget = VisualElementFactory.Widget( "main-widget" ).Classes( "main-widget-background" ).UserData( this );
         }
         public override void Dispose() {
             base.Dispose();

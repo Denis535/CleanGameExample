@@ -166,7 +166,6 @@ namespace Project.UI {
             result.name = name;
             result.AddToClassList( "visual-element" );
             result.AddToClassList( @class );
-            VisualElementScope.Peek?.VisualElement.Add( result );
             return result;
         }
 
@@ -315,40 +314,39 @@ namespace Project.UI {
         }
 
     }
-    internal abstract class VisualElementScope : IDisposable {
+    //internal static class VisualElementExtensions {
 
-        private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
-        public static VisualElementScope? Peek => Stack.Any() ? Stack.Peek() : null;
+    //    public static T AddToHierarchy<T>(this T element, VisualElement parent) where T : VisualElement {
+    //        parent.Add( element );
+    //        return element;
+    //    }
 
-        public VisualElement VisualElement { get; }
+    //}
+    //internal class VisualElementScope : IDisposable {
 
-        public VisualElementScope(VisualElement visualElement) {
-            VisualElement = visualElement;
-            Stack.Push( this );
-        }
-        public void Dispose() {
-            Stack.Pop();
-        }
+    //    private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
+    //    public static VisualElementScope? Peek => Stack.Any() ? Stack.Peek() : null;
 
-    }
-    internal class VisualElementScope<T> : VisualElementScope where T : VisualElement {
+    //    public VisualElement VisualElement { get; }
 
-        public new T VisualElement => (T) base.VisualElement;
+    //    public VisualElementScope(VisualElement visualElement) {
+    //        VisualElement = visualElement;
+    //        Stack.Push( this );
+    //    }
+    //    public void Dispose() {
+    //        Stack.Pop();
+    //    }
 
-        public VisualElementScope(T visualElement) : base( visualElement ) {
-        }
+    //    public static void Add(VisualElement child) {
+    //        Peek!.VisualElement.Add( child );
+    //    }
 
-        public VisualElementScope<T> Out(out T @out) {
-            @out = VisualElement;
-            return this;
-        }
+    //}
+    //internal static class VisualElementScopeExtensions {
 
-    }
-    internal static class VisualElementScopeExtensions {
+    //    public static VisualElementScope AsScope(this VisualElement element) {
+    //        return new VisualElementScope( element );
+    //    }
 
-        public static VisualElementScope<T> AsScope<T>(this T element) where T : VisualElement {
-            return new VisualElementScope<T>( element );
-        }
-
-    }
+    //}
 }

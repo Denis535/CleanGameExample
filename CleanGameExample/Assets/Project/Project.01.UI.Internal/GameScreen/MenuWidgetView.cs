@@ -9,28 +9,39 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly Label title;
-        private readonly Button resume;
-        private readonly Button settings;
-        private readonly Button back;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private Label Title { get; }
+        private Button Resume { get; }
+        private Button Settings { get; }
+        private Button Back { get; }
 
-        protected override VisualElement VisualElement => widget;
         public event EventCallback<ClickEvent> OnResumeEvent {
-            add => resume.RegisterCallback( value );
-            remove => resume.UnregisterCallback( value );
+            add => Resume.RegisterCallback( value );
+            remove => Resume.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnSettingsEvent {
-            add => settings.RegisterCallback( value );
-            remove => settings.UnregisterCallback( value );
+            add => Settings.RegisterCallback( value );
+            remove => Settings.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBackEvent {
-            add => back.RegisterCallback( value );
-            remove => back.UnregisterCallback( value );
+            add => Back.RegisterCallback( value );
+            remove => Back.UnregisterCallback( value );
         }
 
         public MenuWidgetView() {
-            VisualElementFactory_Game.Menu( this, out widget, out title, out resume, out settings, out back );
+            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(
+                VisualElementFactory.Card().Children(
+                    VisualElementFactory.Header().Children(
+                        Title = VisualElementFactory.Label( "Menu" )
+                    ),
+                    VisualElementFactory.Content().Children(
+                        Resume = VisualElementFactory.Resume( "Resume" ),
+                        Settings = VisualElementFactory.Select( "Settings" ),
+                        Back = VisualElementFactory.Back( "Back To Menu" )
+                    )
+                )
+            );
         }
         public override void Dispose() {
             base.Dispose();

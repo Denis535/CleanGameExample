@@ -10,30 +10,35 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly Label title;
-        private readonly VisualElement views;
-
-        protected override VisualElement VisualElement => widget;
-        public UIViewBase[] Views => views.GetViews().ToArray();
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private Label Title { get; }
+        private VisualElement Content { get; }
 
         public MenuWidgetView() {
-            VisualElementFactory_Main.Menu( this, out widget, out title, out views );
+            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(
+                VisualElementFactory.Card().Children(
+                    VisualElementFactory.Header().Children(
+                        Title = VisualElementFactory.Label( "Menu" )
+                    ),
+                    Content = VisualElementFactory.Content()
+                )
+            );
         }
         public override void Dispose() {
-            Views.DisposeAll();
+            Content.GetViews().DisposeAll();
             base.Dispose();
         }
 
         public void AddView(UIViewBase2 view) {
-            views.AddView( view );
-            Recalculate( views.GetViews().ToArray() );
-            title.text = GetTitle( views.GetViews().Last() );
+            Content.AddView( view );
+            Recalculate( Content.GetViews().ToArray() );
+            Title.text = GetTitle( Content.GetViews().Last() );
         }
         public void RemoveView(UIViewBase2 view) {
-            views.RemoveView( view );
-            Recalculate( views.GetViews().ToArray() );
-            title.text = GetTitle( views.GetViews().Last() );
+            Content.RemoveView( view );
+            Recalculate( Content.GetViews().ToArray() );
+            Title.text = GetTitle( Content.GetViews().Last() );
         }
 
         // Helpers
@@ -81,27 +86,31 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_Menu : UIViewBase2 {
 
-        private readonly ColumnScope scope;
-        private readonly Button startGame;
-        private readonly Button settings;
-        private readonly Button quit;
+        protected override VisualElement VisualElement => Scope;
+        private ColumnScope Scope { get; }
+        private Button StartGame { get; }
+        private Button Settings { get; }
+        private Button Quit { get; }
 
-        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnStartGame {
-            add => startGame.RegisterCallback( value );
-            remove => startGame.UnregisterCallback( value );
+            add => StartGame.RegisterCallback( value );
+            remove => StartGame.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnSettings {
-            add => settings.RegisterCallback( value );
-            remove => settings.UnregisterCallback( value );
+            add => Settings.RegisterCallback( value );
+            remove => Settings.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnQuit {
-            add => quit.RegisterCallback( value );
-            remove => quit.UnregisterCallback( value );
+            add => Quit.RegisterCallback( value );
+            remove => Quit.UnregisterCallback( value );
         }
 
         public MenuWidgetView_Menu() {
-            VisualElementFactory_Main.Menu_Menu( this, out scope, out startGame, out settings, out quit );
+            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+                StartGame = VisualElementFactory.Select( "Start Game" ),
+                Settings = VisualElementFactory.Select( "Settings" ),
+                Quit = VisualElementFactory.Quit( "Quit" )
+            );
         }
         public override void Dispose() {
             base.Dispose();
@@ -110,27 +119,31 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_StartGame : UIViewBase2 {
 
-        private readonly ColumnScope scope;
-        private readonly Button newGame;
-        private readonly Button @continue;
-        private readonly Button back;
+        protected override VisualElement VisualElement => Scope;
+        private ColumnScope Scope { get; }
+        private Button NewGame { get; }
+        private Button Continue { get; }
+        private Button Back { get; }
 
-        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnNewGame {
-            add => newGame.RegisterCallback( value );
-            remove => newGame.UnregisterCallback( value );
+            add => NewGame.RegisterCallback( value );
+            remove => NewGame.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnContinue {
-            add => @continue.RegisterCallback( value );
-            remove => @continue.UnregisterCallback( value );
+            add => Continue.RegisterCallback( value );
+            remove => Continue.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBack {
-            add => back.RegisterCallback( value );
-            remove => back.UnregisterCallback( value );
+            add => Back.RegisterCallback( value );
+            remove => Back.UnregisterCallback( value );
         }
 
         public MenuWidgetView_StartGame() {
-            VisualElementFactory_Main.Menu_StartGame( this, out scope, out newGame, out @continue, out back );
+            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+                NewGame = VisualElementFactory.Select( "New Game" ),
+                Continue = VisualElementFactory.Select( "Continue" ),
+                Back = VisualElementFactory.Back( "Back" )
+            );
         }
         public override void Dispose() {
             base.Dispose();
@@ -139,32 +152,39 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_SelectLevel : UIViewBase2 {
 
-        private readonly ColumnScope scope;
-        private readonly Button level1;
-        private readonly Button level2;
-        private readonly Button level3;
-        private readonly Button back;
+        protected override VisualElement VisualElement => Scope;
+        private ColumnScope Scope { get; }
+        private Button Level1 { get; }
+        private Button Level2 { get; }
+        private Button Level3 { get; }
+        private Button Back { get; }
 
-        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnLevel1 {
-            add => level1.RegisterCallback( value );
-            remove => level1.UnregisterCallback( value );
+            add => Level1.RegisterCallback( value );
+            remove => Level1.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnLevel2 {
-            add => level2.RegisterCallback( value );
-            remove => level2.UnregisterCallback( value );
+            add => Level2.RegisterCallback( value );
+            remove => Level2.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnLevel3 {
-            add => level3.RegisterCallback( value );
-            remove => level3.UnregisterCallback( value );
+            add => Level3.RegisterCallback( value );
+            remove => Level3.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBack {
-            add => back.RegisterCallback( value );
-            remove => back.UnregisterCallback( value );
+            add => Back.RegisterCallback( value );
+            remove => Back.UnregisterCallback( value );
         }
 
         public MenuWidgetView_SelectLevel() {
-            VisualElementFactory_Main.Menu_SelectLevel( this, out scope, out level1, out level2, out level3, out back );
+            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+                VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
+                    Level1 = VisualElementFactory.Select( "Level 1" ),
+                    Level2 = VisualElementFactory.Select( "Level 2" ),
+                    Level3 = VisualElementFactory.Select( "Level 3" )
+                ),
+                Back = VisualElementFactory.Back( "Back" )
+            );
         }
         public override void Dispose() {
             base.Dispose();
@@ -173,37 +193,45 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_SelectCharacter : UIViewBase2 {
 
-        private readonly ColumnScope scope;
-        private readonly Button gray;
-        private readonly Button red;
-        private readonly Button green;
-        private readonly Button blue;
-        private readonly Button back;
+        protected override VisualElement VisualElement => Scope;
+        private ColumnScope Scope { get; }
+        private Button Gray { get; }
+        private Button Red { get; }
+        private Button Green { get; }
+        private Button Blue { get; }
+        private Button Back { get; }
 
-        protected override VisualElement VisualElement => scope;
         public event EventCallback<ClickEvent> OnGray {
-            add => gray.RegisterCallback( value );
-            remove => gray.UnregisterCallback( value );
+            add => Gray.RegisterCallback( value );
+            remove => Gray.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnRed {
-            add => red.RegisterCallback( value );
-            remove => red.UnregisterCallback( value );
+            add => Red.RegisterCallback( value );
+            remove => Red.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnGreen {
-            add => green.RegisterCallback( value );
-            remove => green.UnregisterCallback( value );
+            add => Green.RegisterCallback( value );
+            remove => Green.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBlue {
-            add => blue.RegisterCallback( value );
-            remove => blue.UnregisterCallback( value );
+            add => Blue.RegisterCallback( value );
+            remove => Blue.UnregisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBack {
-            add => back.RegisterCallback( value );
-            remove => back.UnregisterCallback( value );
+            add => Back.RegisterCallback( value );
+            remove => Back.UnregisterCallback( value );
         }
 
         public MenuWidgetView_SelectCharacter() {
-            VisualElementFactory_Main.Menu_SelectCharacter( this, out scope, out gray, out red, out green, out blue, out back );
+            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+                VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
+                    Gray = VisualElementFactory.Select( "Gray" ),
+                    Red = VisualElementFactory.Select( "Red" ),
+                    Green = VisualElementFactory.Select( "Green" ),
+                    Blue = VisualElementFactory.Select( "Blue" )
+                ),
+                Back = VisualElementFactory.Back( "Back" )
+            );
         }
         public override void Dispose() {
             base.Dispose();

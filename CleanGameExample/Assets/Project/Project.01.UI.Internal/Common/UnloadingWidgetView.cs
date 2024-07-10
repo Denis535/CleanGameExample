@@ -10,23 +10,24 @@ namespace Project.UI.Common {
 
     public class UnloadingWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly VisualElement background;
-
-        protected override VisualElement VisualElement => widget;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private VisualElement Background { get; }
 
         public UnloadingWidgetView() {
-            VisualElementFactory_Common.Unloading( this, out widget, out background );
-            background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
-                background.style.unityBackgroundImageTintColor = Color.gray;
-                background.style.translate = new Translate( 0, 0 );
-                background.style.rotate = new Rotate( Angle.Degrees( 15 ) );
-                background.style.scale = new Scale( new Vector3( 2, 2, 1 ) );
+            Widget = VisualElementFactory.Widget( "unloading-widget" ).UserData( this ).Children(
+                Background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" )
+            );
+            Background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
+                Background.style.unityBackgroundImageTintColor = Color.gray;
+                Background.style.translate = new Translate( 0, 0 );
+                Background.style.rotate = new Rotate( Angle.Degrees( 15 ) );
+                Background.style.scale = new Scale( new Vector3( 2, 2, 1 ) );
                 await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                background.style.unityBackgroundImageTintColor = Color.white;
-                background.style.translate = new Translate( 0, 0 );
-                background.style.rotate = new Rotate( Angle.Degrees( 0 ) );
-                background.style.scale = new Scale( new Vector3( 1, 1, 1 ) );
+                Background.style.unityBackgroundImageTintColor = Color.white;
+                Background.style.translate = new Translate( 0, 0 );
+                Background.style.rotate = new Rotate( Angle.Degrees( 0 ) );
+                Background.style.scale = new Scale( new Vector3( 1, 1, 1 ) );
             } );
         }
         public override void Dispose() {

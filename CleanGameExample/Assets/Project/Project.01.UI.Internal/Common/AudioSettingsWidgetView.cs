@@ -9,64 +9,71 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly Slider masterVolume;
-        private readonly Slider musicVolume;
-        private readonly Slider sfxVolume;
-        private readonly Slider gameVolume;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private Slider MasterVolume_ { get; }
+        private Slider MusicVolume_ { get; }
+        private Slider SfxVolume_ { get; }
+        private Slider GameVolume_ { get; }
 
-        protected override VisualElement VisualElement => widget;
         public float MasterVolume {
-            get => masterVolume.value;
-            init => masterVolume.value = value;
+            get => MasterVolume_.value;
+            init => MasterVolume_.value = value;
         }
         public (float Min, float Max) MasterVolumeMinMax {
-            get => masterVolume.GetMinMax();
-            init => masterVolume.SetMinMax( value );
+            get => MasterVolume_.GetMinMax();
+            init => MasterVolume_.SetMinMax( value );
         }
         public float MusicVolume {
-            get => musicVolume.value;
-            init => musicVolume.value = value;
+            get => MusicVolume_.value;
+            init => MusicVolume_.value = value;
         }
         public (float Min, float Max) MusicVolumeMinMax {
-            get => musicVolume.GetMinMax();
-            init => musicVolume.SetMinMax( value );
+            get => MusicVolume_.GetMinMax();
+            init => MusicVolume_.SetMinMax( value );
         }
         public float SfxVolume {
-            get => sfxVolume.value;
-            init => sfxVolume.value = value;
+            get => SfxVolume_.value;
+            init => SfxVolume_.value = value;
         }
         public (float Min, float Max) SfxVolumeMinMax {
-            get => sfxVolume.GetMinMax();
-            init => sfxVolume.SetMinMax( value );
+            get => SfxVolume_.GetMinMax();
+            init => SfxVolume_.SetMinMax( value );
         }
         public float GameVolume {
-            get => gameVolume.value;
-            init => gameVolume.value = value;
+            get => GameVolume_.value;
+            init => GameVolume_.value = value;
         }
         public (float Min, float Max) GameVolumeMinMax {
-            get => gameVolume.GetMinMax();
-            init => gameVolume.SetMinMax( value );
+            get => GameVolume_.GetMinMax();
+            init => GameVolume_.SetMinMax( value );
         }
         public event EventCallback<ChangeEvent<float>> OnMasterVolumeEvent {
-            add => masterVolume.RegisterCallback( value );
-            remove => masterVolume.UnregisterCallback( value );
+            add => MasterVolume_.RegisterCallback( value );
+            remove => MasterVolume_.UnregisterCallback( value );
         }
         public event EventCallback<ChangeEvent<float>> OnMusicVolumeEvent {
-            add => musicVolume.RegisterCallback( value );
-            remove => musicVolume.UnregisterCallback( value );
+            add => MusicVolume_.RegisterCallback( value );
+            remove => MusicVolume_.UnregisterCallback( value );
         }
         public event EventCallback<ChangeEvent<float>> OnSfxVolumeEvent {
-            add => sfxVolume.RegisterCallback( value );
-            remove => sfxVolume.UnregisterCallback( value );
+            add => SfxVolume_.RegisterCallback( value );
+            remove => SfxVolume_.UnregisterCallback( value );
         }
         public event EventCallback<ChangeEvent<float>> OnGameVolumeEvent {
-            add => gameVolume.RegisterCallback( value );
-            remove => gameVolume.UnregisterCallback( value );
+            add => GameVolume_.RegisterCallback( value );
+            remove => GameVolume_.UnregisterCallback( value );
         }
 
         public AudioSettingsWidgetView() {
-            VisualElementFactory_Common.AudioSettings( this, out widget, out masterVolume, out musicVolume, out sfxVolume, out gameVolume );
+            Widget = VisualElementFactory.Widget( "audio-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
+                VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
+                    MasterVolume_ = VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ),
+                    MusicVolume_ = VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ),
+                    SfxVolume_ = VisualElementFactory.SliderField( "Sfx Volume", 0, 1 ).Classes( "label-width-25pc" ),
+                    GameVolume_ = VisualElementFactory.SliderField( "Game Volume", 0, 1 ).Classes( "label-width-25pc" )
+                )
+            );
         }
         public override void Dispose() {
             base.Dispose();

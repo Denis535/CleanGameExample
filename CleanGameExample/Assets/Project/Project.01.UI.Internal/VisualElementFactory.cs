@@ -314,39 +314,4 @@ namespace Project.UI {
         }
 
     }
-    //internal static class VisualElementExtensions {
-
-    //    public static T AddToHierarchy<T>(this T element, VisualElement parent) where T : VisualElement {
-    //        parent.Add( element );
-    //        return element;
-    //    }
-
-    //}
-    //internal class VisualElementScope : IDisposable {
-
-    //    private static Stack<VisualElementScope> Stack { get; } = new Stack<VisualElementScope>();
-    //    public static VisualElementScope? Peek => Stack.Any() ? Stack.Peek() : null;
-
-    //    public VisualElement VisualElement { get; }
-
-    //    public VisualElementScope(VisualElement visualElement) {
-    //        VisualElement = visualElement;
-    //        Stack.Push( this );
-    //    }
-    //    public void Dispose() {
-    //        Stack.Pop();
-    //    }
-
-    //    public static void Add(VisualElement child) {
-    //        Peek!.VisualElement.Add( child );
-    //    }
-
-    //}
-    //internal static class VisualElementScopeExtensions {
-
-    //    public static VisualElementScope AsScope(this VisualElement element) {
-    //        return new VisualElementScope( element );
-    //    }
-
-    //}
 }

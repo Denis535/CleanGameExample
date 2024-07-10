@@ -10,61 +10,79 @@ namespace Project.UI.Common {
 
     public class SettingsWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly Label title;
-        private readonly VisualElement profileSettings;
-        private readonly VisualElement videoSettings;
-        private readonly VisualElement audioSettings;
-        private readonly Button okey;
-        private readonly Button back;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private Label Title { get; }
+        private TabView TabView { get; }
+        private Tab ProfileSettingsTab { get; }
+        private Tab VideoSettingsTab { get; }
+        private Tab AudioSettingsTab { get; }
+        private Button Okey { get; }
+        private Button Back { get; }
 
-        protected override VisualElement VisualElement => widget;
         public ProfileSettingsWidgetView? ProfileSettingsEvent {
-            get => profileSettings.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
+            get => ProfileSettingsTab.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    profileSettings.AddView( value );
+                    ProfileSettingsTab.AddView( value );
                 } else {
-                    profileSettings.Clear();
+                    ProfileSettingsTab.Clear();
                 }
             }
         }
         public VideoSettingsWidgetView? VideoSettingsEvent {
-            get => videoSettings.GetViews<VideoSettingsWidgetView>().FirstOrDefault();
+            get => VideoSettingsTab.GetViews<VideoSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    videoSettings.AddView( value );
+                    VideoSettingsTab.AddView( value );
                 } else {
-                    videoSettings.Clear();
+                    VideoSettingsTab.Clear();
                 }
             }
         }
         public AudioSettingsWidgetView? AudioSettingsEvent {
-            get => audioSettings.GetViews<AudioSettingsWidgetView>().FirstOrDefault();
+            get => AudioSettingsTab.GetViews<AudioSettingsWidgetView>().FirstOrDefault();
             set {
                 if (value != null) {
-                    audioSettings.AddView( value );
+                    AudioSettingsTab.AddView( value );
                 } else {
-                    audioSettings.Clear();
+                    AudioSettingsTab.Clear();
                 }
             }
         }
         public event EventCallback<ClickEvent> OnOkeyEvent {
-            add => okey.RegisterCallback( value );
-            remove => okey.RegisterCallback( value );
+            add => Okey.RegisterCallback( value );
+            remove => Okey.RegisterCallback( value );
         }
         public event EventCallback<ClickEvent> OnBackEvent {
-            add => back.RegisterCallback( value );
-            remove => back.RegisterCallback( value );
+            add => Back.RegisterCallback( value );
+            remove => Back.RegisterCallback( value );
         }
 
         public SettingsWidgetView() {
-            VisualElementFactory_Common.Settings( this, out widget, out title, out profileSettings, out videoSettings, out audioSettings, out okey, out back );
-            widget.OnValidate( evt => {
-                okey.SetValid(
-                    profileSettings.GetDescendants().All( i => i.IsValidSelf() ) &&
-                    videoSettings.GetDescendants().All( i => i.IsValidSelf() ) &&
-                    audioSettings.GetDescendants().All( i => i.IsValidSelf() ) );
+            Widget = VisualElementFactory.MediumWidget( "settings-widget" ).UserData( this ).Children(
+                VisualElementFactory.Card().Children(
+                    VisualElementFactory.Header().Children(
+                        Title = VisualElementFactory.Label( "Settings" )
+                    ),
+                    VisualElementFactory.Content().Children(
+                        TabView = VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).Children(
+                            ProfileSettingsTab = VisualElementFactory.Tab( "Profile Settings" ),
+                            VideoSettingsTab = VisualElementFactory.Tab( "Video Settings" ),
+                            AudioSettingsTab = VisualElementFactory.Tab( "Audio Settings" )
+                        )
+                    ),
+                    VisualElementFactory.Footer().Children(
+                        Okey = VisualElementFactory.Submit( "Ok" ),
+                        Back = VisualElementFactory.Cancel( "Back" )
+                    )
+                )
+            );
+            Widget.OnValidate( evt => {
+                Okey.SetValid(
+                    ProfileSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&
+                    VideoSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&
+                    AudioSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) );
             } );
         }
         public override void Dispose() {

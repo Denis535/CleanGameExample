@@ -10,27 +10,27 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase2 {
 
-        protected Widget widget = default!;
-        protected Card card = default!;
-        protected Header header = default!;
-        protected Content content = default!;
-        protected Footer footer = default!;
-        protected Label title = default!;
-        protected Label message = default!;
+        protected override VisualElement VisualElement => Widget;
+        protected Widget Widget { get; init; } = default!;
+        protected Card Card { get; init; } = default!;
+        protected Header Header { get; init; } = default!;
+        protected Content Content { get; init; } = default!;
+        protected Footer Footer { get; init; } = default!;
+        protected Label Title_ { get; init; } = default!;
+        protected Label Message_ { get; init; } = default!;
 
-        protected override VisualElement VisualElement => widget;
         public string? Title {
-            get => title.text;
+            get => Title_.text;
             set {
-                title.text = value;
-                header.SetDisplayed( value != null );
+                Title_.text = value;
+                Header.SetDisplayed( value != null );
             }
         }
         public string? Message {
-            get => message.text;
+            get => Message_.text;
             set {
-                message.text = value;
-                content.SetDisplayed( value != null );
+                Message_.text = value;
+                Content.SetDisplayed( value != null );
             }
         }
 
@@ -47,8 +47,8 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            footer.Add( button );
-            footer.SetDisplayed( true );
+            Footer.Add( button );
+            Footer.SetDisplayed( true );
         }
         public void OnCancel(string text, Action? callback) {
             var button = VisualElementFactory.Cancel( text );
@@ -57,8 +57,8 @@ namespace Project.UI.Common {
                     callback?.Invoke();
                 }
             } );
-            footer.Add( button );
-            footer.SetDisplayed( true );
+            Footer.Add( button );
+            Footer.SetDisplayed( true );
         }
 
         // Helpers
@@ -82,8 +82,20 @@ namespace Project.UI.Common {
     public class DialogWidgetView : DialogWidgetViewBase {
 
         public DialogWidgetView() {
-            VisualElementFactory_Common.Dialog( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
+            Widget = VisualElementFactory.DialogWidget().UserData( this ).Children(
+                VisualElementFactory.DialogCard().Children(
+                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        Title_ = VisualElementFactory.Label( null )
+                    ),
+                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
+                            Message_ = VisualElementFactory.Label( null )
+                        )
+                    ),
+                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                )
+            );
+            Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
@@ -93,8 +105,20 @@ namespace Project.UI.Common {
     public class InfoDialogWidgetView : DialogWidgetViewBase {
 
         public InfoDialogWidgetView() {
-            VisualElementFactory_Common.InfoDialog( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
+            Widget = VisualElementFactory.InfoDialogWidget().UserData( this ).Children(
+                VisualElementFactory.InfoDialogCard().Children(
+                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        Title_ = VisualElementFactory.Label( null )
+                    ),
+                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
+                            Message_ = VisualElementFactory.Label( null )
+                        )
+                    ),
+                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                )
+            );
+            Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
@@ -104,8 +128,20 @@ namespace Project.UI.Common {
     public class WarningDialogWidgetView : DialogWidgetViewBase {
 
         public WarningDialogWidgetView() {
-            VisualElementFactory_Common.WarningDialog( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
+            Widget = VisualElementFactory.WarningDialogWidget().UserData( this ).Children(
+                VisualElementFactory.WarningDialogCard().Children(
+                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        Title_ = VisualElementFactory.Label( null )
+                    ),
+                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
+                            Message_ = VisualElementFactory.Label( null )
+                        )
+                    ),
+                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                )
+            );
+            Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();
@@ -115,8 +151,20 @@ namespace Project.UI.Common {
     public class ErrorDialogWidgetView : DialogWidgetViewBase {
 
         public ErrorDialogWidgetView() {
-            VisualElementFactory_Common.ErrorDialog( this, out widget, out card, out header, out content, out footer, out title, out message );
-            widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
+            Widget = VisualElementFactory.ErrorDialogWidget().UserData( this ).Children(
+                VisualElementFactory.ErrorDialogCard().Children(
+                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        Title_ = VisualElementFactory.Label( null )
+                    ),
+                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                        VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
+                            Message_ = VisualElementFactory.Label( null )
+                        )
+                    ),
+                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                )
+            );
+            Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();

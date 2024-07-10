@@ -11,22 +11,24 @@ namespace Project.UI.Common {
 
     public class LoadingWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly VisualElement background;
-        private readonly Label loading;
-
-        protected override VisualElement VisualElement => widget;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private VisualElement Background { get; }
+        private Label Loading { get; }
 
         public LoadingWidgetView() {
-            VisualElementFactory_Common.Loading( this, out widget, out background, out loading );
-            background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
+            Widget = VisualElementFactory.Widget( "loading-widget" ).UserData( this ).Children(
+                Background = VisualElementFactory.VisualElement().Classes( "loading-widget-background", "width-100pc", "height-100pc" ),
+                Loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" )
+            );
+            Background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
                 await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                background.style.unityBackgroundImageTintColor = Color.black;
-                background.style.translate = new Translate( 0, 0 );
-                background.style.rotate = new Rotate( Angle.Degrees( 45 ) );
-                background.style.scale = new Scale( new Vector3( 5, 5, 1 ) );
+                Background.style.unityBackgroundImageTintColor = Color.black;
+                Background.style.translate = new Translate( 0, 0 );
+                Background.style.rotate = new Rotate( Angle.Degrees( 45 ) );
+                Background.style.scale = new Scale( new Vector3( 5, 5, 1 ) );
             } );
-            loading.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
+            Loading.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
         }
         public override void Dispose() {
             base.Dispose();

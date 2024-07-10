@@ -9,43 +9,49 @@ namespace Project.UI.Common {
 
     public class VideoSettingsWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly Toggle isFullScreen;
-        private readonly PopupField<object?> screenResolution;
-        private readonly Toggle isVSync;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private Toggle IsFullScreen_ { get; }
+        private PopupField<object?> ScreenResolution_ { get; }
+        private Toggle IsVSync_ { get; }
 
-        protected override VisualElement VisualElement => widget;
         public bool IsFullScreen {
-            get => isFullScreen.value;
-            init => isFullScreen.value = value;
+            get => IsFullScreen_.value;
+            init => IsFullScreen_.value = value;
         }
         public object? ScreenResolution {
-            get => screenResolution.value;
-            init => screenResolution.value = value;
+            get => ScreenResolution_.value;
+            init => ScreenResolution_.value = value;
         }
         public List<object?> ScreenResolutionChoices {
-            get => screenResolution.choices;
-            init => screenResolution.choices = value;
+            get => ScreenResolution_.choices;
+            init => ScreenResolution_.choices = value;
         }
         public bool IsVSync {
-            get => isVSync.value;
-            init => isVSync.value = value;
+            get => IsVSync_.value;
+            init => IsVSync_.value = value;
         }
         public event EventCallback<ChangeEvent<bool>> OnIsFullScreenEvent {
-            add => isFullScreen.RegisterCallback( value );
-            remove => isFullScreen.UnregisterCallback( value );
+            add => IsFullScreen_.RegisterCallback( value );
+            remove => IsFullScreen_.UnregisterCallback( value );
         }
         public event EventCallback<ChangeEvent<object?>> OnScreenResolutionEvent {
-            add => screenResolution.RegisterCallback( value );
-            remove => screenResolution.UnregisterCallback( value );
+            add => ScreenResolution_.RegisterCallback( value );
+            remove => ScreenResolution_.UnregisterCallback( value );
         }
         public event EventCallback<ChangeEvent<bool>> OnIsVSyncEvent {
-            add => isVSync.RegisterCallback( value );
-            remove => isVSync.UnregisterCallback( value );
+            add => IsVSync_.RegisterCallback( value );
+            remove => IsVSync_.UnregisterCallback( value );
         }
 
         public VideoSettingsWidgetView() {
-            VisualElementFactory_Common.VideoSettings( this, out widget, out isFullScreen, out screenResolution, out isVSync );
+            Widget = VisualElementFactory.Widget( "video-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
+                VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
+                    IsFullScreen_ = VisualElementFactory.ToggleField( "Full Screen" ).Classes( "label-width-25pc" ),
+                    ScreenResolution_ = VisualElementFactory.PopupField( "Screen Resolution" ).Classes( "label-width-25pc" ),
+                    IsVSync_ = VisualElementFactory.ToggleField( "V-Sync" ).Classes( "label-width-25pc" )
+                )
+            );
         }
         public override void Dispose() {
             base.Dispose();

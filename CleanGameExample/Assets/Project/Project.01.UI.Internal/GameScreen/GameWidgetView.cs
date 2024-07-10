@@ -14,6 +14,7 @@ namespace Project.UI.GameScreen {
         protected override VisualElement VisualElement => Widget;
         private Widget Widget { get; }
         private VisualElement Target { get; }
+
         public TargetEffect TargetEffect {
             set {
                 switch (value) {

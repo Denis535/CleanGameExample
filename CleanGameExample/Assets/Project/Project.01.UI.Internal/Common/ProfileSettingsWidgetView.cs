@@ -9,19 +9,23 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase2 {
 
-        private readonly Widget widget;
-        private readonly TextField name;
+        protected override VisualElement VisualElement => Widget;
+        private Widget Widget { get; }
+        private TextField Name_ { get; }
 
-        protected override VisualElement VisualElement => widget;
         public string Name {
-            get => name.value;
-            init => name.value = value;
+            get => Name_.value;
+            init => Name_.value = value;
         }
 
         public ProfileSettingsWidgetView(Func<string?, bool> nameValidator) {
-            VisualElementFactory_Common.ProfileSettings( this, out widget, out name );
-            name.OnValidate( evt => {
-                name.SetValid( nameValidator( name.value ) );
+            Widget = VisualElementFactory.Widget( "profile-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
+                VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
+                    Name_ = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" )
+                )
+            );
+            Name_.OnValidate( evt => {
+                Name_.SetValid( nameValidator( Name_.value ) );
             } );
         }
         public override void Dispose() {

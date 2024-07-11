@@ -84,15 +84,15 @@ namespace Project.UI.Common {
         public DialogWidgetView() {
             Widget = VisualElementFactory.DialogWidget().UserData( this ).Children(
                 VisualElementFactory.DialogCard().Children(
-                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title_ = VisualElementFactory.Label( null )
                     ),
-                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
                             Message_ = VisualElementFactory.Label( null )
                         )
                     ),
-                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                    Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
                 )
             );
             Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -107,15 +107,15 @@ namespace Project.UI.Common {
         public InfoDialogWidgetView() {
             Widget = VisualElementFactory.InfoDialogWidget().UserData( this ).Children(
                 VisualElementFactory.InfoDialogCard().Children(
-                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title_ = VisualElementFactory.Label( null )
                     ),
-                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
                             Message_ = VisualElementFactory.Label( null )
                         )
                     ),
-                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                    Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
                 )
             );
             Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -130,15 +130,15 @@ namespace Project.UI.Common {
         public WarningDialogWidgetView() {
             Widget = VisualElementFactory.WarningDialogWidget().UserData( this ).Children(
                 VisualElementFactory.WarningDialogCard().Children(
-                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title_ = VisualElementFactory.Label( null )
                     ),
-                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
                             Message_ = VisualElementFactory.Label( null )
                         )
                     ),
-                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                    Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
                 )
             );
             Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );
@@ -153,15 +153,15 @@ namespace Project.UI.Common {
         public ErrorDialogWidgetView() {
             Widget = VisualElementFactory.ErrorDialogWidget().UserData( this ).Children(
                 VisualElementFactory.ErrorDialogCard().Children(
-                    VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title_ = VisualElementFactory.Label( null )
                     ),
-                    VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
+                    Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
                             Message_ = VisualElementFactory.Label( null )
                         )
                     ),
-                    VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
+                    Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
                 )
             );
             Widget.RegisterCallbackOnce<AttachToPanelEvent>( PlayAnimation );

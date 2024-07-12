@@ -6,6 +6,7 @@ namespace Project.UI.GameScreen {
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
@@ -39,15 +40,15 @@ namespace Project.UI.GameScreen {
         // Helpers
         private static MenuWidgetView CreateView(MenuWidget widget) {
             var view = new MenuWidgetView();
-            view.OnResumeEvent += evt => {
+            view.Resume.RegisterCallback<ClickEvent>( evt => {
                 widget.RemoveSelf();
-            };
-            view.OnSettingsEvent += evt => {
+            } );
+            view.Settings.RegisterCallback<ClickEvent>( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
-            };
-            view.OnBackEvent += evt => {
+            } );
+            view.Back.RegisterCallback<ClickEvent>( evt => {
                 widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
-            };
+            } );
             return view;
         }
 

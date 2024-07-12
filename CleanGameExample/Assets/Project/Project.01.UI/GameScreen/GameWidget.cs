@@ -7,14 +7,11 @@ namespace Project.UI.GameScreen {
     using Project.Entities;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
         private Game Game { get; }
-        private bool IsCursorVisible {
-            get => Cursor.lockState == CursorLockMode.None;
-            set => Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
-        }
 
         public GameWidget(IDependencyContainer container) : base( container ) {
             Game = container.RequireDependency<Game>();
@@ -36,16 +33,16 @@ namespace Project.UI.GameScreen {
                 }
             };
             ShowSelf();
-            IsCursorVisible = false;
+            View.IsCursorVisible = false;
         }
         protected override void OnDeactivate(object? argument) {
-            IsCursorVisible = true;
+            View.IsCursorVisible = true;
             HideSelf();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
             Game.IsPaused = Children.Any( i => i is MenuWidget );
-            IsCursorVisible = Children.Any( i => i is MenuWidget or TotalsWidget );
+            View.IsCursorVisible = Children.Any( i => i is MenuWidget or TotalsWidget );
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
@@ -54,29 +51,29 @@ namespace Project.UI.GameScreen {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
             if (State is UIWidgetState.Active) {
                 Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget );
-                IsCursorVisible = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget );
+                View.IsCursorVisible = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget );
             }
         }
 
         public void OnUpdate() {
-            View.TargetEffect = GetTargetEffect( Game.Player );
+            View.Target.style.color = GetTargetColor( Game.Player );
         }
 
         // Helpers
         private static GameWidgetView CreateView(GameWidget widget) {
             var view = new GameWidgetView();
-            view.OnCancelEvent += evt => {
+            view.Widget.RegisterCallback<NavigationCancelEvent>( evt => {
                 if (!widget.Children.Any( i => i is MenuWidget )) {
                     widget.AddChild( new MenuWidget( widget.Container ) );
                 }
-            };
+            } );
             return view;
         }
         // Helpers
-        private static TargetEffect GetTargetEffect(Player player) {
-            if (player.Thing != null) return TargetEffect.Thing;
-            if (player.Enemy != null) return TargetEffect.Enemy;
-            return TargetEffect.Normal;
+        private static Color GetTargetColor(Player player) {
+            if (player.Thing != null) return Color.yellow;
+            if (player.Enemy != null) return Color.red;
+            return Color.white;
         }
 
     }

@@ -8,6 +8,7 @@ namespace Project.UI.MainScreen {
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MenuWidget : UIWidgetBase2<MenuWidgetView> {
 
@@ -49,63 +50,63 @@ namespace Project.UI.MainScreen {
         }
         private static MenuWidgetView_Menu CreateView_Menu(MenuWidget widget) {
             var view = new MenuWidgetView_Menu();
-            view.OnStartGame += evt => {
+            view.StartGame.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_StartGame( widget ) );
-            };
-            view.OnSettings += evt => {
+            } );
+            view.Settings.RegisterCallback<ClickEvent>( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
-            };
-            view.OnQuit += evt => {
+            } );
+            view.Quit.RegisterCallback<ClickEvent>( evt => {
                 widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null ) );
-            };
+            } );
             return view;
         }
         private static MenuWidgetView_StartGame CreateView_StartGame(MenuWidget widget) {
             var view = new MenuWidgetView_StartGame();
-            view.OnNewGame += evt => {
+            view.NewGame.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_SelectLevel( widget ) );
-            };
-            view.OnContinue += evt => {
+            } );
+            view.Continue.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_SelectLevel( widget ) );
-            };
-            view.OnBack += evt => {
+            } );
+            view.Back.RegisterCallback<ClickEvent>( evt => {
                 widget.View.RemoveView( view );
-            };
+            } );
             return view;
         }
         private static MenuWidgetView_SelectLevel CreateView_SelectLevel(MenuWidget widget) {
             var view = new MenuWidgetView_SelectLevel();
-            view.OnLevel1 += evt => {
+            view.Level1.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level1 ) );
-            };
-            view.OnLevel2 += evt => {
+            } );
+            view.Level2.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level2 ) );
-            };
-            view.OnLevel3 += evt => {
+            } );
+            view.Level3.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level3 ) );
-            };
-            view.OnBack += evt => {
+            } );
+            view.Back.RegisterCallback<ClickEvent>( evt => {
                 widget.View.RemoveView( view );
-            };
+            } );
             return view;
         }
         private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
             var view = new MenuWidgetView_SelectCharacter();
-            view.OnGray += evt => {
+            view.Gray.RegisterCallback<ClickEvent>( evt => {
                 widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Gray ) );
-            };
-            view.OnRed += evt => {
+            } );
+            view.Red.RegisterCallback<ClickEvent>( evt => {
                 widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Red ) );
-            };
-            view.OnGreen += evt => {
+            } );
+            view.Green.RegisterCallback<ClickEvent>( evt => {
                 widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Green ) );
-            };
-            view.OnBlue += evt => {
+            } );
+            view.Blue.RegisterCallback<ClickEvent>( evt => {
                 widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Blue ) );
-            };
-            view.OnBack += evt => {
+            } );
+            view.Back.RegisterCallback<ClickEvent>( evt => {
                 widget.View.RemoveView( view );
-            };
+            } );
             return view;
         }
 

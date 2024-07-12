@@ -12,30 +12,11 @@ namespace Project.UI.GameScreen {
 
         private InputActions_UI Input { get; }
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private VisualElement Target { get; }
-
-        public TargetEffect TargetEffect {
-            set {
-                switch (value) {
-                    case TargetEffect.Normal:
-                        Target.style.color = Color.white;
-                        break;
-                    case TargetEffect.Enemy:
-                        Target.style.color = Color.red;
-                        break;
-                    case TargetEffect.Thing:
-                        Target.style.color = Color.yellow;
-                        break;
-                    default:
-                        Exceptions.Internal.NotSupported( $"Value {value} is supported" );
-                        break;
-                }
-            }
-        }
-        public event EventCallback<NavigationCancelEvent> OnCancelEvent {
-            add => Widget.RegisterCallback( value );
-            remove => Widget.UnregisterCallback( value );
+        public Widget Widget { get; }
+        public VisualElement Target { get; }
+        public bool IsCursorVisible {
+            get => UnityEngine.Cursor.lockState == CursorLockMode.None;
+            set => UnityEngine.Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
         public GameWidgetView() {
@@ -62,10 +43,5 @@ namespace Project.UI.GameScreen {
             base.Dispose();
         }
 
-    }
-    public enum TargetEffect {
-        Normal,
-        Enemy,
-        Thing,
     }
 }

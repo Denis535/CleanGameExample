@@ -11,9 +11,9 @@ namespace Project.UI.MainScreen {
     public class MenuWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private VisualElement Content { get; }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public VisualElement Content { get; }
 
         public MenuWidgetView() {
             Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(
@@ -87,23 +87,10 @@ namespace Project.UI.MainScreen {
     public class MenuWidgetView_Menu : UIViewBase2 {
 
         protected override VisualElement VisualElement => Scope;
-        private ColumnScope Scope { get; }
-        private Button StartGame { get; }
-        private Button Settings { get; }
-        private Button Quit { get; }
-
-        public event EventCallback<ClickEvent> OnStartGame {
-            add => StartGame.RegisterCallback( value );
-            remove => StartGame.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnSettings {
-            add => Settings.RegisterCallback( value );
-            remove => Settings.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnQuit {
-            add => Quit.RegisterCallback( value );
-            remove => Quit.UnregisterCallback( value );
-        }
+        public ColumnScope Scope { get; }
+        public Button StartGame { get; }
+        public Button Settings { get; }
+        public Button Quit { get; }
 
         public MenuWidgetView_Menu() {
             Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
@@ -120,23 +107,10 @@ namespace Project.UI.MainScreen {
     public class MenuWidgetView_StartGame : UIViewBase2 {
 
         protected override VisualElement VisualElement => Scope;
-        private ColumnScope Scope { get; }
-        private Button NewGame { get; }
-        private Button Continue { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnNewGame {
-            add => NewGame.RegisterCallback( value );
-            remove => NewGame.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnContinue {
-            add => Continue.RegisterCallback( value );
-            remove => Continue.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBack {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public ColumnScope Scope { get; }
+        public Button NewGame { get; }
+        public Button Continue { get; }
+        public Button Back { get; }
 
         public MenuWidgetView_StartGame() {
             Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
@@ -153,28 +127,11 @@ namespace Project.UI.MainScreen {
     public class MenuWidgetView_SelectLevel : UIViewBase2 {
 
         protected override VisualElement VisualElement => Scope;
-        private ColumnScope Scope { get; }
-        private Button Level1 { get; }
-        private Button Level2 { get; }
-        private Button Level3 { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnLevel1 {
-            add => Level1.RegisterCallback( value );
-            remove => Level1.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnLevel2 {
-            add => Level2.RegisterCallback( value );
-            remove => Level2.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnLevel3 {
-            add => Level3.RegisterCallback( value );
-            remove => Level3.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBack {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public ColumnScope Scope { get; }
+        public Button Level1 { get; }
+        public Button Level2 { get; }
+        public Button Level3 { get; }
+        public Button Back { get; }
 
         public MenuWidgetView_SelectLevel() {
             Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
@@ -194,33 +151,12 @@ namespace Project.UI.MainScreen {
     public class MenuWidgetView_SelectCharacter : UIViewBase2 {
 
         protected override VisualElement VisualElement => Scope;
-        private ColumnScope Scope { get; }
-        private Button Gray { get; }
-        private Button Red { get; }
-        private Button Green { get; }
-        private Button Blue { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnGray {
-            add => Gray.RegisterCallback( value );
-            remove => Gray.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnRed {
-            add => Red.RegisterCallback( value );
-            remove => Red.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnGreen {
-            add => Green.RegisterCallback( value );
-            remove => Green.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBlue {
-            add => Blue.RegisterCallback( value );
-            remove => Blue.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBack {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public ColumnScope Scope { get; }
+        public Button Gray { get; }
+        public Button Red { get; }
+        public Button Green { get; }
+        public Button Blue { get; }
+        public Button Back { get; }
 
         public MenuWidgetView_SelectCharacter() {
             Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(

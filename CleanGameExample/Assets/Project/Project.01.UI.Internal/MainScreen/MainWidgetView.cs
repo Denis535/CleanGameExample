@@ -10,7 +10,7 @@ namespace Project.UI.MainScreen {
     public class MainWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
+        public Widget Widget { get; }
 
         public MainWidgetView() {
             Widget = VisualElementFactory.Widget( "main-widget" ).Classes( "main-widget-background" ).UserData( this );

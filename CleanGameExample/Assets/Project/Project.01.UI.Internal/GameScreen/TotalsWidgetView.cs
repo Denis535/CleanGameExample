@@ -19,20 +19,11 @@ namespace Project.UI.GameScreen {
     public class TotalsWidgetView_LevelCompleted : TotalsWidgetView {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private Label Message { get; }
-        private Button Continue { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnContinueEvent {
-            add => Continue.RegisterCallback( value );
-            remove => Continue.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBackEvent {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public Label Message { get; }
+        public Button Continue { get; }
+        public Button Back { get; }
 
         public TotalsWidgetView_LevelCompleted() {
             Widget = VisualElementFactory.SmallWidget( "level-completed-widget" ).UserData( this ).Children(
@@ -64,15 +55,10 @@ namespace Project.UI.GameScreen {
     public class TotalsWidgetView_GameCompleted : TotalsWidgetView {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private Label Message { get; }
-        private Button Okey { get; }
-
-        public event EventCallback<ClickEvent> OnOkeyEvent {
-            add => Okey.RegisterCallback( value );
-            remove => Okey.UnregisterCallback( value );
-        }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public Label Message { get; }
+        public Button Okey { get; }
 
         public TotalsWidgetView_GameCompleted() {
             Widget = VisualElementFactory.SmallWidget( "game-completed-widget" ).UserData( this ).Children(
@@ -102,20 +88,11 @@ namespace Project.UI.GameScreen {
     public class TotalsWidgetView_LevelFailed : TotalsWidgetView {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private Label Message { get; }
-        private Button Retry { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnRetryEvent {
-            add => Retry.RegisterCallback( value );
-            remove => Retry.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBackEvent {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public Label Message { get; }
+        public Button Retry { get; }
+        public Button Back { get; }
 
         public TotalsWidgetView_LevelFailed() {
             Widget = VisualElementFactory.SmallWidget( "level-failed-widget" ).UserData( this ).Children(

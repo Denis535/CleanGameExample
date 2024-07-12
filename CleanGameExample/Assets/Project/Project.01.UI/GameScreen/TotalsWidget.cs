@@ -7,6 +7,7 @@ namespace Project.UI.GameScreen {
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class TotalsWidget : UIWidgetBase2<TotalsWidgetView> {
 
@@ -44,34 +45,34 @@ namespace Project.UI.GameScreen {
             if (widget.Game.Player.State is PlayerState.Winner) {
                 if (!widget.Game.Info.Level.IsLast()) {
                     var view = new TotalsWidgetView_LevelCompleted();
-                    view.OnContinueEvent += evt => {
+                    view.Continue.RegisterCallback<ClickEvent>( evt => {
                         var gameInfo = widget.Game.Info;
                         gameInfo = gameInfo with { Level = gameInfo.Level.GetNext() };
                         var playerInfo = widget.Game.Player.Info;
                         widget.Router.ReloadGameScene( gameInfo, playerInfo );
-                    };
-                    view.OnBackEvent += evt => {
+                    } );
+                    view.Back.RegisterCallback<ClickEvent>( evt => {
                         widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
-                    };
+                    } );
                     return view;
                 } else {
                     var view = new TotalsWidgetView_GameCompleted();
-                    view.OnOkeyEvent += evt => {
+                    view.Okey.RegisterCallback<ClickEvent>( evt => {
                         widget.Router.UnloadGameScene();
-                    };
+                    } );
                     return view;
                 }
             }
             if (widget.Game.Player.State is PlayerState.Loser) {
                 var view = new TotalsWidgetView_LevelFailed();
-                view.OnRetryEvent += evt => {
+                view.Retry.RegisterCallback<ClickEvent>( evt => {
                     var gameInfo = widget.Game.Info;
                     var playerInfo = widget.Game.Player.Info;
                     widget.Router.ReloadGameScene( gameInfo, playerInfo );
-                };
-                view.OnBackEvent += evt => {
+                } );
+                view.Back.RegisterCallback<ClickEvent>( evt => {
                     widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
-                };
+                } );
                 return view;
             }
             throw Exceptions.Internal.NotSupported( $"PlayerState {widget.Game.Player.State} is not supported" );

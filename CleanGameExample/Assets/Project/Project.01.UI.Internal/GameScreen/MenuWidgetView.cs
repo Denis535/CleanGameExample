@@ -10,24 +10,11 @@ namespace Project.UI.GameScreen {
     public class MenuWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private Button Resume { get; }
-        private Button Settings { get; }
-        private Button Back { get; }
-
-        public event EventCallback<ClickEvent> OnResumeEvent {
-            add => Resume.RegisterCallback( value );
-            remove => Resume.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnSettingsEvent {
-            add => Settings.RegisterCallback( value );
-            remove => Settings.UnregisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBackEvent {
-            add => Back.RegisterCallback( value );
-            remove => Back.UnregisterCallback( value );
-        }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public Button Resume { get; }
+        public Button Settings { get; }
+        public Button Back { get; }
 
         public MenuWidgetView() {
             Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(

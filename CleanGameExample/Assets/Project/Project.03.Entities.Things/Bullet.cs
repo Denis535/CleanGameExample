@@ -21,7 +21,12 @@ namespace Project.Entities.Things {
 
             public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IWeapon weapon, ICharacter character, PlayerBase? player) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
-                result.Awake( force, weapon, character, player );
+                result.Force = force;
+                result.Weapon = weapon;
+                result.Character = character;
+                result.Player = player;
+                result.Rigidbody.AddForce( result.transform.forward * force, ForceMode.Impulse );
+                GameObject.Destroy( result.gameObject, 10 );
                 return result;
             }
 
@@ -37,14 +42,6 @@ namespace Project.Entities.Things {
 
         protected void Awake() {
             Rigidbody = gameObject.RequireComponent<Rigidbody>();
-        }
-        protected void Awake(float force, IWeapon weapon, ICharacter character, PlayerBase? player) {
-            Force = force;
-            Weapon = weapon;
-            Character = character;
-            Player = player;
-            Rigidbody.AddForce( transform.forward * force, ForceMode.Impulse );
-            GameObject.Destroy( gameObject, 10 );
         }
         protected void OnDestroy() {
         }

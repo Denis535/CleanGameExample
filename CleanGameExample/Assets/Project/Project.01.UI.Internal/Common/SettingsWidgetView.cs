@@ -11,53 +11,14 @@ namespace Project.UI.Common {
     public class SettingsWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private Label Title { get; }
-        private TabView TabView { get; }
-        private Tab ProfileSettingsTab { get; }
-        private Tab VideoSettingsTab { get; }
-        private Tab AudioSettingsTab { get; }
-        private Button Okey { get; }
-        private Button Back { get; }
-
-        public ProfileSettingsWidgetView? ProfileSettingsEvent {
-            get => ProfileSettingsTab.GetViews<ProfileSettingsWidgetView>().FirstOrDefault();
-            set {
-                if (value != null) {
-                    ProfileSettingsTab.AddView( value );
-                } else {
-                    ProfileSettingsTab.Clear();
-                }
-            }
-        }
-        public VideoSettingsWidgetView? VideoSettingsEvent {
-            get => VideoSettingsTab.GetViews<VideoSettingsWidgetView>().FirstOrDefault();
-            set {
-                if (value != null) {
-                    VideoSettingsTab.AddView( value );
-                } else {
-                    VideoSettingsTab.Clear();
-                }
-            }
-        }
-        public AudioSettingsWidgetView? AudioSettingsEvent {
-            get => AudioSettingsTab.GetViews<AudioSettingsWidgetView>().FirstOrDefault();
-            set {
-                if (value != null) {
-                    AudioSettingsTab.AddView( value );
-                } else {
-                    AudioSettingsTab.Clear();
-                }
-            }
-        }
-        public event EventCallback<ClickEvent> OnOkeyEvent {
-            add => Okey.RegisterCallback( value );
-            remove => Okey.RegisterCallback( value );
-        }
-        public event EventCallback<ClickEvent> OnBackEvent {
-            add => Back.RegisterCallback( value );
-            remove => Back.RegisterCallback( value );
-        }
+        public Widget Widget { get; }
+        public Label Title { get; }
+        public TabView TabView { get; }
+        public Tab ProfileSettingsTab { get; }
+        public Tab VideoSettingsTab { get; }
+        public Tab AudioSettingsTab { get; }
+        public Button Okey { get; }
+        public Button Back { get; }
 
         public SettingsWidgetView() {
             Widget = VisualElementFactory.MediumWidget( "settings-widget" ).UserData( this ).Children(

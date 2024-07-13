@@ -6,6 +6,7 @@ namespace Project.UI.Common {
     using Project.App;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class AudioSettingsWidget : UIWidgetBase2<AudioSettingsWidgetView> {
 
@@ -27,10 +28,10 @@ namespace Project.UI.Common {
         protected override void OnDeactivate(object? argument) {
             HideSelf();
             if (argument is DeactivateReason.Submit) {
-                AudioSettings.MasterVolume = View.MasterVolume;
-                AudioSettings.MusicVolume = View.MusicVolume;
-                AudioSettings.SfxVolume = View.SfxVolume;
-                AudioSettings.GameVolume = View.GameVolume;
+                AudioSettings.MasterVolume = View.MasterVolume.value;
+                AudioSettings.MusicVolume = View.MusicVolume.value;
+                AudioSettings.SfxVolume = View.SfxVolume.value;
+                AudioSettings.GameVolume = View.GameVolume.value;
                 AudioSettings.Save();
             } else {
                 AudioSettings.Load();
@@ -48,28 +49,27 @@ namespace Project.UI.Common {
 
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget) {
-            var view = new AudioSettingsWidgetView() {
-                MasterVolume = widget.AudioSettings.MasterVolume,
-                MasterVolumeMinMax = (0, 1),
-                MusicVolume = widget.AudioSettings.MusicVolume,
-                MusicVolumeMinMax = (0, 1),
-                SfxVolume = widget.AudioSettings.SfxVolume,
-                SfxVolumeMinMax = (0, 1),
-                GameVolume = widget.AudioSettings.GameVolume,
-                GameVolumeMinMax = (0, 1),
-            };
-            view.OnMasterVolumeEvent += evt => {
+            var view = new AudioSettingsWidgetView();
+            view.MasterVolume.value = widget.AudioSettings.MasterVolume;
+            view.MasterVolume.SetMinMax( 0, 1 );
+            view.MusicVolume.value = widget.AudioSettings.MusicVolume;
+            view.MusicVolume.SetMinMax( 0, 1 );
+            view.SfxVolume.value = widget.AudioSettings.SfxVolume;
+            view.SfxVolume.SetMinMax( 0, 1 );
+            view.GameVolume.value = widget.AudioSettings.GameVolume;
+            view.GameVolume.SetMinMax( 0, 1 );
+            view.MasterVolume.RegisterCallback<ChangeEvent<float>>( evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;
-            };
-            view.OnMusicVolumeEvent += evt => {
+            } );
+            view.MusicVolume.RegisterCallback<ChangeEvent<float>>( evt => {
                 widget.AudioSettings.MusicVolume = evt.newValue;
-            };
-            view.OnSfxVolumeEvent += evt => {
+            } );
+            view.SfxVolume.RegisterCallback<ChangeEvent<float>>( evt => {
                 widget.AudioSettings.SfxVolume = evt.newValue;
-            };
-            view.OnGameVolumeEvent += evt => {
+            } );
+            view.GameVolume.RegisterCallback<ChangeEvent<float>>( evt => {
                 widget.AudioSettings.GameVolume = evt.newValue;
-            };
+            } );
             return view;
         }
 

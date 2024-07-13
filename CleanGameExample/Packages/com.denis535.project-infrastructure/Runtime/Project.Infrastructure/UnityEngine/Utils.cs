@@ -80,6 +80,9 @@ namespace UnityEngine {
         public static (T Min, T Max) GetMinMax<T>(this BaseSlider<T> element) where T : IComparable<T> {
             return (element.lowValue, element.highValue);
         }
+        public static void SetMinMax<T>(this BaseSlider<T> element, T min, T max) where T : IComparable<T> {
+            (element.lowValue, element.highValue) = (min, max);
+        }
         public static void SetMinMax<T>(this BaseSlider<T> element, (T Min, T Max) value) where T : IComparable<T> {
             (element.lowValue, element.highValue) = value;
         }
@@ -88,8 +91,8 @@ namespace UnityEngine {
             // todo: how to handle any event?
             //element.RegisterCallback<EventBase>( callback, useTrickleDown );
             element.RegisterCallback<AttachToPanelEvent>( callback, useTrickleDown );
-            element.RegisterCallback<ChangeEvent<object>>( callback, useTrickleDown );
-            element.RegisterCallback<ChangeEvent<string>>( callback, useTrickleDown );
+            element.RegisterCallback<ChangeEvent<object?>>( callback, useTrickleDown );
+            element.RegisterCallback<ChangeEvent<string?>>( callback, useTrickleDown );
             element.RegisterCallback<ChangeEvent<int>>( callback, useTrickleDown );
             element.RegisterCallback<ChangeEvent<float>>( callback, useTrickleDown );
             element.RegisterCallback<ChangeEvent<bool>>( callback, useTrickleDown );

@@ -27,7 +27,7 @@ namespace Project.UI.Common {
         protected override void OnDeactivate(object? argument) {
             HideSelf();
             if (argument is DeactivateReason.Submit) {
-                ProfileSettings.Name = View.Name;
+                ProfileSettings.Name = View.Name.value;
                 ProfileSettings.Save();
             } else {
                 ProfileSettings.Load();
@@ -45,9 +45,8 @@ namespace Project.UI.Common {
 
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget) {
-            var view = new ProfileSettingsWidgetView( widget.ProfileSettings.IsNameValid ) {
-                Name = widget.ProfileSettings.Name
-            };
+            var view = new ProfileSettingsWidgetView( widget.ProfileSettings.IsNameValid );
+            view.Name.value = widget.ProfileSettings.Name;
             return view;
         }
 

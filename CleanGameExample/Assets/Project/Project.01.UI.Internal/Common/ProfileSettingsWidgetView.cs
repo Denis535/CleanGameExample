@@ -10,22 +10,17 @@ namespace Project.UI.Common {
     public class ProfileSettingsWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private TextField Name_ { get; }
-
-        public string Name {
-            get => Name_.value;
-            init => Name_.value = value;
-        }
+        public Widget Widget { get; }
+        public TextField Name { get; }
 
         public ProfileSettingsWidgetView(Func<string?, bool> nameValidator) {
             Widget = VisualElementFactory.Widget( "profile-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
                 VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
-                    Name_ = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" )
+                    Name = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" )
                 )
             );
-            Name_.OnValidate( evt => {
-                Name_.SetValid( nameValidator( Name_.value ) );
+            Name.OnValidate( evt => {
+                Name.SetValid( nameValidator( Name.value ) );
             } );
         }
         public override void Dispose() {

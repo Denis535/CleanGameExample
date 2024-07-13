@@ -5,6 +5,7 @@ namespace Project.UI.Common {
     using Project.App;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class VideoSettingsWidget : UIWidgetBase2<VideoSettingsWidgetView> {
 
@@ -26,9 +27,9 @@ namespace Project.UI.Common {
         protected override void OnDeactivate(object? argument) {
             HideSelf();
             if (argument is DeactivateReason.Submit) {
-                VideoSettings.IsFullScreen = View.IsFullScreen;
-                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution!;
-                VideoSettings.IsVSync = View.IsVSync;
+                VideoSettings.IsFullScreen = View.IsFullScreen.value;
+                VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.value!;
+                VideoSettings.IsVSync = View.IsVSync.value;
                 VideoSettings.Save();
             } else {
                 VideoSettings.Load();
@@ -46,21 +47,20 @@ namespace Project.UI.Common {
 
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget) {
-            var view = new VideoSettingsWidgetView() {
-                IsFullScreen = widget.VideoSettings.IsFullScreen,
-                ScreenResolution = widget.VideoSettings.ScreenResolution,
-                ScreenResolutionChoices = widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList(),
-                IsVSync = widget.VideoSettings.IsVSync
-            };
-            view.OnIsFullScreenEvent += evt => {
+            var view = new VideoSettingsWidgetView();
+            view.IsFullScreen.value = widget.VideoSettings.IsFullScreen;
+            view.ScreenResolution.value = widget.VideoSettings.ScreenResolution;
+            view.ScreenResolution.choices = widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList();
+            view.IsVSync.value = widget.VideoSettings.IsVSync;
+            view.IsFullScreen.RegisterCallback<ChangeEvent<bool>>( evt => {
                 widget.VideoSettings.IsFullScreen = evt.newValue;
-            };
-            view.OnScreenResolutionEvent += evt => {
+            } );
+            view.ScreenResolution.RegisterCallback<ChangeEvent<object?>>( evt => {
                 widget.VideoSettings.ScreenResolution = (Resolution) evt.newValue!;
-            };
-            view.OnIsVSyncEvent += evt => {
+            } );
+            view.IsVSync.RegisterCallback<ChangeEvent<bool>>( evt => {
                 widget.VideoSettings.IsVSync = evt.newValue;
-            };
+            } );
             return view;
         }
 

@@ -11,8 +11,8 @@ namespace Project.UI.Common {
     public class UnloadingWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private VisualElement Background { get; }
+        public Widget Widget { get; }
+        public VisualElement Background { get; }
 
         public UnloadingWidgetView() {
             Widget = VisualElementFactory.Widget( "unloading-widget" ).UserData( this ).Children(

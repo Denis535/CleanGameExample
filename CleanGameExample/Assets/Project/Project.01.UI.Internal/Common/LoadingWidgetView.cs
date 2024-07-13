@@ -12,9 +12,9 @@ namespace Project.UI.Common {
     public class LoadingWidgetView : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        private Widget Widget { get; }
-        private VisualElement Background { get; }
-        private Label Loading { get; }
+        public Widget Widget { get; }
+        public VisualElement Background { get; }
+        public Label Loading { get; }
 
         public LoadingWidgetView() {
             Widget = VisualElementFactory.Widget( "loading-widget" ).UserData( this ).Children(

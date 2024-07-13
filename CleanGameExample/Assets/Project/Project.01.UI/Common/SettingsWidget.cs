@@ -38,30 +38,30 @@ namespace Project.UI.Common {
 
         protected override void ShowView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettings) {
-                View.ProfileSettingsEvent = profileSettings;
+                View.ProfileSettingsTab.AddView( profileSettings );
                 return;
             }
             if (view is VideoSettingsWidgetView videoSettings) {
-                View.VideoSettingsEvent = videoSettings;
+                View.VideoSettingsTab.AddView( videoSettings );
                 return;
             }
             if (view is AudioSettingsWidgetView audioSettings) {
-                View.AudioSettingsEvent = audioSettings;
+                View.AudioSettingsTab.AddView( audioSettings );
                 return;
             }
             base.ShowView( view );
         }
         protected override void HideView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettings) {
-                View.ProfileSettingsEvent = null;
+                View.ProfileSettingsTab.Clear();
                 return;
             }
             if (view is VideoSettingsWidgetView videoSettings) {
-                View.VideoSettingsEvent = null;
+                View.VideoSettingsTab.Clear();
                 return;
             }
             if (view is AudioSettingsWidgetView audioSettings) {
-                View.AudioSettingsEvent = null;
+                View.AudioSettingsTab.Clear();
                 return;
             }
             base.HideView( view );
@@ -70,14 +70,14 @@ namespace Project.UI.Common {
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();
-            view.OnOkeyEvent += evt => {
+            view.Okey.RegisterCallback<ClickEvent>( evt => {
                 if (evt.GetTarget().IsValidSelf()) {
                     widget.RemoveSelf( DeactivateReason.Submit );
                 }
-            };
-            view.OnBackEvent += evt => {
+            } );
+            view.Back.RegisterCallback<ClickEvent>( evt => {
                 widget.RemoveSelf( DeactivateReason.Cancel );
-            };
+            } );
             return view;
         }
 

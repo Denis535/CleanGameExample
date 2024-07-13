@@ -15,35 +15,6 @@ namespace Project.UI.Common {
         public PopupField<object?> ScreenResolution { get; }
         public Toggle IsVSync { get; }
 
-        //public bool IsFullScreen {
-        //    get => IsFullScreen_.value;
-        //    init => IsFullScreen_.value = value;
-        //}
-        //public object? ScreenResolution {
-        //    get => ScreenResolution_.value;
-        //    init => ScreenResolution_.value = value;
-        //}
-        //public List<object?> ScreenResolutionChoices {
-        //    get => ScreenResolution_.choices;
-        //    init => ScreenResolution_.choices = value;
-        //}
-        //public bool IsVSync {
-        //    get => IsVSync_.value;
-        //    init => IsVSync_.value = value;
-        //}
-        //public event EventCallback<ChangeEvent<bool>> OnIsFullScreenEvent {
-        //    add => IsFullScreen_.RegisterCallback( value );
-        //    remove => IsFullScreen_.UnregisterCallback( value );
-        //}
-        //public event EventCallback<ChangeEvent<object?>> OnScreenResolutionEvent {
-        //    add => ScreenResolution_.RegisterCallback( value );
-        //    remove => ScreenResolution_.UnregisterCallback( value );
-        //}
-        //public event EventCallback<ChangeEvent<bool>> OnIsVSyncEvent {
-        //    add => IsVSync_.RegisterCallback( value );
-        //    remove => IsVSync_.UnregisterCallback( value );
-        //}
-
         public VideoSettingsWidgetView() {
             Widget = VisualElementFactory.Widget( "video-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
                 VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(

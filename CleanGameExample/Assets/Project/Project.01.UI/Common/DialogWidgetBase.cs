@@ -5,8 +5,24 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public abstract class DialogWidgetBase : UIWidgetBase<DialogWidgetViewBase> {
+
+        public string? Title {
+            get => View.Title.text;
+            set {
+                View.Title.text = value;
+                View.Header.SetDisplayed( value != null );
+            }
+        }
+        public string? Message {
+            get => View.Message.text;
+            set {
+                View.Message.text = value;
+                View.Content.SetDisplayed( value != null );
+            }
+        }
 
         public DialogWidgetBase() {
         }
@@ -31,17 +47,27 @@ namespace Project.UI.Common {
         }
 
         public DialogWidgetBase OnSubmit(string text, Action? callback) {
-            View.OnSubmit( text, () => {
-                callback?.Invoke();
-                if (State is UIWidgetState.Active) RemoveSelf();
+            var button = VisualElementFactory.Submit( text );
+            button.RegisterCallback<ClickEvent>( evt => {
+                if (button.IsValidSelf()) {
+                    callback?.Invoke();
+                    if (State is UIWidgetState.Active) RemoveSelf();
+                }
             } );
+            View.Footer.Add( button );
+            View.Footer.SetDisplayed( true );
             return this;
         }
         public DialogWidgetBase OnCancel(string text, Action? callback) {
-            View.OnCancel( text, () => {
-                callback?.Invoke();
-                if (State is UIWidgetState.Active) RemoveSelf();
+            var button = VisualElementFactory.Cancel( text );
+            button.RegisterCallback<ClickEvent>( evt => {
+                if (button.IsValidSelf()) {
+                    callback?.Invoke();
+                    if (State is UIWidgetState.Active) RemoveSelf();
+                }
             } );
+            View.Footer.Add( button );
+            View.Footer.SetDisplayed( true );
             return this;
         }
 
@@ -50,8 +76,8 @@ namespace Project.UI.Common {
 
         public DialogWidget(string? title, string? message) {
             View = new DialogWidgetView();
-            View.Title = title;
-            View.Message = message;
+            Title = title;
+            Message = message;
         }
         public override void Dispose() {
             View.Dispose();
@@ -70,8 +96,8 @@ namespace Project.UI.Common {
 
         public InfoDialogWidget(string? title, string? message) {
             View = new InfoDialogWidgetView();
-            View.Title = title;
-            View.Message = message;
+            Title = title;
+            Message = message;
         }
         public override void Dispose() {
             View.Dispose();
@@ -90,8 +116,8 @@ namespace Project.UI.Common {
 
         public WarningDialogWidget(string? title, string? message) {
             View = new WarningDialogWidgetView();
-            View.Title = title;
-            View.Message = message;
+            Title = title;
+            Message = message;
         }
         public override void Dispose() {
             View.Dispose();
@@ -110,8 +136,8 @@ namespace Project.UI.Common {
 
         public ErrorDialogWidget(string? title, string? message) {
             View = new ErrorDialogWidgetView();
-            View.Title = title;
-            View.Message = message;
+            Title = title;
+            Message = message;
         }
         public override void Dispose() {
             View.Dispose();

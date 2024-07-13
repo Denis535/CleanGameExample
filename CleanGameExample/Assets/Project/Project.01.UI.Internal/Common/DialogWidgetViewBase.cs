@@ -11,54 +11,18 @@ namespace Project.UI.Common {
     public abstract class DialogWidgetViewBase : UIViewBase2 {
 
         protected override VisualElement VisualElement => Widget;
-        protected Widget Widget { get; init; } = default!;
-        protected Card Card { get; init; } = default!;
-        protected Header Header { get; init; } = default!;
-        protected Content Content { get; init; } = default!;
-        protected Footer Footer { get; init; } = default!;
-        protected Label Title_ { get; init; } = default!;
-        protected Label Message_ { get; init; } = default!;
-
-        public string? Title {
-            get => Title_.text;
-            set {
-                Title_.text = value;
-                Header.SetDisplayed( value != null );
-            }
-        }
-        public string? Message {
-            get => Message_.text;
-            set {
-                Message_.text = value;
-                Content.SetDisplayed( value != null );
-            }
-        }
+        public Widget Widget { get; protected init; } = default!;
+        public Card Card { get; protected init; } = default!;
+        public Header Header { get; protected init; } = default!;
+        public Content Content { get; protected init; } = default!;
+        public Footer Footer { get; protected init; } = default!;
+        public Label Title { get; protected init; } = default!;
+        public Label Message { get; protected init; } = default!;
 
         public DialogWidgetViewBase() {
         }
         public override void Dispose() {
             base.Dispose();
-        }
-
-        public void OnSubmit(string text, Action? callback) {
-            var button = VisualElementFactory.Submit( text );
-            button.RegisterCallback<ClickEvent>( evt => {
-                if (button.IsValidSelf()) {
-                    callback?.Invoke();
-                }
-            } );
-            Footer.Add( button );
-            Footer.SetDisplayed( true );
-        }
-        public void OnCancel(string text, Action? callback) {
-            var button = VisualElementFactory.Cancel( text );
-            button.RegisterCallback<ClickEvent>( evt => {
-                if (button.IsValidSelf()) {
-                    callback?.Invoke();
-                }
-            } );
-            Footer.Add( button );
-            Footer.SetDisplayed( true );
         }
 
         // Helpers
@@ -85,11 +49,11 @@ namespace Project.UI.Common {
             Widget = VisualElementFactory.DialogWidget().UserData( this ).Children(
                 VisualElementFactory.DialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
-                        Title_ = VisualElementFactory.Label( null )
+                        Title = VisualElementFactory.Label( null )
                     ),
                     Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
-                            Message_ = VisualElementFactory.Label( null )
+                            Message = VisualElementFactory.Label( null )
                         )
                     ),
                     Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
@@ -108,11 +72,11 @@ namespace Project.UI.Common {
             Widget = VisualElementFactory.InfoDialogWidget().UserData( this ).Children(
                 VisualElementFactory.InfoDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
-                        Title_ = VisualElementFactory.Label( null )
+                        Title = VisualElementFactory.Label( null )
                     ),
                     Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
-                            Message_ = VisualElementFactory.Label( null )
+                            Message = VisualElementFactory.Label( null )
                         )
                     ),
                     Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
@@ -131,11 +95,11 @@ namespace Project.UI.Common {
             Widget = VisualElementFactory.WarningDialogWidget().UserData( this ).Children(
                 VisualElementFactory.WarningDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
-                        Title_ = VisualElementFactory.Label( null )
+                        Title = VisualElementFactory.Label( null )
                     ),
                     Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
-                            Message_ = VisualElementFactory.Label( null )
+                            Message = VisualElementFactory.Label( null )
                         )
                     ),
                     Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )
@@ -154,11 +118,11 @@ namespace Project.UI.Common {
             Widget = VisualElementFactory.ErrorDialogWidget().UserData( this ).Children(
                 VisualElementFactory.ErrorDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
-                        Title_ = VisualElementFactory.Label( null )
+                        Title = VisualElementFactory.Label( null )
                     ),
                     Content = VisualElementFactory.Content().Pipe( i => i.SetDisplayed( false ) ).Children(
                         VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "grow-1", "justify-content-center", "align-items-center" ).Children(
-                            Message_ = VisualElementFactory.Label( null )
+                            Message = VisualElementFactory.Label( null )
                         )
                     ),
                     Footer = VisualElementFactory.Footer().Pipe( i => i.SetDisplayed( false ) )

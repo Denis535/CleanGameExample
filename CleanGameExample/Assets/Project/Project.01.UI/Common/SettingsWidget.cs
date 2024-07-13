@@ -38,15 +38,15 @@ namespace Project.UI.Common {
 
         protected override void ShowView(UIViewBase view) {
             if (view is ProfileSettingsWidgetView profileSettings) {
-                View.ProfileSettingsTab.AddView( profileSettings );
+                View.ProfileSettingsTab.Add( profileSettings );
                 return;
             }
             if (view is VideoSettingsWidgetView videoSettings) {
-                View.VideoSettingsTab.AddView( videoSettings );
+                View.VideoSettingsTab.Add( videoSettings );
                 return;
             }
             if (view is AudioSettingsWidgetView audioSettings) {
-                View.AudioSettingsTab.AddView( audioSettings );
+                View.AudioSettingsTab.Add( audioSettings );
                 return;
             }
             base.ShowView( view );

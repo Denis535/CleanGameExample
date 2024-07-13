@@ -25,14 +25,14 @@ namespace Project.UI.MainScreen {
 
         protected override async void OnActivate(object? argument) {
             ShowSelf();
-            Children.OfType<MenuWidget>().First().View.SetDisplayed( false );
+            Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( false );
             try {
                 await Application.RunAsync( DisposeCancellationToken );
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );
             } finally {
-                Children.OfType<MenuWidget>().First().View.SetDisplayed( true );
+                Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
             }
         }
         protected override void OnDeactivate(object? argument) {

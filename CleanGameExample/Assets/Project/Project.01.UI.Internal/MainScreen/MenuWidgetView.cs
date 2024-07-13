@@ -26,19 +26,19 @@ namespace Project.UI.MainScreen {
             );
         }
         public override void Dispose() {
-            Content.GetViews().DisposeAll();
+            Content.Children().ToViews().DisposeAll();
             base.Dispose();
         }
 
         public void AddView(UIViewBase2 view) {
-            Content.AddView( view );
-            Recalculate( Content.GetViews().ToArray() );
-            Title.text = GetTitle( Content.GetViews().Last() );
+            Content.Add( view );
+            Recalculate( Content.Children().ToViews().ToArray() );
+            Title.text = GetTitle( Content.Children().ToViews().Last() );
         }
         public void RemoveView(UIViewBase2 view) {
-            Content.RemoveView( view );
-            Recalculate( Content.GetViews().ToArray() );
-            Title.text = GetTitle( Content.GetViews().Last() );
+            Content.Remove( view );
+            Recalculate( Content.Children().ToViews().ToArray() );
+            Title.text = GetTitle( Content.Children().ToViews().Last() );
         }
 
         // Helpers

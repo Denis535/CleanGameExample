@@ -48,10 +48,9 @@ namespace Project.UI.Common {
         // Helpers
         private static VideoSettingsWidgetView CreateView(VideoSettingsWidget widget) {
             var view = new VideoSettingsWidgetView();
-            view.IsFullScreen.value = widget.VideoSettings.IsFullScreen;
-            view.ScreenResolution.value = widget.VideoSettings.ScreenResolution;
-            view.ScreenResolution.choices = widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList();
-            view.IsVSync.value = widget.VideoSettings.IsVSync;
+            view.IsFullScreen.SetValue( widget.VideoSettings.IsFullScreen );
+            view.ScreenResolution.SetValue( widget.VideoSettings.ScreenResolution, widget.VideoSettings.ScreenResolutions.Cast<object?>().ToList() );
+            view.IsVSync.SetValue( widget.VideoSettings.IsVSync );
             view.IsFullScreen.RegisterCallback<ChangeEvent<bool>>( evt => {
                 widget.VideoSettings.IsFullScreen = evt.newValue;
             } );

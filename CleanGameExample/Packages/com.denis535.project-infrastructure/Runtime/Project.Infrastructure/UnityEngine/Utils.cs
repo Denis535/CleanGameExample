@@ -77,14 +77,17 @@ namespace UnityEngine {
     }
     public static class VisualElementExtensions {
 
-        public static (T Min, T Max) GetMinMax<T>(this BaseSlider<T> element) where T : IComparable<T> {
-            return (element.lowValue, element.highValue);
+        public static void SetValue<T>(this BaseField<T> element, T value) {
+            element.value = value;
         }
-        public static void SetMinMax<T>(this BaseSlider<T> element, T min, T max) where T : IComparable<T> {
-            (element.lowValue, element.highValue) = (min, max);
+        public static void SetValue<T>(this PopupField<T> element, T value, List<T> choices) {
+            (element.value, element.choices) = (value, choices.ToList());
         }
-        public static void SetMinMax<T>(this BaseSlider<T> element, (T Min, T Max) value) where T : IComparable<T> {
-            (element.lowValue, element.highValue) = value;
+        public static void SetValue<T>(this PopupField<T> element, T value, T[] choices) {
+            (element.value, element.choices) = (value, choices.ToList());
+        }
+        public static void SetValue<T>(this BaseSlider<T> element, T value, T min, T max) where T : IComparable<T> {
+            (element.value, element.lowValue, element.highValue) = (value, min, max);
         }
 
         public static void OnValidate(this VisualElement element, EventCallback<EventBase> callback, TrickleDown useTrickleDown = TrickleDown.NoTrickleDown) {

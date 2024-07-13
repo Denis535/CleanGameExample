@@ -46,7 +46,7 @@ namespace Project.UI.Common {
         // Helpers
         private static ProfileSettingsWidgetView CreateView(ProfileSettingsWidget widget) {
             var view = new ProfileSettingsWidgetView( widget.ProfileSettings.IsNameValid );
-            view.Name.value = widget.ProfileSettings.Name;
+            view.Name.SetValue( widget.ProfileSettings.Name );
             return view;
         }
 

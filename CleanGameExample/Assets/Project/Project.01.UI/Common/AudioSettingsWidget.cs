@@ -50,14 +50,10 @@ namespace Project.UI.Common {
         // Helpers
         private static AudioSettingsWidgetView CreateView(AudioSettingsWidget widget) {
             var view = new AudioSettingsWidgetView();
-            view.MasterVolume.value = widget.AudioSettings.MasterVolume;
-            view.MasterVolume.SetMinMax( 0, 1 );
-            view.MusicVolume.value = widget.AudioSettings.MusicVolume;
-            view.MusicVolume.SetMinMax( 0, 1 );
-            view.SfxVolume.value = widget.AudioSettings.SfxVolume;
-            view.SfxVolume.SetMinMax( 0, 1 );
-            view.GameVolume.value = widget.AudioSettings.GameVolume;
-            view.GameVolume.SetMinMax( 0, 1 );
+            view.MasterVolume.SetValue( widget.AudioSettings.MasterVolume, 0, 1 );
+            view.MusicVolume.SetValue( widget.AudioSettings.MusicVolume, 0, 1 );
+            view.SfxVolume.SetValue( widget.AudioSettings.SfxVolume, 0, 1 );
+            view.GameVolume.SetValue( widget.AudioSettings.GameVolume, 0, 1 );
             view.MasterVolume.RegisterCallback<ChangeEvent<float>>( evt => {
                 widget.AudioSettings.MasterVolume = evt.newValue;
             } );

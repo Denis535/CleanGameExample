@@ -52,20 +52,20 @@ namespace Project.Entities.Characters {
             if (IsAlive) {
                 if (Input != null) {
                     Facade.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
-                    Facade.LookAt( Input.GetBodyTarget() );
-                    Head.LookAt( Input.GetHeadTarget() );
-                    WeaponSlot.LookAt( Input.GetWeaponTarget() );
+                    Facade.BodyAt( Input.GetBodyTarget() );
+                    Facade.HeadAt( Input.GetHeadTarget() );
+                    Facade.AimAt( Input.GetWeaponTarget() );
                     if (Input.IsAimPressed()) {
 
                     }
                     if (Input.IsFirePressed()) {
-                        WeaponSlot.Weapon?.Fire( this, Player );
+                        Facade.Weapon?.Fire( this, Player );
                     }
                     if (Input.IsInteractPressed( out var interactable )) {
                         if (interactable is Weapon weapon) {
-                            WeaponSlot.Weapon = weapon;
+                            Facade.Weapon = weapon;
                         } else {
-                            WeaponSlot.Weapon = null;
+                            Facade.Weapon = null;
                         }
                     }
                 }

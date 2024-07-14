@@ -47,7 +47,7 @@ namespace Project.Entities.Characters {
         }
 
         protected override void Start() {
-            WeaponSlot.Weapon = Gun.Factory.Create( null );
+            Facade.Weapon = Gun.Factory.Create( null );
         }
         protected override void FixedUpdate() {
             Environment = GetEnvironment( transform );
@@ -55,21 +55,23 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             if (IsAlive) {
                 Facade.Move( Vector3.zero, false, false, false );
-                Facade.LookAt( GetBodyTarget( Environment ) );
-                Head.LookAt( GetHeadTarget( Environment ) );
-                WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
+                Facade.BodyAt( GetBodyTarget( Environment ) );
+                Facade.HeadAt( GetHeadTarget( Environment ) );
+                Facade.AimAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    WeaponSlot.Weapon?.Fire( this, null );
+                    Facade.Weapon?.Fire( this, null );
                 }
             }
         }
 
+        // Helpers
         private static Environment_ GetEnvironment(Transform transform) {
             var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
             return new Environment_() {
                 Player = Utils.OverlapSphere( transform.position, 8, mask, QueryTriggerInteraction.Ignore ).Select( i => i.transform.root.GetComponent<PlayerCharacter>() ).FirstOrDefault( i => i != null )
             };
         }
+        // Helpers
         private static Vector3? GetBodyTarget(Environment_ environment) {
             if (environment.Player != null) {
                 if (environment.Player.IsAlive) {

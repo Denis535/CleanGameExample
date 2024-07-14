@@ -57,8 +57,6 @@ namespace Project.Entities.Characters {
         }
 
         protected void Update() {
-        }
-        protected void LateUpdate() {
             if (Target != null) {
                 if (IsTargetChanged) {
                     Angles = new Vector2( DefaultAngles.x, Target.transform.eulerAngles.y );

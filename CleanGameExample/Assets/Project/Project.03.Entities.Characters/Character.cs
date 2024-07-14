@@ -11,19 +11,13 @@ namespace Project.Entities.Characters {
     public abstract partial class Character : MonoBehaviour, ICharacter, IDamageable {
 
         protected GameObjectFacade Facade { get; private set; } = default!;
-        protected Head_ Head { get; private set; } = default!;
-        protected WeaponSlot_ WeaponSlot { get; private set; } = default!;
         public bool IsAlive { get; private set; } = true;
         public event Action<DamageInfo>? OnDamageEvent;
 
         protected virtual void Awake() {
             Facade = new GameObjectFacade( gameObject );
-            Head = new Head_( gameObject.transform.Require( "Head" ).gameObject );
-            WeaponSlot = new WeaponSlot_( gameObject.RequireComponentInChildren<WeaponSlot>() );
         }
         protected virtual void OnDestroy() {
-            WeaponSlot.Dispose();
-            Head.Dispose();
             Facade.Dispose();
         }
 
@@ -34,14 +28,14 @@ namespace Project.Entities.Characters {
         protected virtual void Update() {
         }
 
-        void IDamageable.OnDamage(DamageInfo info) {
+        public virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
-                gameObject.SetLayerRecursively( Layers.Entity );
                 IsAlive = false;
-                Facade.IsRagdoll = true;
-                WeaponSlot.Weapon = null;
+                Facade.Weapon = null;
                 if (info is BulletDamageInfo bulletDamageInfo) {
-                    Facade.Rigidbody.AddForceAtPosition( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point, ForceMode.Impulse );
+                    Facade.Kill( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
+                } else {
+                    Facade.Kill();
                 }
                 OnDamageEvent?.Invoke( info );
             }
@@ -55,89 +49,11 @@ namespace Project.Entities.Characters {
             private Transform Transform => GameObject.transform;
 
             private MoveableBody MoveableBody { get; }
-            internal Rigidbody Rigidbody { get; }
-            public bool IsRagdoll {
-                get => !MoveableBody.enabled;
-                set {
-                    if (value) {
-                        MoveableBody.enabled = false;
-                        Rigidbody.isKinematic = false;
-                    } else {
-                        MoveableBody.enabled = true;
-                        Rigidbody.isKinematic = true;
-                    }
-                }
-            }
-
-            public GameObjectFacade(GameObject gameObject) {
-                GameObject = gameObject;
-                MoveableBody = gameObject.RequireComponent<MoveableBody>();
-                Rigidbody = gameObject.RequireComponent<Rigidbody>();
-            }
-            public override void Dispose() {
-                base.Dispose();
-            }
-
-            public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
-                MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
-            }
-
-            public void LookAt(Vector3? target) {
-                MoveableBody.LookAt( target );
-            }
-
-        }
-        protected class Head_ : Disposable {
-
-            private GameObject GameObject { get; }
-            private Transform Transform => GameObject.transform;
-
-            public Head_(GameObject gameObject) {
-                GameObject = gameObject;
-            }
-            public override void Dispose() {
-                base.Dispose();
-            }
-
-            public bool LookAt(Vector3? target) {
-                var rotation = Transform.localRotation;
-                if (target != null) {
-                    Transform.localRotation = Quaternion.identity;
-                    var direction = Transform.InverseTransformPoint( target.Value );
-                    var rotation2 = GetRotation( direction );
-                    if (rotation2 != null) {
-                        Transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
-                        return true;
-                    } else {
-                        Transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                        return false;
-                    }
-                } else {
-                    Transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                    return false;
-                }
-            }
-
-            // Helpers
-            private static Quaternion? GetRotation(Vector3 direction) {
-                var rotation = Quaternion.LookRotation( direction );
-                var angles = rotation.eulerAngles;
-                if (angles.x > 180) angles.x -= 360;
-                if (angles.y > 180) angles.y -= 360;
-                if (angles.y >= -80 && angles.y <= 80) {
-                    angles.x = Mathf.Clamp( angles.x, -80, 80 );
-                    angles.y = Mathf.Clamp( angles.y, -80, 80 );
-                    return Quaternion.Euler( angles );
-                }
-                return null;
-            }
-
-        }
-        protected class WeaponSlot_ : Disposable {
-
-            private WeaponSlot Slot { get; }
+            private Rigidbody Rigidbody { get; }
+            private GameObject Head { get; }
+            private WeaponSlot WeaponSlot { get; }
             public Weapon? Weapon {
-                get => Slot.transform.childCount > 0 ? Slot.transform.GetChild( 0 ).gameObject.RequireComponent<Weapon>() : null;
+                get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject.RequireComponent<Weapon>() : null;
                 set {
                     var prevWeapon = Weapon;
                     if (prevWeapon != null) {
@@ -147,7 +63,7 @@ namespace Project.Entities.Characters {
                     }
                     if (value != null) {
                         value.gameObject.SetLayerRecursively( Layers.Entity_Exact );
-                        value.transform.SetParent( Slot.transform, true );
+                        value.transform.SetParent( WeaponSlot.transform, true );
                         value.transform.localPosition = Vector3.zero;
                         value.transform.localRotation = Quaternion.identity;
                         value.IsRigidbody = false;
@@ -155,43 +71,89 @@ namespace Project.Entities.Characters {
                 }
             }
 
-            public WeaponSlot_(WeaponSlot slot) {
-                Slot = slot;
+            public GameObjectFacade(GameObject gameObject) {
+                GameObject = gameObject;
+                MoveableBody = gameObject.RequireComponent<MoveableBody>();
+                Rigidbody = gameObject.RequireComponent<Rigidbody>();
+                Head = gameObject.transform.Require( "Head" ).gameObject;
+                WeaponSlot = gameObject.RequireComponentInChildren<WeaponSlot>();
             }
             public override void Dispose() {
                 base.Dispose();
             }
 
-            public bool LookAt(Vector3? target) {
-                var rotation = Slot.transform.localRotation;
-                if (target != null) {
-                    Slot.transform.localRotation = Quaternion.identity;
-                    var direction = Slot.transform.InverseTransformPoint( target.Value );
-                    var rotation2 = GetRotation( direction );
-                    if (rotation2 != null) {
-                        Slot.transform.localRotation = Quaternion.RotateTowards( rotation, rotation2.Value, 2 * 360 * Time.deltaTime );
-                        return true;
-                    } else {
-                        Slot.transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
-                        return false;
+            public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+                MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            }
+
+            public void BodyAt(Vector3? target) {
+                MoveableBody.LookAt( target );
+            }
+
+            public bool HeadAt(Vector3? target) {
+                return LookAt( Head.transform, target );
+                static bool LookAt(Transform transform, Vector3? target) {
+                    var rotation = transform.localRotation;
+                    if (target != null) {
+                        transform.LookAt( target.Value );
+                        if (Check( transform.localRotation )) {
+                            transform.localRotation = Quaternion.RotateTowards( rotation, transform.localRotation, 2 * 360 * Time.deltaTime );
+                            return true;
+                        }
                     }
-                } else {
-                    Slot.transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
+                }
+                static bool Check(Quaternion rotation) {
+                    var angles = rotation.eulerAngles;
+                    if (angles.x > 180) angles.x -= 360;
+                    if (angles.y > 180) angles.y -= 360;
+                    if (angles.x >= -100 && angles.x <= 100) {
+                        if (angles.y >= -80 && angles.y <= 80) {
+                            return true;
+                        }
+                    }
                     return false;
                 }
             }
 
-            // Helpers
-            private static Quaternion? GetRotation(Vector3 direction) {
-                var rotation = Quaternion.LookRotation( direction );
-                var angles = rotation.eulerAngles;
-                if (angles.x > 180) angles.x -= 360;
-                if (angles.y > 180) angles.y -= 360;
-                if (angles.y >= -80 && angles.y <= 80) {
-                    angles.y = Mathf.Clamp( angles.y, -80, 80 );
-                    return Quaternion.Euler( angles );
+            public bool AimAt(Vector3? target) {
+                return LookAt( WeaponSlot.transform, target );
+                static bool LookAt(Transform transform, Vector3? target) {
+                    var rotation = transform.localRotation;
+                    if (target != null) {
+                        transform.LookAt( target.Value );
+                        if (Check( transform.localRotation )) {
+                            transform.localRotation = Quaternion.RotateTowards( rotation, transform.localRotation, 2 * 360 * Time.deltaTime );
+                            return true;
+                        }
+                    }
+                    transform.localRotation = Quaternion.RotateTowards( rotation, Quaternion.identity, 2 * 360 * Time.deltaTime );
+                    return false;
                 }
-                return null;
+                static bool Check(Quaternion rotation) {
+                    var angles = rotation.eulerAngles;
+                    if (angles.x > 180) angles.x -= 360;
+                    if (angles.y > 180) angles.y -= 360;
+                    if (angles.x >= -100 && angles.x <= 100) {
+                        if (angles.y >= -80 && angles.y <= 80) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            public void Kill() {
+                GameObject.SetLayerRecursively( Layers.Entity );
+                MoveableBody.enabled = false;
+                Rigidbody.isKinematic = false;
+            }
+            public void Kill(Vector3 force, Vector3 position) {
+                GameObject.SetLayerRecursively( Layers.Entity );
+                MoveableBody.enabled = false;
+                Rigidbody.isKinematic = false;
+                Rigidbody.AddForceAtPosition( force, position, ForceMode.Impulse );
             }
 
         }

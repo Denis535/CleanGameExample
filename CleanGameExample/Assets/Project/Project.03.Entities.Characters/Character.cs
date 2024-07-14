@@ -6,13 +6,46 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
 
+    //public abstract class CharacterBase : MonoBehaviour, ICharacter, IDamageable {
+
+    //    public bool IsAlive { get; private set; } = true;
+    //    public event Action<DamageInfo>? OnDamageEvent;
+
+    //    protected virtual void Awake() {
+    //    }
+    //    protected virtual void OnDestroy() {
+    //    }
+
+    //    protected virtual void Start() {
+    //    }
+    //    protected virtual void FixedUpdate() {
+    //    }
+    //    protected virtual void Update() {
+    //    }
+
+    //    void IDamageable.OnDamage(DamageInfo info) => OnDamage( info );
+    //    protected virtual void OnDamage(DamageInfo info) {
+    //        if (IsAlive) {
+    //            IsAlive = false;
+    //            //Facade.Weapon = null;
+    //            //if (info is BulletDamageInfo bulletDamageInfo) {
+    //            //    Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
+    //            //} else {
+    //            //    Facade.Die();
+    //            //}
+    //            OnDamageEvent?.Invoke( info );
+    //        }
+    //    }
+
+    //}
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract partial class Character : MonoBehaviour, ICharacter, IDamageable {
 
-        protected Facade_ Facade { get; private set; } = default!;
+        private Facade_ Facade { get; set; } = default!;
         public bool IsAlive { get; private set; } = true;
         public event Action<DamageInfo>? OnDamageEvent;
+        public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
 
         protected virtual void Awake() {
             Facade = new Facade_( gameObject );
@@ -39,6 +72,29 @@ namespace Project.Entities.Characters {
                 }
                 OnDamageEvent?.Invoke( info );
             }
+        }
+
+        protected void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+            Facade.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+        }
+
+        protected void BodyAt(Vector3? target) {
+            Facade.BodyAt( target );
+        }
+
+        protected bool HeadAt(Vector3? target) {
+            return Facade.HeadAt( target );
+        }
+
+        protected bool AimAt(Vector3? target) {
+            return Facade.AimAt( target );
+        }
+
+        protected void Die() {
+            Facade.Die();
+        }
+        protected void Die(Vector3 force, Vector3 position) {
+            Facade.Die( force, position );
         }
 
     }

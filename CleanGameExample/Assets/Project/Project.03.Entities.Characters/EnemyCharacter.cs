@@ -27,6 +27,7 @@ namespace Project.Entities.Characters {
 
             public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
                 var result = GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
+                result.Weapon = Gun.Factory.Create( null );
                 return result;
             }
 
@@ -47,19 +48,18 @@ namespace Project.Entities.Characters {
         }
 
         protected override void Start() {
-            Facade.Weapon = Gun.Factory.Create( null );
         }
         protected override void FixedUpdate() {
             Environment = GetEnvironment( transform );
         }
         protected override void Update() {
             if (IsAlive) {
-                Facade.Move( Vector3.zero, false, false, false );
-                Facade.BodyAt( GetBodyTarget( Environment ) );
-                Facade.HeadAt( GetHeadTarget( Environment ) );
-                Facade.AimAt( GetWeaponTarget( Environment ) );
+                Move( Vector3.zero, false, false, false );
+                BodyAt( GetBodyTarget( Environment ) );
+                HeadAt( GetHeadTarget( Environment ) );
+                AimAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {
-                    Facade.Weapon?.Fire( this, null );
+                    Weapon?.Fire( this, null );
                 }
             }
         }

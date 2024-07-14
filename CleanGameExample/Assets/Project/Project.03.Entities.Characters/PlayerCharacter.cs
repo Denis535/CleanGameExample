@@ -51,21 +51,21 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             if (IsAlive) {
                 if (Input != null) {
-                    Facade.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
-                    Facade.BodyAt( Input.GetBodyTarget() );
-                    Facade.HeadAt( Input.GetHeadTarget() );
-                    Facade.AimAt( Input.GetWeaponTarget() );
+                    Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
+                    BodyAt( Input.GetBodyTarget() );
+                    HeadAt( Input.GetHeadTarget() );
+                    AimAt( Input.GetWeaponTarget() );
                     if (Input.IsAimPressed()) {
 
                     }
                     if (Input.IsFirePressed()) {
-                        Facade.Weapon?.Fire( this, Player );
+                        Weapon?.Fire( this, Player );
                     }
                     if (Input.IsInteractPressed( out var interactable )) {
                         if (interactable is Weapon weapon) {
-                            Facade.Weapon = weapon;
+                            Weapon = weapon;
                         } else {
-                            Facade.Weapon = null;
+                            Weapon = null;
                         }
                     }
                 }

@@ -6,6 +6,7 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Framework.Entities;
 
     public partial class PlayerCharacter {
         public static class Factory {
@@ -24,13 +25,17 @@ namespace Project.Entities.Characters {
                 Prefabs.Release();
             }
 
-            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerCharacterType type) {
-                return GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
+            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerBase player, PlayerCharacterType type) {
+                var result = GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
+                result.Player = player;
+                return result;
             }
 
         }
     }
     public partial class PlayerCharacter : PlayableCharacter {
+
+        public PlayerBase Player { get; private set; } = default!;
 
         protected override void Awake() {
             base.Awake();
@@ -46,15 +51,15 @@ namespace Project.Entities.Characters {
         protected override void Update() {
             if (IsAlive) {
                 if (Input != null) {
-                    MoveableBody.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
-                    MoveableBody.LookAt( Input.GetBodyTarget() );
+                    Facade.Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );
+                    Facade.LookAt( Input.GetBodyTarget() );
                     Head.LookAt( Input.GetHeadTarget() );
                     WeaponSlot.LookAt( Input.GetWeaponTarget() );
                     if (Input.IsAimPressed()) {
 
                     }
                     if (Input.IsFirePressed()) {
-                        WeaponSlot.Weapon?.Fire( this, null );
+                        WeaponSlot.Weapon?.Fire( this, Player );
                     }
                     if (Input.IsInteractPressed( out var interactable )) {
                         if (interactable is Weapon weapon) {

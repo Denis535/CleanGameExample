@@ -19,7 +19,7 @@ namespace Project.Entities {
             World = container.RequireDependency<World>();
             {
                 var point = World.PlayerPoints.First();
-                Player.Character = SpawnPlayerCharacter( point, Player.Info );
+                Player.Character = SpawnPlayerCharacter( point, Player );
                 Player.Camera = Camera2.Factory.Create();
             }
             foreach (var point in World.EnemyPoints) {
@@ -50,8 +50,8 @@ namespace Project.Entities {
             }
         }
 
-        protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, PlayerInfo info) {
-            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, info.CharacterType );
+        protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, Player player) {
+            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, player, player.Info.CharacterType );
             character.OnDamageEvent += info => {
                 IsDirty = true;
             };

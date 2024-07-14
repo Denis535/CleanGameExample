@@ -5,6 +5,7 @@ namespace Project.Entities.Things {
     using System.Collections.Generic;
     using UnityEngine;
 
+    [ExecuteAlways]
     public abstract class Thing : MonoBehaviour {
 
         protected Rigidbody Rigidbody { get; private set; } = default!;

@@ -32,6 +32,7 @@ namespace Project.Entities.Things {
 
         }
     }
+    [ExecuteAlways]
     public partial class Bullet : MonoBehaviour {
 
         private Rigidbody Rigidbody { get; set; } = default!;

@@ -26,7 +26,8 @@ namespace Project.Entities.Characters {
             }
 
             public static EnemyCharacter Create(Vector3 position, Quaternion rotation) {
-                return GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
+                var result = GameObject.Instantiate<EnemyCharacter>( Prefabs.GetValues().GetRandom(), position, rotation );
+                return result;
             }
 
         }
@@ -53,8 +54,8 @@ namespace Project.Entities.Characters {
         }
         protected override void Update() {
             if (IsAlive) {
-                MoveableBody.Move( Vector3.zero, false, false, false );
-                MoveableBody.LookAt( GetBodyTarget( Environment ) );
+                Facade.Move( Vector3.zero, false, false, false );
+                Facade.LookAt( GetBodyTarget( Environment ) );
                 Head.LookAt( GetHeadTarget( Environment ) );
                 WeaponSlot.LookAt( GetWeaponTarget( Environment ) );
                 if (Environment.Player != null && Environment.Player.IsAlive) {

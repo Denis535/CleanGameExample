@@ -19,7 +19,8 @@ namespace Project.Entities.Characters {
             }
 
             public static Camera2 Create() {
-                return GameObject.Instantiate( Prefab.GetValue() );
+                var result = GameObject.Instantiate( Prefab.GetValue() );
+                return result;
             }
 
         }

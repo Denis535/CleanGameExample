@@ -10,34 +10,21 @@ namespace Project.Entities.Characters {
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract partial class Character : MonoBehaviour, ICharacter, IDamageable {
 
-        protected MoveableBody MoveableBody { get; private set; } = default!;
-        protected Rigidbody Rigidbody { get; private set; } = default!;
-        public bool IsAlive { get; private set; } = true;
-        public event Action<DamageInfo>? OnDamageEvent;
-        public bool IsRagdoll {
-            get => !MoveableBody.enabled;
-            private set {
-                if (value) {
-                    MoveableBody.enabled = false;
-                    Rigidbody.isKinematic = false;
-                } else {
-                    MoveableBody.enabled = true;
-                    Rigidbody.isKinematic = true;
-                }
-            }
-        }
+        protected GameObjectFacade Facade { get; private set; } = default!;
         protected Head_ Head { get; private set; } = default!;
         protected WeaponSlot_ WeaponSlot { get; private set; } = default!;
+        public bool IsAlive { get; private set; } = true;
+        public event Action<DamageInfo>? OnDamageEvent;
 
         protected virtual void Awake() {
-            MoveableBody = gameObject.RequireComponent<MoveableBody>();
-            Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            Facade = new GameObjectFacade( gameObject );
             Head = new Head_( gameObject.transform.Require( "Head" ).gameObject );
             WeaponSlot = new WeaponSlot_( gameObject.RequireComponentInChildren<WeaponSlot>() );
         }
         protected virtual void OnDestroy() {
             WeaponSlot.Dispose();
             Head.Dispose();
+            Facade.Dispose();
         }
 
         protected virtual void Start() {
@@ -51,10 +38,10 @@ namespace Project.Entities.Characters {
             if (IsAlive) {
                 gameObject.SetLayerRecursively( Layers.Entity );
                 IsAlive = false;
-                IsRagdoll = true;
+                Facade.IsRagdoll = true;
                 WeaponSlot.Weapon = null;
                 if (info is BulletDamageInfo bulletDamageInfo) {
-                    Rigidbody.AddForceAtPosition( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point, ForceMode.Impulse );
+                    Facade.Rigidbody.AddForceAtPosition( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point, ForceMode.Impulse );
                 }
                 OnDamageEvent?.Invoke( info );
             }
@@ -62,6 +49,44 @@ namespace Project.Entities.Characters {
 
     }
     public abstract partial class Character {
+        protected class GameObjectFacade : Disposable {
+
+            private GameObject GameObject { get; }
+            private Transform Transform => GameObject.transform;
+
+            private MoveableBody MoveableBody { get; }
+            internal Rigidbody Rigidbody { get; }
+            public bool IsRagdoll {
+                get => !MoveableBody.enabled;
+                set {
+                    if (value) {
+                        MoveableBody.enabled = false;
+                        Rigidbody.isKinematic = false;
+                    } else {
+                        MoveableBody.enabled = true;
+                        Rigidbody.isKinematic = true;
+                    }
+                }
+            }
+
+            public GameObjectFacade(GameObject gameObject) {
+                GameObject = gameObject;
+                MoveableBody = gameObject.RequireComponent<MoveableBody>();
+                Rigidbody = gameObject.RequireComponent<Rigidbody>();
+            }
+            public override void Dispose() {
+                base.Dispose();
+            }
+
+            public void Move(Vector3 moveVector, bool isJumpPressed, bool isCrouchPressed, bool isAcceleratePressed) {
+                MoveableBody.Move( moveVector, isJumpPressed, isCrouchPressed, isAcceleratePressed );
+            }
+
+            public void LookAt(Vector3? target) {
+                MoveableBody.LookAt( target );
+            }
+
+        }
         protected class Head_ : Disposable {
 
             private GameObject GameObject { get; }

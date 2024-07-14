@@ -39,7 +39,7 @@ namespace Project.Entities.Characters {
     }
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract partial class Character : CharacterBase, ICharacter, IDamageable {
+    public abstract partial class Character : CharacterBase {
 
         private Facade_ Facade { get; set; } = default!;
         public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }

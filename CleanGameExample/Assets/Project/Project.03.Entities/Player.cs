@@ -49,7 +49,6 @@ namespace Project.Entities {
                 }
             }
         }
-
         public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
         public EnemyCharacter? Enemy {
             get {
@@ -85,13 +84,14 @@ namespace Project.Entities {
                 Input.SetEnabled( Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f && Character != null && Camera != null );
             }
             if (Character != null) {
-                
+
             }
             if (Camera != null) {
                 Hit = Raycast( Camera.Ray, Character?.transform );
             }
         }
 
+        // Helpers
         private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
             var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
             var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();

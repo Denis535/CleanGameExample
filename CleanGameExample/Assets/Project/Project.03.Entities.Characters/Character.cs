@@ -10,12 +10,12 @@ namespace Project.Entities.Characters {
     [RequireComponent( typeof( MoveableBody ) )]
     public abstract partial class Character : MonoBehaviour, ICharacter, IDamageable {
 
-        protected GameObjectFacade Facade { get; private set; } = default!;
+        protected Facade_ Facade { get; private set; } = default!;
         public bool IsAlive { get; private set; } = true;
         public event Action<DamageInfo>? OnDamageEvent;
 
         protected virtual void Awake() {
-            Facade = new GameObjectFacade( gameObject );
+            Facade = new Facade_( gameObject );
         }
         protected virtual void OnDestroy() {
             Facade.Dispose();
@@ -33,9 +33,9 @@ namespace Project.Entities.Characters {
                 IsAlive = false;
                 Facade.Weapon = null;
                 if (info is BulletDamageInfo bulletDamageInfo) {
-                    Facade.Kill( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
+                    Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
                 } else {
-                    Facade.Kill();
+                    Facade.Die();
                 }
                 OnDamageEvent?.Invoke( info );
             }
@@ -43,11 +43,10 @@ namespace Project.Entities.Characters {
 
     }
     public abstract partial class Character {
-        protected class GameObjectFacade : Disposable {
+        protected class Facade_ : Disposable {
 
             private GameObject GameObject { get; }
             private Transform Transform => GameObject.transform;
-
             private MoveableBody MoveableBody { get; }
             private Rigidbody Rigidbody { get; }
             private GameObject Head { get; }
@@ -71,7 +70,7 @@ namespace Project.Entities.Characters {
                 }
             }
 
-            public GameObjectFacade(GameObject gameObject) {
+            public Facade_(GameObject gameObject) {
                 GameObject = gameObject;
                 MoveableBody = gameObject.RequireComponent<MoveableBody>();
                 Rigidbody = gameObject.RequireComponent<Rigidbody>();
@@ -144,12 +143,12 @@ namespace Project.Entities.Characters {
                 }
             }
 
-            public void Kill() {
+            public void Die() {
                 GameObject.SetLayerRecursively( Layers.Entity );
                 MoveableBody.enabled = false;
                 Rigidbody.isKinematic = false;
             }
-            public void Kill(Vector3 force, Vector3 position) {
+            public void Die(Vector3 force, Vector3 position) {
                 GameObject.SetLayerRecursively( Layers.Entity );
                 MoveableBody.enabled = false;
                 Rigidbody.isKinematic = false;

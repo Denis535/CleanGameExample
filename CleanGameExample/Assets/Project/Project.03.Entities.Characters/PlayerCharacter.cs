@@ -45,10 +45,13 @@ namespace Project.Entities.Characters {
         }
 
         protected override void Start() {
+            base.Start();
         }
         protected override void FixedUpdate() {
+            base.FixedUpdate();
         }
         protected override void Update() {
+            base.Update();
             if (IsAlive) {
                 if (Input != null) {
                     Move( Input.GetMoveVector(), Input.IsJumpPressed(), Input.IsCrouchPressed(), Input.IsAcceleratePressed() );

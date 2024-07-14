@@ -48,11 +48,14 @@ namespace Project.Entities.Characters {
         }
 
         protected override void Start() {
+            base.Start();
         }
         protected override void FixedUpdate() {
+            base.FixedUpdate();
             Environment = GetEnvironment( transform );
         }
         protected override void Update() {
+            base.Update();
             if (IsAlive) {
                 Move( Vector3.zero, false, false, false );
                 BodyAt( GetBodyTarget( Environment ) );

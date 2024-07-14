@@ -52,14 +52,14 @@ namespace Project.Entities {
 
         protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, Player player) {
             var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, player, player.Info.CharacterType );
-            character.OnDamageEvent += info => {
+            character.OnDeathEvent += info => {
                 IsDirty = true;
             };
             return character;
         }
         protected void SpawnEnemyCharacter(EnemyPoint point) {
             var character = EnemyCharacter.Factory.Create( point.transform.position, point.transform.rotation );
-            character.OnDamageEvent += info => {
+            character.OnDeathEvent += info => {
                 IsDirty = true;
             };
         }

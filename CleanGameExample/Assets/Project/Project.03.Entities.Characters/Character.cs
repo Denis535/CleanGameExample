@@ -6,52 +6,15 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
 
-    //public abstract class CharacterBase : MonoBehaviour, ICharacter, IDamageable {
+    public abstract class CharacterBase : MonoBehaviour, ICharacter, IDamageable {
 
-    //    public bool IsAlive { get; private set; } = true;
-    //    public event Action<DamageInfo>? OnDamageEvent;
-
-    //    protected virtual void Awake() {
-    //    }
-    //    protected virtual void OnDestroy() {
-    //    }
-
-    //    protected virtual void Start() {
-    //    }
-    //    protected virtual void FixedUpdate() {
-    //    }
-    //    protected virtual void Update() {
-    //    }
-
-    //    void IDamageable.OnDamage(DamageInfo info) => OnDamage( info );
-    //    protected virtual void OnDamage(DamageInfo info) {
-    //        if (IsAlive) {
-    //            IsAlive = false;
-    //            //Facade.Weapon = null;
-    //            //if (info is BulletDamageInfo bulletDamageInfo) {
-    //            //    Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
-    //            //} else {
-    //            //    Facade.Die();
-    //            //}
-    //            OnDamageEvent?.Invoke( info );
-    //        }
-    //    }
-
-    //}
-    [RequireComponent( typeof( Rigidbody ) )]
-    [RequireComponent( typeof( MoveableBody ) )]
-    public abstract partial class Character : MonoBehaviour, ICharacter, IDamageable {
-
-        private Facade_ Facade { get; set; } = default!;
         public bool IsAlive { get; private set; } = true;
-        public event Action<DamageInfo>? OnDamageEvent;
-        public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
+        //public event Action<DamageInfo>? OnDamageEvent;
+        public event Action<DamageInfo>? OnDeathEvent;
 
         protected virtual void Awake() {
-            Facade = new Facade_( gameObject );
         }
         protected virtual void OnDestroy() {
-            Facade.Dispose();
         }
 
         protected virtual void Start() {
@@ -61,16 +24,55 @@ namespace Project.Entities.Characters {
         protected virtual void Update() {
         }
 
-        public virtual void OnDamage(DamageInfo info) {
+        void IDamageable.OnDamage(DamageInfo info) => OnDamage( info );
+        protected virtual void OnDamage(DamageInfo info) {
             if (IsAlive) {
                 IsAlive = false;
-                Facade.Weapon = null;
-                if (info is BulletDamageInfo bulletDamageInfo) {
-                    Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
-                } else {
-                    Facade.Die();
-                }
-                OnDamageEvent?.Invoke( info );
+                OnDeath( info );
+                //OnDamageEvent?.Invoke( info );
+                OnDeathEvent?.Invoke( info );
+            }
+        }
+        protected virtual void OnDeath(DamageInfo info) {
+        }
+
+    }
+    [RequireComponent( typeof( Rigidbody ) )]
+    [RequireComponent( typeof( MoveableBody ) )]
+    public abstract partial class Character : CharacterBase, ICharacter, IDamageable {
+
+        private Facade_ Facade { get; set; } = default!;
+        public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
+
+        protected override void Awake() {
+            base.Awake();
+            Facade = new Facade_( gameObject );
+        }
+        protected override void OnDestroy() {
+            Facade.Dispose();
+            base.OnDestroy();
+        }
+
+        protected override void Start() {
+            base.Start();
+        }
+        protected override void FixedUpdate() {
+            base.FixedUpdate();
+        }
+        protected override void Update() {
+            base.Update();
+        }
+
+        protected override void OnDamage(DamageInfo info) {
+            base.OnDamage( info );
+        }
+        protected override void OnDeath(DamageInfo info) {
+            base.OnDeath( info );
+            Facade.Weapon = null;
+            if (info is BulletDamageInfo bulletDamageInfo) {
+                Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );
+            } else {
+                Facade.Die();
             }
         }
 

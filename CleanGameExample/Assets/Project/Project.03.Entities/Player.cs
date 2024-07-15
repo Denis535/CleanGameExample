@@ -21,13 +21,13 @@ namespace Project.Entities {
                     character.Input = null;
                 }
                 if (camera != null) {
+                    camera.Input = null;
                     camera.Target = null;
                 }
                 character = value;
-                if (character != null) {
-                    character.Input = new PlayableCharacterInput( this );
-                }
-                if (camera != null) {
+                if (character != null && camera != null) {
+                    character.Input = new PlayableCharacterInput( Input.Character, character, camera );
+                    camera.Input = new CameraInput( Input.Camera );
                     camera.Target = character;
                 }
             }
@@ -36,14 +36,18 @@ namespace Project.Entities {
             get => camera;
             internal set {
                 Input.Disable();
+                if (character != null) {
+                    character.Input = null;
+                }
                 if (camera != null) {
                     camera.Input = null;
                     camera.Target = null;
                 }
                 camera = value;
-                if (camera != null) {
-                    camera.Input = new CameraInput( this );
-                    camera.Target = Character;
+                if (character != null && camera != null) {
+                    character.Input = new PlayableCharacterInput( Input.Character, character, camera );
+                    camera.Input = new CameraInput( Input.Camera );
+                    camera.Target = character;
                 }
             }
         }
@@ -67,15 +71,16 @@ namespace Project.Entities {
     }
     internal class PlayableCharacterInput : IPlayableCharacterInput {
 
-        private Player Player { get; }
-        private InputActions_Player.CharacterActions Input => Player.Input.Character;
-        private Character Character => Player.Character!;
-        private Camera2 Camera => Player.Camera!;
+        private InputActions_Player.CharacterActions Input { get; }
+        private Character Character { get; }
+        private Camera2 Camera { get; }
         private Camera2.RaycastHit? Hit => Camera.Hit;
         private Vector3 Target => Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128f );
 
-        public PlayableCharacterInput(Player player) {
-            Player = player;
+        public PlayableCharacterInput(InputActions_Player.CharacterActions input, Character character, Camera2 camera) {
+            Input = input;
+            Character = character;
+            Camera = camera;
         }
 
         public Vector3 GetMoveVector() {
@@ -143,11 +148,10 @@ namespace Project.Entities {
     }
     internal class CameraInput : ICameraInput {
 
-        private Player Player { get; }
-        private InputActions_Player.CameraActions Input => Player.Input.Camera;
+        private InputActions_Player.CameraActions Input { get; }
 
-        public CameraInput(Player player) {
-            Player = player;
+        public CameraInput(InputActions_Player.CameraActions input) {
+            Input = input;
         }
 
         public Vector2 GetLookDelta() {

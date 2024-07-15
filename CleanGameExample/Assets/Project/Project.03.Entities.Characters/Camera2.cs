@@ -3,6 +3,8 @@ namespace Project.Entities.Characters {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
+    using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
@@ -50,7 +52,25 @@ namespace Project.Entities.Characters {
         public bool IsTargetChanged { get; private set; }
         public Vector2 Angles { get; private set; }
         public float Distance { get; private set; }
-        public Ray Ray => new Ray( transform.position, transform.forward );
+        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
+        public EnemyCharacter? Enemy {
+            get {
+                if (Hit != null && Target != null && Vector3.Distance( Target.transform.position, Hit.Value.Point ) <= 16f) {
+                    var @object = Hit.Value.Object.transform.root.gameObject;
+                    return @object.GetComponent<EnemyCharacter>();
+                }
+                return null;
+            }
+        }
+        public Thing? Thing {
+            get {
+                if (Hit != null && Target != null && Vector3.Distance( Target.transform.position, Hit.Value.Point ) <= 2.5f) {
+                    var @object = Hit.Value.Object.transform.root.gameObject;
+                    return @object.GetComponent<Thing>();
+                }
+                return null;
+            }
+        }
 
         protected void Awake() {
         }
@@ -80,6 +100,7 @@ namespace Project.Entities.Characters {
                 }
                 Apply( transform, Target, Angles, Distance );
                 Apply( Camera.main, transform );
+                Hit = Raycast( new Ray( transform.position, transform.forward ), Target.transform );
             }
         }
 
@@ -102,6 +123,16 @@ namespace Project.Entities.Characters {
         private static void Apply(Camera camera, Transform transform) {
             camera.transform.localPosition = transform.localPosition;
             camera.transform.localRotation = transform.localRotation;
+        }
+        // Helpers
+        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
+            var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
+            var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
+            if (hit.transform) {
+                return (hit.point, hit.distance, hit.collider.gameObject);
+            } else {
+                return null;
+            }
         }
 
     }

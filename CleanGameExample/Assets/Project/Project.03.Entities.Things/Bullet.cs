@@ -7,7 +7,7 @@ namespace Project.Entities.Things {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
-    [DefaultExecutionOrder( 200 )]
+    [DefaultExecutionOrder( 100 )]
     public partial class Bullet {
         public static class Factory {
 

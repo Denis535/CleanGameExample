@@ -5,6 +5,7 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using System.Linq;
     using Project.Entities;
+    using Project.Entities.Characters;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
@@ -56,7 +57,11 @@ namespace Project.UI.GameScreen {
         }
 
         public void OnUpdate() {
-            View.Target.style.color = GetTargetColor( Game.Player );
+            if (Game.Player.Camera != null) {
+                View.Target.style.color = GetTargetColor( Game.Player.Camera );
+            } else {
+                View.Target.style.color = default;
+            }
         }
 
         // Helpers
@@ -70,9 +75,9 @@ namespace Project.UI.GameScreen {
             return view;
         }
         // Helpers
-        private static Color GetTargetColor(Player player) {
-            if (player.Thing != null) return Color.yellow;
-            if (player.Enemy != null) return Color.red;
+        private static Color GetTargetColor(Camera2 camera) {
+            if (camera.Thing != null) return Color.yellow;
+            if (camera.Enemy != null) return Color.red;
             return Color.white;
         }
 

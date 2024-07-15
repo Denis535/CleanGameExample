@@ -3,7 +3,6 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Project.Entities.Characters;
     using Project.Entities.Things;
     using UnityEngine;
@@ -49,25 +48,6 @@ namespace Project.Entities {
                 }
             }
         }
-        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
-        public EnemyCharacter? Enemy {
-            get {
-                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 16f) {
-                    var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<EnemyCharacter>();
-                }
-                return null;
-            }
-        }
-        public Thing? Thing {
-            get {
-                if (Hit != null && Vector3.Distance( Character!.transform.position, Hit.Value.Point ) <= 2.5f) {
-                    var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<Thing>();
-                }
-                return null;
-            }
-        }
 
         public Player(IDependencyContainer container, PlayerInfo info) : base( container, info ) {
             Input = new InputActions_Player();
@@ -83,23 +63,6 @@ namespace Project.Entities {
             {
                 Input.SetEnabled( Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f && Character != null && Camera != null );
             }
-            if (Character != null) {
-
-            }
-            if (Camera != null) {
-                Hit = Raycast( Camera.Ray, Character?.transform );
-            }
-        }
-
-        // Helpers
-        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
-            var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
-            var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
-            if (hit.transform) {
-                return (hit.point, hit.distance, hit.collider.gameObject);
-            } else {
-                return null;
-            }
         }
 
     }
@@ -108,9 +71,11 @@ namespace Project.Entities {
         private Player Player { get; }
         private InputActions_Player.CharacterActions Input => Player.Input.Character;
         private Character Character => Player.Character!;
-        private Vector3 Target => Player.Hit?.Point ?? Camera.main.transform.TransformPoint( Vector3.forward * 128f );
-        private EnemyCharacter? Enemy => Player.Enemy;
-        private Thing? Thing => Player.Thing;
+        private Camera2 Camera => Player.Camera!;
+        private Vector3 Target => Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128f );
+        private (Vector3 Point, float Distance, GameObject Object)? Hit => Camera.Hit;
+        private EnemyCharacter? Enemy => Camera.Enemy;
+        private Thing? Thing => Camera.Thing;
 
         public PlayableCharacterInput(Player player) {
             Player = player;
@@ -119,7 +84,7 @@ namespace Project.Entities {
         public Vector3 GetMoveVector() {
             if (Input.Move.IsPressed()) {
                 var vector = Input.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
-                vector = Camera.main.transform.TransformDirection( vector );
+                vector = Camera.transform.TransformDirection( vector );
                 vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
                 return vector;
             } else {
@@ -133,7 +98,7 @@ namespace Project.Entities {
             if (Input.Move.IsPressed()) {
                 var vector = Input.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
                 if (vector != Vector3.zero) {
-                    vector = Camera.main.transform.TransformDirection( vector );
+                    vector = Camera.transform.TransformDirection( vector );
                     vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
                     return Character.transform.position + vector;
                 }

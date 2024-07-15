@@ -6,7 +6,7 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
 
-    [DefaultExecutionOrder( 200 )]
+    [DefaultExecutionOrder( 100 )]
     public abstract class CharacterBase : MonoBehaviour, ICharacter, IDamageable {
 
         public bool IsAlive { get; private set; } = true;

@@ -113,7 +113,7 @@ namespace Project.Entities.Characters {
         private static RaycastHit? Raycast(Ray ray, Transform character) {
             var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
             var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
-            if (hit.transform) {
+            if (hit.collider) {
                 return new RaycastHit(
                     hit.collider.gameObject,
                     hit.point,

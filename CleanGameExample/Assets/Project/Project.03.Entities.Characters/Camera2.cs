@@ -25,6 +25,7 @@ namespace Project.Entities.Characters {
 
         }
     }
+    [DefaultExecutionOrder( 99 )]
     public partial class Camera2 : MonoBehaviour {
 
         private static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );

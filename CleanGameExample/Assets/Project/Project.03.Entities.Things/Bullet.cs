@@ -7,6 +7,7 @@ namespace Project.Entities.Things {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
+    [DefaultExecutionOrder( 200 )]
     public partial class Bullet {
         public static class Factory {
 
@@ -32,7 +33,6 @@ namespace Project.Entities.Things {
 
         }
     }
-    [ExecuteAlways]
     public partial class Bullet : MonoBehaviour {
 
         private Rigidbody Rigidbody { get; set; } = default!;

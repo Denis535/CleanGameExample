@@ -14,7 +14,7 @@ namespace Project {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    [DefaultExecutionOrder( 1000 )]
+    [DefaultExecutionOrder( 100 )]
     public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
 
         protected override UITheme Theme { get; set; } = default!;
@@ -81,26 +81,32 @@ namespace Project {
             this.ThrowIfInvalid();
             // UI
             if (type.IsAssignableTo( typeof( UIThemeBase ) )) {
-                return new Option<object?>( Theme ?? throw Exceptions.Internal.NullReference( $"Reference 'Theme' is null" ) );
+                if (Theme != null) return new Option<object?>( Theme );
+                return default;
             }
             if (type.IsAssignableTo( typeof( UIScreenBase ) )) {
-                return new Option<object?>( Screen ?? throw Exceptions.Internal.NullReference( $"Reference 'Screen' is null" ) );
+                if (Screen != null) return new Option<object?>( Screen );
+                return default;
             }
             if (type.IsAssignableTo( typeof( UIRouterBase ) )) {
-                return new Option<object?>( Router ?? throw Exceptions.Internal.NullReference( $"Reference 'Router' is null" ) );
+                if (Router != null) return new Option<object?>( Router );
+                return default;
             }
             // App
             if (type.IsAssignableTo( typeof( ApplicationBase ) )) {
-                return new Option<object?>( Application ?? throw Exceptions.Internal.NullReference( $"Reference 'Application' is null" ) );
+                if (Application != null) return new Option<object?>( Application );
+                return default;
             }
             // Entities
             if (type.IsAssignableTo( typeof( GameBase ) )) {
-                return new Option<object?>( Game );
+                if (Game != null) return new Option<object?>( Game );
+                return default;
             }
             // Misc
             if (type == typeof( AudioSource ) && (string?) argument == "MusicAudioSource") {
                 var result = transform.Find( "MusicAudioSource" )?.gameObject.GetComponent<AudioSource?>();
                 if (result is not null) {
+                    result.ThrowIfInvalid();
                     return new Option<object?>( result );
                 }
                 return default;
@@ -108,6 +114,7 @@ namespace Project {
             if (type == typeof( AudioSource ) && (string?) argument == "SfxAudioSource") {
                 var result = transform.Find( "SfxAudioSource" )?.gameObject.GetComponent<AudioSource?>();
                 if (result is not null) {
+                    result.ThrowIfInvalid();
                     return new Option<object?>( result );
                 }
                 return default;
@@ -115,6 +122,7 @@ namespace Project {
             if (type == typeof( UIDocument )) {
                 var result = gameObject.GetComponentInChildren<UIDocument>();
                 if (result is not null) {
+                    result.ThrowIfInvalid();
                     return new Option<object?>( result );
                 }
                 return default;
@@ -123,6 +131,7 @@ namespace Project {
             if (type.IsAssignableTo( typeof( UnityEngine.Object ) )) {
                 var result = FindAnyObjectByType( type, FindObjectsInactive.Exclude );
                 if (result is not null) {
+                    result.ThrowIfInvalid();
                     return new Option<object?>( result );
                 }
                 return default;
@@ -130,6 +139,7 @@ namespace Project {
             if (type.IsArray && type.GetElementType().IsAssignableTo( typeof( UnityEngine.Object ) )) {
                 var result = FindObjectsByType( type.GetElementType(), FindObjectsInactive.Exclude, FindObjectsSortMode.None ).NullIfEmpty();
                 if (result is not null) {
+                    result.ForEach( i => i.ThrowIfInvalid() );
                     var result2 = Array.CreateInstance( type.GetElementType(), result.Length );
                     result.CopyTo( result2, 0 );
                     return new Option<object?>( result );

@@ -67,6 +67,7 @@ namespace Project {
             Theme.OnUpdate();
         }
         protected override void LateUpdate() {
+            Application?.OnLateUpdate();
         }
 
         protected override bool OnQuit() {

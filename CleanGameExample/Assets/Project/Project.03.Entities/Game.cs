@@ -34,11 +34,14 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        public override void OnFixedUpdate() {
+        public void OnFixedUpdate() {
             Player.OnFixedUpdate();
         }
-        public override void OnUpdate() {
+        public void OnUpdate() {
             Player.OnUpdate();
+        }
+        public void OnLateUpdate() {
+            Player.OnLateUpdate();
             if (IsDirty) {
                 if (IsLoser()) {
                     OnLoser();

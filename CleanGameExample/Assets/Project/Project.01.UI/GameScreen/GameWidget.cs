@@ -76,8 +76,8 @@ namespace Project.UI.GameScreen {
         }
         // Helpers
         private static Color GetTargetColor(Camera2 camera) {
-            if (camera.Thing != null) return Color.yellow;
-            if (camera.Enemy != null) return Color.red;
+            if (camera.Hit?.Thing != null) return Color.yellow;
+            if (camera.Hit?.Enemy != null) return Color.red;
             return Color.white;
         }
 

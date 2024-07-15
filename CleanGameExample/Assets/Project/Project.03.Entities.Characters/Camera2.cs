@@ -29,6 +29,7 @@ namespace Project.Entities.Characters {
     }
     [DefaultExecutionOrder( 99 )]
     public partial class Camera2 : MonoBehaviour {
+        public record RaycastHit(GameObject GameObject, Vector3 Point, float Distance, EnemyCharacter? Enemy, Thing? Thing);
 
         private static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         private static readonly float DefaultDistance = 1.5f;
@@ -52,25 +53,7 @@ namespace Project.Entities.Characters {
         public bool IsTargetChanged { get; private set; }
         public Vector2 Angles { get; private set; }
         public float Distance { get; private set; }
-        public (Vector3 Point, float Distance, GameObject Object)? Hit { get; private set; }
-        public EnemyCharacter? Enemy {
-            get {
-                if (Hit != null && Target != null && Vector3.Distance( Target.transform.position, Hit.Value.Point ) <= 16f) {
-                    var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<EnemyCharacter>();
-                }
-                return null;
-            }
-        }
-        public Thing? Thing {
-            get {
-                if (Hit != null && Target != null && Vector3.Distance( Target.transform.position, Hit.Value.Point ) <= 2.5f) {
-                    var @object = Hit.Value.Object.transform.root.gameObject;
-                    return @object.GetComponent<Thing>();
-                }
-                return null;
-            }
-        }
+        public RaycastHit? Hit { get; private set; }
 
         protected void Awake() {
         }
@@ -101,6 +84,8 @@ namespace Project.Entities.Characters {
                 Apply( transform, Target, Angles, Distance );
                 Apply( Camera.main, transform );
                 Hit = Raycast( new Ray( transform.position, transform.forward ), Target.transform );
+            } else {
+                Hit = null;
             }
         }
 
@@ -125,14 +110,33 @@ namespace Project.Entities.Characters {
             camera.transform.localRotation = transform.localRotation;
         }
         // Helpers
-        private static (Vector3 Point, float Distance, GameObject Object)? Raycast(Ray ray, Transform? ignore) {
+        private static RaycastHit? Raycast(Ray ray, Transform character) {
             var mask = ~(Masks.Entity_Approximate | Masks.Trivial);
-            var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != ignore ).OrderBy( i => i.distance ).FirstOrDefault();
+            var hit = Utils.RaycastAll( ray, 128, mask, QueryTriggerInteraction.Ignore ).Where( i => i.transform.root != character ).OrderBy( i => i.distance ).FirstOrDefault();
             if (hit.transform) {
-                return (hit.point, hit.distance, hit.collider.gameObject);
+                return new RaycastHit(
+                    hit.collider.gameObject,
+                    hit.point,
+                    hit.distance,
+                    GetEnemy( hit.collider.gameObject, hit.point, hit.distance, character ),
+                    GetThing( hit.collider.gameObject, hit.point, hit.distance, character ) );
             } else {
                 return null;
             }
+        }
+        private static EnemyCharacter? GetEnemy(GameObject gameObject, Vector3 Point, float Distance, Transform character) {
+            if (Vector3.Distance( character.position, Point ) <= 16f) {
+                var @object = gameObject.transform.root.gameObject;
+                return @object.GetComponent<EnemyCharacter>();
+            }
+            return null;
+        }
+        private static Thing? GetThing(GameObject gameObject, Vector3 Point, float Distance, Transform character) {
+            if (Vector3.Distance( character.position, Point ) <= 2.5f) {
+                var @object = gameObject.transform.root.gameObject;
+                return @object.GetComponent<Thing>();
+            }
+            return null;
         }
 
     }

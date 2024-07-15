@@ -90,6 +90,9 @@ namespace Project.App {
         public void OnUpdate() {
             Game?.OnUpdate();
         }
+        public void OnLateUpdate() {
+            Game?.OnLateUpdate();
+        }
 
     }
 }

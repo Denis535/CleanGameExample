@@ -42,9 +42,6 @@ namespace Project.Entities {
             base.Dispose();
         }
 
-        public abstract void OnFixedUpdate();
-        public abstract void OnUpdate();
-
     }
 
     public record GameInfo(string Name, GameMode Mode, GameLevel Level);

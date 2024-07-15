@@ -4,7 +4,6 @@ namespace Project.Entities {
     using System.Collections;
     using System.Collections.Generic;
     using Project.Entities.Characters;
-    using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.InputSystem;
 
@@ -60,9 +59,9 @@ namespace Project.Entities {
         public void OnFixedUpdate() {
         }
         public void OnUpdate() {
-            {
-                Input.SetEnabled( Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f && Character != null && Camera != null );
-            }
+            Input.SetEnabled( Character != null && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f );
+        }
+        public void OnLateUpdate() {
         }
 
     }
@@ -72,10 +71,8 @@ namespace Project.Entities {
         private InputActions_Player.CharacterActions Input => Player.Input.Character;
         private Character Character => Player.Character!;
         private Camera2 Camera => Player.Camera!;
+        private Camera2.RaycastHit? Hit => Camera.Hit;
         private Vector3 Target => Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128f );
-        private (Vector3 Point, float Distance, GameObject Object)? Hit => Camera.Hit;
-        private EnemyCharacter? Enemy => Camera.Enemy;
-        private Thing? Thing => Camera.Thing;
 
         public PlayableCharacterInput(Player player) {
             Player = player;
@@ -139,7 +136,7 @@ namespace Project.Entities {
             return Input.Aim.IsPressed();
         }
         public bool IsInteractPressed(out MonoBehaviour? interactable) {
-            interactable = (MonoBehaviour?) Enemy ?? Thing;
+            interactable = (MonoBehaviour?) Hit?.Enemy ?? Hit?.Thing;
             return Input.Interact.WasPressedThisFrame();
         }
 

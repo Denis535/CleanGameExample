@@ -6,41 +6,9 @@ namespace Project.Entities.Characters {
     using Project.Entities.Things;
     using UnityEngine;
 
-    [DefaultExecutionOrder( 100 )]
-    public abstract class CharacterBase : MonoBehaviour, ICharacter, IDamageable {
-
-        public bool IsAlive { get; private set; } = true;
-        //public event Action<DamageInfo>? OnDamageEvent;
-        public event Action<DamageInfo>? OnDeathEvent;
-
-        protected virtual void Awake() {
-        }
-        protected virtual void OnDestroy() {
-        }
-
-        protected virtual void Start() {
-        }
-        protected virtual void FixedUpdate() {
-        }
-        protected virtual void Update() {
-        }
-
-        void IDamageable.OnDamage(DamageInfo info) => OnDamage( info );
-        protected virtual void OnDamage(DamageInfo info) {
-            if (IsAlive) {
-                IsAlive = false;
-                OnDeath( info );
-                //OnDamageEvent?.Invoke( info );
-                OnDeathEvent?.Invoke( info );
-            }
-        }
-        protected virtual void OnDeath(DamageInfo info) {
-        }
-
-    }
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract partial class Character : CharacterBase {
+    public abstract partial class Character : Actor {
 
         private Facade_ Facade { get; set; } = default!;
         public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }

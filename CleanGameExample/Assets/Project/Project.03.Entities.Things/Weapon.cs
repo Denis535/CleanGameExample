@@ -15,7 +15,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public abstract void Fire(ICharacter character, PlayerBase? player);
+        public abstract void Fire(IActor actor, PlayerBase? player);
 
     }
 }

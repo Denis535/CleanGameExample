@@ -1,8 +1,9 @@
 ﻿#nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Things {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Actors;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 

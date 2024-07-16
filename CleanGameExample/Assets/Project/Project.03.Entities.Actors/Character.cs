@@ -3,6 +3,7 @@ namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Things;
     using UnityEngine;
 
     [RequireComponent( typeof( Rigidbody ) )]

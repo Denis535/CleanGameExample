@@ -1,9 +1,10 @@
 ﻿#nullable enable
-namespace Project.Entities {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Project.Entities.Things;
 
     [DefaultExecutionOrder( 100 )]
     public abstract class Actor : MonoBehaviour, IDamageable {

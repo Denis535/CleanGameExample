@@ -48,7 +48,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public override void Fire(IActor actor, PlayerBase? player) {
+        public override void Fire(Actor actor, PlayerBase? player) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
                 var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, actor, player );

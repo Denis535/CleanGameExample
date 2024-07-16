@@ -1,12 +1,12 @@
 ﻿#nullable enable
-namespace Project.Entities.Things {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon : Thing, IWeapon {
+    public abstract class Weapon : Thing {
 
         protected override void Awake() {
             base.Awake();
@@ -15,7 +15,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public abstract void Fire(IActor actor, PlayerBase? player);
+        public abstract void Fire(Actor actor, PlayerBase? player);
 
     }
 }

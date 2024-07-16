@@ -7,7 +7,6 @@ namespace Project.Entities.Things {
     using UnityEngine.AddressableAssets;
     using UnityEngine.Framework.Entities;
 
-    [DefaultExecutionOrder( 100 )]
     public partial class Bullet {
         public static class Factory {
 
@@ -20,7 +19,7 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, IWeapon weapon, IActor actor, PlayerBase? player) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, Weapon weapon, Actor actor, PlayerBase? player) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
                 result.Force = force;
                 result.Weapon = weapon;
@@ -33,12 +32,13 @@ namespace Project.Entities.Things {
 
         }
     }
+    [DefaultExecutionOrder( 100 )]
     public partial class Bullet : MonoBehaviour {
 
         private Rigidbody Rigidbody { get; set; } = default!;
         public float Force { get; private set; } = default!;
-        public IWeapon Weapon { get; private set; } = default!;
-        public IActor Actor { get; private set; } = default!;
+        public Weapon Weapon { get; private set; } = default!;
+        public Actor Actor { get; private set; } = default!;
         public PlayerBase? Player { get; private set; } = default!;
 
         protected void Awake() {
@@ -50,7 +50,7 @@ namespace Project.Entities.Things {
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
                 var damageable = collision.transform.root.GetComponent<IDamageable>();
-                if (damageable != null && damageable != Actor) {
+                if (damageable != null && damageable != (IDamageable) Actor) {
                     damageable.OnDamage( new BulletDamageInfo( Rigidbody.position, Rigidbody.velocity.normalized, Force, Weapon, Actor, Player ) );
                 }
                 enabled = false;

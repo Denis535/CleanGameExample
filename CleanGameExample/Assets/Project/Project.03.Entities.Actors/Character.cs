@@ -3,7 +3,6 @@ namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Things;
     using UnityEngine;
 
     [RequireComponent( typeof( Rigidbody ) )]
@@ -22,17 +21,13 @@ namespace Project.Entities.Actors {
             base.OnDestroy();
         }
 
-        protected override void Start() {
-            base.Start();
+        protected virtual void Start() {
         }
-        protected override void FixedUpdate() {
-            base.FixedUpdate();
+        protected virtual void FixedUpdate() {
         }
-        protected override void Update() {
-            base.Update();
+        protected virtual void Update() {
         }
-        protected override void LateUpdate() {
-            base.LateUpdate();
+        protected virtual void LateUpdate() {
         }
 
         protected override void OnDamage(DamageInfo info) {

@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -12,10 +12,10 @@ namespace Project.Entities.Characters {
         public static class Factory {
 
             private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
-                R.Project.Entities.Characters.Value_PlayerCharacter_Gray,
-                R.Project.Entities.Characters.Value_PlayerCharacter_Red,
-                R.Project.Entities.Characters.Value_PlayerCharacter_Green,
-                R.Project.Entities.Characters.Value_PlayerCharacter_Blue
+                R.Project.Entities.Actors.Value_PlayerCharacter_Gray,
+                R.Project.Entities.Actors.Value_PlayerCharacter_Red,
+                R.Project.Entities.Actors.Value_PlayerCharacter_Green,
+                R.Project.Entities.Actors.Value_PlayerCharacter_Blue
             } );
 
             public static void Load() {
@@ -73,6 +73,9 @@ namespace Project.Entities.Characters {
                     }
                 }
             }
+        }
+        protected override void LateUpdate() {
+            base.LateUpdate();
         }
 
     }

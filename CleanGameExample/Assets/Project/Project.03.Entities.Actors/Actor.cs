@@ -1,9 +1,8 @@
 ﻿#nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Things;
     using UnityEngine;
 
     [DefaultExecutionOrder( 100 )]
@@ -23,6 +22,8 @@ namespace Project.Entities.Characters {
         protected virtual void FixedUpdate() {
         }
         protected virtual void Update() {
+        }
+        protected virtual void LateUpdate() {
         }
 
         void IDamageable.OnDamage(DamageInfo info) => OnDamage( info );

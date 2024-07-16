@@ -90,7 +90,7 @@ namespace Project {
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.01.UI.Internal/Common/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.02.App/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities/" ) )
-                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Characters/" ) )
+                .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Actors/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Things/" ) )
                 .ThenByDescending( i => i.dir.StartsWith( "Assets/Project/Project.03.Entities.Worlds/" ) )
                 // UI/
@@ -145,12 +145,14 @@ namespace Project {
                 .ThenByDescending( i => i.name.Equals( "Game.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Player.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Camera.cs" ) )
-                // Entities.Characters/
+                // Entities.Actors/
+                .ThenByDescending( i => i.name.Equals( "Actor.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Character.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "PlayerCharacter.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "EnemyCharacter.cs" ) )
                 // Entities.Things/
                 .ThenByDescending( i => i.name.Equals( "Thing.cs" ) )
+                .ThenByDescending( i => i.name.Equals( "Weapon.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Gun.cs" ) )
                 .ThenByDescending( i => i.name.Equals( "Bullet.cs" ) )
                 // Entities.Worlds/

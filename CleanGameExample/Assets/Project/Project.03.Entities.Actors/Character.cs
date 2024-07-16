@@ -1,5 +1,5 @@
 #nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -30,6 +30,9 @@ namespace Project.Entities.Characters {
         }
         protected override void Update() {
             base.Update();
+        }
+        protected override void LateUpdate() {
+            base.LateUpdate();
         }
 
         protected override void OnDamage(DamageInfo info) {

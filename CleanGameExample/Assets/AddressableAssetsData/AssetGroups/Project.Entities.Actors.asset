@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Project.Entities.Characters
+  m_Name: Project.Entities.Actors
   m_EditorClassIdentifier: 
-  m_GroupName: Project.Entities.Characters
+  m_GroupName: Project.Entities.Actors
   m_Data:
     m_SerializedData: []
   m_GUID: 2f96b6367c2d768498ca6304ae2558cc
   m_SerializeEntries:
   - m_GUID: 365c006b10ba4084db9b67c6f9682b2e
-    m_Address: Project.Entities.Characters
+    m_Address: Project.Entities.Actors
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

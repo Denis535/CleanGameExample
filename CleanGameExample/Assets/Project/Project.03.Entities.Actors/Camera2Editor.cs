@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 #nullable enable
-namespace Project.Entities.Characters {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;

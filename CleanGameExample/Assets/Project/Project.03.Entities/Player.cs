@@ -3,7 +3,7 @@ namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Project.Entities.Characters;
+    using Project.Entities.Actors;
     using UnityEngine;
     using UnityEngine.InputSystem;
 

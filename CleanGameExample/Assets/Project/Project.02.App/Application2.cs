@@ -6,7 +6,7 @@ namespace Project.App {
     using System.Threading;
     using System.Threading.Tasks;
     using Project.Entities;
-    using Project.Entities.Characters;
+    using Project.Entities.Actors;
     using Project.Entities.Things;
     using Unity.Services.Authentication;
     using Unity.Services.Core;

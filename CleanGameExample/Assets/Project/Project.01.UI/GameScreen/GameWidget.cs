@@ -5,7 +5,7 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using System.Linq;
     using Project.Entities;
-    using Project.Entities.Characters;
+    using Project.Entities.Actors;
     using UnityEngine;
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;

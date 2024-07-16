@@ -67,7 +67,7 @@ namespace Project.Entities {
             };
         }
         protected void SpawnThing(ThingPoint point) {
-            var thing = Gun.Factory.Create( point.transform.position, point.transform.rotation, null );
+            var thing = Gun.Factory.Create( point.transform.position, point.transform.rotation );
         }
 
         protected bool IsWinner() {

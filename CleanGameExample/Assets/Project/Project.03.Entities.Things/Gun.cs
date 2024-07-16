@@ -24,12 +24,12 @@ namespace Project.Entities.Things {
                 Prefabs.Release();
             }
 
-            public static Gun Create(Transform? parent) {
-                var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), parent );
+            public static Gun Create() {
+                var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), null );
                 return result;
             }
-            public static Gun Create(Vector3 position, Quaternion rotation, Transform? parent) {
-                var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), position, rotation, parent );
+            public static Gun Create(Vector3 position, Quaternion rotation) {
+                var result = GameObject.Instantiate<Gun>( Prefabs.GetValues().GetRandom(), position, rotation, null );
                 return result;
             }
 
@@ -51,7 +51,7 @@ namespace Project.Entities.Things {
         public override void Fire(Actor actor, PlayerBase? player) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
-                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, null, 5, this, actor, player );
+                var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, 5, this, actor, player );
                 Physics.IgnoreCollision( gameObject.RequireComponentInChildren<Collider>(), bullet.gameObject.RequireComponentInChildren<Collider>() );
             }
         }

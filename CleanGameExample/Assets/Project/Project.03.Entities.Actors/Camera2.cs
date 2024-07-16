@@ -4,7 +4,6 @@ namespace Project.Entities.Actors {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 

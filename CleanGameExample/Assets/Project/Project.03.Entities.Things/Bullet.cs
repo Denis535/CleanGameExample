@@ -19,8 +19,8 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, Transform? parent, float force, Weapon weapon, Actor actor, PlayerBase? player) {
-                var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, parent );
+            public static Bullet Create(Vector3 position, Quaternion rotation, float force, Weapon weapon, Actor actor, PlayerBase? player) {
+                var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, null );
                 result.Force = force;
                 result.Weapon = weapon;
                 result.Actor = actor;

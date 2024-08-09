@@ -8,7 +8,7 @@ namespace Project.UI.Common {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UnloadingWidgetView : UIViewBase2 {
+    public class UnloadingWidgetView : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }

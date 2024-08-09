@@ -7,7 +7,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MainWidgetView : UIViewBase2 {
+    public class MainWidgetView : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }

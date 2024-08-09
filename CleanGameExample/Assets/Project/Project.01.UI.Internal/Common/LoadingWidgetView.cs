@@ -9,7 +9,7 @@ namespace Project.UI.Common {
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public class LoadingWidgetView : UIViewBase2 {
+    public class LoadingWidgetView : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }

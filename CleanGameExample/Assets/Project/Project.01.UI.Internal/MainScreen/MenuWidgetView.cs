@@ -8,7 +8,7 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase2 {
+    public class MenuWidgetView : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
@@ -30,19 +30,19 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        public void AddView(UIViewBase2 view) {
+        public void AddView(UIViewBase view) {
             Content.Add( view );
             Recalculate( Content.Children().ToViews().ToArray() );
             Title.text = GetTitle( Content.Children().ToViews().Last() );
         }
-        public void RemoveView(UIViewBase2 view) {
+        public void RemoveView(UIViewBase view) {
             Content.Remove( view );
             Recalculate( Content.Children().ToViews().ToArray() );
             Title.text = GetTitle( Content.Children().ToViews().Last() );
         }
 
         // Helpers
-        private static void Recalculate(UIViewBase2[] views) {
+        private static void Recalculate(UIViewBase[] views) {
             foreach (var view in views) {
                 if (view.HasFocusedElement()) {
                     view.SaveFocus();
@@ -84,7 +84,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_Menu : UIViewBase2 {
+    public class MenuWidgetView_Menu : UIViewBase {
 
         protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
@@ -104,7 +104,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_StartGame : UIViewBase2 {
+    public class MenuWidgetView_StartGame : UIViewBase {
 
         protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
@@ -124,7 +124,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectLevel : UIViewBase2 {
+    public class MenuWidgetView_SelectLevel : UIViewBase {
 
         protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
@@ -148,7 +148,7 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectCharacter : UIViewBase2 {
+    public class MenuWidgetView_SelectCharacter : UIViewBase {
 
         protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }

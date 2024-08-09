@@ -7,7 +7,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public abstract class TotalsWidgetView : UIViewBase2 {
+    public abstract class TotalsWidgetView : UIViewBase {
 
         public TotalsWidgetView() {
         }

@@ -19,14 +19,14 @@
       "url": "https://package.openupm.com"
     },
     "com.denis535.clean-architecture-game-framework": {
-      "version": "1.2.14",
+      "version": "https://github.com/Denis535/CleanArchitectureGameFramework.git?path=/Packages/com.denis535.clean-architecture-game-framework",
       "depth": 0,
-      "source": "registry",
+      "source": "git",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0",
         "com.unity.modules.audio": "1.0.0"
       },
-      "url": "https://package.openupm.com"
+      "hash": "8cd4156749700d92db254d72db9bf9cd97a87c66"
     },
     "com.denis535.colorful-project-window": {
       "version": "1.0.36",
@@ -241,7 +241,7 @@
       }
     },
     "com.unity.terrain-tools": {
-      "version": "5.1.1",
+      "version": "5.1.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {

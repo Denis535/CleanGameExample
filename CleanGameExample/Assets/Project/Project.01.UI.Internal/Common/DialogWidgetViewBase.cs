@@ -8,7 +8,7 @@ namespace Project.UI.Common {
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public abstract class DialogWidgetViewBase : UIViewBase2 {
+    public abstract class DialogWidgetViewBase : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; protected init; } = default!;

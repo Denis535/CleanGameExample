@@ -7,7 +7,7 @@ namespace Project.UI.Common {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class ProfileSettingsWidgetView : UIViewBase2 {
+    public class ProfileSettingsWidgetView : UIViewBase {
 
         protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }

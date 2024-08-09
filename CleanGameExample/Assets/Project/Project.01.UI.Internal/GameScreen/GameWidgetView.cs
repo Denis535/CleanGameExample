@@ -8,7 +8,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
 
-    public class GameWidgetView : UIViewBase2 {
+    public class GameWidgetView : UIViewBase {
 
         private InputActions_UI Input { get; }
         protected override VisualElement VisualElement => Widget;

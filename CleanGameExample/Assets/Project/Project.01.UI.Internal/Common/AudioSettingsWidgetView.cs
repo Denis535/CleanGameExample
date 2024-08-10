@@ -9,7 +9,6 @@ namespace Project.UI.Common {
 
     public class AudioSettingsWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public Slider MasterVolume { get; }
         public Slider MusicVolume { get; }
@@ -17,7 +16,7 @@ namespace Project.UI.Common {
         public Slider GameVolume { get; }
 
         public AudioSettingsWidgetView() {
-            Widget = VisualElementFactory.Widget( "audio-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
+            Widget = VisualElementFactory.Widget( "audio-settings-widget" ).Classes( "grow-1" ).Children(
                 VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
                     MasterVolume = VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ),
                     MusicVolume = VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ),

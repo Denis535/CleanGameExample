@@ -10,7 +10,6 @@ namespace Project.UI.Common {
 
     public abstract class DialogWidgetViewBase : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; protected init; } = default!;
         public Card Card { get; protected init; } = default!;
         public Header Header { get; protected init; } = default!;
@@ -46,7 +45,7 @@ namespace Project.UI.Common {
     public class DialogWidgetView : DialogWidgetViewBase {
 
         public DialogWidgetView() {
-            Widget = VisualElementFactory.DialogWidget().UserData( this ).Children(
+            Widget = VisualElementFactory.DialogWidget().Children(
                 VisualElementFactory.DialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title = VisualElementFactory.Label( null )
@@ -69,7 +68,7 @@ namespace Project.UI.Common {
     public class InfoDialogWidgetView : DialogWidgetViewBase {
 
         public InfoDialogWidgetView() {
-            Widget = VisualElementFactory.InfoDialogWidget().UserData( this ).Children(
+            Widget = VisualElementFactory.InfoDialogWidget().Children(
                 VisualElementFactory.InfoDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title = VisualElementFactory.Label( null )
@@ -92,7 +91,7 @@ namespace Project.UI.Common {
     public class WarningDialogWidgetView : DialogWidgetViewBase {
 
         public WarningDialogWidgetView() {
-            Widget = VisualElementFactory.WarningDialogWidget().UserData( this ).Children(
+            Widget = VisualElementFactory.WarningDialogWidget().Children(
                 VisualElementFactory.WarningDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title = VisualElementFactory.Label( null )
@@ -115,7 +114,7 @@ namespace Project.UI.Common {
     public class ErrorDialogWidgetView : DialogWidgetViewBase {
 
         public ErrorDialogWidgetView() {
-            Widget = VisualElementFactory.ErrorDialogWidget().UserData( this ).Children(
+            Widget = VisualElementFactory.ErrorDialogWidget().Children(
                 VisualElementFactory.ErrorDialogCard().Children(
                     Header = VisualElementFactory.Header().Pipe( i => i.SetDisplayed( false ) ).Children(
                         Title = VisualElementFactory.Label( null )

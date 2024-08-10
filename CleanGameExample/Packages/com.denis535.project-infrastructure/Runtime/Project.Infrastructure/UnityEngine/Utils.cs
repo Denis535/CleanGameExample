@@ -51,27 +51,27 @@ namespace UnityEngine {
     public static class UIViewExtensions {
 
         public static bool IsAttached(this UIViewBase view) {
-            return view.__GetVisualElement__().panel != null;
+            return view.panel != null;
         }
 
         public static bool IsEnabledSelf(this UIViewBase view) {
-            return view.__GetVisualElement__().enabledSelf;
+            return view.enabledSelf;
         }
         public static bool IsEnabledInHierarchy(this UIViewBase view) {
-            return view.__GetVisualElement__().enabledInHierarchy;
+            return view.enabledInHierarchy;
         }
         public static void SetEnabled(this UIViewBase view, bool value) {
-            view.__GetVisualElement__().SetEnabled( value );
+            view.SetEnabled( value );
         }
 
         public static bool IsDisplayedSelf(this UIViewBase view) {
-            return view.__GetVisualElement__().IsDisplayedSelf();
+            return view.IsDisplayedSelf();
         }
         public static bool IsDisplayedInHierarchy(this UIViewBase view) {
-            return view.__GetVisualElement__().IsDisplayedInHierarchy();
+            return view.IsDisplayedInHierarchy();
         }
         public static void SetDisplayed(this UIViewBase view, bool value) {
-            view.__GetVisualElement__().SetDisplayed( value );
+            view.SetDisplayed( value );
         }
 
     }

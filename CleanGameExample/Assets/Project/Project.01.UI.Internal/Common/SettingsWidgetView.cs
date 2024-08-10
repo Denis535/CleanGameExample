@@ -10,7 +10,6 @@ namespace Project.UI.Common {
 
     public class SettingsWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public Label Title { get; }
         public TabView TabView { get; }
@@ -21,7 +20,7 @@ namespace Project.UI.Common {
         public Button Back { get; }
 
         public SettingsWidgetView() {
-            Widget = VisualElementFactory.MediumWidget( "settings-widget" ).UserData( this ).Children(
+            Widget = VisualElementFactory.MediumWidget( "settings-widget" ).Children(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Settings" )

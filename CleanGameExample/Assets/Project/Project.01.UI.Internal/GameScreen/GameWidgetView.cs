@@ -11,7 +11,6 @@ namespace Project.UI.GameScreen {
     public class GameWidgetView : UIViewBase {
 
         private InputActions_UI Input { get; }
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public VisualElement Target { get; }
         public bool IsCursorVisible {
@@ -26,7 +25,7 @@ namespace Project.UI.GameScreen {
                     Widget.Focus();
                 }
             };
-            Widget = VisualElementFactory.Widget( "game-widget" ).UserData( this ).Pipe( i => i.focusable = true ).Children(
+            Widget = VisualElementFactory.Widget( "game-widget" ).Pipe( i => i.focusable = true ).Children(
                 Target = VisualElementFactory.Label( "+" )
                     .Classes( "font-size-400pc", "color-light", "margin-0pc", "border-0pc", "position-absolute", "left-50pc", "top-50pc" )
                     .Style( i => i.translate = new Translate( new Length( -50, LengthUnit.Percent ), new Length( -50, LengthUnit.Percent ) ) )

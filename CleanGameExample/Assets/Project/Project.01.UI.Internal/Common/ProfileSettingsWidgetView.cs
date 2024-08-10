@@ -9,12 +9,11 @@ namespace Project.UI.Common {
 
     public class ProfileSettingsWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public TextField Name { get; }
 
         public ProfileSettingsWidgetView(Func<string?, bool> nameValidator) {
-            Widget = VisualElementFactory.Widget( "profile-settings-widget" ).Classes( "grow-1" ).UserData( this ).Children(
+            Widget = VisualElementFactory.Widget( "profile-settings-widget" ).Classes( "grow-1" ).Children(
                 VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
                     Name = VisualElementFactory.TextField( "Name", 16 ).Classes( "label-width-25pc" )
                 )

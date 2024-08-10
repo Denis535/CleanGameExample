@@ -10,12 +10,11 @@ namespace Project.UI.Common {
 
     public class UnloadingWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public VisualElement Background { get; }
 
         public UnloadingWidgetView() {
-            Widget = VisualElementFactory.Widget( "unloading-widget" ).UserData( this ).Children(
+            Widget = VisualElementFactory.Widget( "unloading-widget" ).Children(
                 Background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" )
             );
             Background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {

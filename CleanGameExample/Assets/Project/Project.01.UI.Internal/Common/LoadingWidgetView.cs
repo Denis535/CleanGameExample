@@ -11,13 +11,12 @@ namespace Project.UI.Common {
 
     public class LoadingWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public VisualElement Background { get; }
         public Label Loading { get; }
 
         public LoadingWidgetView() {
-            Widget = VisualElementFactory.Widget( "loading-widget" ).UserData( this ).Children(
+            Widget = VisualElementFactory.Widget( "loading-widget" ).Children(
                 Background = VisualElementFactory.VisualElement().Classes( "loading-widget-background", "width-100pc", "height-100pc" ),
                 Loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" )
             );

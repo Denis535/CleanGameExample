@@ -9,7 +9,6 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public Label Title { get; }
         public Button Resume { get; }
@@ -17,7 +16,7 @@ namespace Project.UI.GameScreen {
         public Button Back { get; }
 
         public MenuWidgetView() {
-            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(
+            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).Children(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )

@@ -10,13 +10,12 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidgetView : UIViewBase {
 
-        protected override VisualElement VisualElement => Widget;
         public Widget Widget { get; }
         public Label Title { get; }
         public VisualElement Content { get; }
 
         public MenuWidgetView() {
-            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).UserData( this ).Children(
+            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).Children(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )
@@ -26,19 +25,21 @@ namespace Project.UI.MainScreen {
             );
         }
         public override void Dispose() {
-            Content.Children().ToViews().DisposeAll();
+            foreach (var view in Content.Children().Cast<UIViewBase>()) {
+                view.Dispose();
+            }
             base.Dispose();
         }
 
         public void AddView(UIViewBase view) {
             Content.Add( view );
-            Recalculate( Content.Children().ToViews().ToArray() );
-            Title.text = GetTitle( Content.Children().ToViews().Last() );
+            Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+            Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
         }
         public void RemoveView(UIViewBase view) {
             Content.Remove( view );
-            Recalculate( Content.Children().ToViews().ToArray() );
-            Title.text = GetTitle( Content.Children().ToViews().Last() );
+            Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+            Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
         }
 
         // Helpers
@@ -86,14 +87,13 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_Menu : UIViewBase {
 
-        protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
         public Button StartGame { get; }
         public Button Settings { get; }
         public Button Quit { get; }
 
         public MenuWidgetView_Menu() {
-            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+            Scope = VisualElementFactory.ColumnScope().Children(
                 StartGame = VisualElementFactory.Select( "Start Game" ),
                 Settings = VisualElementFactory.Select( "Settings" ),
                 Quit = VisualElementFactory.Quit( "Quit" )
@@ -106,14 +106,13 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_StartGame : UIViewBase {
 
-        protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
         public Button NewGame { get; }
         public Button Continue { get; }
         public Button Back { get; }
 
         public MenuWidgetView_StartGame() {
-            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+            Scope = VisualElementFactory.ColumnScope().Children(
                 NewGame = VisualElementFactory.Select( "New Game" ),
                 Continue = VisualElementFactory.Select( "Continue" ),
                 Back = VisualElementFactory.Back( "Back" )
@@ -126,7 +125,6 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_SelectLevel : UIViewBase {
 
-        protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
         public Button Level1 { get; }
         public Button Level2 { get; }
@@ -134,7 +132,7 @@ namespace Project.UI.MainScreen {
         public Button Back { get; }
 
         public MenuWidgetView_SelectLevel() {
-            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+            Scope = VisualElementFactory.ColumnScope().Children(
                 VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
                     Level1 = VisualElementFactory.Select( "Level 1" ),
                     Level2 = VisualElementFactory.Select( "Level 2" ),
@@ -150,7 +148,6 @@ namespace Project.UI.MainScreen {
     }
     public class MenuWidgetView_SelectCharacter : UIViewBase {
 
-        protected override VisualElement VisualElement => Scope;
         public ColumnScope Scope { get; }
         public Button Gray { get; }
         public Button Red { get; }
@@ -159,7 +156,7 @@ namespace Project.UI.MainScreen {
         public Button Back { get; }
 
         public MenuWidgetView_SelectCharacter() {
-            Scope = VisualElementFactory.ColumnScope().UserData( this ).Children(
+            Scope = VisualElementFactory.ColumnScope().Children(
                 VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
                     Gray = VisualElementFactory.Select( "Gray" ),
                     Red = VisualElementFactory.Select( "Red" ),

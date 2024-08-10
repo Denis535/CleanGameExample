@@ -76,7 +76,7 @@ namespace Project.UI {
         }
 
     }
-    public class RootWidgetView : UIRootWidgetView {
+    public class RootWidgetView : UIRootWidgetViewBase {
 
         // Constructor
         public RootWidgetView() {

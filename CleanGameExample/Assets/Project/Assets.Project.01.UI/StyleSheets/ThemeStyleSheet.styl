@@ -1,18 +1,51 @@
 @import "Packages/com.denis535.uitoolkit-theme-style-sheet/Runtime/UIToolkit.ThemeStyleSheet/Assets.UnityEngine.UIElements/StyleSheets/Internal/_Utils"
 
-// .main-widget-background
-.main-widget-background
+.widget-view
+    add-layout-position(absolute)
+    add-layout-size(100%, 100%)
+    add-layout-box(0px, 0px, 0px)
+.root-widget-view
+    add-layout-position(absolute)
+    add-layout-size(100%, 100%)
+    add-layout-box(0px, 0px, 0px)
+.left-widget-view
+    add-layout-position(absolute, right: 60%, bottom: 10%)
+    add-layout-size(600px, auto)
+    add-layout-box(0px, 0px, 0px)
+.small-widget-view
+    add-layout-position(absolute, left: 50%, top: 50%)
+    add-layout-size(1400px, 700px)
+    add-layout-box(0px, 0px, 0px)
+    translate -50% -50%()
+.medium-widget-view
+    add-layout-position(absolute, left: 50%, top: 50%)
+    add-layout-size(1600px, 800px)
+    add-layout-box(0px, 0px, 0px)
+    translate -50% -50%
+.large-widget-view
+    add-layout-position(absolute, left: 50%, top: 50%)
+    add-layout-size(1800px, 900px)
+    add-layout-box(0px, 0px, 0px)
+    translate -50% -50%
+.dialog-widget-view
+.info-dialog-widget-view
+.warning-dialog-widget-view
+.error-dialog-widget-view
+    add-layout-position(absolute, left: 50%, top: 49%)
+    add-layout-size(1000px, 500px)
+    add-layout-box(0px, 0px, 0px)
+    translate -50% -50%
+
+.main-widget-view-background
     add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
 
-// .loading-widget-background
-.loading-widget-background
+.loading-widget-view-background
     add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
     transition-property -unity-background-image-tint-color, translate, rotate, scale
     transition-duration 10s
     transition-timing-function ease
 
-// .unloading-widget-background
-.unloading-widget-background
+.unloading-widget-view-background
     add-view-background(null, img('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png', null, scale-and-crop))
     transition-property -unity-background-image-tint-color, translate, rotate, scale
     transition-duration 1s

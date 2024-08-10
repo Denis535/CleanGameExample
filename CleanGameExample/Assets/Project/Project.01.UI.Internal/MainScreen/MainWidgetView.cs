@@ -9,12 +9,7 @@ namespace Project.UI.MainScreen {
 
     public class MainWidgetView : UIViewBase {
 
-        public Widget Widget { get; }
-
-        public MainWidgetView() : base( "main-widget-view" ) {
-            Add(
-                Widget = VisualElementFactory.Widget( "main-widget" ).Classes( "main-widget-background" )
-            );
+        public MainWidgetView() : base( "main-widget-view", "widget-view", "main-widget-view-background" ) {
         }
         public override void Dispose() {
             base.Dispose();

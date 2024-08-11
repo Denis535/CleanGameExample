@@ -5,17 +5,15 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using System.Text;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class UnloadingWidgetView : UIViewBase {
+    public class UnloadingWidgetView : WidgetView {
 
-        public Widget Widget { get; }
         public VisualElement Background { get; }
 
-        public UnloadingWidgetView() {
-            Widget = VisualElementFactory.Widget( "unloading-widget" ).Children(
-                Background = VisualElementFactory.VisualElement().Classes( "unloading-widget-background", "width-100pc", "height-100pc" )
+        public UnloadingWidgetView() : base( "unloading-widget-view" ) {
+            Add(
+                Background = VisualElementFactory.VisualElement().Classes( "unloading-widget-view-background", "width-100pc", "height-100pc" )
             );
             Background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {
                 Background.style.unityBackgroundImageTintColor = Color.gray;

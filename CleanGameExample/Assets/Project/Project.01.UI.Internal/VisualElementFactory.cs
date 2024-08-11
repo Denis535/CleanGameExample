@@ -5,27 +5,23 @@ namespace Project.UI {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
+    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
     public static partial class VisualElementFactory {
 
         public static Func<object?, string?>? StringSelector { get; set; }
 
-        public static event Action<VisualElement>? OnWidgetAttach;
-        public static event Action<VisualElement>? OnWidgetDetach;
-
         public static event EventCallback<EventBase>? OnPlayClick;
         public static event EventCallback<ClickEvent>? OnPlaySelect;
         public static event EventCallback<ClickEvent>? OnPlaySubmit;
         public static event EventCallback<ClickEvent>? OnPlayCancel;
         public static event EventCallback<IChangeEvent>? OnPlayChange;
-
         public static event EventCallback<FocusEvent>? OnPlayFocus;
-
-        public static event EventCallback<AttachToPanelEvent>? OnPlayDialog;
-        public static event EventCallback<AttachToPanelEvent>? OnPlayInfoDialog;
-        public static event EventCallback<AttachToPanelEvent>? OnPlayWarningDialog;
-        public static event EventCallback<AttachToPanelEvent>? OnPlayErrorDialog;
+        public static EventCallback<AttachToPanelEvent>? OnPlayDialog;
+        public static EventCallback<AttachToPanelEvent>? OnPlayInfoDialog;
+        public static EventCallback<AttachToPanelEvent>? OnPlayWarningDialog;
+        public static EventCallback<AttachToPanelEvent>? OnPlayErrorDialog;
 
         public static VisualElement VisualElement() {
             var result = Create<VisualElement>( null, null );
@@ -172,66 +168,6 @@ namespace Project.UI {
     }
     public static partial class VisualElementFactory {
 
-        public static Widget Widget(string name) {
-            var result = Create<Widget>( name, "widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget LeftWidget(string name) {
-            var result = Create<Widget>( name, "left-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget SmallWidget(string name) {
-            var result = Create<Widget>( name, "small-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget MediumWidget(string name) {
-            var result = Create<Widget>( name, "medium-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget LargeWidget(string name) {
-            var result = Create<Widget>( name, "large-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-
-        public static Widget DialogWidget() {
-            var result = Create<Widget>( "dialog-widget", "dialog-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnPlayDialog?.Invoke( evt ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget InfoDialogWidget() {
-            var result = Create<Widget>( "info-dialog-widget", "info-dialog-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnPlayInfoDialog?.Invoke( evt ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget WarningDialogWidget() {
-            var result = Create<Widget>( "warning-dialog-widget", "warning-dialog-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnPlayWarningDialog?.Invoke( evt ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-        public static Widget ErrorDialogWidget() {
-            var result = Create<Widget>( "error-dialog-widget", "error-dialog-widget" );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnWidgetAttach?.Invoke( (VisualElement) evt.target ) );
-            result.RegisterCallbackOnce<AttachToPanelEvent>( evt => OnPlayErrorDialog?.Invoke( evt ) );
-            result.RegisterCallbackOnce<DetachFromPanelEvent>( evt => OnWidgetDetach?.Invoke( (VisualElement) evt.target ) );
-            return result;
-        }
-
         public static Card Card() {
             var result = Create<Card>( "card", "card" );
             return result;
@@ -311,6 +247,70 @@ namespace Project.UI {
         public static Box Box() {
             var result = Create<Box>( "box", null );
             return result;
+        }
+
+    }
+    public abstract class View : UIViewBase {
+
+        public View(string name) : base( name, "view" ) {
+        }
+
+    }
+    public abstract class WidgetView : UIViewBase {
+
+        public WidgetView(string name) : base( name, "widget-view" ) {
+        }
+
+    }
+    public abstract class LeftWidgetView : UIViewBase {
+
+        public LeftWidgetView(string name) : base( name, "left-widget-view" ) {
+        }
+
+    }
+    public abstract class SmallWidgetView : UIViewBase {
+
+        public SmallWidgetView(string name) : base( name, "small-widget-view" ) {
+        }
+
+    }
+    public abstract class MediumWidgetView : UIViewBase {
+
+        public MediumWidgetView(string name) : base( name, "medium-widget-view" ) {
+        }
+
+    }
+    public abstract class LargeWidgetView : UIViewBase {
+
+        public LargeWidgetView(string name) : base( name, "large-widget-view" ) {
+        }
+
+    }
+    public abstract class DialogWidgetViewBase : UIViewBase {
+
+        public DialogWidgetViewBase(string name) : base( name, "dialog-widget-view" ) {
+            RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayDialog?.Invoke( evt ) );
+        }
+
+    }
+    public abstract class InfoDialogWidgetViewBase : UIViewBase {
+
+        public InfoDialogWidgetViewBase(string name) : base( name, "info-dialog-widget-view" ) {
+            RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayInfoDialog?.Invoke( evt ) );
+        }
+
+    }
+    public abstract class WarningDialogWidgetViewBase : UIViewBase {
+
+        public WarningDialogWidgetViewBase(string name) : base( name, "warning-dialog-widget-view" ) {
+            RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayWarningDialog?.Invoke( evt ) );
+        }
+
+    }
+    public abstract class ErrorDialogWidgetViewBase : UIViewBase {
+
+        public ErrorDialogWidgetViewBase(string name) : base( name, "error-dialog-widget-view" ) {
+            RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayErrorDialog?.Invoke( evt ) );
         }
 
     }

@@ -4,12 +4,11 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
-    using UnityEngine.UIElements;
 
-    public class MainWidgetView : UIViewBase {
+    public class MainWidgetView : WidgetView {
 
-        public MainWidgetView() : base( "main-widget-view", "widget-view", "main-widget-view-background" ) {
+        public MainWidgetView() : base( "main-widget-view" ) {
+            AddToClassList( "main-widget-view-background" );
         }
         public override void Dispose() {
             base.Dispose();

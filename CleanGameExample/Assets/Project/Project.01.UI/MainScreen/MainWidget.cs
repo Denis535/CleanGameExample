@@ -8,6 +8,7 @@ namespace Project.UI.MainScreen {
     using Project.UI.Common;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.UIElements;
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
@@ -16,7 +17,7 @@ namespace Project.UI.MainScreen {
         public MainWidget(IDependencyContainer container) : base( container ) {
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
-            //AddChild( new MenuWidget( Container ) );
+            AddChild( new MenuWidget( Container ) );
         }
         public override void Dispose() {
             View.Dispose();
@@ -25,15 +26,15 @@ namespace Project.UI.MainScreen {
 
         protected override async void OnActivate(object? argument) {
             ShowSelf();
-            //Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( false );
-            //try {
-            //    await Application.RunAsync( DisposeCancellationToken );
-            //} catch (OperationCanceledException) {
-            //} catch (Exception ex) {
-            //    Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );
-            //} finally {
-            //    Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
-            //}
+            Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( false );
+            try {
+                await Application.RunAsync( DisposeCancellationToken );
+            } catch (OperationCanceledException) {
+            } catch (Exception ex) {
+                Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );
+            } finally {
+                Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
+            }
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();

@@ -48,33 +48,6 @@ namespace UnityEngine {
         }
 
     }
-    public static class UIViewExtensions {
-
-        public static bool IsAttached(this UIViewBase view) {
-            return view.panel != null;
-        }
-
-        public static bool IsEnabledSelf(this UIViewBase view) {
-            return view.enabledSelf;
-        }
-        public static bool IsEnabledInHierarchy(this UIViewBase view) {
-            return view.enabledInHierarchy;
-        }
-        public static void SetEnabled(this UIViewBase view, bool value) {
-            view.SetEnabled( value );
-        }
-
-        public static bool IsDisplayedSelf(this UIViewBase view) {
-            return view.IsDisplayedSelf();
-        }
-        public static bool IsDisplayedInHierarchy(this UIViewBase view) {
-            return view.IsDisplayedInHierarchy();
-        }
-        public static void SetDisplayed(this UIViewBase view, bool value) {
-            view.SetDisplayed( value );
-        }
-
-    }
     public static class VisualElementExtensions {
 
         public static void SetValue<T>(this BaseField<T> element, T value) {

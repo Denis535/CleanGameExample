@@ -8,14 +8,13 @@ namespace Project.UI.MainScreen {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class MenuWidgetView : LeftWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public VisualElement Content { get; }
 
-        public MenuWidgetView() {
-            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).Children(
+        public MenuWidgetView() : base( "menu-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )
@@ -69,7 +68,7 @@ namespace Project.UI.MainScreen {
         }
         // Helpers
         private static string GetTitle(UIViewBase view) {
-            if (view is MenuWidgetView_Menu) {
+            if (view is MenuWidgetView_Initial) {
                 return "Menu";
             }
             if (view is MenuWidgetView_StartGame) {
@@ -85,15 +84,14 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_Menu : UIViewBase {
+    public class MenuWidgetView_Initial : View {
 
-        public ColumnScope Scope { get; }
         public Button StartGame { get; }
         public Button Settings { get; }
         public Button Quit { get; }
 
-        public MenuWidgetView_Menu() {
-            Scope = VisualElementFactory.ColumnScope().Children(
+        public MenuWidgetView_Initial() : base( "initial-view" ) {
+            this.Add(
                 StartGame = VisualElementFactory.Select( "Start Game" ),
                 Settings = VisualElementFactory.Select( "Settings" ),
                 Quit = VisualElementFactory.Quit( "Quit" )
@@ -104,15 +102,14 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_StartGame : UIViewBase {
+    public class MenuWidgetView_StartGame : View {
 
-        public ColumnScope Scope { get; }
         public Button NewGame { get; }
         public Button Continue { get; }
         public Button Back { get; }
 
-        public MenuWidgetView_StartGame() {
-            Scope = VisualElementFactory.ColumnScope().Children(
+        public MenuWidgetView_StartGame() : base( "start-game-view" ) {
+            this.Add(
                 NewGame = VisualElementFactory.Select( "New Game" ),
                 Continue = VisualElementFactory.Select( "Continue" ),
                 Back = VisualElementFactory.Back( "Back" )
@@ -123,16 +120,15 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectLevel : UIViewBase {
+    public class MenuWidgetView_SelectLevel : View {
 
-        public ColumnScope Scope { get; }
         public Button Level1 { get; }
         public Button Level2 { get; }
         public Button Level3 { get; }
         public Button Back { get; }
 
-        public MenuWidgetView_SelectLevel() {
-            Scope = VisualElementFactory.ColumnScope().Children(
+        public MenuWidgetView_SelectLevel() : base( "select-level-view" ) {
+            this.Add(
                 VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
                     Level1 = VisualElementFactory.Select( "Level 1" ),
                     Level2 = VisualElementFactory.Select( "Level 2" ),
@@ -146,17 +142,16 @@ namespace Project.UI.MainScreen {
         }
 
     }
-    public class MenuWidgetView_SelectCharacter : UIViewBase {
+    public class MenuWidgetView_SelectCharacter : View {
 
-        public ColumnScope Scope { get; }
         public Button Gray { get; }
         public Button Red { get; }
         public Button Green { get; }
         public Button Blue { get; }
         public Button Back { get; }
 
-        public MenuWidgetView_SelectCharacter() {
-            Scope = VisualElementFactory.ColumnScope().Children(
+        public MenuWidgetView_SelectCharacter() : base( "select-character-view" ) {
+            this.Add(
                 VisualElementFactory.ColumnScope().Classes( "margin-bottom-4px" ).Children(
                     Gray = VisualElementFactory.Select( "Gray" ),
                     Red = VisualElementFactory.Select( "Red" ),

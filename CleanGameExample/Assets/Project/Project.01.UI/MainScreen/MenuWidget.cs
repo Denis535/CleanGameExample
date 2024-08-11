@@ -48,8 +48,8 @@ namespace Project.UI.MainScreen {
             view.AddView( CreateView_Menu( widget ) );
             return view;
         }
-        private static MenuWidgetView_Menu CreateView_Menu(MenuWidget widget) {
-            var view = new MenuWidgetView_Menu();
+        private static MenuWidgetView_Initial CreateView_Menu(MenuWidget widget) {
+            var view = new MenuWidgetView_Initial();
             view.StartGame.RegisterCallback<ClickEvent>( evt => {
                 widget.View.AddView( CreateView_StartGame( widget ) );
             } );

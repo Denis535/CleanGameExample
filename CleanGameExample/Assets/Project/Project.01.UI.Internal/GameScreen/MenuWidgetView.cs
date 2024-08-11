@@ -4,19 +4,17 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class MenuWidgetView : UIViewBase {
+    public class MenuWidgetView : LeftWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public Button Resume { get; }
         public Button Settings { get; }
         public Button Back { get; }
 
-        public MenuWidgetView() {
-            Widget = VisualElementFactory.LeftWidget( "menu-widget" ).Children(
+        public MenuWidgetView() : base( "menu-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )

@@ -5,12 +5,10 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class SettingsWidgetView : UIViewBase {
+    public class SettingsWidgetView : MediumWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public TabView TabView { get; }
         public Tab ProfileSettingsTab { get; }
@@ -19,8 +17,8 @@ namespace Project.UI.Common {
         public Button Okey { get; }
         public Button Back { get; }
 
-        public SettingsWidgetView() {
-            Widget = VisualElementFactory.MediumWidget( "settings-widget" ).Children(
+        public SettingsWidgetView() : base( "settings-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Settings" )
@@ -38,7 +36,7 @@ namespace Project.UI.Common {
                     )
                 )
             );
-            Widget.OnValidate( evt => {
+            this.OnValidate( evt => {
                 Okey.SetValid(
                     ProfileSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&
                     VideoSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&

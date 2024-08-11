@@ -5,19 +5,17 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using System.Text;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
 
-    public class LoadingWidgetView : UIViewBase {
+    public class LoadingWidgetView : WidgetView {
 
-        public Widget Widget { get; }
         public VisualElement Background { get; }
         public Label Loading { get; }
 
-        public LoadingWidgetView() {
-            Widget = VisualElementFactory.Widget( "loading-widget" ).Children(
-                Background = VisualElementFactory.VisualElement().Classes( "loading-widget-background", "width-100pc", "height-100pc" ),
+        public LoadingWidgetView() : base( "loading-widget-view" ) {
+            this.Add(
+                Background = VisualElementFactory.VisualElement().Classes( "loading-widget-view-background", "width-100pc", "height-100pc" ),
                 Loading = VisualElementFactory.Label( "Loading..." ).Classes( "color-light", "font-size-200pc", "font-style-bold", "position-absolute", "left-50pc", "bottom-2pc", "translate-x-n50pc" )
             );
             Background.RegisterCallbackOnce<AttachToPanelEvent>( async evt => {

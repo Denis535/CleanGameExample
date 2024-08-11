@@ -58,13 +58,12 @@ namespace Project.UI {
             Widget.AddChild( new UnloadingWidget( Container ) );
         }
         public void HideScreen() {
-            Widget.RemoveChildren( i => i is not DialogWidgetBase );
+            Widget.RemoveChildren( i => i is not (WarningDialogWidget or ErrorDialogWidget) );
         }
 
     }
     public class RootWidget : UIRootWidgetBase {
 
-        // Constructor
         public RootWidget(IDependencyContainer container) : base( container ) {
             View = new RootWidgetView();
             View.OnSubmitEvent += OnSubmit;
@@ -78,19 +77,16 @@ namespace Project.UI {
     }
     public class RootWidgetView : UIRootWidgetViewBase {
 
-        // Constructor
         public RootWidgetView() {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        // GetPriority
         protected override int GetPriority(UIViewBase view) {
             return GetLayer( view );
         }
 
-        // GetLayer
         protected override int GetLayer(UIViewBase view) {
             return view switch {
                 // MainScreen
@@ -106,7 +102,10 @@ namespace Project.UI {
                 Common.VideoSettingsWidgetView => 500,
                 Common.AudioSettingsWidgetView => 500,
                 Common.LoadingWidgetView => 999,
-                Common.DialogWidgetViewBase => 1000,
+                Common.DialogWidgetView => 1000,
+                Common.InfoDialogWidgetView => 1000,
+                Common.WarningDialogWidgetView => 1000,
+                Common.ErrorDialogWidgetView => 1000,
                 _ => 0
             };
         }

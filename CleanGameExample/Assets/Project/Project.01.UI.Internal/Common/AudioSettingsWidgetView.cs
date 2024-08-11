@@ -4,19 +4,17 @@ namespace Project.UI.Common {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public class AudioSettingsWidgetView : UIViewBase {
+    public class AudioSettingsWidgetView : WidgetView {
 
-        public Widget Widget { get; }
         public Slider MasterVolume { get; }
         public Slider MusicVolume { get; }
         public Slider SfxVolume { get; }
         public Slider GameVolume { get; }
 
-        public AudioSettingsWidgetView() {
-            Widget = VisualElementFactory.Widget( "audio-settings-widget" ).Classes( "grow-1" ).Children(
+        public AudioSettingsWidgetView() : base( "audio-settings-widget-view" ) {
+            Add(
                 VisualElementFactory.ColumnGroup().Classes( "gray", "medium", "margin-0px", "grow-1" ).Children(
                     MasterVolume = VisualElementFactory.SliderField( "Master Volume", 0, 1 ).Classes( "label-width-25pc" ),
                     MusicVolume = VisualElementFactory.SliderField( "Music Volume", 0, 1 ).Classes( "label-width-25pc" ),

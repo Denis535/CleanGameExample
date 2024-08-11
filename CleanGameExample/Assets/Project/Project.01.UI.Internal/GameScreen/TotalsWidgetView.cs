@@ -4,12 +4,11 @@ namespace Project.UI.GameScreen {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    public abstract class TotalsWidgetView : UIViewBase {
+    public abstract class TotalsWidgetView : SmallWidgetView {
 
-        public TotalsWidgetView() {
+        public TotalsWidgetView(string name) : base( name ) {
         }
         public override void Dispose() {
             base.Dispose();
@@ -18,14 +17,13 @@ namespace Project.UI.GameScreen {
     }
     public class TotalsWidgetView_LevelCompleted : TotalsWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public Label Message { get; }
         public Button Continue { get; }
         public Button Back { get; }
 
-        public TotalsWidgetView_LevelCompleted() {
-            Widget = VisualElementFactory.SmallWidget( "level-completed-widget" ).Children(
+        public TotalsWidgetView_LevelCompleted() : base( "level-completed-totals-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Level Completed" )
@@ -53,13 +51,12 @@ namespace Project.UI.GameScreen {
     }
     public class TotalsWidgetView_GameCompleted : TotalsWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public Label Message { get; }
         public Button Okey { get; }
 
-        public TotalsWidgetView_GameCompleted() {
-            Widget = VisualElementFactory.SmallWidget( "game-completed-widget" ).Children(
+        public TotalsWidgetView_GameCompleted() : base( "game-completed-totals-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Game Completed" )
@@ -85,14 +82,13 @@ namespace Project.UI.GameScreen {
     }
     public class TotalsWidgetView_LevelFailed : TotalsWidgetView {
 
-        public Widget Widget { get; }
         public Label Title { get; }
         public Label Message { get; }
         public Button Retry { get; }
         public Button Back { get; }
 
-        public TotalsWidgetView_LevelFailed() {
-            Widget = VisualElementFactory.SmallWidget( "level-failed-widget" ).Children(
+        public TotalsWidgetView_LevelFailed() : base( "level-failed-totals-widget-view" ) {
+            Add(
                 VisualElementFactory.Card().Children(
                     VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Level Failed" )

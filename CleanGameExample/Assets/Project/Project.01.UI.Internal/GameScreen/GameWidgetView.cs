@@ -6,6 +6,7 @@ namespace Project.UI.GameScreen {
     using UnityEngine;
     using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
+    using UnityEngine.Framework.UI;
 
     public class GameWidgetView : WidgetView {
 

@@ -6,6 +6,7 @@ namespace Project.UI.Common {
     using UnityEngine;
     using UnityEngine.UIElements;
     using UnityEngine.UIElements.Experimental;
+    using UnityEngine.Framework.UI;
 
     internal interface IDialogWidgetView {
         Card Card { get; }

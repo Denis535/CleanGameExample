@@ -4,6 +4,7 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Framework.UI;
 
     public class MainWidgetView : WidgetView {
 

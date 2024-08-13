@@ -5,6 +5,7 @@ namespace Project.UI.GameScreen {
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
+    using UnityEngine.Framework.UI;
 
     public class MenuWidgetView : LeftWidgetView {
 

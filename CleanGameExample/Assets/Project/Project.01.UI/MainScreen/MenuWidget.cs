@@ -45,13 +45,13 @@ namespace Project.UI.MainScreen {
         // Helpers
         private static MenuWidgetView CreateView(MenuWidget widget) {
             var view = new MenuWidgetView();
-            view.AddView( CreateView_Menu( widget ) );
+            view.ShowView( CreateView_Initial( widget ) );
             return view;
         }
-        private static MenuWidgetView_Initial CreateView_Menu(MenuWidget widget) {
+        private static MenuWidgetView_Initial CreateView_Initial(MenuWidget widget) {
             var view = new MenuWidgetView_Initial();
             view.StartGame.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_StartGame( widget ) );
+                view.ShowView( CreateView_StartGame( widget ) );
             } );
             view.Settings.RegisterCallback<ClickEvent>( evt => {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
@@ -64,29 +64,29 @@ namespace Project.UI.MainScreen {
         private static MenuWidgetView_StartGame CreateView_StartGame(MenuWidget widget) {
             var view = new MenuWidgetView_StartGame();
             view.NewGame.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_SelectLevel( widget ) );
+                view.ShowView( CreateView_SelectLevel( widget ) );
             } );
             view.Continue.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_SelectLevel( widget ) );
+                view.ShowView( CreateView_SelectLevel( widget ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
-                widget.View.RemoveView( view );
+                view.HideView( view );
             } );
             return view;
         }
         private static MenuWidgetView_SelectLevel CreateView_SelectLevel(MenuWidget widget) {
             var view = new MenuWidgetView_SelectLevel();
             view.Level1.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level1 ) );
+                view.ShowView( CreateView_SelectCharacter( widget, GameLevel.Level1 ) );
             } );
             view.Level2.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level2 ) );
+                view.ShowView( CreateView_SelectCharacter( widget, GameLevel.Level2 ) );
             } );
             view.Level3.RegisterCallback<ClickEvent>( evt => {
-                widget.View.AddView( CreateView_SelectCharacter( widget, GameLevel.Level3 ) );
+                view.ShowView( CreateView_SelectCharacter( widget, GameLevel.Level3 ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
-                widget.View.RemoveView( view );
+                view.HideView( view );
             } );
             return view;
         }
@@ -105,7 +105,7 @@ namespace Project.UI.MainScreen {
                 widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Blue ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
-                widget.View.RemoveView( view );
+                view.HideView( view );
             } );
             return view;
         }

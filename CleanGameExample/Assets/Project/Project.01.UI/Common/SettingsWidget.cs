@@ -36,37 +36,6 @@ namespace Project.UI.Common {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
-        protected override void ShowView(UIViewBase view) {
-            if (view is ProfileSettingsWidgetView profileSettings) {
-                View.ProfileSettingsTab.Add( profileSettings );
-                return;
-            }
-            if (view is VideoSettingsWidgetView videoSettings) {
-                View.VideoSettingsTab.Add( videoSettings );
-                return;
-            }
-            if (view is AudioSettingsWidgetView audioSettings) {
-                View.AudioSettingsTab.Add( audioSettings );
-                return;
-            }
-            base.ShowView( view );
-        }
-        protected override void HideView(UIViewBase view) {
-            if (view is ProfileSettingsWidgetView profileSettings) {
-                View.ProfileSettingsTab.Clear();
-                return;
-            }
-            if (view is VideoSettingsWidgetView videoSettings) {
-                View.VideoSettingsTab.Clear();
-                return;
-            }
-            if (view is AudioSettingsWidgetView audioSettings) {
-                View.AudioSettingsTab.Clear();
-                return;
-            }
-            base.HideView( view );
-        }
-
         // Helpers
         private static SettingsWidgetView CreateView(SettingsWidget widget) {
             var view = new SettingsWidgetView();

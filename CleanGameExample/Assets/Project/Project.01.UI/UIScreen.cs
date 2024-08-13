@@ -62,7 +62,7 @@ namespace Project.UI {
         }
 
     }
-    public class RootWidget : UIRootWidgetBase {
+    public class RootWidget : UIRootWidgetBase<RootWidgetView> {
 
         public RootWidget(IDependencyContainer container) : base( container ) {
             View = new RootWidgetView();

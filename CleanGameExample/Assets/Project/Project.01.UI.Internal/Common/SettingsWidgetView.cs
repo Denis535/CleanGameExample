@@ -5,6 +5,7 @@ namespace Project.UI.Common {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
+    using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
     public class SettingsWidgetView : MediumWidgetView {
@@ -45,6 +46,37 @@ namespace Project.UI.Common {
         }
         public override void Dispose() {
             base.Dispose();
+        }
+
+        protected override bool AddView(UIViewBase view) {
+            if (view is ProfileSettingsWidgetView profileSettings) {
+                ProfileSettingsTab.Add( profileSettings );
+                return true;
+            }
+            if (view is VideoSettingsWidgetView videoSettings) {
+                VideoSettingsTab.Add( videoSettings );
+                return true;
+            }
+            if (view is AudioSettingsWidgetView audioSettings) {
+                AudioSettingsTab.Add( audioSettings );
+                return true;
+            }
+            return false;
+        }
+        protected override bool RemoveView(UIViewBase view) {
+            if (view is ProfileSettingsWidgetView profileSettings) {
+                ProfileSettingsTab.Clear();
+                return true;
+            }
+            if (view is VideoSettingsWidgetView videoSettings) {
+                VideoSettingsTab.Clear();
+                return true;
+            }
+            if (view is AudioSettingsWidgetView audioSettings) {
+                AudioSettingsTab.Clear();
+                return true;
+            }
+            return false;
         }
 
     }

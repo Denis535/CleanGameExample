@@ -30,15 +30,23 @@ namespace Project.UI.MainScreen {
             base.Dispose();
         }
 
-        public void AddView(UIViewBase view) {
-            Content.Add( view );
-            Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
-            Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
+        protected override bool AddView(UIViewBase view) {
+            if (view is MenuWidgetView_Initial or MenuWidgetView_StartGame or MenuWidgetView_SelectLevel or MenuWidgetView_SelectCharacter) {
+                Content.Add( view );
+                Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+                Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
+                return true;
+            }
+            return false;
         }
-        public void RemoveView(UIViewBase view) {
-            Content.Remove( view );
-            Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
-            Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
+        protected override bool RemoveView(UIViewBase view) {
+            if (view is MenuWidgetView_Initial or MenuWidgetView_StartGame or MenuWidgetView_SelectLevel or MenuWidgetView_SelectCharacter) {
+                Content.Remove( view );
+                Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+                Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
+                return true;
+            }
+            return false;
         }
 
         // Helpers

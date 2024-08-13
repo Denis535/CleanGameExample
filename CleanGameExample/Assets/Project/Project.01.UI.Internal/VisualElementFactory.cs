@@ -252,64 +252,84 @@ namespace Project.UI {
     }
     public abstract class View : UIViewBase {
 
-        public View(string name) : base( name, "view" ) {
+        public View(string name) {
+            base.name = name;
+            AddToClassList( "view" );
         }
 
     }
     public abstract class WidgetView : UIViewBase {
 
-        public WidgetView(string name) : base( name, "widget-view" ) {
+        public WidgetView(string name) {
+            base.name = name;
+            AddToClassList( "widget-view" );
         }
 
     }
     public abstract class LeftWidgetView : UIViewBase {
 
-        public LeftWidgetView(string name) : base( name, "left-widget-view" ) {
+        public LeftWidgetView(string name) {
+            base.name = name;
+            AddToClassList( "left-widget-view" );
         }
 
     }
     public abstract class SmallWidgetView : UIViewBase {
 
-        public SmallWidgetView(string name) : base( name, "small-widget-view" ) {
+        public SmallWidgetView(string name) {
+            base.name = name;
+            AddToClassList( "small-widget-view" );
         }
 
     }
     public abstract class MediumWidgetView : UIViewBase {
 
-        public MediumWidgetView(string name) : base( name, "medium-widget-view" ) {
+        public MediumWidgetView(string name) {
+            base.name = name;
+            AddToClassList( "medium-widget-view" );
         }
 
     }
     public abstract class LargeWidgetView : UIViewBase {
 
-        public LargeWidgetView(string name) : base( name, "large-widget-view" ) {
+        public LargeWidgetView(string name) {
+            base.name = name;
+            AddToClassList( "large-widget-view" );
         }
 
     }
     public abstract class DialogWidgetViewBase : UIViewBase {
 
-        public DialogWidgetViewBase(string name) : base( name, "dialog-widget-view" ) {
+        public DialogWidgetViewBase(string name) {
+            base.name = name;
+            AddToClassList( "dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayDialog?.Invoke( evt ) );
         }
 
     }
     public abstract class InfoDialogWidgetViewBase : UIViewBase {
 
-        public InfoDialogWidgetViewBase(string name) : base( name, "info-dialog-widget-view" ) {
+        public InfoDialogWidgetViewBase(string name) {
+            base.name = name;
+            AddToClassList( "info-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayInfoDialog?.Invoke( evt ) );
         }
 
     }
     public abstract class WarningDialogWidgetViewBase : UIViewBase {
 
-        public WarningDialogWidgetViewBase(string name) : base( name, "warning-dialog-widget-view" ) {
+        public WarningDialogWidgetViewBase(string name) {
+            base.name = name;
+            AddToClassList( "warning-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayWarningDialog?.Invoke( evt ) );
         }
 
     }
     public abstract class ErrorDialogWidgetViewBase : UIViewBase {
 
-        public ErrorDialogWidgetViewBase(string name) : base( name, "error-dialog-widget-view" ) {
+        public ErrorDialogWidgetViewBase(string name) {
+            base.name = name;
+            AddToClassList( "error-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayErrorDialog?.Invoke( evt ) );
         }
 

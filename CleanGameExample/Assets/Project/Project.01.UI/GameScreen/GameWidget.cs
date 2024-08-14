@@ -8,17 +8,28 @@ namespace Project.UI.GameScreen {
     using Project.Entities.Actors;
     using UnityEngine;
     using UnityEngine.Framework.UI;
+    using UnityEngine.InputSystem;
     using UnityEngine.UIElements;
 
     public class GameWidget : UIWidgetBase2<GameWidgetView> {
 
         private Game Game { get; }
+        private InputActions_UI Input { get; }
+        private bool IsCursorVisible {
+            get => UnityEngine.Cursor.lockState == CursorLockMode.None;
+            set => UnityEngine.Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
+        }
 
         public GameWidget(IDependencyContainer container) : base( container ) {
             Game = container.RequireDependency<Game>();
+            Input = new InputActions_UI();
+            Input.UI.Cancel.performed += ctx => {
+                if (View.focusController.focusedElement == null) View.Focus();
+            };
             View = CreateView( this );
         }
         public override void Dispose() {
+            Input.Dispose();
             View.Dispose();
             base.Dispose();
         }
@@ -34,16 +45,18 @@ namespace Project.UI.GameScreen {
                 }
             };
             ShowSelf();
-            View.IsCursorVisible = false;
+            Input.Enable();
+            IsCursorVisible = false;
         }
         protected override void OnDeactivate(object? argument) {
-            View.IsCursorVisible = true;
+            Input.Disable();
+            IsCursorVisible = true;
             HideSelf();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
             Game.IsPaused = Children.Any( i => i is MenuWidget );
-            View.IsCursorVisible = Children.Any( i => i is MenuWidget or TotalsWidget );
+            IsCursorVisible = Children.Any( i => i is MenuWidget or TotalsWidget );
         }
         protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
         }
@@ -52,7 +65,7 @@ namespace Project.UI.GameScreen {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
             if (State is UIWidgetState.Active) {
                 Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget );
-                View.IsCursorVisible = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget );
+                IsCursorVisible = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget );
             }
         }
 

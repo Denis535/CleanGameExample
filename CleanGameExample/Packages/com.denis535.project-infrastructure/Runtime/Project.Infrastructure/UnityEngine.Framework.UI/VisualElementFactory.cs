@@ -251,7 +251,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class View : UIViewBase {
 
-        public View(string name) {
+        public View(string? name) {
             base.name = name;
             AddToClassList( "view" );
         }
@@ -259,7 +259,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class WidgetView : UIViewBase {
 
-        public WidgetView(string name) {
+        public WidgetView(string? name) {
             base.name = name;
             AddToClassList( "widget-view" );
         }
@@ -267,7 +267,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class LeftWidgetView : UIViewBase {
 
-        public LeftWidgetView(string name) {
+        public LeftWidgetView(string? name) {
             base.name = name;
             AddToClassList( "left-widget-view" );
         }
@@ -275,7 +275,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class SmallWidgetView : UIViewBase {
 
-        public SmallWidgetView(string name) {
+        public SmallWidgetView(string? name) {
             base.name = name;
             AddToClassList( "small-widget-view" );
         }
@@ -283,7 +283,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class MediumWidgetView : UIViewBase {
 
-        public MediumWidgetView(string name) {
+        public MediumWidgetView(string? name) {
             base.name = name;
             AddToClassList( "medium-widget-view" );
         }
@@ -291,7 +291,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class LargeWidgetView : UIViewBase {
 
-        public LargeWidgetView(string name) {
+        public LargeWidgetView(string? name) {
             base.name = name;
             AddToClassList( "large-widget-view" );
         }
@@ -299,7 +299,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class DialogWidgetViewBase : UIViewBase {
 
-        public DialogWidgetViewBase(string name) {
+        public DialogWidgetViewBase(string? name) {
             base.name = name;
             AddToClassList( "dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayDialog?.Invoke( evt ) );
@@ -308,7 +308,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class InfoDialogWidgetViewBase : UIViewBase {
 
-        public InfoDialogWidgetViewBase(string name) {
+        public InfoDialogWidgetViewBase(string? name) {
             base.name = name;
             AddToClassList( "info-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayInfoDialog?.Invoke( evt ) );
@@ -317,7 +317,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class WarningDialogWidgetViewBase : UIViewBase {
 
-        public WarningDialogWidgetViewBase(string name) {
+        public WarningDialogWidgetViewBase(string? name) {
             base.name = name;
             AddToClassList( "warning-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayWarningDialog?.Invoke( evt ) );
@@ -326,7 +326,7 @@ namespace UnityEngine.Framework.UI {
     }
     public abstract class ErrorDialogWidgetViewBase : UIViewBase {
 
-        public ErrorDialogWidgetViewBase(string name) {
+        public ErrorDialogWidgetViewBase(string? name) {
             base.name = name;
             AddToClassList( "error-dialog-widget-view" );
             RegisterCallbackOnce<AttachToPanelEvent>( evt => VisualElementFactory.OnPlayErrorDialog?.Invoke( evt ) );

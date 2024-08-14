@@ -10,28 +10,32 @@ namespace Project.UI.Common {
 
     public class SettingsWidgetView : MediumWidgetView {
 
+        public Card Card { get; }
+        public Header Header { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public TabView TabView { get; }
         public Tab ProfileSettingsTab { get; }
         public Tab VideoSettingsTab { get; }
         public Tab AudioSettingsTab { get; }
+        public Footer Footer { get; }
         public Button Okey { get; }
         public Button Back { get; }
 
         public SettingsWidgetView() : base( "settings-widget-view" ) {
             Add(
-                VisualElementFactory.Card().Children(
-                    VisualElementFactory.Header().Children(
+                Card = VisualElementFactory.Card().Children(
+                    Header = VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Settings" )
                     ),
-                    VisualElementFactory.Content().Children(
+                    Content = VisualElementFactory.Content().Children(
                         TabView = VisualElementFactory.TabView().Classes( "no-outline", "grow-1" ).Children(
                             ProfileSettingsTab = VisualElementFactory.Tab( "Profile Settings" ),
                             VideoSettingsTab = VisualElementFactory.Tab( "Video Settings" ),
                             AudioSettingsTab = VisualElementFactory.Tab( "Audio Settings" )
                         )
                     ),
-                    VisualElementFactory.Footer().Children(
+                    Footer = VisualElementFactory.Footer().Children(
                         Okey = VisualElementFactory.Submit( "Ok" ),
                         Back = VisualElementFactory.Cancel( "Back" )
                     )

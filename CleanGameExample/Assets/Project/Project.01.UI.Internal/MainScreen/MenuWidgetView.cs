@@ -10,13 +10,15 @@ namespace Project.UI.MainScreen {
 
     public class MenuWidgetView : LeftWidgetView {
 
+        public Card Card { get; }
+        public Header Header { get; }
         public Label Title { get; }
         public VisualElement Content { get; }
 
         public MenuWidgetView() : base( "menu-widget-view" ) {
             Add(
-                VisualElementFactory.Card().Children(
-                    VisualElementFactory.Header().Children(
+                Card = VisualElementFactory.Card().Children(
+                    Header = VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )
                     ),
                     Content = VisualElementFactory.Content()

@@ -20,10 +20,10 @@ namespace Project.UI.Common {
 
         public Card Card { get; }
         public Header Header { get; }
-        public Content Content { get; }
-        public Footer Footer { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public Label Message { get; }
+        public Footer Footer { get; }
 
         public DialogWidgetView() : base( "dialog-widget-view" ) {
             Add(
@@ -67,10 +67,10 @@ namespace Project.UI.Common {
 
         public Card Card { get; }
         public Header Header { get; }
-        public Content Content { get; }
-        public Footer Footer { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public Label Message { get; }
+        public Footer Footer { get; }
 
         public InfoDialogWidgetView() : base( "info-dialog-widget-view" ) {
             Add(
@@ -114,10 +114,10 @@ namespace Project.UI.Common {
 
         public Card Card { get; }
         public Header Header { get; }
-        public Content Content { get; }
-        public Footer Footer { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public Label Message { get; }
+        public Footer Footer { get; }
 
         public WarningDialogWidgetView() : base( "warning-dialog-widget-view" ) {
             Add(
@@ -161,10 +161,10 @@ namespace Project.UI.Common {
 
         public Card Card { get; }
         public Header Header { get; }
-        public Content Content { get; }
-        public Footer Footer { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public Label Message { get; }
+        public Footer Footer { get; }
 
         public ErrorDialogWidgetView() : base( "error-dialog-widget-view" ) {
             Add(

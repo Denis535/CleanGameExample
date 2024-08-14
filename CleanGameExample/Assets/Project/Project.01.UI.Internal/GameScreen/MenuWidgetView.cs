@@ -9,18 +9,21 @@ namespace Project.UI.GameScreen {
 
     public class MenuWidgetView : LeftWidgetView {
 
+        public Card Card { get; }
+        public Header Header { get; }
         public Label Title { get; }
+        public Content Content { get; }
         public Button Resume { get; }
         public Button Settings { get; }
         public Button Back { get; }
 
         public MenuWidgetView() : base( "menu-widget-view" ) {
             Add(
-                VisualElementFactory.Card().Children(
-                    VisualElementFactory.Header().Children(
+                Card = VisualElementFactory.Card().Children(
+                    Header = VisualElementFactory.Header().Children(
                         Title = VisualElementFactory.Label( "Menu" )
                     ),
-                    VisualElementFactory.Content().Children(
+                    Content = VisualElementFactory.Content().Children(
                         Resume = VisualElementFactory.Resume( "Resume" ),
                         Settings = VisualElementFactory.Select( "Settings" ),
                         Back = VisualElementFactory.Back( "Back To Menu" )

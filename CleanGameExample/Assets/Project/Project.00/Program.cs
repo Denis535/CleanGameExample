@@ -14,7 +14,7 @@ namespace Project {
     using UnityEngine.Framework.UI;
     using UnityEngine.UIElements;
 
-    [DefaultExecutionOrder( 50 )]
+    [DefaultExecutionOrder( 10 )]
     public class Program : ProgramBase2<UITheme, UIScreen, UIRouter, Application2, Game> {
 
         protected override UITheme Theme { get; set; } = default!;

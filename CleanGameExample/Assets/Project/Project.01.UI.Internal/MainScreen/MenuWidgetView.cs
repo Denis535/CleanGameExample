@@ -35,7 +35,7 @@ namespace Project.UI.MainScreen {
         protected override bool AddView(UIViewBase view) {
             if (view is MenuWidgetView_Initial or MenuWidgetView_StartGame or MenuWidgetView_SelectLevel or MenuWidgetView_SelectCharacter) {
                 Content.Add( view );
-                Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+                SetVisibility( Content.Children().Cast<UIViewBase>().ToArray() );
                 Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
                 return true;
             }
@@ -44,7 +44,7 @@ namespace Project.UI.MainScreen {
         protected override bool RemoveView(UIViewBase view) {
             if (view is MenuWidgetView_Initial or MenuWidgetView_StartGame or MenuWidgetView_SelectLevel or MenuWidgetView_SelectCharacter) {
                 Content.Remove( view );
-                Recalculate( Content.Children().Cast<UIViewBase>().ToArray() );
+                SetVisibility( Content.Children().Cast<UIViewBase>().ToArray() );
                 Title.text = GetTitle( Content.Children().Cast<UIViewBase>().Last() );
                 return true;
             }
@@ -52,7 +52,7 @@ namespace Project.UI.MainScreen {
         }
 
         // Helpers
-        private static void Recalculate(UIViewBase[] views) {
+        private static void SetVisibility(UIViewBase[] views) {
             foreach (var view in views) {
                 if (view.HasFocusedElement()) {
                     view.SaveFocus();
@@ -61,11 +61,7 @@ namespace Project.UI.MainScreen {
             for (var i = 0; i < views.Length; i++) {
                 var view = views[ i ];
                 var next = views.ElementAtOrDefault( i + 1 );
-                if (next == null) {
-                    view.SetDisplayed( true );
-                } else {
-                    view.SetDisplayed( false );
-                }
+                view.SetDisplayed( next == null );
             }
             if (views.Any()) {
                 var view = views.Last();

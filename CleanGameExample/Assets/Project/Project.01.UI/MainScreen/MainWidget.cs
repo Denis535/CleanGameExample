@@ -29,13 +29,12 @@ namespace Project.UI.MainScreen {
 
         protected override async void OnActivate(object? argument) {
             ShowSelf();
-            Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( false );
+            Children.OfType<MenuWidget>().First().__GetView__().style.display = DisplayStyle.None;
             try {
                 await Application.InitializeTask.WaitAsync( DisposeCancellationToken );
-                Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
+                Children.OfType<MenuWidget>().First().__GetView__().style.display = DisplayStyle.Flex;
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
-                //Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
                 Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() ) );
             }
         }

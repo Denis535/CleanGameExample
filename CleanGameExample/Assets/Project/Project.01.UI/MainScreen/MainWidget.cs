@@ -4,6 +4,7 @@ namespace Project.UI.MainScreen {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Project.App;
     using Project.UI.Common;
     using UnityEngine;
@@ -12,9 +13,11 @@ namespace Project.UI.MainScreen {
 
     public class MainWidget : UIWidgetBase2<MainWidgetView> {
 
+        private UIRouter Router { get; }
         private Application2 Application { get; }
 
         public MainWidget(IDependencyContainer container) : base( container ) {
+            Router = container.RequireDependency<UIRouter>();
             Application = container.RequireDependency<Application2>();
             View = CreateView( this );
             AddChild( new MenuWidget( Container ) );
@@ -28,12 +31,12 @@ namespace Project.UI.MainScreen {
             ShowSelf();
             Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( false );
             try {
-                await Application.RunAsync( DisposeCancellationToken );
+                await Application.InitializeTask.WaitAsync( DisposeCancellationToken );
+                Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
-                Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", null ) );
-            } finally {
-                Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
+                //Children.OfType<MenuWidget>().First().__GetView__().SetDisplayed( true );
+                Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() ) );
             }
         }
         protected override void OnDeactivate(object? argument) {

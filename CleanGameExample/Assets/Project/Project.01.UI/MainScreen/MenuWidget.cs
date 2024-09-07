@@ -77,32 +77,32 @@ namespace Project.UI.MainScreen {
         private static MenuWidgetView_SelectLevel CreateView_SelectLevel(MenuWidget widget) {
             var view = new MenuWidgetView_SelectLevel();
             view.Level1.RegisterCallback<ClickEvent>( evt => {
-                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameLevel.Level1 ) );
+                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameInfo.Level_.Level1 ) );
             } );
             view.Level2.RegisterCallback<ClickEvent>( evt => {
-                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameLevel.Level2 ) );
+                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameInfo.Level_.Level2 ) );
             } );
             view.Level3.RegisterCallback<ClickEvent>( evt => {
-                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameLevel.Level3 ) );
+                view.AddViewRecursive( CreateView_SelectCharacter( widget, GameInfo.Level_.Level3 ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
                 view.RemoveViewRecursive( view );
             } );
             return view;
         }
-        private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameLevel level) {
+        private static MenuWidgetView_SelectCharacter CreateView_SelectCharacter(MenuWidget widget, GameInfo.Level_ level) {
             var view = new MenuWidgetView_SelectCharacter();
             view.Gray.RegisterCallback<ClickEvent>( evt => {
-                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Gray ) );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameInfo.Mode_.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerInfo.CharacterType_.Gray ) );
             } );
             view.Red.RegisterCallback<ClickEvent>( evt => {
-                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Red ) );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameInfo.Mode_.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerInfo.CharacterType_.Red ) );
             } );
             view.Green.RegisterCallback<ClickEvent>( evt => {
-                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Green ) );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameInfo.Mode_.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerInfo.CharacterType_.Green ) );
             } );
             view.Blue.RegisterCallback<ClickEvent>( evt => {
-                widget.Router.LoadGameScene( new GameInfo( "Game", GameMode.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerCharacterType.Blue ) );
+                widget.Router.LoadGameScene( new GameInfo( "Game", GameInfo.Mode_.None, level ), new PlayerInfo( widget.ProfileSettings.Name, PlayerInfo.CharacterType_.Blue ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
                 view.RemoveViewRecursive( view );

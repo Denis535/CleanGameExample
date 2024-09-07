@@ -69,7 +69,7 @@ namespace Project.UI {
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
                 Application.RunGame( gameInfo, playerInfo );
-                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
+                Application.Game!.OnPauseChangeEvent += i => Theme.IsPaused = i;
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
             }
@@ -90,7 +90,7 @@ namespace Project.UI {
                 await LoadSceneAsync_Game();
                 await LoadSceneAsync_World( GetWorldSceneAddress( gameInfo.Level ) );
                 Application.RunGame( gameInfo, playerInfo );
-                Application.Game!.OnPauseEvent += i => Theme.IsPaused = i;
+                Application.Game!.OnPauseChangeEvent += i => Theme.IsPaused = i;
                 Theme.PlayGameTheme();
                 Screen.ShowGameScreen();
             }
@@ -170,11 +170,11 @@ namespace Project.UI {
             await WorldScene.UnloadAsync();
         }
         // Helpers
-        private static string GetWorldSceneAddress(GameLevel level) {
+        private static string GetWorldSceneAddress(GameInfo.Level_ level) {
             switch (level) {
-                case GameLevel.Level1: return R.Project.Entities.Worlds.Value_World_01;
-                case GameLevel.Level2: return R.Project.Entities.Worlds.Value_World_02;
-                case GameLevel.Level3: return R.Project.Entities.Worlds.Value_World_03;
+                case GameInfo.Level_.Level1: return R.Project.Entities.Worlds.Value_World_01;
+                case GameInfo.Level_.Level2: return R.Project.Entities.Worlds.Value_World_02;
+                case GameInfo.Level_.Level3: return R.Project.Entities.Worlds.Value_World_03;
                 default: throw Exceptions.Internal.NotSupported( $"Level {level} is not supported" );
             }
         }

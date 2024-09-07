@@ -13,19 +13,6 @@ namespace UnityEngine {
         public static readonly RaycastHit[] RaycastHitBuffer = new RaycastHit[ 256 ];
         public static readonly Collider[] ColliderBuffer = new Collider[ 256 ];
 
-        public static void SetEnabled(this InputActions_UI input, bool value) {
-            if (value) input.Enable(); else input.Disable();
-        }
-        public static void SetEnabled(this InputActions_Player input, bool value) {
-            if (value) input.Enable(); else input.Disable();
-        }
-        public static void SetEnabled(this InputActions_Player.CameraActions input, bool value) {
-            if (value) input.Enable(); else input.Disable();
-        }
-        public static void SetEnabled(this InputActions_Player.CharacterActions input, bool value) {
-            if (value) input.Enable(); else input.Disable();
-        }
-
         public static IEnumerable<RaycastHit> RaycastAll(Ray ray, float maxDistance, int mask, QueryTriggerInteraction queryTriggerInteraction) {
             var count = Physics.RaycastNonAlloc( ray, RaycastHitBuffer, maxDistance, mask, QueryTriggerInteraction.Ignore );
             return RaycastHitBuffer.Take( count );

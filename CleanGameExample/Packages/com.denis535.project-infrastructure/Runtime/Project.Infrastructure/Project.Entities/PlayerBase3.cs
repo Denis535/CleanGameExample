@@ -8,18 +8,7 @@ namespace Project.Entities {
 
     public abstract class PlayerBase3 : PlayerBase2 {
 
-        private PlayerState state;
-
         public PlayerInfo Info { get; }
-        public PlayerState State {
-            get => state;
-            set {
-                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
-                state = value;
-                OnStateChangeEvent?.Invoke( state );
-            }
-        }
-        public event Action<PlayerState>? OnStateChangeEvent;
 
         public PlayerBase3(IDependencyContainer container, PlayerInfo info) : base( container ) {
             Info = info;
@@ -29,18 +18,12 @@ namespace Project.Entities {
         }
 
     }
-
-    public record PlayerInfo(string Name, PlayerCharacterType CharacterType);
-    public enum PlayerCharacterType {
-        Gray,
-        Red,
-        Green,
-        Blue
-    }
-
-    public enum PlayerState {
-        Playing,
-        Winner,
-        Loser
+    public record PlayerInfo(string Name, PlayerInfo.CharacterType_ CharacterType) {
+        public enum CharacterType_ {
+            Gray,
+            Red,
+            Green,
+            Blue
+        }
     }
 }

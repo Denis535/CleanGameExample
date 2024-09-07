@@ -9,10 +9,21 @@ namespace Project.Entities {
 
     public class Player : PlayerBase3 {
 
+        private PlayerState state;
         private PlayerCharacter? character;
         private Camera2? camera;
 
-        internal InputActions_Player Input { get; private set; }
+        public PlayerState State {
+            get => state;
+            set {
+                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
+                state = value;
+                OnStateChangeEvent?.Invoke( state );
+            }
+        }
+        public event Action<PlayerState>? OnStateChangeEvent;
+
+        private InputActions_Player Input { get; set; }
         public PlayerCharacter? Character {
             get => character;
             internal set {
@@ -63,15 +74,35 @@ namespace Project.Entities {
         public void OnFixedUpdate() {
         }
         public void OnUpdate() {
-            Input.SetEnabled( Character != null && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f );
+            if (Character != null && Character.IsAlive && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f) {
+                Input.Character.Enable();
+            } else {
+                Input.Character.Disable();
+            }
+            if (Character != null && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f) {
+                Input.Camera.Enable();
+            } else {
+                Input.Camera.Disable();
+            }
         }
         public void OnLateUpdate() {
         }
 
     }
+    public enum PlayerState {
+        Playing,
+        Winner,
+        Loser
+    }
     internal class PlayableCharacterInput : IPlayableCharacterInput {
 
         private InputActions_Player.CharacterActions Input { get; }
+        public bool IsEnabled {
+            get => Input.enabled;
+            set {
+                if (value) Input.Enable(); else Input.Disable();
+            }
+        }
         private Character Character { get; }
         private Camera2 Camera { get; }
         private Camera2.RaycastHit? Hit => Camera.Hit;
@@ -149,6 +180,12 @@ namespace Project.Entities {
     internal class CameraInput : ICameraInput {
 
         private InputActions_Player.CameraActions Input { get; }
+        public bool IsEnabled {
+            get => Input.enabled;
+            set {
+                if (value) Input.Enable(); else Input.Disable();
+            }
+        }
 
         public CameraInput(InputActions_Player.CameraActions input) {
             Input = input;

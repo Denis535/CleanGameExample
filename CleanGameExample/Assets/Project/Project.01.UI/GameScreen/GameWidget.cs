@@ -69,6 +69,17 @@ namespace Project.UI.GameScreen {
             }
         }
 
+        protected override void Sort(List<UIWidgetBase> children) {
+            children.Sort( (a, b) => Comparer<int>.Default.Compare( GetOrderOf( a ), GetOrderOf( b ) ) );
+        }
+        private static int GetOrderOf(UIWidgetBase widget) {
+            return widget switch {
+                TotalsWidget => 0,
+                MenuWidget => 1,
+                _ => 2,
+            };
+        }
+
         public void OnUpdate() {
             if (Game.Player.Camera != null) {
                 View.Target.style.color = GetTargetColor( Game.Player.Camera );

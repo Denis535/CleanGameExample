@@ -25,7 +25,7 @@ namespace Project.Entities.Actors {
                 Prefabs.Release();
             }
 
-            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerBase player, PlayerCharacterType type) {
+            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerBase player, PlayerInfo.CharacterType_ type) {
                 var result = GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
                 result.Player = player;
                 return result;

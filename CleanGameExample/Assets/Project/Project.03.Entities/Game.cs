@@ -11,8 +11,35 @@ namespace Project.Entities {
 
     public class Game : GameBase3 {
 
+        private GameState state;
+        private bool isPaused;
+
+        public GameState State {
+            get => state;
+            protected set {
+                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
+                state = value;
+                OnStateChangeEvent?.Invoke( state );
+            }
+        }
+        public event Action<GameState>? OnStateChangeEvent;
+
+        public bool IsPaused {
+            get => isPaused;
+            set {
+                if (value != isPaused) {
+                    isPaused = value;
+                    //Time.timeScale = isPaused ? 0f : 1f;
+                    OnPauseChangeEvent?.Invoke( isPaused );
+                }
+            }
+        }
+        public event Action<bool>? OnPauseChangeEvent;
+
         public Player Player { get; }
         public World World { get; }
+
+        private bool IsDirty { get; set; }
 
         public Game(IDependencyContainer container, GameInfo gameInfo, PlayerInfo playerInfo) : base( container, gameInfo ) {
             Player = new Player( container, playerInfo );
@@ -30,6 +57,7 @@ namespace Project.Entities {
             }
         }
         public override void Dispose() {
+            //Time.timeScale = 1f;
             Player.Dispose();
             base.Dispose();
         }
@@ -97,5 +125,9 @@ namespace Project.Entities {
             State = GameState.Completed;
         }
 
+    }
+    public enum GameState {
+        Playing,
+        Completed
     }
 }

@@ -51,6 +51,16 @@ namespace Project.UI.MainScreen {
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
 
+        protected override void Sort(List<UIWidgetBase> children) {
+            children.Sort( (a, b) => Comparer<int>.Default.Compare( GetOrderOf( a ), GetOrderOf( b ) ) );
+        }
+        private static int GetOrderOf(UIWidgetBase widget) {
+            return widget switch {
+                MenuWidget => 0,
+                _ => 1,
+            };
+        }
+
         public void OnUpdate() {
         }
 

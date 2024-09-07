@@ -32,7 +32,7 @@ namespace Project.UI.MainScreen {
             Children.OfType<MenuWidget>().First().__GetView__().style.display = DisplayStyle.None;
             try {
                 await Application.InitializeTask.WaitAsync( DisposeCancellationToken );
-                Children.OfType<MenuWidget>().First().__GetView__().style.display = DisplayStyle.Flex;
+                Children.OfType<MenuWidget>().First().__GetView__().style.display = StyleKeyword.Null;
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Root.AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() ) );

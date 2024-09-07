@@ -83,11 +83,11 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        protected override int GetPriority(UIViewBase view) {
-            return GetLayer( view );
+        protected override int GetOrderOf(UIViewBase view) {
+            return GetLayerOf( view );
         }
 
-        protected override int GetLayer(UIViewBase view) {
+        protected override int GetLayerOf(UIViewBase view) {
             return view switch {
                 // MainScreen
                 MainScreen.MainWidgetView => 0,

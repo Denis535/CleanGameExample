@@ -43,9 +43,9 @@ namespace Project.UI.Common {
             );
             this.OnValidate( evt => {
                 Okey.SetValid(
-                    ProfileSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&
-                    VideoSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) &&
-                    AudioSettingsTab.GetDescendants().All( i => i.IsValidSelf() ) );
+                    ProfileSettingsTab.Descendants().All( i => i.IsValidSelf() ) &&
+                    VideoSettingsTab.Descendants().All( i => i.IsValidSelf() ) &&
+                    AudioSettingsTab.Descendants().All( i => i.IsValidSelf() ) );
             } );
         }
         public override void Dispose() {

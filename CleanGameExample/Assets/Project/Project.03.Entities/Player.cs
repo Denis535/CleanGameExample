@@ -13,9 +13,12 @@ namespace Project.Entities {
         private PlayerCharacter? character;
         private Camera2? camera;
 
+        private InputActions_Character CharacterInput { get; set; }
+        private InputActions_Camera CameraInput { get; set; }
+
         public PlayerState State {
             get => state;
-            set {
+            internal set {
                 Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
                 state = value;
                 OnStateChangeEvent?.Invoke( state );
@@ -23,51 +26,54 @@ namespace Project.Entities {
         }
         public event Action<PlayerState>? OnStateChangeEvent;
 
-        private InputActions_Player Input { get; set; }
         public PlayerCharacter? Character {
             get => character;
             internal set {
-                Input.Disable();
-                if (character != null) {
-                    character.Input = null;
+                CharacterInput.Disable();
+                CameraInput.Disable();
+                if (Character != null) {
+                    Character.Input = null;
                 }
-                if (camera != null) {
-                    camera.Input = null;
-                    camera.Target = null;
+                if (Camera != null) {
+                    Camera.Input = null;
+                    Camera.Target = null;
                 }
                 character = value;
-                if (character != null && camera != null) {
-                    character.Input = new PlayableCharacterInput( Input.Character, character, camera );
-                    camera.Input = new CameraInput( Input.Camera );
-                    camera.Target = character;
+                if (Character != null && Camera != null) {
+                    Character.Input = new PlayableCharacterInput( CharacterInput, Character, Camera );
+                    Camera.Input = new CameraInput( CameraInput );
+                    Camera.Target = Character;
                 }
             }
         }
         public Camera2? Camera {
             get => camera;
             internal set {
-                Input.Disable();
-                if (character != null) {
-                    character.Input = null;
+                CharacterInput.Disable();
+                CameraInput.Disable();
+                if (Character != null) {
+                    Character.Input = null;
                 }
-                if (camera != null) {
-                    camera.Input = null;
-                    camera.Target = null;
+                if (Camera != null) {
+                    Camera.Input = null;
+                    Camera.Target = null;
                 }
                 camera = value;
-                if (character != null && camera != null) {
-                    character.Input = new PlayableCharacterInput( Input.Character, character, camera );
-                    camera.Input = new CameraInput( Input.Camera );
-                    camera.Target = character;
+                if (Character != null && Camera != null) {
+                    Character.Input = new PlayableCharacterInput( CharacterInput, Character, Camera );
+                    Camera.Input = new CameraInput( CameraInput );
+                    Camera.Target = Character;
                 }
             }
         }
 
         public Player(IDependencyContainer container, PlayerInfo info) : base( container, info ) {
-            Input = new InputActions_Player();
+            CharacterInput = new InputActions_Character();
+            CameraInput = new InputActions_Camera();
         }
         public override void Dispose() {
-            Input.Dispose();
+            CharacterInput.Dispose();
+            CameraInput.Dispose();
             base.Dispose();
         }
 
@@ -75,14 +81,14 @@ namespace Project.Entities {
         }
         public void OnUpdate() {
             if (Character != null && Character.IsAlive && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f) {
-                Input.Character.Enable();
+                CharacterInput.Enable();
             } else {
-                Input.Character.Disable();
+                CharacterInput.Disable();
             }
             if (Character != null && Camera != null && Cursor.lockState == CursorLockMode.Locked && Time.timeScale != 0f) {
-                Input.Camera.Enable();
+                CameraInput.Enable();
             } else {
-                Input.Camera.Disable();
+                CameraInput.Disable();
             }
         }
         public void OnLateUpdate() {
@@ -96,27 +102,27 @@ namespace Project.Entities {
     }
     internal class PlayableCharacterInput : IPlayableCharacterInput {
 
-        private InputActions_Player.CharacterActions Input { get; }
-        public bool IsEnabled {
-            get => Input.enabled;
-            set {
-                if (value) Input.Enable(); else Input.Disable();
-            }
-        }
+        private InputActions_Character Input { get; }
+        //public bool IsEnabled {
+        //    get => Input.Character.enabled;
+        //    set {
+        //        if (value) Input.Enable(); else Input.Disable();
+        //    }
+        //}
         private Character Character { get; }
         private Camera2 Camera { get; }
         private Camera2.RaycastHit? Hit => Camera.Hit;
         private Vector3 Target => Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128f );
 
-        public PlayableCharacterInput(InputActions_Player.CharacterActions input, Character character, Camera2 camera) {
+        public PlayableCharacterInput(InputActions_Character input, Character character, Camera2 camera) {
             Input = input;
             Character = character;
             Camera = camera;
         }
 
         public Vector3 GetMoveVector() {
-            if (Input.Move.IsPressed()) {
-                var vector = Input.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+            if (Input.Character.Move.IsPressed()) {
+                var vector = Input.Character.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
                 vector = Camera.transform.TransformDirection( vector );
                 vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
                 return vector;
@@ -125,11 +131,11 @@ namespace Project.Entities {
             }
         }
         public Vector3? GetBodyTarget() {
-            if (Input.Aim.IsPressed() || Input.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Target;
             }
-            if (Input.Move.IsPressed()) {
-                var vector = Input.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
+            if (Input.Character.Move.IsPressed()) {
+                var vector = Input.Character.Move.ReadValue<Vector2>().Chain( i => new Vector3( i.x, 0, i.y ) );
                 if (vector != Vector3.zero) {
                     vector = Camera.transform.TransformDirection( vector );
                     vector = new Vector3( vector.x, 0, vector.z ).normalized * vector.magnitude;
@@ -139,63 +145,63 @@ namespace Project.Entities {
             return null;
         }
         public Vector3? GetHeadTarget() {
-            if (Input.Aim.IsPressed() || Input.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Target;
             }
-            if (Input.Move.IsPressed()) {
+            if (Input.Character.Move.IsPressed()) {
                 return Target;
             }
             return Target;
         }
         public Vector3? GetWeaponTarget() {
-            if (Input.Aim.IsPressed() || Input.Fire.IsPressed()) {
+            if (Input.Character.Aim.IsPressed() || Input.Character.Fire.IsPressed()) {
                 return Target;
             }
-            if (Input.Move.IsPressed()) {
+            if (Input.Character.Move.IsPressed()) {
                 return null;
             }
             return null;
         }
         public bool IsJumpPressed() {
-            return Input.Jump.IsPressed();
+            return Input.Character.Jump.IsPressed();
         }
         public bool IsCrouchPressed() {
-            return Input.Crouch.IsPressed();
+            return Input.Character.Crouch.IsPressed();
         }
         public bool IsAcceleratePressed() {
-            return Input.Accelerate.IsPressed();
+            return Input.Character.Accelerate.IsPressed();
         }
         public bool IsFirePressed() {
-            return Input.Fire.IsPressed();
+            return Input.Character.Fire.IsPressed();
         }
         public bool IsAimPressed() {
-            return Input.Aim.IsPressed();
+            return Input.Character.Aim.IsPressed();
         }
         public bool IsInteractPressed(out MonoBehaviour? interactable) {
             interactable = (MonoBehaviour?) Hit?.Enemy ?? Hit?.Thing;
-            return Input.Interact.WasPressedThisFrame();
+            return Input.Character.Interact.WasPressedThisFrame();
         }
 
     }
     internal class CameraInput : ICameraInput {
 
-        private InputActions_Player.CameraActions Input { get; }
-        public bool IsEnabled {
-            get => Input.enabled;
-            set {
-                if (value) Input.Enable(); else Input.Disable();
-            }
-        }
+        private InputActions_Camera Input { get; }
+        //public bool IsEnabled {
+        //    get => Input.Camera.enabled;
+        //    set {
+        //        if (value) Input.Enable(); else Input.Disable();
+        //    }
+        //}
 
-        public CameraInput(InputActions_Player.CameraActions input) {
+        public CameraInput(InputActions_Camera input) {
             Input = input;
         }
 
         public Vector2 GetLookDelta() {
-            return Input.Look.ReadValue<Vector2>();
+            return Input.Camera.Look.ReadValue<Vector2>();
         }
         public float GetZoomDelta() {
-            return Input.Zoom.ReadValue<Vector2>().y;
+            return Input.Camera.Zoom.ReadValue<Vector2>().y;
         }
 
     }

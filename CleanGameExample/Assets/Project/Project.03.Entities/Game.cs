@@ -16,7 +16,7 @@ namespace Project.Entities {
 
         public GameState State {
             get => state;
-            protected set {
+            private set {
                 Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
                 state = value;
                 OnStateChangeEvent?.Invoke( state );

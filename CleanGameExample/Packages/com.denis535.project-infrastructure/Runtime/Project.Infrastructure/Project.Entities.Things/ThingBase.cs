@@ -6,7 +6,7 @@ namespace Project.Entities.Things {
     using UnityEngine;
 
     [DefaultExecutionOrder( 100 )]
-    public abstract class Thing : MonoBehaviour {
+    public abstract class ThingBase : MonoBehaviour {
 
         protected Rigidbody Rigidbody { get; private set; } = default!;
         public bool IsRigidbody {

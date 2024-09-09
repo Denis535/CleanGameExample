@@ -20,7 +20,7 @@ namespace Project.Entities.Things {
                 Prefab.Release();
             }
 
-            public static Bullet Create(Vector3 position, Quaternion rotation, float force, Weapon weapon, Actor actor, PlayerBase? player) {
+            public static Bullet Create(Vector3 position, Quaternion rotation, float force, WeaponBase weapon, ActorBase actor, PlayerBase? player) {
                 var result = GameObject.Instantiate<Bullet>( Prefab.GetValue(), position, rotation, null );
                 result.Force = force;
                 result.Weapon = weapon;
@@ -38,8 +38,8 @@ namespace Project.Entities.Things {
 
         private Rigidbody Rigidbody { get; set; } = default!;
         public float Force { get; private set; } = default!;
-        public Weapon Weapon { get; private set; } = default!;
-        public Actor Actor { get; private set; } = default!;
+        public WeaponBase Weapon { get; private set; } = default!;
+        public ActorBase Actor { get; private set; } = default!;
         public PlayerBase? Player { get; private set; } = default!;
 
         protected void Awake() {

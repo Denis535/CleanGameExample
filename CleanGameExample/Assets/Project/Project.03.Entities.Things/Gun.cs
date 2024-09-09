@@ -36,7 +36,7 @@ namespace Project.Entities.Things {
 
         }
     }
-    public partial class Gun : Weapon {
+    public partial class Gun : WeaponBase {
 
         private FireDelay FireDelay { get; } = new FireDelay( 0.25f );
         private FirePoint FirePoint { get; set; } = default!;
@@ -49,7 +49,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public override void Fire(Actor actor, PlayerBase? player) {
+        public override void Fire(ActorBase actor, PlayerBase? player) {
             if (FireDelay.CanFire) {
                 FireDelay.Fire();
                 var bullet = Bullet.Factory.Create( FirePoint.transform.position, FirePoint.transform.rotation, 5, this, actor, player );

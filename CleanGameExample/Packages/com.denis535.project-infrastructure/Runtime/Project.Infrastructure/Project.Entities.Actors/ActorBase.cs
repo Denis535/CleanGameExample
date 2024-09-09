@@ -7,7 +7,7 @@ namespace Project.Entities.Actors {
     using Project.Entities.Things;
 
     [DefaultExecutionOrder( 100 )]
-    public abstract class Actor : MonoBehaviour, IDamageable {
+    public abstract class ActorBase : MonoBehaviour, IDamageable {
 
         public bool IsAlive { get; private set; } = true;
         //public event Action<DamageInfo>? OnDamageEvent;

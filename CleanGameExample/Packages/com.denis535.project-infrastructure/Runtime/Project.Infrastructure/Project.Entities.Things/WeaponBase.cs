@@ -7,7 +7,7 @@ namespace Project.Entities.Things {
     using UnityEngine;
     using UnityEngine.Framework.Entities;
 
-    public abstract class Weapon : Thing {
+    public abstract class WeaponBase : ThingBase {
 
         protected override void Awake() {
             base.Awake();
@@ -16,7 +16,7 @@ namespace Project.Entities.Things {
             base.OnDestroy();
         }
 
-        public abstract void Fire(Actor actor, PlayerBase? player);
+        public abstract void Fire(ActorBase actor, PlayerBase? player);
 
     }
 }

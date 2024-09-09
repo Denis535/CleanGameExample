@@ -29,7 +29,7 @@ namespace Project.Entities.Actors {
     }
     [DefaultExecutionOrder( 99 )]
     public partial class Camera2 : MonoBehaviour {
-        public record RaycastHit(GameObject GameObject, Vector3 Point, float Distance, EnemyCharacter? Enemy, Thing? Thing);
+        public record RaycastHit(GameObject GameObject, Vector3 Point, float Distance, EnemyCharacter? Enemy, ThingBase? Thing);
 
         private static readonly Vector2 DefaultAngles = new Vector2( 30, 0 );
         private static readonly float DefaultDistance = 1.5f;
@@ -131,10 +131,10 @@ namespace Project.Entities.Actors {
             }
             return null;
         }
-        private static Thing? GetThing(GameObject gameObject, Vector3 Point, float Distance, Transform character) {
+        private static ThingBase? GetThing(GameObject gameObject, Vector3 Point, float Distance, Transform character) {
             if (Vector3.Distance( character.position, Point ) <= 2.5f) {
                 var @object = gameObject.transform.root.gameObject;
-                return @object.GetComponent<Thing>();
+                return @object.GetComponent<ThingBase>();
             }
             return null;
         }

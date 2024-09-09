@@ -65,7 +65,7 @@ namespace Project.Entities.Actors {
                         Weapon?.Fire( this, Player );
                     }
                     if (Input.IsInteractPressed( out var interactable )) {
-                        if (interactable is Weapon weapon) {
+                        if (interactable is WeaponBase weapon) {
                             Weapon = weapon;
                         } else {
                             Weapon = null;

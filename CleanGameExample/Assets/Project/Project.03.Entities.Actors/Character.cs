@@ -8,10 +8,10 @@ namespace Project.Entities.Actors {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract partial class Character : Actor {
+    public abstract partial class Character : ActorBase {
 
         private Facade_ Facade { get; set; } = default!;
-        public Weapon? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
+        public WeaponBase? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
 
         protected override void Awake() {
             base.Awake();
@@ -77,8 +77,8 @@ namespace Project.Entities.Actors {
             private Rigidbody Rigidbody { get; }
             private GameObject Head { get; }
             private WeaponSlot WeaponSlot { get; }
-            public Weapon? Weapon {
-                get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject.RequireComponent<Weapon>() : null;
+            public WeaponBase? Weapon {
+                get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject.RequireComponent<WeaponBase>() : null;
                 set {
                     var prevWeapon = Weapon;
                     if (prevWeapon != null) {

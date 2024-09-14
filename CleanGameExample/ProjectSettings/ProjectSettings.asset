@@ -773,11 +773,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: ebedf778-a948-4612-ab8a-28e6c2289a79
+  cloudProjectId: 7a0e516c-6bf8-42f2-93ca-cd593dd03cd4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: PerfectGameTemplate
-  organizationId: unity_00c2f888b06637677707
+  projectName: CleanGameExample
+  organizationId: denis535-as-publisher
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

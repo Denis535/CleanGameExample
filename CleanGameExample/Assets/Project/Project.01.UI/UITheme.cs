@@ -10,24 +10,15 @@ namespace Project.UI {
 
     public class UITheme : UIThemeBase2 {
 
-        private new ThemeState? State {
-            get => (ThemeState?) base.State;
-            set => base.State = value;
-        }
-        public bool IsPaused {
-            set {
-                if (value) {
-                    AudioSource.Pause();
-                } else {
-                    AudioSource.UnPause();
-                }
-            }
+        private new UIPlayListBase2? PlayList => (UIPlayListBase2?) base.PlayList;
+        public new bool IsPaused {
+            set => base.IsPaused = value;
         }
 
         public UITheme(IDependencyContainer container) : base( container, container.RequireDependency<AudioSource>( "MusicAudioSource" ) ) {
         }
         public override void Dispose() {
-            State?.Dispose();
+            SetPlayList( null );
             base.Dispose();
         }
 
@@ -37,46 +28,40 @@ namespace Project.UI {
         }
 
         public void PlayMainTheme() {
-            State?.Dispose();
-            State = new MainThemeState( this );
-            State.Play();
+            SetPlayList( new MainThemePlayList( this ) );
         }
         public void PlayGameTheme() {
-            State?.Dispose();
-            State = new GameThemeState( this );
-            State.Play();
+            SetPlayList( new GameThemePlayList( this ) );
         }
         public void PlayLoadingTheme() {
-            if (State is MainThemeState mainStrategy) {
-                State.IsFading = true;
+            if (PlayList is MainThemePlayList mainStrategy) {
+                mainStrategy.IsFading = true;
             } else {
-                State?.Dispose();
-                State = null;
+                SetPlayList( null );
             }
         }
         public void PlayUnloadingTheme() {
-            State?.Dispose();
-            State = null;
+            SetPlayList( null );
         }
         public void StopTheme() {
-            State?.Dispose();
-            State = null;
+            SetPlayList( null );
         }
 
     }
-    internal abstract class ThemeState : UIThemeStateBase {
+    internal abstract class UIPlayListBase2 : UIPlayListBase {
 
-        public AssetHandle<AudioClip>[] Clips { get; }
+        protected new UIThemeBase2 Context => (UIThemeBase2) base.Context;
+        protected AssetHandle<AudioClip>[] Clips { get; }
         public bool IsFading { get; internal set; }
 
-        public ThemeState(UITheme context, AssetHandle<AudioClip>[] clips) : base( context ) {
+        public UIPlayListBase2(UITheme context, AssetHandle<AudioClip>[] clips) : base( context ) {
             Clips = clips;
         }
         public override void Dispose() {
             base.Dispose();
         }
 
-        public async void Play() {
+        protected override async void OnActivate(object? argument) {
             try {
                 for (var i = 0; true; i++) {
                     await PlayClipAsync( Clips[ i % Clips.Length ] );
@@ -84,6 +69,10 @@ namespace Project.UI {
             } catch (OperationCanceledException) {
             }
         }
+        protected override void OnDeactivate(object? argument) {
+            Dispose();
+        }
+
         private async Task PlayClipAsync(AssetHandle<AudioClip> clip) {
             try {
                 await PlayClipAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
@@ -110,27 +99,27 @@ namespace Project.UI {
         }
 
     }
-    internal class MainThemeState : ThemeState {
+    internal class MainThemePlayList : UIPlayListBase2 {
 
         private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
             new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
         } );
 
-        public MainThemeState(UITheme context) : base( context, Clips ) {
+        public MainThemePlayList(UITheme context) : base( context, Clips ) {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    internal class GameThemeState : ThemeState {
+    internal class GameThemePlayList : UIPlayListBase2 {
 
         private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_1 ),
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
-        public GameThemeState(UITheme context) : base( context, Clips ) {
+        public GameThemePlayList(UITheme context) : base( context, Clips ) {
         }
         public override void Dispose() {
             base.Dispose();

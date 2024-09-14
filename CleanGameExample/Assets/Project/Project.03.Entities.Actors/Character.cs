@@ -69,7 +69,7 @@ namespace Project.Entities.Actors {
 
     }
     public abstract partial class Character {
-        protected class Facade_ : Disposable {
+        protected class Facade_ : DisposableBase {
 
             private GameObject GameObject { get; }
             private Transform Transform => GameObject.transform;

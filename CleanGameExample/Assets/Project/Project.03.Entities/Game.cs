@@ -82,7 +82,7 @@ namespace Project.Entities {
         }
 
         protected PlayerCharacter SpawnPlayerCharacter(PlayerPoint point, Player player) {
-            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, player, player.Info.CharacterType );
+            var character = PlayerCharacter.Factory.Create( point.transform.position, point.transform.rotation, player, (PlayerCharacter.Factory.CharacterType) player.Info.CharacterType );
             character.OnDeathEvent += info => {
                 IsDirty = true;
             };

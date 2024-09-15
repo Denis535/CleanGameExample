@@ -10,6 +10,12 @@ namespace Project.Entities.Actors {
 
     public partial class PlayerCharacter {
         public static class Factory {
+            public enum CharacterType {
+                Gray,
+                Red,
+                Green,
+                Blue
+            }
 
             private static readonly PrefabListHandle<PlayerCharacter> Prefabs = new PrefabListHandle<PlayerCharacter>( new[] {
                 R.Project.Entities.Actors.Value_PlayerCharacter_Gray,
@@ -25,7 +31,7 @@ namespace Project.Entities.Actors {
                 Prefabs.Release();
             }
 
-            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerBase player, PlayerInfo.CharacterType_ type) {
+            public static PlayerCharacter Create(Vector3 position, Quaternion rotation, PlayerBase player, CharacterType type) {
                 var result = GameObject.Instantiate<PlayerCharacter>( Prefabs.GetValues()[ (int) type ], position, rotation );
                 result.Player = player;
                 return result;

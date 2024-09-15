@@ -19,9 +19,9 @@ namespace Project.Entities {
         public PlayerState State {
             get => state;
             internal set {
-                Assert.Operation.Message( $"Transition from {state} to {value} is invalid" ).Valid( value != state );
+                Assert.Operation.Message( $"Transition from {State} to {value} is invalid" ).Valid( value != State );
                 state = value;
-                OnStateChangeEvent?.Invoke( state );
+                OnStateChangeEvent?.Invoke( State );
             }
         }
         public event Action<PlayerState>? OnStateChangeEvent;

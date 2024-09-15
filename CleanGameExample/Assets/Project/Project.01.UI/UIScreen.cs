@@ -74,20 +74,6 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        protected override void OnActivate(object? argument) {
-        }
-        protected override void OnDeactivate(object? argument) {
-        }
-
-        protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
-        }
-        protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
-        }
-        protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-        }
-        protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-        }
-
         internal void AddChild(MainWidget widget) {
             base.AddChild( widget );
         }

@@ -60,41 +60,41 @@ namespace Project.UI {
             base.Dispose();
         }
 
-        protected override async void OnActivate(object? argument) {
-            try {
-                for (var i = 0; true; i++) {
-                    await PlayAsync( Clips[ i % Clips.Length ] );
-                }
-            } catch (OperationCanceledException) {
-            }
+        protected override void OnActivate(object? argument) {
+            //try {
+            //    for (var i = 0; true; i++) {
+            //        await PlayAsync( Clips[ i % Clips.Length ] );
+            //    }
+            //} catch (OperationCanceledException) {
+            //}
         }
         protected override void OnDeactivate(object? argument) {
         }
 
-        private async Task PlayAsync(AssetHandle<AudioClip> clip) {
-            try {
-                await PlayAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
-            } finally {
-                clip.Release();
-            }
-        }
-        private async Task PlayAsync(AudioClip clip) {
-            try {
-                Play( clip );
-                IsFading = false;
-                Volume = 1;
-                Pitch = 1;
-                while (!IsCompleted) {
-                    if (IsFading) {
-                        Volume = Mathf.MoveTowards( Volume, 0, Volume * 1.0f * Time.deltaTime );
-                        Pitch = Mathf.MoveTowards( Pitch, 0, Pitch * 0.5f * Time.deltaTime );
-                    }
-                    await Awaitable.NextFrameAsync( DisposeCancellationToken );
-                }
-            } finally {
-                Stop();
-            }
-        }
+        //private async Task PlayAsync(AssetHandle<AudioClip> clip) {
+        //    try {
+        //        await PlayAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
+        //    } finally {
+        //        clip.Release();
+        //    }
+        //}
+        //private async Task PlayAsync(AudioClip clip) {
+        //    try {
+        //        Play( clip );
+        //        IsFading = false;
+        //        Volume = 1;
+        //        Pitch = 1;
+        //        while (!IsCompleted) {
+        //            if (IsFading) {
+        //                Volume = Mathf.MoveTowards( Volume, 0, Volume * 1.0f * Time.deltaTime );
+        //                Pitch = Mathf.MoveTowards( Pitch, 0, Pitch * 0.5f * Time.deltaTime );
+        //            }
+        //            await Awaitable.NextFrameAsync( DisposeCancellationToken );
+        //        }
+        //    } finally {
+        //        Stop();
+        //    }
+        //}
 
     }
     public class MainPlayList : UIPlayListBase3 {

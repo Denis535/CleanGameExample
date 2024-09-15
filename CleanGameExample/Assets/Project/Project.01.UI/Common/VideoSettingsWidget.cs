@@ -34,7 +34,6 @@ namespace Project.UI.Common {
                 VideoSettings.Load();
             }
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

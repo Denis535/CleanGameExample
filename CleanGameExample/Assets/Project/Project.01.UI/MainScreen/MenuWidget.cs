@@ -31,7 +31,6 @@ namespace Project.UI.MainScreen {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -58,7 +57,7 @@ namespace Project.UI.MainScreen {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
             view.Quit.RegisterCallback<ClickEvent>( evt => {
-                widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null ) );
+                widget.AddChild( new DialogWidget( widget.Container, "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.Quit() ).OnCancel( "No", null ) );
             } );
             return view;
         }

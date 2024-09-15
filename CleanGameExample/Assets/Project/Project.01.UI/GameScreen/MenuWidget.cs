@@ -26,7 +26,6 @@ namespace Project.UI.GameScreen {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -48,7 +47,7 @@ namespace Project.UI.GameScreen {
                 widget.AddChild( new SettingsWidget( widget.Container ) );
             } );
             view.Back.RegisterCallback<ClickEvent>( evt => {
-                widget.AddChild( new DialogWidget( "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
+                widget.AddChild( new DialogWidget( widget.Container, "Confirmation", "Are you sure?" ).OnSubmit( "Yes", () => widget.Router.UnloadGameScene() ).OnCancel( "No", null ) );
             } );
             return view;
         }

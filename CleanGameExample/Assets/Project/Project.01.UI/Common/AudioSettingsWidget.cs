@@ -36,7 +36,6 @@ namespace Project.UI.Common {
                 AudioSettings.Load();
             }
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

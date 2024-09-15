@@ -32,7 +32,6 @@ namespace Project.UI.Common {
                 ProfileSettings.Load();
             }
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

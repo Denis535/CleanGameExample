@@ -35,12 +35,11 @@ namespace Project.UI.MainScreen {
                 Children.OfType<MenuWidget>().First().__GetView__().style.display = StyleKeyword.Null;
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
-                ((RootWidget) Root).AddChild( new ErrorDialogWidget( "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() ) );
+                ((RootWidget) Root).AddChild( new ErrorDialogWidget( Container, "Error", ex.Message ).OnSubmit( "Ok", () => Router.Quit() ) );
             }
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

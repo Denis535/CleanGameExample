@@ -25,7 +25,6 @@ namespace Project.UI.Common {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

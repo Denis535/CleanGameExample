@@ -52,7 +52,6 @@ namespace Project.UI.GameScreen {
             Input.Disable();
             IsCursorVisible = true;
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

@@ -13,7 +13,7 @@ namespace Project.UI.Common {
         TThis OnSubmit(string text, Action? callback);
         TThis OnCancel(string text, Action? callback);
     }
-    public class DialogWidget : UIWidgetBase<DialogWidgetView>, IDialogWidget<DialogWidget> {
+    public class DialogWidget : UIWidgetBase2<DialogWidgetView>, IDialogWidget<DialogWidget> {
 
         public string? Title {
             get => View.Title.text;
@@ -30,7 +30,7 @@ namespace Project.UI.Common {
             }
         }
 
-        public DialogWidget(string? title, string? message) {
+        public DialogWidget(IDependencyContainer container, string? title, string? message) : base( container ) {
             View = new DialogWidgetView();
             Title = title;
             Message = message;
@@ -45,7 +45,6 @@ namespace Project.UI.Common {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -83,7 +82,7 @@ namespace Project.UI.Common {
         }
 
     }
-    public class InfoDialogWidget : UIWidgetBase<InfoDialogWidgetView>, IDialogWidget<InfoDialogWidget> {
+    public class InfoDialogWidget : UIWidgetBase2<InfoDialogWidgetView>, IDialogWidget<InfoDialogWidget> {
 
         public string? Title {
             get => View.Title.text;
@@ -100,7 +99,7 @@ namespace Project.UI.Common {
             }
         }
 
-        public InfoDialogWidget(string? title, string? message) {
+        public InfoDialogWidget(IDependencyContainer container, string? title, string? message) : base( container ) {
             View = new InfoDialogWidgetView();
             Title = title;
             Message = message;
@@ -152,7 +151,7 @@ namespace Project.UI.Common {
         }
 
     }
-    public class WarningDialogWidget : UIWidgetBase<WarningDialogWidgetView>, IDialogWidget<WarningDialogWidget> {
+    public class WarningDialogWidget : UIWidgetBase2<WarningDialogWidgetView>, IDialogWidget<WarningDialogWidget> {
 
         public string? Title {
             get => View.Title.text;
@@ -169,7 +168,7 @@ namespace Project.UI.Common {
             }
         }
 
-        public WarningDialogWidget(string? title, string? message) {
+        public WarningDialogWidget(IDependencyContainer container, string? title, string? message) : base( container ) {
             View = new WarningDialogWidgetView();
             Title = title;
             Message = message;
@@ -221,7 +220,7 @@ namespace Project.UI.Common {
         }
 
     }
-    public class ErrorDialogWidget : UIWidgetBase<ErrorDialogWidgetView>, IDialogWidget<ErrorDialogWidget> {
+    public class ErrorDialogWidget : UIWidgetBase2<ErrorDialogWidgetView>, IDialogWidget<ErrorDialogWidget> {
 
         public string? Title {
             get => View.Title.text;
@@ -238,7 +237,7 @@ namespace Project.UI.Common {
             }
         }
 
-        public ErrorDialogWidget(string? title, string? message) {
+        public ErrorDialogWidget(IDependencyContainer container, string? title, string? message) : base( container ) {
             View = new ErrorDialogWidgetView();
             Title = title;
             Message = message;

@@ -77,7 +77,6 @@ namespace Project.UI {
         protected override void OnActivate(object? argument) {
         }
         protected override void OnDeactivate(object? argument) {
-            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

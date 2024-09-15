@@ -123,22 +123,24 @@ namespace Project.UI {
             return view switch {
                 // MainScreen
                 MainScreen.MainWidgetView => 0,
-                MainScreen.MenuWidgetView => 500,
+                MainScreen.MenuWidgetView => 100,
                 // GameScreen
                 GameScreen.GameWidgetView => 0,
                 GameScreen.TotalsWidgetView => 0,
-                GameScreen.MenuWidgetView => 500,
+                GameScreen.MenuWidgetView => 100,
                 // Common
-                Common.SettingsWidgetView => 500,
-                Common.ProfileSettingsWidgetView => 500,
-                Common.VideoSettingsWidgetView => 500,
-                Common.AudioSettingsWidgetView => 500,
-                Common.LoadingWidgetView => 999,
-                Common.UnloadingWidgetView => 999,
+                Common.LoadingWidgetView => 100,
+                Common.UnloadingWidgetView => 100,
+                // Common
+                Common.SettingsWidgetView => 100,
+                Common.ProfileSettingsWidgetView => 100,
+                Common.VideoSettingsWidgetView => 100,
+                Common.AudioSettingsWidgetView => 100,
+                // Common
                 Common.DialogWidgetView => 1000,
-                Common.InfoDialogWidgetView => 1000,
-                Common.WarningDialogWidgetView => 1000,
-                Common.ErrorDialogWidgetView => 1000,
+                Common.InfoDialogWidgetView => 1001,
+                Common.WarningDialogWidgetView => 1002,
+                Common.ErrorDialogWidgetView => 1003,
                 _ => 0
             };
         }

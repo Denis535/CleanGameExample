@@ -28,13 +28,13 @@ namespace Project.UI {
         }
 
         public void PlayMainTheme() {
-            SetPlayList( new MainThemePlayList( this ) );
+            SetPlayList( new MainPlayList( this ) );
         }
         public void PlayGameTheme() {
-            SetPlayList( new GameThemePlayList( this ) );
+            SetPlayList( new GamePlayList( this ) );
         }
         public void PlayLoadingTheme() {
-            if (PlayList is MainThemePlayList mainStrategy) {
+            if (PlayList is MainPlayList mainStrategy) {
                 mainStrategy.IsFading = true;
             } else {
                 SetPlayList( null );
@@ -48,7 +48,7 @@ namespace Project.UI {
         }
 
     }
-    internal abstract class UIPlayListBase2 : UIPlayListBase {
+    public abstract class UIPlayListBase2 : UIPlayListBase {
 
         protected new UIThemeBase2 Context => (UIThemeBase2) base.Context;
         protected AssetHandle<AudioClip>[] Clips { get; }
@@ -64,7 +64,7 @@ namespace Project.UI {
         protected override async void OnActivate(object? argument) {
             try {
                 for (var i = 0; true; i++) {
-                    await PlayClipAsync( Clips[ i % Clips.Length ] );
+                    await PlayAsync( Clips[ i % Clips.Length ] );
                 }
             } catch (OperationCanceledException) {
             }
@@ -73,14 +73,14 @@ namespace Project.UI {
             Dispose();
         }
 
-        private async Task PlayClipAsync(AssetHandle<AudioClip> clip) {
+        private async Task PlayAsync(AssetHandle<AudioClip> clip) {
             try {
-                await PlayClipAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
+                await PlayAsync( await clip.Load().GetValueAsync( DisposeCancellationToken ) );
             } finally {
                 clip.Release();
             }
         }
-        private async Task PlayClipAsync(AudioClip clip) {
+        private async Task PlayAsync(AudioClip clip) {
             try {
                 Play( clip );
                 IsFading = false;
@@ -99,27 +99,27 @@ namespace Project.UI {
         }
 
     }
-    internal class MainThemePlayList : UIPlayListBase2 {
+    public class MainPlayList : UIPlayListBase2 {
 
         private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
             new AssetHandle<AudioClip>( R.Project.UI.MainScreen.Music.Value_Theme )
         } );
 
-        public MainThemePlayList(UITheme context) : base( context, Clips ) {
+        public MainPlayList(UITheme context) : base( context, Clips ) {
         }
         public override void Dispose() {
             base.Dispose();
         }
 
     }
-    internal class GameThemePlayList : UIPlayListBase2 {
+    public class GamePlayList : UIPlayListBase2 {
 
         private static readonly new AssetHandle<AudioClip>[] Clips = Shuffle( new[] {
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_1 ),
             new AssetHandle<AudioClip>( R.Project.UI.GameScreen.Music.Value_Theme_2 ),
         } );
 
-        public GameThemePlayList(UITheme context) : base( context, Clips ) {
+        public GamePlayList(UITheme context) : base( context, Clips ) {
         }
         public override void Dispose() {
             base.Dispose();

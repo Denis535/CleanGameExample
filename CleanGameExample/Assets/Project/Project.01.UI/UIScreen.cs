@@ -25,10 +25,10 @@ namespace Project.UI {
             VisualElementFactory.OnPlayInfoDialog += evt => { };
             VisualElementFactory.OnPlayWarningDialog += evt => { };
             VisualElementFactory.OnPlayErrorDialog += evt => { };
-            AddWidget( new RootWidget( container ) );
+            SetWidget( new RootWidget( container ) );
         }
         public override void Dispose() {
-            Widget.RemoveSelf();
+            SetWidget( null );
             base.Dispose();
         }
 
@@ -58,7 +58,7 @@ namespace Project.UI {
             Widget.AddChild( new UnloadingWidget( Container ) );
         }
         public void HideScreen() {
-            Widget.RemoveChildren( i => i is not (WarningDialogWidget or ErrorDialogWidget) );
+            Widget.Clear();
         }
 
     }
@@ -72,6 +72,43 @@ namespace Project.UI {
         public override void Dispose() {
             View.Dispose();
             base.Dispose();
+        }
+
+        protected override void OnActivate(object? argument) {
+        }
+        protected override void OnDeactivate(object? argument) {
+            Dispose();
+        }
+
+        protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        protected override void OnAfterDescendantActivate(UIWidgetBase descendant, object? argument) {
+        }
+        protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+        protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
+        }
+
+        internal void AddChild(MainWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void AddChild(GameWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void AddChild(LoadingWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void AddChild(UnloadingWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void AddChild(WarningDialogWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void AddChild(ErrorDialogWidget widget) {
+            base.AddChild( widget );
+        }
+        internal void Clear() {
+            RemoveChildren( i => i is not (DialogWidget or InfoDialogWidget or WarningDialogWidget or ErrorDialogWidget) );
         }
 
         protected override void Sort(List<UIWidgetBase> children) {
@@ -112,6 +149,7 @@ namespace Project.UI {
                 Common.VideoSettingsWidgetView => 500,
                 Common.AudioSettingsWidgetView => 500,
                 Common.LoadingWidgetView => 999,
+                Common.UnloadingWidgetView => 999,
                 Common.DialogWidgetView => 1000,
                 Common.InfoDialogWidgetView => 1000,
                 Common.WarningDialogWidgetView => 1000,

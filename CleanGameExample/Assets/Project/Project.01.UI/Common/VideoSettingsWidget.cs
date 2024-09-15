@@ -25,7 +25,6 @@ namespace Project.UI.Common {
             ShowSelf();
         }
         protected override void OnDeactivate(object? argument) {
-            HideSelf();
             if (argument is DeactivateReason.Submit) {
                 VideoSettings.IsFullScreen = View.IsFullScreen.value;
                 VideoSettings.ScreenResolution = (Resolution) View.ScreenResolution.value!;
@@ -34,6 +33,8 @@ namespace Project.UI.Common {
             } else {
                 VideoSettings.Load();
             }
+            HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

@@ -45,6 +45,7 @@ namespace Project.UI.Common {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -61,7 +62,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -73,7 +74,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -130,7 +131,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -142,7 +143,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -199,7 +200,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -211,7 +212,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -268,7 +269,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );
@@ -280,7 +281,7 @@ namespace Project.UI.Common {
             button.RegisterCallback<ClickEvent>( evt => {
                 if (button.IsValidSelf()) {
                     callback?.Invoke();
-                    if (State is UIWidgetState.Active) RemoveSelf();
+                    if (State is State_.Active) RemoveSelf();
                 }
             } );
             View.Footer.Add( button );

@@ -26,7 +26,6 @@ namespace Project.UI.Common {
             ShowSelf();
         }
         protected override void OnDeactivate(object? argument) {
-            HideSelf();
             if (argument is DeactivateReason.Submit) {
                 AudioSettings.MasterVolume = View.MasterVolume.value;
                 AudioSettings.MusicVolume = View.MusicVolume.value;
@@ -36,6 +35,8 @@ namespace Project.UI.Common {
             } else {
                 AudioSettings.Load();
             }
+            HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

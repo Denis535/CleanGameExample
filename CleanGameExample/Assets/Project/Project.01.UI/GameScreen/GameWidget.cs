@@ -52,6 +52,7 @@ namespace Project.UI.GameScreen {
             Input.Disable();
             IsCursorVisible = true;
             HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {
@@ -63,9 +64,9 @@ namespace Project.UI.GameScreen {
         protected override void OnBeforeDescendantDeactivate(UIWidgetBase descendant, object? argument) {
         }
         protected override void OnAfterDescendantDeactivate(UIWidgetBase descendant, object? argument) {
-            if (State is UIWidgetState.Active) {
-                Game.IsPaused = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget );
-                IsCursorVisible = Children.Where( i => i.State is UIWidgetState.Active ).Any( i => i is MenuWidget or TotalsWidget );
+            if (State is State_.Active) {
+                Game.IsPaused = Children.Where( i => i.State is State_.Active ).Any( i => i is MenuWidget );
+                IsCursorVisible = Children.Where( i => i.State is State_.Active ).Any( i => i is MenuWidget or TotalsWidget );
             }
         }
 

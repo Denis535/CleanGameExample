@@ -25,13 +25,14 @@ namespace Project.UI.Common {
             ShowSelf();
         }
         protected override void OnDeactivate(object? argument) {
-            HideSelf();
             if (argument is DeactivateReason.Submit) {
                 ProfileSettings.Name = View.Name.value;
                 ProfileSettings.Save();
             } else {
                 ProfileSettings.Load();
             }
+            HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

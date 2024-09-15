@@ -26,6 +26,7 @@ namespace Project.UI.GameScreen {
         }
         protected override void OnDeactivate(object? argument) {
             HideSelf();
+            Dispose();
         }
 
         protected override void OnBeforeDescendantActivate(UIWidgetBase descendant, object? argument) {

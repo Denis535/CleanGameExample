@@ -36,6 +36,6 @@ The beautiful UIToolkit theme style sheets and some additions and tools.
 - This package is developed by fcaudio.
 - It's licensed under the Standard Unity Asset Store EULA.
 - Project.UI/Assets.Project.UI.MainScreen/Music
-- Project.UI/Assets.Project.UI.GameScreen/Musc
+- Project.UI/Assets.Project.UI.GameScreen/Music
 - https://assetstore.unity.com/publishers/41922
 - https://assetstore.unity.com/packages/audio/music/fc-game-audio-pack-1-lite-182311

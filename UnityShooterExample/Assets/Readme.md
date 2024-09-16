@@ -101,9 +101,7 @@ The project also consists of the following source codes:
 - https://youtu.be/WmLJHRg0EI4
 
 # Links
-- https://denis535.github.io
-- https://github.com/denis535/CleanGameExample
-- https://www.youtube.com/channel/UCLFdZl0pFkCkHpDWmodBUFg
+- https://denis535.github.io/#unity-shooter-example
 - https://www.nuget.org/profiles/Denis535
 - https://openupm.com/packages/?sort=downloads&q=denis535
 - https://assetstore.unity.com/publishers/90787

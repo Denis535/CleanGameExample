@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3778303671815374908}
-  - component: {fileID: 1260703212726580696}
+  - component: {fileID: 3308128232623805610}
   m_Layer: 10
-  m_Name: WeaponSlot
+  m_Name: WeaponSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6596323002675131578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1260703212726580696
+--- !u!114 &3308128232623805610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039713243695715955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13aa656777dfaed4f8bde65e2d693bee, type: 3}
+  m_Script: {fileID: 11500000, guid: 39048cb6c7331054c9ae9f9469d7faa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2553907863006304314

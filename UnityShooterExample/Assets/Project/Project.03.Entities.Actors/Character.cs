@@ -76,9 +76,9 @@ namespace Project.Entities.Actors {
             private MoveableBody MoveableBody { get; }
             private Rigidbody Rigidbody { get; }
             private GameObject Head { get; }
-            private WeaponSlot WeaponSlot { get; }
+            private WeaponSocket WeaponSocket { get; }
             public WeaponBase? Weapon {
-                get => WeaponSlot.transform.childCount > 0 ? WeaponSlot.transform.GetChild( 0 ).gameObject.RequireComponent<WeaponBase>() : null;
+                get => WeaponSocket.transform.childCount > 0 ? WeaponSocket.transform.GetChild( 0 ).gameObject.RequireComponent<WeaponBase>() : null;
                 set {
                     var prevWeapon = Weapon;
                     if (prevWeapon != null) {
@@ -88,7 +88,7 @@ namespace Project.Entities.Actors {
                     }
                     if (value != null) {
                         value.gameObject.SetLayerRecursively( Layers.Entity_Exact );
-                        value.transform.SetParent( WeaponSlot.transform, true );
+                        value.transform.SetParent( WeaponSocket.transform, true );
                         value.transform.localPosition = Vector3.zero;
                         value.transform.localRotation = Quaternion.identity;
                         value.IsRigidbody = false;
@@ -101,7 +101,7 @@ namespace Project.Entities.Actors {
                 MoveableBody = gameObject.RequireComponent<MoveableBody>();
                 Rigidbody = gameObject.RequireComponent<Rigidbody>();
                 Head = gameObject.transform.Require( "Head" ).gameObject;
-                WeaponSlot = gameObject.RequireComponentInChildren<WeaponSlot>();
+                WeaponSocket = gameObject.RequireComponentInChildren<WeaponSocket>();
             }
             public override void Dispose() {
                 base.Dispose();
@@ -143,7 +143,7 @@ namespace Project.Entities.Actors {
             }
 
             public bool AimAt(Vector3? target) {
-                return LookAt( WeaponSlot.transform, target );
+                return LookAt( WeaponSocket.transform, target );
                 static bool LookAt(Transform transform, Vector3? target) {
                     var rotation = transform.localRotation;
                     if (target != null) {

@@ -1,15 +1,15 @@
-﻿#nullable enable
+#nullable enable
 namespace UnityEngine {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class WeaponSlot : Slot {
+    public abstract class Socket : MonoBehaviour {
 
 #if UNITY_EDITOR
-        protected override void OnValidate() {
-            base.OnValidate();
+        protected virtual void OnValidate() {
+            gameObject.name = GetType().Name;
         }
 #endif
 

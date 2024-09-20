@@ -1,9 +1,10 @@
 #if UNITY_EDITOR
 #nullable enable
-namespace Project.Entities.Actors {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Project.Entities.Actors;
     using UnityEditor;
     using UnityEngine;
 

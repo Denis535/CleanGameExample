@@ -1,13 +1,13 @@
 #nullable enable
-namespace Project.Entities.Actors {
+namespace Project.Entities {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Project.Entities.Actors;
     using Project.Entities.Things;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.InputSystem;
 
     public partial class Camera2 {
         public static class Factory {
@@ -144,27 +144,5 @@ namespace Project.Entities.Actors {
     public interface ICameraInput {
         Vector2 GetLookDelta();
         float GetZoomDelta();
-    }
-    public class CameraInput : ICameraInput {
-
-        private InputActions_Camera Input { get; }
-        //public bool IsEnabled {
-        //    get => Input.Camera.enabled;
-        //    set {
-        //        if (value) Input.Enable(); else Input.Disable();
-        //    }
-        //}
-
-        public CameraInput(InputActions_Camera input) {
-            Input = input;
-        }
-
-        public Vector2 GetLookDelta() {
-            return Input.Camera.Look.ReadValue<Vector2>();
-        }
-        public float GetZoomDelta() {
-            return Input.Camera.Zoom.ReadValue<Vector2>().y;
-        }
-
     }
 }

@@ -39,7 +39,7 @@ namespace Project.Entities.Actors {
 
         }
     }
-    public partial class PlayerCharacter : PlayableCharacter {
+    public partial class PlayerCharacter : PlayableCharacterBase {
 
         public PlayerBase Player { get; private set; } = default!;
 

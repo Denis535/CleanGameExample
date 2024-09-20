@@ -33,7 +33,7 @@ namespace Project.Entities.Actors {
 
         }
     }
-    public partial class EnemyCharacter : NonPlayableCharacter {
+    public partial class EnemyCharacter : NonPlayableCharacterBase {
         private struct Environment_ {
             public PlayerCharacter? Player { get; init; }
         }

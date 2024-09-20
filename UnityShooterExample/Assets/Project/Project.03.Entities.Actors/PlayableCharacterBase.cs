@@ -5,7 +5,7 @@ namespace Project.Entities.Actors {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public abstract class PlayableCharacter : Character {
+    public abstract class PlayableCharacterBase : CharacterBase {
 
         public IPlayableCharacterInput? Input { get; set; }
 

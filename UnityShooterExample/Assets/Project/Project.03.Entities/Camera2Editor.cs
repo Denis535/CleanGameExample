@@ -15,7 +15,7 @@ namespace Project.Entities {
 
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
-            EditorGUILayout.ObjectField( "Target", Target.Target, typeof( Character ), true );
+            EditorGUILayout.ObjectField( "Target", Target.Target, typeof( CharacterBase ), true );
             EditorGUILayout.Vector2Field( "Angles", Target.Angles );
             EditorGUILayout.FloatField( "Distance", Target.Distance );
         }

@@ -4,7 +4,6 @@ namespace Project.Entities.Actors {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using Project.Entities.Things;
 
     [DefaultExecutionOrder( 100 )]
     public abstract class ActorBase : MonoBehaviour, IDamageable {

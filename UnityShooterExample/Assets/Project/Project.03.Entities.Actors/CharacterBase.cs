@@ -8,7 +8,7 @@ namespace Project.Entities.Actors {
 
     [RequireComponent( typeof( Rigidbody ) )]
     [RequireComponent( typeof( MoveableBody ) )]
-    public abstract partial class Character : ActorBase {
+    public abstract partial class CharacterBase : ActorBase {
 
         private Facade_ Facade { get; set; } = default!;
         public WeaponBase? Weapon { get => Facade.Weapon; protected set => Facade.Weapon = value; }
@@ -68,7 +68,7 @@ namespace Project.Entities.Actors {
         }
 
     }
-    public abstract partial class Character {
+    public abstract partial class CharacterBase {
         protected class Facade_ : DisposableBase {
 
             private GameObject GameObject { get; }

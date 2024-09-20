@@ -5,7 +5,7 @@ namespace Project.Entities.Actors {
     using System.Collections.Generic;
     using UnityEngine;
 
-    public abstract class NonPlayableCharacter : Character {
+    public abstract class NonPlayableCharacterBase : CharacterBase {
 
         protected override void Awake() {
             base.Awake();

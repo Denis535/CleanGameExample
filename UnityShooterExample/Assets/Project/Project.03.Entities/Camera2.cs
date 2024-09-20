@@ -41,10 +41,10 @@ namespace Project.Entities {
         private static readonly float AnglesInputSensitivity = 0.15f;
         private static readonly float DistanceInputSensitivity = 0.20f;
 
-        private Character? target;
+        private CharacterBase? target;
 
         public ICameraInput? Input { get; set; }
-        public Character? Target {
+        public CharacterBase? Target {
             get => target;
             set {
                 if (value != target) IsTargetChanged = true;
@@ -91,7 +91,7 @@ namespace Project.Entities {
         }
 
         // Helpers
-        private static void Apply(Transform transform, Character target, Vector2 angles, float distance) {
+        private static void Apply(Transform transform, CharacterBase target, Vector2 angles, float distance) {
             if (target.IsAlive) {
                 var distance01 = Mathf.InverseLerp( MinDistance, MaxDistance, distance );
                 transform.localPosition = target.transform.position;

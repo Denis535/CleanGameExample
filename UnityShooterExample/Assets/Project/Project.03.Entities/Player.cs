@@ -131,12 +131,12 @@ namespace Project.Entities {
         //        if (value) Input.Enable(); else Input.Disable();
         //    }
         //}
-        private Character Character { get; }
+        private CharacterBase Character { get; }
         private Camera2 Camera { get; }
         private Camera2.RaycastHit? Hit => Camera.Hit;
         private Vector3 Target => Camera.Hit?.Point ?? Camera.transform.TransformPoint( Vector3.forward * 128f );
 
-        public PlayableCharacterInput(InputActions_Character input, Character character, Camera2 camera) {
+        public PlayableCharacterInput(InputActions_Character input, CharacterBase character, Camera2 camera) {
             Input = input;
             Character = character;
             Camera = camera;

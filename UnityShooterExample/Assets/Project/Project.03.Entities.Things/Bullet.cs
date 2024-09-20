@@ -50,10 +50,7 @@ namespace Project.Entities.Things {
 
         public void OnCollisionEnter(Collision collision) {
             if (enabled) {
-                var damageable = collision.transform.root.GetComponent<IDamageable>();
-                if (damageable != null && damageable != (IDamageable) Actor) {
-                    damageable.OnDamage( new BulletDamageInfo( Rigidbody.position, Rigidbody.velocity.normalized, Force, Weapon, Actor, Player ) );
-                }
+                collision.collider.Damage( new BulletDamageInfo( Rigidbody.position, Rigidbody.velocity.normalized, Force, Weapon, Actor, Player ) );
                 enabled = false;
             }
         }

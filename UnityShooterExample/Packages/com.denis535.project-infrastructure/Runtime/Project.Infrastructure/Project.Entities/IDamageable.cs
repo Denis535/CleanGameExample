@@ -9,7 +9,17 @@ namespace Project.Entities {
     using UnityEngine.Framework.Entities;
 
     public interface IDamageable {
-        void OnDamage(DamageInfo info);
+        void Damage(DamageInfo info);
+    }
+    public static class IDamageableExtensions {
+
+        public static void Damage(this Collider collider, DamageInfo info) {
+            var damageable = collider.transform.root.GetComponent<IDamageable>();
+            if (damageable != null && damageable != (IDamageable?) info.Actor) {
+                damageable.Damage( info );
+            }
+        }
+
     }
     public abstract record DamageInfo(float Damage, ThingBase? Thing, ActorBase? Actor, PlayerBase? Player);
     public record KillZoneDamageInfo(float Damage) : DamageInfo( Damage, null, null, null );

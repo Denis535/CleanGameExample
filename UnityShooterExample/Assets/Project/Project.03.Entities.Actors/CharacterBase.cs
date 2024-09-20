@@ -32,10 +32,8 @@ namespace Project.Entities.Actors {
         }
 
         protected override void OnDamage(DamageInfo info) {
-            base.OnDamage( info );
         }
         protected override void OnDeath(DamageInfo info) {
-            base.OnDeath( info );
             Facade.Weapon = null;
             if (info is BulletDamageInfo bulletDamageInfo) {
                 Facade.Die( bulletDamageInfo.Direction * 5, bulletDamageInfo.Point );

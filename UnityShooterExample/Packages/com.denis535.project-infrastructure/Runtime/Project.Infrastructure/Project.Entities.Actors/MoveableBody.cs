@@ -1,5 +1,5 @@
 #nullable enable
-namespace UnityEngine {
+namespace Project.Entities.Actors {
     using System;
     using System.Collections;
     using System.Collections.Generic;

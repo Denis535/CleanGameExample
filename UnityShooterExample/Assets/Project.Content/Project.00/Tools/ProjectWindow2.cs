@@ -47,6 +47,7 @@ namespace Project {
         private static string[] GetModulePaths() {
             return Enumerable.Empty<string>()
                 .Append( "Assets/Project" )
+                .Append( "Assets/Project.Content" )
                 .Concat( AssetDatabase.GetAllAssetPaths()
                     .Where( i => Path.GetExtension( i ) is ".asmdef" or ".asmref" )
                     .Where( i => i.StartsWith( "Packages/" ) )

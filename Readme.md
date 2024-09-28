@@ -1,15 +1,18 @@
 # Заголовок
 ========================================
+
 Architecture of Game Projects Using Third Person Shooter as an Example
 Архитектура Игровых Проектов на Примере Шутера от Третьего Лица
 
 # Подзаголовок
 ========================================
+
 Shooter Game Tutorial | Game Architecture | Modular Architecture | Clean Architecture | Domain-Driven Design | State-Driven UI | Best Practices
 Учебное пособие по игре-шутеру | Архитектура игр | Модульная архитектура | Чистая архитектура | Domain-Driven Дизайн | State-Driven Пользовательский Интерфейс | Лучшие Практики
 
 # Обзор
 ========================================
+
 В этом видео курсе мы подробно рассмотрим пример шутера, в котором я постарался воплотить все свои лучшие идеи и наработки, накопленные за годы работы в игровой индустрии.
 Заметьте, я не буду углубляться в детали устройства движка Unity, так как предполагается, что у вас уже есть базовые знания об этом движке.
 Вместо этого, я сосредоточусь на главных принципах разработки качественных проектов.
@@ -29,6 +32,7 @@ Shooter Game Tutorial | Game Architecture | Modular Architecture | Clean Archite
 
 # Справка
 ========================================
+
 Проект состоит из модулей:
 - Project
 - Project.UI
@@ -49,10 +53,10 @@ Shooter Game Tutorial | Game Architecture | Modular Architecture | Clean Archite
 
 # Ссылки
 ========================================
+
 - https://github.com/Denis535/UnityShooterExample
 - https://openupm.com/packages/?sort=downloads&q=denis535
 - https://assetstore.unity.com/packages/tools/gui/uitoolkit-theme-style-sheet-273463
-
 
 ########## ########## ########## ########## ########## ########## ########## ########## ########## ##########
 ########## ########## ########## ########## ########## ########## ########## ########## ########## ##########

@@ -32,6 +32,7 @@ Shooter Game Tutorial | Game Architecture | Modular Architecture | Clean Archite
 
 # Ссылки
 - https://github.com/Denis535/UnityShooterExample
+- https://www.nuget.org/profiles/Denis535
 - https://openupm.com/packages/?sort=downloads&q=denis535
 - https://assetstore.unity.com/packages/tools/gui/uitoolkit-theme-style-sheet-273463
 

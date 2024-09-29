@@ -12,7 +12,7 @@ namespace Project {
     using UnityEditor.SceneManagement;
     using UnityEngine;
 
-    public static class ProjectToolbar {
+    public static class ProjectBar {
 
         [MenuItem( "Project/Launcher", priority = 0 )]
         public static void LoadLauncher() {

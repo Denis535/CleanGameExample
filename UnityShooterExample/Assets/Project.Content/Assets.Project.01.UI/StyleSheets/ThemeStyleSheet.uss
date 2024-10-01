@@ -144,18 +144,18 @@
   translate: -50% -50%;
 }
 .main-widget-view-background {
-  background-image: url('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png');
+  background-image: url('project://database/Assets/Project.Content/Assets.Project.01.UI/MainScreen/Images/Background.png');
   -unity-background-scale-mode: scale-and-crop;
 }
 .loading-widget-view-background {
-  background-image: url('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png');
+  background-image: url('project://database/Assets/Project.Content/Assets.Project.01.UI/MainScreen/Images/Background.png');
   -unity-background-scale-mode: scale-and-crop;
   transition-property: -unity-background-image-tint-color, translate, rotate, scale;
   transition-duration: 10s;
   transition-timing-function: ease;
 }
 .unloading-widget-view-background {
-  background-image: url('project://database/Assets/Project/Assets.Project.01.UI/MainScreen/Images/Background.png');
+  background-image: url('project://database/Assets/Project.Content/Assets.Project.01.UI/MainScreen/Images/Background.png');
   -unity-background-scale-mode: scale-and-crop;
   transition-property: -unity-background-image-tint-color, translate, rotate, scale;
   transition-duration: 1s;

@@ -70,8 +70,36 @@ namespace Project {
             EditorUtility.RevealInFinder( path );
         }
 
-        [MenuItem( "Project/Open All", priority = 300 )]
-        public static void OpenAll() {
+        [MenuItem( "Project/Place Player Point", priority = 300 )]
+        public static void PlacePlayerPoint() {
+            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
+            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
+                var go = new GameObject( "PlayerPoint", typeof( PlayerPoint ) );
+                go.transform.position = hit.point;
+                Selection.activeGameObject = go;
+            }
+        }
+        [MenuItem( "Project/Place Enemy Point", priority = 301 )]
+        public static void PlaceEnemyPoint() {
+            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
+            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
+                var go = new GameObject( "EnemyPoint", typeof( EnemyPoint ) );
+                go.transform.position = hit.point;
+                Selection.activeGameObject = go;
+            }
+        }
+        [MenuItem( "Project/Place Thing Point", priority = 302 )]
+        public static void PlaceThingPoint() {
+            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
+            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
+                var go = new GameObject( "ThingPoint", typeof( ThingPoint ) );
+                go.transform.position = hit.point;
+                Selection.activeGameObject = go;
+            }
+        }
+
+        [MenuItem( "Project/Open All (*.cs)", priority = 500 )]
+        public static void OpenAll_CSharp() {
             var paths = AssetDatabase.GetAllAssetPaths()
                 .Where( i => i.StartsWith( "Assets/Project.Content/" ) && Path.GetExtension( i ) == ".cs" )
                 .Select( i => new {
@@ -164,31 +192,6 @@ namespace Project {
             foreach (var path in paths.Reverse()) {
                 AssetDatabase.OpenAsset( AssetDatabase.LoadAssetAtPath<UnityEngine.Object>( path ) );
                 Thread.Sleep( 100 );
-            }
-        }
-
-        [MenuItem( "Project/Player Point", priority = 500 )]
-        public static void PlayerPoint() {
-            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
-            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "PlayerPoint", typeof( PlayerPoint ) );
-                go.transform.position = hit.point;
-            }
-        }
-        [MenuItem( "Project/Enemy Point", priority = 501 )]
-        public static void EnemyPoint() {
-            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
-            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "EnemyPoint", typeof( EnemyPoint ) );
-                go.transform.position = hit.point;
-            }
-        }
-        [MenuItem( "Project/Thing Point", priority = 502 )]
-        public static void ThingPoint() {
-            var ray = HandleUtility.GUIPointToWorldRay( GUIUtility.ScreenToGUIPoint( SceneView.lastActiveSceneView.cameraViewport.center ) );
-            if (Physics.Raycast( ray, out var hit, 512, ~0, QueryTriggerInteraction.Ignore )) {
-                var go = Selection.activeGameObject = new GameObject( "ThingPoint", typeof( ThingPoint ) );
-                go.transform.position = hit.point;
             }
         }
 

@@ -36,17 +36,17 @@ namespace Project {
         }
 
         [MenuItem( "Project/World 01", priority = 100 )]
-        public static void LoadLevel1() {
+        public static void LoadWorld01() {
             var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_01.unity" );
             EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/World 02", priority = 101 )]
-        public static void LoadLevel2() {
+        public static void LoadWorld02() {
             var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_02.unity" );
             EditorSceneManager.OpenScene( path );
         }
         [MenuItem( "Project/World 03", priority = 101 )]
-        public static void LoadLevel3() {
+        public static void LoadWorld03() {
             var path = AssetDatabase.GetAllAssetPaths().Single( i => Path.GetFileName( i ) == "World_03.unity" );
             EditorSceneManager.OpenScene( path );
         }
